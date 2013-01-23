@@ -20,9 +20,9 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
-import edu.ksu.cis.macr.organization.model.InstanceGoal;
-import edu.ksu.cis.macr.organization.model.Organization;
-import edu.ksu.cis.macr.organization.model.SpecificationGoal;
+import model.organization.entity.InstanceGoal;
+import model.organization.entity.Organization;
+import model.organization.entity.SpecificationGoal;
 
 /**
  * The <code>GoalVisualizationPanel</code> class is a Swing component to

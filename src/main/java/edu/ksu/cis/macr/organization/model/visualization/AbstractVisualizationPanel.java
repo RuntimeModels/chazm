@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
-import edu.ksu.cis.macr.organization.model.Organization;
+import model.organization.entity.Organization;
 
 /**
  * The <code>AbstractVisualizationPanel</code> provides the base framework

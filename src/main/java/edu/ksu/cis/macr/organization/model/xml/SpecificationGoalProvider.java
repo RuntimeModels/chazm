@@ -7,7 +7,7 @@
  */
 package edu.ksu.cis.macr.organization.model.xml;
 
-import edu.ksu.cis.macr.organization.model.SpecificationGoal;
+import model.organization.entity.SpecificationGoal;
 
 /**
  * The <code>SpecificationGoalProvider</code> interface provides the necessary

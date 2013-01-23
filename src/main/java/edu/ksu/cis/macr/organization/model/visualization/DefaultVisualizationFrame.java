@@ -19,7 +19,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 
-import edu.ksu.cis.macr.organization.model.Organization;
+import model.organization.entity.Organization;
 
 /**
  * The <code>DefaultVisualizationFrame</code> provides a primitive

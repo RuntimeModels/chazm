@@ -9,6 +9,13 @@ package edu.ksu.cis.macr.organization.model;
 
 import java.util.Collection;
 
+import model.organization.entity.Agent;
+import model.organization.entity.Attribute;
+import model.organization.entity.Capability;
+import model.organization.entity.InstanceGoal;
+import model.organization.entity.Role;
+import model.organization.relation.Assignment;
+
 /**
  * The <code>RoleGoodnessFunction</code> interface provides the necessary
  * functionality for computing the goodness score of how good an {@link Agent}

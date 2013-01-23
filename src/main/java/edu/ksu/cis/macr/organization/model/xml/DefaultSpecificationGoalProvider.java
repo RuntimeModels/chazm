@@ -7,8 +7,8 @@
  */
 package edu.ksu.cis.macr.organization.model.xml;
 
-import edu.ksu.cis.macr.organization.model.SpecificationGoal;
-import edu.ksu.cis.macr.organization.model.SpecificationGoalImpl;
+import model.organization.entity.SpecificationGoal;
+import model.organization.entity.SpecificationGoalImpl;
 
 /**
  * The <code>DefaultSpecificationGoalProvider</code> provides a default

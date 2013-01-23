@@ -18,8 +18,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ListSelectionEvent;
 
-import edu.ksu.cis.macr.organization.model.Capability;
-import edu.ksu.cis.macr.organization.model.Organization;
+import model.organization.entity.Capability;
+import model.organization.entity.Organization;
 
 /**
  * The <code>CapabilityVisualizationPanel</code> class is a Swing component to

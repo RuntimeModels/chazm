@@ -18,8 +18,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ListSelectionEvent;
 
-import edu.ksu.cis.macr.organization.model.Organization;
-import edu.ksu.cis.macr.organization.model.Task;
+import model.organization.entity.Organization;
+import model.organization.relation.Task;
 
 /**
  * The <code>TaskVisualizationPanel</code> class is a Swing component to
