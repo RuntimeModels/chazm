@@ -7,8 +7,8 @@
  */
 package edu.ksu.cis.macr.organization.model.simple;
 
-import edu.ksu.cis.macr.organization.model.InstanceGoal;
-import edu.ksu.cis.macr.organization.model.SpecificationGoal;
+import model.organization.entity.InstanceGoal;
+import model.organization.entity.SpecificationGoal;
 import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
 
 /**

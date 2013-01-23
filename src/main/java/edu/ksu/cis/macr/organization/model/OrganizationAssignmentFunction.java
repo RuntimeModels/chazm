@@ -9,6 +9,8 @@ package edu.ksu.cis.macr.organization.model;
 
 import java.util.Collection;
 
+import model.organization.relation.Assignment;
+
 /**
  * The <code>OrganizationAssignmentFunction</code> interface provides the
  * necessary functionality for computing the organization score.

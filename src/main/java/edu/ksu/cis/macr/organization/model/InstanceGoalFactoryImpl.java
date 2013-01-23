@@ -1,12 +1,15 @@
 /*
  * InstanceGoalFactoryImpl.java
- * 
+ *
  * Created on Sep 12, 2006
- * 
+ *
  * See License.txt file the license agreement.
  */
 package edu.ksu.cis.macr.organization.model;
 
+import model.organization.entity.InstanceGoal;
+import model.organization.entity.InstanceGoalImpl;
+import model.organization.entity.SpecificationGoal;
 import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
 
 /**
@@ -25,8 +28,8 @@ public class InstanceGoalFactoryImpl implements InstanceGoalFactory {
 			final SpecificationGoal specification,
 			final UniqueIdentifier instanceIdentifier,
 			final ParameterType parameter) {
-		return new InstanceGoalImpl<>(specification, instanceIdentifier,
-				parameter, false);
+		return new InstanceGoalImpl<ParameterType>(specification,
+				instanceIdentifier, parameter, false);
 	}
 
 }

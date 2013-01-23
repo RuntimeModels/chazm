@@ -18,8 +18,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ListSelectionEvent;
 
-import edu.ksu.cis.macr.organization.model.Organization;
-import edu.ksu.cis.macr.organization.model.PerformanceFunction;
+import model.organization.entity.Organization;
+import model.organization.entity.PerformanceFunction;
 
 /**
  * The <code>PerformanceFunctionVisualizationPanel</code> class is a Swing

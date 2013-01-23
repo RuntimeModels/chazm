@@ -18,8 +18,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ListSelectionEvent;
 
-import edu.ksu.cis.macr.organization.model.Attribute;
-import edu.ksu.cis.macr.organization.model.Organization;
+import model.organization.entity.Attribute;
+import model.organization.entity.Organization;
 
 /**
  * The <code>AttributeVisualizationPanel</code> class is a Swing component to

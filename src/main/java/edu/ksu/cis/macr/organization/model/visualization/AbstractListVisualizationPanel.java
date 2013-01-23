@@ -15,7 +15,7 @@ import javax.swing.JList;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionListener;
 
-import edu.ksu.cis.macr.organization.model.Organization;
+import model.organization.entity.Organization;
 
 /**
  * The <code>AbstractListVisualizationPanel</code> provides list type

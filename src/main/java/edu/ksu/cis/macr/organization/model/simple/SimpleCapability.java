@@ -7,7 +7,7 @@
  */
 package edu.ksu.cis.macr.organization.model.simple;
 
-import edu.ksu.cis.macr.organization.model.Capability;
+import model.organization.entity.Capability;
 import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
 
 /**

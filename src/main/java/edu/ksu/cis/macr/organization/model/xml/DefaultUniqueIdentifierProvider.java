@@ -7,11 +7,11 @@
  */
 package edu.ksu.cis.macr.organization.model.xml;
 
-import edu.ksu.cis.macr.organization.model.Agent;
-import edu.ksu.cis.macr.organization.model.Capability;
-import edu.ksu.cis.macr.organization.model.InstanceGoal;
-import edu.ksu.cis.macr.organization.model.Role;
-import edu.ksu.cis.macr.organization.model.SpecificationGoal;
+import model.organization.entity.Agent;
+import model.organization.entity.Capability;
+import model.organization.entity.InstanceGoal;
+import model.organization.entity.Role;
+import model.organization.entity.SpecificationGoal;
 import edu.ksu.cis.macr.organization.model.identifiers.StringIdentifier;
 import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
 

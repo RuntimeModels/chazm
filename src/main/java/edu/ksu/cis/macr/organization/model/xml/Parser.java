@@ -16,6 +16,12 @@ import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import model.organization.entity.CapabilityImpl;
+import model.organization.entity.Organization;
+import model.organization.entity.OrganizationImpl;
+import model.organization.entity.RoleImpl;
+import model.organization.entity.SpecificationGoal;
+
 import org.xml.sax.SAXException;
 
 import edu.ksu.cis.agenttool.core.model.Capability;
@@ -28,11 +34,6 @@ import edu.ksu.cis.agenttool.core.model.Role;
 import edu.ksu.cis.agenttool.core.model.Schema;
 import edu.ksu.cis.agenttool.core.model.Schema.DiagramType;
 import edu.ksu.cis.agenttool.core.xml.XMLParseException;
-import edu.ksu.cis.macr.organization.model.CapabilityImpl;
-import edu.ksu.cis.macr.organization.model.Organization;
-import edu.ksu.cis.macr.organization.model.OrganizationImpl;
-import edu.ksu.cis.macr.organization.model.RoleImpl;
-import edu.ksu.cis.macr.organization.model.SpecificationGoal;
 import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
 
 /**
@@ -573,10 +574,9 @@ public class Parser {
 						.getChildren(ModelElementType.CAPABILITY)) {
 					final Capability capability = (Capability) element;
 					final UniqueIdentifier capabilityIdentifier = uniqueIdentifierProvider
-							.getUniqueIdentifier(
-									capability.getName(),
-									edu.ksu.cis.macr.organization.model.Capability.class);
-					final edu.ksu.cis.macr.organization.model.Capability c = new CapabilityImpl(
+							.getUniqueIdentifier(capability.getName(),
+									model.organization.entity.Capability.class);
+					final model.organization.entity.Capability c = new CapabilityImpl(
 							capabilityIdentifier);
 					organization.addCapability(c);
 				}
@@ -588,10 +588,9 @@ public class Parser {
 					if (role.getDestRelationships(RelationshipType.INHERITS)
 							.size() == 0) {
 						final UniqueIdentifier roleIdentifier = uniqueIdentifierProvider
-								.getUniqueIdentifier(
-										role.getName(),
-										edu.ksu.cis.macr.organization.model.Role.class);
-						final edu.ksu.cis.macr.organization.model.Role r = new RoleImpl(
+								.getUniqueIdentifier(role.getName(),
+										model.organization.entity.Role.class);
+						final model.organization.entity.Role r = new RoleImpl(
 								roleIdentifier);
 						organization.addRole(r);
 						/* set up the achieves relation */
@@ -612,7 +611,7 @@ public class Parser {
 							final UniqueIdentifier capabilityIdentifier = uniqueIdentifierProvider
 									.getUniqueIdentifier(
 											capability.getName(),
-											edu.ksu.cis.macr.organization.model.Capability.class);
+											model.organization.entity.Capability.class);
 							organization.specifyRequiresRelation(
 									roleIdentifier, capabilityIdentifier);
 						}
@@ -629,7 +628,7 @@ public class Parser {
 								final UniqueIdentifier capabilityIdentifier = uniqueIdentifierProvider
 										.getUniqueIdentifier(
 												capability.getName(),
-												edu.ksu.cis.macr.organization.model.Capability.class);
+												model.organization.entity.Capability.class);
 								organization.specifyRequiresRelation(
 										roleIdentifier, capabilityIdentifier);
 							}

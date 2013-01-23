@@ -20,16 +20,16 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
 
-import edu.ksu.cis.macr.organization.model.Agent;
-import edu.ksu.cis.macr.organization.model.Assignment;
-import edu.ksu.cis.macr.organization.model.Attribute;
-import edu.ksu.cis.macr.organization.model.Capability;
-import edu.ksu.cis.macr.organization.model.Characteristic;
-import edu.ksu.cis.macr.organization.model.InstanceGoal;
-import edu.ksu.cis.macr.organization.model.PerformanceFunction;
-import edu.ksu.cis.macr.organization.model.Role;
-import edu.ksu.cis.macr.organization.model.SpecificationGoal;
-import edu.ksu.cis.macr.organization.model.Task;
+import model.organization.entity.Agent;
+import model.organization.entity.Attribute;
+import model.organization.entity.Capability;
+import model.organization.entity.Characteristic;
+import model.organization.entity.InstanceGoal;
+import model.organization.entity.PerformanceFunction;
+import model.organization.entity.Role;
+import model.organization.entity.SpecificationGoal;
+import model.organization.relation.Assignment;
+import model.organization.relation.Task;
 
 /**
  * The <code>DetailedInformationPanel</code> class is a Swing component that is

@@ -13,7 +13,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
 
-import edu.ksu.cis.macr.organization.model.Organization;
+import model.organization.entity.Organization;
 
 /**
  * The <code>AbstractListVisualizationPanel</code> provides tree type
