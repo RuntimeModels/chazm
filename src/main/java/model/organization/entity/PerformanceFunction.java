@@ -10,8 +10,8 @@ package model.organization.entity;
 import java.util.Collection;
 import java.util.Set;
 
+import model.organization.identifier.UniqueIdentifier;
 import model.organization.relation.Assignment;
-import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
 
 /**
  * The <code>PerformanceFunction</code> interface defines the entity Performance

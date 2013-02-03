@@ -12,10 +12,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import model.organization.entity.basic.SimpleCapabilityImpl;
+import model.organization.identifier.UniqueIdentifier;
 import model.organization.relation.PossessesRelation;
 import model.organization.relation.RequiresRelation;
-import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
-import edu.ksu.cis.macr.organization.model.simple.SimpleCapabilityImpl;
 
 /**
  * The <code>CapabilityImpl</code> class implements the {@link Capability}

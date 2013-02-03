@@ -12,9 +12,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import model.organization.entity.basic.SimpleCharacteristicImpl;
+import model.organization.identifier.UniqueIdentifier;
 import model.organization.relation.ContainsRelation;
-import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
-import edu.ksu.cis.macr.organization.model.simple.SimpleCharacteristicImpl;
 
 /**
  * The <code></code> class implements the {@link Characteristic} interface.

@@ -9,8 +9,8 @@ package model.organization.entity;
 
 import java.util.Set;
 
-import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
-import edu.ksu.cis.macr.organization.model.simple.SimpleGoal;
+import model.organization.entity.basic.SimpleGoal;
+import model.organization.identifier.UniqueIdentifier;
 
 /**
  * The <code>SpecificationGoal</code> interface defines the static goal entity

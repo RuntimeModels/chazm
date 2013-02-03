@@ -12,11 +12,11 @@ import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Set;
 
+import model.organization.identifier.UniqueIdentifier;
+import model.organization.parser.SpecificationGoalProvider;
+import model.organization.parser.UniqueIdentifierProvider;
 import model.organization.relation.Assignment;
 import model.organization.relation.Task;
-import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
-import edu.ksu.cis.macr.organization.model.xml.SpecificationGoalProvider;
-import edu.ksu.cis.macr.organization.model.xml.UniqueIdentifierProvider;
 
 /**
  * The <code>Org1</code> interface defines the basic functionality of an

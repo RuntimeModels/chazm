@@ -13,12 +13,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import model.organization.identifier.UniqueIdentifier;
+import model.organization.registry.ChangeManager;
+import model.organization.registry.EventRegistry;
 import model.organization.relation.Assignment;
 import model.organization.relation.ModeratesRelation;
 import model.organization.relation.UsesRelation;
-import edu.ksu.cis.macr.organization.model.event.ChangeManager;
-import edu.ksu.cis.macr.organization.model.event.EventRegistry;
-import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
 
 /**
  * The <code>PerformanceFunctionImpl</code> class implements the

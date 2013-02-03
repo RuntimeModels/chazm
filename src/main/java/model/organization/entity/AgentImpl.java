@@ -12,13 +12,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import model.organization.entity.basic.SimpleAgent;
+import model.organization.entity.basic.SimpleAgentImpl;
+import model.organization.identifier.UniqueIdentifier;
+import model.organization.registry.ChangeManager;
+import model.organization.registry.EventRegistry;
 import model.organization.relation.HasRelation;
 import model.organization.relation.PossessesRelation;
-import edu.ksu.cis.macr.organization.model.event.ChangeManager;
-import edu.ksu.cis.macr.organization.model.event.EventRegistry;
-import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
-import edu.ksu.cis.macr.organization.model.simple.SimpleAgent;
-import edu.ksu.cis.macr.organization.model.simple.SimpleAgentImpl;
 
 /**
  * The <code>AgentImpl</code> class implements the {@link Agent} interface.

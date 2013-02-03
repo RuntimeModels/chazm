@@ -13,18 +13,18 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import model.organization.entity.basic.SimpleRoleImpl;
+import model.organization.function.RoleGoodnessFunction;
+import model.organization.function.RoleGoodnessFunction.DefaultRoleGoodnessFunction;
+import model.organization.identifier.UniqueIdentifier;
+import model.organization.registry.ChangeManager;
+import model.organization.registry.EventRegistry;
 import model.organization.relation.AchievesRelation;
 import model.organization.relation.Assignment;
 import model.organization.relation.ContainsRelation;
 import model.organization.relation.NeedsRelation;
 import model.organization.relation.RequiresRelation;
 import model.organization.relation.UsesRelation;
-import edu.ksu.cis.macr.organization.model.RoleGoodnessFunction;
-import edu.ksu.cis.macr.organization.model.RoleGoodnessFunction.DefaultRoleGoodnessFunction;
-import edu.ksu.cis.macr.organization.model.event.ChangeManager;
-import edu.ksu.cis.macr.organization.model.event.EventRegistry;
-import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
-import edu.ksu.cis.macr.organization.model.simple.SimpleRoleImpl;
 
 /**
  * The <code>RoleImpl</code> class implements the {@link Role} interface.

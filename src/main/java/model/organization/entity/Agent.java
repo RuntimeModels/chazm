@@ -9,8 +9,8 @@ package model.organization.entity;
 
 import java.util.Set;
 
-import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
-import edu.ksu.cis.macr.organization.model.simple.SimpleAgent;
+import model.organization.entity.basic.SimpleAgent;
+import model.organization.identifier.UniqueIdentifier;
 
 /**
  * The <code>Agent</code> interface defines the basic agent entity of the
