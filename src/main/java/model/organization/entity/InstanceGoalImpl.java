@@ -9,8 +9,8 @@ package model.organization.entity;
 
 import java.util.Set;
 
-import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
-import edu.ksu.cis.macr.organization.model.simple.SimpleGoalImpl;
+import model.organization.entity.basic.SimpleGoalImpl;
+import model.organization.identifier.UniqueIdentifier;
 
 /**
  * The <code>InstanceGoalImpl</code> class implements the {@link InstanceGoal}.

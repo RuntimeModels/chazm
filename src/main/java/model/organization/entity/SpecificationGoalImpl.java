@@ -12,11 +12,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import model.organization.entity.basic.SimpleGoalImpl;
+import model.organization.factory.InstanceGoalFactory;
+import model.organization.factory.InstanceGoalFactoryImpl;
+import model.organization.identifier.UniqueIdentifier;
 import model.organization.relation.AchievesRelation;
-import edu.ksu.cis.macr.organization.model.InstanceGoalFactory;
-import edu.ksu.cis.macr.organization.model.InstanceGoalFactoryImpl;
-import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
-import edu.ksu.cis.macr.organization.model.simple.SimpleGoalImpl;
 
 /**
  * The <code>SpecificationGoalImpl</code> class implements the

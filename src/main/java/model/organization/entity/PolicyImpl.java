@@ -7,7 +7,7 @@
  */
 package model.organization.entity;
 
-import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
+import model.organization.identifier.UniqueIdentifier;
 
 /**
  * The <code>Policy</code> class implements the {@link Policy} interface.

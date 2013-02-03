@@ -10,10 +10,10 @@ package model.organization.entity;
 import java.util.Collection;
 import java.util.Set;
 
+import model.organization.entity.basic.SimpleRole;
+import model.organization.function.RoleGoodnessFunction;
+import model.organization.identifier.UniqueIdentifier;
 import model.organization.relation.Assignment;
-import edu.ksu.cis.macr.organization.model.RoleGoodnessFunction;
-import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
-import edu.ksu.cis.macr.organization.model.simple.SimpleRole;
 
 /**
  * The <code>Role</code> interface defines the basic role entity of the

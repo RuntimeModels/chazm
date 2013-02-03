@@ -9,8 +9,8 @@ package model.organization.entity;
 
 import java.util.Set;
 
-import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
-import edu.ksu.cis.macr.organization.model.simple.SimpleAttribute;
+import model.organization.entity.basic.SimpleAttribute;
+import model.organization.identifier.UniqueIdentifier;
 
 /**
  * The <code>Attribute</code> interface defines the basic attribute entity of

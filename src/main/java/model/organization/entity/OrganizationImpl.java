@@ -18,17 +18,16 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import model.organization.identifier.UniqueIdentifier;
+import model.organization.parser.SpecificationGoalProvider;
+import model.organization.parser.UniqueIdentifierProvider;
+import model.organization.parser.xml.XMLParser;
+import model.organization.registry.ChangeManager;
+import model.organization.registry.EventRegistry;
 import model.organization.relation.Assignment;
 import model.organization.relation.Task;
 
 import org.xml.sax.SAXException;
-
-import edu.ksu.cis.macr.organization.model.event.ChangeManager;
-import edu.ksu.cis.macr.organization.model.event.EventRegistry;
-import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
-import edu.ksu.cis.macr.organization.model.xml.Parser;
-import edu.ksu.cis.macr.organization.model.xml.SpecificationGoalProvider;
-import edu.ksu.cis.macr.organization.model.xml.UniqueIdentifierProvider;
 
 /**
  * The <code>Organization</code> class implements the {@link Organization}
@@ -175,7 +174,7 @@ public class OrganizationImpl implements Organization {
 			final SpecificationGoalProvider specificationGoalProvider,
 			final UniqueIdentifierProvider uniqueIdentifierProvider) {
 		try {
-			Parser.parse(path, specificationGoalProvider,
+			XMLParser.parse(path, specificationGoalProvider,
 					uniqueIdentifierProvider, this);
 		} catch (SAXException | IOException | ParserConfigurationException e) {
 			e.printStackTrace();

@@ -10,7 +10,7 @@ package model.organization.relation;
 import model.organization.entity.Agent;
 import model.organization.entity.InstanceGoal;
 import model.organization.entity.Role;
-import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
+import model.organization.identifier.UniqueIdentifier;
 
 /**
  * The <code>Assignment</code> class represents an assignment, which is a tuple

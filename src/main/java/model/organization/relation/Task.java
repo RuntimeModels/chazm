@@ -15,8 +15,8 @@ import model.organization.entity.InstanceGoal;
 import model.organization.entity.PerformanceFunction;
 import model.organization.entity.Role;
 import model.organization.entity.SpecificationGoal;
-import edu.ksu.cis.macr.organization.model.RoleGoodnessFunction;
-import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
+import model.organization.function.RoleGoodnessFunction;
+import model.organization.identifier.UniqueIdentifier;
 
 /**
  * The <code>Task</code> class represents the task entity of the Organization

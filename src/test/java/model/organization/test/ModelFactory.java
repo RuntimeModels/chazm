@@ -24,12 +24,12 @@ import model.organization.entity.Role;
 import model.organization.entity.RoleImpl;
 import model.organization.entity.SpecificationGoal;
 import model.organization.entity.SpecificationGoalImpl;
-import edu.ksu.cis.macr.organization.model.identifiers.StringIdentifier;
+import model.organization.identifier.StringIdentifier;
 
 /**
  * The <code>ModelFactory</code> class allows the random generation of a
  * organization model based on the current implementation available from the
- * package <code>edu.ksu.cis.macr.organization.model</code>.
+ * package <code>model.organization.function</code>.
  * 
  * @author Christopher Zhong
  * @version $Revision$, $Date$

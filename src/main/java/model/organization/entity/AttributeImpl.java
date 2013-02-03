@@ -12,11 +12,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import model.organization.entity.basic.SimpleAttributeImpl;
+import model.organization.identifier.UniqueIdentifier;
 import model.organization.relation.HasRelation;
 import model.organization.relation.ModeratesRelation;
 import model.organization.relation.NeedsRelation;
-import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
-import edu.ksu.cis.macr.organization.model.simple.SimpleAttributeImpl;
 
 /**
  * The <code>AttributeImpl</code> class implements the {@link Attribute}
