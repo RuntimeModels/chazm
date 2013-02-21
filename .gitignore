@@ -1,5 +1,6 @@
 .DS_Store
-bin
-target
 .refactorings
 .settings
+bin
+target
+xtend-gen
