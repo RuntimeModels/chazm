@@ -1,3 +1,10 @@
+/*
+ * AchievesRelation.java
+ *
+ * Created on Mar 3, 2005
+ *
+ * See License.txt file the license agreement.
+ */
 package model.organization.relation
 
 import model.organization.entity.Role
@@ -25,7 +32,11 @@ class AchievesRelation {
 	/**
 	 * Optimization for hash code computation since it never changes.
 	 */
-	int hashCode = 0
+	Integer hashCode = null
+	/**
+	 * Optimization for <code>toString</code> method since it never changes.
+	 */
+	String toString = null
 	/**
 	 * Constructs a new instance of <code>AchievesRelation</code>.
 	 *
@@ -68,12 +79,16 @@ class AchievesRelation {
 		false
 	}
 	override hashCode() {
-		if (hashCode == 0) {
-//			hashCode = role.hashCode << 16 | specificationGoal.hashCode
+		if (hashCode == null) {
+			hashCode = 1
+			hashCode = 31 * hashCode + role.hashCode
+			hashCode = 31 * hashCode + specificationGoal.hashCode
 		}
 		hashCode
 	}
 	override toString() {
-		'''«role.identifier» <-> «specificationGoal.identifier»'''
+		if (toString == null)
+			toString = '''«role.identifier» <-> «specificationGoal.identifier»'''
+		toString
 	}
 }
