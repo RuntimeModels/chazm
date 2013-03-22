@@ -13,6 +13,7 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -58,6 +59,7 @@ public class AchievesRelationTest {
 	/**
 	 * Test method for {@link model.organization.relation.AchievesRelation#hashCode()}.
 	 */
+	@Ignore
 	@Test
 	public final void testHashCode() {
 		fail("Not yet implemented"); // TODO
@@ -66,6 +68,7 @@ public class AchievesRelationTest {
 	/**
 	 * Test method for {@link model.organization.relation.AchievesRelation#AchievesRelation(model.organization.entity.Role, model.organization.entity.SpecificationGoal)}.
 	 */
+	@Ignore
 	@Test
 	public final void testAchievesRelation() {
 		fail("Not yet implemented"); // TODO
@@ -74,6 +77,7 @@ public class AchievesRelationTest {
 	/**
 	 * Test method for {@link model.organization.relation.AchievesRelation#getRole()}.
 	 */
+	@Ignore
 	@Test
 	public final void testGetRole() {
 		fail("Not yet implemented"); // TODO
@@ -82,6 +86,7 @@ public class AchievesRelationTest {
 	/**
 	 * Test method for {@link model.organization.relation.AchievesRelation#getSpecificationGoal()}.
 	 */
+	@Ignore
 	@Test
 	public final void testGetSpecificationGoal() {
 		fail("Not yet implemented"); // TODO
@@ -90,6 +95,7 @@ public class AchievesRelationTest {
 	/**
 	 * Test method for {@link model.organization.relation.AchievesRelation#equals(java.lang.Object)}.
 	 */
+	@Ignore
 	@Test
 	public final void testEqualsObject() {
 		fail("Not yet implemented"); // TODO
@@ -98,6 +104,7 @@ public class AchievesRelationTest {
 	/**
 	 * Test method for {@link model.organization.relation.AchievesRelation#toString()}.
 	 */
+	@Ignore
 	@Test
 	public final void testToString() {
 		fail("Not yet implemented"); // TODO
