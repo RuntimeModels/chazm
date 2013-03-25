@@ -1,6 +1,10 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
+sourceCompatibility = '1.7'
+
+version = '6.0.0'
+
 repositories {
 	mavenCentral()
 	maven { url 'http://build.eclipse.org/common/xtend/maven/' }
