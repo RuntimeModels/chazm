@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
-sourceCompatibility = '1.7'
+sourceCompatibility = '1.8'
 
 version = '6.0.0'
 
@@ -19,3 +19,7 @@ dependencies {
 }
 
 sourceSets.main.java.srcDirs 'src/main/java', 'src/main/xtend-gen'
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '2.3'
+}
