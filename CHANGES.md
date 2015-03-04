@@ -22,8 +22,13 @@
 * Renamed `getGoalType()` method to `getSpecificationGoal()` method.
 * Asserts in `AgentImpl` converted to `IllegalArgumentException`s.
 * Extracted interface from `Organization` class.
+<<<<<<< HEAD
     * `Organization` class is renamed to `OrganizationImpl`.
     * Interface is called `Organization`.
+=======
+  * `Organization` class is renamed to `OrganizationImpl`.
+  * Interface is called `Organization`.
+>>>>>>> 32c630f28cd3000252e23e35cc3a013f931f03f9
 * Removed all Java generics.
 * Replaced most asserts with `IllegalArgumentException`.
 
