@@ -1,54 +1,37 @@
-===============================================================================
-Version: 4.1.0
-===============================================================================
-* Deprecated some methods to be consistent with using UniqueIdentifier instead
-  of the actual class.
-* Added an event-based notification interface that can be used for push updates
-  of changes to the organization model.
+# Version: 4.1.0
+* Deprecated some methods to be consistent with using UniqueIdentifier instead of the actual class.
+* Added an event-based notification interface that can be used for push updates of changes to the organization model.
 
-===============================================================================
-Version: 4.0.0
-===============================================================================
+# Version: 4.0.0
 * Encapsulated the notion of identifiers.
 * Ability to load initialize the organization model with a given xml file.
 * Updated collection to be thread-safe.
 * Modified and added a number of methods for dealing with relations.
-* Updated the Assignment class for a cleaner toString() output.
-* Updated InstanceGoalImpl class for a cleaner toString() output.
-* Removed SimpleGoal uses from visualization code.
-* Beautified the output of DetailedInformationPanel.
-* Improved StringIdentifier class for thread-safety.
+* Updated the `Assignment` class for a cleaner `toString()` output.
+* Updated `InstanceGoalImpl` class for a cleaner `toString()` output.
+* Removed `SimpleGoal` uses from visualization code.
+* Beautified the output of `DetailedInformationPanel`.
+* Improved `StringIdentifier` class for thread-safety.
 * Improved the layout of the visualization panels.
-* Renamed the getAssignmentsByAgent(...) to getAssignments().
-* Added the equals() and hashCode() methods to the classes:
-  AgentImpl, CapabilityImpl, InstanceGoalImpl, RoleImpl, and
-  SpecificationGoalImpl. These equals() and hashCode() method simply uses the
-  result from their super class.
+* Renamed the `getAssignmentsByAgent(...)` to `getAssignments()`.
+* Added the `equals()` and `hashCode()` methods to the classes: `AgentImpl`, `CapabilityImpl`, `InstanceGoalImpl`, `RoleImpl`, and `SpecificationGoalImpl`. These `equals()` and `hashCode()` method simply uses the result from their super class.
 * Updated visualization code to be more robust.
-* Extracted an interface for the rcf() function called RoleCapabilityFunction.
-* Added a series of extra methods to the Organization class.
+* Extracted an interface for the `rcf()` function called `RoleCapabilityFunction`.
+* Added a series of extra methods to the `Organization` class.
 * Deprecated methods have been removed.
-* Renamed getGoalType() method to getSpecificationGoal() method.
-* Asserts in AgentImpl converted to IllegalArgumentExceptions.
-* Extracted interface from Organization class
-  - Organization class is refactored to OrganizationImpl
-  - Interface is called Organization
+* Renamed `getGoalType()` method to `getSpecificationGoal()` method.
+* Asserts in `AgentImpl` converted to `IllegalArgumentException`s.
+* Extracted interface from `Organization` class.
+    * `Organization` class is renamed to `OrganizationImpl`.
+    * Interface is called `Organization`.
 * Removed all Java generics.
-* Replaced most asserts with IllegalArgumentException.
+* Replaced most asserts with `IllegalArgumentException`.
 
-===============================================================================
-Version: 3.4.1
-===============================================================================
-* Generic method signatures has changed in a number of files. e.g.
-  void method(C<?> p) ->  <T> void method(C<T> p)
+# Version: 3.4.1
+* Generic method signatures has changed in a number of files. e.g. `void method(C<?> p)` ->  `<T> void method(C<T> p)`
 * Updated existing code that utilize the changed methods
 * Constructors also follows the new way 
-* Extracted interfaces for the following classes;
-  SimpleAgent -> SimpleAgentImpl; interface = SimpleAgent
-  SimpleCapability -> SimpleCapabilityImpl; interface = SimpleCapability
-  SimpleGoal -> SimpleGoalImpl; interface = SimpleGoal
-  SimpleRole -> SimpleRoleImpl; interface = SimpleRole
-  Agent -> AgentImpl; interface = Agent
+* Extracted interfaces for the following classes: `SimpleAgent` (interface) -> `SimpleAgentImpl`; `SimpleCapability` -> `SimpleCapabilityImpl`; `SimpleGoal` -> `SimpleGoalImpl`; `SimpleRole` -> `SimpleRoleImpl`; `Agent` -> `AgentImpl`;
   Capability -> CapabilityImpl; interface = Capability
   Goal -> GoalImpl; interface = Goal
   InstanceGoal -> InstanceGoalImpl; interface = InstanceGoal
@@ -77,22 +60,16 @@ Version: 3.4.1
   and made a static method in the implementation class
 * Added convenience method removeActiveGoals() to remove a set of goals
 
-===============================================================================
-Version: 3.4.0
-===============================================================================
+# Version: 3.4.0
 * All the relation classes (AchievesRelation.java, CapableRelation.java,
   PossessesRelation.java) are now hidden except for the min/max score;
   all related classes have been updated to reflect the change
 
-===============================================================================
-Version: 3.3.0
-===============================================================================
+# Version: 3.3.0
 * Introduced a simplified version of the basic entities for use
 * DefaultGoalFactory.java renamed to GoalFactoryImpl.java
 
-===============================================================================
-Version: 3.2.1
-===============================================================================
+# Version: 3.2.1
 * Fixed bug in Role.java rcf function that uses integer division instead of
   double
 * Added final keyword to parameters, local variables, fields when possible
@@ -101,9 +78,7 @@ Version: 3.2.1
 * Extracted OrganizationAssignmentFunction from Organization as an interface
 * Modifed InstanceGoal and Goal class to allow for easier use by subclasses
 
-===============================================================================
-Version: 3.2.0
-===============================================================================
+# Version: 3.2.0
 * Goal.java
   - Removed generic <T> from Goal.java
   - Field parameter moved to InstanceGoal.java
@@ -117,9 +92,7 @@ Version: 3.2.0
 + DefaultFactory.java
   + A default factory that implements Factory.java
 
-===============================================================================
-Version: 3.1.0
-===============================================================================
+# Version: 3.1.0
 * Agent.java
   + Field capableOf added
     + Method getCapableOf(String) added
@@ -147,15 +120,11 @@ Version: 3.1.0
   - EveryGoalIsAchievedByAtLeastOneRole.java removed
   - EveryRoleRequiresAtLeastOneCapability.java removed
 
-===============================================================================
-Version: 3.0.1
-===============================================================================
+# Version: 3.0.1
 * Organization.java
   * Added missing code from isValid() method
 
-===============================================================================
-Version: 3.0.0
-===============================================================================
+# Version: 3.0.0
 * Initial Release
 ** Overall Changes **
   - Detached the Goal Tree structure from OrganizationModel
@@ -247,12 +216,8 @@ Version: 3.0.0
 * Possesses.java renamed to PossessesRelation.java
 * Potential.java renamed to PotentialRelation.java
 
-===============================================================================
-Version: 2.0.0
-===============================================================================
+# Version: 2.0.0
 * Initial Release
 
-===============================================================================
-Version: 1.0.0
-===============================================================================
+# Version: 1.0.0
 * Initial Release
