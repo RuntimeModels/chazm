@@ -1,8 +1,8 @@
 /*
  * SimpleAgentImpl.java
- * 
+ *
  * Created on Mar 6, 2007
- * 
+ *
  * See License.txt file the license agreement.
  */
 package org.models.organization.entity.basic;
@@ -13,9 +13,8 @@ import java.util.Map;
 import org.models.organization.identifier.UniqueIdentifier;
 
 /**
- * The <code>SimpleCharacteristicImpl</code> class implements the
- * {@link SimpleCharacteristic} interface.
- * 
+ * The <code>SimpleCharacteristicImpl</code> class implements the {@link SimpleCharacteristic} interface.
+ *
  * @author Christopher Zhong
  * @version $Revision: 1.1.2.2 $, $Date: 2011/09/19 14:26:39 $
  * @see SimpleAttribute
@@ -24,29 +23,24 @@ import org.models.organization.identifier.UniqueIdentifier;
 public class SimpleCharacteristicImpl implements SimpleCharacteristic {
 
 	/**
-	 * A mapping for <code>UniqueIdentifier</code> that maps to
-	 * <code>SimpleCharacteristic</code> to ensure the uniqueness of
-	 * <code>SimpleCharacteristic</code>.
+	 * A mapping for <code>UniqueIdentifier</code> that maps to <code>SimpleCharacteristic</code> to ensure the uniqueness of <code>SimpleCharacteristic</code>.
 	 */
 	private static final Map<UniqueIdentifier, SimpleCharacteristic> uniqueCharacteristics = new HashMap<>();
 
 	/**
-	 * The <code>UniqueIdentifier</code> representing the
-	 * <code>SimpleCharacteristic</code>.
+	 * The <code>UniqueIdentifier</code> representing the <code>SimpleCharacteristic</code>.
 	 */
 	private final UniqueIdentifier identifier;
 
 	/**
 	 * Constructs a new instance of <code>SimpleCharacteristicImpl</code>.
-	 * 
+	 *
 	 * @param identifier
-	 *            the <code>UniqueIdentifier</code> representing the
-	 *            <code>SimpleCharacteristic</code>.
+	 *            the <code>UniqueIdentifier</code> representing the <code>SimpleCharacteristic</code>.
 	 */
 	protected SimpleCharacteristicImpl(final UniqueIdentifier identifier) {
 		if (identifier == null) {
-			throw new IllegalArgumentException(
-					"Parameter (identifier) cannot be null");
+			throw new IllegalArgumentException("Parameter (identifier) cannot be null");
 		}
 		this.identifier = identifier;
 	}
@@ -76,22 +70,16 @@ public class SimpleCharacteristicImpl implements SimpleCharacteristic {
 	}
 
 	/**
-	 * Returns a <code>SimpleCharacteristic</code> instance representing the
-	 * given <code>UniqueIdentifier</code>.
+	 * Returns a <code>SimpleCharacteristic</code> instance representing the given <code>UniqueIdentifier</code>.
 	 * <p>
-	 * If a new <>SimpleCharacteristic</code> instance is not required, this
-	 * method returns the existing <code>SimpleCharacteristic</code> instance.
-	 * 
+	 * If a new <>SimpleCharacteristic</code> instance is not required, this method returns the existing <code>SimpleCharacteristic</code> instance.
+	 *
 	 * @param identifier
-	 *            the <code>UniqueIdentifier</code> representing the
-	 *            <code>SimpleCharacteristic</code> instance.
-	 * @return a <code>SimpleCharacteristic</code> instance representing the
-	 *         given <code>UniqueIdentifier</code>.
+	 *            the <code>UniqueIdentifier</code> representing the <code>SimpleCharacteristic</code> instance.
+	 * @return a <code>SimpleCharacteristic</code> instance representing the given <code>UniqueIdentifier</code>.
 	 */
-	public static final SimpleCharacteristic createSimpleCharacteristic(
-			final UniqueIdentifier identifier) {
-		SimpleCharacteristic simpleCharacteristic = uniqueCharacteristics
-				.get(identifier);
+	public static final SimpleCharacteristic createSimpleCharacteristic(final UniqueIdentifier identifier) {
+		SimpleCharacteristic simpleCharacteristic = uniqueCharacteristics.get(identifier);
 		if (simpleCharacteristic == null) {
 			simpleCharacteristic = new SimpleCharacteristicImpl(identifier);
 			uniqueCharacteristics.put(identifier, simpleCharacteristic);

@@ -52,7 +52,7 @@ public class RequiresRelation {
 
 	/**
 	 * Constructs a new instance of <code>RequiresRelation</code>.
-	 * 
+	 *
 	 * @param role
 	 *            the <code>Role</code> of this <code>RequiresRelation</code>.
 	 * @param capability
@@ -68,7 +68,7 @@ public class RequiresRelation {
 
 	/**
 	 * Returns the <code>Role</code> of this <code>RequiresRelation</code>.
-	 * 
+	 *
 	 * @return the <code>Role</code> of this <code>RequiresRelation</code>.
 	 */
 	public Role getRole() {
@@ -77,7 +77,7 @@ public class RequiresRelation {
 
 	/**
 	 * Returns the <code>Capability</code> of this <code>RequiresRelation</code> .
-	 * 
+	 *
 	 * @return the <code>Capability</code> of this <code>RequiresRelation</code> .
 	 */
 	public Capability getCapability() {

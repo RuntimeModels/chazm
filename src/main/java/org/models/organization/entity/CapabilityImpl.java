@@ -18,9 +18,8 @@ import org.models.organization.relation.PossessesRelation;
 import org.models.organization.relation.RequiresRelation;
 
 /**
- * The <code>CapabilityImpl</code> class implements the {@link Capability}
- * interface.
- * 
+ * The <code>CapabilityImpl</code> class implements the {@link Capability} interface.
+ *
  * @author Scott Harmon, Christopher Zhong
  * @version $Revision: 1.5.2.3 $, $Date: 2011/09/19 14:26:37 $
  * @see Agent
@@ -30,8 +29,7 @@ import org.models.organization.relation.RequiresRelation;
 public class CapabilityImpl extends SimpleCapabilityImpl implements Capability {
 
 	/**
-	 * The set of <code>Agent</code> that possesses this <code>Capability</code>
-	 * .
+	 * The set of <code>Agent</code> that possesses this <code>Capability</code> .
 	 */
 	private final Map<UniqueIdentifier, PossessesRelation> possessedBy = new ConcurrentHashMap<>();
 
@@ -42,34 +40,28 @@ public class CapabilityImpl extends SimpleCapabilityImpl implements Capability {
 
 	/**
 	 * Constructs a new instance of <code>Capability</code>.
-	 * 
+	 *
 	 * @param identifier
-	 *            the unique <code>UniqueIdentifier</code> identifying this
-	 *            <code>Capability</code>.
+	 *            the unique <code>UniqueIdentifier</code> identifying this <code>Capability</code>.
 	 */
 	public CapabilityImpl(final UniqueIdentifier identifier) {
 		super(identifier);
 	}
 
 	/**
-	 * Adds the given <code>PossessesRelation</code> to the set of
-	 * <code>PossessesRelation</code> that is possessed by this
-	 * <code>Capability</code>.
+	 * Adds the given <code>PossessesRelation</code> to the set of <code>PossessesRelation</code> that is possessed by this <code>Capability</code>.
 	 * <p>
-	 * The <code>PossessesRelation</code> will be indexed by the
-	 * <code>String</code> identifying the <code>Agent</code> that is associated
-	 * with the given <code>PossessesRelation</code>.
-	 * 
+	 * The <code>PossessesRelation</code> will be indexed by the <code>String</code> identifying the <code>Agent</code> that is associated with the given
+	 * <code>PossessesRelation</code>.
+	 *
 	 * @param possessesRelation
 	 *            the <code>PossessesRelation</code> to be added.
 	 */
 	final void addPossessedBy(final PossessesRelation possessesRelation) {
 		if (possessesRelation == null) {
-			throw new IllegalArgumentException(
-					"Parameter (possessesRelation) cannot be null");
+			throw new IllegalArgumentException("Parameter (possessesRelation) cannot be null");
 		}
-		possessedBy.put(possessesRelation.getAgent().getIdentifier(),
-				possessesRelation);
+		possessedBy.put(possessesRelation.getAgent().getIdentifier(), possessesRelation);
 	}
 
 	@Override
@@ -82,47 +74,38 @@ public class CapabilityImpl extends SimpleCapabilityImpl implements Capability {
 	}
 
 	@Override
-	public final double getPossessedByScore(
-			final UniqueIdentifier agentIdentifier) {
+	public final double getPossessedByScore(final UniqueIdentifier agentIdentifier) {
 		if (agentIdentifier == null) {
-			throw new IllegalArgumentException(
-					"Parameter (agentIdentifier) cannot be null");
+			throw new IllegalArgumentException("Parameter (agentIdentifier) cannot be null");
 		}
-		final PossessesRelation possessesRelation = possessedBy
-				.get(agentIdentifier);
-		return possessesRelation == null ? PossessesRelation.MIN_SCORE
-				: possessesRelation.getScore();
+		final PossessesRelation possessesRelation = possessedBy.get(agentIdentifier);
+		return possessesRelation == null ? PossessesRelation.MIN_SCORE : possessesRelation.getScore();
 	}
 
 	/**
-	 * Removes the given <code>Agent</code> from the set of <code>Agent</code>
-	 * that possesses this <code>Capability</code>.
-	 * 
+	 * Removes the given <code>Agent</code> from the set of <code>Agent</code> that possesses this <code>Capability</code>.
+	 *
 	 * @param agent
 	 *            the <code>Agent</code> to be removed.
 	 */
 	final void removePossessedBy(final Agent<?> agent) {
 		if (agent == null) {
-			throw new IllegalArgumentException(
-					"Parameter (agent) cannot be null");
+			throw new IllegalArgumentException("Parameter (agent) cannot be null");
 		}
 		possessedBy.remove(agent.getIdentifier());
 	}
 
 	/**
-	 * Adds the given <code>RequiresRelation</code> to the set of
-	 * <code>RequiresRelation</code> that this <code>Capability</code> requires.
-	 * 
+	 * Adds the given <code>RequiresRelation</code> to the set of <code>RequiresRelation</code> that this <code>Capability</code> requires.
+	 *
 	 * @param requiresRelation
 	 *            the <code>RequiresRelation</code> to be added.
 	 */
 	final void addRequiredBy(final RequiresRelation requiresRelation) {
 		if (requiresRelation == null) {
-			throw new IllegalArgumentException(
-					"Parameter (requiresRelation) cannot be null");
+			throw new IllegalArgumentException("Parameter (requiresRelation) cannot be null");
 		}
-		requiredBy.put(requiresRelation.getRole().getIdentifier(),
-				requiresRelation);
+		requiredBy.put(requiresRelation.getRole().getIdentifier(), requiresRelation);
 	}
 
 	@Override
@@ -135,16 +118,14 @@ public class CapabilityImpl extends SimpleCapabilityImpl implements Capability {
 	}
 
 	/**
-	 * Remove the given <code>Role</code> from the set of <code>Role</code> that
-	 * this <code>Capability</code> requires.
-	 * 
+	 * Remove the given <code>Role</code> from the set of <code>Role</code> that this <code>Capability</code> requires.
+	 *
 	 * @param role
 	 *            the <code>Role</code> to be removed.
 	 */
 	final void removeRequiredBy(final Role role) {
 		if (role == null) {
-			throw new IllegalArgumentException(
-					"Parameter (role) cannot be null");
+			throw new IllegalArgumentException("Parameter (role) cannot be null");
 		}
 		requiredBy.remove(role.getIdentifier());
 	}

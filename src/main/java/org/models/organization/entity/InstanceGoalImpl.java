@@ -14,7 +14,7 @@ import org.models.organization.identifier.UniqueIdentifier;
 
 /**
  * The <code>InstanceGoalImpl</code> class implements the {@link InstanceGoal}.
- * 
+ *
  * @author Christopher Zhong
  * @version $Revision: 1.5.2.5 $, $Date: 2011/09/19 14:26:36 $
  * @param <ParameterType>
@@ -22,14 +22,11 @@ import org.models.organization.identifier.UniqueIdentifier;
  * @see SpecificationGoal
  * @since 3.2
  */
-public class InstanceGoalImpl<ParameterType> extends SimpleGoalImpl implements
-		InstanceGoal<ParameterType> {
+public class InstanceGoalImpl<ParameterType> extends SimpleGoalImpl implements InstanceGoal<ParameterType> {
 
 	/**
-	 * The <code>InstanceGoalIdentifier</code> class extends the
-	 * {@link UniqueIdentifier} by using two {@link UniqueIdentifier} as the
-	 * form of identification.
-	 * 
+	 * The <code>InstanceGoalIdentifier</code> class extends the {@link UniqueIdentifier} by using two {@link UniqueIdentifier} as the form of identification.
+	 *
 	 * @author Christopher Zhong
 	 * @version $Revision: 1.5.2.5 $, $Date: 2011/09/19 14:26:36 $
 	 * @since 4.0
@@ -43,14 +40,12 @@ public class InstanceGoalImpl<ParameterType> extends SimpleGoalImpl implements
 		private static final long serialVersionUID = 1L;
 
 		/**
-		 * Internal <code>String</code> for the formatting of
-		 * <code>InstanceGoalImpl</code> class.
+		 * Internal <code>String</code> for the formatting of <code>InstanceGoalImpl</code> class.
 		 */
 		private static final String STRING_FORMAT = "%s[%s]";
 
 		/**
-		 * The <code>UniqueIdentifier</code> of the
-		 * <code>SpecificationGoal</code>.
+		 * The <code>UniqueIdentifier</code> of the <code>SpecificationGoal</code>.
 		 */
 		private final UniqueIdentifier specificationIdentifier;
 
@@ -71,38 +66,30 @@ public class InstanceGoalImpl<ParameterType> extends SimpleGoalImpl implements
 
 		/**
 		 * Constructs a new instance of <code>InstanceGoalIdentifier</code>.
-		 * 
+		 *
 		 * @param specificationIdentifier
-		 *            the <code>UniqueIdentifier</code> of the
-		 *            <code>SpecificationGoal</code>.
+		 *            the <code>UniqueIdentifier</code> of the <code>SpecificationGoal</code>.
 		 * @param instanceIdentifier
-		 *            the <code>UniqueIdentifier</code> of the
-		 *            <code>InstanceGoal</code>.
+		 *            the <code>UniqueIdentifier</code> of the <code>InstanceGoal</code>.
 		 */
-		public InstanceGoalIdentifier(
-				final UniqueIdentifier specificationIdentifier,
-				final UniqueIdentifier instanceIdentifier) {
+		public InstanceGoalIdentifier(final UniqueIdentifier specificationIdentifier, final UniqueIdentifier instanceIdentifier) {
 			this.specificationIdentifier = specificationIdentifier;
 			this.instanceIdentifier = instanceIdentifier;
 		}
 
 		/**
-		 * Returns the <code>UniqueIdentifier</code> of the
-		 * <code>SpecificationGoal</code>.
-		 * 
-		 * @return the <code>UniqueIdentifier</code> of the
-		 *         <code>SpecificationGoal</code>.
+		 * Returns the <code>UniqueIdentifier</code> of the <code>SpecificationGoal</code>.
+		 *
+		 * @return the <code>UniqueIdentifier</code> of the <code>SpecificationGoal</code>.
 		 */
 		private UniqueIdentifier getSpecificationIdentifier() {
 			return specificationIdentifier;
 		}
 
 		/**
-		 * Returns the <code>UniqueIdentifier</code> of the
-		 * <code>InstanceGoal</code>.
-		 * 
-		 * @return the <code>UniqueIdentifier</code> of the
-		 *         <code>InstanceGoal</code>.
+		 * Returns the <code>UniqueIdentifier</code> of the <code>InstanceGoal</code>.
+		 *
+		 * @return the <code>UniqueIdentifier</code> of the <code>InstanceGoal</code>.
 		 */
 		private UniqueIdentifier getInstanceIdentifier() {
 			return instanceIdentifier;
@@ -112,10 +99,8 @@ public class InstanceGoalImpl<ParameterType> extends SimpleGoalImpl implements
 		public boolean equals(final Object object) {
 			if (object instanceof InstanceGoalIdentifier) {
 				final InstanceGoalIdentifier instanceGoalIdentifier = (InstanceGoalIdentifier) object;
-				return getSpecificationIdentifier().equals(
-						instanceGoalIdentifier.getSpecificationIdentifier())
-						&& getInstanceIdentifier().equals(
-								instanceGoalIdentifier.getInstanceIdentifier());
+				return getSpecificationIdentifier().equals(instanceGoalIdentifier.getSpecificationIdentifier())
+						&& getInstanceIdentifier().equals(instanceGoalIdentifier.getInstanceIdentifier());
 			}
 			return false;
 		}
@@ -123,8 +108,7 @@ public class InstanceGoalImpl<ParameterType> extends SimpleGoalImpl implements
 		@Override
 		public int hashCode() {
 			if (hashCode == null) {
-				hashCode = getSpecificationIdentifier().hashCode() << 16
-						| getInstanceIdentifier().hashCode();
+				hashCode = getSpecificationIdentifier().hashCode() << 16 | getInstanceIdentifier().hashCode();
 			}
 			return hashCode;
 		}
@@ -132,8 +116,7 @@ public class InstanceGoalImpl<ParameterType> extends SimpleGoalImpl implements
 		@Override
 		public String toString() {
 			if (toString == null) {
-				toString = String.format(STRING_FORMAT,
-						getSpecificationIdentifier(), getInstanceIdentifier());
+				toString = String.format(STRING_FORMAT, getSpecificationIdentifier(), getInstanceIdentifier());
 			}
 			return toString;
 		}
@@ -141,21 +124,17 @@ public class InstanceGoalImpl<ParameterType> extends SimpleGoalImpl implements
 	}
 
 	/**
-	 * Internal <code>String</code> for the formatting of
-	 * <code>InstanceGoalImpl</code> class.
+	 * Internal <code>String</code> for the formatting of <code>InstanceGoalImpl</code> class.
 	 */
 	private static final String STRING_FORMAT = "%s (%s)";
 
 	/**
-	 * The <code>SpecificationGoal</code> that created this
-	 * <code>InstanceGoal</code>.
+	 * The <code>SpecificationGoal</code> that created this <code>InstanceGoal</code>.
 	 */
 	private final SpecificationGoal specificationGoal;
 
 	/**
-	 * The <code>UniqueIdentifier</code> identifying the
-	 * <code>InstanceGoal</code> with respect to other similar
-	 * <code>InstanceGoal</code> based on the same
+	 * The <code>UniqueIdentifier</code> identifying the <code>InstanceGoal</code> with respect to other similar <code>InstanceGoal</code> based on the same
 	 * <code>SpecificationGoal</code>.
 	 */
 	private final UniqueIdentifier instanceIdentifier;
@@ -166,50 +145,37 @@ public class InstanceGoalImpl<ParameterType> extends SimpleGoalImpl implements
 	private final ParameterType parameter;
 
 	/**
-	 * Constructs a new instance of <code>InstanceGoal</code> with the given
-	 * <code>SpecificationGoal</code>, the <code>UniqueIdentifier</code>
-	 * identifying the <code>InstanceGoal</code> with respect to the given
-	 * <code>SpecificationGoal</code>, and the parameter(s).
-	 * 
+	 * Constructs a new instance of <code>InstanceGoal</code> with the given <code>SpecificationGoal</code>, the <code>UniqueIdentifier</code> identifying the
+	 * <code>InstanceGoal</code> with respect to the given <code>SpecificationGoal</code>, and the parameter(s).
+	 *
 	 * @param specificationGoal
-	 *            the <code>SpecificationGoal</code> that this
-	 *            <code>InstanceGoal</code> is based on.
+	 *            the <code>SpecificationGoal</code> that this <code>InstanceGoal</code> is based on.
 	 * @param instanceIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the instance of
-	 *            this <code>InstanceGoal</code>.
+	 *            the <code>UniqueIdentifier</code> identifying the instance of this <code>InstanceGoal</code>.
 	 * @param parameter
 	 *            the parameter(s) of this <code>InstanceGoal</code>.
 	 */
-	protected InstanceGoalImpl(final SpecificationGoal specificationGoal,
-			final UniqueIdentifier instanceIdentifier,
-			final ParameterType parameter) {
+	protected InstanceGoalImpl(final SpecificationGoal specificationGoal, final UniqueIdentifier instanceIdentifier, final ParameterType parameter) {
 		this(specificationGoal, instanceIdentifier, parameter, false);
 	}
 
 	/**
-	 * Constructs a new instance of <code>InstanceGoal</code> with the given
-	 * <code>SpecificationGoal</code>, the <code>UniqueIdentifier</code>
-	 * identifying the <code>InstanceGoal</code>, and the parameter(s).
-	 * 
+	 * Constructs a new instance of <code>InstanceGoal</code> with the given <code>SpecificationGoal</code>, the <code>UniqueIdentifier</code> identifying the
+	 * <code>InstanceGoal</code>, and the parameter(s).
+	 *
 	 * @param specificationGoal
-	 *            the <code>SpecificationGoal</code> that this
-	 *            <code>InstanceGoal</code> is based on.
+	 *            the <code>SpecificationGoal</code> that this <code>InstanceGoal</code> is based on.
 	 * @param instanceIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the instance of
-	 *            this <code>InstanceGoal</code>.
+	 *            the <code>UniqueIdentifier</code> identifying the instance of this <code>InstanceGoal</code>.
 	 * @param parameter
 	 *            the parameter(s) of this <code>InstanceGoal</code>.
 	 * @param useSameForGlobal
-	 *            <code>true</code> if the given <code>UniqueIdentifier</code>
-	 *            is to be the same as the <code>UniqueIdentifer</code> from
+	 *            <code>true</code> if the given <code>UniqueIdentifier</code> is to be the same as the <code>UniqueIdentifer</code> from
 	 *            {@link #getIdentifier()}, <code>false</code> otherwise.
 	 */
-	public InstanceGoalImpl(final SpecificationGoal specificationGoal,
-			final UniqueIdentifier instanceIdentifier,
-			final ParameterType parameter, final boolean useSameForGlobal) {
-		super(useSameForGlobal ? instanceIdentifier
-				: new InstanceGoalIdentifier(specificationGoal.getIdentifier(),
-						instanceIdentifier));
+	public InstanceGoalImpl(final SpecificationGoal specificationGoal, final UniqueIdentifier instanceIdentifier, final ParameterType parameter,
+			final boolean useSameForGlobal) {
+		super(useSameForGlobal ? instanceIdentifier : new InstanceGoalIdentifier(specificationGoal.getIdentifier(), instanceIdentifier));
 		this.specificationGoal = specificationGoal;
 		this.instanceIdentifier = instanceIdentifier;
 		this.parameter = parameter;
@@ -257,8 +223,7 @@ public class InstanceGoalImpl<ParameterType> extends SimpleGoalImpl implements
 	@Override
 	public String toString() {
 		final ParameterType parameter = getParameter();
-		return String.format(STRING_FORMAT, super.toString(),
-				parameter == null ? "" : parameter);
+		return String.format(STRING_FORMAT, super.toString(), parameter == null ? "" : parameter);
 	}
 
 }

@@ -22,15 +22,13 @@ import org.models.organization.entity.Organization;
 import org.models.organization.relation.Task;
 
 /**
- * The <code>TaskVisualizationPanel</code> class is a Swing component to
- * visualize the {@link Task} currently in the {@link Organization}.
- * 
+ * The <code>TaskVisualizationPanel</code> class is a Swing component to visualize the {@link Task} currently in the {@link Organization}.
+ *
  * @author Christopher Zhong
  * @version $Revision: 1.1.2.4 $, $Date: 2011/09/19 14:26:34 $
  * @since 6.0
  */
-public class TaskVisualizationPanel extends
-		AbstractListVisualizationPanel<Task> {
+public class TaskVisualizationPanel extends AbstractListVisualizationPanel<Task> {
 
 	/**
 	 * Default serial version ID
@@ -39,17 +37,13 @@ public class TaskVisualizationPanel extends
 
 	/**
 	 * Constructs a new instance of <code>TaskVisualizationPanel</code>.
-	 * 
+	 *
 	 * @param organization
-	 *            the <code>Organization</code> that is used to visualize the
-	 *            <code>Task</code>.
+	 *            the <code>Organization</code> that is used to visualize the <code>Task</code>.
 	 */
 	public TaskVisualizationPanel(final Organization organization) {
-		super(organization, "Tasks",
-				ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
-				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED,
-				JSplitPane.VERTICAL_SPLIT, true,
-				ListSelectionModel.SINGLE_SELECTION, JList.VERTICAL, 10);
+		super(organization, "Tasks", ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED,
+				JSplitPane.VERTICAL_SPLIT, true, ListSelectionModel.SINGLE_SELECTION, JList.VERTICAL, 10);
 	}
 
 	@Override
@@ -63,14 +57,7 @@ public class TaskVisualizationPanel extends
 	@Override
 	List<Task> getCollection() {
 		final List<Task> tasks = new ArrayList<>(getOrganization().getTasks());
-		final Comparator<Task> comparator = new Comparator<Task>() {
-
-			@Override
-			public int compare(final Task task1, final Task task2) {
-				return task1.toString().compareTo(task2.toString());
-			}
-
-		};
+		final Comparator<Task> comparator = (task1, task2) -> task1.toString().compareTo(task2.toString());
 		Collections.sort(tasks, comparator);
 		return tasks;
 	}

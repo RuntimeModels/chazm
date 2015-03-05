@@ -19,9 +19,8 @@ import org.models.organization.relation.Assignment;
 import org.models.organization.relation.Task;
 
 /**
- * The <code>Org1</code> interface defines the basic functionality of an
- * organization.
- * 
+ * The <code>Org1</code> interface defines the basic functionality of an organization.
+ *
  * @author Christopher Zhong
  * @version $Revision: 1.9.2.7 $, $Date: 2011/09/19 14:26:37 $
  * @since 4.0
@@ -30,118 +29,92 @@ public interface Organization {
 
 	/**
 	 * Populates the <code>Organization</code>.
-	 * 
+	 *
 	 * @param file
-	 *            the <code>File</code> from which to populate the
-	 *            <code>Organization</code>.
+	 *            the <code>File</code> from which to populate the <code>Organization</code>.
 	 * @param specificationGoalProvider
-	 *            the <code>SpecificationGoalProvider</code> from which to
-	 *            retrieve <code>SpecificationGoal</code>s.
+	 *            the <code>SpecificationGoalProvider</code> from which to retrieve <code>SpecificationGoal</code>s.
 	 * @param uniqueIdentifierProvider
-	 *            the <code>UniqueIdentifierProvider</code> which provides
-	 *            <code>UniqueIdentifier</code>.
+	 *            the <code>UniqueIdentifierProvider</code> which provides <code>UniqueIdentifier</code>.
 	 * @return the populated <code>Organization</code>.
 	 */
 	@Deprecated
-	Organization populate(File file,
-			SpecificationGoalProvider specificationGoalProvider,
-			UniqueIdentifierProvider uniqueIdentifierProvider);
+	Organization populate(File file, SpecificationGoalProvider specificationGoalProvider, UniqueIdentifierProvider uniqueIdentifierProvider);
 
 	/**
 	 * Populates the <code>Organization</code>.
-	 * 
+	 *
 	 * @param path
-	 *            the <code>Path</code> from which to populate the
-	 *            <code>Organization</code>.
+	 *            the <code>Path</code> from which to populate the <code>Organization</code>.
 	 * @param specificationGoalProvider
-	 *            the <code>SpecificationGoalProvider</code> from which to
-	 *            retrieve <code>SpecificationGoal</code>s.
+	 *            the <code>SpecificationGoalProvider</code> from which to retrieve <code>SpecificationGoal</code>s.
 	 * @param uniqueIdentifierProvider
-	 *            the <code>UniqueIdentifierProvider</code> which provides
-	 *            <code>UniqueIdentifier</code>.
+	 *            the <code>UniqueIdentifierProvider</code> which provides <code>UniqueIdentifier</code>.
 	 * @return the populated <code>Organization</code>.
 	 */
-	Organization populate(Path path,
-			SpecificationGoalProvider specificationGoalProvider,
-			UniqueIdentifierProvider uniqueIdentifierProvider);
+	Organization populate(Path path, SpecificationGoalProvider specificationGoalProvider, UniqueIdentifierProvider uniqueIdentifierProvider);
 
 	/**
-	 * Adds the given <code>SpecificationGoal</code> to the set of
-	 * <code>SpecificationGoal</code>.
-	 * 
+	 * Adds the given <code>SpecificationGoal</code> to the set of <code>SpecificationGoal</code>.
+	 *
 	 * @param specificationGoal
 	 *            the <code>SpecificationGoal</code> to be added.
 	 */
 	void addSpecificationGoal(SpecificationGoal specificationGoal);
 
 	/**
-	 * Adds the given set of <code>SpecificationGoal</code> to the set of
-	 * <code>SpecificationGoal</code>.
-	 * 
+	 * Adds the given set of <code>SpecificationGoal</code> to the set of <code>SpecificationGoal</code>.
+	 *
 	 * @param specificationGoals
 	 *            the set of <code>SpecificationGoal</code> to be added.
 	 */
 	void addSpecificationGoals(Collection<SpecificationGoal> specificationGoals);
 
 	/**
-	 * Adds the given set of <code>SpecificationGoal</code> to the set of
-	 * <code>SpecificationGoal</code>.
-	 * 
+	 * Adds the given set of <code>SpecificationGoal</code> to the set of <code>SpecificationGoal</code>.
+	 *
 	 * @param specificationGoals
 	 *            the set of <code>SpecificationGoal</code> to be added.
 	 */
 	void addSpecificationGoals(SpecificationGoal... specificationGoals);
 
 	/**
-	 * Returns the <code>SpecificationGoal</code> by the given
-	 * <code>UniqueIdentifier</code>.
-	 * 
+	 * Returns the <code>SpecificationGoal</code> by the given <code>UniqueIdentifier</code>.
+	 *
 	 * @param specificationGoalIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>SpecificationGoal</code> to retrieve.
-	 * @return the <code>SpecificationGoal</code> if it exists,
-	 *         <code>null</code> otherwise.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>SpecificationGoal</code> to retrieve.
+	 * @return the <code>SpecificationGoal</code> if it exists, <code>null</code> otherwise.
 	 */
-	SpecificationGoal getSpecificationGoal(
-			UniqueIdentifier specificationGoalIdentifier);
+	SpecificationGoal getSpecificationGoal(UniqueIdentifier specificationGoalIdentifier);
 
 	/**
 	 * Returns the set of <code>SpecificationGoal</code>.
-	 * 
+	 *
 	 * @return the set of <code>SpecificationGoal</code>.
 	 */
 	Set<SpecificationGoal> getSpecificationGoals();
 
 	/**
-	 * Removes the <code>SpecificationGoal</code> by the given
-	 * <code>UniqueIdentifier</code> from the set of
-	 * <code>SpecificationGoal</code>.
-	 * 
+	 * Removes the <code>SpecificationGoal</code> by the given <code>UniqueIdentifier</code> from the set of <code>SpecificationGoal</code>.
+	 *
 	 * @param goalIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>SpecificationGoal</code> to remove.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>SpecificationGoal</code> to remove.
 	 */
 	void removeSpecificationGoal(UniqueIdentifier goalIdentifier);
 
 	/**
-	 * Removes the given set of <code>UniqueIdentifier</code> that identifies
-	 * <code>SpecificationGoal</code> from the set of
-	 * <code>SpecificationGoal</code>.
-	 * 
+	 * Removes the given set of <code>UniqueIdentifier</code> that identifies <code>SpecificationGoal</code> from the set of <code>SpecificationGoal</code>.
+	 *
 	 * @param goalIdentifiers
-	 *            the set of <code>UniqueIdentifier</code> that identifies
-	 *            <code>SpecificationGoal</code> to be removed.
+	 *            the set of <code>UniqueIdentifier</code> that identifies <code>SpecificationGoal</code> to be removed.
 	 */
 	void removeSpecificationGoals(Collection<UniqueIdentifier> goalIdentifiers);
 
 	/**
-	 * Removes the given set of <code>UniqueIdentifier</code> that identifies
-	 * <code>SpecificationGoal</code> from the set of
-	 * <code>SpecificationGoal</code>.
-	 * 
+	 * Removes the given set of <code>UniqueIdentifier</code> that identifies <code>SpecificationGoal</code> from the set of <code>SpecificationGoal</code>.
+	 *
 	 * @param goalIdentifiers
-	 *            the set of <code>UniqueIdentifier</code> that identifies
-	 *            <code>SpecificationGoal</code> to be removed.
+	 *            the set of <code>UniqueIdentifier</code> that identifies <code>SpecificationGoal</code> to be removed.
 	 */
 	void removeSpecificationGoals(UniqueIdentifier... goalIdentifiers);
 
@@ -152,7 +125,7 @@ public interface Organization {
 
 	/**
 	 * Adds the given <code>Role</code> to the set of <code>Role</code>.
-	 * 
+	 *
 	 * @param role
 	 *            the <code>Role</code> to be added.
 	 */
@@ -160,7 +133,7 @@ public interface Organization {
 
 	/**
 	 * Adds the given set of <code>Role</code> to the set of <code>Role</code>.
-	 * 
+	 *
 	 * @param roles
 	 *            the set of <code>Role</code> to be added.
 	 */
@@ -168,7 +141,7 @@ public interface Organization {
 
 	/**
 	 * Adds the given set of <code>Role</code> to the set of <code>Role</code>.
-	 * 
+	 *
 	 * @param roles
 	 *            the set of <code>Role</code> to be added.
 	 */
@@ -176,48 +149,41 @@ public interface Organization {
 
 	/**
 	 * Returns the <code>Role</code> by the given <code>UniqueIdentifier</code>.
-	 * 
+	 *
 	 * @param roleIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Role</code> to retrieve.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Role</code> to retrieve.
 	 * @return the <code>Role</code> if it exists, <code>null</code> otherwise.
 	 */
 	Role getRole(UniqueIdentifier roleIdentifier);
 
 	/**
 	 * Returns the set of <code>Role</code>.
-	 * 
+	 *
 	 * @return the set of <code>Role</code>.
 	 */
 	Set<Role> getRoles();
 
 	/**
-	 * Removes the <code>Role</code> by the given <code>UniqueIdentifier</code>
-	 * from the set of <code>Role</code>.
-	 * 
+	 * Removes the <code>Role</code> by the given <code>UniqueIdentifier</code> from the set of <code>Role</code>.
+	 *
 	 * @param roleIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Role</code> to remove.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Role</code> to remove.
 	 */
 	void removeRole(UniqueIdentifier roleIdentifier);
 
 	/**
-	 * Removes the given set of <code>UniqueIdentifier</code> that identifies
-	 * the <code>Role</code> from the set of <code>Role</code>.
-	 * 
+	 * Removes the given set of <code>UniqueIdentifier</code> that identifies the <code>Role</code> from the set of <code>Role</code>.
+	 *
 	 * @param roleIdentifiers
-	 *            the set of <code>UniqueIdentifier</code> that identifies the
-	 *            <code>Role</code> to be removed.
+	 *            the set of <code>UniqueIdentifier</code> that identifies the <code>Role</code> to be removed.
 	 */
 	void removeRoles(Collection<UniqueIdentifier> roleIdentifiers);
 
 	/**
-	 * Removes the given set of <code>UniqueIdentifier</code> that identifies
-	 * the <code>Role</code> from the set of <code>Role</code>.
-	 * 
+	 * Removes the given set of <code>UniqueIdentifier</code> that identifies the <code>Role</code> from the set of <code>Role</code>.
+	 *
 	 * @param roleIdentifiers
-	 *            the set of <code>UniqueIdentifier</code> that identifies the
-	 *            <code>Role</code> to be removed.
+	 *            the set of <code>UniqueIdentifier</code> that identifies the <code>Role</code> to be removed.
 	 */
 	void removeRoles(UniqueIdentifier... roleIdentifiers);
 
@@ -228,75 +194,65 @@ public interface Organization {
 
 	/**
 	 * Adds the given <code>Agent</code> to the set of <code>Agent</code>.
-	 * 
+	 *
 	 * @param agent
 	 *            the <code>Agent</code> to be added.
 	 */
 	void addAgent(Agent<?> agent);
 
 	/**
-	 * Adds the given set of <code>Agent</code> to the set of <code>Agent</code>
-	 * .
-	 * 
+	 * Adds the given set of <code>Agent</code> to the set of <code>Agent</code> .
+	 *
 	 * @param agents
 	 *            the set of <code>Agent</code> to be added.
 	 */
 	void addAgents(Collection<Agent<?>> agents);
 
 	/**
-	 * Adds the given set of <code>Agent</code> to the set of <code>Agent</code>
-	 * .
-	 * 
+	 * Adds the given set of <code>Agent</code> to the set of <code>Agent</code> .
+	 *
 	 * @param agents
 	 *            the set of <code>Agent</code> to be added.
 	 */
 	void addAgents(Agent<?>... agents);
 
 	/**
-	 * Returns the <code>Agent</code> by the given <code>UniqueIdentifier</code>
-	 * .
-	 * 
+	 * Returns the <code>Agent</code> by the given <code>UniqueIdentifier</code> .
+	 *
 	 * @param agentIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Agent</code> to retrieve.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Agent</code> to retrieve.
 	 * @return the <code>Agent</code> if it exists, <code>null</code> otherwise.
 	 */
 	Agent<?> getAgent(UniqueIdentifier agentIdentifier);
 
 	/**
 	 * Returns the set of <code>Agent</code>.
-	 * 
+	 *
 	 * @return the set of <code>Agent</code>.
 	 */
 	Set<Agent<?>> getAgents();
 
 	/**
-	 * Removes the <code>Agent</code> by the given <code>UniqueIdentifier</code>
-	 * from the set of <code>Agent</code>.
-	 * 
+	 * Removes the <code>Agent</code> by the given <code>UniqueIdentifier</code> from the set of <code>Agent</code>.
+	 *
 	 * @param agentIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Agent</code> to remove.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Agent</code> to remove.
 	 */
 	void removeAgent(UniqueIdentifier agentIdentifier);
 
 	/**
-	 * Removes the given set of <code>UniqueIdentifier</code> that identifies
-	 * the <code>Agent</code> from the set of <code>Agent</code>.
-	 * 
+	 * Removes the given set of <code>UniqueIdentifier</code> that identifies the <code>Agent</code> from the set of <code>Agent</code>.
+	 *
 	 * @param agentIdentifiers
-	 *            the set of <code>UniqueIdentifier</code> that identifies the
-	 *            <code>Agent</code> to remove.
+	 *            the set of <code>UniqueIdentifier</code> that identifies the <code>Agent</code> to remove.
 	 */
 	void removeAgents(Collection<UniqueIdentifier> agentIdentifiers);
 
 	/**
-	 * Removes the given set of <code>UniqueIdentifier</code> that identifies
-	 * the <code>Agent</code> from the set of <code>Agent</code>.
-	 * 
+	 * Removes the given set of <code>UniqueIdentifier</code> that identifies the <code>Agent</code> from the set of <code>Agent</code>.
+	 *
 	 * @param agentIdentifiers
-	 *            the set of <code>UniqueIdentifier</code> that identifies the
-	 *            <code>Agent</code> to remove.
+	 *            the set of <code>UniqueIdentifier</code> that identifies the <code>Agent</code> to remove.
 	 */
 	void removeAgents(UniqueIdentifier... agentIdentifiers);
 
@@ -306,78 +262,66 @@ public interface Organization {
 	void removeAllAgents();
 
 	/**
-	 * Adds the given <code>Capability</code> to the set of
-	 * <code>Capability</code>.
-	 * 
+	 * Adds the given <code>Capability</code> to the set of <code>Capability</code>.
+	 *
 	 * @param capability
 	 *            the <code>Capability</code> to be added.
 	 */
 	void addCapability(Capability capability);
 
 	/**
-	 * Adds the given set of <code>Capability</code> to the set of
-	 * <code>Capability</code>.
-	 * 
+	 * Adds the given set of <code>Capability</code> to the set of <code>Capability</code>.
+	 *
 	 * @param capabilities
 	 *            the set of <code>Capability</code> to be added.
 	 */
 	void addCapabilities(Collection<Capability> capabilities);
 
 	/**
-	 * Adds the given set of <code>Capability</code> to the set of
-	 * <code>Capability</code>.
-	 * 
+	 * Adds the given set of <code>Capability</code> to the set of <code>Capability</code>.
+	 *
 	 * @param capabilities
 	 *            the set of <code>Capability</code> to be added.
 	 */
 	void addCapabilities(Capability... capabilities);
 
 	/**
-	 * Returns the <code>Capability</code> by the given
-	 * <code>UniqueIdentifier</code>.
-	 * 
+	 * Returns the <code>Capability</code> by the given <code>UniqueIdentifier</code>.
+	 *
 	 * @param capabilityIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Capability</code> to retrieve.
-	 * @return the <code>Capability</code> if it exists, <code>null</code>
-	 *         otherwise.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Capability</code> to retrieve.
+	 * @return the <code>Capability</code> if it exists, <code>null</code> otherwise.
 	 */
 	Capability getCapability(UniqueIdentifier capabilityIdentifier);
 
 	/**
 	 * Returns the set of <code>Capability</code>.
-	 * 
+	 *
 	 * @return the set of <code>Capability</code>.
 	 */
 	Set<Capability> getCapabilities();
 
 	/**
-	 * Removes the <code>Capability</code> by the given
-	 * <code>UniqueIdentifier</code> from the set of <code>Capability</code>.
-	 * 
+	 * Removes the <code>Capability</code> by the given <code>UniqueIdentifier</code> from the set of <code>Capability</code>.
+	 *
 	 * @param capabilityIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Capability</code> to remove.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Capability</code> to remove.
 	 */
 	void removeCapability(UniqueIdentifier capabilityIdentifier);
 
 	/**
-	 * Removes the given set of <code>UniqueIdentifier</code> that identifies
-	 * the <code>Capability</code> from the set of <code>Capability</code>.
-	 * 
+	 * Removes the given set of <code>UniqueIdentifier</code> that identifies the <code>Capability</code> from the set of <code>Capability</code>.
+	 *
 	 * @param capabilityIdentifiers
-	 *            the set of <code>UniqueIdentifier</code> that identifies the
-	 *            <code>Capability</code> to remove.
+	 *            the set of <code>UniqueIdentifier</code> that identifies the <code>Capability</code> to remove.
 	 */
 	void removeCapabilities(Collection<UniqueIdentifier> capabilityIdentifiers);
 
 	/**
-	 * Removes the given set of <code>UniqueIdentifier</code> that identifies
-	 * the <code>Capability</code> from the set of <code>Capability</code>.
-	 * 
+	 * Removes the given set of <code>UniqueIdentifier</code> that identifies the <code>Capability</code> from the set of <code>Capability</code>.
+	 *
 	 * @param capabilityIdentifiers
-	 *            the set of <code>UniqueIdentifier</code> that identifies the
-	 *            <code>Capability</code> to remove.
+	 *            the set of <code>UniqueIdentifier</code> that identifies the <code>Capability</code> to remove.
 	 */
 	void removeCapabilities(UniqueIdentifier... capabilityIdentifiers);
 
@@ -388,76 +332,65 @@ public interface Organization {
 
 	/**
 	 * Adds the given <code>Policy</code> to the set of <code>Policy</code>.
-	 * 
+	 *
 	 * @param policy
 	 *            the <code>Policy</code> to be added.
 	 */
 	void addPolicy(Policy policy);
 
 	/**
-	 * Adds the given set of <code>Policy</code> to the set of
-	 * <code>Policy</code>.
-	 * 
+	 * Adds the given set of <code>Policy</code> to the set of <code>Policy</code>.
+	 *
 	 * @param policies
 	 *            the set of <code>Policy</code> to be added.
 	 */
 	void addPolicies(Collection<Policy> policies);
 
 	/**
-	 * Adds the given set of <code>Policy</code> to the set of
-	 * <code>Policy</code>.
-	 * 
+	 * Adds the given set of <code>Policy</code> to the set of <code>Policy</code>.
+	 *
 	 * @param policies
 	 *            the set of <code>Policy</code> to be added.
 	 */
 	void addPolicies(Policy... policies);
 
 	/**
-	 * Returns the <code>Policy</code> by the given
-	 * <code>UniqueIdentifier</code>.
-	 * 
+	 * Returns the <code>Policy</code> by the given <code>UniqueIdentifier</code>.
+	 *
 	 * @param policyIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Policy</code> to retrieve.
-	 * @return the <code>Policy</code> if it exists, <code>null</code>
-	 *         otherwise.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Policy</code> to retrieve.
+	 * @return the <code>Policy</code> if it exists, <code>null</code> otherwise.
 	 */
 	Policy getPolicy(UniqueIdentifier policyIdentifier);
 
 	/**
 	 * Returns the set of <code>Policy</code>.
-	 * 
+	 *
 	 * @return the set of <code>Policy</code>.
 	 */
 	Set<Policy> getPolicies();
 
 	/**
-	 * Removes the given <code>UniqueIdentifier</code> that identifies the
-	 * <code>Policy</code> from the set of <code>Policy</code>.
-	 * 
+	 * Removes the given <code>UniqueIdentifier</code> that identifies the <code>Policy</code> from the set of <code>Policy</code>.
+	 *
 	 * @param policyIdentifier
-	 *            the <code>UniqueIdentifier</code> that identifies the
-	 *            <code>Policy</code> to be removed.
+	 *            the <code>UniqueIdentifier</code> that identifies the <code>Policy</code> to be removed.
 	 */
 	void removePolicy(UniqueIdentifier policyIdentifier);
 
 	/**
-	 * Removes the given set of <code>UniqueIdentifier</code> that identifies
-	 * the <code>Policy</code> from the set of <code>Policy</code>.
-	 * 
+	 * Removes the given set of <code>UniqueIdentifier</code> that identifies the <code>Policy</code> from the set of <code>Policy</code>.
+	 *
 	 * @param policyIdentifiers
-	 *            the set of <code>UniqueIdentifier</code> that identifies the
-	 *            <code>Policy</code> to be removed.
+	 *            the set of <code>UniqueIdentifier</code> that identifies the <code>Policy</code> to be removed.
 	 */
 	void removePolicies(Collection<UniqueIdentifier> policyIdentifiers);
 
 	/**
-	 * Removes the given set of <code>UniqueIdentifier</code> that identifies
-	 * the <code>Policy</code> from the set of <code>Policy</code>.
-	 * 
+	 * Removes the given set of <code>UniqueIdentifier</code> that identifies the <code>Policy</code> from the set of <code>Policy</code>.
+	 *
 	 * @param policyIdentifiers
-	 *            the set of <code>UniqueIdentifier</code> that identifies the
-	 *            <code>Policy</code> to be removed.
+	 *            the set of <code>UniqueIdentifier</code> that identifies the <code>Policy</code> to be removed.
 	 */
 	void removePolicies(UniqueIdentifier... policyIdentifiers);
 
@@ -467,79 +400,66 @@ public interface Organization {
 	void removeAllPolicies();
 
 	/**
-	 * Adds the given <code>InstanceGoal</code> to the set of
-	 * <code>InstanceGoal</code>.
-	 * 
+	 * Adds the given <code>InstanceGoal</code> to the set of <code>InstanceGoal</code>.
+	 *
 	 * @param instanceGoal
 	 *            the <code>InstanceGoal</code> to be added.
 	 */
 	void addInstanceGoal(InstanceGoal<?> instanceGoal);
 
 	/**
-	 * Adds the given set of <code>InstanceGoal</code> to the set of
-	 * <code>InstanceGoal</code>.
-	 * 
+	 * Adds the given set of <code>InstanceGoal</code> to the set of <code>InstanceGoal</code>.
+	 *
 	 * @param instanceGoals
 	 *            the set of <code>InstanceGoal</code> to be added.
 	 */
 	void addInstanceGoals(Collection<InstanceGoal<?>> instanceGoals);
 
 	/**
-	 * Adds the given set of <code>InstanceGoal</code> to the set of
-	 * <code>InstanceGoal</code>.
-	 * 
+	 * Adds the given set of <code>InstanceGoal</code> to the set of <code>InstanceGoal</code>.
+	 *
 	 * @param instanceGoals
 	 *            the set of <code>InstanceGoal</code> to be added.
 	 */
 	void addInstanceGoals(InstanceGoal<?>... instanceGoals);
 
 	/**
-	 * Returns the <code>InstanceGoal</code> by the given
-	 * <code>UniqueIdentifier</code> that identifies the the
-	 * <code>InstanceGoal</code>.
-	 * 
+	 * Returns the <code>InstanceGoal</code> by the given <code>UniqueIdentifier</code> that identifies the the <code>InstanceGoal</code>.
+	 *
 	 * @param goalIdentifier
-	 *            the <code>UniqueIdentifier</code> that identifies the
-	 *            <code>InstanceGoal</code> to retrieve.
-	 * @return the <code>InstanceGoal</code> if it exists, <code>null</code>
-	 *         otherwise.
+	 *            the <code>UniqueIdentifier</code> that identifies the <code>InstanceGoal</code> to retrieve.
+	 * @return the <code>InstanceGoal</code> if it exists, <code>null</code> otherwise.
 	 */
 	InstanceGoal<?> getInstanceGoal(UniqueIdentifier goalIdentifier);
 
 	/**
 	 * Returns the set of <code>InstanceGoal</code>.
-	 * 
+	 *
 	 * @return the set of <code>InstanceGoal</code>.
 	 */
 	Set<InstanceGoal<?>> getInstanceGoals();
 
 	/**
-	 * Removes the given <code>UniqueIdentifier</code> that identifies the
-	 * <code>InstanceGoal</code> from the set of <code>InstanceGoal</code>.
-	 * 
+	 * Removes the given <code>UniqueIdentifier</code> that identifies the <code>InstanceGoal</code> from the set of <code>InstanceGoal</code>.
+	 *
 	 * @param goalIdentifier
-	 *            the <code>UniqueIdentifier</code> that identifies the
-	 *            <code>InstanceGoal</code> to be removed.
+	 *            the <code>UniqueIdentifier</code> that identifies the <code>InstanceGoal</code> to be removed.
 	 */
 	void removeInstanceGoal(UniqueIdentifier goalIdentifier);
 
 	/**
-	 * Removes the given set of <code>UniqueIdentifier</code> that identifies
-	 * the <code>InstanceGoal</code> from the set of <code>InstanceGoal</code>.
-	 * 
+	 * Removes the given set of <code>UniqueIdentifier</code> that identifies the <code>InstanceGoal</code> from the set of <code>InstanceGoal</code>.
+	 *
 	 * @param goalIdentifiers
-	 *            the set of <code>UniqueIdentifier</code> that identifies the
-	 *            <code>InstanceGoal</code> to be removed.
+	 *            the set of <code>UniqueIdentifier</code> that identifies the <code>InstanceGoal</code> to be removed.
 	 */
 	void removeInstanceGoals(Collection<UniqueIdentifier> goalIdentifiers);
 
 	/**
-	 * Removes the given set of <code>UniqueIdentifier</code> that identifies
-	 * the <code>InstanceGoal</code> from the set of <code>InstanceGoal</code>.
-	 * 
+	 * Removes the given set of <code>UniqueIdentifier</code> that identifies the <code>InstanceGoal</code> from the set of <code>InstanceGoal</code>.
+	 *
 	 * @param goalIdentifiers
-	 *            the set of <code>UniqueIdentifier</code> that identifies the
-	 *            <code>InstanceGoal</code> to be removed.
+	 *            the set of <code>UniqueIdentifier</code> that identifies the <code>InstanceGoal</code> to be removed.
 	 */
 	void removeInstanceGoals(UniqueIdentifier... goalIdentifiers);
 
@@ -549,93 +469,75 @@ public interface Organization {
 	void removeAllInstanceGoals();
 
 	/**
-	 * Adds the given <code>Assignment</code> to the set of
-	 * <code>Assignment</code>.
-	 * 
+	 * Adds the given <code>Assignment</code> to the set of <code>Assignment</code>.
+	 *
 	 * @param assignment
 	 *            the <code>Assignment</code> to be added.
 	 */
 	void addAssignment(Assignment assignment);
 
 	/**
-	 * Adds the given set of <code>Assignment</code> to the set of
-	 * <code>Assignment</code>.
-	 * 
+	 * Adds the given set of <code>Assignment</code> to the set of <code>Assignment</code>.
+	 *
 	 * @param assignments
 	 *            the set of <code>Assignment</code> to be added.
 	 */
 	void addAssignments(Collection<Assignment> assignments);
 
 	/**
-	 * Adds the given set of <code>Assignment</code> to the set of
-	 * <code>Assignment</code>.
-	 * 
+	 * Adds the given set of <code>Assignment</code> to the set of <code>Assignment</code>.
+	 *
 	 * @param assignments
 	 *            the set of <code>Assignment</code> to be added.
 	 */
 	void addAssignments(Assignment... assignments);
 
 	/**
-	 * Returns the <code>Assignment</code> by the given
-	 * <code>UniqueIdentifier</code> that identifies the <code>Assignment</code>
-	 * .
-	 * 
+	 * Returns the <code>Assignment</code> by the given <code>UniqueIdentifier</code> that identifies the <code>Assignment</code> .
+	 *
 	 * @param assignmentIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Assignment</code> to retrieve.
-	 * @return the <code>Assignment</code> if it exists, <code>null</code>
-	 *         otherwise.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Assignment</code> to retrieve.
+	 * @return the <code>Assignment</code> if it exists, <code>null</code> otherwise.
 	 */
 	Assignment getAssignment(UniqueIdentifier assignmentIdentifier);
 
 	/**
 	 * Returns the set of <code>Assignment</code>.
-	 * 
+	 *
 	 * @return the set of <code>Assignment</code>.
 	 */
 	Set<Assignment> getAssignments();
 
 	/**
-	 * Returns the set of <code>Assignment</code> assigned to the given
-	 * <code>Agent</code>.
-	 * 
+	 * Returns the set of <code>Assignment</code> assigned to the given <code>Agent</code>.
+	 *
 	 * @param agentIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Agent</code> to retrieve the set of
-	 *            <code>Assignment</code>.
-	 * @return the set of <code>Assignment</code> assigned to the given
-	 *         <code>Agent</code>.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Agent</code> to retrieve the set of <code>Assignment</code>.
+	 * @return the set of <code>Assignment</code> assigned to the given <code>Agent</code>.
 	 */
 	Set<Assignment> getAssignmentsOfAgent(UniqueIdentifier agentIdentifier);
 
 	/**
-	 * Removes the <code>Assignment</code> by the given
-	 * <code>UniqueIdentifier</code> that identifies the <code>Assignment</code>
-	 * .
-	 * 
+	 * Removes the <code>Assignment</code> by the given <code>UniqueIdentifier</code> that identifies the <code>Assignment</code> .
+	 *
 	 * @param assignmentIdentifier
-	 *            the <code>UniqueIdentifier</code> that identifies the
-	 *            <code>Assignment</code> to be removed.
+	 *            the <code>UniqueIdentifier</code> that identifies the <code>Assignment</code> to be removed.
 	 */
 	void removeAssignment(UniqueIdentifier assignmentIdentifier);
 
 	/**
-	 * Removes the given set of <code>UniqueIdentifier</code> that identifies
-	 * <code>Assignment</code> from the set of <code>Assignment</code>.
-	 * 
+	 * Removes the given set of <code>UniqueIdentifier</code> that identifies <code>Assignment</code> from the set of <code>Assignment</code>.
+	 *
 	 * @param assignmentIdentifiers
-	 *            the set of <code>UniqueIdentifier</code> that identifies
-	 *            <code>Assignment</code> to be removed.
+	 *            the set of <code>UniqueIdentifier</code> that identifies <code>Assignment</code> to be removed.
 	 */
 	void removeAssignments(Collection<UniqueIdentifier> assignmentIdentifiers);
 
 	/**
-	 * Removes the given set of <code>UniqueIdentifier</code> that identifies
-	 * <code>Assignment</code> from the set of <code>Assignment</code>.
-	 * 
+	 * Removes the given set of <code>UniqueIdentifier</code> that identifies <code>Assignment</code> from the set of <code>Assignment</code>.
+	 *
 	 * @param assignmentIdentifiers
-	 *            the set of <code>UniqueIdentifier</code> that identifies
-	 *            <code>Assignment</code> to be removed.
+	 *            the set of <code>UniqueIdentifier</code> that identifies <code>Assignment</code> to be removed.
 	 */
 	void removeAssignments(UniqueIdentifier... assignmentIdentifiers);
 
@@ -645,80 +547,66 @@ public interface Organization {
 	void removeAllAssignments();
 
 	/**
-	 * Adds the given <code>Attribute</code> to the set of
-	 * <code>Attribute</code>.
-	 * 
+	 * Adds the given <code>Attribute</code> to the set of <code>Attribute</code>.
+	 *
 	 * @param attribute
 	 *            the <code>Attribute</code> to be added.
 	 */
 	void addAttribute(Attribute attribute);
 
 	/**
-	 * Adds the given set of <code>Attribute</code> to the set of
-	 * <code>Attribute</code>.
-	 * 
+	 * Adds the given set of <code>Attribute</code> to the set of <code>Attribute</code>.
+	 *
 	 * @param attributes
 	 *            the set of <code>Attribute</code> to be added.
 	 */
 	void addAttributes(Collection<Attribute> attributes);
 
 	/**
-	 * Adds the given set of <code>Attribute</code> to the set of
-	 * <code>Attribute</code>.
-	 * 
+	 * Adds the given set of <code>Attribute</code> to the set of <code>Attribute</code>.
+	 *
 	 * @param attributes
 	 *            the set of <code>Attribute</code> to be added.
 	 */
 	void addAttributes(Attribute... attributes);
 
 	/**
-	 * Returns the <code>Attribute</code> by the given
-	 * <code>UniqueIdentifier</code> that identifies the <code>Attribute</code>
-	 * .
-	 * 
+	 * Returns the <code>Attribute</code> by the given <code>UniqueIdentifier</code> that identifies the <code>Attribute</code> .
+	 *
 	 * @param attributeIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Attribute</code> to retrieve.
-	 * @return the <code>Attribute</code> if it exists, <code>null</code>
-	 *         otherwise.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Attribute</code> to retrieve.
+	 * @return the <code>Attribute</code> if it exists, <code>null</code> otherwise.
 	 */
 	Attribute getAttribute(UniqueIdentifier attributeIdentifier);
 
 	/**
 	 * Returns the set of <code>Attribute</code>.
-	 * 
+	 *
 	 * @return the set of <code>Attribute</code>.
 	 */
 	Set<Attribute> getAttributes();
 
 	/**
-	 * Removes the <code>Attribute</code> by the given
-	 * <code>UniqueIdentifier</code> that identifies the <code>Attribute</code>
-	 * .
-	 * 
+	 * Removes the <code>Attribute</code> by the given <code>UniqueIdentifier</code> that identifies the <code>Attribute</code> .
+	 *
 	 * @param attributeIdentifier
-	 *            the <code>UniqueIdentifier</code> that identifies the
-	 *            <code>Attribute</code> to be removed.
+	 *            the <code>UniqueIdentifier</code> that identifies the <code>Attribute</code> to be removed.
 	 */
 	void removeAttribute(UniqueIdentifier attributeIdentifier);
 
 	/**
-	 * Removes the given set of <code>UniqueIdentifier</code> that identifies
-	 * <code>Attribute</code> from the set of <code>Attribute</code>.
-	 * 
+	 * Removes the given set of <code>UniqueIdentifier</code> that identifies <code>Attribute</code> from the set of <code>Attribute</code>.
+	 *
 	 * @param attributeIdentifiers
-	 *            the set of <code>UniqueIdentifier</code> that identifies
-	 *            <code>Attribute</code> to be removed.
+	 *            the set of <code>UniqueIdentifier</code> that identifies <code>Attribute</code> to be removed.
 	 */
 	void removeAttributes(Collection<UniqueIdentifier> attributeIdentifiers);
 
 	/**
-	 * Removes the given set of <code>UniqueIdentifier</code> that identifies
-	 * <code>Attribute</code> from the set of <code>Attribute</code>.
-	 * 
+	 * Removes the given set of <code>UniqueIdentifier</code> that identifies <code>Attribute</code> from the set of <code>Attribute</code>.
+	 *
 	 * @param attributeIdentifiers
-	 *            the set of <code>UniqueIdentifier</code> that identifies
-	 *            <code>Attribute</code> to be removed.
+	 *            the set of <code>UniqueIdentifier</code> that identifies <code>Attribute</code> to be removed.
 	 */
 	void removeAttributes(UniqueIdentifier... attributeIdentifiers);
 
@@ -729,7 +617,7 @@ public interface Organization {
 
 	/**
 	 * Adds the given <code>Task</code> to the set of <code>Task</code>.
-	 * 
+	 *
 	 * @param task
 	 *            the <code>Task</code> to be added.
 	 */
@@ -737,7 +625,7 @@ public interface Organization {
 
 	/**
 	 * Adds the given set of <code>Task</code> to the set of <code>Task</code>.
-	 * 
+	 *
 	 * @param tasks
 	 *            the set of <code>Task</code> to be added.
 	 */
@@ -745,37 +633,33 @@ public interface Organization {
 
 	/**
 	 * Adds the given set of <code>Task</code> to the set of <code>Task</code>.
-	 * 
+	 *
 	 * @param tasks
 	 *            the set of <code>Task</code> to be added.
 	 */
 	void addTasks(Task... tasks);
 
 	/**
-	 * Returns the <code>Task</code> by the given <code>UniqueIdentifier</code>
-	 * that identifies the <code>Task</code>.
-	 * 
+	 * Returns the <code>Task</code> by the given <code>UniqueIdentifier</code> that identifies the <code>Task</code>.
+	 *
 	 * @param taskIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Task</code> to retrieve.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Task</code> to retrieve.
 	 * @return the <code>Task</code> if it exists, <code>null</code> otherwise.
 	 */
 	Task getTask(UniqueIdentifier taskIdentifier);
 
 	/**
 	 * Returns the set of <code>Task</code>.
-	 * 
+	 *
 	 * @return the set of <code>Task</code>.
 	 */
 	Set<Task> getTasks();
 
 	/**
-	 * Removes the <code>Task</code> by the given <code>UniqueIdentifier</code>
-	 * that identifies the <code>Task</code>.
-	 * 
+	 * Removes the <code>Task</code> by the given <code>UniqueIdentifier</code> that identifies the <code>Task</code>.
+	 *
 	 * @param taskIdentifier
-	 *            the <code>UniqueIdentifier</code> that identifies the
-	 *            <code>Task</code> to be removed.
+	 *            the <code>UniqueIdentifier</code> that identifies the <code>Task</code> to be removed.
 	 */
 	void removeTask(UniqueIdentifier taskIdentifier);
 
@@ -785,65 +669,52 @@ public interface Organization {
 	void removeAllTasks();
 
 	/**
-	 * Adds the given <code>PerformanceFunction</code> to the set of
-	 * <code>PerformanceFunction</code>.
-	 * 
+	 * Adds the given <code>PerformanceFunction</code> to the set of <code>PerformanceFunction</code>.
+	 *
 	 * @param performanceFunction
 	 *            the <code>PerformanceFunction</code> to be added.
 	 */
 	void addPerformanceFunction(PerformanceFunction performanceFunction);
 
 	/**
-	 * Adds the given set of <code>PerformanceFunction</code> to the set of
-	 * <code>PerformanceFunction</code>.
-	 * 
+	 * Adds the given set of <code>PerformanceFunction</code> to the set of <code>PerformanceFunction</code>.
+	 *
 	 * @param performanceFunctions
 	 *            the set of <code>PerformanceFunction</code> to be added.
 	 */
-	void addPerformanceFunctions(
-			Collection<PerformanceFunction> performanceFunctions);
+	void addPerformanceFunctions(Collection<PerformanceFunction> performanceFunctions);
 
 	/**
-	 * Adds the given set of <code>PerformanceFunction</code> to the set of
-	 * <code>PerformanceFunction</code>.
-	 * 
+	 * Adds the given set of <code>PerformanceFunction</code> to the set of <code>PerformanceFunction</code>.
+	 *
 	 * @param performanceFunctions
 	 *            the set of <code>PerformanceFunction</code> to be added.
 	 */
 	void addPerformanceFunctions(PerformanceFunction... performanceFunctions);
 
 	/**
-	 * Returns the <code>PerformanceFunction</code> by the given
-	 * <code>UniqueIdentifier</code> that identifies the
-	 * <code>PerformanceFunction</code>.
-	 * 
+	 * Returns the <code>PerformanceFunction</code> by the given <code>UniqueIdentifier</code> that identifies the <code>PerformanceFunction</code>.
+	 *
 	 * @param performanceFunctionIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>PerformanceFunction</code> to retrieve.
-	 * @return the <code>PerformanceFunction</code> if it exists,
-	 *         <code>null</code> otherwise.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>PerformanceFunction</code> to retrieve.
+	 * @return the <code>PerformanceFunction</code> if it exists, <code>null</code> otherwise.
 	 */
-	PerformanceFunction getPerformanceFunction(
-			UniqueIdentifier performanceFunctionIdentifier);
+	PerformanceFunction getPerformanceFunction(UniqueIdentifier performanceFunctionIdentifier);
 
 	/**
 	 * Returns the set of <code>PerformanceFunction</code>.
-	 * 
+	 *
 	 * @return the set of <code>PerformanceFunction</code>.
 	 */
 	Set<PerformanceFunction> getPerformanceFunctions();
 
 	/**
-	 * Removes the <code>PerformanceFunction</code> by the given
-	 * <code>UniqueIdentifier</code> that identifies the
-	 * <code>PerformanceFunction</code>.
-	 * 
+	 * Removes the <code>PerformanceFunction</code> by the given <code>UniqueIdentifier</code> that identifies the <code>PerformanceFunction</code>.
+	 *
 	 * @param performanceFunctionIdentifier
-	 *            the <code>UniqueIdentifier</code> that identifies the
-	 *            <code>PerformanceFunction</code> to be removed.
+	 *            the <code>UniqueIdentifier</code> that identifies the <code>PerformanceFunction</code> to be removed.
 	 */
-	void removePerformanceFunction(
-			UniqueIdentifier performanceFunctionIdentifier);
+	void removePerformanceFunction(UniqueIdentifier performanceFunctionIdentifier);
 
 	/**
 	 * Clears the set of <code>PerformanceFunction</code>.
@@ -851,59 +722,50 @@ public interface Organization {
 	void removeAllPerformanceFunctions();
 
 	/**
-	 * Adds the given <code>Characteristic</code> to the set of
-	 * <code>Characteristic</code>.
-	 * 
+	 * Adds the given <code>Characteristic</code> to the set of <code>Characteristic</code>.
+	 *
 	 * @param characteristic
 	 *            the <code>Characteristic</code> to add.
 	 */
 	void addCharacteristic(Characteristic characteristic);
 
 	/**
-	 * Adds the given set of <code>Characteristic</code> to the set of
-	 * <code>Characteristic</code>.
-	 * 
+	 * Adds the given set of <code>Characteristic</code> to the set of <code>Characteristic</code>.
+	 *
 	 * @param characteristics
 	 *            the set of <code>Characteristic</code> to add.
 	 */
 	void addCharacteristics(Collection<Characteristic> characteristics);
 
 	/**
-	 * Adds the given set of <code>Characteristic</code> to the set of
-	 * <code>Characteristic</code>.
-	 * 
+	 * Adds the given set of <code>Characteristic</code> to the set of <code>Characteristic</code>.
+	 *
 	 * @param characteristics
 	 *            the set of <code>Characteristic</code> to add.
 	 */
 	void addCharacteristics(Characteristic... characteristics);
 
 	/**
-	 * Returns the <code>Characteristic</code> represented by the given
-	 * <code>UniqueIdentifier</code>.
-	 * 
+	 * Returns the <code>Characteristic</code> represented by the given <code>UniqueIdentifier</code>.
+	 *
 	 * @param characteristicIdentifier
-	 *            the <code>UniqueIdentifier</code> of the
-	 *            <code>Characteristic</code> to return.
-	 * @return the <code>Characteristic</code> represented by the given
-	 *         <code>UniqueIdentifier</code>, <code>null</code> otherwise.
+	 *            the <code>UniqueIdentifier</code> of the <code>Characteristic</code> to return.
+	 * @return the <code>Characteristic</code> represented by the given <code>UniqueIdentifier</code>, <code>null</code> otherwise.
 	 */
 	Characteristic getCharacteristic(UniqueIdentifier characteristicIdentifier);
 
 	/**
 	 * Returns the set of <code>Characteristic</code>.
-	 * 
+	 *
 	 * @return the set of <code>Characteristic</code>.
 	 */
 	Set<Characteristic> getCharacteristics();
 
 	/**
-	 * Removes the <code>Characteristic</code> (from the given
-	 * <code>UniqueIdentifier</code>) from the set of
-	 * <code>Characteristic</code>.
-	 * 
+	 * Removes the <code>Characteristic</code> (from the given <code>UniqueIdentifier</code>) from the set of <code>Characteristic</code>.
+	 *
 	 * @param characteristicIdentifier
-	 *            the <code>UniqueIdentifier</code> of the
-	 *            <code>Characteristic</code> to remove.
+	 *            the <code>UniqueIdentifier</code> of the <code>Characteristic</code> to remove.
 	 */
 	void removeCharacteristic(UniqueIdentifier characteristicIdentifier);
 
@@ -913,283 +775,198 @@ public interface Organization {
 	void removeAllCharacteristic();
 
 	/**
-	 * Creates the achieves relation with the given <code>Role</code>,
-	 * <code>SpecificationGoal</code>, and score.
-	 * 
+	 * Creates the achieves relation with the given <code>Role</code>, <code>SpecificationGoal</code>, and score.
+	 *
 	 * @param roleIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Role</code> for the achieves relation.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Role</code> for the achieves relation.
 	 * @param goalIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>SpecificationGoal</code> for the achieves relation.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>SpecificationGoal</code> for the achieves relation.
 	 */
-	void specifyAchievesRelation(UniqueIdentifier roleIdentifier,
-			UniqueIdentifier goalIdentifier);
+	void specifyAchievesRelation(UniqueIdentifier roleIdentifier, UniqueIdentifier goalIdentifier);
 
 	/**
-	 * Removes the achieves relation with the given <code>Role</code> and
-	 * <code>SpecificationGoal</code>.
-	 * 
+	 * Removes the achieves relation with the given <code>Role</code> and <code>SpecificationGoal</code>.
+	 *
 	 * @param roleIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Role</code> for the achieves relation.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Role</code> for the achieves relation.
 	 * @param goalIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>SpecificationGoal</code> for the achieves relation.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>SpecificationGoal</code> for the achieves relation.
 	 */
-	void removeAchievesRelation(UniqueIdentifier roleIdentifier,
-			UniqueIdentifier goalIdentifier);
+	void removeAchievesRelation(UniqueIdentifier roleIdentifier, UniqueIdentifier goalIdentifier);
 
 	/**
-	 * Creates the requires relation with the given <code>Role</code> and
-	 * <code>Capability</code>.
-	 * 
+	 * Creates the requires relation with the given <code>Role</code> and <code>Capability</code>.
+	 *
 	 * @param roleIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Role</code> for the requires relation.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Role</code> for the requires relation.
 	 * @param capabilityIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Capability</code> for the requires relation.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Capability</code> for the requires relation.
 	 */
-	void specifyRequiresRelation(UniqueIdentifier roleIdentifier,
-			UniqueIdentifier capabilityIdentifier);
+	void specifyRequiresRelation(UniqueIdentifier roleIdentifier, UniqueIdentifier capabilityIdentifier);
 
 	/**
-	 * Removes the requires relation with the given <code>Role</code> and
-	 * <code>Capability</code>.
-	 * 
+	 * Removes the requires relation with the given <code>Role</code> and <code>Capability</code>.
+	 *
 	 * @param roleIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Role</code> for the requires relation.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Role</code> for the requires relation.
 	 * @param capabilityIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Capability</code> for the requires relation.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Capability</code> for the requires relation.
 	 */
-	void removeRequiresRelation(UniqueIdentifier roleIdentifier,
-			UniqueIdentifier capabilityIdentifier);
+	void removeRequiresRelation(UniqueIdentifier roleIdentifier, UniqueIdentifier capabilityIdentifier);
 
 	/**
-	 * Creates the possesses relation with the given <code>Agent</code>,
-	 * <code>Capability</code>, and score.
-	 * 
+	 * Creates the possesses relation with the given <code>Agent</code>, <code>Capability</code>, and score.
+	 *
 	 * @param agentIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Agent</code> for the possesses relation.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Agent</code> for the possesses relation.
 	 * @param capabilityIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Capability</code> for the possesses relation.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Capability</code> for the possesses relation.
 	 * @param score
 	 *            the score of the possesses relation.
 	 */
-	void specifyPossessesRelation(UniqueIdentifier agentIdentifier,
-			UniqueIdentifier capabilityIdentifier, double score);
+	void specifyPossessesRelation(UniqueIdentifier agentIdentifier, UniqueIdentifier capabilityIdentifier, double score);
 
 	/**
-	 * Removes the possesses relation with the given <code>Agent</code> and
-	 * <code>Capability</code>.
-	 * 
+	 * Removes the possesses relation with the given <code>Agent</code> and <code>Capability</code>.
+	 *
 	 * @param agentIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Agent</code> for the possesses relation.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Agent</code> for the possesses relation.
 	 * @param capabilityIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Capability</code> for the possesses relation.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Capability</code> for the possesses relation.
 	 */
-	void removePossessesRelation(UniqueIdentifier agentIdentifier,
-			UniqueIdentifier capabilityIdentifier);
+	void removePossessesRelation(UniqueIdentifier agentIdentifier, UniqueIdentifier capabilityIdentifier);
 
 	/**
-	 * Updates the possesses relation with the given <code>Agent</code>,
-	 * <code>Capability</code>, and score.
-	 * 
+	 * Updates the possesses relation with the given <code>Agent</code>, <code>Capability</code>, and score.
+	 *
 	 * @param agentIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Agent</code> for the possesses relation.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Agent</code> for the possesses relation.
 	 * @param capabilityIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Capability</code> for the possesses relation.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Capability</code> for the possesses relation.
 	 * @param score
 	 *            the score of the possesses relation.
 	 */
-	void updatePossessesRelation(UniqueIdentifier agentIdentifier,
-			UniqueIdentifier capabilityIdentifier, double score);
+	void updatePossessesRelation(UniqueIdentifier agentIdentifier, UniqueIdentifier capabilityIdentifier, double score);
 
 	/**
-	 * Creates the <code>NeedsRelation</code> with the given <code>Role</code>
-	 * and <code>Attribute</code>.
-	 * 
+	 * Creates the <code>NeedsRelation</code> with the given <code>Role</code> and <code>Attribute</code>.
+	 *
 	 * @param roleIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Role</code> for the <code>NeedsRelation</code>.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Role</code> for the <code>NeedsRelation</code>.
 	 * @param attributeIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Attribute</code> for the <code>NeedsRelation</code> .
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Attribute</code> for the <code>NeedsRelation</code> .
 	 */
-	void specifyNeedsRelation(UniqueIdentifier roleIdentifier,
-			UniqueIdentifier attributeIdentifier);
+	void specifyNeedsRelation(UniqueIdentifier roleIdentifier, UniqueIdentifier attributeIdentifier);
 
 	/**
-	 * Removes the <code>NeedsRelation</code> with the given <code>Role</code>
-	 * and <code>Attribute</code>.
-	 * 
+	 * Removes the <code>NeedsRelation</code> with the given <code>Role</code> and <code>Attribute</code>.
+	 *
 	 * @param roleIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Role</code> for the <code>NeedsRelation</code>.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Role</code> for the <code>NeedsRelation</code>.
 	 * @param attributeIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Attribute</code> for the <code>NeedsRelation</code> .
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Attribute</code> for the <code>NeedsRelation</code> .
 	 */
-	void removeNeedsRelation(UniqueIdentifier roleIdentifier,
-			UniqueIdentifier attributeIdentifier);
+	void removeNeedsRelation(UniqueIdentifier roleIdentifier, UniqueIdentifier attributeIdentifier);
 
 	/**
-	 * Creates the <code>HasRelation</code> with the given <code>Role</code>,
-	 * <code>Attribute</code>, and a <code>double</code> representing the score.
-	 * 
+	 * Creates the <code>HasRelation</code> with the given <code>Role</code>, <code>Attribute</code>, and a <code>double</code> representing the score.
+	 *
 	 * @param agentIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Agent</code> for the <code>HasRelation</code>.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Agent</code> for the <code>HasRelation</code>.
 	 * @param attributeIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Attribute</code> for the <code>HasRelation</code>.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Attribute</code> for the <code>HasRelation</code>.
 	 * @param value
-	 *            the <code>double</code> representing the value for the
-	 *            <code>HasRelation</code>.
+	 *            the <code>double</code> representing the value for the <code>HasRelation</code>.
 	 */
-	void specifyHasRelation(UniqueIdentifier agentIdentifier,
-			UniqueIdentifier attributeIdentifier, double value);
+	void specifyHasRelation(UniqueIdentifier agentIdentifier, UniqueIdentifier attributeIdentifier, double value);
 
 	/**
-	 * Removes the <code>HasRelation</code> with the given <code>Agent</code>
-	 * and <code>Attribute</code>.
-	 * 
+	 * Removes the <code>HasRelation</code> with the given <code>Agent</code> and <code>Attribute</code>.
+	 *
 	 * @param agentIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Agent</code> for the <code>HasRelation</code>.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Agent</code> for the <code>HasRelation</code>.
 	 * @param attributeIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Attribute</code> for the <code>HasRelation</code>.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Attribute</code> for the <code>HasRelation</code>.
 	 */
-	void removeHasRelation(UniqueIdentifier agentIdentifier,
-			UniqueIdentifier attributeIdentifier);
+	void removeHasRelation(UniqueIdentifier agentIdentifier, UniqueIdentifier attributeIdentifier);
 
 	/**
-	 * Updates the <code>HasRelation</code> with the given <code>Agent</code>,
-	 * <code>Attribute</code>, and <code>double</code> representing the score.
-	 * 
+	 * Updates the <code>HasRelation</code> with the given <code>Agent</code>, <code>Attribute</code>, and <code>double</code> representing the score.
+	 *
 	 * @param agentIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Agent</code> for the <code>HasRelation</code>.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Agent</code> for the <code>HasRelation</code>.
 	 * @param attributeIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Attribute</code> for the <code>HasRelation</code>.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Attribute</code> for the <code>HasRelation</code>.
 	 * @param score
-	 *            the <code>double</code> representing the score for the
-	 *            <code>HasRelation</code>.
+	 *            the <code>double</code> representing the score for the <code>HasRelation</code>.
 	 */
-	void updateHasRelation(UniqueIdentifier agentIdentifier,
-			UniqueIdentifier attributeIdentifier, double score);
+	void updateHasRelation(UniqueIdentifier agentIdentifier, UniqueIdentifier attributeIdentifier, double score);
 
 	/**
-	 * Creates the <code>LinkedRelation</code> with the given <code>Role</code>
-	 * and <code>PerformanceFunction</code>.
-	 * 
+	 * Creates the <code>LinkedRelation</code> with the given <code>Role</code> and <code>PerformanceFunction</code>.
+	 *
 	 * @param roleIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Role</code> for the <code>LinkedRelation</code>.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Role</code> for the <code>LinkedRelation</code>.
 	 * @param functionIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>PerformanceFunction</code> for the
-	 *            <code>LinkedRelation</code>.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>PerformanceFunction</code> for the <code>LinkedRelation</code>.
 	 */
-	void specifyUsesRelation(UniqueIdentifier roleIdentifier,
-			UniqueIdentifier functionIdentifier);
+	void specifyUsesRelation(UniqueIdentifier roleIdentifier, UniqueIdentifier functionIdentifier);
 
 	/**
-	 * Removes the <code>LinkedRelation</code> with the given <code>Role</code>
-	 * and <code>PerformanceFunction</code>.
-	 * 
+	 * Removes the <code>LinkedRelation</code> with the given <code>Role</code> and <code>PerformanceFunction</code>.
+	 *
 	 * @param roleIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Role</code> for the <code>LinkedRelation</code>.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Role</code> for the <code>LinkedRelation</code>.
 	 * @param functionIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>PerformanceFunction</code> for the
-	 *            <code>LinkedRelation</code>.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>PerformanceFunction</code> for the <code>LinkedRelation</code>.
 	 */
-	void removeUsesRelation(UniqueIdentifier roleIdentifier,
-			UniqueIdentifier functionIdentifier);
+	void removeUsesRelation(UniqueIdentifier roleIdentifier, UniqueIdentifier functionIdentifier);
 
 	/**
-	 * Creates the <code>ModeratesRelation</code> with the given
-	 * <code>PerformanceFunction</code> and <code>Attribute</code>.
-	 * 
+	 * Creates the <code>ModeratesRelation</code> with the given <code>PerformanceFunction</code> and <code>Attribute</code>.
+	 *
 	 * @param performanceFunctionIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>PerformanceFunction</code> for the
-	 *            <code>ModeratesRelation</code>.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>PerformanceFunction</code> for the <code>ModeratesRelation</code>.
 	 * @param attributeIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the
-	 *            <code>Attribute</code> for the <code>ModeratesRelation</code>.
+	 *            the <code>UniqueIdentifier</code> identifying the <code>Attribute</code> for the <code>ModeratesRelation</code>.
 	 */
-	void specifyModeratesRelation(
-			UniqueIdentifier performanceFunctionIdentifier,
-			UniqueIdentifier attributeIdentifier);
+	void specifyModeratesRelation(UniqueIdentifier performanceFunctionIdentifier, UniqueIdentifier attributeIdentifier);
 
 	/**
-	 * Creates the <code>ContainsRelation</code> with the <code>Role</code>
-	 * (from the given <code>UniqueIdentifier</code>),
-	 * <code>Characteristic</code> (from the given <code>UniqueIdentifier</code>
-	 * ), and <code>double</code> value.
-	 * 
+	 * Creates the <code>ContainsRelation</code> with the <code>Role</code> (from the given <code>UniqueIdentifier</code>), <code>Characteristic</code> (from
+	 * the given <code>UniqueIdentifier</code> ), and <code>double</code> value.
+	 *
 	 * @param roleIdentifier
-	 *            the <code>UniqueIdentifier</code> of the <code>Role</code> for
-	 *            the <code>ContainsRelation</code>.
+	 *            the <code>UniqueIdentifier</code> of the <code>Role</code> for the <code>ContainsRelation</code>.
 	 * @param characteristicIdentifier
-	 *            the <code>UniqueIdentifier</code> of the
-	 *            <code>Characteristic</code> for the
-	 *            <code>ContainsRelation</code>.
+	 *            the <code>UniqueIdentifier</code> of the <code>Characteristic</code> for the <code>ContainsRelation</code>.
 	 * @param value
-	 *            the <code>double</code> value for the
-	 *            <code>ContainsRelation</code>.
+	 *            the <code>double</code> value for the <code>ContainsRelation</code>.
 	 */
-	void specifyContainsRelation(UniqueIdentifier roleIdentifier,
-			UniqueIdentifier characteristicIdentifier, double value);
+	void specifyContainsRelation(UniqueIdentifier roleIdentifier, UniqueIdentifier characteristicIdentifier, double value);
 
 	/**
-	 * Removes the <code>ContainsRelation</code> of the <code>Role</code> (from
-	 * the given <code>UniqueIdentifier</code>) and <code>Characteristic</code>
-	 * (from the given <code>UniqueIdentifier</code>).
-	 * 
+	 * Removes the <code>ContainsRelation</code> of the <code>Role</code> (from the given <code>UniqueIdentifier</code>) and <code>Characteristic</code> (from
+	 * the given <code>UniqueIdentifier</code>).
+	 *
 	 * @param roleIdentifier
-	 *            the <code>UniqueIdentifier</code> of the <code>Role</code> for
-	 *            the <code>ContainsRelation</code>.
+	 *            the <code>UniqueIdentifier</code> of the <code>Role</code> for the <code>ContainsRelation</code>.
 	 * @param characteristicIdentifier
-	 *            the <code>UniqueIdentifier</code> of the
-	 *            <code>Characteristic</code> for the
-	 *            <code>ContainsRelation</code>.
+	 *            the <code>UniqueIdentifier</code> of the <code>Characteristic</code> for the <code>ContainsRelation</code>.
 	 */
-	void removeContainsRelation(UniqueIdentifier roleIdentifier,
-			UniqueIdentifier characteristicIdentifier);
+	void removeContainsRelation(UniqueIdentifier roleIdentifier, UniqueIdentifier characteristicIdentifier);
 
 	/**
-	 * Updates the <code>ContainsRelation</code> of the <code>Role</code> (from
-	 * the given <code>UniqueIdentifier</code>) and <code>Characteristic</code>
-	 * (from the given <code>UniqueIdentifier</code>) with the given new
-	 * <code>double</code> value.
-	 * 
+	 * Updates the <code>ContainsRelation</code> of the <code>Role</code> (from the given <code>UniqueIdentifier</code>) and <code>Characteristic</code> (from
+	 * the given <code>UniqueIdentifier</code>) with the given new <code>double</code> value.
+	 *
 	 * @param roleIdentifier
-	 *            the <code>UniqueIdentifier</code> of the <code>Role</code> for
-	 *            the <code>ContainsRelation</code>.
+	 *            the <code>UniqueIdentifier</code> of the <code>Role</code> for the <code>ContainsRelation</code>.
 	 * @param characteristicIdentifier
-	 *            the <code>UniqueIdentifier</code> of the
-	 *            <code>Characteristic</code> for the
-	 *            <code>ContainsRelation</code>.
+	 *            the <code>UniqueIdentifier</code> of the <code>Characteristic</code> for the <code>ContainsRelation</code>.
 	 * @param value
-	 *            the new <code>double</code> value for the
-	 *            <code>ContainsRelation</code>.
+	 *            the new <code>double</code> value for the <code>ContainsRelation</code>.
 	 */
-	void updateContainsRelation(UniqueIdentifier roleIdentifier,
-			UniqueIdentifier characteristicIdentifier, double value);
+	void updateContainsRelation(UniqueIdentifier roleIdentifier, UniqueIdentifier characteristicIdentifier, double value);
 
 }
