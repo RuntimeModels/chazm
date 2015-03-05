@@ -1,16 +1,15 @@
 /*
  * ClassIdentifier.java
- * 
+ *
  * Created on Nov 6, 2007
- * 
+ *
  * See License.txt file the license agreement.
  */
 package org.models.organization.identifier;
 
 /**
- * The <code>ClassIdentifier</code> implements the {@link UniqueIdentifier}
- * interface to represent {@link Class} as entities in the Organization Model.
- * 
+ * The <code>ClassIdentifier</code> implements the {@link UniqueIdentifier} interface to represent {@link Class} as entities in the Organization Model.
+ *
  * @author Christopher Zhong
  * @version $Revision: 1.1 $, $Date: 2009/03/06 15:34:59 $
  * @since 4.0
@@ -34,17 +33,15 @@ public class ClassIdentifier extends UniqueIdentifier {
 	private transient Integer hashCode = null;
 
 	/**
-	 * Optimization for the <code>toString()</code> method since it never
-	 * changes.
+	 * Optimization for the <code>toString()</code> method since it never changes.
 	 */
 	private String toString = null;
 
 	/**
 	 * Constructs a new instance of <code>ClassIdentifier</code>.
-	 * 
+	 *
 	 * @param classType
-	 *            the <code>Class</code> that is used as the
-	 *            <code>UniqueIdentifier</code>.
+	 *            the <code>Class</code> that is used as the <code>UniqueIdentifier</code>.
 	 */
 	public ClassIdentifier(final Class<?> classType) {
 		this.classType = classType;

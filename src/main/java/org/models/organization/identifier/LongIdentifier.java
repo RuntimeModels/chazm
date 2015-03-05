@@ -1,17 +1,15 @@
 /*
  * LongIdentifier.java
- * 
+ *
  * Created on Feb 7, 2008
- * 
+ *
  * See License.txt file the license agreement.
  */
 package org.models.organization.identifier;
 
 /**
- * The <code>LongIdentifier</code> implements the {@link UniqueIdentifier}
- * interface to represent <code>long</code> as entities in the Organization
- * Model.
- * 
+ * The <code>LongIdentifier</code> implements the {@link UniqueIdentifier} interface to represent <code>long</code> as entities in the Organization Model.
+ *
  * @author Christopher Zhong
  * @version $Revision: 1.3 $, $Date: 2009/12/03 00:03:25 $
  * @since 4.0
@@ -35,17 +33,15 @@ public class LongIdentifier extends UniqueIdentifier {
 	private transient Integer hashCode = null;
 
 	/**
-	 * Optimization for the <code>toString()</code> method since it never
-	 * changes.
+	 * Optimization for the <code>toString()</code> method since it never changes.
 	 */
 	private String toString = null;
 
 	/**
 	 * Constructs a new instance of <code>LongIdentifier</code>.
-	 * 
+	 *
 	 * @param value
-	 *            the <code>long</code> that is used as the
-	 *            <code>UniqueIdentifier</code>.
+	 *            the <code>long</code> that is used as the <code>UniqueIdentifier</code>.
 	 */
 	public LongIdentifier(final long value) {
 		this.value = value;

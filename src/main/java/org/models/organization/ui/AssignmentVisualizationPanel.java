@@ -22,16 +22,13 @@ import org.models.organization.entity.Organization;
 import org.models.organization.relation.Assignment;
 
 /**
- * The <code>AssignmentVisualizationPanel</code> class is a Swing component to
- * visualize the <code>Assignment</code> currently in the
- * <code>Organization</code>.
- * 
+ * The <code>AssignmentVisualizationPanel</code> class is a Swing component to visualize the <code>Assignment</code> currently in the <code>Organization</code>.
+ *
  * @author Christopher Zhong
  * @version $Revision: 1.2.4.4 $, $Date: 2011/09/19 14:26:34 $
  * @since 3.4
  */
-public class AssignmentVisualizationPanel extends
-		AbstractListVisualizationPanel<Assignment> {
+public class AssignmentVisualizationPanel extends AbstractListVisualizationPanel<Assignment> {
 
 	/**
 	 * Default serial version ID.
@@ -40,17 +37,13 @@ public class AssignmentVisualizationPanel extends
 
 	/**
 	 * Constructs a new instance of <code>AssignmentVisualizationPanel</code>.
-	 * 
+	 *
 	 * @param organization
-	 *            the <code>Organization</code> that is used to visualize the
-	 *            <code>Assignment</code>.
+	 *            the <code>Organization</code> that is used to visualize the <code>Assignment</code>.
 	 */
 	public AssignmentVisualizationPanel(final Organization organization) {
-		super(organization, "Assignments",
-				ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
-				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED,
-				JSplitPane.VERTICAL_SPLIT, true,
-				ListSelectionModel.SINGLE_SELECTION, JList.VERTICAL, 10);
+		super(organization, "Assignments", ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED,
+				JSplitPane.VERTICAL_SPLIT, true, ListSelectionModel.SINGLE_SELECTION, JList.VERTICAL, 10);
 	}
 
 	@Override
@@ -63,17 +56,8 @@ public class AssignmentVisualizationPanel extends
 
 	@Override
 	List<Assignment> getCollection() {
-		final List<Assignment> assignments = new ArrayList<>(getOrganization()
-				.getAssignments());
-		final Comparator<Assignment> comparator = new Comparator<Assignment>() {
-
-			@Override
-			public int compare(final Assignment assignment1,
-					final Assignment assignment2) {
-				return assignment1.toString().compareTo(assignment2.toString());
-			}
-
-		};
+		final List<Assignment> assignments = new ArrayList<>(getOrganization().getAssignments());
+		final Comparator<Assignment> comparator = (assignment1, assignment2) -> assignment1.toString().compareTo(assignment2.toString());
 		Collections.sort(assignments, comparator);
 		return assignments;
 	}

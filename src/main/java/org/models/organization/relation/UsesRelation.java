@@ -52,7 +52,7 @@ public class UsesRelation {
 
 	/**
 	 * Constructs a new instance of <code>UsesRelation</code>.
-	 * 
+	 *
 	 * @param role
 	 *            the <code>Role</code> for the <code>UsesRelation</code>.
 	 * @param performanceFunction
@@ -68,7 +68,7 @@ public class UsesRelation {
 
 	/**
 	 * Returns the <code>Task</code>.
-	 * 
+	 *
 	 * @return the <code>Task</code>.
 	 */
 	public Role getRole() {
@@ -77,7 +77,7 @@ public class UsesRelation {
 
 	/**
 	 * Returns the <code>PerformanceFunction</code>.
-	 * 
+	 *
 	 * @return the <code>PerformanceFunction</code>.
 	 */
 	public PerformanceFunction getPerformanceFunction() {

@@ -17,10 +17,9 @@ import org.models.organization.entity.Role;
 import org.models.organization.relation.Assignment;
 
 /**
- * The <code>RoleGoodnessFunction</code> interface provides the necessary
- * functionality for computing the goodness score of how good an {@link Agent}
- * plays a {@link Role} to achieve a {@link InstanceGoal}.
- * 
+ * The <code>RoleGoodnessFunction</code> interface provides the necessary functionality for computing the goodness score of how good an {@link Agent} plays a
+ * {@link Role} to achieve a {@link InstanceGoal}.
+ *
  * @author Christopher Zhong
  * @version $Revision: 1.1.2.8 $, $Date: 2012/01/20 21:24:38 $
  * @since 6.0
@@ -28,26 +27,19 @@ import org.models.organization.relation.Assignment;
 public interface RoleGoodnessFunction {
 
 	/**
-	 * The <code>DefaultRoleGoodnessFunction</code> provides a very basic
-	 * goodness function that only checks if the given <code>Agent</code> has
-	 * the necessary attributes and then multiplies the scores of the
-	 * capabilities.
-	 * 
+	 * The <code>DefaultRoleGoodnessFunction</code> provides a very basic goodness function that only checks if the given <code>Agent</code> has the necessary
+	 * attributes and then multiplies the scores of the capabilities.
+	 *
 	 * @author Christopher Zhong
 	 * @version $Revision: 1.1.2.8 $, $Date: 2012/01/20 21:24:38 $
 	 * @since 6.0
 	 */
-	public static final class DefaultRoleGoodnessFunction implements
-			RoleGoodnessFunction {
+	public static final class DefaultRoleGoodnessFunction implements RoleGoodnessFunction {
 
 		@Override
-		public double goodness(final Role role, final Agent<?> agent,
-				final InstanceGoal<?> goal,
-				final Collection<Assignment> assignments) {
+		public double goodness(final Role role, final Agent<?> agent, final InstanceGoal<?> goal, final Collection<Assignment> assignments) {
 			/*
-			 * first, check that the agent has all the necessary attributes.
-			 * otherwise, return a null to indicate that the agent cannot play
-			 * the role
+			 * first, check that the agent has all the necessary attributes. otherwise, return a null to indicate that the agent cannot play the role
 			 */
 			for (final Attribute attribute : role.getNeedsSet()) {
 				if (agent.has(attribute) == null) {
@@ -82,40 +74,31 @@ public interface RoleGoodnessFunction {
 	}
 
 	/**
-	 * <code>MIN_SCORE</code> is the minimum possible value for a score, which
-	 * is {@value} .
+	 * <code>MIN_SCORE</code> is the minimum possible value for a score, which is {@value} .
 	 */
 	public static final double MIN_SCORE = 0.0;
 
 	/**
-	 * <code>MAX_SCORE</code> is the maximum possible value for a score, which
-	 * is {@value} .
+	 * <code>MAX_SCORE</code> is the maximum possible value for a score, which is {@value} .
 	 */
 	public static final double MAX_SCORE = 1.0;
 
 	/**
-	 * Returns the score (<code>0.0</code> &le; score &le; <code>1.0</code>) of
-	 * how good the given {@link Agent} plays the given {@link Role} to achieve
-	 * the given {@link InstanceGoal}.
-	 * 
+	 * Returns the score (<code>0.0</code> &le; score &le; <code>1.0</code>) of how good the given {@link Agent} plays the given {@link Role} to achieve the
+	 * given {@link InstanceGoal}.
+	 *
 	 * @param role
 	 *            the {@link Role} to compute the goodness score.
 	 * @param agent
 	 *            the {@link Agent} to compute the goodness score.
 	 * @param goal
-	 *            the {@link InstanceGoal} that may be used in computing the
-	 *            goodness score.
+	 *            the {@link InstanceGoal} that may be used in computing the goodness score.
 	 * @param assignments
-	 *            the {@link Assignment} that may be used in computing the
-	 *            goodness score.
-	 * @return the goodness score (<code>0.0</code> &le; score &le;
-	 *         <code>1.0</code>) of how good the given {@link Agent} plays the
-	 *         given {@link Role} to achieve the given {@link InstanceGoal}. A
-	 *         value of <code>0.0</code> indicates that the {@link Agent} cannot
-	 *         perform the {@link Role} or the {@link InstanceGoal} cannot be
-	 *         achieved by the {@link Role}.
+	 *            the {@link Assignment} that may be used in computing the goodness score.
+	 * @return the goodness score (<code>0.0</code> &le; score &le; <code>1.0</code>) of how good the given {@link Agent} plays the given {@link Role} to
+	 *         achieve the given {@link InstanceGoal}. A value of <code>0.0</code> indicates that the {@link Agent} cannot perform the {@link Role} or the
+	 *         {@link InstanceGoal} cannot be achieved by the {@link Role}.
 	 */
-	double goodness(Role role, Agent<?> agent, InstanceGoal<?> goal,
-			Collection<Assignment> assignments);
+	double goodness(Role role, Agent<?> agent, InstanceGoal<?> goal, Collection<Assignment> assignments);
 
 }

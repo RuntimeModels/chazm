@@ -19,9 +19,8 @@ import org.models.organization.function.RoleGoodnessFunction;
 import org.models.organization.identifier.UniqueIdentifier;
 
 /**
- * The <code>Task</code> class represents the task entity of the Organization
- * Model.
- * 
+ * The <code>Task</code> class represents the task entity of the Organization Model.
+ *
  * @author Christopher Zhong
  * @version $Revision: 1.1.2.7 $, $Date: 2012/01/20 21:24:38 $
  * @since 6.0
@@ -29,15 +28,13 @@ import org.models.organization.identifier.UniqueIdentifier;
 public class Task {
 
 	/**
-	 * Internal <code>String</code> for the formatting of the
-	 * <code>toString</code> method.
+	 * Internal <code>String</code> for the formatting of the <code>toString</code> method.
 	 */
 	private static final String STRING_FORMAT = "<%s>";
 
 	/**
-	 * The <code>TaskIdentifier</code> extends the {@link UniqueIdentifier} by
-	 * using two {@link UniqueIdentifier} as the form of identification.
-	 * 
+	 * The <code>TaskIdentifier</code> extends the {@link UniqueIdentifier} by using two {@link UniqueIdentifier} as the form of identification.
+	 *
 	 * @author Christopher Zhong
 	 * @version $Revision: 1.1.2.7 $, $Date: 2012/01/20 21:24:38 $
 	 * @see UniqueIdentifier
@@ -51,8 +48,7 @@ public class Task {
 		private static final long serialVersionUID = 1L;
 
 		/**
-		 * Internal <code>String</code> for the formatting of <code>Task</code>
-		 * class.
+		 * Internal <code>String</code> for the formatting of <code>Task</code> class.
 		 */
 		private static final String STRING_FORMAT = "%s, %s";
 
@@ -62,8 +58,7 @@ public class Task {
 		private final UniqueIdentifier roleIdentifier;
 
 		/**
-		 * The <code>UniqueIdentifier</code> of the
-		 * <code>SpecificationGoal</code>.
+		 * The <code>UniqueIdentifier</code> of the <code>SpecificationGoal</code>.
 		 */
 		private final UniqueIdentifier goalIdentifier;
 
@@ -79,23 +74,20 @@ public class Task {
 
 		/**
 		 * Constructs a new instance of <code>AssignmentIdentifier</code>.
-		 * 
+		 *
 		 * @param roleIdentifier
-		 *            the <code>UniqueIdentifier</code> of the <code>Role</code>
-		 *            .
+		 *            the <code>UniqueIdentifier</code> of the <code>Role</code> .
 		 * @param goalIdentifier
-		 *            the <code>UniqueIdentifier</code> of the
-		 *            <code>SpecificationGoal</code>.
+		 *            the <code>UniqueIdentifier</code> of the <code>SpecificationGoal</code>.
 		 */
-		public TaskIdentifier(final UniqueIdentifier roleIdentifier,
-				final UniqueIdentifier goalIdentifier) {
+		public TaskIdentifier(final UniqueIdentifier roleIdentifier, final UniqueIdentifier goalIdentifier) {
 			this.roleIdentifier = roleIdentifier;
 			this.goalIdentifier = goalIdentifier;
 		}
 
 		/**
 		 * Returns the <code>UniqueIdentifier</code> of the <code>Role</code>.
-		 * 
+		 *
 		 * @return the <code>UniqueIdentifier</code> of the <code>Role</code>..
 		 */
 		private UniqueIdentifier getRoleIdentifier() {
@@ -103,11 +95,9 @@ public class Task {
 		}
 
 		/**
-		 * Returns the <code>UniqueIdentifier</code> of the
-		 * <code>SpecificationGoal</code>.
-		 * 
-		 * @return the <code>UniqueIdentifier</code> of the
-		 *         <code>SpecificationGoal</code>.
+		 * Returns the <code>UniqueIdentifier</code> of the <code>SpecificationGoal</code>.
+		 *
+		 * @return the <code>UniqueIdentifier</code> of the <code>SpecificationGoal</code>.
 		 */
 		private UniqueIdentifier getGoalIdentifier() {
 			return goalIdentifier;
@@ -117,10 +107,7 @@ public class Task {
 		public boolean equals(final Object object) {
 			if (object instanceof TaskIdentifier) {
 				final TaskIdentifier taskIdentifier = (TaskIdentifier) object;
-				return getRoleIdentifier().equals(
-						taskIdentifier.getRoleIdentifier())
-						&& getGoalIdentifier().equals(
-								taskIdentifier.getGoalIdentifier());
+				return getRoleIdentifier().equals(taskIdentifier.getRoleIdentifier()) && getGoalIdentifier().equals(taskIdentifier.getGoalIdentifier());
 			}
 			return false;
 		}
@@ -128,8 +115,7 @@ public class Task {
 		@Override
 		public int hashCode() {
 			if (hashCode == null) {
-				hashCode = getRoleIdentifier().hashCode() << 16
-						| getGoalIdentifier().hashCode();
+				hashCode = getRoleIdentifier().hashCode() << 16 | getGoalIdentifier().hashCode();
 			}
 			return hashCode;
 		}
@@ -137,8 +123,7 @@ public class Task {
 		@Override
 		public String toString() {
 			if (toString == null) {
-				toString = String.format(STRING_FORMAT, getRoleIdentifier(),
-						getGoalIdentifier());
+				toString = String.format(STRING_FORMAT, getRoleIdentifier(), getGoalIdentifier());
 			}
 			return toString;
 		}
@@ -167,7 +152,7 @@ public class Task {
 
 	/**
 	 * Constructs a new instance of <code>TaskImpl</code>.
-	 * 
+	 *
 	 * @param role
 	 *            the <code>Role</code> of this <code>Task</code>.
 	 * @param specificationGoal
@@ -175,22 +160,17 @@ public class Task {
 	 */
 	public Task(final Role role, final SpecificationGoal specificationGoal) {
 		if (role == null || specificationGoal == null) {
-			throw new IllegalArgumentException(String.format(
-					"Parameters (role: %s, goal: %s) cannot be null", role,
-					specificationGoal));
+			throw new IllegalArgumentException(String.format("Parameters (role: %s, goal: %s) cannot be null", role, specificationGoal));
 		}
-		identifier = new TaskIdentifier(role.getIdentifier(),
-				specificationGoal.getIdentifier());
+		identifier = new TaskIdentifier(role.getIdentifier(), specificationGoal.getIdentifier());
 		this.role = role;
 		this.specificationGoal = specificationGoal;
 	}
 
 	/**
-	 * Returns the unique <code>UniqueIdentifier</code> representing the
-	 * <code>SimpleTask</code>.
-	 * 
-	 * @return the unique <code>UniqueIdentifier</code> representing the
-	 *         <code>SimpleTask</code>.
+	 * Returns the unique <code>UniqueIdentifier</code> representing the <code>SimpleTask</code>.
+	 *
+	 * @return the unique <code>UniqueIdentifier</code> representing the <code>SimpleTask</code>.
 	 */
 	public final UniqueIdentifier getIdentifier() {
 		return identifier;
@@ -198,7 +178,7 @@ public class Task {
 
 	/**
 	 * Returns the <code>Role</code> of this <code>Task</code>.
-	 * 
+	 *
 	 * @return the <code>Role</code> of this <code>Task</code>.
 	 */
 	public final Role getRole() {
@@ -207,7 +187,7 @@ public class Task {
 
 	/**
 	 * Returns the <code>SpecificationGoal</code> of this <code>Task</code>.
-	 * 
+	 *
 	 * @return the <code>SpecificationGoal</code> of this <code>Task</code>.
 	 */
 	public final SpecificationGoal getSpecificationGoal() {
@@ -215,42 +195,30 @@ public class Task {
 	}
 
 	/**
-	 * Returns the set of <code>PerformanceFunction</code> that is linked to
-	 * this <code>Task</code>.
-	 * 
-	 * @return the set of <code>PerformanceFunction</code> that is linked to
-	 *         this <code>Task</code>.
+	 * Returns the set of <code>PerformanceFunction</code> that is linked to this <code>Task</code>.
+	 *
+	 * @return the set of <code>PerformanceFunction</code> that is linked to this <code>Task</code>.
 	 */
 	public final Set<PerformanceFunction> getLinkedSet() {
 		return getRole().getUsesSet();
 	}
 
 	/**
-	 * Returns the score of how good the given {@link Agent} is able to carry
-	 * out the associated {@link Task} with respect to the given
-	 * {@link InstanceGoal}. The given {@link InstanceGoal} must be an instance
-	 * of the {@link SpecificationGoal} of the {@link Task}.
-	 * 
+	 * Returns the score of how good the given {@link Agent} is able to carry out the associated {@link Task} with respect to the given {@link InstanceGoal}.
+	 * The given {@link InstanceGoal} must be an instance of the {@link SpecificationGoal} of the {@link Task}.
+	 *
 	 * @param agent
 	 *            the {@link Agent} to compute the goodness score.
 	 * @param instanceGoal
-	 *            the {@link InstanceGoal} that may be used in computing the
-	 *            goodness score.
+	 *            the {@link InstanceGoal} that may be used in computing the goodness score.
 	 * @param assignments
-	 *            the {@link Assignment} that may be used in computing the
-	 *            goodness score.
-	 * @return the goodness score (<code>0.0</code> &le; score &le;
-	 *         <code>1.0</code>) of how good the given {@link Agent} is able to
-	 *         carry out the associated {@link Task} with respect to the given
-	 *         {@link InstanceGoal}. A value of <code>0.0</code> indicates that
-	 *         the {@link Agent} cannot perform the {@link Task} or the given
-	 *         {@link InstanceGoal} is not an instance of the
-	 *         {@link SpecificationGoal} of this {@link Task}.
+	 *            the {@link Assignment} that may be used in computing the goodness score.
+	 * @return the goodness score (<code>0.0</code> &le; score &le; <code>1.0</code>) of how good the given {@link Agent} is able to carry out the associated
+	 *         {@link Task} with respect to the given {@link InstanceGoal}. A value of <code>0.0</code> indicates that the {@link Agent} cannot perform the
+	 *         {@link Task} or the given {@link InstanceGoal} is not an instance of the {@link SpecificationGoal} of this {@link Task}.
 	 * @see RoleGoodnessFunction#goodness(Role, Agent, InstanceGoal, Collection)
 	 */
-	public final double goodness(final Agent<?> agent,
-			final InstanceGoal<?> instanceGoal,
-			final Collection<Assignment> assignments) {
+	public final double goodness(final Agent<?> agent, final InstanceGoal<?> instanceGoal, final Collection<Assignment> assignments) {
 		if (getSpecificationGoal().equals(instanceGoal.getSpecificationGoal())) {
 			return getRole().goodness(agent, instanceGoal, assignments);
 		}

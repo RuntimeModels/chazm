@@ -18,6 +18,7 @@ import org.junit.Test;
 
 /**
  * TODO Class Description!
+ * 
  * @author Christopher Zhong
  * @version $Revision: $, $Date: $
  * @since 6.0
@@ -26,6 +27,7 @@ public class AchievesRelationTest {
 
 	/**
 	 * TODO Method Description!
+	 * 
 	 * @throws java.lang.Exception
 	 */
 	@BeforeClass
@@ -34,6 +36,7 @@ public class AchievesRelationTest {
 
 	/**
 	 * TODO Method Description!
+	 * 
 	 * @throws java.lang.Exception
 	 */
 	@AfterClass
@@ -42,6 +45,7 @@ public class AchievesRelationTest {
 
 	/**
 	 * TODO Method Description!
+	 * 
 	 * @throws java.lang.Exception
 	 */
 	@Before
@@ -50,6 +54,7 @@ public class AchievesRelationTest {
 
 	/**
 	 * TODO Method Description!
+	 * 
 	 * @throws java.lang.Exception
 	 */
 	@After
@@ -66,7 +71,8 @@ public class AchievesRelationTest {
 	}
 
 	/**
-	 * Test method for {@link org.models.organization.relation.AchievesRelation#AchievesRelation(model.organization.entity.Role, model.organization.entity.SpecificationGoal)}.
+	 * Test method for
+	 * {@link org.models.organization.relation.AchievesRelation#AchievesRelation(model.organization.entity.Role, model.organization.entity.SpecificationGoal)}.
 	 */
 	@Ignore
 	@Test

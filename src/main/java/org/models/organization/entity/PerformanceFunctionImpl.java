@@ -21,9 +21,8 @@ import org.models.organization.relation.ModeratesRelation;
 import org.models.organization.relation.UsesRelation;
 
 /**
- * The <code>PerformanceFunctionImpl</code> class implements the
- * {@link PerformanceFunction} interface.
- * 
+ * The <code>PerformanceFunctionImpl</code> class implements the {@link PerformanceFunction} interface.
+ *
  * @author Christopher Zhong
  * @version $Revision: 1.1.2.5 $, $Date: 2011/09/19 14:26:37 $
  * @since 6.0
@@ -31,34 +30,29 @@ import org.models.organization.relation.UsesRelation;
 public class PerformanceFunctionImpl implements PerformanceFunction {
 
 	/**
-	 * The <code>UniqueIdentifier</code> representing the
-	 * <code>PerformanceFunction</code>.
+	 * The <code>UniqueIdentifier</code> representing the <code>PerformanceFunction</code>.
 	 */
 	private final UniqueIdentifier identifier;
 
 	/**
-	 * The set of <code>Task</code> that are linked to this
-	 * <code>PerformanceFunction</code>.
+	 * The set of <code>Task</code> that are linked to this <code>PerformanceFunction</code>.
 	 */
 	private final Map<UniqueIdentifier, UsesRelation> linkedBy = new ConcurrentHashMap<>();
 
 	/**
-	 * The <code>Attribute</code> that this <code>PerformanceFunction</code>
-	 * moderates.
+	 * The <code>Attribute</code> that this <code>PerformanceFunction</code> moderates.
 	 */
 	private ModeratesRelation moderates = null;
 
 	/**
 	 * Constructs a new instance of <code>PerformanceFunctionImpl</code>.
-	 * 
+	 *
 	 * @param identifier
-	 *            the <code>UniqueIdentifier</code> representing the
-	 *            <code>PerformanceFunction</code>.
+	 *            the <code>UniqueIdentifier</code> representing the <code>PerformanceFunction</code>.
 	 */
 	public PerformanceFunctionImpl(final UniqueIdentifier identifier) {
 		if (identifier == null) {
-			throw new IllegalArgumentException(
-					"Parameter (identifier) cannot be null");
+			throw new IllegalArgumentException("Parameter (identifier) cannot be null");
 		}
 		this.identifier = identifier;
 	}
@@ -69,18 +63,15 @@ public class PerformanceFunctionImpl implements PerformanceFunction {
 	}
 
 	/**
-	 * Adds the <code>Task</code> (in the given <code>LinkedRelation</code>) to
-	 * the set of <code>Task</code> that is linked to this
+	 * Adds the <code>Task</code> (in the given <code>LinkedRelation</code>) to the set of <code>Task</code> that is linked to this
 	 * <code>PerformanceFunction</code>.
-	 * 
+	 *
 	 * @param linkedRelation
-	 *            the <code>LinkedRelation</code> containing the
-	 *            <code>Task</code> to add.
+	 *            the <code>LinkedRelation</code> containing the <code>Task</code> to add.
 	 */
 	final void addUsedBy(final UsesRelation linkedRelation) {
 		if (linkedRelation == null) {
-			throw new IllegalArgumentException(
-					"Parameter (linkedRelation) cannot be null");
+			throw new IllegalArgumentException("Parameter (linkedRelation) cannot be null");
 		}
 		linkedBy.put(linkedRelation.getRole().getIdentifier(), linkedRelation);
 	}
@@ -95,9 +86,8 @@ public class PerformanceFunctionImpl implements PerformanceFunction {
 	}
 
 	/**
-	 * Removes the given <code>Role</code> from the set of <code>Role</code>
-	 * that is linked to this <code>PerformanceFunction</code>.
-	 * 
+	 * Removes the given <code>Role</code> from the set of <code>Role</code> that is linked to this <code>PerformanceFunction</code>.
+	 *
 	 * @param role
 	 *            the <code>Role</code> to remove.
 	 */
@@ -111,18 +101,13 @@ public class PerformanceFunctionImpl implements PerformanceFunction {
 	@Override
 	public final void setModerates(final Attribute attribute) {
 		if (attribute == null) {
-			throw new IllegalArgumentException(
-					"Parameter (attribute) cannot be null");
+			throw new IllegalArgumentException("Parameter (attribute) cannot be null");
 		}
 		if (moderates != null) {
-			throw new IllegalArgumentException(
-					String.format(
-							"Cannot set attribute (%s) as function (%s) already moderates (%s)",
-							attribute, getIdentifier(),
-							moderates.getAttribute()));
+			throw new IllegalArgumentException(String.format("Cannot set attribute (%s) as function (%s) already moderates (%s)", attribute, getIdentifier(),
+					moderates.getAttribute()));
 		}
-		final ModeratesRelation moderatesRelation = new ModeratesRelation(this,
-				attribute);
+		final ModeratesRelation moderatesRelation = new ModeratesRelation(this, attribute);
 		moderates = moderatesRelation;
 		if (attribute instanceof AttributeImpl) {
 			((AttributeImpl) attribute).addModeratedBy(moderatesRelation);
@@ -130,8 +115,7 @@ public class PerformanceFunctionImpl implements PerformanceFunction {
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyModeratesSet(getIdentifier(),
-					attribute.getIdentifier());
+			changeManager.notifyModeratesSet(getIdentifier(), attribute.getIdentifier());
 		}
 	}
 
@@ -142,8 +126,7 @@ public class PerformanceFunctionImpl implements PerformanceFunction {
 	}
 
 	@Override
-	public final Double pmf(final Agent<?> agent, final Role role,
-			final InstanceGoal<?> goal, final Collection<Assignment> assignments) {
+	public final Double pmf(final Agent<?> agent, final Role role, final InstanceGoal<?> goal, final Collection<Assignment> assignments) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -22,9 +22,8 @@ import javax.swing.WindowConstants;
 import org.models.organization.entity.Organization;
 
 /**
- * The <code>DefaultVisualizationFrame</code> provides a primitive
- * <code>JFrame</code> for visualizing the <code>Organization</code>.
- * 
+ * The <code>DefaultVisualizationFrame</code> provides a primitive <code>JFrame</code> for visualizing the <code>Organization</code>.
+ *
  * @author Christopher Zhong
  * @version $Revision: 1.3.4.6 $, $Date: 2012/01/10 23:51:14 $
  * @since 3.4
@@ -32,8 +31,7 @@ import org.models.organization.entity.Organization;
 public class DefaultVisualizationFrame extends JFrame {
 
 	static {
-		final LookAndFeelInfo[] installedLookAndFeels = UIManager
-				.getInstalledLookAndFeels();
+		final LookAndFeelInfo[] installedLookAndFeels = UIManager.getInstalledLookAndFeels();
 		try {
 			for (final LookAndFeelInfo info : installedLookAndFeels) {
 				if ("Nimbus".equals(info.getName())) {
@@ -41,8 +39,7 @@ public class DefaultVisualizationFrame extends JFrame {
 					break;
 				}
 			}
-		} catch (ClassNotFoundException | InstantiationException
-				| IllegalAccessException e) {
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 			/* should not occur */
 			e.printStackTrace();
 		} catch (final UnsupportedLookAndFeelException e) {
@@ -58,12 +55,11 @@ public class DefaultVisualizationFrame extends JFrame {
 	/**
 	 * The default preferred size of the frame.
 	 */
-	private static final Dimension DEFAULT_PREFERRED_SIZE = new Dimension(900,
-			600);
+	private static final Dimension DEFAULT_PREFERRED_SIZE = new Dimension(900, 600);
 
 	/**
 	 * Constructs a new instance of <code>DefaultVisualizationFrame</code>.
-	 * 
+	 *
 	 * @param organization
 	 *            the <code>Organization</code> that is used for visualization.
 	 */
@@ -82,8 +78,7 @@ public class DefaultVisualizationFrame extends JFrame {
 		final JPanel centerPanel = new JPanel(new GridLayout(1, 3));
 		centerPanel.add(new CharacteristicVisualizationPanel(organization));
 		centerPanel.add(new AttributeVisualizationPanel(organization));
-		centerPanel
-				.add(new PerformanceFunctionVisualizationPanel(organization));
+		centerPanel.add(new PerformanceFunctionVisualizationPanel(organization));
 
 		final JPanel bottomPanel = new JPanel(new GridLayout(1, 3));
 		bottomPanel.add(new TaskVisualizationPanel(organization));

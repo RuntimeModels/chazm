@@ -22,15 +22,13 @@ import org.models.organization.entity.Agent;
 import org.models.organization.entity.Organization;
 
 /**
- * The <code>AgentVisualizationPanel</code> class is a Swing component to
- * visualize the <code>Agent</code> currently in the <code>Organization</code>.
- * 
+ * The <code>AgentVisualizationPanel</code> class is a Swing component to visualize the <code>Agent</code> currently in the <code>Organization</code>.
+ *
  * @author Christopher Zhong
  * @version $Revision: 1.3.4.4 $, $Date: 2011/09/19 14:26:34 $
  * @since 3.4
  */
-public class AgentVisualizationPanel extends
-		AbstractListVisualizationPanel<Agent<?>> {
+public class AgentVisualizationPanel extends AbstractListVisualizationPanel<Agent<?>> {
 
 	/**
 	 * Default serial version ID.
@@ -39,17 +37,13 @@ public class AgentVisualizationPanel extends
 
 	/**
 	 * Constructs a new instance of <code>AgentVisualizationPanel</code>.
-	 * 
+	 *
 	 * @param organization
-	 *            the <code>Organization</code> that is used to visualize the
-	 *            <code>Agent</code>.
+	 *            the <code>Organization</code> that is used to visualize the <code>Agent</code>.
 	 */
 	public AgentVisualizationPanel(final Organization organization) {
-		super(organization, "Agents",
-				ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
-				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED,
-				JSplitPane.VERTICAL_SPLIT, true,
-				ListSelectionModel.SINGLE_SELECTION, JList.VERTICAL, 5);
+		super(organization, "Agents", ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED,
+				JSplitPane.VERTICAL_SPLIT, true, ListSelectionModel.SINGLE_SELECTION, JList.VERTICAL, 5);
 	}
 
 	@Override
@@ -62,16 +56,8 @@ public class AgentVisualizationPanel extends
 
 	@Override
 	List<Agent<?>> getCollection() {
-		final List<Agent<?>> agents = new ArrayList<>(getOrganization()
-				.getAgents());
-		final Comparator<Agent<?>> comparator = new Comparator<Agent<?>>() {
-
-			@Override
-			public int compare(final Agent<?> agent1, final Agent<?> agent2) {
-				return agent1.toString().compareTo(agent2.toString());
-			}
-
-		};
+		final List<Agent<?>> agents = new ArrayList<>(getOrganization().getAgents());
+		final Comparator<Agent<?>> comparator = (agent1, agent2) -> agent1.toString().compareTo(agent2.toString());
 		Collections.sort(agents, comparator);
 		return agents;
 	}

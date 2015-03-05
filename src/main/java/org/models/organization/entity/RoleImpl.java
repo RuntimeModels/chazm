@@ -28,7 +28,7 @@ import org.models.organization.relation.UsesRelation;
 
 /**
  * The <code>RoleImpl</code> class implements the {@link Role} interface.
- * 
+ *
  * @author Scott Harmon, Christopher Zhong
  * @version $Revision: 1.8.2.14 $, $Date: 2012/01/20 21:24:37 $
  * @see Agent
@@ -39,8 +39,7 @@ import org.models.organization.relation.UsesRelation;
 public class RoleImpl extends SimpleRoleImpl implements Role {
 
 	/**
-	 * The set of <code>SpecificationGoal</code> that this <code>Role</code>
-	 * achieves.
+	 * The set of <code>SpecificationGoal</code> that this <code>Role</code> achieves.
 	 */
 	private final Map<UniqueIdentifier, AchievesRelation> achieves = new ConcurrentHashMap<>();
 
@@ -55,14 +54,12 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 	private final Map<UniqueIdentifier, NeedsRelation> needs = new ConcurrentHashMap<>();
 
 	/**
-	 * The set of <code>Characteristic</code> contained by this
-	 * <code>Role</code>.
+	 * The set of <code>Characteristic</code> contained by this <code>Role</code>.
 	 */
 	private final Map<UniqueIdentifier, ContainsRelation> contains = new ConcurrentHashMap<>();
 
 	/**
-	 * The set of <code>PerformanceFunction</code> that are linked to this
-	 * <code>Task</code>.
+	 * The set of <code>PerformanceFunction</code> that are linked to this <code>Task</code>.
 	 */
 	private final Map<UniqueIdentifier, UsesRelation> uses = new ConcurrentHashMap<>();
 
@@ -73,10 +70,9 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 
 	/**
 	 * Constructs a new instance of <code>RoleImpl</code>.
-	 * 
+	 *
 	 * @param identifier
-	 *            the <code>UniqueIdentifier</code> identifying this
-	 *            <code>Role</code>.
+	 *            the <code>UniqueIdentifier</code> identifying this <code>Role</code>.
 	 */
 	public RoleImpl(final UniqueIdentifier identifier) {
 		super(identifier);
@@ -85,27 +81,20 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 	@Override
 	public final void addAchieves(final SpecificationGoal specificationGoal) {
 		if (specificationGoal == null) {
-			throw new IllegalArgumentException(
-					String.format("Specification goal (%s) cannot be null",
-							specificationGoal));
+			throw new IllegalArgumentException(String.format("Specification goal (%s) cannot be null", specificationGoal));
 		}
 		if (achieves.containsKey(specificationGoal.getIdentifier())) {
-			throw new IllegalArgumentException(String.format(
-					"Role (%s) already achieves goal (%s)", this,
-					specificationGoal));
+			throw new IllegalArgumentException(String.format("Role (%s) already achieves goal (%s)", this, specificationGoal));
 		}
-		final AchievesRelation achievesRelation = new AchievesRelation(this,
-				specificationGoal);
+		final AchievesRelation achievesRelation = new AchievesRelation(this, specificationGoal);
 		achieves.put(specificationGoal.getIdentifier(), achievesRelation);
 		if (specificationGoal instanceof SpecificationGoalImpl) {
-			((SpecificationGoalImpl) specificationGoal)
-					.addAchievedBy(achievesRelation);
+			((SpecificationGoalImpl) specificationGoal).addAchievedBy(achievesRelation);
 		}
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyAchievesAdded(getIdentifier(),
-					specificationGoal.getIdentifier());
+			changeManager.notifyAchievesAdded(getIdentifier(), specificationGoal.getIdentifier());
 		}
 	}
 
@@ -121,23 +110,18 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 	@Override
 	public final void removeAchieves(final UniqueIdentifier goalIdentifier) {
 		if (goalIdentifier == null) {
-			throw new IllegalArgumentException(
-					"Parameter (goalIdentifier) cannot be null");
+			throw new IllegalArgumentException("Parameter (goalIdentifier) cannot be null");
 		}
 		if (achieves.containsKey(goalIdentifier)) {
-			final AchievesRelation achievesRelation = achieves
-					.remove(goalIdentifier);
-			final SpecificationGoal specificationGoal = achievesRelation
-					.getSpecificationGoal();
+			final AchievesRelation achievesRelation = achieves.remove(goalIdentifier);
+			final SpecificationGoal specificationGoal = achievesRelation.getSpecificationGoal();
 			if (specificationGoal instanceof SpecificationGoalImpl) {
-				((SpecificationGoalImpl) specificationGoal)
-						.removeAchievedBy(this);
+				((SpecificationGoalImpl) specificationGoal).removeAchievedBy(this);
 			}
 
 			final ChangeManager changeManager = EventRegistry.get();
 			if (changeManager != null) {
-				changeManager.notifyAchievesRemoved(getIdentifier(),
-						specificationGoal.getIdentifier());
+				changeManager.notifyAchievesRemoved(getIdentifier(), specificationGoal.getIdentifier());
 			}
 		}
 	}
@@ -145,24 +129,19 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 	@Override
 	public final void removeAllAchieves() {
 		for (final AchievesRelation achievesRelation : achieves.values()) {
-			removeAchieves(achievesRelation.getSpecificationGoal()
-					.getIdentifier());
+			removeAchieves(achievesRelation.getSpecificationGoal().getIdentifier());
 		}
 	}
 
 	@Override
 	public final void addRequires(final Capability capability) {
 		if (capability == null) {
-			throw new IllegalArgumentException(
-					"Parameter (capability) cannot be null");
+			throw new IllegalArgumentException("Parameter (capability) cannot be null");
 		}
 		if (requires.containsKey(capability.getIdentifier())) {
-			throw new IllegalArgumentException(String.format(
-					"Role (%s) already requires capability (%s)", this,
-					capability));
+			throw new IllegalArgumentException(String.format("Role (%s) already requires capability (%s)", this, capability));
 		}
-		final RequiresRelation requiresRelation = new RequiresRelation(this,
-				capability);
+		final RequiresRelation requiresRelation = new RequiresRelation(this, capability);
 		requires.put(capability.getIdentifier(), requiresRelation);
 		if (capability instanceof CapabilityImpl) {
 			((CapabilityImpl) capability).addRequiredBy(requiresRelation);
@@ -170,16 +149,14 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyRequiresAdded(getIdentifier(),
-					capability.getIdentifier());
+			changeManager.notifyRequiresAdded(getIdentifier(), capability.getIdentifier());
 		}
 	}
 
 	@Override
 	public final void addRequiresSet(final Collection<Capability> capabilities) {
 		if (capabilities == null) {
-			throw new IllegalArgumentException(
-					"Parameter (capabilities) cannot be null");
+			throw new IllegalArgumentException("Parameter (capabilities) cannot be null");
 		}
 		for (final Capability capability : capabilities) {
 			addRequires(capability);
@@ -198,12 +175,10 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 	@Override
 	public final void removeRequires(final UniqueIdentifier capabilityIdentifier) {
 		if (capabilityIdentifier == null) {
-			throw new IllegalArgumentException(
-					"Parameter (capabilityIdentifier) cannot be null");
+			throw new IllegalArgumentException("Parameter (capabilityIdentifier) cannot be null");
 		}
 		if (requires.containsKey(capabilityIdentifier)) {
-			final RequiresRelation requiresRelation = requires
-					.remove(capabilityIdentifier);
+			final RequiresRelation requiresRelation = requires.remove(capabilityIdentifier);
 			final Capability capability = requiresRelation.getCapability();
 			if (capability instanceof CapabilityImpl) {
 				((CapabilityImpl) capability).removeRequiredBy(this);
@@ -211,8 +186,7 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 
 			final ChangeManager changeManager = EventRegistry.get();
 			if (changeManager != null) {
-				changeManager.notifyRequiresRemoves(getIdentifier(),
-						capability.getIdentifier());
+				changeManager.notifyRequiresRemoves(getIdentifier(), capability.getIdentifier());
 			}
 		}
 	}
@@ -227,12 +201,10 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 	@Override
 	public final void addNeeds(final Attribute attribute) {
 		if (attribute == null) {
-			throw new IllegalArgumentException(
-					"Parameter (attribute) cannot be null");
+			throw new IllegalArgumentException("Parameter (attribute) cannot be null");
 		}
 		if (needs.containsKey(attribute.getIdentifier())) {
-			throw new IllegalArgumentException(String.format(
-					"Role (%s) already needs attribute (%s)", this, attribute));
+			throw new IllegalArgumentException(String.format("Role (%s) already needs attribute (%s)", this, attribute));
 		}
 		final NeedsRelation needsRelation = new NeedsRelation(this, attribute);
 		needs.put(attribute.getIdentifier(), needsRelation);
@@ -242,8 +214,7 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyInfluencesAdded(getIdentifier(),
-					attribute.getIdentifier());
+			changeManager.notifyInfluencesAdded(getIdentifier(), attribute.getIdentifier());
 		}
 	}
 
@@ -259,12 +230,10 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 	@Override
 	public final void removeNeeds(final UniqueIdentifier attributeIdentifier) {
 		if (attributeIdentifier == null) {
-			throw new IllegalArgumentException(
-					"Parameter (attributeIdentifier) cannot be null");
+			throw new IllegalArgumentException("Parameter (attributeIdentifier) cannot be null");
 		}
 		if (needs.containsKey(attributeIdentifier)) {
-			final NeedsRelation needsRelation = needs
-					.remove(attributeIdentifier);
+			final NeedsRelation needsRelation = needs.remove(attributeIdentifier);
 			final Attribute attribute = needsRelation.getAttribute();
 			if (attribute instanceof AttributeImpl) {
 				((AttributeImpl) attribute).removeInfluencedBy(this);
@@ -272,8 +241,7 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 
 			final ChangeManager changeManager = EventRegistry.get();
 			if (changeManager != null) {
-				changeManager.notifyInfluencesRemoved(getIdentifier(),
-						attribute.getIdentifier());
+				changeManager.notifyInfluencesRemoved(getIdentifier(), attribute.getIdentifier());
 			}
 		}
 	}
@@ -286,29 +254,22 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 	}
 
 	@Override
-	public final void addContains(final Characteristic characteristic,
-			final double value) {
+	public final void addContains(final Characteristic characteristic, final double value) {
 		if (characteristic == null) {
-			throw new IllegalArgumentException(
-					"Parameter (characteristic) cannot be null");
+			throw new IllegalArgumentException("Parameter (characteristic) cannot be null");
 		}
 		if (contains.containsKey(characteristic.getIdentifier())) {
-			throw new IllegalArgumentException(String.format(
-					"Role (%s) already contains characteristic (%s)", this,
-					characteristic));
+			throw new IllegalArgumentException(String.format("Role (%s) already contains characteristic (%s)", this, characteristic));
 		}
-		final ContainsRelation containsRelation = new ContainsRelation(this,
-				characteristic, value);
+		final ContainsRelation containsRelation = new ContainsRelation(this, characteristic, value);
 		contains.put(characteristic.getIdentifier(), containsRelation);
 		if (characteristic instanceof CharacteristicImpl) {
-			((CharacteristicImpl) characteristic)
-					.addContainedBy(containsRelation);
+			((CharacteristicImpl) characteristic).addContainedBy(containsRelation);
 		}
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyContainsAdded(getIdentifier(),
-					characteristic.getIdentifier(), value);
+			changeManager.notifyContainsAdded(getIdentifier(), characteristic.getIdentifier(), value);
 		}
 	}
 
@@ -322,62 +283,47 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 	}
 
 	@Override
-	public final Double getContainsValue(
-			final UniqueIdentifier characteristicIdentifier) {
+	public final Double getContainsValue(final UniqueIdentifier characteristicIdentifier) {
 		if (characteristicIdentifier == null) {
-			throw new IllegalArgumentException(
-					"Parameter (characteristicIdentifier) cannot be null");
+			throw new IllegalArgumentException("Parameter (characteristicIdentifier) cannot be null");
 		}
-		final ContainsRelation containsRelation = contains
-				.get(characteristicIdentifier);
+		final ContainsRelation containsRelation = contains.get(characteristicIdentifier);
 		return containsRelation == null ? null : containsRelation.getValue();
 	}
 
 	@Override
-	public final void setContainsValue(
-			final UniqueIdentifier characteristicIdentifier, final double value) {
+	public final void setContainsValue(final UniqueIdentifier characteristicIdentifier, final double value) {
 		if (characteristicIdentifier == null) {
-			throw new IllegalArgumentException(
-					"Parameter (characteristicIdentifier) cannot be null");
+			throw new IllegalArgumentException("Parameter (characteristicIdentifier) cannot be null");
 		}
-		final ContainsRelation containsRelation = contains
-				.get(characteristicIdentifier);
+		final ContainsRelation containsRelation = contains.get(characteristicIdentifier);
 		if (containsRelation == null) {
-			throw new IllegalArgumentException(
-					String.format(
-							"Cannot set score for a non-existent characteristic (%s=%s)",
-							characteristicIdentifier, containsRelation));
+			throw new IllegalArgumentException(String.format("Cannot set score for a non-existent characteristic (%s=%s)", characteristicIdentifier,
+					containsRelation));
 		}
 		containsRelation.setValue(value);
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager
-					.notifyContainsChanged(getIdentifier(), containsRelation
-							.getCharacteristic().getIdentifier(), value);
+			changeManager.notifyContainsChanged(getIdentifier(), containsRelation.getCharacteristic().getIdentifier(), value);
 		}
 	}
 
 	@Override
-	public final void removeContains(
-			final UniqueIdentifier characteristicIdentifier) {
+	public final void removeContains(final UniqueIdentifier characteristicIdentifier) {
 		if (characteristicIdentifier == null) {
-			throw new IllegalArgumentException(
-					"Parameter (characteristicsIdentifier) cannot be null");
+			throw new IllegalArgumentException("Parameter (characteristicsIdentifier) cannot be null");
 		}
 		if (contains.containsKey(characteristicIdentifier)) {
-			final ContainsRelation containsRelation = contains
-					.remove(characteristicIdentifier);
-			final Characteristic characterisitic = containsRelation
-					.getCharacteristic();
+			final ContainsRelation containsRelation = contains.remove(characteristicIdentifier);
+			final Characteristic characterisitic = containsRelation.getCharacteristic();
 			if (characterisitic instanceof CharacteristicImpl) {
 				((CharacteristicImpl) characterisitic).removeContainedBy(this);
 			}
 
 			final ChangeManager changeManager = EventRegistry.get();
 			if (changeManager != null) {
-				changeManager.notifyContainsRemoved(getIdentifier(),
-						characterisitic.getIdentifier());
+				changeManager.notifyContainsRemoved(getIdentifier(), characterisitic.getIdentifier());
 			}
 		}
 	}
@@ -392,39 +338,30 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 	@Override
 	public final void addUses(final PerformanceFunction performanceFunction) {
 		if (performanceFunction == null) {
-			throw new IllegalArgumentException(
-					"Parameter (performanceFunction) cannot be null");
+			throw new IllegalArgumentException("Parameter (performanceFunction) cannot be null");
 		}
 		if (uses.containsKey(performanceFunction.getIdentifier())) {
-			throw new IllegalArgumentException(String.format(
-					"Task (%s) already linked to performance function (%s)",
-					this, performanceFunction));
+			throw new IllegalArgumentException(String.format("Task (%s) already linked to performance function (%s)", this, performanceFunction));
 		}
-		final UsesRelation linkedRelation = new UsesRelation(this,
-				performanceFunction);
+		final UsesRelation linkedRelation = new UsesRelation(this, performanceFunction);
 		uses.put(performanceFunction.getIdentifier(), linkedRelation);
 		if (performanceFunction instanceof PerformanceFunctionImpl) {
-			((PerformanceFunctionImpl) performanceFunction)
-					.addUsedBy(linkedRelation);
+			((PerformanceFunctionImpl) performanceFunction).addUsedBy(linkedRelation);
 		}
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyLinkedAdded(getIdentifier(),
-					performanceFunction.getIdentifier());
+			changeManager.notifyLinkedAdded(getIdentifier(), performanceFunction.getIdentifier());
 		}
 	}
 
 	@Override
-	public final PerformanceFunction getUses(
-			final UniqueIdentifier functionIdentifer) {
+	public final PerformanceFunction getUses(final UniqueIdentifier functionIdentifer) {
 		if (functionIdentifer == null) {
-			throw new IllegalArgumentException(
-					"Parameter (functionIdentifier) cannot be null");
+			throw new IllegalArgumentException("Parameter (functionIdentifier) cannot be null");
 		}
 		final UsesRelation usesRelation = uses.get(functionIdentifer);
-		return usesRelation == null ? null : usesRelation
-				.getPerformanceFunction();
+		return usesRelation == null ? null : usesRelation.getPerformanceFunction();
 	}
 
 	@Override
@@ -439,36 +376,30 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 	@Override
 	public final void removeUses(final UniqueIdentifier functionIdentifier) {
 		if (functionIdentifier == null) {
-			throw new IllegalArgumentException(
-					"Parameter (functionIdentifier) cannot be null");
+			throw new IllegalArgumentException("Parameter (functionIdentifier) cannot be null");
 		}
 		if (uses.containsKey(functionIdentifier)) {
 			final UsesRelation linkedRelation = uses.remove(functionIdentifier);
-			final PerformanceFunction performanceFunction = linkedRelation
-					.getPerformanceFunction();
+			final PerformanceFunction performanceFunction = linkedRelation.getPerformanceFunction();
 			if (performanceFunction instanceof PerformanceFunctionImpl) {
-				((PerformanceFunctionImpl) performanceFunction)
-						.removeUsedBy(this);
+				((PerformanceFunctionImpl) performanceFunction).removeUsedBy(this);
 			}
 
 			final ChangeManager changeManager = EventRegistry.get();
 			if (changeManager != null) {
-				changeManager.notifyLinkedRemoved(getIdentifier(),
-						performanceFunction.getIdentifier());
+				changeManager.notifyLinkedRemoved(getIdentifier(), performanceFunction.getIdentifier());
 			}
 		}
 	}
 
 	@Override
-	public final void setGoodnessFunction(
-			final RoleGoodnessFunction goodnessFunction) {
+	public final void setGoodnessFunction(final RoleGoodnessFunction goodnessFunction) {
 		this.goodnessFunction = goodnessFunction;
 	}
 
 	@Override
 	public final boolean achieves(final SpecificationGoal specificationGoal) {
-		final AchievesRelation achievesRelation = achieves
-				.get(specificationGoal.getIdentifier());
+		final AchievesRelation achievesRelation = achieves.get(specificationGoal.getIdentifier());
 		return achievesRelation != null;
 	}
 
@@ -489,14 +420,12 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 
 	@Override
 	public final Double contains(final Characteristic characteristic) {
-		final ContainsRelation containsRelation = contains.get(characteristic
-				.getIdentifier());
+		final ContainsRelation containsRelation = contains.get(characteristic.getIdentifier());
 		return containsRelation == null ? null : containsRelation.getValue();
 	}
 
 	@Override
-	public final double goodness(final Agent<?> agent,
-			final InstanceGoal<?> goal, final Collection<Assignment> assignments) {
+	public final double goodness(final Agent<?> agent, final InstanceGoal<?> goal, final Collection<Assignment> assignments) {
 		return goodnessFunction.goodness(this, agent, goal, assignments);
 	}
 

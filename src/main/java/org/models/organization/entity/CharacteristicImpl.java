@@ -1,8 +1,8 @@
 /*
  * CharacteristicImpl.java
- * 
+ *
  * Created on May 25, 2010
- * 
+ *
  * See License.txt file the license agreement.
  */
 package org.models.organization.entity;
@@ -18,46 +18,39 @@ import org.models.organization.relation.ContainsRelation;
 
 /**
  * The <code></code> class implements the {@link Characteristic} interface.
- * 
+ *
  * @author Christopher Zhong
  * @version $Revision: 1.1.2.2 $, $Date: 2011/09/19 14:26:37 $
  * @since 6.0
  */
-public class CharacteristicImpl extends SimpleCharacteristicImpl implements
-		Characteristic {
+public class CharacteristicImpl extends SimpleCharacteristicImpl implements Characteristic {
 
 	/**
-	 * The set of <code>Role</code> that contains this
-	 * <code>Characteristic</code>.
+	 * The set of <code>Role</code> that contains this <code>Characteristic</code>.
 	 */
 	private final Map<UniqueIdentifier, ContainsRelation> containedBy = new ConcurrentHashMap<>();
 
 	/**
 	 * Constructs a new instance of <code>CharacteristicImpl</code>.
-	 * 
+	 *
 	 * @param identifier
-	 *            the <code>UniqueIdentifier</code> representing the
-	 *            <code>Characteristic</code>
+	 *            the <code>UniqueIdentifier</code> representing the <code>Characteristic</code>
 	 */
 	public CharacteristicImpl(final UniqueIdentifier identifier) {
 		super(identifier);
 	}
 
 	/**
-	 * Adds the <code>Role</code> (from the given <code>ContainsRelation</code>)
-	 * to the set of <code>Role</code> that contains this
-	 * <code>Characteristic</code>.
-	 * 
+	 * Adds the <code>Role</code> (from the given <code>ContainsRelation</code>) to the set of <code>Role</code> that contains this <code>Characteristic</code>.
+	 *
 	 * @param containsRelation
 	 *            the <code>ContainsRelation</code> to add.
 	 */
 	final void addContainedBy(final ContainsRelation containsRelation) {
 		if (containsRelation == null) {
-			throw new IllegalArgumentException(
-					"Parameter (containsRelation) cannot be null");
+			throw new IllegalArgumentException("Parameter (containsRelation) cannot be null");
 		}
-		containedBy.put(containsRelation.getRole().getIdentifier(),
-				containsRelation);
+		containedBy.put(containsRelation.getRole().getIdentifier(), containsRelation);
 	}
 
 	@Override
@@ -70,28 +63,23 @@ public class CharacteristicImpl extends SimpleCharacteristicImpl implements
 	}
 
 	@Override
-	public final Double getContainedByValue(
-			final UniqueIdentifier roleIdentifier) {
+	public final Double getContainedByValue(final UniqueIdentifier roleIdentifier) {
 		if (roleIdentifier == null) {
-			throw new IllegalArgumentException(
-					"Parameter (roleIdentifier) cannot be null");
+			throw new IllegalArgumentException("Parameter (roleIdentifier) cannot be null");
 		}
-		final ContainsRelation containsRelation = containedBy
-				.get(roleIdentifier);
+		final ContainsRelation containsRelation = containedBy.get(roleIdentifier);
 		return containsRelation == null ? null : containsRelation.getValue();
 	}
 
 	/**
-	 * Removes the given <code>Role</code> from the set of <code>Role</code>
-	 * that contains this <code>Characteristic</code>.
-	 * 
+	 * Removes the given <code>Role</code> from the set of <code>Role</code> that contains this <code>Characteristic</code>.
+	 *
 	 * @param role
 	 *            the <code>Role</code> to remove.
 	 */
 	final void removeContainedBy(final Role role) {
 		if (role == null) {
-			throw new IllegalArgumentException(
-					"Parameter (role) cannot be null");
+			throw new IllegalArgumentException("Parameter (role) cannot be null");
 		}
 		containedBy.remove(role.getIdentifier());
 	}

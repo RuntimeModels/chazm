@@ -18,18 +18,15 @@ import javax.swing.event.ListSelectionListener;
 import org.models.organization.entity.Organization;
 
 /**
- * The <code>AbstractListVisualizationPanel</code> provides list type
- * <code>JPanel</code> for display information about the
- * <code>Organization</code>.
- * 
+ * The <code>AbstractListVisualizationPanel</code> provides list type <code>JPanel</code> for display information about the <code>Organization</code>.
+ *
  * @author Christopher Zhong
  * @version $Revision: 1.2.4.3 $, $Date: 2011/09/19 14:26:34 $
  * @param <T>
  *            the type for the list.
  * @since 3.4
  */
-public abstract class AbstractListVisualizationPanel<T> extends
-		AbstractVisualizationPanel implements ListSelectionListener {
+public abstract class AbstractListVisualizationPanel<T> extends AbstractVisualizationPanel implements ListSelectionListener {
 
 	/**
 	 * Default serial version ID.
@@ -37,61 +34,45 @@ public abstract class AbstractListVisualizationPanel<T> extends
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * The <code>DefaultListModel</code> that will be used by the
-	 * <code>JList</code> to display the <code>Organization</code> information.
+	 * The <code>DefaultListModel</code> that will be used by the <code>JList</code> to display the <code>Organization</code> information.
 	 */
 	private final DefaultListModel<T> listModel = new DefaultListModel<>();
 
 	/**
-	 * The <code>JList</code> used to display the <code>Organization</code>
-	 * information.
+	 * The <code>JList</code> used to display the <code>Organization</code> information.
 	 */
 	private final JList<T> list = new JList<>(listModel);;
 
 	/**
 	 * Constructs a new instance of <code>AbstractListVisualizationPanel</code>.
-	 * 
+	 *
 	 * @param organization
-	 *            the <code>Organization</code> that is used to visualize
-	 *            information.
+	 *            the <code>Organization</code> that is used to visualize information.
 	 * @param description
 	 *            the <code>String</code> describing the title.
 	 * @param verticalScrollBarPolicy
-	 *            the vertical scroll bar policy which must be one of
-	 *            <code>ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS</code>,
-	 *            <code>ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED</code>,
-	 *            or <code>ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER</code>.
+	 *            the vertical scroll bar policy which must be one of <code>ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS</code>,
+	 *            <code>ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED</code>, or <code>ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER</code>.
 	 * @param horizontalScrollBarPolicy
-	 *            the horizontal scroll bar policy which be one of
-	 *            <code>ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS</code>,
-	 *            <code>ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED</code>
-	 *            , or
-	 *            <code>ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER</code>.
+	 *            the horizontal scroll bar policy which be one of <code>ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS</code>,
+	 *            <code>ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED</code> , or <code>ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER</code>.
 	 * @param orientation
-	 *            the orientation of the <code>JSplitPane</code> which must be
-	 *            either <code>JSplitPane.HORIZONTAL_SPLIT</code> or
+	 *            the orientation of the <code>JSplitPane</code> which must be either <code>JSplitPane.HORIZONTAL_SPLIT</code> or
 	 *            <code>JSplitPane.VERTICAL_SPLIT</code>.
 	 * @param oneTouchExpandable
-	 *            <code>true</code> to specify that the <code>JSplitPane</code>
-	 *            should provide a collapse / expand widget, <code>false</code>
-	 *            otherwise.
+	 *            <code>true</code> to specify that the <code>JSplitPane</code> should provide a collapse / expand widget, <code>false</code> otherwise.
 	 * @param selectionMode
-	 *            the selection mode of the <code>JList</code> which must be one
-	 *            of <code>ListSelectionModel.SINGLE_SELECTION</code>,
-	 *            <code>ListSelectionModel.SINGLE_INTERVAL_SELECTION</code> or
-	 *            <code>ListSelectionModel.MULTIPLE_INTERVAL_SELECTION</code>.
+	 *            the selection mode of the <code>JList</code> which must be one of <code>ListSelectionModel.SINGLE_SELECTION</code>,
+	 *            <code>ListSelectionModel.SINGLE_INTERVAL_SELECTION</code> or <code>ListSelectionModel.MULTIPLE_INTERVAL_SELECTION</code>.
 	 * @param layoutOrientation
-	 *            the orientation of the <code>JList</code> which must be one of
-	 *            <code>JList.VERTICAL</code>, <code>JList.VERTICAL_WRAP</code>,
-	 *            or <code>JList.HORIZONTAL_WRAP</code>.
+	 *            the orientation of the <code>JList</code> which must be one of <code>JList.VERTICAL</code>, <code>JList.VERTICAL_WRAP</code>, or
+	 *            <code>JList.HORIZONTAL_WRAP</code>.
 	 * @param visibleRowCount
 	 *            sets the visible row count property of the <code>JList</code>.
 	 */
-	protected AbstractListVisualizationPanel(final Organization organization,
-			final String description, final int verticalScrollBarPolicy,
-			final int horizontalScrollBarPolicy, final int orientation,
-			final boolean oneTouchExpandable, final int selectionMode,
-			final int layoutOrientation, final int visibleRowCount) {
+	protected AbstractListVisualizationPanel(final Organization organization, final String description, final int verticalScrollBarPolicy,
+			final int horizontalScrollBarPolicy, final int orientation, final boolean oneTouchExpandable, final int selectionMode, final int layoutOrientation,
+			final int visibleRowCount) {
 		super(organization);
 
 		list.setSelectionMode(selectionMode);
@@ -99,8 +80,7 @@ public abstract class AbstractListVisualizationPanel<T> extends
 		list.setVisibleRowCount(visibleRowCount);
 		list.getSelectionModel().addListSelectionListener(this);
 
-		initialize(list, description, verticalScrollBarPolicy,
-				horizontalScrollBarPolicy, orientation, oneTouchExpandable);
+		initialize(list, description, verticalScrollBarPolicy, horizontalScrollBarPolicy, orientation, oneTouchExpandable);
 
 		startPolling();
 	}
@@ -115,38 +95,31 @@ public abstract class AbstractListVisualizationPanel<T> extends
 				toRemove.add(o);
 			}
 		}
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				/*
-				 * first, remove all elements from the list model that are not
-				 * present in the updated list
-				 */
-				for (final T o : toRemove) {
-					listModel.removeElement(o);
-				}
-				/*
-				 * next, add the new elements from the updated list to the list
-				 * model
-				 */
-				for (final T o : updatedList) {
-					final int index = listModel.indexOf(o);
-					if (index == -1) {
-						listModel.addElement(o);
-					} else {
-						listModel.set(index, o);
-					}
+		SwingUtilities.invokeLater(() -> {
+			/*
+			 * first, remove all elements from the list model that are not present in the updated list
+			 */
+			for (final T o1 : toRemove) {
+				listModel.removeElement(o1);
+			}
+			/*
+			 * next, add the new elements from the updated list to the list model
+			 */
+			for (final T o2 : updatedList) {
+				final int index = listModel.indexOf(o2);
+				if (index == -1) {
+					listModel.addElement(o2);
+				} else {
+					listModel.set(index, o2);
 				}
 			}
 		});
 	}
 
 	/**
-	 * Returns the <code>JList</code> that it is using to display information
-	 * about the <code>Organization</code>.
-	 * 
-	 * @return the <code>JList</code> that it is using to display information
-	 *         about the <code>Organization</code>.
+	 * Returns the <code>JList</code> that it is using to display information about the <code>Organization</code>.
+	 *
+	 * @return the <code>JList</code> that it is using to display information about the <code>Organization</code>.
 	 */
 	JList<T> getList() {
 		return list;
@@ -154,7 +127,7 @@ public abstract class AbstractListVisualizationPanel<T> extends
 
 	/**
 	 * Returns a <code>Collection</code> of <code>Object</code>.
-	 * 
+	 *
 	 * @return a <code>Collection</code> of <code>Object</code>.
 	 */
 	abstract List<T> getCollection();
