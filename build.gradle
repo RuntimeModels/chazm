@@ -1,8 +1,10 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
 
 sourceCompatibility = '1.8'
 
+group = 'org.models'
 version = '6.0.0'
 
 repositories {
@@ -22,4 +24,12 @@ sourceSets.main.java.srcDirs 'src/main/java', 'src/main/xtend-gen'
 
 task wrapper(type: Wrapper) {
 	gradleVersion = '2.3'
+}
+
+publishing {
+	publications {
+		maven(MavenPublication) {
+			from components.java
+		}
+	}
 }
