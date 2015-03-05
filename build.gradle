@@ -9,18 +9,13 @@ version = '6.0.0'
 
 repositories {
 	mavenCentral()
-	maven { url 'http://build.eclipse.org/common/xtend/maven/' }
 }
 
 dependencies {
 	compile fileTree(dir: 'src/main/resources', include: '*.jar')
-	compile 'org.eclipse.xtend:org.eclipse.xtend.lib:+'
-	compile 'org.eclipse.xtext:org.eclipse.xtext.xbase.lib:+'
 	testCompile 'junit:junit:+'
 	testCompile 'org.mockito:mockito-core:+'
 }
-
-sourceSets.main.java.srcDirs 'src/main/java', 'src/main/xtend-gen'
 
 task wrapper(type: Wrapper) {
 	gradleVersion = '2.3'
