@@ -18,8 +18,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ListSelectionEvent;
 
+import org.models.organization.Organization;
 import org.models.organization.entity.Capability;
-import org.models.organization.entity.Organization;
 
 /**
  * The <code>CapabilityVisualizationPanel</code> class is a Swing component to visualize the <code>Capability</code> currently in the <code>Organization</code>.

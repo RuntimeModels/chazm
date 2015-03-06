@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
-import org.models.organization.entity.Organization;
+import org.models.organization.Organization;
 
 /**
  * The <code>AbstractVisualizationPanel</code> provides the base framework <code>JPanel</code> for display information about the <code>Organization</code>.

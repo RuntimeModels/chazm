@@ -13,7 +13,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
 
-import org.models.organization.entity.Organization;
+import org.models.organization.Organization;
 
 /**
  * The <code>AbstractListVisualizationPanel</code> provides tree type <code>JPanel</code> for display information about the <code>Organization</code>.

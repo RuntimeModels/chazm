@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.models.organization.Organization;
+import org.models.organization.OrganizationImpl;
 import org.models.organization.entity.Agent;
 import org.models.organization.entity.AgentImpl;
 import org.models.organization.entity.Attribute;
@@ -18,8 +20,6 @@ import org.models.organization.entity.Attribute.Type;
 import org.models.organization.entity.AttributeImpl;
 import org.models.organization.entity.Capability;
 import org.models.organization.entity.CapabilityImpl;
-import org.models.organization.entity.Organization;
-import org.models.organization.entity.OrganizationImpl;
 import org.models.organization.entity.Role;
 import org.models.organization.entity.RoleImpl;
 import org.models.organization.entity.SpecificationGoal;
