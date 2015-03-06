@@ -102,7 +102,7 @@ public class GoalVisualizationPanel extends AbstractTreeVisualizationPanel {
 					final DefaultMutableTreeNode node2 = new DefaultMutableTreeNode(goal2);
 					instanceGoals.put(goal2, node2);
 					getTreeModel().insertNodeInto(node2, specificationGoals.get(goal2.getSpecificationGoal()),
-									specificationGoals.get(goal2.getSpecificationGoal()).getChildCount());
+							specificationGoals.get(goal2.getSpecificationGoal()).getChildCount());
 				}
 			}
 		});

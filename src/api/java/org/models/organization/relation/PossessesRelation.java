@@ -39,7 +39,7 @@ public class PossessesRelation {
 	/**
 	 * The <code>Agent</code> of this <code>PossessesRelation</code> relation.
 	 */
-	private final Agent<?> agent;
+	private final Agent agent;
 
 	/**
 	 * The <code>Capability</code> of this <code>PossessesRelation</code> relation.
@@ -66,7 +66,7 @@ public class PossessesRelation {
 	 * @param score
 	 *            the score of this <code>PossessesRelation</code>.
 	 */
-	public PossessesRelation(final Agent<?> agent, final Capability capability, final double score) {
+	public PossessesRelation(final Agent agent, final Capability capability, final double score) {
 		if (agent == null || capability == null) {
 			throw new IllegalArgumentException(String.format("Parameters (agent: %s, capability: %s) cannot be null", agent, capability));
 		}
@@ -80,7 +80,7 @@ public class PossessesRelation {
 	 *
 	 * @return the <code>Agent</code> of this <code>PossessesRelation</code>.
 	 */
-	public final Agent<?> getAgent() {
+	public final Agent getAgent() {
 		return agent;
 	}
 

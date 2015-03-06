@@ -198,7 +198,7 @@ public interface Organization {
 	 * @param agent
 	 *            the <code>Agent</code> to be added.
 	 */
-	void addAgent(Agent<?> agent);
+	void addAgent(Agent agent);
 
 	/**
 	 * Adds the given set of <code>Agent</code> to the set of <code>Agent</code> .
@@ -206,7 +206,7 @@ public interface Organization {
 	 * @param agents
 	 *            the set of <code>Agent</code> to be added.
 	 */
-	void addAgents(Collection<Agent<?>> agents);
+	void addAgents(Collection<Agent> agents);
 
 	/**
 	 * Adds the given set of <code>Agent</code> to the set of <code>Agent</code> .
@@ -214,7 +214,7 @@ public interface Organization {
 	 * @param agents
 	 *            the set of <code>Agent</code> to be added.
 	 */
-	void addAgents(Agent<?>... agents);
+	void addAgents(Agent... agents);
 
 	/**
 	 * Returns the <code>Agent</code> by the given <code>UniqueIdentifier</code> .
@@ -223,14 +223,14 @@ public interface Organization {
 	 *            the <code>UniqueIdentifier</code> identifying the <code>Agent</code> to retrieve.
 	 * @return the <code>Agent</code> if it exists, <code>null</code> otherwise.
 	 */
-	Agent<?> getAgent(UniqueIdentifier agentIdentifier);
+	Agent getAgent(UniqueIdentifier agentIdentifier);
 
 	/**
 	 * Returns the set of <code>Agent</code>.
 	 *
 	 * @return the set of <code>Agent</code>.
 	 */
-	Set<Agent<?>> getAgents();
+	Set<Agent> getAgents();
 
 	/**
 	 * Removes the <code>Agent</code> by the given <code>UniqueIdentifier</code> from the set of <code>Agent</code>.

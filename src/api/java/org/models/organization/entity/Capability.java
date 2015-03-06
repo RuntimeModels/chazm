@@ -26,7 +26,7 @@ public interface Capability extends SimpleCapability {
 	 *
 	 * @return the set of <code>Agent</code> that possesses this <code>Capability</code>.
 	 */
-	Set<Agent<?>> getPossessedBySet();
+	Set<Agent> getPossessedBySet();
 
 	/**
 	 * Returns the score of the given <code>Agent</code> that possesses this <code>Capability</code>.

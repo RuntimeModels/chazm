@@ -218,7 +218,7 @@ public class Task {
 	 *         {@link Task} or the given {@link InstanceGoal} is not an instance of the {@link SpecificationGoal} of this {@link Task}.
 	 * @see RoleGoodnessFunction#goodness(Role, Agent, InstanceGoal, Collection)
 	 */
-	public final double goodness(final Agent<?> agent, final InstanceGoal<?> instanceGoal, final Collection<Assignment> assignments) {
+	public final double goodness(final Agent agent, final InstanceGoal<?> instanceGoal, final Collection<Assignment> assignments) {
 		if (getSpecificationGoal().equals(instanceGoal.getSpecificationGoal())) {
 			return getRole().goodness(agent, instanceGoal, assignments);
 		}

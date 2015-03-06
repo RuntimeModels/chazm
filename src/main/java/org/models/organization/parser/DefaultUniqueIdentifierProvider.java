@@ -105,7 +105,7 @@ public class DefaultUniqueIdentifierProvider implements UniqueIdentifierProvider
 	 *            the <code>Class</code> or a sub-<code>Class</code> of the <code>Agent</code>.
 	 * @return a <code>UniqueIdentifier</code> for the <code>Agent</code>.
 	 */
-	protected UniqueIdentifier getUniqueIdentifierForAgent(final String identifier, final Class<? extends Agent<?>> type) {
+	protected UniqueIdentifier getUniqueIdentifierForAgent(final String identifier, final Class<? extends Agent> type) {
 		return StringIdentifier.getIdentifier(identifier);
 	}
 

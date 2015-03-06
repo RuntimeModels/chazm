@@ -25,14 +25,12 @@ import org.models.organization.relation.PossessesRelation;
  *
  * @author Scott Harmon, Christopher Zhong
  * @version $Revision: 1.10.2.7 $, $Date: 2011/09/19 14:26:37 $
- * @param <ContactInformationType>
- *            the type of contact information of the <code>Agent</code>.
  * @see SimpleAgent
  * @see Capability
  * @see Role
  * @since 1.0
  */
-public class AgentImpl<ContactInformationType> extends SimpleAgentImpl implements Agent<ContactInformationType> {
+public class AgentImpl extends SimpleAgentImpl implements Agent {
 
 	/**
 	 * The set of <code>Capability</code> that this <code>Agent</code> possesses.
@@ -47,7 +45,7 @@ public class AgentImpl<ContactInformationType> extends SimpleAgentImpl implement
 	/**
 	 * Contains contact information on how to contact this agent.
 	 */
-	private ContactInformationType contactInformation = null;
+	private ContactInfo contactInfo = null;
 
 	/**
 	 * Constructs a new instance of <code>AgentImpl</code>.
@@ -232,16 +230,16 @@ public class AgentImpl<ContactInformationType> extends SimpleAgentImpl implement
 	}
 
 	@Override
-	public final ContactInformationType getContactInformation() {
-		return contactInformation;
+	public final ContactInfo getContactInfo() {
+		return contactInfo;
 	}
 
 	@Override
-	public final void setContactInformation(final ContactInformationType contactInformation) {
-		if (contactInformation == null) {
-			throw new IllegalArgumentException(String.format("Contact information (%s) cannot be null", contactInformation));
+	public final void setContactInfo(final ContactInfo contactInfo) {
+		if (contactInfo == null) {
+			throw new IllegalArgumentException(String.format("Contact information (%s) cannot be null", contactInfo));
 		}
-		this.contactInformation = contactInformation;
+		this.contactInfo = contactInfo;
 	}
 
 	@Override
@@ -264,8 +262,8 @@ public class AgentImpl<ContactInformationType> extends SimpleAgentImpl implement
 
 	@Override
 	public boolean equals(final Object object) {
-		if (object instanceof Agent<?>) {
-			final Agent<?> agent = (Agent<?>) object;
+		if (object instanceof Agent) {
+			final Agent agent = (Agent) object;
 			return super.equals(agent);
 		}
 		return false;
