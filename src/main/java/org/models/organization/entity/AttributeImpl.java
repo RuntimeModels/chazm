@@ -115,8 +115,8 @@ public class AttributeImpl extends SimpleAttributeImpl implements Attribute {
 	}
 
 	@Override
-	public final Set<Agent<?>> getHadBySet() {
-		final Set<Agent<?>> result = new HashSet<>();
+	public final Set<Agent> getHadBySet() {
+		final Set<Agent> result = new HashSet<>();
 		for (final HasRelation hasRelation : hadBy.values()) {
 			result.add(hasRelation.getAgent());
 		}
@@ -138,7 +138,7 @@ public class AttributeImpl extends SimpleAttributeImpl implements Attribute {
 	 * @param agent
 	 *            the <code>Agent</code> to be removed.
 	 */
-	final void removeHadBy(final Agent<?> agent) {
+	final void removeHadBy(final Agent agent) {
 		if (agent == null) {
 			throw new IllegalArgumentException("Parameter (agent) cannot be null");
 		}

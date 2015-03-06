@@ -43,7 +43,7 @@ public class HasRelation {
 	/**
 	 * The <code>Agent</code> of this <code>HasRelation</code>.
 	 */
-	private final Agent<?> agent;
+	private final Agent agent;
 
 	/**
 	 * The <code>Attribute</code> of this <code>HasRelation</code>.
@@ -70,7 +70,7 @@ public class HasRelation {
 	 * @param value
 	 *            the value of this <code>HasRelation</code>.
 	 */
-	public HasRelation(final Agent<?> agent, final Attribute attribute, final double value) {
+	public HasRelation(final Agent agent, final Attribute attribute, final double value) {
 		if (agent == null || attribute == null) {
 			throw new IllegalArgumentException(String.format("Parameters (agent: %s, attribute: %s) cannot be null", agent, attribute));
 		}
@@ -84,7 +84,7 @@ public class HasRelation {
 	 *
 	 * @return the <code>Agent</code> of this <code>HasRelation</code>.
 	 */
-	public final Agent<?> getAgent() {
+	public final Agent getAgent() {
 		return agent;
 	}
 

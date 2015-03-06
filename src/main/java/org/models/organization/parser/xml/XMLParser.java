@@ -85,7 +85,7 @@ public class XMLParser {
 	 *             if any parse errors occur.
 	 */
 	public static Organization parse(final Path path, final SpecificationGoalProvider specificationGoalProvider) throws SAXException, IOException,
-			ParserConfigurationException {
+	ParserConfigurationException {
 		return parse(path, specificationGoalProvider, new DefaultUniqueIdentifierProvider(), new OrganizationImpl());
 	}
 
@@ -105,7 +105,7 @@ public class XMLParser {
 	 *             if any parse errors occur.
 	 */
 	public static Organization parse(final Path path, final UniqueIdentifierProvider uniqueIdentifierProvider) throws SAXException, IOException,
-			ParserConfigurationException {
+	ParserConfigurationException {
 		return parse(path, new DefaultSpecificationGoalProvider(), uniqueIdentifierProvider, new OrganizationImpl());
 	}
 

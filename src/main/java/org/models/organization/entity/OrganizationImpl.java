@@ -57,7 +57,7 @@ public class OrganizationImpl implements Organization {
 	/**
 	 * The set of <code>Agent</code> in this <code>Organization</code>.
 	 */
-	private final Map<UniqueIdentifier, Agent<?>> agents = new ConcurrentHashMap<>();
+	private final Map<UniqueIdentifier, Agent> agents = new ConcurrentHashMap<>();
 
 	/**
 	 * The set of <code>Capability</code> in this <code>Organization</code>.
@@ -340,7 +340,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void addAgent(final Agent<?> agent) {
+	public final void addAgent(final Agent agent) {
 		if (agent == null) {
 			throw new IllegalArgumentException("Parameter (agent) cannot be null");
 		}
@@ -358,27 +358,27 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void addAgents(final Collection<Agent<?>> agents) {
+	public final void addAgents(final Collection<Agent> agents) {
 		if (agents == null) {
 			throw new IllegalArgumentException("Parameter (agents) cannot be null");
 		}
-		for (final Agent<?> agent : agents) {
+		for (final Agent agent : agents) {
 			addAgent(agent);
 		}
 	}
 
 	@Override
-	public final void addAgents(final Agent<?>... agents) {
+	public final void addAgents(final Agent... agents) {
 		if (agents == null) {
 			throw new IllegalArgumentException("Parameter (agents) cannot be null");
 		}
-		for (final Agent<?> agent : agents) {
+		for (final Agent agent : agents) {
 			addAgent(agent);
 		}
 	}
 
 	@Override
-	public final Agent<?> getAgent(final UniqueIdentifier agentIdentifier) {
+	public final Agent getAgent(final UniqueIdentifier agentIdentifier) {
 		if (agentIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (agentIdentifier) cannot be null");
 		}
@@ -386,7 +386,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final Set<Agent<?>> getAgents() {
+	public final Set<Agent> getAgents() {
 		return new HashSet<>(agents.values());
 	}
 
@@ -395,7 +395,7 @@ public class OrganizationImpl implements Organization {
 		if (agentIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (agentIdentifier) cannot be null");
 		}
-		final Agent<?> agent = agents.remove(agentIdentifier);
+		final Agent agent = agents.remove(agentIdentifier);
 		assignmentsByAgent.remove(agentIdentifier);
 
 		if (agent != null) {
@@ -1139,7 +1139,7 @@ public class OrganizationImpl implements Organization {
 
 	@Override
 	public final void specifyPossessesRelation(final UniqueIdentifier agentIdentifier, final UniqueIdentifier capabilityIdentifier, final double score) {
-		final Agent<?> agent = getAgent(agentIdentifier);
+		final Agent agent = getAgent(agentIdentifier);
 		final Capability capability = getCapability(capabilityIdentifier);
 		if (agent == null || capability == null) {
 			throw new IllegalArgumentException(String.format("Both agent (%s=%s) and capability (%s=%s) must exists", agentIdentifier, agent,
@@ -1150,7 +1150,7 @@ public class OrganizationImpl implements Organization {
 
 	@Override
 	public final void removePossessesRelation(final UniqueIdentifier agentIdentifier, final UniqueIdentifier capabilityIdentifier) {
-		final Agent<?> agent = getAgent(agentIdentifier);
+		final Agent agent = getAgent(agentIdentifier);
 		final Capability capability = getCapability(capabilityIdentifier);
 		if (agent == null || capability == null) {
 			throw new IllegalArgumentException(String.format("Both agent (%s=%s) and capability (%s=%s) must exists", agentIdentifier, agent,
@@ -1161,7 +1161,7 @@ public class OrganizationImpl implements Organization {
 
 	@Override
 	public final void updatePossessesRelation(final UniqueIdentifier agentIdentifier, final UniqueIdentifier capabilityIdentifier, final double score) {
-		final Agent<?> agent = getAgent(agentIdentifier);
+		final Agent agent = getAgent(agentIdentifier);
 		final Capability capability = getCapability(capabilityIdentifier);
 		if (agent == null || capability == null) {
 			throw new IllegalArgumentException(String.format("Both agent (%s=%s) and capability (%s=%s) must exists", agentIdentifier, agent,
@@ -1194,7 +1194,7 @@ public class OrganizationImpl implements Organization {
 
 	@Override
 	public final void specifyHasRelation(final UniqueIdentifier agentIdentifier, final UniqueIdentifier attributeIdentifier, final double value) {
-		final Agent<?> agent = getAgent(agentIdentifier);
+		final Agent agent = getAgent(agentIdentifier);
 		final Attribute attribute = getAttribute(attributeIdentifier);
 		if (agent == null || attribute == null) {
 			throw new IllegalArgumentException(String.format("Both agent (%s=%s) and attribute (%s=%s) must exists", agentIdentifier, agent,
@@ -1205,7 +1205,7 @@ public class OrganizationImpl implements Organization {
 
 	@Override
 	public final void removeHasRelation(final UniqueIdentifier agentIdentifier, final UniqueIdentifier attributeIdentifier) {
-		final Agent<?> agent = getAgent(agentIdentifier);
+		final Agent agent = getAgent(agentIdentifier);
 		final Attribute attribute = getAttribute(attributeIdentifier);
 		if (agent == null || attribute == null) {
 			throw new IllegalArgumentException(String.format("Both agent (%s=%s) and attribute (%s=%s) must exists", agentIdentifier, agent,
@@ -1216,7 +1216,7 @@ public class OrganizationImpl implements Organization {
 
 	@Override
 	public final void updateHasRelation(final UniqueIdentifier agentIdentifier, final UniqueIdentifier attributeIdentifier, final double score) {
-		final Agent<?> agent = getAgent(agentIdentifier);
+		final Agent agent = getAgent(agentIdentifier);
 		final Attribute attribute = getAttribute(attributeIdentifier);
 		if (agent == null || attribute == null) {
 			throw new IllegalArgumentException(String.format("Both agent (%s=%s) and attribute (%s=%s) must exists", agentIdentifier, agent,
@@ -1362,7 +1362,7 @@ public class OrganizationImpl implements Organization {
 				/*
 				 * there is no reason to continue checking if the previous results are false
 				 */
-				for (final Agent<?> agent : organization.getAgents()) {
+				for (final Agent agent : organization.getAgents()) {
 					for (final Capability capability : agent.getPossessesSet()) {
 						result &= organization.getCapability(capability.getIdentifier()) != null;
 						if (!result) { /* short circuit */

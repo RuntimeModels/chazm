@@ -101,11 +101,11 @@ public class ModelFactory {
 			organization.addAttribute(attribute);
 		}
 		/* create the specified number of agents */
-		final List<Agent<?>> agents = new ArrayList<>(numberOfAgents);
+		final List<Agent> agents = new ArrayList<>(numberOfAgents);
 		for (int i = 0; i < numberOfAgents; i++) {
 			final String agentName = String.format("Agent %s", i + 1);
 			final StringIdentifier agentIdentifier = StringIdentifier.getIdentifier(agentName);
-			final Agent<Object> agent = new AgentImpl<>(agentIdentifier);
+			final Agent agent = new AgentImpl(agentIdentifier);
 			agents.add(agent);
 			organization.addAgent(agent);
 		}
@@ -126,7 +126,7 @@ public class ModelFactory {
 			}
 			/*
 			 * compute range min .. max of roles needed to be assigned to the current goal to maintain the average role per goal
-			 * 
+			 *
 			 * average = (roles assigned + (goals left - 1)) / number of goals
 			 */
 			final int min = Math.max(1, averageNumberOfRolesPerGoal * numberOfGoals - totalRolesAssigned - (numberOfGoalsLeft - 1) * numberOfRoles);
@@ -178,7 +178,7 @@ public class ModelFactory {
 			}
 			/*
 			 * compute range min .. max of agents needed to be assigned to the current role to maintain the average agent per role
-			 * 
+			 *
 			 * average = (agents assigned + (roles left - 1)) / number of roles
 			 */
 			final int min = Math.max(1, averageNumberOfAgentsPerRole * numberOfRoles - totalAgentsAssigned - (numberOfRolesLeft - 1) * numberOfAgents);
@@ -205,7 +205,7 @@ public class ModelFactory {
 			/* randomizes the agents list */
 			Collections.shuffle(agents);
 			for (int i = 0; i < agentsToAssign; i++) {
-				final Agent<?> agent = agents.get(i);
+				final Agent agent = agents.get(i);
 				for (final Capability capability : role.getRequiresSet()) {
 					/*
 					 * randomly generates a possesses score, where 0.0 < score <= 1.0

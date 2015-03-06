@@ -65,8 +65,8 @@ public class CapabilityImpl extends SimpleCapabilityImpl implements Capability {
 	}
 
 	@Override
-	public final Set<Agent<?>> getPossessedBySet() {
-		final Set<Agent<?>> result = new HashSet<>();
+	public final Set<Agent> getPossessedBySet() {
+		final Set<Agent> result = new HashSet<>();
 		for (final PossessesRelation possessesRelaton : possessedBy.values()) {
 			result.add(possessesRelaton.getAgent());
 		}
@@ -88,7 +88,7 @@ public class CapabilityImpl extends SimpleCapabilityImpl implements Capability {
 	 * @param agent
 	 *            the <code>Agent</code> to be removed.
 	 */
-	final void removePossessedBy(final Agent<?> agent) {
+	final void removePossessedBy(final Agent agent) {
 		if (agent == null) {
 			throw new IllegalArgumentException("Parameter (agent) cannot be null");
 		}

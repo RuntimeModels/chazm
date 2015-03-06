@@ -120,7 +120,7 @@ public class Assignment {
 				final AssignmentIdentifier assignmentIdentifier = (AssignmentIdentifier) object;
 				return getAgentIdentifier().equals(assignmentIdentifier.getAgentIdentifier())
 						&& getRoleIdentifier().equals(assignmentIdentifier.getRoleIdentifier())
-								&& getGoalIdentifier().equals(assignmentIdentifier.getGoalIdentifier());
+						&& getGoalIdentifier().equals(assignmentIdentifier.getGoalIdentifier());
 			}
 			return false;
 		}
@@ -161,7 +161,7 @@ public class Assignment {
 	/**
 	 * The <code>Agent</code> of this <code>Assignment</code> relation.
 	 */
-	private final Agent<?> agent;
+	private final Agent agent;
 
 	/**
 	 * The <code>Role</code> of this <code>Assignment</code> relation.
@@ -183,7 +183,7 @@ public class Assignment {
 	 * @param instanceGoal
 	 *            the <code>InstanceGoal</code> of this <code>Assignment</code> relation.
 	 */
-	public Assignment(final Agent<?> agent, final Role role, final InstanceGoal<?> instanceGoal) {
+	public Assignment(final Agent agent, final Role role, final InstanceGoal<?> instanceGoal) {
 		if (agent == null || role == null || instanceGoal == null) {
 			throw new IllegalArgumentException(String.format("Parameters (agent: %s, role: %s, instance goal: %s) cannot be null", agent, role, instanceGoal));
 		}
@@ -207,7 +207,7 @@ public class Assignment {
 	 *
 	 * @return the <code>Agent</code> of this <code>Assignment</code> relation.
 	 */
-	public final Agent<?> getAgent() {
+	public final Agent getAgent() {
 		return agent;
 	}
 

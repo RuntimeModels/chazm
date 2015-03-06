@@ -120,7 +120,7 @@ public interface Attribute extends SimpleAttribute {
 	 *
 	 * @return the set of <code>Agent</code> that has this <code>Attribute</code>.
 	 */
-	Set<Agent<?>> getHadBySet();
+	Set<Agent> getHadBySet();
 
 	/**
 	 * Returns the score of the <code>Agent</code> (from the given <code>UniqueIdentifier</code>) that has this <code>Attribute</code>.

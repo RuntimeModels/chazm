@@ -28,7 +28,7 @@ import org.models.organization.entity.Organization;
  * @version $Revision: 1.3.4.4 $, $Date: 2011/09/19 14:26:34 $
  * @since 3.4
  */
-public class AgentVisualizationPanel extends AbstractListVisualizationPanel<Agent<?>> {
+public class AgentVisualizationPanel extends AbstractListVisualizationPanel<Agent> {
 
 	/**
 	 * Default serial version ID.
@@ -48,16 +48,16 @@ public class AgentVisualizationPanel extends AbstractListVisualizationPanel<Agen
 
 	@Override
 	public void valueChanged(final ListSelectionEvent e) {
-		final Agent<?> agent = getList().getSelectedValue();
+		final Agent agent = getList().getSelectedValue();
 		if (agent != null) {
 			getDetailedInformationPanel().showDetailedInformation(agent);
 		}
 	}
 
 	@Override
-	List<Agent<?>> getCollection() {
-		final List<Agent<?>> agents = new ArrayList<>(getOrganization().getAgents());
-		final Comparator<Agent<?>> comparator = (agent1, agent2) -> agent1.toString().compareTo(agent2.toString());
+	List<Agent> getCollection() {
+		final List<Agent> agents = new ArrayList<>(getOrganization().getAgents());
+		final Comparator<Agent> comparator = (agent1, agent2) -> agent1.toString().compareTo(agent2.toString());
 		Collections.sort(agents, comparator);
 		return agents;
 	}

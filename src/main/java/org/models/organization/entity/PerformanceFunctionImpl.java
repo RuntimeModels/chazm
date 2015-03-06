@@ -126,7 +126,7 @@ public class PerformanceFunctionImpl implements PerformanceFunction {
 	}
 
 	@Override
-	public final Double pmf(final Agent<?> agent, final Role role, final InstanceGoal<?> goal, final Collection<Assignment> assignments) {
+	public final Double pmf(final Agent agent, final Role role, final InstanceGoal<?> goal, final Collection<Assignment> assignments) {
 		// TODO Auto-generated method stub
 		return null;
 	}

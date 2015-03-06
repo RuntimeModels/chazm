@@ -425,7 +425,7 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 	}
 
 	@Override
-	public final double goodness(final Agent<?> agent, final InstanceGoal<?> goal, final Collection<Assignment> assignments) {
+	public final double goodness(final Agent agent, final InstanceGoal<?> goal, final Collection<Assignment> assignments) {
 		return goodnessFunction.goodness(this, agent, goal, assignments);
 	}
 

@@ -298,7 +298,7 @@ public class DetailedInformationPanel extends JPanel {
 				writeRelationEntity(role.getIdentifier().toString());
 			}
 			writeRelation("Possessed By Agent(s):");
-			for (final Agent<?> agent : capability.getPossessedBySet()) {
+			for (final Agent agent : capability.getPossessedBySet()) {
 				writeRelationEntityScore(agent.getIdentifier().toString(), capability.getPossessedByScore(agent.getIdentifier()));
 			}
 		} catch (final BadLocationException e) {
@@ -338,7 +338,7 @@ public class DetailedInformationPanel extends JPanel {
 	 * @param agent
 	 *            the <code>Agent</code> to process.
 	 */
-	public void showDetailedInformation(final Agent<?> agent) {
+	public void showDetailedInformation(final Agent agent) {
 		try {
 			/* clears the contents of the document */
 			doc.remove(0, doc.getLength());
@@ -372,7 +372,7 @@ public class DetailedInformationPanel extends JPanel {
 				writeRelationEntity(role.getIdentifier().toString());
 			}
 			writeRelation("Has By Agent(s):");
-			for (final Agent<?> agent : attribute.getHadBySet()) {
+			for (final Agent agent : attribute.getHadBySet()) {
 				writeRelationEntityValue(agent.getIdentifier().toString(), attribute.getHadByValue(agent.getIdentifier()));
 			}
 			writeRelation("Moderated By Performance Function(s):");

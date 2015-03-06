@@ -37,7 +37,7 @@ public interface RoleGoodnessFunction {
 	public static final class DefaultRoleGoodnessFunction implements RoleGoodnessFunction {
 
 		@Override
-		public double goodness(final Role role, final Agent<?> agent, final InstanceGoal<?> goal, final Collection<Assignment> assignments) {
+		public double goodness(final Role role, final Agent agent, final InstanceGoal<?> goal, final Collection<Assignment> assignments) {
 			/*
 			 * first, check that the agent has all the necessary attributes. otherwise, return a null to indicate that the agent cannot play the role
 			 */
@@ -99,6 +99,6 @@ public interface RoleGoodnessFunction {
 	 *         achieve the given {@link InstanceGoal}. A value of <code>0.0</code> indicates that the {@link Agent} cannot perform the {@link Role} or the
 	 *         {@link InstanceGoal} cannot be achieved by the {@link Role}.
 	 */
-	double goodness(Role role, Agent<?> agent, InstanceGoal<?> goal, Collection<Assignment> assignments);
+	double goodness(Role role, Agent agent, InstanceGoal<?> goal, Collection<Assignment> assignments);
 
 }

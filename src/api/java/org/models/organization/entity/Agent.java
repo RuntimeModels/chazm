@@ -17,11 +17,18 @@ import org.models.organization.identifier.UniqueIdentifier;
  *
  * @author Christopher Zhong
  * @version $Revision: 1.9.2.4 $, $Date: 2011/03/28 21:08:35 $
- * @param <ContactInformationType>
- *            the sub-type of contact information of the <code>Agent</code>.
  * @since 3.4
  */
-public interface Agent<ContactInformationType> extends SimpleAgent {
+public interface Agent extends SimpleAgent {
+
+	/**
+	 * The {@linkplain ContactInfo} defines the interface on how {@linkplain Agent}s can be contacted.
+	 *
+	 * @author Christopher Zhong
+	 * @since 7.0.0
+	 */
+	interface ContactInfo {
+	}
 
 	/**
 	 * Adds the given <code>Capability</code> to the the set of <code>Capability</code> that this <code>Agent</code> possesses.
@@ -131,19 +138,19 @@ public interface Agent<ContactInformationType> extends SimpleAgent {
 	void removeAllHas();
 
 	/**
-	 * Returns the contact information for this <code>Agent</code>.
+	 * Returns the {@linkplain ContactInfo} for this <code>Agent</code>.
 	 *
-	 * @return the contact information of this <code>Agent</code>.
+	 * @return the {@linkplain ContactInfo} of this <code>Agent</code>.
 	 */
-	ContactInformationType getContactInformation();
+	ContactInfo getContactInfo();
 
 	/**
-	 * Sets the contact information for this <code>Agent</code>.
+	 * Sets the {@linkplain ContactInfo} for this <code>Agent</code>.
 	 *
-	 * @param contactInformation
-	 *            the new contact information to set.
+	 * @param contactInfo
+	 *            the new {@linkplain ContactInfo} to set.
 	 */
-	void setContactInformation(ContactInformationType contactInformation);
+	void setContactInfo(ContactInfo contactInfo);
 
 	/**
 	 * Determines whether this <code>Agent</code> possesses the given <code>Capability</code> and returns the score indicating the ability of this
