@@ -5,7 +5,7 @@
  *
  * See License.txt file the license agreement.
  */
-package org.models.organization.parser;
+package org.models.organization.provider;
 
 import org.models.organization.entity.Agent;
 import org.models.organization.entity.Capability;
@@ -14,6 +14,7 @@ import org.models.organization.entity.Role;
 import org.models.organization.entity.SpecificationGoal;
 import org.models.organization.identifier.StringIdentifier;
 import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.provider.UniqueIdentifierProvider;
 
 /**
  * The <code>DefaultUniqueIdentifierProvider</code> provides a default implementation of the <code>UniqueIdentifierProvider</code>.

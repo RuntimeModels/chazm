@@ -21,10 +21,10 @@ import org.models.organization.entity.OrganizationImpl;
 import org.models.organization.entity.RoleImpl;
 import org.models.organization.entity.SpecificationGoal;
 import org.models.organization.identifier.UniqueIdentifier;
-import org.models.organization.parser.DefaultSpecificationGoalProvider;
-import org.models.organization.parser.DefaultUniqueIdentifierProvider;
-import org.models.organization.parser.SpecificationGoalProvider;
-import org.models.organization.parser.UniqueIdentifierProvider;
+import org.models.organization.provider.DefaultSpecificationGoalProvider;
+import org.models.organization.provider.DefaultUniqueIdentifierProvider;
+import org.models.organization.provider.SpecificationGoalProvider;
+import org.models.organization.provider.UniqueIdentifierProvider;
 import org.xml.sax.SAXException;
 
 import edu.ksu.cis.agenttool.core.model.Capability;

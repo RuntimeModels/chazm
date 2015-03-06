@@ -5,10 +5,12 @@
  *
  * See License.txt file the license agreement.
  */
-package org.models.organization.parser;
+package org.models.organization.provider;
 
 import org.models.organization.entity.SpecificationGoal;
 import org.models.organization.entity.SpecificationGoalImpl;
+import org.models.organization.provider.SpecificationGoalProvider;
+import org.models.organization.provider.UniqueIdentifierProvider;
 
 /**
  * The <code>DefaultSpecificationGoalProvider</code> provides a default implementation for the <code>SpecificationGoalProvider</code>.
