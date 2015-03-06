@@ -11,20 +11,51 @@ repositories {
 	mavenCentral()
 }
 
+sourceSets {
+	main {
+		java {
+			srcDir 'src/api/java'
+		}
+	}
+	api {
+		java {
+			srcDir 'src/api/java'
+		}
+	}
+}
+
 dependencies {
 	compile fileTree(dir: 'src/main/resources', include: '*.jar')
 	testCompile 'junit:junit:+'
 	testCompile 'org.mockito:mockito-core:+'
 }
 
+
+task apiJar(type: Jar) {
+	baseName = baseName + "-$sourceSets.api.name"
+	from sourceSets.api.output
+}
+
 task wrapper(type: Wrapper) {
 	gradleVersion = '2.3'
 }
 
+artifacts {
+	archives apiJar
+}
+
+jar {
+	from sourceSets.api.output
+}
+
 publishing {
 	publications {
-		maven(MavenPublication) {
+		main(MavenPublication) {
 			from components.java
+		}
+		api(MavenPublication) {
+			artifactId = artifactId + "-$sourceSets.api.name"
+			artifact apiJar
 		}
 	}
 }
