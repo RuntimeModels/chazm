@@ -5,7 +5,7 @@
  *
  * See License.txt file the license agreement.
  */
-package org.models.organization.parser;
+package org.models.organization.provider;
 
 import org.models.organization.entity.SpecificationGoal;
 
