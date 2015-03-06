@@ -15,7 +15,7 @@ import javax.swing.JList;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionListener;
 
-import org.models.organization.entity.Organization;
+import org.models.organization.Organization;
 
 /**
  * The <code>AbstractListVisualizationPanel</code> provides list type <code>JPanel</code> for display information about the <code>Organization</code>.

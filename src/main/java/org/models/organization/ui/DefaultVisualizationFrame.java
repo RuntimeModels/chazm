@@ -19,7 +19,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 
-import org.models.organization.entity.Organization;
+import org.models.organization.Organization;
 
 /**
  * The <code>DefaultVisualizationFrame</code> provides a primitive <code>JFrame</code> for visualizing the <code>Organization</code>.

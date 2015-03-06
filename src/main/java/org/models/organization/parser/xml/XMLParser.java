@@ -15,9 +15,9 @@ import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.models.organization.Organization;
+import org.models.organization.OrganizationImpl;
 import org.models.organization.entity.CapabilityImpl;
-import org.models.organization.entity.Organization;
-import org.models.organization.entity.OrganizationImpl;
 import org.models.organization.entity.RoleImpl;
 import org.models.organization.entity.SpecificationGoal;
 import org.models.organization.identifier.UniqueIdentifier;

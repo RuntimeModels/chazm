@@ -20,8 +20,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
+import org.models.organization.Organization;
 import org.models.organization.entity.InstanceGoal;
-import org.models.organization.entity.Organization;
 import org.models.organization.entity.SpecificationGoal;
 
 /**

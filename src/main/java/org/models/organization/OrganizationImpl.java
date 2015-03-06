@@ -5,7 +5,7 @@
  *
  * See License.txt file the license agreement.
  */
-package org.models.organization.entity;
+package org.models.organization;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -13,6 +13,16 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.models.organization.Organization;
+import org.models.organization.entity.Agent;
+import org.models.organization.entity.Attribute;
+import org.models.organization.entity.Capability;
+import org.models.organization.entity.Characteristic;
+import org.models.organization.entity.InstanceGoal;
+import org.models.organization.entity.PerformanceFunction;
+import org.models.organization.entity.Policy;
+import org.models.organization.entity.Role;
+import org.models.organization.entity.SpecificationGoal;
 import org.models.organization.identifier.UniqueIdentifier;
 import org.models.organization.registry.ChangeManager;
 import org.models.organization.registry.EventRegistry;
