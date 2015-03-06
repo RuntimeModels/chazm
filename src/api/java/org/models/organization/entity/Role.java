@@ -19,7 +19,6 @@ import org.models.organization.relation.Assignment;
  * The <code>Role</code> interface defines the basic role entity of the Organization Model by extending the {@link SimpleRole} interface.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.5.2.11 $, $Date: 2012/01/20 21:24:37 $
  * @see SimpleRole
  * @see RoleGoodnessFunction
  * @since 3.4

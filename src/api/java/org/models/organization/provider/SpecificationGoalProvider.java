@@ -13,7 +13,6 @@ import org.models.organization.entity.SpecificationGoal;
  * The <code>SpecificationGoalProvider</code> interface provides the necessary functionality required for extensions so as to properly interact with parsers.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.2.4.1 $, $Date: 2011/09/19 14:26:41 $
  * @since 4.0
  */
 public interface SpecificationGoalProvider {

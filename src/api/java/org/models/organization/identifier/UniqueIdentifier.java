@@ -23,7 +23,6 @@ import java.io.Serializable;
  * the correct instance of the <code>UniqueIdentifier</code> so that uses of the implementation across multiple JVMs exhibit correct behavior.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.1 $, $Date: 2009/03/06 15:34:59 $
  * @since 4.0
  */
 public abstract class UniqueIdentifier implements Serializable {

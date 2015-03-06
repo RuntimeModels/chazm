@@ -23,7 +23,6 @@ import org.models.organization.Organization;
  * The <code>AbstractVisualizationPanel</code> provides the base framework <code>JPanel</code> for display information about the <code>Organization</code>.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.1.2.6 $, $Date: 2012/01/24 17:24:08 $
  * @since 6.0
  */
 public abstract class AbstractVisualizationPanel extends JPanel {

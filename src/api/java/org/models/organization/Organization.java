@@ -32,7 +32,6 @@ import org.models.organization.relation.UsesRelation;
  * The {@linkplain Organization} interface defines an organization.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.9.2.7 $, $Date: 2011/09/19 14:26:37 $
  * @since 4.0
  */
 public interface Organization {

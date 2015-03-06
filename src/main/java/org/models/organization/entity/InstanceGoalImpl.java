@@ -16,7 +16,6 @@ import org.models.organization.identifier.UniqueIdentifier;
  * The <code>InstanceGoalImpl</code> class implements the {@link InstanceGoal}.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.5.2.5 $, $Date: 2011/09/19 14:26:36 $
  * @param <ParameterType>
  *            the type of the parameter for the <code>InstanceGoal</code>.
  * @see SpecificationGoal
@@ -28,7 +27,6 @@ public class InstanceGoalImpl<ParameterType> extends SimpleGoalImpl implements I
 	 * The <code>InstanceGoalIdentifier</code> class extends the {@link UniqueIdentifier} by using two {@link UniqueIdentifier} as the form of identification.
 	 *
 	 * @author Christopher Zhong
-	 * @version $Revision: 1.5.2.5 $, $Date: 2011/09/19 14:26:36 $
 	 * @since 4.0
 	 * @see UniqueIdentifier
 	 */

@@ -25,7 +25,6 @@ import org.models.organization.Organization;
  * The <code>DefaultVisualizationFrame</code> provides a primitive <code>JFrame</code> for visualizing the <code>Organization</code>.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.3.4.6 $, $Date: 2012/01/10 23:51:14 $
  * @since 3.4
  */
 public class DefaultVisualizationFrame extends JFrame {

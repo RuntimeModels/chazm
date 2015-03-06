@@ -16,7 +16,6 @@ import org.models.organization.identifier.UniqueIdentifier;
  * The <code>SimpleRoleImpl</code> class implements the {@link SimpleRole} interface.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.4.2.1 $, $Date: 2011/09/19 14:26:39 $
  * @since 3.2
  */
 public class SimpleRoleImpl implements SimpleRole {

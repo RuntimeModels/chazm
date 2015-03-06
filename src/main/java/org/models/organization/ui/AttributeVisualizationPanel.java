@@ -25,7 +25,6 @@ import org.models.organization.entity.Attribute;
  * The <code>AttributeVisualizationPanel</code> class is a Swing component to visualize the <code>Attribute</code> currently in the <code>Organization</code>.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.1.4.5 $, $Date: 2011/09/19 14:26:33 $
  * @since 3.4
  */
 public class AttributeVisualizationPanel extends AbstractListVisualizationPanel<Attribute> {

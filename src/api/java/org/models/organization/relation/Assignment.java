@@ -18,7 +18,6 @@ import org.models.organization.identifier.UniqueIdentifier;
  * An assignment means that an {@link Agent} is assigned to play a {@link Role} to achieve a {@link InstanceGoal}
  *
  * @author Christopher Zhong
- * @version $Revision: 1.5.2.2 $, $Date: 2010/06/24 19:26:07 $
  * @see Agent
  * @see Role
  * @see InstanceGoal
@@ -30,7 +29,6 @@ public class Assignment {
 	 * The <code>AssignmentIdentifier</code> extends the {@link UniqueIdentifier} by using three {@link UniqueIdentifier} as the form of identification.
 	 *
 	 * @author Christopher Zhong
-	 * @version $Revision: 1.5.2.2 $, $Date: 2010/06/24 19:26:07 $
 	 * @see UniqueIdentifier
 	 * @since 4.0
 	 */

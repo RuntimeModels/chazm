@@ -20,7 +20,6 @@ import org.junit.Test;
  * TODO Class Description!
  *
  * @author Christopher Zhong
- * @version $Revision: $, $Date: $
  * @since 6.0
  */
 public class AchievesRelationTest {

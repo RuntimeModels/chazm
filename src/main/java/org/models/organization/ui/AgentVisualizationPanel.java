@@ -25,7 +25,6 @@ import org.models.organization.entity.Agent;
  * The <code>AgentVisualizationPanel</code> class is a Swing component to visualize the <code>Agent</code> currently in the <code>Organization</code>.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.3.4.4 $, $Date: 2011/09/19 14:26:34 $
  * @since 3.4
  */
 public class AgentVisualizationPanel extends AbstractListVisualizationPanel<Agent> {

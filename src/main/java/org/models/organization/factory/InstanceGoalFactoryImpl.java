@@ -16,7 +16,6 @@ import org.models.organization.identifier.UniqueIdentifier;
  * <code>InstanceGoalFactoryImpl</code> provides a default {@link InstanceGoalFactory} used for creating instances of {@link InstanceGoal}.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.2.4.1 $, $Date: 2011/09/19 14:26:36 $
  * @since 3.2
  */
 public class InstanceGoalFactoryImpl implements InstanceGoalFactory {

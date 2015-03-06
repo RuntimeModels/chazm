@@ -15,7 +15,6 @@ import org.models.organization.identifier.UniqueIdentifier;
  * The <code>InstanceGoalFactory</code> interface provides a standard way to instantiate {@link InstanceGoal} in the Organization Model.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.2 $, $Date: 2009/03/31 10:07:08 $
  * @since 3.2
  */
 public interface InstanceGoalFactory {

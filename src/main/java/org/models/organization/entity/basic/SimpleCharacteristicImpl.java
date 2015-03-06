@@ -16,7 +16,6 @@ import org.models.organization.identifier.UniqueIdentifier;
  * The <code>SimpleCharacteristicImpl</code> class implements the {@link SimpleCharacteristic} interface.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.1.2.2 $, $Date: 2011/09/19 14:26:39 $
  * @see SimpleAttribute
  * @since 3.2
  */

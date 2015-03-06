@@ -22,7 +22,6 @@ import org.models.organization.relation.NeedsRelation;
  * The <code>AttributeImpl</code> class implements the {@link Attribute} interface.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.1.4.7 $, $Date: 2011/09/19 14:26:37 $
  * @see Attribute
  * @since 5.0
  */

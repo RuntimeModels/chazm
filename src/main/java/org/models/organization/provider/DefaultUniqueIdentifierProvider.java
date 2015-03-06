@@ -20,7 +20,6 @@ import org.models.organization.provider.UniqueIdentifierProvider;
  * The <code>DefaultUniqueIdentifierProvider</code> provides a default implementation of the <code>UniqueIdentifierProvider</code>.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.1.4.1 $, $Date: 2011/09/19 14:26:41 $
  * @since 4.0
  */
 public class DefaultUniqueIdentifierProvider implements UniqueIdentifierProvider {

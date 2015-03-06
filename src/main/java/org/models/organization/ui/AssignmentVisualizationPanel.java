@@ -25,7 +25,6 @@ import org.models.organization.relation.Assignment;
  * The <code>AssignmentVisualizationPanel</code> class is a Swing component to visualize the <code>Assignment</code> currently in the <code>Organization</code>.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.2.4.4 $, $Date: 2011/09/19 14:26:34 $
  * @since 3.4
  */
 public class AssignmentVisualizationPanel extends AbstractListVisualizationPanel<Assignment> {

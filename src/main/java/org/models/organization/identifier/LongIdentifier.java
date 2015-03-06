@@ -11,7 +11,6 @@ package org.models.organization.identifier;
  * The <code>LongIdentifier</code> implements the {@link UniqueIdentifier} interface to represent <code>long</code> as entities in the Organization Model.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.3 $, $Date: 2009/12/03 00:03:25 $
  * @since 4.0
  * @see UniqueIdentifier
  */

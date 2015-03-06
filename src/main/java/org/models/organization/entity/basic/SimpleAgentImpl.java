@@ -16,7 +16,6 @@ import org.models.organization.identifier.UniqueIdentifier;
  * The <code>SimpleAgentImpl</code> class implements the {@link SimpleAgent} interface.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.4.2.1 $, $Date: 2011/09/19 14:26:40 $
  * @see SimpleAgent
  * @since 3.2
  */

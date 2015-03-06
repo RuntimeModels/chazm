@@ -16,7 +16,6 @@ import org.models.organization.identifier.UniqueIdentifier;
  * The <code>Agent</code> interface defines the basic agent entity of the Organization Model by extending the {@link SimpleAgent} interface.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.9.2.4 $, $Date: 2011/03/28 21:08:35 $
  * @since 3.4
  */
 public interface Agent extends SimpleAgent {

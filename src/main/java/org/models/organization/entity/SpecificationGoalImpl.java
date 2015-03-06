@@ -22,7 +22,6 @@ import org.models.organization.relation.AchievesRelation;
  * The <code>SpecificationGoalImpl</code> class implements the {@link SpecificationGoal} interface.
  *
  * @author Scott Harmon, Christopher Zhong
- * @version $Revision: 1.5.2.6 $, $Date: 2011/09/19 14:26:37 $
  * @see Role
  * @since 1.0
  */

@@ -11,7 +11,6 @@ package org.models.organization.registry;
  * The <code>EventRegistry</code> class is a mechanism for implementations of {@link ChangeManager} to provide an actual reference that can be used.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.1 $, $Date: 2009/09/21 20:48:47 $
  * @since 4.0
  */
 public final class EventRegistry {

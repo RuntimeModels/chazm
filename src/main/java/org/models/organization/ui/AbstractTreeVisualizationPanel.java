@@ -19,7 +19,6 @@ import org.models.organization.Organization;
  * The <code>AbstractListVisualizationPanel</code> provides tree type <code>JPanel</code> for display information about the <code>Organization</code>.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.1.2.1 $, $Date: 2010/05/27 23:25:55 $
  * @since 6.0
  */
 public abstract class AbstractTreeVisualizationPanel extends AbstractVisualizationPanel implements TreeSelectionListener {

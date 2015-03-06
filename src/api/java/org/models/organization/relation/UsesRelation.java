@@ -14,7 +14,6 @@ import org.models.organization.entity.Role;
  * Represents the uses relation, where a {@link Role} uses a {@link PerformanceFunction}.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.1.2.1 $, $Date: 2010/06/10 20:25:45 $
  * @see Role
  * @see PerformanceFunction
  * @since 6.0

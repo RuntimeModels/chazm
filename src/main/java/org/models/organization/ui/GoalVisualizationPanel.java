@@ -29,7 +29,6 @@ import org.models.organization.entity.SpecificationGoal;
  * the <code>Organization</code>.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.5.2.2 $, $Date: 2011/09/19 14:26:33 $
  * @since 3.4
  */
 public class GoalVisualizationPanel extends AbstractTreeVisualizationPanel {

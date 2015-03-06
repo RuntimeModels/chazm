@@ -17,7 +17,6 @@ import org.models.organization.identifier.UniqueIdentifier;
  * interface.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.1.2.1 $, $Date: 2010/05/25 22:18:33 $
  * @see SimpleCharacteristic
  * @since 6.0
  */

@@ -13,7 +13,6 @@ import org.models.organization.identifier.UniqueIdentifier;
  * The <code>ChangeManager</code> interface defines the types of changes that can occur within the organization model.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.2.4.5 $, $Date: 2010/07/30 19:19:41 $
  * @since 4.0
  */
 public interface ChangeManager {
