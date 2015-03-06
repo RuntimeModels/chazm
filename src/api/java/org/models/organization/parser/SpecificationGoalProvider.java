@@ -8,11 +8,9 @@
 package org.models.organization.parser;
 
 import org.models.organization.entity.SpecificationGoal;
-import org.models.organization.parser.xml.XMLParser;
 
 /**
- * The <code>SpecificationGoalProvider</code> interface provides the necessary functionality required for extensions so as to properly interact with the
- * {@link XMLParser}.
+ * The <code>SpecificationGoalProvider</code> interface provides the necessary functionality required for extensions so as to properly interact with parsers.
  *
  * @author Christopher Zhong
  * @version $Revision: 1.2.4.1 $, $Date: 2011/09/19 14:26:41 $

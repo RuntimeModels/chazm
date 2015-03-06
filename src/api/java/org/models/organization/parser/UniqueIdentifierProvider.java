@@ -8,11 +8,9 @@
 package org.models.organization.parser;
 
 import org.models.organization.identifier.UniqueIdentifier;
-import org.models.organization.parser.xml.XMLParser;
 
 /**
- * The <code>UniqueIdentifierProvider</code> interface defines the necessary functionality for using user-defined {@link UniqueIdentifier} when parsing XML
- * files using the {@link XMLParser}.
+ * The <code>UniqueIdentifierProvider</code> interface defines the necessary functionality for using user-defined {@link UniqueIdentifier} when parsing files.
  *
  * @author Christopher Zhong
  * @version $Revision: 1.1.4.1 $, $Date: 2011/09/19 14:26:41 $
