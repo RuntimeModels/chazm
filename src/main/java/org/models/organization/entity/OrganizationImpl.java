@@ -7,28 +7,20 @@
  */
 package org.models.organization.entity;
 
-import java.io.IOException;
-import java.nio.file.Path;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.models.organization.identifier.UniqueIdentifier;
-import org.models.organization.parser.SpecificationGoalProvider;
-import org.models.organization.parser.UniqueIdentifierProvider;
-import org.models.organization.parser.xml.XMLParser;
 import org.models.organization.registry.ChangeManager;
 import org.models.organization.registry.EventRegistry;
 import org.models.organization.relation.Assignment;
 import org.models.organization.relation.Task;
-import org.xml.sax.SAXException;
 
 /**
- * The <code>Organization</code> class implements the {@link Organization} interface.
+ * The {@linkplain OrganizationImpl} class implements the {@link Organization} interface.
  *
  * @author Scott Harmon
  * @author Christopher Zhong
@@ -42,101 +34,101 @@ import org.xml.sax.SAXException;
  * @since 1.0
  */
 public class OrganizationImpl implements Organization {
-
 	/**
-	 * The set of <code>SpecificationGoal</code> in this <code>Organization</code>.
+	 * The {@linkplain Entities} class is an data class for the entities within an {@linkplain Organization}.
+	 * 
+	 * @author Christopher Zhong
+	 * @since 7.0.0
 	 */
-	private final Map<UniqueIdentifier, SpecificationGoal> specificationGoals = new ConcurrentHashMap<>();
+	private static final class Entities {
+		/**
+		 * The set of {@linkplain SpecificationGoal} in this {@linkplain Organization}.
+		 */
+		private final Map<UniqueIdentifier, SpecificationGoal> specificationGoals = new ConcurrentHashMap<>();
+
+		/**
+		 * The set of {@linkplain Role} in this {@linkplain Organization}.
+		 */
+		private final Map<UniqueIdentifier, Role> roles = new ConcurrentHashMap<>();
+
+		/**
+		 * The set of {@linkplain Agent} in this {@linkplain Organization}.
+		 */
+		private final Map<UniqueIdentifier, Agent> agents = new ConcurrentHashMap<>();
+
+		/**
+		 * The set of {@linkplain Capability} in this {@linkplain Organization}.
+		 */
+		private final Map<UniqueIdentifier, Capability> capabilities = new ConcurrentHashMap<>();
+
+		/**
+		 * The set of {@linkplain Policy} in this {@linkplain Organization}.
+		 */
+		private final Map<UniqueIdentifier, Policy> policies = new ConcurrentHashMap<>();
+
+		/**
+		 * The set of {@linkplain InstanceGoal} in this {@linkplain Organization}.
+		 */
+		private final Map<UniqueIdentifier, InstanceGoal<?>> instanceGoals = new ConcurrentHashMap<>();
+
+		/**
+		 * The set of {@linkplain InstanceGoal} in this {@linkplain Organization} that is indexed by the {@linkplain SpecificationGoal}.
+		 */
+		private final Map<UniqueIdentifier, Map<UniqueIdentifier, InstanceGoal<?>>> instanceGoalsBySpecificationGoal = new ConcurrentHashMap<>();
+
+		/**
+		 * The set of {@linkplain Attribute} in this {@linkplain Organization}.
+		 */
+		private final Map<UniqueIdentifier, Attribute> attributes = new ConcurrentHashMap<>();
+
+		/**
+		 * The set of {@linkplain Task} in this {@linkplain Organization}.
+		 */
+		private final Map<UniqueIdentifier, Task> tasks = new ConcurrentHashMap<>();
+
+		/**
+		 * The set of {@linkplain PerformanceFunction} in this {@linkplain Organization}.
+		 */
+		private final Map<UniqueIdentifier, PerformanceFunction> performanceFunctions = new ConcurrentHashMap<>();
+
+		/**
+		 * The set of {@linkplain Characteristic} in this {@linkplain Organization}.
+		 */
+		private final Map<UniqueIdentifier, Characteristic> characteristics = new ConcurrentHashMap<>();
+	}
 
 	/**
-	 * The set of <code>Role</code> in this <code>Organization</code>.
+	 * The {@linkplain Relations} is a data class for the relations that are within an {@linkplain Organization}.
+	 * 
+	 * @author Christopher Zhong
+	 * @since 7.0.0
 	 */
-	private final Map<UniqueIdentifier, Role> roles = new ConcurrentHashMap<>();
+	private static final class Relations {
+		/**
+		 * The set of {@linkplain Assignment} in this {@linkplain Organization}.
+		 */
+		private final Map<UniqueIdentifier, Assignment> assignments = new ConcurrentHashMap<>();
+
+		/**
+		 * The set of {@linkplain Assignment} in this {@linkplain Organization} that is indexed by the {@linkplain Agent}.
+		 */
+		private final Map<UniqueIdentifier, Map<UniqueIdentifier, Assignment>> assignmentsByAgent = new ConcurrentHashMap<>();
+	}
 
 	/**
-	 * The set of <code>Agent</code> in this <code>Organization</code>.
+	 * The entities within this {@linkplain Organization}.
 	 */
-	private final Map<UniqueIdentifier, Agent> agents = new ConcurrentHashMap<>();
+	private final Entities entities = new Entities();
 
 	/**
-	 * The set of <code>Capability</code> in this <code>Organization</code>.
+	 * The relations within this {@linkplain Organization}.
 	 */
-	private final Map<UniqueIdentifier, Capability> capabilities = new ConcurrentHashMap<>();
+	private final Relations relations = new Relations();
 
 	/**
-	 * The set of <code>Policy</code> in this <code>Organization</code>.
-	 */
-	private final Map<UniqueIdentifier, Policy> policies = new ConcurrentHashMap<>();
-
-	/**
-	 * The set of <code>InstanceGoal</code> in this <code>Organization</code>.
-	 */
-	private final Map<UniqueIdentifier, InstanceGoal<?>> instanceGoals = new ConcurrentHashMap<>();
-
-	/**
-	 * The set of <code>InstanceGoal</code> in this <code>Organization</code> that is indexed by the <code>SpecificationGoal</code>.
-	 */
-	private final Map<UniqueIdentifier, Map<UniqueIdentifier, InstanceGoal<?>>> instanceGoalsBySpecificationGoal = new ConcurrentHashMap<>();
-
-	/**
-	 * The set of <code>Assignment</code> in this <code>Organization</code>.
-	 */
-	private final Map<UniqueIdentifier, Assignment> assignments = new ConcurrentHashMap<>();
-
-	/**
-	 * The set of <code>Assignment</code> in this <code>Organization</code> that is indexed by the <code>Agent</code>.
-	 */
-	private final Map<UniqueIdentifier, Map<UniqueIdentifier, Assignment>> assignmentsByAgent = new ConcurrentHashMap<>();
-
-	/**
-	 * The set of <code>Attribute</code> in this <code>Organization</code>.
-	 */
-	private final Map<UniqueIdentifier, Attribute> attributes = new ConcurrentHashMap<>();
-
-	/**
-	 * The set of <code>Task</code> in this <code>Organization</code>.
-	 */
-	private final Map<UniqueIdentifier, Task> tasks = new ConcurrentHashMap<>();
-
-	/**
-	 * The set of <code>PerformanceFunction</code> in this <code>Organization</code>.
-	 */
-	private final Map<UniqueIdentifier, PerformanceFunction> performanceFunctions = new ConcurrentHashMap<>();
-
-	/**
-	 * The set of <code>Characteristic</code> in this <code>Organization</code>.
-	 */
-	private final Map<UniqueIdentifier, Characteristic> characteristics = new ConcurrentHashMap<>();
-
-	/**
-	 * Constructs a new instance of <code>OrganizationImpl</code>.
+	 * Constructs an empty instance of an {@linkplain Organization}.
 	 */
 	public OrganizationImpl() {
-	}
-
-	/**
-	 * Constructs a new instance of <code>OrganizationImpl</code>.
-	 *
-	 * @param path
-	 *            the <code>Path</code> from which to populate the <code>Organization</code>.
-	 * @param specificationGoalProvider
-	 *            the <code>SpecificationGoalProvider</code> from which to retrieve <code>SpecificationGoal</code>s.
-	 * @param uniqueIdentifierProvider
-	 *            the <code>UniqueIdentifierProvider</code> which provides <code>UniqueIdentifier</code>.
-	 */
-	public OrganizationImpl(final Path path, final SpecificationGoalProvider specificationGoalProvider, final UniqueIdentifierProvider uniqueIdentifierProvider) {
-		populate(path, specificationGoalProvider, uniqueIdentifierProvider);
-	}
-
-	@Override
-	public Organization populate(final Path path, final SpecificationGoalProvider specificationGoalProvider,
-			final UniqueIdentifierProvider uniqueIdentifierProvider) {
-		try {
-			XMLParser.parse(path, specificationGoalProvider, uniqueIdentifierProvider, this);
-		} catch (SAXException | IOException | ParserConfigurationException e) {
-			e.printStackTrace();
-		}
-		return this;
 	}
 
 	@Override
@@ -144,11 +136,11 @@ public class OrganizationImpl implements Organization {
 		if (specificationGoal == null) {
 			throw new IllegalArgumentException("Parameter (specificationGoal) cannot be null");
 		}
-		if (specificationGoals.containsKey(specificationGoal.getIdentifier())) {
+		if (entities.specificationGoals.containsKey(specificationGoal.getIdentifier())) {
 			throw new IllegalArgumentException(String.format("Specification goal (%s) already exists", specificationGoal));
 		}
-		specificationGoals.put(specificationGoal.getIdentifier(), specificationGoal);
-		instanceGoalsBySpecificationGoal.put(specificationGoal.getIdentifier(), new ConcurrentHashMap<UniqueIdentifier, InstanceGoal<?>>());
+		entities.specificationGoals.put(specificationGoal.getIdentifier(), specificationGoal);
+		entities.instanceGoalsBySpecificationGoal.put(specificationGoal.getIdentifier(), new ConcurrentHashMap<UniqueIdentifier, InstanceGoal<?>>());
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
@@ -181,12 +173,12 @@ public class OrganizationImpl implements Organization {
 		if (goalIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (goalIdentifier) cannot be null");
 		}
-		return specificationGoals.get(goalIdentifier);
+		return entities.specificationGoals.get(goalIdentifier);
 	}
 
 	@Override
 	public final Set<SpecificationGoal> getSpecificationGoals() {
-		return new HashSet<>(specificationGoals.values());
+		return new HashSet<>(entities.specificationGoals.values());
 	}
 
 	@Override
@@ -194,8 +186,8 @@ public class OrganizationImpl implements Organization {
 		if (goalIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (goalIdentifier) cannot be null");
 		}
-		final SpecificationGoal specificationGoal = specificationGoals.remove(goalIdentifier);
-		instanceGoalsBySpecificationGoal.remove(goalIdentifier);
+		final SpecificationGoal specificationGoal = entities.specificationGoals.remove(goalIdentifier);
+		entities.instanceGoalsBySpecificationGoal.remove(goalIdentifier);
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
@@ -225,8 +217,8 @@ public class OrganizationImpl implements Organization {
 
 	@Override
 	public final void removeAllSpecificationGoals() {
-		specificationGoals.clear();
-		instanceGoalsBySpecificationGoal.clear();
+		entities.specificationGoals.clear();
+		entities.instanceGoalsBySpecificationGoal.clear();
 	}
 
 	@Override
@@ -234,10 +226,10 @@ public class OrganizationImpl implements Organization {
 		if (role == null) {
 			throw new IllegalArgumentException("Parameter (role) cannot be null");
 		}
-		if (roles.containsKey(role.getIdentifier())) {
+		if (entities.roles.containsKey(role.getIdentifier())) {
 			throw new IllegalArgumentException(String.format("Role (%s) already exists", role));
 		}
-		roles.put(role.getIdentifier(), role);
+		entities.roles.put(role.getIdentifier(), role);
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
@@ -270,12 +262,12 @@ public class OrganizationImpl implements Organization {
 		if (roleIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (roleIdentifier) cannot be null");
 		}
-		return roles.get(roleIdentifier);
+		return entities.roles.get(roleIdentifier);
 	}
 
 	@Override
 	public final Set<Role> getRoles() {
-		return new HashSet<>(roles.values());
+		return new HashSet<>(entities.roles.values());
 	}
 
 	@Override
@@ -283,7 +275,7 @@ public class OrganizationImpl implements Organization {
 		if (roleIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (roleIdentifier) cannot be null");
 		}
-		final Role role = roles.remove(roleIdentifier);
+		final Role role = entities.roles.remove(roleIdentifier);
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
@@ -313,7 +305,7 @@ public class OrganizationImpl implements Organization {
 
 	@Override
 	public final void removeAllRoles() {
-		roles.clear();
+		entities.roles.clear();
 	}
 
 	@Override
@@ -321,12 +313,12 @@ public class OrganizationImpl implements Organization {
 		if (agent == null) {
 			throw new IllegalArgumentException("Parameter (agent) cannot be null");
 		}
-		if (agents.containsKey(agent.getIdentifier())) {
+		if (entities.agents.containsKey(agent.getIdentifier())) {
 			throw new IllegalArgumentException(String.format("Agent (%s) already exists", agent));
 		}
-		agents.put(agent.getIdentifier(), agent);
+		entities.agents.put(agent.getIdentifier(), agent);
 		final Map<UniqueIdentifier, Assignment> map = new ConcurrentHashMap<>();
-		assignmentsByAgent.put(agent.getIdentifier(), map);
+		relations.assignmentsByAgent.put(agent.getIdentifier(), map);
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
@@ -359,12 +351,12 @@ public class OrganizationImpl implements Organization {
 		if (agentIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (agentIdentifier) cannot be null");
 		}
-		return agents.get(agentIdentifier);
+		return entities.agents.get(agentIdentifier);
 	}
 
 	@Override
 	public final Set<Agent> getAgents() {
-		return new HashSet<>(agents.values());
+		return new HashSet<>(entities.agents.values());
 	}
 
 	@Override
@@ -372,8 +364,8 @@ public class OrganizationImpl implements Organization {
 		if (agentIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (agentIdentifier) cannot be null");
 		}
-		final Agent agent = agents.remove(agentIdentifier);
-		assignmentsByAgent.remove(agentIdentifier);
+		final Agent agent = entities.agents.remove(agentIdentifier);
+		relations.assignmentsByAgent.remove(agentIdentifier);
 
 		if (agent != null) {
 			final ChangeManager changeManager = EventRegistry.get();
@@ -405,8 +397,8 @@ public class OrganizationImpl implements Organization {
 
 	@Override
 	public final void removeAllAgents() {
-		agents.clear();
-		assignmentsByAgent.clear();
+		entities.agents.clear();
+		relations.assignmentsByAgent.clear();
 	}
 
 	@Override
@@ -414,10 +406,10 @@ public class OrganizationImpl implements Organization {
 		if (capability == null) {
 			throw new IllegalArgumentException("Parameter (capability) cannot be null");
 		}
-		if (capabilities.containsKey(capability.getIdentifier())) {
+		if (entities.capabilities.containsKey(capability.getIdentifier())) {
 			throw new IllegalArgumentException(String.format("Capability (%s) already exists", capability));
 		}
-		capabilities.put(capability.getIdentifier(), capability);
+		entities.capabilities.put(capability.getIdentifier(), capability);
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
@@ -450,12 +442,12 @@ public class OrganizationImpl implements Organization {
 		if (capabilityIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (capabilityIdentifier) cannot be null");
 		}
-		return capabilities.get(capabilityIdentifier);
+		return entities.capabilities.get(capabilityIdentifier);
 	}
 
 	@Override
 	public final Set<Capability> getCapabilities() {
-		return new HashSet<>(capabilities.values());
+		return new HashSet<>(entities.capabilities.values());
 	}
 
 	@Override
@@ -463,7 +455,7 @@ public class OrganizationImpl implements Organization {
 		if (capabilityIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (capabilityIdentifier) cannot be null");
 		}
-		final Capability capability = capabilities.remove(capabilityIdentifier);
+		final Capability capability = entities.capabilities.remove(capabilityIdentifier);
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
@@ -493,7 +485,7 @@ public class OrganizationImpl implements Organization {
 
 	@Override
 	public final void removeAllCapabilities() {
-		capabilities.clear();
+		entities.capabilities.clear();
 	}
 
 	@Override
@@ -501,10 +493,10 @@ public class OrganizationImpl implements Organization {
 		if (policy == null) {
 			throw new IllegalArgumentException("Parameter (policy) cannot be null");
 		}
-		if (policies.containsKey(policy.getIdentifier())) {
+		if (entities.policies.containsKey(policy.getIdentifier())) {
 			throw new IllegalArgumentException(String.format("Policy (%s) already exists", policy));
 		}
-		policies.put(policy.getIdentifier(), policy);
+		entities.policies.put(policy.getIdentifier(), policy);
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
@@ -537,12 +529,12 @@ public class OrganizationImpl implements Organization {
 		if (policyIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (policyIdentifier) cannot be null");
 		}
-		return policies.get(policyIdentifier);
+		return entities.policies.get(policyIdentifier);
 	}
 
 	@Override
 	public final Set<Policy> getPolicies() {
-		return new HashSet<>(policies.values());
+		return new HashSet<>(entities.policies.values());
 	}
 
 	@Override
@@ -550,7 +542,7 @@ public class OrganizationImpl implements Organization {
 		if (policyIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (policyIdentifier) cannot be null");
 		}
-		final Policy policy = policies.remove(policyIdentifier);
+		final Policy policy = entities.policies.remove(policyIdentifier);
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
@@ -580,7 +572,7 @@ public class OrganizationImpl implements Organization {
 
 	@Override
 	public final void removeAllPolicies() {
-		policies.clear();
+		entities.policies.clear();
 	}
 
 	@Override
@@ -588,11 +580,11 @@ public class OrganizationImpl implements Organization {
 		if (instanceGoal == null) {
 			throw new IllegalArgumentException("Parameter (instanceGoal) cannot be null");
 		}
-		if (instanceGoals.containsKey(instanceGoal.getIdentifier())) {
+		if (entities.instanceGoals.containsKey(instanceGoal.getIdentifier())) {
 			throw new IllegalArgumentException(String.format("Instance goal (%s) already exists", instanceGoal.getIdentifier()));
 		}
-		instanceGoals.put(instanceGoal.getIdentifier(), instanceGoal);
-		instanceGoalsBySpecificationGoal.get(instanceGoal.getSpecificationIdentifier()).put(instanceGoal.getInstanceIdentifier(), instanceGoal);
+		entities.instanceGoals.put(instanceGoal.getIdentifier(), instanceGoal);
+		entities.instanceGoalsBySpecificationGoal.get(instanceGoal.getSpecificationIdentifier()).put(instanceGoal.getInstanceIdentifier(), instanceGoal);
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
@@ -625,12 +617,12 @@ public class OrganizationImpl implements Organization {
 		if (goalIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (goalIdentifier) cannot be null");
 		}
-		return instanceGoals.get(goalIdentifier);
+		return entities.instanceGoals.get(goalIdentifier);
 	}
 
 	@Override
 	public final Set<InstanceGoal<?>> getInstanceGoals() {
-		return new HashSet<>(instanceGoals.values());
+		return new HashSet<>(entities.instanceGoals.values());
 	}
 
 	@Override
@@ -638,8 +630,8 @@ public class OrganizationImpl implements Organization {
 		if (goalIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (goalIdentifier) cannot be null");
 		}
-		final InstanceGoal<?> instanceGoal = instanceGoals.remove(goalIdentifier);
-		instanceGoalsBySpecificationGoal.get(instanceGoal.getSpecificationIdentifier()).remove(instanceGoal.getInstanceIdentifier());
+		final InstanceGoal<?> instanceGoal = entities.instanceGoals.remove(goalIdentifier);
+		entities.instanceGoalsBySpecificationGoal.get(instanceGoal.getSpecificationIdentifier()).remove(instanceGoal.getInstanceIdentifier());
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
@@ -669,10 +661,300 @@ public class OrganizationImpl implements Organization {
 
 	@Override
 	public final void removeAllInstanceGoals() {
-		instanceGoals.clear();
-		for (final Map<UniqueIdentifier, InstanceGoal<?>> map : instanceGoalsBySpecificationGoal.values()) {
+		entities.instanceGoals.clear();
+		for (final Map<UniqueIdentifier, InstanceGoal<?>> map : entities.instanceGoalsBySpecificationGoal.values()) {
 			map.clear();
 		}
+	}
+
+	@Override
+	public final void addAttribute(final Attribute attribute) {
+		if (attribute == null) {
+			throw new IllegalArgumentException("Parameter (attribute) cannot be null");
+		}
+		if (entities.attributes.containsKey(attribute.getIdentifier())) {
+			throw new IllegalArgumentException(String.format("Attribute (%s) already exists", attribute));
+		}
+		entities.attributes.put(attribute.getIdentifier(), attribute);
+
+		final ChangeManager changeManager = EventRegistry.get();
+		if (changeManager != null) {
+			changeManager.notifyAttributeAdded(attribute.getIdentifier());
+		}
+	}
+
+	@Override
+	public final void addAttributes(final Collection<Attribute> attributes) {
+		if (attributes == null) {
+			throw new IllegalArgumentException("Parameter (attributes) cannot be null");
+		}
+		for (final Attribute attribute : attributes) {
+			addAttribute(attribute);
+		}
+	}
+
+	@Override
+	public final void addAttributes(final Attribute... attributes) {
+		if (attributes == null) {
+			throw new IllegalArgumentException("Parameter (attributes) cannot be null");
+		}
+		for (final Attribute attribute : attributes) {
+			addAttribute(attribute);
+		}
+	}
+
+	@Override
+	public final Attribute getAttribute(final UniqueIdentifier attributeIdentifier) {
+		if (attributeIdentifier == null) {
+			throw new IllegalArgumentException("Parameter (attributeIdentifier) cannot be null");
+		}
+		return entities.attributes.get(attributeIdentifier);
+	}
+
+	@Override
+	public final Set<Attribute> getAttributes() {
+		return new HashSet<>(entities.attributes.values());
+	}
+
+	@Override
+	public final void removeAttribute(final UniqueIdentifier attributeIdentifier) {
+		if (attributeIdentifier == null) {
+			throw new IllegalArgumentException("Parameter (attributeIdentifier) cannot be null");
+		}
+		final Attribute attribute = entities.attributes.remove(attributeIdentifier);
+
+		final ChangeManager changeManager = EventRegistry.get();
+		if (changeManager != null) {
+			changeManager.notifyAttributeRemoved(attribute.getIdentifier());
+		}
+	}
+
+	@Override
+	public final void removeAttributes(final Collection<UniqueIdentifier> attributeIdentifiers) {
+		if (attributeIdentifiers == null) {
+			throw new IllegalArgumentException("Parameter (attributeIdentifiers) cannot be null");
+		}
+		for (final UniqueIdentifier attributeIdentifier : attributeIdentifiers) {
+			removeAttribute(attributeIdentifier);
+		}
+	}
+
+	@Override
+	public final void removeAttributes(final UniqueIdentifier... attributeIdentifiers) {
+		if (attributeIdentifiers == null) {
+			throw new IllegalArgumentException("Parameter (attributeIdentifiers) cannot be null");
+		}
+		for (final UniqueIdentifier attributeIdentifier : attributeIdentifiers) {
+			removeAttribute(attributeIdentifier);
+		}
+	}
+
+	@Override
+	public final void removeAllAttributes() {
+		entities.attributes.clear();
+	}
+
+	@Override
+	public final void addTask(final Task task) {
+		if (task == null) {
+			throw new IllegalArgumentException("Parameter (task) cannot be null");
+		}
+		if (entities.tasks.containsKey(task.getIdentifier())) {
+			throw new IllegalArgumentException(String.format("Task (%s) already exists", task));
+		}
+		entities.tasks.put(task.getIdentifier(), task);
+
+		final ChangeManager changeManager = EventRegistry.get();
+		if (changeManager != null) {
+			changeManager.notifyTaskAdded(task.getIdentifier());
+		}
+	}
+
+	@Override
+	public final void addTasks(final Collection<Task> tasks) {
+		if (tasks == null) {
+			throw new IllegalArgumentException("Parameter (tasks) cannot be null");
+		}
+		for (final Task task : tasks) {
+			addTask(task);
+		}
+	}
+
+	@Override
+	public final void addTasks(final Task... tasks) {
+		if (tasks == null) {
+			throw new IllegalArgumentException("Parameter (tasks) cannot be null");
+		}
+		for (final Task task : tasks) {
+			addTask(task);
+		}
+	}
+
+	@Override
+	public Task getTask(final UniqueIdentifier taskIdentifier) {
+		if (taskIdentifier == null) {
+			throw new IllegalArgumentException("Parameter (taskIdentifier) cannot be null");
+		}
+		return entities.tasks.get(taskIdentifier);
+	}
+
+	@Override
+	public final Set<Task> getTasks() {
+		return new HashSet<>(entities.tasks.values());
+	}
+
+	@Override
+	public final void removeTask(final UniqueIdentifier taskIdentifier) {
+		if (taskIdentifier == null) {
+			throw new IllegalArgumentException("Parameter (taskIdentifier) cannot be null");
+		}
+		final Task task = entities.tasks.remove(taskIdentifier);
+
+		final ChangeManager changeManager = EventRegistry.get();
+		if (changeManager != null) {
+			changeManager.notifyTaskRemoved(task.getIdentifier());
+		}
+	}
+
+	@Override
+	public final void removeAllTasks() {
+		entities.tasks.clear();
+	}
+
+	@Override
+	public final void addPerformanceFunction(final PerformanceFunction performanceFunction) {
+		if (performanceFunction == null) {
+			throw new IllegalArgumentException("Parameter (performanceFunction) cannot be null");
+		}
+		if (entities.performanceFunctions.containsKey(performanceFunction.getIdentifier())) {
+			throw new IllegalArgumentException(String.format("Performance function (%s) already exists", performanceFunction));
+		}
+		entities.performanceFunctions.put(performanceFunction.getIdentifier(), performanceFunction);
+
+		final ChangeManager changeManager = EventRegistry.get();
+		if (changeManager != null) {
+			changeManager.notifyPerformanceFunctionAdded(performanceFunction.getIdentifier());
+		}
+	}
+
+	@Override
+	public final void addPerformanceFunctions(final Collection<PerformanceFunction> performanceFunctions) {
+		if (performanceFunctions == null) {
+			throw new IllegalArgumentException("Parameter (performanceFunctions) cannot be null");
+		}
+		for (final PerformanceFunction performanceFunction : performanceFunctions) {
+			addPerformanceFunction(performanceFunction);
+		}
+	}
+
+	@Override
+	public final void addPerformanceFunctions(final PerformanceFunction... performanceFunctions) {
+		if (performanceFunctions == null) {
+			throw new IllegalArgumentException("Parameter (performanceFunctions) cannot be null");
+		}
+		for (final PerformanceFunction performanceFunction : performanceFunctions) {
+			addPerformanceFunction(performanceFunction);
+		}
+	}
+
+	@Override
+	public PerformanceFunction getPerformanceFunction(final UniqueIdentifier performanceFunctionIdentifier) {
+		if (performanceFunctionIdentifier == null) {
+			throw new IllegalArgumentException("Parameter (performanceFunctionIdentifier) cannot be null");
+		}
+		return entities.performanceFunctions.get(performanceFunctionIdentifier);
+	}
+
+	@Override
+	public final Set<PerformanceFunction> getPerformanceFunctions() {
+		return new HashSet<>(entities.performanceFunctions.values());
+	}
+
+	@Override
+	public final void removePerformanceFunction(final UniqueIdentifier performanceFunctionIdentifier) {
+		if (performanceFunctionIdentifier == null) {
+			throw new IllegalArgumentException("Parameter (performanceFunctionIdentifier) cannot be null");
+		}
+		final PerformanceFunction performanceFunction = entities.performanceFunctions.remove(performanceFunctionIdentifier);
+
+		final ChangeManager changeManager = EventRegistry.get();
+		if (changeManager != null) {
+			changeManager.notifyPerformanceFunctionRemoved(performanceFunction.getIdentifier());
+		}
+	}
+
+	@Override
+	public final void removeAllPerformanceFunctions() {
+		entities.performanceFunctions.clear();
+	}
+
+	@Override
+	public final void addCharacteristic(final Characteristic characteristic) {
+		if (characteristic == null) {
+			throw new IllegalArgumentException("Parameter (characteristic) cannot be null");
+		}
+		if (entities.characteristics.containsKey(characteristic.getIdentifier())) {
+			throw new IllegalArgumentException(String.format("Characteristic (%s) already exists", characteristic));
+		}
+		entities.characteristics.put(characteristic.getIdentifier(), characteristic);
+
+		final ChangeManager changeManager = EventRegistry.get();
+		if (changeManager != null) {
+			changeManager.notifyCharacteristicAdded(characteristic.getIdentifier());
+		}
+	}
+
+	@Override
+	public final void addCharacteristics(final Collection<Characteristic> characteristics) {
+		if (characteristics == null) {
+			throw new IllegalArgumentException("Parameter (characteristics) cannot be null");
+		}
+		for (final Characteristic characteristic : characteristics) {
+			addCharacteristic(characteristic);
+		}
+	}
+
+	@Override
+	public final void addCharacteristics(final Characteristic... characteristics) {
+		if (characteristics == null) {
+			throw new IllegalArgumentException("Parameter (characteristics) cannot be null");
+		}
+		for (final Characteristic characteristic : characteristics) {
+			addCharacteristic(characteristic);
+		}
+	}
+
+	@Override
+	public final Characteristic getCharacteristic(final UniqueIdentifier characteristicIdentifier) {
+		if (characteristicIdentifier == null) {
+			throw new IllegalArgumentException("Parameter (characteristicIdentifier) cannot be null");
+		}
+		return entities.characteristics.get(characteristicIdentifier);
+	}
+
+	@Override
+	public final Set<Characteristic> getCharacteristics() {
+		return new HashSet<>(entities.characteristics.values());
+	}
+
+	@Override
+	public final void removeCharacteristic(final UniqueIdentifier characteristicIdentifier) {
+		if (characteristicIdentifier == null) {
+			throw new IllegalArgumentException("Parameter (characteristicIdentifier) cannot be null");
+		}
+		if (entities.characteristics.containsKey(characteristicIdentifier)) {
+			final Characteristic characteristic = entities.characteristics.remove(characteristicIdentifier);
+
+			final ChangeManager changeManager = EventRegistry.get();
+			if (changeManager != null) {
+				changeManager.notifyCharacteristicRemoved(characteristic.getIdentifier());
+			}
+		}
+	}
+
+	@Override
+	public final void removeAllCharacteristic() {
+		entities.characteristics.clear();
 	}
 
 	@Override
@@ -680,11 +962,11 @@ public class OrganizationImpl implements Organization {
 		if (assignment == null) {
 			throw new IllegalArgumentException("Parameter (assignment) cannot be null");
 		}
-		if (assignments.containsKey(assignment.getIdentifier())) {
+		if (relations.assignments.containsKey(assignment.getIdentifier())) {
 			throw new IllegalArgumentException(String.format("Assignment (%s) already exists", assignment));
 		}
-		assignments.put(assignment.getIdentifier(), assignment);
-		assignmentsByAgent.get(assignment.getAgent().getIdentifier()).put(assignment.getIdentifier(), assignment);
+		relations.assignments.put(assignment.getIdentifier(), assignment);
+		relations.assignmentsByAgent.get(assignment.getAgent().getIdentifier()).put(assignment.getIdentifier(), assignment);
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
@@ -718,12 +1000,12 @@ public class OrganizationImpl implements Organization {
 		if (assignmentIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (assignmentIdentifier) cannot be null");
 		}
-		return assignments.get(assignmentIdentifier);
+		return relations.assignments.get(assignmentIdentifier);
 	}
 
 	@Override
 	public final Set<Assignment> getAssignments() {
-		return new HashSet<>(assignments.values());
+		return new HashSet<>(relations.assignments.values());
 	}
 
 	@Override
@@ -732,7 +1014,7 @@ public class OrganizationImpl implements Organization {
 			throw new IllegalArgumentException("Parameter (agentIdentifier) cannot be null");
 		}
 		final Set<Assignment> results = new HashSet<>();
-		final Map<UniqueIdentifier, Assignment> map = assignmentsByAgent.get(agentIdentifier);
+		final Map<UniqueIdentifier, Assignment> map = relations.assignmentsByAgent.get(agentIdentifier);
 		if (map != null) {
 			results.addAll(map.values());
 		}
@@ -744,8 +1026,8 @@ public class OrganizationImpl implements Organization {
 		if (assignmentIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (assignmentIdentifier) cannot be null");
 		}
-		final Assignment assignment = assignments.remove(assignmentIdentifier);
-		assignmentsByAgent.get(assignment.getAgent().getIdentifier()).remove(assignmentIdentifier);
+		final Assignment assignment = relations.assignments.remove(assignmentIdentifier);
+		relations.assignmentsByAgent.get(assignment.getAgent().getIdentifier()).remove(assignmentIdentifier);
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
@@ -776,304 +1058,14 @@ public class OrganizationImpl implements Organization {
 
 	@Override
 	public final void removeAllAssignments() {
-		assignments.clear();
-		for (final Map<UniqueIdentifier, Assignment> map : assignmentsByAgent.values()) {
+		relations.assignments.clear();
+		for (final Map<UniqueIdentifier, Assignment> map : relations.assignmentsByAgent.values()) {
 			map.clear();
 		}
 	}
 
 	@Override
-	public final void addAttribute(final Attribute attribute) {
-		if (attribute == null) {
-			throw new IllegalArgumentException("Parameter (attribute) cannot be null");
-		}
-		if (attributes.containsKey(attribute.getIdentifier())) {
-			throw new IllegalArgumentException(String.format("Attribute (%s) already exists", attribute));
-		}
-		attributes.put(attribute.getIdentifier(), attribute);
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyAttributeAdded(attribute.getIdentifier());
-		}
-	}
-
-	@Override
-	public final void addAttributes(final Collection<Attribute> attributes) {
-		if (attributes == null) {
-			throw new IllegalArgumentException("Parameter (attributes) cannot be null");
-		}
-		for (final Attribute attribute : attributes) {
-			addAttribute(attribute);
-		}
-	}
-
-	@Override
-	public final void addAttributes(final Attribute... attributes) {
-		if (attributes == null) {
-			throw new IllegalArgumentException("Parameter (attributes) cannot be null");
-		}
-		for (final Attribute attribute : attributes) {
-			addAttribute(attribute);
-		}
-	}
-
-	@Override
-	public final Attribute getAttribute(final UniqueIdentifier attributeIdentifier) {
-		if (attributeIdentifier == null) {
-			throw new IllegalArgumentException("Parameter (attributeIdentifier) cannot be null");
-		}
-		return attributes.get(attributeIdentifier);
-	}
-
-	@Override
-	public final Set<Attribute> getAttributes() {
-		return new HashSet<>(attributes.values());
-	}
-
-	@Override
-	public final void removeAttribute(final UniqueIdentifier attributeIdentifier) {
-		if (attributeIdentifier == null) {
-			throw new IllegalArgumentException("Parameter (attributeIdentifier) cannot be null");
-		}
-		final Attribute attribute = attributes.remove(attributeIdentifier);
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyAttributeRemoved(attribute.getIdentifier());
-		}
-	}
-
-	@Override
-	public final void removeAttributes(final Collection<UniqueIdentifier> attributeIdentifiers) {
-		if (attributeIdentifiers == null) {
-			throw new IllegalArgumentException("Parameter (attributeIdentifiers) cannot be null");
-		}
-		for (final UniqueIdentifier attributeIdentifier : attributeIdentifiers) {
-			removeAttribute(attributeIdentifier);
-		}
-	}
-
-	@Override
-	public final void removeAttributes(final UniqueIdentifier... attributeIdentifiers) {
-		if (attributeIdentifiers == null) {
-			throw new IllegalArgumentException("Parameter (attributeIdentifiers) cannot be null");
-		}
-		for (final UniqueIdentifier attributeIdentifier : attributeIdentifiers) {
-			removeAttribute(attributeIdentifier);
-		}
-	}
-
-	@Override
-	public final void removeAllAttributes() {
-		attributes.clear();
-	}
-
-	@Override
-	public final void addTask(final Task task) {
-		if (task == null) {
-			throw new IllegalArgumentException("Parameter (task) cannot be null");
-		}
-		if (tasks.containsKey(task.getIdentifier())) {
-			throw new IllegalArgumentException(String.format("Task (%s) already exists", task));
-		}
-		tasks.put(task.getIdentifier(), task);
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyTaskAdded(task.getIdentifier());
-		}
-	}
-
-	@Override
-	public final void addTasks(final Collection<Task> tasks) {
-		if (tasks == null) {
-			throw new IllegalArgumentException("Parameter (tasks) cannot be null");
-		}
-		for (final Task task : tasks) {
-			addTask(task);
-		}
-	}
-
-	@Override
-	public final void addTasks(final Task... tasks) {
-		if (tasks == null) {
-			throw new IllegalArgumentException("Parameter (tasks) cannot be null");
-		}
-		for (final Task task : tasks) {
-			addTask(task);
-		}
-	}
-
-	@Override
-	public Task getTask(final UniqueIdentifier taskIdentifier) {
-		if (taskIdentifier == null) {
-			throw new IllegalArgumentException("Parameter (taskIdentifier) cannot be null");
-		}
-		return tasks.get(taskIdentifier);
-	}
-
-	@Override
-	public final Set<Task> getTasks() {
-		return new HashSet<>(tasks.values());
-	}
-
-	@Override
-	public final void removeTask(final UniqueIdentifier taskIdentifier) {
-		if (taskIdentifier == null) {
-			throw new IllegalArgumentException("Parameter (taskIdentifier) cannot be null");
-		}
-		final Task task = tasks.remove(taskIdentifier);
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyTaskRemoved(task.getIdentifier());
-		}
-	}
-
-	@Override
-	public final void removeAllTasks() {
-		tasks.clear();
-	}
-
-	@Override
-	public final void addPerformanceFunction(final PerformanceFunction performanceFunction) {
-		if (performanceFunction == null) {
-			throw new IllegalArgumentException("Parameter (performanceFunction) cannot be null");
-		}
-		if (performanceFunctions.containsKey(performanceFunction.getIdentifier())) {
-			throw new IllegalArgumentException(String.format("Performance function (%s) already exists", performanceFunction));
-		}
-		performanceFunctions.put(performanceFunction.getIdentifier(), performanceFunction);
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyPerformanceFunctionAdded(performanceFunction.getIdentifier());
-		}
-	}
-
-	@Override
-	public final void addPerformanceFunctions(final Collection<PerformanceFunction> performanceFunctions) {
-		if (performanceFunctions == null) {
-			throw new IllegalArgumentException("Parameter (performanceFunctions) cannot be null");
-		}
-		for (final PerformanceFunction performanceFunction : performanceFunctions) {
-			addPerformanceFunction(performanceFunction);
-		}
-	}
-
-	@Override
-	public final void addPerformanceFunctions(final PerformanceFunction... performanceFunctions) {
-		if (performanceFunctions == null) {
-			throw new IllegalArgumentException("Parameter (performanceFunctions) cannot be null");
-		}
-		for (final PerformanceFunction performanceFunction : performanceFunctions) {
-			addPerformanceFunction(performanceFunction);
-		}
-	}
-
-	@Override
-	public PerformanceFunction getPerformanceFunction(final UniqueIdentifier performanceFunctionIdentifier) {
-		if (performanceFunctionIdentifier == null) {
-			throw new IllegalArgumentException("Parameter (performanceFunctionIdentifier) cannot be null");
-		}
-		return performanceFunctions.get(performanceFunctionIdentifier);
-	}
-
-	@Override
-	public final Set<PerformanceFunction> getPerformanceFunctions() {
-		return new HashSet<>(performanceFunctions.values());
-	}
-
-	@Override
-	public final void removePerformanceFunction(final UniqueIdentifier performanceFunctionIdentifier) {
-		if (performanceFunctionIdentifier == null) {
-			throw new IllegalArgumentException("Parameter (performanceFunctionIdentifier) cannot be null");
-		}
-		final PerformanceFunction performanceFunction = performanceFunctions.remove(performanceFunctionIdentifier);
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyPerformanceFunctionRemoved(performanceFunction.getIdentifier());
-		}
-	}
-
-	@Override
-	public final void removeAllPerformanceFunctions() {
-		performanceFunctions.clear();
-	}
-
-	@Override
-	public final void addCharacteristic(final Characteristic characteristic) {
-		if (characteristic == null) {
-			throw new IllegalArgumentException("Parameter (characteristic) cannot be null");
-		}
-		if (characteristics.containsKey(characteristic.getIdentifier())) {
-			throw new IllegalArgumentException(String.format("Characteristic (%s) already exists", characteristic));
-		}
-		characteristics.put(characteristic.getIdentifier(), characteristic);
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyCharacteristicAdded(characteristic.getIdentifier());
-		}
-	}
-
-	@Override
-	public final void addCharacteristics(final Collection<Characteristic> characteristics) {
-		if (characteristics == null) {
-			throw new IllegalArgumentException("Parameter (characteristics) cannot be null");
-		}
-		for (final Characteristic characteristic : characteristics) {
-			addCharacteristic(characteristic);
-		}
-	}
-
-	@Override
-	public final void addCharacteristics(final Characteristic... characteristics) {
-		if (characteristics == null) {
-			throw new IllegalArgumentException("Parameter (characteristics) cannot be null");
-		}
-		for (final Characteristic characteristic : characteristics) {
-			addCharacteristic(characteristic);
-		}
-	}
-
-	@Override
-	public final Characteristic getCharacteristic(final UniqueIdentifier characteristicIdentifier) {
-		if (characteristicIdentifier == null) {
-			throw new IllegalArgumentException("Parameter (characteristicIdentifier) cannot be null");
-		}
-		return characteristics.get(characteristicIdentifier);
-	}
-
-	@Override
-	public final Set<Characteristic> getCharacteristics() {
-		return new HashSet<>(characteristics.values());
-	}
-
-	@Override
-	public final void removeCharacteristic(final UniqueIdentifier characteristicIdentifier) {
-		if (characteristicIdentifier == null) {
-			throw new IllegalArgumentException("Parameter (characteristicIdentifier) cannot be null");
-		}
-		if (characteristics.containsKey(characteristicIdentifier)) {
-			final Characteristic characteristic = characteristics.remove(characteristicIdentifier);
-
-			final ChangeManager changeManager = EventRegistry.get();
-			if (changeManager != null) {
-				changeManager.notifyCharacteristicRemoved(characteristic.getIdentifier());
-			}
-		}
-	}
-
-	@Override
-	public final void removeAllCharacteristic() {
-		characteristics.clear();
-	}
-
-	@Override
-	public final void specifyAchievesRelation(final UniqueIdentifier roleIdentifier, final UniqueIdentifier goalIdentifier) {
+	public final void addAchievesRelation(final UniqueIdentifier roleIdentifier, final UniqueIdentifier goalIdentifier) {
 		final Role role = getRole(roleIdentifier);
 		final SpecificationGoal goal = getSpecificationGoal(goalIdentifier);
 		if (role == null || goal == null) {
@@ -1093,7 +1085,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void specifyRequiresRelation(final UniqueIdentifier roleIdentifier, final UniqueIdentifier capabilityIdentifier) {
+	public final void addRequiresRelation(final UniqueIdentifier roleIdentifier, final UniqueIdentifier capabilityIdentifier) {
 		final Role role = getRole(roleIdentifier);
 		final Capability capability = getCapability(capabilityIdentifier);
 		if (role == null || capability == null) {
@@ -1115,7 +1107,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void specifyPossessesRelation(final UniqueIdentifier agentIdentifier, final UniqueIdentifier capabilityIdentifier, final double score) {
+	public final void addPossessesRelation(final UniqueIdentifier agentIdentifier, final UniqueIdentifier capabilityIdentifier, final double score) {
 		final Agent agent = getAgent(agentIdentifier);
 		final Capability capability = getCapability(capabilityIdentifier);
 		if (agent == null || capability == null) {
@@ -1148,7 +1140,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void specifyNeedsRelation(final UniqueIdentifier roleIdentifier, final UniqueIdentifier attributeIdentifier) {
+	public final void addNeedsRelation(final UniqueIdentifier roleIdentifier, final UniqueIdentifier attributeIdentifier) {
 		final Role role = getRole(roleIdentifier);
 		final Attribute attribute = getAttribute(attributeIdentifier);
 		if (role == null || attribute == null) {
@@ -1170,7 +1162,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void specifyHasRelation(final UniqueIdentifier agentIdentifier, final UniqueIdentifier attributeIdentifier, final double value) {
+	public final void addHasRelation(final UniqueIdentifier agentIdentifier, final UniqueIdentifier attributeIdentifier, final double value) {
 		final Agent agent = getAgent(agentIdentifier);
 		final Attribute attribute = getAttribute(attributeIdentifier);
 		if (agent == null || attribute == null) {
@@ -1203,7 +1195,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void specifyUsesRelation(final UniqueIdentifier roleIdentifier, final UniqueIdentifier functionIdentifier) {
+	public final void addUsesRelation(final UniqueIdentifier roleIdentifier, final UniqueIdentifier functionIdentifier) {
 		final Role role = getRole(roleIdentifier);
 		final PerformanceFunction performanceFunction = getPerformanceFunction(functionIdentifier);
 		if (role == null || performanceFunction == null) {
@@ -1225,7 +1217,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void specifyModeratesRelation(final UniqueIdentifier performanceFunctionIdentifier, final UniqueIdentifier attributeIdentifier) {
+	public final void setModeratesRelation(final UniqueIdentifier performanceFunctionIdentifier, final UniqueIdentifier attributeIdentifier) {
 		final PerformanceFunction performanceFunction = getPerformanceFunction(performanceFunctionIdentifier);
 		final Attribute attribute = getAttribute(attributeIdentifier);
 		if (performanceFunction == null || attribute == null) {
@@ -1233,10 +1225,11 @@ public class OrganizationImpl implements Organization {
 					performanceFunctionIdentifier, performanceFunction, attributeIdentifier, attribute));
 		}
 		performanceFunction.setModerates(attribute);
+
 	}
 
 	@Override
-	public final void specifyContainsRelation(final UniqueIdentifier roleIdentifier, final UniqueIdentifier characteristicIdentifier, final double value) {
+	public final void addContainsRelation(final UniqueIdentifier roleIdentifier, final UniqueIdentifier characteristicIdentifier, final double value) {
 		final Role role = getRole(roleIdentifier);
 		final Characteristic characteristic = getCharacteristic(characteristicIdentifier);
 		if (role == null || characteristic == null) {
@@ -1269,13 +1262,13 @@ public class OrganizationImpl implements Organization {
 	}
 
 	/**
-	 * Determines whether this <code>Organization</code> is valid.
+	 * Determines whether this {@linkplain Organization} is valid.
 	 * <p>
 	 * Validity checks include checks for the structural integrity of the current organization.
 	 *
 	 * @param organization
-	 *            the <code>Organization</code> to check.
-	 * @return <code>true</code> if the <code>Organization</code> is valid, <code>false</code> otherwise.
+	 *            the {@linkplain Organization} to check.
+	 * @return <code>true</code> if the {@linkplain Organization} is valid, <code>false</code> otherwise.
 	 */
 	public static final boolean isOrganizationValid(final Organization organization) {
 		boolean result = true;
