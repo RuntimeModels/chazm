@@ -13,7 +13,6 @@ import org.models.organization.identifier.UniqueIdentifier;
  * The <code>Policy</code> class implements the {@link Policy} interface.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.3.2.1 $, $Date: 2011/09/19 14:26:36 $
  * @since 1.0
  */
 public abstract class PolicyImpl implements Policy {

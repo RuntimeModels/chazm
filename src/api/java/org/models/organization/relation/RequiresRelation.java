@@ -14,7 +14,6 @@ import org.models.organization.entity.Role;
  * Represents the requires relation, where a {@link Role} requires a {@link Capability}.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.1.4.2 $, $Date: 2010/05/20 21:16:42 $
  * @see Capability
  * @see Role
  * @since 1.0

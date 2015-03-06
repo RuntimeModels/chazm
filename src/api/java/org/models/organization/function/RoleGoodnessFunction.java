@@ -21,7 +21,6 @@ import org.models.organization.relation.Assignment;
  * {@link Role} to achieve a {@link InstanceGoal}.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.1.2.8 $, $Date: 2012/01/20 21:24:38 $
  * @since 6.0
  */
 public interface RoleGoodnessFunction {
@@ -31,7 +30,6 @@ public interface RoleGoodnessFunction {
 	 * attributes and then multiplies the scores of the capabilities.
 	 *
 	 * @author Christopher Zhong
-	 * @version $Revision: 1.1.2.8 $, $Date: 2012/01/20 21:24:38 $
 	 * @since 6.0
 	 */
 	public static final class DefaultRoleGoodnessFunction implements RoleGoodnessFunction {

@@ -14,7 +14,6 @@ import org.models.organization.entity.PerformanceFunction;
  * Represents the moderates relation, where a {@link PerformanceFunction} moderates an {@link Attribute}.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.1.2.3 $, $Date: 2010/06/24 19:26:06 $
  * @see PerformanceFunction
  * @see Attribute
  * @since 6.0

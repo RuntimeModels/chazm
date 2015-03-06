@@ -24,7 +24,6 @@ import org.models.organization.relation.UsesRelation;
  * The <code>PerformanceFunctionImpl</code> class implements the {@link PerformanceFunction} interface.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.1.2.5 $, $Date: 2011/09/19 14:26:37 $
  * @since 6.0
  */
 public class PerformanceFunctionImpl implements PerformanceFunction {

@@ -16,7 +16,6 @@ import org.models.organization.identifier.UniqueIdentifier;
  * The <code>InstanceGoal</code> interface defines the concrete instance of a {@link SpecificationGoal} that belongs in the active goal set.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.4.2.1 $, $Date: 2010/07/30 19:19:36 $
  * @param <ParameterType>
  *            the sub-type of the parameter for the <code>InstanceGoal</code>.
  * @since 3.4

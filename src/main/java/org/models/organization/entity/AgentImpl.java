@@ -24,7 +24,6 @@ import org.models.organization.relation.PossessesRelation;
  * The <code>AgentImpl</code> class implements the {@link Agent} interface.
  *
  * @author Scott Harmon, Christopher Zhong
- * @version $Revision: 1.10.2.7 $, $Date: 2011/09/19 14:26:37 $
  * @see SimpleAgent
  * @see Capability
  * @see Role

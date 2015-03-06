@@ -14,7 +14,6 @@ import org.models.organization.entity.Capability;
  * Represents the possesses relation, where an {@link Agent} possesses a {@link Capability}.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.5.2.1 $, $Date: 2010/06/24 19:26:06 $
  * @see Agent
  * @see Capability
  * @since 1.0

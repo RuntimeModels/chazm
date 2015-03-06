@@ -17,7 +17,6 @@ import org.models.organization.relation.Assignment;
  * The <code>PerformanceFunction</code> interface defines the entity Performance Function of the Organization Model.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.1.2.8 $, $Date: 2012/01/20 21:26:19 $
  * @since 6.0
  */
 public interface PerformanceFunction {

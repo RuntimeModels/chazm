@@ -21,7 +21,6 @@ import java.util.concurrent.locks.ReentrantLock;
  * provide a constant time complexity.
  *
  * @author Christopher Zhong, Scott Harmon
- * @version $Revision: 1.1.4.1 $, $Date: 2011/09/19 14:26:43 $
  * @since 4.0
  * @see UniqueIdentifier
  */

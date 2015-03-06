@@ -16,7 +16,6 @@ import org.models.organization.identifier.UniqueIdentifier;
  * The <code>Capability</code> interface defines the basic capability entity of the Organization Model by extending {@link SimpleCapability}.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.4.2.1 $, $Date: 2010/05/20 21:21:08 $
  * @since 3.4
  */
 public interface Capability extends SimpleCapability {

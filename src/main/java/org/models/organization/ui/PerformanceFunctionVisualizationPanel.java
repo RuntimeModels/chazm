@@ -26,7 +26,6 @@ import org.models.organization.entity.PerformanceFunction;
  * {@link Organization}.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.1.2.4 $, $Date: 2011/09/19 14:26:34 $
  * @since 6.0
  */
 public class PerformanceFunctionVisualizationPanel extends AbstractListVisualizationPanel<PerformanceFunction> {

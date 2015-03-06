@@ -14,7 +14,6 @@ import org.models.organization.entity.Role;
  * Represents the needs relation, where a {@link Role} needs an {@link Attribute}.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.1.4.2 $, $Date: 2010/06/23 22:15:50 $
  * @since 6.0
  */
 public class NeedsRelation {

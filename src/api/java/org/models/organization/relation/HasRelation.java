@@ -15,7 +15,6 @@ import org.models.organization.entity.Attribute.Type;
  * The <code>HasRelation</code> class represents the has relation, where an {@link Agent} has an {@link Attribute}.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.1.4.5 $, $Date: 2010/06/28 21:21:08 $
  * @since 5.0
  */
 public class HasRelation {

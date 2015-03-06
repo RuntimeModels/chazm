@@ -16,7 +16,6 @@ import org.models.organization.identifier.UniqueIdentifier;
  * The <code>Attribute</code> interface defines the basic attribute entity of the Organization Model by extending the {@link SimpleAttribute} interface.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.1.4.3 $, $Date: 2010/05/25 22:18:33 $
  * @see SimpleAttribute
  * @since 5.0
  */
@@ -26,7 +25,6 @@ public interface Attribute extends SimpleAttribute {
 	 * The <code>Type</code> enumeration lists all the possible types that an <code>Attribute</code> can be.
 	 *
 	 * @author Christopher Zhong
-	 * @version $Revision: 1.1.4.3 $, $Date: 2010/05/25 22:18:33 $
 	 * @since 5.0
 	 */
 	enum Type {

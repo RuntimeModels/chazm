@@ -14,7 +14,6 @@ import org.models.organization.entity.Role;
  * The <code>ContainsRelation</code> class represents the contains relation, where a {@link Role} contains a {@link Characteristic}.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.1.2.1 $, $Date: 2010/05/25 22:18:33 $
  * @since 6.0
  */
 public class ContainsRelation {

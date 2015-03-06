@@ -16,7 +16,6 @@ import org.models.organization.identifier.UniqueIdentifier;
  * The <code>SimpleAttributeImpl</code> class implements the {@link SimpleAttribute} interface.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.1.4.3 $, $Date: 2011/09/19 14:26:39 $
  * @see SimpleAttribute
  * @since 3.2
  */

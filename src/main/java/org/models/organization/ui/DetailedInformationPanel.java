@@ -36,7 +36,6 @@ import org.models.organization.relation.Task;
  * information about the entities of the organization model.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.6.2.6 $, $Date: 2010/07/30 19:19:37 $
  * @since 3.4
  */
 public class DetailedInformationPanel extends JPanel {
@@ -45,7 +44,6 @@ public class DetailedInformationPanel extends JPanel {
 	 * Styles for displaying additional information.
 	 *
 	 * @author Christopher Zhong
-	 * @version $Revision: 1.6.2.6 $, $Date: 2010/07/30 19:19:37 $
 	 * @since 4.0
 	 */
 	static enum Styles {

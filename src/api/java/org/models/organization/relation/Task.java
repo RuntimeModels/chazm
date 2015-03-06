@@ -22,7 +22,6 @@ import org.models.organization.identifier.UniqueIdentifier;
  * The <code>Task</code> class represents the task entity of the Organization Model.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.1.2.7 $, $Date: 2012/01/20 21:24:38 $
  * @since 6.0
  */
 public class Task {
@@ -36,7 +35,6 @@ public class Task {
 	 * The <code>TaskIdentifier</code> extends the {@link UniqueIdentifier} by using two {@link UniqueIdentifier} as the form of identification.
 	 *
 	 * @author Christopher Zhong
-	 * @version $Revision: 1.1.2.7 $, $Date: 2012/01/20 21:24:38 $
 	 * @see UniqueIdentifier
 	 * @since 6.0
 	 */

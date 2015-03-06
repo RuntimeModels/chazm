@@ -25,7 +25,6 @@ import org.models.organization.relation.Task;
  * The <code>TaskVisualizationPanel</code> class is a Swing component to visualize the {@link Task} currently in the {@link Organization}.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.1.2.4 $, $Date: 2011/09/19 14:26:34 $
  * @since 6.0
  */
 public class TaskVisualizationPanel extends AbstractListVisualizationPanel<Task> {

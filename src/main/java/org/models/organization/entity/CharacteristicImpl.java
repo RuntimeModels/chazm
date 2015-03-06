@@ -20,7 +20,6 @@ import org.models.organization.relation.ContainsRelation;
  * The <code></code> class implements the {@link Characteristic} interface.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.1.2.2 $, $Date: 2011/09/19 14:26:37 $
  * @since 6.0
  */
 public class CharacteristicImpl extends SimpleCharacteristicImpl implements Characteristic {

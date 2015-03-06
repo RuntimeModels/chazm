@@ -34,7 +34,6 @@ import org.models.organization.relation.Task;
  *
  * @author Scott Harmon
  * @author Christopher Zhong
- * @version $Revision: 1.13.2.11 $, $Date: 2011/09/19 14:26:36 $
  * @see Agent
  * @see Capability
  * @see InstanceGoal

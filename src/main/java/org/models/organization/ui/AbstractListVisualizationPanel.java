@@ -21,7 +21,6 @@ import org.models.organization.Organization;
  * The <code>AbstractListVisualizationPanel</code> provides list type <code>JPanel</code> for display information about the <code>Organization</code>.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.2.4.3 $, $Date: 2011/09/19 14:26:34 $
  * @param <T>
  *            the type for the list.
  * @since 3.4

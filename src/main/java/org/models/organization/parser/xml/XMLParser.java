@@ -42,7 +42,6 @@ import edu.ksu.cis.agenttool.core.xml.XMLParseException;
  * The <code>XMLParser</code> for populating an organization model.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.1.2.2 $, $Date: 2012/05/02 00:09:15 $
  * @since 4.0
  */
 public class XMLParser {

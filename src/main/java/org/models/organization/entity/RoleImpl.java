@@ -30,7 +30,6 @@ import org.models.organization.relation.UsesRelation;
  * The <code>RoleImpl</code> class implements the {@link Role} interface.
  *
  * @author Scott Harmon, Christopher Zhong
- * @version $Revision: 1.8.2.14 $, $Date: 2012/01/20 21:24:37 $
  * @see Agent
  * @see Capability
  * @see SpecificationGoal

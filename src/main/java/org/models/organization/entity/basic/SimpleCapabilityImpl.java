@@ -16,7 +16,6 @@ import org.models.organization.identifier.UniqueIdentifier;
  * The <code>SimpleCapabilityImpl</code> class implements the the {@link SimpleCapability} interface.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.4.2.1 $, $Date: 2011/09/19 14:26:39 $
  * @since 3.2
  */
 public class SimpleCapabilityImpl implements SimpleCapability {

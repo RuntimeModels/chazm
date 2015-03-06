@@ -31,7 +31,6 @@ import org.models.organization.identifier.StringIdentifier;
  * <code>model.organization.function</code>.
  *
  * @author Christopher Zhong
- * @version $Revision$, $Date$
  * @since 1.0
  */
 public class ModelFactory {

@@ -16,7 +16,6 @@ import org.models.organization.identifier.UniqueIdentifier;
  * The <code>SpecificationGoal</code> interface defines the static goal entity of the Organization Model by extending the {@link SimpleGoal} interface.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.4.2.2 $, $Date: 2011/09/07 17:37:21 $
  * @since 3.4
  */
 public interface SpecificationGoal extends SimpleGoal {

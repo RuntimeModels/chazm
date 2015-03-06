@@ -25,7 +25,6 @@ import org.models.organization.entity.Role;
  * The <code>RoleVisualizationPanel</code> class is a Swing component to visualize the <code>Role</code> currently in the <code>Organization</code>.
  *
  * @author Christopher Zhong
- * @version $Revision: 1.2.4.4 $, $Date: 2011/09/19 14:26:34 $
  * @since 3.4
  */
 public class RoleVisualizationPanel extends AbstractListVisualizationPanel<Role> {

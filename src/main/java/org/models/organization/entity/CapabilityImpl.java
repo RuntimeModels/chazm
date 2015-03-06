@@ -21,7 +21,6 @@ import org.models.organization.relation.RequiresRelation;
  * The <code>CapabilityImpl</code> class implements the {@link Capability} interface.
  *
  * @author Scott Harmon, Christopher Zhong
- * @version $Revision: 1.5.2.3 $, $Date: 2011/09/19 14:26:37 $
  * @see Agent
  * @see Role
  * @since 1.0
