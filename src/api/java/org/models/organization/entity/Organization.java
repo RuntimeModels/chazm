@@ -7,7 +7,6 @@
  */
 package org.models.organization.entity;
 
-import java.io.File;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Set;
@@ -26,20 +25,6 @@ import org.models.organization.relation.Task;
  * @since 4.0
  */
 public interface Organization {
-
-	/**
-	 * Populates the <code>Organization</code>.
-	 *
-	 * @param file
-	 *            the <code>File</code> from which to populate the <code>Organization</code>.
-	 * @param specificationGoalProvider
-	 *            the <code>SpecificationGoalProvider</code> from which to retrieve <code>SpecificationGoal</code>s.
-	 * @param uniqueIdentifierProvider
-	 *            the <code>UniqueIdentifierProvider</code> which provides <code>UniqueIdentifier</code>.
-	 * @return the populated <code>Organization</code>.
-	 */
-	@Deprecated
-	Organization populate(File file, SpecificationGoalProvider specificationGoalProvider, UniqueIdentifierProvider uniqueIdentifierProvider);
 
 	/**
 	 * Populates the <code>Organization</code>.

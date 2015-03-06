@@ -7,7 +7,6 @@
  */
 package org.models.organization.entity;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Collection;
@@ -118,21 +117,6 @@ public class OrganizationImpl implements Organization {
 	/**
 	 * Constructs a new instance of <code>OrganizationImpl</code>.
 	 *
-	 * @param file
-	 *            the <code>File</code> from which to populate the <code>Organization</code>.
-	 * @param specificationGoalProvider
-	 *            the <code>SpecificationGoalProvider</code> from which to retrieve <code>SpecificationGoal</code>s.
-	 * @param uniqueIdentifierProvider
-	 *            the <code>UniqueIdentifierProvider</code> which provides <code>UniqueIdentifier</code>.
-	 */
-	@Deprecated
-	public OrganizationImpl(final File file, final SpecificationGoalProvider specificationGoalProvider, final UniqueIdentifierProvider uniqueIdentifierProvider) {
-		this(file.toPath(), specificationGoalProvider, uniqueIdentifierProvider);
-	}
-
-	/**
-	 * Constructs a new instance of <code>OrganizationImpl</code>.
-	 *
 	 * @param path
 	 *            the <code>Path</code> from which to populate the <code>Organization</code>.
 	 * @param specificationGoalProvider
@@ -142,13 +126,6 @@ public class OrganizationImpl implements Organization {
 	 */
 	public OrganizationImpl(final Path path, final SpecificationGoalProvider specificationGoalProvider, final UniqueIdentifierProvider uniqueIdentifierProvider) {
 		populate(path, specificationGoalProvider, uniqueIdentifierProvider);
-	}
-
-	@Override
-	@Deprecated
-	public Organization populate(final File file, final SpecificationGoalProvider specificationGoalProvider,
-			final UniqueIdentifierProvider uniqueIdentifierProvider) {
-		return populate(file.toPath(), specificationGoalProvider, uniqueIdentifierProvider);
 	}
 
 	@Override
