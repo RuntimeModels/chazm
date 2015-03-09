@@ -10,7 +10,7 @@ package org.models.organization.relation;
 import org.models.organization.entity.Agent;
 import org.models.organization.entity.InstanceGoal;
 import org.models.organization.entity.Role;
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 
 /**
  * The <code>Assignment</code> class represents an assignment, which is a tuple relation of {@link Agent}s, {@link Role}s, and {@link InstanceGoal}s.
@@ -26,13 +26,13 @@ import org.models.organization.identifier.UniqueIdentifier;
 public class Assignment {
 
 	/**
-	 * The <code>AssignmentIdentifier</code> extends the {@link UniqueIdentifier} by using three {@link UniqueIdentifier} as the form of identification.
+	 * The <code>AssignmentIdentifier</code> extends the {@link UniqueId} by using three {@link UniqueId} as the form of identification.
 	 *
 	 * @author Christopher Zhong
-	 * @see UniqueIdentifier
+	 * @see UniqueId
 	 * @since 4.0
 	 */
-	private static class AssignmentIdentifier extends UniqueIdentifier {
+	private static class AssignmentIdentifier extends UniqueId {
 
 		/**
 		 * Default serial version ID.
@@ -47,17 +47,17 @@ public class Assignment {
 		/**
 		 * The <code>UniqueIdentifier</code> of the <code>Agent</code>.
 		 */
-		private final UniqueIdentifier agentIdentifier;
+		private final UniqueId agentIdentifier;
 
 		/**
 		 * The <code>UniqueIdentifier</code> of the <code>Role</code>.
 		 */
-		private final UniqueIdentifier roleIdentifier;
+		private final UniqueId roleIdentifier;
 
 		/**
 		 * The <code>UniqueIdentifier</code> of the <code>InstanceGoal</code>.
 		 */
-		private final UniqueIdentifier goalIdentifier;
+		private final UniqueId goalIdentifier;
 
 		/**
 		 * Optimization for hash code computation since it never changes.
@@ -79,7 +79,7 @@ public class Assignment {
 		 * @param goalIdentifier
 		 *            the <code>UniqueIdentifier</code> of the <code>InstanceGoal</code>.
 		 */
-		public AssignmentIdentifier(final UniqueIdentifier agentIdentifier, final UniqueIdentifier roleIdentifier, final UniqueIdentifier goalIdentifier) {
+		public AssignmentIdentifier(final UniqueId agentIdentifier, final UniqueId roleIdentifier, final UniqueId goalIdentifier) {
 			this.agentIdentifier = agentIdentifier;
 			this.roleIdentifier = roleIdentifier;
 			this.goalIdentifier = goalIdentifier;
@@ -90,7 +90,7 @@ public class Assignment {
 		 *
 		 * @return the <code>UniqueIdentifier</code> of the <code>Agent</code>.
 		 */
-		private UniqueIdentifier getAgentIdentifier() {
+		private UniqueId getAgentIdentifier() {
 			return agentIdentifier;
 		}
 
@@ -99,7 +99,7 @@ public class Assignment {
 		 *
 		 * @return the <code>UniqueIdentifier</code> of the <code>Role</code>.
 		 */
-		private UniqueIdentifier getRoleIdentifier() {
+		private UniqueId getRoleIdentifier() {
 			return roleIdentifier;
 		}
 
@@ -108,7 +108,7 @@ public class Assignment {
 		 *
 		 * @return the <code>UniqueIdentifier</code> of the <code>InstanceGoal</code>.
 		 */
-		private UniqueIdentifier getGoalIdentifier() {
+		private UniqueId getGoalIdentifier() {
 			return goalIdentifier;
 		}
 
@@ -154,7 +154,7 @@ public class Assignment {
 	/**
 	 * The <code>UniqueIdentifier</code> identifying this <code>Assignment</code> relation.
 	 */
-	private final UniqueIdentifier identifier;
+	private final UniqueId identifier;
 
 	/**
 	 * The <code>Agent</code> of this <code>Assignment</code> relation.
@@ -196,7 +196,7 @@ public class Assignment {
 	 *
 	 * @return the <code>UniqueIdentifier</code> identifying this <code>Assignment</code> relation.
 	 */
-	public final UniqueIdentifier getIdentifier() {
+	public final UniqueId getIdentifier() {
 		return identifier;
 	}
 

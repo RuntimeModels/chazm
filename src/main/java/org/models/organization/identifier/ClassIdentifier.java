@@ -8,13 +8,13 @@
 package org.models.organization.identifier;
 
 /**
- * The <code>ClassIdentifier</code> implements the {@link UniqueIdentifier} interface to represent {@link Class} as entities in the Organization Model.
+ * The <code>ClassIdentifier</code> implements the {@link UniqueId} interface to represent {@link Class} as entities in the Organization Model.
  *
  * @author Christopher Zhong
  * @since 4.0
- * @see UniqueIdentifier
+ * @see UniqueId
  */
-public class ClassIdentifier extends UniqueIdentifier {
+public class ClassIdentifier extends UniqueId {
 
 	/**
 	 * Default serial version ID.

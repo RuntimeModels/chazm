@@ -10,7 +10,7 @@ package org.models.organization.entity;
 import java.util.Set;
 
 import org.models.organization.entity.basic.SimpleAgent;
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 
 /**
  * The <code>Agent</code> interface defines the basic agent entity of the Organization Model by extending the {@link SimpleAgent} interface.
@@ -46,7 +46,7 @@ public interface Agent extends SimpleAgent {
 	 *            the <code>UniqueIdentifier</code> identifying the <code>Capability</code> to retrieve.
 	 * @return the <code>Capability</code> if it exists, <code>null</code> otherwise.
 	 */
-	Capability getPossesses(UniqueIdentifier capabilityIdentifier);
+	Capability getPossesses(UniqueId capabilityIdentifier);
 
 	/**
 	 * Returns the set of <code>Capability</code> that this <code>Agent</code> possesses.
@@ -62,7 +62,7 @@ public interface Agent extends SimpleAgent {
 	 *            the score of the <code>Capability</code> to retrieve.
 	 * @return the score if it exists, <code>0.0</code> otherwise.
 	 */
-	double getPossessesScore(UniqueIdentifier capabilityIdentifier);
+	double getPossessesScore(UniqueId capabilityIdentifier);
 
 	/**
 	 * Changes the score for the given <code>Capability</code> to the given score.
@@ -72,7 +72,7 @@ public interface Agent extends SimpleAgent {
 	 * @param score
 	 *            the new score for the given <code>Capability</code>.
 	 */
-	void setPossessesScore(UniqueIdentifier capabilityIdentifier, double score);
+	void setPossessesScore(UniqueId capabilityIdentifier, double score);
 
 	/**
 	 * Removes the given <code>Capability</code> from the set of <code>Capability</code> that this <code>Agent</code> possesses.
@@ -80,7 +80,7 @@ public interface Agent extends SimpleAgent {
 	 * @param capabilityIdentifier
 	 *            the <code>Capability</code> to be removed.
 	 */
-	void removePossesses(UniqueIdentifier capabilityIdentifier);
+	void removePossesses(UniqueId capabilityIdentifier);
 
 	/**
 	 * Clears the set of <code>Capability</code> that this <code>Agent</code> possesses.
@@ -111,7 +111,7 @@ public interface Agent extends SimpleAgent {
 	 *            the score of the <code>Attribute</code> to retrieve.
 	 * @return the score if it exists, <code>null</code> otherwise.
 	 */
-	Double getHasValue(UniqueIdentifier attributeIdentifier);
+	Double getHasValue(UniqueId attributeIdentifier);
 
 	/**
 	 * Changes the score for the given <code>Attribute</code> to the given score.
@@ -121,7 +121,7 @@ public interface Agent extends SimpleAgent {
 	 * @param value
 	 *            the new score for the given <code>Attribute</code>.
 	 */
-	void setHasValue(UniqueIdentifier attributeIdentifier, double value);
+	void setHasValue(UniqueId attributeIdentifier, double value);
 
 	/**
 	 * Removes the given <code>Attribute</code> from the set of <code>Attribute</code> that this <code>Agent</code> has.
@@ -129,7 +129,7 @@ public interface Agent extends SimpleAgent {
 	 * @param attributeIdentifier
 	 *            the <code>Attribute</code> to be removed.
 	 */
-	void removeHas(UniqueIdentifier attributeIdentifier);
+	void removeHas(UniqueId attributeIdentifier);
 
 	/**
 	 * Clears the set of <code>Attribute</code> that this <code>Agent</code> has.

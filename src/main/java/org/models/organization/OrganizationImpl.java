@@ -22,7 +22,7 @@ import org.models.organization.entity.PerformanceFunction;
 import org.models.organization.entity.Policy;
 import org.models.organization.entity.Role;
 import org.models.organization.entity.SpecificationGoal;
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 import org.models.organization.registry.ChangeManager;
 import org.models.organization.registry.EventRegistry;
 import org.models.organization.relation.AchievesRelation;
@@ -53,57 +53,57 @@ public class OrganizationImpl implements Organization {
 		/**
 		 * The set of {@linkplain SpecificationGoal} in this {@linkplain Organization}.
 		 */
-		private final Map<UniqueIdentifier, SpecificationGoal> specificationGoals = new ConcurrentHashMap<>();
+		private final Map<UniqueId, SpecificationGoal> specificationGoals = new ConcurrentHashMap<>();
 
 		/**
 		 * The set of {@linkplain Role} in this {@linkplain Organization}.
 		 */
-		private final Map<UniqueIdentifier, Role> roles = new ConcurrentHashMap<>();
+		private final Map<UniqueId, Role> roles = new ConcurrentHashMap<>();
 
 		/**
 		 * The set of {@linkplain Agent} in this {@linkplain Organization}.
 		 */
-		private final Map<UniqueIdentifier, Agent> agents = new ConcurrentHashMap<>();
+		private final Map<UniqueId, Agent> agents = new ConcurrentHashMap<>();
 
 		/**
 		 * The set of {@linkplain Capability} in this {@linkplain Organization}.
 		 */
-		private final Map<UniqueIdentifier, Capability> capabilities = new ConcurrentHashMap<>();
+		private final Map<UniqueId, Capability> capabilities = new ConcurrentHashMap<>();
 
 		/**
 		 * The set of {@linkplain Policy} in this {@linkplain Organization}.
 		 */
-		private final Map<UniqueIdentifier, Policy> policies = new ConcurrentHashMap<>();
+		private final Map<UniqueId, Policy> policies = new ConcurrentHashMap<>();
 
 		/**
 		 * The set of {@linkplain InstanceGoal} in this {@linkplain Organization}.
 		 */
-		private final Map<UniqueIdentifier, InstanceGoal<?>> instanceGoals = new ConcurrentHashMap<>();
+		private final Map<UniqueId, InstanceGoal<?>> instanceGoals = new ConcurrentHashMap<>();
 
 		/**
 		 * The set of {@linkplain InstanceGoal} in this {@linkplain Organization} that is indexed by the {@linkplain SpecificationGoal}.
 		 */
-		private final Map<UniqueIdentifier, Map<UniqueIdentifier, InstanceGoal<?>>> instanceGoalsBySpecificationGoal = new ConcurrentHashMap<>();
+		private final Map<UniqueId, Map<UniqueId, InstanceGoal<?>>> instanceGoalsBySpecificationGoal = new ConcurrentHashMap<>();
 
 		/**
 		 * The set of {@linkplain Attribute} in this {@linkplain Organization}.
 		 */
-		private final Map<UniqueIdentifier, Attribute> attributes = new ConcurrentHashMap<>();
+		private final Map<UniqueId, Attribute> attributes = new ConcurrentHashMap<>();
 
 		/**
 		 * The set of {@linkplain Task} in this {@linkplain Organization}.
 		 */
-		private final Map<UniqueIdentifier, Task> tasks = new ConcurrentHashMap<>();
+		private final Map<UniqueId, Task> tasks = new ConcurrentHashMap<>();
 
 		/**
 		 * The set of {@linkplain PerformanceFunction} in this {@linkplain Organization}.
 		 */
-		private final Map<UniqueIdentifier, PerformanceFunction> performanceFunctions = new ConcurrentHashMap<>();
+		private final Map<UniqueId, PerformanceFunction> performanceFunctions = new ConcurrentHashMap<>();
 
 		/**
 		 * The set of {@linkplain Characteristic} in this {@linkplain Organization}.
 		 */
-		private final Map<UniqueIdentifier, Characteristic> characteristics = new ConcurrentHashMap<>();
+		private final Map<UniqueId, Characteristic> characteristics = new ConcurrentHashMap<>();
 	}
 
 	/**
@@ -116,22 +116,22 @@ public class OrganizationImpl implements Organization {
 		/**
 		 * The set of {@linkplain Assignment} in this {@linkplain Organization}.
 		 */
-		private final Map<UniqueIdentifier, Assignment> assignments = new ConcurrentHashMap<>();
+		private final Map<UniqueId, Assignment> assignments = new ConcurrentHashMap<>();
 
 		/**
 		 * The set of {@linkplain Assignment} in this {@linkplain Organization} that is indexed by the {@linkplain Agent}.
 		 */
-		private final Map<UniqueIdentifier, Map<UniqueIdentifier, Assignment>> assignmentsByAgent = new ConcurrentHashMap<>();
+		private final Map<UniqueId, Map<UniqueId, Assignment>> assignmentsByAgent = new ConcurrentHashMap<>();
 
 		/**
 		 * Contains a set of {@linkplain Role}s and the {@linkplain SpecificationGoal}s that are achieved by each {@linkplain Role}.
 		 */
-		private final Map<UniqueIdentifier, Map<UniqueIdentifier, AchievesRelation>> achieves = new ConcurrentHashMap<>();
+		private final Map<UniqueId, Map<UniqueId, AchievesRelation>> achieves = new ConcurrentHashMap<>();
 
 		/**
 		 * Contains a set of {@linkplain SpecificationGoal}s and the {@linkplain Role}s that achieve each {@linkplain SpecificationGoal}.
 		 */
-		private final Map<UniqueIdentifier, Map<UniqueIdentifier, AchievesRelation>> achievedBy = new ConcurrentHashMap<>();
+		private final Map<UniqueId, Map<UniqueId, AchievesRelation>> achievedBy = new ConcurrentHashMap<>();
 	}
 
 	/**
@@ -159,7 +159,7 @@ public class OrganizationImpl implements Organization {
 			throw new IllegalArgumentException(String.format("Specification goal (%s) already exists", specificationGoal));
 		}
 		entities.specificationGoals.put(specificationGoal.getIdentifier(), specificationGoal);
-		entities.instanceGoalsBySpecificationGoal.put(specificationGoal.getIdentifier(), new ConcurrentHashMap<UniqueIdentifier, InstanceGoal<?>>());
+		entities.instanceGoalsBySpecificationGoal.put(specificationGoal.getIdentifier(), new ConcurrentHashMap<UniqueId, InstanceGoal<?>>());
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
@@ -188,7 +188,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final SpecificationGoal getSpecificationGoal(final UniqueIdentifier goalIdentifier) {
+	public final SpecificationGoal getSpecificationGoal(final UniqueId goalIdentifier) {
 		if (goalIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (goalIdentifier) cannot be null");
 		}
@@ -201,7 +201,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void removeSpecificationGoal(final UniqueIdentifier goalIdentifier) {
+	public final void removeSpecificationGoal(final UniqueId goalIdentifier) {
 		if (goalIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (goalIdentifier) cannot be null");
 		}
@@ -215,21 +215,21 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void removeSpecificationGoals(final Collection<UniqueIdentifier> goalIdentifiers) {
+	public final void removeSpecificationGoals(final Collection<UniqueId> goalIdentifiers) {
 		if (goalIdentifiers == null) {
 			throw new IllegalArgumentException("Parameter (goalIdentifiers) cannot be null");
 		}
-		for (final UniqueIdentifier specificationGoalIdentifier : goalIdentifiers) {
+		for (final UniqueId specificationGoalIdentifier : goalIdentifiers) {
 			removeSpecificationGoal(specificationGoalIdentifier);
 		}
 	}
 
 	@Override
-	public final void removeSpecificationGoals(final UniqueIdentifier... goalIdentifiers) {
+	public final void removeSpecificationGoals(final UniqueId... goalIdentifiers) {
 		if (goalIdentifiers == null) {
 			throw new IllegalArgumentException("Parameter (goalIdentifiers) cannot be null");
 		}
-		for (final UniqueIdentifier specificationGoalIdentifier : goalIdentifiers) {
+		for (final UniqueId specificationGoalIdentifier : goalIdentifiers) {
 			removeSpecificationGoal(specificationGoalIdentifier);
 		}
 	}
@@ -277,7 +277,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final Role getRole(final UniqueIdentifier roleIdentifier) {
+	public final Role getRole(final UniqueId roleIdentifier) {
 		if (roleIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (roleIdentifier) cannot be null");
 		}
@@ -290,7 +290,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void removeRole(final UniqueIdentifier roleIdentifier) {
+	public final void removeRole(final UniqueId roleIdentifier) {
 		if (roleIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (roleIdentifier) cannot be null");
 		}
@@ -303,21 +303,21 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void removeRoles(final Collection<UniqueIdentifier> roleIdentifiers) {
+	public final void removeRoles(final Collection<UniqueId> roleIdentifiers) {
 		if (roleIdentifiers == null) {
 			throw new IllegalArgumentException("Parameter (roleIdentifiers) cannot be null");
 		}
-		for (final UniqueIdentifier roleIdentifier : roleIdentifiers) {
+		for (final UniqueId roleIdentifier : roleIdentifiers) {
 			removeRole(roleIdentifier);
 		}
 	}
 
 	@Override
-	public final void removeRoles(final UniqueIdentifier... roleIdentifiers) {
+	public final void removeRoles(final UniqueId... roleIdentifiers) {
 		if (roleIdentifiers == null) {
 			throw new IllegalArgumentException("Parameter (roleIdentifiers) cannot be null");
 		}
-		for (final UniqueIdentifier roleIdentifier : roleIdentifiers) {
+		for (final UniqueId roleIdentifier : roleIdentifiers) {
 			removeRole(roleIdentifier);
 		}
 	}
@@ -336,7 +336,7 @@ public class OrganizationImpl implements Organization {
 			throw new IllegalArgumentException(String.format("Agent (%s) already exists", agent));
 		}
 		entities.agents.put(agent.getIdentifier(), agent);
-		final Map<UniqueIdentifier, Assignment> map = new ConcurrentHashMap<>();
+		final Map<UniqueId, Assignment> map = new ConcurrentHashMap<>();
 		relations.assignmentsByAgent.put(agent.getIdentifier(), map);
 
 		final ChangeManager changeManager = EventRegistry.get();
@@ -366,7 +366,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final Agent getAgent(final UniqueIdentifier agentIdentifier) {
+	public final Agent getAgent(final UniqueId agentIdentifier) {
 		if (agentIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (agentIdentifier) cannot be null");
 		}
@@ -379,7 +379,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void removeAgent(final UniqueIdentifier agentIdentifier) {
+	public final void removeAgent(final UniqueId agentIdentifier) {
 		if (agentIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (agentIdentifier) cannot be null");
 		}
@@ -395,21 +395,21 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void removeAgents(final Collection<UniqueIdentifier> agentIdentifiers) {
+	public final void removeAgents(final Collection<UniqueId> agentIdentifiers) {
 		if (agentIdentifiers == null) {
 			throw new IllegalArgumentException("Parameter (agentIdentifiers) cannot be null");
 		}
-		for (final UniqueIdentifier agentIdentifier : agentIdentifiers) {
+		for (final UniqueId agentIdentifier : agentIdentifiers) {
 			removeAgent(agentIdentifier);
 		}
 	}
 
 	@Override
-	public final void removeAgents(final UniqueIdentifier... agentIdentifiers) {
+	public final void removeAgents(final UniqueId... agentIdentifiers) {
 		if (agentIdentifiers == null) {
 			throw new IllegalArgumentException("Parameter (agentIdentifiers) cannot be null");
 		}
-		for (final UniqueIdentifier agentIdentifier : agentIdentifiers) {
+		for (final UniqueId agentIdentifier : agentIdentifiers) {
 			removeAgent(agentIdentifier);
 		}
 	}
@@ -457,7 +457,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final Capability getCapability(final UniqueIdentifier capabilityIdentifier) {
+	public final Capability getCapability(final UniqueId capabilityIdentifier) {
 		if (capabilityIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (capabilityIdentifier) cannot be null");
 		}
@@ -470,7 +470,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void removeCapability(final UniqueIdentifier capabilityIdentifier) {
+	public final void removeCapability(final UniqueId capabilityIdentifier) {
 		if (capabilityIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (capabilityIdentifier) cannot be null");
 		}
@@ -483,21 +483,21 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void removeCapabilities(final Collection<UniqueIdentifier> capabilityIdentifiers) {
+	public final void removeCapabilities(final Collection<UniqueId> capabilityIdentifiers) {
 		if (capabilityIdentifiers == null) {
 			throw new IllegalArgumentException("Parameter (capabilityIdentifiers) cannot be null");
 		}
-		for (final UniqueIdentifier capabilityIdentifier : capabilityIdentifiers) {
+		for (final UniqueId capabilityIdentifier : capabilityIdentifiers) {
 			removeCapability(capabilityIdentifier);
 		}
 	}
 
 	@Override
-	public final void removeCapabilities(final UniqueIdentifier... capabilityIdentifiers) {
+	public final void removeCapabilities(final UniqueId... capabilityIdentifiers) {
 		if (capabilityIdentifiers == null) {
 			throw new IllegalArgumentException("Parameter (capabilityIdentifiers) cannot be null");
 		}
-		for (final UniqueIdentifier capabilityIdentifier : capabilityIdentifiers) {
+		for (final UniqueId capabilityIdentifier : capabilityIdentifiers) {
 			removeCapability(capabilityIdentifier);
 		}
 	}
@@ -544,7 +544,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final Policy getPolicy(final UniqueIdentifier policyIdentifier) {
+	public final Policy getPolicy(final UniqueId policyIdentifier) {
 		if (policyIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (policyIdentifier) cannot be null");
 		}
@@ -557,7 +557,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void removePolicy(final UniqueIdentifier policyIdentifier) {
+	public final void removePolicy(final UniqueId policyIdentifier) {
 		if (policyIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (policyIdentifier) cannot be null");
 		}
@@ -570,21 +570,21 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void removePolicies(final Collection<UniqueIdentifier> policyIdentifiers) {
+	public final void removePolicies(final Collection<UniqueId> policyIdentifiers) {
 		if (policyIdentifiers == null) {
 			throw new IllegalArgumentException("Parameter (policyIdentifiers) cannot be null");
 		}
-		for (final UniqueIdentifier policyIdentifer : policyIdentifiers) {
+		for (final UniqueId policyIdentifer : policyIdentifiers) {
 			removePolicy(policyIdentifer);
 		}
 	}
 
 	@Override
-	public final void removePolicies(final UniqueIdentifier... policyIdentifiers) {
+	public final void removePolicies(final UniqueId... policyIdentifiers) {
 		if (policyIdentifiers == null) {
 			throw new IllegalArgumentException("Parameter (policyIdentifiers) cannot be null");
 		}
-		for (final UniqueIdentifier policyIdentifer : policyIdentifiers) {
+		for (final UniqueId policyIdentifer : policyIdentifiers) {
 			removePolicy(policyIdentifer);
 		}
 	}
@@ -632,7 +632,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final InstanceGoal<?> getInstanceGoal(final UniqueIdentifier goalIdentifier) {
+	public final InstanceGoal<?> getInstanceGoal(final UniqueId goalIdentifier) {
 		if (goalIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (goalIdentifier) cannot be null");
 		}
@@ -645,7 +645,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void removeInstanceGoal(final UniqueIdentifier goalIdentifier) {
+	public final void removeInstanceGoal(final UniqueId goalIdentifier) {
 		if (goalIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (goalIdentifier) cannot be null");
 		}
@@ -659,21 +659,21 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void removeInstanceGoals(final Collection<UniqueIdentifier> goalIdentifiers) {
+	public final void removeInstanceGoals(final Collection<UniqueId> goalIdentifiers) {
 		if (goalIdentifiers == null) {
 			throw new IllegalArgumentException("Parameter (goalIdentifiers) cannot be null");
 		}
-		for (final UniqueIdentifier instanceGoalIdentifier : goalIdentifiers) {
+		for (final UniqueId instanceGoalIdentifier : goalIdentifiers) {
 			removeInstanceGoal(instanceGoalIdentifier);
 		}
 	}
 
 	@Override
-	public final void removeInstanceGoals(final UniqueIdentifier... goalIdentifiers) {
+	public final void removeInstanceGoals(final UniqueId... goalIdentifiers) {
 		if (goalIdentifiers == null) {
 			throw new IllegalArgumentException("Parameter (goalIdentifiers) cannot be null");
 		}
-		for (final UniqueIdentifier instanceGoalIdentifier : goalIdentifiers) {
+		for (final UniqueId instanceGoalIdentifier : goalIdentifiers) {
 			removeInstanceGoal(instanceGoalIdentifier);
 		}
 	}
@@ -681,7 +681,7 @@ public class OrganizationImpl implements Organization {
 	@Override
 	public final void removeAllInstanceGoals() {
 		entities.instanceGoals.clear();
-		for (final Map<UniqueIdentifier, InstanceGoal<?>> map : entities.instanceGoalsBySpecificationGoal.values()) {
+		for (final Map<UniqueId, InstanceGoal<?>> map : entities.instanceGoalsBySpecificationGoal.values()) {
 			map.clear();
 		}
 	}
@@ -723,7 +723,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final Attribute getAttribute(final UniqueIdentifier attributeIdentifier) {
+	public final Attribute getAttribute(final UniqueId attributeIdentifier) {
 		if (attributeIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (attributeIdentifier) cannot be null");
 		}
@@ -736,7 +736,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void removeAttribute(final UniqueIdentifier attributeIdentifier) {
+	public final void removeAttribute(final UniqueId attributeIdentifier) {
 		if (attributeIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (attributeIdentifier) cannot be null");
 		}
@@ -749,21 +749,21 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void removeAttributes(final Collection<UniqueIdentifier> attributeIdentifiers) {
+	public final void removeAttributes(final Collection<UniqueId> attributeIdentifiers) {
 		if (attributeIdentifiers == null) {
 			throw new IllegalArgumentException("Parameter (attributeIdentifiers) cannot be null");
 		}
-		for (final UniqueIdentifier attributeIdentifier : attributeIdentifiers) {
+		for (final UniqueId attributeIdentifier : attributeIdentifiers) {
 			removeAttribute(attributeIdentifier);
 		}
 	}
 
 	@Override
-	public final void removeAttributes(final UniqueIdentifier... attributeIdentifiers) {
+	public final void removeAttributes(final UniqueId... attributeIdentifiers) {
 		if (attributeIdentifiers == null) {
 			throw new IllegalArgumentException("Parameter (attributeIdentifiers) cannot be null");
 		}
-		for (final UniqueIdentifier attributeIdentifier : attributeIdentifiers) {
+		for (final UniqueId attributeIdentifier : attributeIdentifiers) {
 			removeAttribute(attributeIdentifier);
 		}
 	}
@@ -810,7 +810,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public Task getTask(final UniqueIdentifier taskIdentifier) {
+	public Task getTask(final UniqueId taskIdentifier) {
 		if (taskIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (taskIdentifier) cannot be null");
 		}
@@ -823,7 +823,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void removeTask(final UniqueIdentifier taskIdentifier) {
+	public final void removeTask(final UniqueId taskIdentifier) {
 		if (taskIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (taskIdentifier) cannot be null");
 		}
@@ -877,7 +877,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public PerformanceFunction getPerformanceFunction(final UniqueIdentifier performanceFunctionIdentifier) {
+	public PerformanceFunction getPerformanceFunction(final UniqueId performanceFunctionIdentifier) {
 		if (performanceFunctionIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (performanceFunctionIdentifier) cannot be null");
 		}
@@ -890,7 +890,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void removePerformanceFunction(final UniqueIdentifier performanceFunctionIdentifier) {
+	public final void removePerformanceFunction(final UniqueId performanceFunctionIdentifier) {
 		if (performanceFunctionIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (performanceFunctionIdentifier) cannot be null");
 		}
@@ -944,7 +944,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final Characteristic getCharacteristic(final UniqueIdentifier characteristicIdentifier) {
+	public final Characteristic getCharacteristic(final UniqueId characteristicIdentifier) {
 		if (characteristicIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (characteristicIdentifier) cannot be null");
 		}
@@ -957,7 +957,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void removeCharacteristic(final UniqueIdentifier characteristicIdentifier) {
+	public final void removeCharacteristic(final UniqueId characteristicIdentifier) {
 		if (characteristicIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (characteristicIdentifier) cannot be null");
 		}
@@ -1015,7 +1015,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final Assignment getAssignment(final UniqueIdentifier assignmentIdentifier) {
+	public final Assignment getAssignment(final UniqueId assignmentIdentifier) {
 		if (assignmentIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (assignmentIdentifier) cannot be null");
 		}
@@ -1028,12 +1028,12 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final Set<Assignment> getAssignmentsOfAgent(final UniqueIdentifier agentIdentifier) {
+	public final Set<Assignment> getAssignmentsOfAgent(final UniqueId agentIdentifier) {
 		if (agentIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (agentIdentifier) cannot be null");
 		}
 		final Set<Assignment> results = new HashSet<>();
-		final Map<UniqueIdentifier, Assignment> map = relations.assignmentsByAgent.get(agentIdentifier);
+		final Map<UniqueId, Assignment> map = relations.assignmentsByAgent.get(agentIdentifier);
 		if (map != null) {
 			results.addAll(map.values());
 		}
@@ -1041,7 +1041,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void removeAssignment(final UniqueIdentifier assignmentIdentifier) {
+	public final void removeAssignment(final UniqueId assignmentIdentifier) {
 		if (assignmentIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (assignmentIdentifier) cannot be null");
 		}
@@ -1056,21 +1056,21 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void removeAssignments(final Collection<UniqueIdentifier> assignmentIdentifiers) {
+	public final void removeAssignments(final Collection<UniqueId> assignmentIdentifiers) {
 		if (assignmentIdentifiers == null) {
 			throw new IllegalArgumentException("Parameter (assignmentIdentifiers) cannot be null");
 		}
-		for (final UniqueIdentifier assignmentIdentifier : assignmentIdentifiers) {
+		for (final UniqueId assignmentIdentifier : assignmentIdentifiers) {
 			removeAssignment(assignmentIdentifier);
 		}
 	}
 
 	@Override
-	public final void removeAssignments(final UniqueIdentifier... assignmentIdentifiers) {
+	public final void removeAssignments(final UniqueId... assignmentIdentifiers) {
 		if (assignmentIdentifiers == null) {
 			throw new IllegalArgumentException("Parameter (assignmentIdentifiers) cannot be null");
 		}
-		for (final UniqueIdentifier assignmentIdentifier : assignmentIdentifiers) {
+		for (final UniqueId assignmentIdentifier : assignmentIdentifiers) {
 			removeAssignment(assignmentIdentifier);
 		}
 	}
@@ -1078,13 +1078,13 @@ public class OrganizationImpl implements Organization {
 	@Override
 	public final void removeAllAssignments() {
 		relations.assignments.clear();
-		for (final Map<UniqueIdentifier, Assignment> map : relations.assignmentsByAgent.values()) {
+		for (final Map<UniqueId, Assignment> map : relations.assignmentsByAgent.values()) {
 			map.clear();
 		}
 	}
 
 	@Override
-	public final void addAchievesRelation(final UniqueIdentifier roleId, final UniqueIdentifier specGoalId) {
+	public final void addAchievesRelation(final UniqueId roleId, final UniqueId specGoalId) {
 		final Role role = getRole(roleId);
 		if (role == null) {
 			throw new IllegalArgumentException(String.format("Role (%s) does not exists", roleId));
@@ -1093,14 +1093,14 @@ public class OrganizationImpl implements Organization {
 		if (specGoal == null) {
 			throw new IllegalArgumentException(String.format("Specification goal (%s) does not exists", specGoalId));
 		}
-		final Map<UniqueIdentifier, AchievesRelation> achieves = relations.achieves.computeIfAbsent(roleId, v -> new ConcurrentHashMap<>());
+		final Map<UniqueId, AchievesRelation> achieves = relations.achieves.computeIfAbsent(roleId, v -> new ConcurrentHashMap<>());
 		/* if the relation already exists do nothing */
 		if (achieves.containsKey(specGoalId)) {
 			return;
 		}
 		final AchievesRelation achievesRelation = new AchievesRelation(role, specGoal);
 		achieves.put(specGoalId, achievesRelation);
-		final Map<UniqueIdentifier, AchievesRelation> achievedBy = relations.achievedBy.computeIfAbsent(specGoalId, v -> new ConcurrentHashMap<>());
+		final Map<UniqueId, AchievesRelation> achievedBy = relations.achievedBy.computeIfAbsent(specGoalId, v -> new ConcurrentHashMap<>());
 		achievedBy.put(roleId, achievesRelation);
 
 		final ChangeManager changeManager = EventRegistry.get();
@@ -1111,7 +1111,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void removeAchievesRelation(final UniqueIdentifier roleIdentifier, final UniqueIdentifier goalIdentifier) {
+	public final void removeAchievesRelation(final UniqueId roleIdentifier, final UniqueId goalIdentifier) {
 		final Role role = getRole(roleIdentifier);
 		final SpecificationGoal goal = getSpecificationGoal(goalIdentifier);
 		if (role == null || goal == null) {
@@ -1121,7 +1121,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void addRequiresRelation(final UniqueIdentifier roleIdentifier, final UniqueIdentifier capabilityIdentifier) {
+	public final void addRequiresRelation(final UniqueId roleIdentifier, final UniqueId capabilityIdentifier) {
 		final Role role = getRole(roleIdentifier);
 		final Capability capability = getCapability(capabilityIdentifier);
 		if (role == null || capability == null) {
@@ -1132,7 +1132,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void removeRequiresRelation(final UniqueIdentifier roleIdentifier, final UniqueIdentifier capabilityIdentifier) {
+	public final void removeRequiresRelation(final UniqueId roleIdentifier, final UniqueId capabilityIdentifier) {
 		final Role role = getRole(roleIdentifier);
 		final Capability capability = getCapability(capabilityIdentifier);
 		if (role == null || capability == null) {
@@ -1143,7 +1143,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void addPossessesRelation(final UniqueIdentifier agentIdentifier, final UniqueIdentifier capabilityIdentifier, final double score) {
+	public final void addPossessesRelation(final UniqueId agentIdentifier, final UniqueId capabilityIdentifier, final double score) {
 		final Agent agent = getAgent(agentIdentifier);
 		final Capability capability = getCapability(capabilityIdentifier);
 		if (agent == null || capability == null) {
@@ -1154,7 +1154,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void removePossessesRelation(final UniqueIdentifier agentIdentifier, final UniqueIdentifier capabilityIdentifier) {
+	public final void removePossessesRelation(final UniqueId agentIdentifier, final UniqueId capabilityIdentifier) {
 		final Agent agent = getAgent(agentIdentifier);
 		final Capability capability = getCapability(capabilityIdentifier);
 		if (agent == null || capability == null) {
@@ -1165,7 +1165,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void updatePossessesRelation(final UniqueIdentifier agentIdentifier, final UniqueIdentifier capabilityIdentifier, final double score) {
+	public final void updatePossessesRelation(final UniqueId agentIdentifier, final UniqueId capabilityIdentifier, final double score) {
 		final Agent agent = getAgent(agentIdentifier);
 		final Capability capability = getCapability(capabilityIdentifier);
 		if (agent == null || capability == null) {
@@ -1176,7 +1176,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void addNeedsRelation(final UniqueIdentifier roleIdentifier, final UniqueIdentifier attributeIdentifier) {
+	public final void addNeedsRelation(final UniqueId roleIdentifier, final UniqueId attributeIdentifier) {
 		final Role role = getRole(roleIdentifier);
 		final Attribute attribute = getAttribute(attributeIdentifier);
 		if (role == null || attribute == null) {
@@ -1187,7 +1187,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void removeNeedsRelation(final UniqueIdentifier roleIdentifier, final UniqueIdentifier attributeIdentifier) {
+	public final void removeNeedsRelation(final UniqueId roleIdentifier, final UniqueId attributeIdentifier) {
 		final Role role = getRole(roleIdentifier);
 		final Attribute attribute = getAttribute(attributeIdentifier);
 		if (role == null || attribute == null) {
@@ -1198,7 +1198,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void addHasRelation(final UniqueIdentifier agentIdentifier, final UniqueIdentifier attributeIdentifier, final double value) {
+	public final void addHasRelation(final UniqueId agentIdentifier, final UniqueId attributeIdentifier, final double value) {
 		final Agent agent = getAgent(agentIdentifier);
 		final Attribute attribute = getAttribute(attributeIdentifier);
 		if (agent == null || attribute == null) {
@@ -1209,7 +1209,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void removeHasRelation(final UniqueIdentifier agentIdentifier, final UniqueIdentifier attributeIdentifier) {
+	public final void removeHasRelation(final UniqueId agentIdentifier, final UniqueId attributeIdentifier) {
 		final Agent agent = getAgent(agentIdentifier);
 		final Attribute attribute = getAttribute(attributeIdentifier);
 		if (agent == null || attribute == null) {
@@ -1220,7 +1220,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void updateHasRelation(final UniqueIdentifier agentIdentifier, final UniqueIdentifier attributeIdentifier, final double score) {
+	public final void updateHasRelation(final UniqueId agentIdentifier, final UniqueId attributeIdentifier, final double score) {
 		final Agent agent = getAgent(agentIdentifier);
 		final Attribute attribute = getAttribute(attributeIdentifier);
 		if (agent == null || attribute == null) {
@@ -1231,7 +1231,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void addUsesRelation(final UniqueIdentifier roleIdentifier, final UniqueIdentifier functionIdentifier) {
+	public final void addUsesRelation(final UniqueId roleIdentifier, final UniqueId functionIdentifier) {
 		final Role role = getRole(roleIdentifier);
 		final PerformanceFunction performanceFunction = getPerformanceFunction(functionIdentifier);
 		if (role == null || performanceFunction == null) {
@@ -1242,7 +1242,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void removeUsesRelation(final UniqueIdentifier roleIdentifier, final UniqueIdentifier functionIdentifier) {
+	public final void removeUsesRelation(final UniqueId roleIdentifier, final UniqueId functionIdentifier) {
 		final Role role = getRole(roleIdentifier);
 		final PerformanceFunction performanceFunction = getPerformanceFunction(functionIdentifier);
 		if (role == null || performanceFunction == null) {
@@ -1253,7 +1253,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void setModeratesRelation(final UniqueIdentifier performanceFunctionIdentifier, final UniqueIdentifier attributeIdentifier) {
+	public final void setModeratesRelation(final UniqueId performanceFunctionIdentifier, final UniqueId attributeIdentifier) {
 		final PerformanceFunction performanceFunction = getPerformanceFunction(performanceFunctionIdentifier);
 		final Attribute attribute = getAttribute(attributeIdentifier);
 		if (performanceFunction == null || attribute == null) {
@@ -1265,7 +1265,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void addContainsRelation(final UniqueIdentifier roleIdentifier, final UniqueIdentifier characteristicIdentifier, final double value) {
+	public final void addContainsRelation(final UniqueId roleIdentifier, final UniqueId characteristicIdentifier, final double value) {
 		final Role role = getRole(roleIdentifier);
 		final Characteristic characteristic = getCharacteristic(characteristicIdentifier);
 		if (role == null || characteristic == null) {
@@ -1276,7 +1276,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void removeContainsRelation(final UniqueIdentifier roleIdentifier, final UniqueIdentifier characteristicIdentifier) {
+	public final void removeContainsRelation(final UniqueId roleIdentifier, final UniqueId characteristicIdentifier) {
 		final Role role = getRole(roleIdentifier);
 		final Characteristic characteristic = getCharacteristic(characteristicIdentifier);
 		if (role == null || characteristic == null) {
@@ -1287,7 +1287,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void updateContainsRelation(final UniqueIdentifier roleIdentifier, final UniqueIdentifier characteristicIdentifier, final double value) {
+	public final void updateContainsRelation(final UniqueId roleIdentifier, final UniqueId characteristicIdentifier, final double value) {
 		final Role role = getRole(roleIdentifier);
 		final Characteristic characteristic = getCharacteristic(characteristicIdentifier);
 		if (role == null || characteristic == null) {

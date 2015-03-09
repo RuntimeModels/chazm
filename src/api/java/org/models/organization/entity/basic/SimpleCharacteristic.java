@@ -8,7 +8,7 @@
 package org.models.organization.entity.basic;
 
 import org.models.organization.entity.Characteristic;
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 
 /**
  * The <code>SimpleCharacteristic</code> interface defines the simplified version of the {@link Characteristic} interface.
@@ -23,6 +23,6 @@ public interface SimpleCharacteristic {
 	 *
 	 * @return the <code>UniqueIdentifier</code> representing the <code>SimpleCharacteristic</code>.
 	 */
-	UniqueIdentifier getIdentifier();
+	UniqueId getIdentifier();
 
 }

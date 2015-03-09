@@ -10,7 +10,7 @@ package org.models.organization.entity;
 import java.util.Set;
 
 import org.models.organization.entity.basic.SimpleAttribute;
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 
 /**
  * The <code>Attribute</code> interface defines the basic attribute entity of the Organization Model by extending the {@link SimpleAttribute} interface.
@@ -127,7 +127,7 @@ public interface Attribute extends SimpleAttribute {
 	 *            the <code>UniqueIdentifier</code> identifying the <code>Agent</code> to retrieve the score.
 	 * @return the score if it exists, <code>null</code> otherwise.
 	 */
-	Double getHadByValue(UniqueIdentifier agentIdentifier);
+	Double getHadByValue(UniqueId agentIdentifier);
 
 	/**
 	 * Returns the set of <code>PerformanceFunction</code> that moderates this <code>Attribute</code>.

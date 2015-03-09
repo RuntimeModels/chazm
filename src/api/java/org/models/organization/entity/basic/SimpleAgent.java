@@ -8,7 +8,7 @@
 package org.models.organization.entity.basic;
 
 import org.models.organization.entity.Agent;
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 
 /**
  * The <code>SimpleAgent</code> interface defines the simplified version of the {@link Agent} interface.
@@ -23,6 +23,6 @@ public interface SimpleAgent {
 	 *
 	 * @return the unique <code>UniqueIdentifier</code> representing the <code>SimpleAgent</code>.
 	 */
-	UniqueIdentifier getIdentifier();
+	UniqueId getIdentifier();
 
 }

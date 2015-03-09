@@ -7,7 +7,7 @@
  */
 package org.models.organization.entity;
 
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 
 /**
  * The <code>Policy</code> class implements the {@link Policy} interface.
@@ -20,7 +20,7 @@ public abstract class PolicyImpl implements Policy {
 	/**
 	 * The <code>UniqueIdentifier</code> of the <code>Policy</code>.
 	 */
-	private final UniqueIdentifier identifier;
+	private final UniqueId identifier;
 
 	/**
 	 * Constructs a new instance of <code>Policy</code>.
@@ -28,7 +28,7 @@ public abstract class PolicyImpl implements Policy {
 	 * @param identifier
 	 *            the <code>UniqueIdentifier</code> of the <code>Policy</code>.
 	 */
-	protected PolicyImpl(final UniqueIdentifier identifier) {
+	protected PolicyImpl(final UniqueId identifier) {
 		if (identifier == null) {
 			throw new IllegalArgumentException("Parameter (identifier) cannot be null");
 		}
@@ -36,7 +36,7 @@ public abstract class PolicyImpl implements Policy {
 	}
 
 	@Override
-	public final UniqueIdentifier getIdentifier() {
+	public final UniqueId getIdentifier() {
 		return identifier;
 	}
 

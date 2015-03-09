@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.models.organization.entity.basic.SimpleAgent;
 import org.models.organization.entity.basic.SimpleAgentImpl;
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 import org.models.organization.registry.ChangeManager;
 import org.models.organization.registry.EventRegistry;
 import org.models.organization.relation.HasRelation;
@@ -34,12 +34,12 @@ public class AgentImpl extends SimpleAgentImpl implements Agent {
 	/**
 	 * The set of <code>Capability</code> that this <code>Agent</code> possesses.
 	 */
-	private final Map<UniqueIdentifier, PossessesRelation> possesses = new ConcurrentHashMap<>();
+	private final Map<UniqueId, PossessesRelation> possesses = new ConcurrentHashMap<>();
 
 	/**
 	 * The set of <code>Attribute</code> that this <code>Agent</code> has.
 	 */
-	private final Map<UniqueIdentifier, HasRelation> has = new ConcurrentHashMap<>();
+	private final Map<UniqueId, HasRelation> has = new ConcurrentHashMap<>();
 
 	/**
 	 * Contains contact information on how to contact this agent.
@@ -53,7 +53,7 @@ public class AgentImpl extends SimpleAgentImpl implements Agent {
 	 * @param identifier
 	 *            the <code>UniqueIdentifier</code> that identifies the <code>AgentImpl</code>.
 	 */
-	public AgentImpl(final UniqueIdentifier identifier) {
+	public AgentImpl(final UniqueId identifier) {
 		super(identifier);
 	}
 
@@ -78,7 +78,7 @@ public class AgentImpl extends SimpleAgentImpl implements Agent {
 	}
 
 	@Override
-	public final Capability getPossesses(final UniqueIdentifier capabilityIdentifier) {
+	public final Capability getPossesses(final UniqueId capabilityIdentifier) {
 		if (capabilityIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (capabilityIdentifier) cannot be null");
 		}
@@ -96,7 +96,7 @@ public class AgentImpl extends SimpleAgentImpl implements Agent {
 	}
 
 	@Override
-	public final double getPossessesScore(final UniqueIdentifier capabilityIdentifier) {
+	public final double getPossessesScore(final UniqueId capabilityIdentifier) {
 		if (capabilityIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (capabilityIdentifier) cannot be null");
 		}
@@ -105,7 +105,7 @@ public class AgentImpl extends SimpleAgentImpl implements Agent {
 	}
 
 	@Override
-	public final void setPossessesScore(final UniqueIdentifier capabilityIdentifier, final double score) {
+	public final void setPossessesScore(final UniqueId capabilityIdentifier, final double score) {
 		if (capabilityIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (capabilityIdentifier) cannot be null");
 		}
@@ -122,7 +122,7 @@ public class AgentImpl extends SimpleAgentImpl implements Agent {
 	}
 
 	@Override
-	public final void removePossesses(final UniqueIdentifier capabilityIdentifier) {
+	public final void removePossesses(final UniqueId capabilityIdentifier) {
 		if (capabilityIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (capabilityIdentifier) cannot be null");
 		}
@@ -177,7 +177,7 @@ public class AgentImpl extends SimpleAgentImpl implements Agent {
 	}
 
 	@Override
-	public final Double getHasValue(final UniqueIdentifier attributeIdentifier) {
+	public final Double getHasValue(final UniqueId attributeIdentifier) {
 		if (attributeIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (attributeIdentifier) cannot be null");
 		}
@@ -186,7 +186,7 @@ public class AgentImpl extends SimpleAgentImpl implements Agent {
 	}
 
 	@Override
-	public final void setHasValue(final UniqueIdentifier attributeIdentifier, final double value) {
+	public final void setHasValue(final UniqueId attributeIdentifier, final double value) {
 		if (attributeIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (attributeIdentifier) cannot be null");
 		}
@@ -203,7 +203,7 @@ public class AgentImpl extends SimpleAgentImpl implements Agent {
 	}
 
 	@Override
-	public final void removeHas(final UniqueIdentifier attributeIdentifier) {
+	public final void removeHas(final UniqueId attributeIdentifier) {
 		if (attributeIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (attributeIdentifier) cannot be null");
 		}

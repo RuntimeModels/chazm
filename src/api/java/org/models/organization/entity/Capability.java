@@ -10,7 +10,7 @@ package org.models.organization.entity;
 import java.util.Set;
 
 import org.models.organization.entity.basic.SimpleCapability;
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 
 /**
  * The <code>Capability</code> interface defines the basic capability entity of the Organization Model by extending {@link SimpleCapability}.
@@ -34,7 +34,7 @@ public interface Capability extends SimpleCapability {
 	 *            the <code>Agent</code> to retrieve the score.
 	 * @return the score of the given <code>Agent</code> that possesses this <code>Capability</code>.
 	 */
-	double getPossessedByScore(UniqueIdentifier agentIdentifier);
+	double getPossessedByScore(UniqueId agentIdentifier);
 
 	/**
 	 * Returns the set of <code>Role</code> that this <code>Capability</code> requires.

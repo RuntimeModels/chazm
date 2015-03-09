@@ -20,7 +20,7 @@ import org.models.organization.OrganizationImpl;
 import org.models.organization.entity.CapabilityImpl;
 import org.models.organization.entity.RoleImpl;
 import org.models.organization.entity.SpecificationGoal;
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 import org.models.organization.provider.DefaultSpecificationGoalProvider;
 import org.models.organization.provider.DefaultUniqueIdentifierProvider;
 import org.models.organization.provider.SpecificationGoalProvider;
@@ -245,7 +245,7 @@ public class XMLParser {
 				/* parse all the capabilities */
 				for (final ModelElement element : schema.getChildren(ModelElementType.CAPABILITY)) {
 					final Capability capability = (Capability) element;
-					final UniqueIdentifier capabilityIdentifier = uniqueIdentifierProvider.getUniqueIdentifier(capability.getName(),
+					final UniqueId capabilityIdentifier = uniqueIdentifierProvider.getUniqueIdentifier(capability.getName(),
 							org.models.organization.entity.Capability.class);
 					final org.models.organization.entity.Capability c = new CapabilityImpl(capabilityIdentifier);
 					organization.addCapability(c);
@@ -255,20 +255,20 @@ public class XMLParser {
 					final Role role = (Role) element;
 					/* only roles that are not inherited are added */
 					if (role.getDestRelationships(RelationshipType.INHERITS).size() == 0) {
-						final UniqueIdentifier roleIdentifier = uniqueIdentifierProvider.getUniqueIdentifier(role.getName(),
+						final UniqueId roleIdentifier = uniqueIdentifierProvider.getUniqueIdentifier(role.getName(),
 								org.models.organization.entity.Role.class);
 						final org.models.organization.entity.Role r = new RoleImpl(roleIdentifier);
 						organization.addRole(r);
 						/* set up the achieves relation */
 						for (final Relationship achieves : role.getSrcRelationships(RelationshipType.ACHIEVES)) {
 							final Goal goal = (Goal) achieves.getChild();
-							final UniqueIdentifier goalIdentifier = uniqueIdentifierProvider.getUniqueIdentifier(goal.getName(), SpecificationGoal.class);
+							final UniqueId goalIdentifier = uniqueIdentifierProvider.getUniqueIdentifier(goal.getName(), SpecificationGoal.class);
 							organization.addAchievesRelation(roleIdentifier, goalIdentifier);
 						}
 						/* set up the requires relation */
 						for (final Relationship requires : role.getSrcRelationships(RelationshipType.REQUIRES)) {
 							final Capability capability = (Capability) requires.getChild();
-							final UniqueIdentifier capabilityIdentifier = uniqueIdentifierProvider.getUniqueIdentifier(capability.getName(),
+							final UniqueId capabilityIdentifier = uniqueIdentifierProvider.getUniqueIdentifier(capability.getName(),
 									org.models.organization.entity.Capability.class);
 							organization.addRequiresRelation(roleIdentifier, capabilityIdentifier);
 						}
@@ -277,7 +277,7 @@ public class XMLParser {
 							final Role parent = (Role) inherits.remove(0).getChild();
 							for (final Relationship requires : parent.getSrcRelationships(RelationshipType.REQUIRES)) {
 								final Capability capability = (Capability) requires.getChild();
-								final UniqueIdentifier capabilityIdentifier = uniqueIdentifierProvider.getUniqueIdentifier(capability.getName(),
+								final UniqueId capabilityIdentifier = uniqueIdentifierProvider.getUniqueIdentifier(capability.getName(),
 										org.models.organization.entity.Capability.class);
 								organization.addRequiresRelation(roleIdentifier, capabilityIdentifier);
 							}

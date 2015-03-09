@@ -13,7 +13,7 @@ import org.models.organization.entity.InstanceGoal;
 import org.models.organization.entity.Role;
 import org.models.organization.entity.SpecificationGoal;
 import org.models.organization.identifier.StringIdentifier;
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 import org.models.organization.provider.UniqueIdentifierProvider;
 
 /**
@@ -25,7 +25,7 @@ import org.models.organization.provider.UniqueIdentifierProvider;
 public class DefaultUniqueIdentifierProvider implements UniqueIdentifierProvider {
 
 	@Override
-	public UniqueIdentifier getUniqueIdentifier(final String identifier, final Class<?> type) {
+	public UniqueId getUniqueIdentifier(final String identifier, final Class<?> type) {
 		if (SpecificationGoal.class.isAssignableFrom(type)) {
 			return getUniqueIdentifierForSpecificationGoal(identifier, type);
 		}
@@ -53,7 +53,7 @@ public class DefaultUniqueIdentifierProvider implements UniqueIdentifierProvider
 	 *            the <code>Class</code> or a sub-<code>Class</code> of the <code>SpecificationGoal</code>.
 	 * @return a <code>UniqueIdentifier</code> for the <code>SpecificationGoal</code>.
 	 */
-	protected UniqueIdentifier getUniqueIdentifierForSpecificationGoal(final String identifier, final Class<?> type) {
+	protected UniqueId getUniqueIdentifierForSpecificationGoal(final String identifier, final Class<?> type) {
 		return StringIdentifier.getIdentifier(identifier);
 	}
 
@@ -66,7 +66,7 @@ public class DefaultUniqueIdentifierProvider implements UniqueIdentifierProvider
 	 *            the <code>Class</code> or a sub-<code>Class</code> of the <code>InstanceGoal</code>.
 	 * @return a <code>UniqueIdentifier</code> for the <code>InstanceGoal</code> .
 	 */
-	protected UniqueIdentifier getUniqueIdentifierForInstanceGoal(final String identifier, final Class<?> type) {
+	protected UniqueId getUniqueIdentifierForInstanceGoal(final String identifier, final Class<?> type) {
 		return StringIdentifier.getIdentifier(identifier);
 	}
 
@@ -79,7 +79,7 @@ public class DefaultUniqueIdentifierProvider implements UniqueIdentifierProvider
 	 *            the <code>Class</code> or a sub-<code>Class</code> of the <code>Role</code>.
 	 * @return a <code>UniqueIdentifier</code> for the <code>Role</code>.
 	 */
-	protected UniqueIdentifier getUniqueIdentifierForRole(final String identifier, final Class<?> type) {
+	protected UniqueId getUniqueIdentifierForRole(final String identifier, final Class<?> type) {
 		return StringIdentifier.getIdentifier(identifier);
 	}
 
@@ -92,7 +92,7 @@ public class DefaultUniqueIdentifierProvider implements UniqueIdentifierProvider
 	 *            the <code>Class</code> or a sub-<code>Class</code> of the <code>Capability</code>.
 	 * @return a <code>UniqueIdentifier</code> for the <code>Capability</code>.
 	 */
-	protected UniqueIdentifier getUniqueIdentifierForCapability(final String identifier, final Class<?> type) {
+	protected UniqueId getUniqueIdentifierForCapability(final String identifier, final Class<?> type) {
 		return StringIdentifier.getIdentifier(identifier);
 	}
 
@@ -105,7 +105,7 @@ public class DefaultUniqueIdentifierProvider implements UniqueIdentifierProvider
 	 *            the <code>Class</code> or a sub-<code>Class</code> of the <code>Agent</code>.
 	 * @return a <code>UniqueIdentifier</code> for the <code>Agent</code>.
 	 */
-	protected UniqueIdentifier getUniqueIdentifierForAgent(final String identifier, final Class<? extends Agent> type) {
+	protected UniqueId getUniqueIdentifierForAgent(final String identifier, final Class<? extends Agent> type) {
 		return StringIdentifier.getIdentifier(identifier);
 	}
 

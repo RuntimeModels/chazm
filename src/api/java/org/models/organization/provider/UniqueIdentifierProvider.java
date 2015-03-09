@@ -7,10 +7,10 @@
  */
 package org.models.organization.provider;
 
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 
 /**
- * The <code>UniqueIdentifierProvider</code> interface defines the necessary functionality for using user-defined {@link UniqueIdentifier} when parsing files.
+ * The <code>UniqueIdentifierProvider</code> interface defines the necessary functionality for using user-defined {@link UniqueId} when parsing files.
  *
  * @author Christopher Zhong
  * @since 4.0
@@ -29,6 +29,6 @@ public interface UniqueIdentifierProvider {
 	 *            the <code>Class</code> or a sub-<code>Class</code> of one of the entities of the Organization Model.
 	 * @return a <code>UniqueIdentifier</code> for the given <code>String</code> .
 	 */
-	UniqueIdentifier getUniqueIdentifier(String identifier, Class<?> type);
+	UniqueId getUniqueIdentifier(String identifier, Class<?> type);
 
 }

@@ -10,7 +10,7 @@ package org.models.organization.entity.basic;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 
 /**
  * The <code>SimpleCharacteristicImpl</code> class implements the {@link SimpleCharacteristic} interface.
@@ -24,12 +24,12 @@ public class SimpleCharacteristicImpl implements SimpleCharacteristic {
 	/**
 	 * A mapping for <code>UniqueIdentifier</code> that maps to <code>SimpleCharacteristic</code> to ensure the uniqueness of <code>SimpleCharacteristic</code>.
 	 */
-	private static final Map<UniqueIdentifier, SimpleCharacteristic> uniqueCharacteristics = new HashMap<>();
+	private static final Map<UniqueId, SimpleCharacteristic> uniqueCharacteristics = new HashMap<>();
 
 	/**
 	 * The <code>UniqueIdentifier</code> representing the <code>SimpleCharacteristic</code>.
 	 */
-	private final UniqueIdentifier identifier;
+	private final UniqueId identifier;
 
 	/**
 	 * Constructs a new instance of <code>SimpleCharacteristicImpl</code>.
@@ -37,7 +37,7 @@ public class SimpleCharacteristicImpl implements SimpleCharacteristic {
 	 * @param identifier
 	 *            the <code>UniqueIdentifier</code> representing the <code>SimpleCharacteristic</code>.
 	 */
-	protected SimpleCharacteristicImpl(final UniqueIdentifier identifier) {
+	protected SimpleCharacteristicImpl(final UniqueId identifier) {
 		if (identifier == null) {
 			throw new IllegalArgumentException("Parameter (identifier) cannot be null");
 		}
@@ -45,7 +45,7 @@ public class SimpleCharacteristicImpl implements SimpleCharacteristic {
 	}
 
 	@Override
-	public final UniqueIdentifier getIdentifier() {
+	public final UniqueId getIdentifier() {
 		return identifier;
 	}
 
@@ -77,7 +77,7 @@ public class SimpleCharacteristicImpl implements SimpleCharacteristic {
 	 *            the <code>UniqueIdentifier</code> representing the <code>SimpleCharacteristic</code> instance.
 	 * @return a <code>SimpleCharacteristic</code> instance representing the given <code>UniqueIdentifier</code>.
 	 */
-	public static final SimpleCharacteristic createSimpleCharacteristic(final UniqueIdentifier identifier) {
+	public static final SimpleCharacteristic createSimpleCharacteristic(final UniqueId identifier) {
 		SimpleCharacteristic simpleCharacteristic = uniqueCharacteristics.get(identifier);
 		if (simpleCharacteristic == null) {
 			simpleCharacteristic = new SimpleCharacteristicImpl(identifier);

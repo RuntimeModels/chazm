@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.models.organization.entity.basic.SimpleAttributeImpl;
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 import org.models.organization.relation.HasRelation;
 import org.models.organization.relation.ModeratesRelation;
 import org.models.organization.relation.NeedsRelation;
@@ -35,17 +35,17 @@ public class AttributeImpl extends SimpleAttributeImpl implements Attribute {
 	/**
 	 * The set of <code>Role</code> that needs this <code>Attribute</code>.
 	 */
-	private final Map<UniqueIdentifier, NeedsRelation> influencedBy = new ConcurrentHashMap<>();
+	private final Map<UniqueId, NeedsRelation> influencedBy = new ConcurrentHashMap<>();
 
 	/**
 	 * The set of <code>Agent</code> that has this <code>Attribute</code>.
 	 */
-	private final Map<UniqueIdentifier, HasRelation> hadBy = new ConcurrentHashMap<>();
+	private final Map<UniqueId, HasRelation> hadBy = new ConcurrentHashMap<>();
 
 	/**
 	 * The set of <code>PerformanceFunction</code> that moderates this <code>Attribute</code>.
 	 */
-	private final Map<UniqueIdentifier, ModeratesRelation> moderatedBy = new ConcurrentHashMap<>();
+	private final Map<UniqueId, ModeratesRelation> moderatedBy = new ConcurrentHashMap<>();
 
 	/**
 	 * Constructs a new instance of <code>AttributeImpl</code>.
@@ -55,7 +55,7 @@ public class AttributeImpl extends SimpleAttributeImpl implements Attribute {
 	 * @param attributeType
 	 *            the <code>Type</code> of the <code>Attribute</code>.
 	 */
-	public AttributeImpl(final UniqueIdentifier identifier, final Type attributeType) {
+	public AttributeImpl(final UniqueId identifier, final Type attributeType) {
 		super(identifier);
 		this.attributeType = attributeType;
 	}
@@ -123,7 +123,7 @@ public class AttributeImpl extends SimpleAttributeImpl implements Attribute {
 	}
 
 	@Override
-	public final Double getHadByValue(final UniqueIdentifier agentIdentifier) {
+	public final Double getHadByValue(final UniqueId agentIdentifier) {
 		if (agentIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (agentIdentifier) cannot be null");
 		}

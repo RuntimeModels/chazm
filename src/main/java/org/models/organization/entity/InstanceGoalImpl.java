@@ -10,7 +10,7 @@ package org.models.organization.entity;
 import java.util.Set;
 
 import org.models.organization.entity.basic.SimpleGoalImpl;
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 
 /**
  * The <code>InstanceGoalImpl</code> class implements the {@link InstanceGoal}.
@@ -24,13 +24,13 @@ import org.models.organization.identifier.UniqueIdentifier;
 public class InstanceGoalImpl<ParameterType> extends SimpleGoalImpl implements InstanceGoal<ParameterType> {
 
 	/**
-	 * The <code>InstanceGoalIdentifier</code> class extends the {@link UniqueIdentifier} by using two {@link UniqueIdentifier} as the form of identification.
+	 * The <code>InstanceGoalIdentifier</code> class extends the {@link UniqueId} by using two {@link UniqueId} as the form of identification.
 	 *
 	 * @author Christopher Zhong
 	 * @since 4.0
-	 * @see UniqueIdentifier
+	 * @see UniqueId
 	 */
-	private static class InstanceGoalIdentifier extends UniqueIdentifier {
+	private static class InstanceGoalIdentifier extends UniqueId {
 
 		/**
 		 * Default serial version ID.
@@ -45,12 +45,12 @@ public class InstanceGoalImpl<ParameterType> extends SimpleGoalImpl implements I
 		/**
 		 * The <code>UniqueIdentifier</code> of the <code>SpecificationGoal</code>.
 		 */
-		private final UniqueIdentifier specificationIdentifier;
+		private final UniqueId specificationIdentifier;
 
 		/**
 		 * The <code>UniqueIdentifier</code> of the <code>InstanceGoal</code>.
 		 */
-		private final UniqueIdentifier instanceIdentifier;
+		private final UniqueId instanceIdentifier;
 
 		/**
 		 * Optimization for hash code computation since it never changes.
@@ -70,7 +70,7 @@ public class InstanceGoalImpl<ParameterType> extends SimpleGoalImpl implements I
 		 * @param instanceIdentifier
 		 *            the <code>UniqueIdentifier</code> of the <code>InstanceGoal</code>.
 		 */
-		public InstanceGoalIdentifier(final UniqueIdentifier specificationIdentifier, final UniqueIdentifier instanceIdentifier) {
+		public InstanceGoalIdentifier(final UniqueId specificationIdentifier, final UniqueId instanceIdentifier) {
 			this.specificationIdentifier = specificationIdentifier;
 			this.instanceIdentifier = instanceIdentifier;
 		}
@@ -80,7 +80,7 @@ public class InstanceGoalImpl<ParameterType> extends SimpleGoalImpl implements I
 		 *
 		 * @return the <code>UniqueIdentifier</code> of the <code>SpecificationGoal</code>.
 		 */
-		private UniqueIdentifier getSpecificationIdentifier() {
+		private UniqueId getSpecificationIdentifier() {
 			return specificationIdentifier;
 		}
 
@@ -89,7 +89,7 @@ public class InstanceGoalImpl<ParameterType> extends SimpleGoalImpl implements I
 		 *
 		 * @return the <code>UniqueIdentifier</code> of the <code>InstanceGoal</code>.
 		 */
-		private UniqueIdentifier getInstanceIdentifier() {
+		private UniqueId getInstanceIdentifier() {
 			return instanceIdentifier;
 		}
 
@@ -135,7 +135,7 @@ public class InstanceGoalImpl<ParameterType> extends SimpleGoalImpl implements I
 	 * The <code>UniqueIdentifier</code> identifying the <code>InstanceGoal</code> with respect to other similar <code>InstanceGoal</code> based on the same
 	 * <code>SpecificationGoal</code>.
 	 */
-	private final UniqueIdentifier instanceIdentifier;
+	private final UniqueId instanceIdentifier;
 
 	/**
 	 * The parameter(s) of this <code>InstanceGoal</code>.
@@ -153,7 +153,7 @@ public class InstanceGoalImpl<ParameterType> extends SimpleGoalImpl implements I
 	 * @param parameter
 	 *            the parameter(s) of this <code>InstanceGoal</code>.
 	 */
-	protected InstanceGoalImpl(final SpecificationGoal specificationGoal, final UniqueIdentifier instanceIdentifier, final ParameterType parameter) {
+	protected InstanceGoalImpl(final SpecificationGoal specificationGoal, final UniqueId instanceIdentifier, final ParameterType parameter) {
 		this(specificationGoal, instanceIdentifier, parameter, false);
 	}
 
@@ -171,7 +171,7 @@ public class InstanceGoalImpl<ParameterType> extends SimpleGoalImpl implements I
 	 *            <code>true</code> if the given <code>UniqueIdentifier</code> is to be the same as the <code>UniqueIdentifer</code> from
 	 *            {@link #getIdentifier()}, <code>false</code> otherwise.
 	 */
-	public InstanceGoalImpl(final SpecificationGoal specificationGoal, final UniqueIdentifier instanceIdentifier, final ParameterType parameter,
+	public InstanceGoalImpl(final SpecificationGoal specificationGoal, final UniqueId instanceIdentifier, final ParameterType parameter,
 			final boolean useSameForGlobal) {
 		super(useSameForGlobal ? instanceIdentifier : new InstanceGoalIdentifier(specificationGoal.getIdentifier(), instanceIdentifier));
 		this.specificationGoal = specificationGoal;
@@ -185,12 +185,12 @@ public class InstanceGoalImpl<ParameterType> extends SimpleGoalImpl implements I
 	}
 
 	@Override
-	public final UniqueIdentifier getSpecificationIdentifier() {
+	public final UniqueId getSpecificationIdentifier() {
 		return getSpecificationGoal().getIdentifier();
 	}
 
 	@Override
-	public final UniqueIdentifier getInstanceIdentifier() {
+	public final UniqueId getInstanceIdentifier() {
 		return instanceIdentifier;
 	}
 

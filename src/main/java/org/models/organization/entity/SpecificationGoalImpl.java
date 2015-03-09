@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.models.organization.entity.basic.SimpleGoalImpl;
 import org.models.organization.factory.InstanceGoalFactory;
 import org.models.organization.factory.InstanceGoalFactoryImpl;
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 import org.models.organization.relation.AchievesRelation;
 
 /**
@@ -35,7 +35,7 @@ public class SpecificationGoalImpl extends SimpleGoalImpl implements Specificati
 	/**
 	 * The set of <code>Role</code> that achieves this <code>SpecificationGoal</code>.
 	 */
-	private final Map<UniqueIdentifier, AchievesRelation> achievedBy = new ConcurrentHashMap<>();
+	private final Map<UniqueId, AchievesRelation> achievedBy = new ConcurrentHashMap<>();
 
 	/**
 	 * Constructs a new instance of <code>SpecificationGoal</code> with the given <code>UniqueIdentifier</code>.
@@ -43,7 +43,7 @@ public class SpecificationGoalImpl extends SimpleGoalImpl implements Specificati
 	 * @param identifier
 	 *            the <code>UniqueIdentifier</code> identifying the <code>SpecificationGoal</code>.
 	 */
-	public SpecificationGoalImpl(final UniqueIdentifier identifier) {
+	public SpecificationGoalImpl(final UniqueId identifier) {
 		super(identifier);
 	}
 
@@ -70,7 +70,7 @@ public class SpecificationGoalImpl extends SimpleGoalImpl implements Specificati
 	}
 
 	@Override
-	public final <ParameterType> InstanceGoal<ParameterType> getInstanceGoal(final UniqueIdentifier instanceIdentifier, final ParameterType parameter) {
+	public final <ParameterType> InstanceGoal<ParameterType> getInstanceGoal(final UniqueId instanceIdentifier, final ParameterType parameter) {
 		if (instanceIdentifier == null) {
 			throw new IllegalArgumentException(String.format("Parameter cannot be null: (Unique Identifier: %s)", instanceIdentifier));
 		}

@@ -8,7 +8,7 @@
 package org.models.organization.entity.basic;
 
 import org.models.organization.entity.Role;
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 
 /**
  * The <code>SimpleRole</code> interface defines the simplified version of the {@link Role} interface.
@@ -23,6 +23,6 @@ public interface SimpleRole {
 	 *
 	 * @return the unique <code>UniqueIdentifier</code> representing the <code>SimpleRole</code>.
 	 */
-	UniqueIdentifier getIdentifier();
+	UniqueId getIdentifier();
 
 }

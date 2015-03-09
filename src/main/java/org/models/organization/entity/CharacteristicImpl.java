@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.models.organization.entity.basic.SimpleCharacteristicImpl;
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 import org.models.organization.relation.ContainsRelation;
 
 /**
@@ -27,7 +27,7 @@ public class CharacteristicImpl extends SimpleCharacteristicImpl implements Char
 	/**
 	 * The set of <code>Role</code> that contains this <code>Characteristic</code>.
 	 */
-	private final Map<UniqueIdentifier, ContainsRelation> containedBy = new ConcurrentHashMap<>();
+	private final Map<UniqueId, ContainsRelation> containedBy = new ConcurrentHashMap<>();
 
 	/**
 	 * Constructs a new instance of <code>CharacteristicImpl</code>.
@@ -35,7 +35,7 @@ public class CharacteristicImpl extends SimpleCharacteristicImpl implements Char
 	 * @param identifier
 	 *            the <code>UniqueIdentifier</code> representing the <code>Characteristic</code>
 	 */
-	public CharacteristicImpl(final UniqueIdentifier identifier) {
+	public CharacteristicImpl(final UniqueId identifier) {
 		super(identifier);
 	}
 
@@ -62,7 +62,7 @@ public class CharacteristicImpl extends SimpleCharacteristicImpl implements Char
 	}
 
 	@Override
-	public final Double getContainedByValue(final UniqueIdentifier roleIdentifier) {
+	public final Double getContainedByValue(final UniqueId roleIdentifier) {
 		if (roleIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (roleIdentifier) cannot be null");
 		}

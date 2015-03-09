@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.models.organization.entity.basic.SimpleRoleImpl;
 import org.models.organization.function.RoleGoodnessFunction;
 import org.models.organization.function.RoleGoodnessFunction.DefaultRoleGoodnessFunction;
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 import org.models.organization.registry.ChangeManager;
 import org.models.organization.registry.EventRegistry;
 import org.models.organization.relation.AchievesRelation;
@@ -40,27 +40,27 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 	/**
 	 * The set of <code>SpecificationGoal</code> that this <code>Role</code> achieves.
 	 */
-	private final Map<UniqueIdentifier, AchievesRelation> achieves = new ConcurrentHashMap<>();
+	private final Map<UniqueId, AchievesRelation> achieves = new ConcurrentHashMap<>();
 
 	/**
 	 * The set of <code>Capability</code> required by this <code>Role</code>.
 	 */
-	private final Map<UniqueIdentifier, RequiresRelation> requires = new ConcurrentHashMap<>();
+	private final Map<UniqueId, RequiresRelation> requires = new ConcurrentHashMap<>();
 
 	/**
 	 * The set of <code>Attribute</code> needed by this <code>Role</code>.
 	 */
-	private final Map<UniqueIdentifier, NeedsRelation> needs = new ConcurrentHashMap<>();
+	private final Map<UniqueId, NeedsRelation> needs = new ConcurrentHashMap<>();
 
 	/**
 	 * The set of <code>Characteristic</code> contained by this <code>Role</code>.
 	 */
-	private final Map<UniqueIdentifier, ContainsRelation> contains = new ConcurrentHashMap<>();
+	private final Map<UniqueId, ContainsRelation> contains = new ConcurrentHashMap<>();
 
 	/**
 	 * The set of <code>PerformanceFunction</code> that are linked to this <code>Task</code>.
 	 */
-	private final Map<UniqueIdentifier, UsesRelation> uses = new ConcurrentHashMap<>();
+	private final Map<UniqueId, UsesRelation> uses = new ConcurrentHashMap<>();
 
 	/**
 	 * The <code>RoleGoodnessFunction</code> of this <code>Role</code>.
@@ -73,7 +73,7 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 	 * @param identifier
 	 *            the <code>UniqueIdentifier</code> identifying this <code>Role</code>.
 	 */
-	public RoleImpl(final UniqueIdentifier identifier) {
+	public RoleImpl(final UniqueId identifier) {
 		super(identifier);
 	}
 
@@ -87,7 +87,7 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 	}
 
 	@Override
-	public final void removeAchieves(final UniqueIdentifier goalIdentifier) {
+	public final void removeAchieves(final UniqueId goalIdentifier) {
 		if (goalIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (goalIdentifier) cannot be null");
 		}
@@ -152,7 +152,7 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 	}
 
 	@Override
-	public final void removeRequires(final UniqueIdentifier capabilityIdentifier) {
+	public final void removeRequires(final UniqueId capabilityIdentifier) {
 		if (capabilityIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (capabilityIdentifier) cannot be null");
 		}
@@ -207,7 +207,7 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 	}
 
 	@Override
-	public final void removeNeeds(final UniqueIdentifier attributeIdentifier) {
+	public final void removeNeeds(final UniqueId attributeIdentifier) {
 		if (attributeIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (attributeIdentifier) cannot be null");
 		}
@@ -262,7 +262,7 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 	}
 
 	@Override
-	public final Double getContainsValue(final UniqueIdentifier characteristicIdentifier) {
+	public final Double getContainsValue(final UniqueId characteristicIdentifier) {
 		if (characteristicIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (characteristicIdentifier) cannot be null");
 		}
@@ -271,7 +271,7 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 	}
 
 	@Override
-	public final void setContainsValue(final UniqueIdentifier characteristicIdentifier, final double value) {
+	public final void setContainsValue(final UniqueId characteristicIdentifier, final double value) {
 		if (characteristicIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (characteristicIdentifier) cannot be null");
 		}
@@ -289,7 +289,7 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 	}
 
 	@Override
-	public final void removeContains(final UniqueIdentifier characteristicIdentifier) {
+	public final void removeContains(final UniqueId characteristicIdentifier) {
 		if (characteristicIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (characteristicsIdentifier) cannot be null");
 		}
@@ -335,7 +335,7 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 	}
 
 	@Override
-	public final PerformanceFunction getUses(final UniqueIdentifier functionIdentifer) {
+	public final PerformanceFunction getUses(final UniqueId functionIdentifer) {
 		if (functionIdentifer == null) {
 			throw new IllegalArgumentException("Parameter (functionIdentifier) cannot be null");
 		}
@@ -353,7 +353,7 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 	}
 
 	@Override
-	public final void removeUses(final UniqueIdentifier functionIdentifier) {
+	public final void removeUses(final UniqueId functionIdentifier) {
 		if (functionIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (functionIdentifier) cannot be null");
 		}

@@ -10,7 +10,7 @@ package org.models.organization.entity;
 import java.util.Set;
 
 import org.models.organization.entity.basic.SimpleGoal;
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 
 /**
  * The <code>InstanceGoal</code> interface defines the concrete instance of a {@link SpecificationGoal} that belongs in the active goal set.
@@ -34,7 +34,7 @@ public interface InstanceGoal<ParameterType> extends SimpleGoal {
 	 *
 	 * @return the <code>UniqueIdentifier</code> identifying the <code>SpecificationGoal</code> that this <code>InstanceGoal</code> is based on.
 	 */
-	UniqueIdentifier getSpecificationIdentifier();
+	UniqueId getSpecificationIdentifier();
 
 	/**
 	 * Returns the <code>UniqueIdentifier</code> identifying this <code>InstanceGoal</code> with respect to the <code>SpecificationGoal</code>.
@@ -42,7 +42,7 @@ public interface InstanceGoal<ParameterType> extends SimpleGoal {
 	 * @return the <code>UniqueIdentifier</code> identifying this <code>InstanceGoal</code> with respect the <code>SpecificationGoal</code> that this
 	 *         <code>InstanceGoal</code> is based on.
 	 */
-	UniqueIdentifier getInstanceIdentifier();
+	UniqueId getInstanceIdentifier();
 
 	/**
 	 * Returns the parameter(s) of this <code>InstanceGoal</code>.

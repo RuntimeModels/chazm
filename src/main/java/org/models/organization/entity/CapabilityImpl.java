@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.models.organization.entity.basic.SimpleCapabilityImpl;
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 import org.models.organization.relation.PossessesRelation;
 import org.models.organization.relation.RequiresRelation;
 
@@ -30,12 +30,12 @@ public class CapabilityImpl extends SimpleCapabilityImpl implements Capability {
 	/**
 	 * The set of <code>Agent</code> that possesses this <code>Capability</code> .
 	 */
-	private final Map<UniqueIdentifier, PossessesRelation> possessedBy = new ConcurrentHashMap<>();
+	private final Map<UniqueId, PossessesRelation> possessedBy = new ConcurrentHashMap<>();
 
 	/**
 	 * The set of <code>Role</code> that requires this <code>Capability</code>.
 	 */
-	private final Map<UniqueIdentifier, RequiresRelation> requiredBy = new ConcurrentHashMap<>();
+	private final Map<UniqueId, RequiresRelation> requiredBy = new ConcurrentHashMap<>();
 
 	/**
 	 * Constructs a new instance of <code>Capability</code>.
@@ -43,7 +43,7 @@ public class CapabilityImpl extends SimpleCapabilityImpl implements Capability {
 	 * @param identifier
 	 *            the unique <code>UniqueIdentifier</code> identifying this <code>Capability</code>.
 	 */
-	public CapabilityImpl(final UniqueIdentifier identifier) {
+	public CapabilityImpl(final UniqueId identifier) {
 		super(identifier);
 	}
 
@@ -73,7 +73,7 @@ public class CapabilityImpl extends SimpleCapabilityImpl implements Capability {
 	}
 
 	@Override
-	public final double getPossessedByScore(final UniqueIdentifier agentIdentifier) {
+	public final double getPossessedByScore(final UniqueId agentIdentifier) {
 		if (agentIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (agentIdentifier) cannot be null");
 		}

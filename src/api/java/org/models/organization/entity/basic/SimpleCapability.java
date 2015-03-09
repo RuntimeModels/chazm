@@ -8,7 +8,7 @@
 package org.models.organization.entity.basic;
 
 import org.models.organization.entity.Capability;
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 
 /**
  * The <code>SimpleCapability</code> interface defines the simplified version of the {@link Capability} interface.
@@ -23,6 +23,6 @@ public interface SimpleCapability {
 	 *
 	 * @return the unique <code>UniqueIdentifier</code> representing the <code>SimpleCapability</code>.
 	 */
-	UniqueIdentifier getIdentifier();
+	UniqueId getIdentifier();
 
 }

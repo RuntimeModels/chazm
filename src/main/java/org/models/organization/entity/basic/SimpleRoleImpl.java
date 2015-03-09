@@ -10,7 +10,7 @@ package org.models.organization.entity.basic;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 
 /**
  * The <code>SimpleRoleImpl</code> class implements the {@link SimpleRole} interface.
@@ -23,12 +23,12 @@ public class SimpleRoleImpl implements SimpleRole {
 	/**
 	 * A mapping for <code>UniqueIdentifier</code> that maps to <code>SimpleRole</code> to ensure the uniqueness of <code>SimpleRole</code>.
 	 */
-	private static final Map<UniqueIdentifier, SimpleRole> uniqueRoles = new HashMap<>();
+	private static final Map<UniqueId, SimpleRole> uniqueRoles = new HashMap<>();
 
 	/**
 	 * The unique <code>UniqueIdentifier</code> of the <code>SimpleRoleImpl</code>.
 	 */
-	private final UniqueIdentifier identifier;
+	private final UniqueId identifier;
 
 	/**
 	 * Constructs a new instance of <code>SimpleRoleImpl</code>.
@@ -36,7 +36,7 @@ public class SimpleRoleImpl implements SimpleRole {
 	 * @param identifier
 	 *            the unique <code>UniqueIdentifier</code> representing the <code>SimpleRoleImpl</code>.
 	 */
-	protected SimpleRoleImpl(final UniqueIdentifier identifier) {
+	protected SimpleRoleImpl(final UniqueId identifier) {
 		if (identifier == null) {
 			throw new IllegalArgumentException("Parameter (identifier) cannot be null");
 		}
@@ -44,7 +44,7 @@ public class SimpleRoleImpl implements SimpleRole {
 	}
 
 	@Override
-	public final UniqueIdentifier getIdentifier() {
+	public final UniqueId getIdentifier() {
 		return identifier;
 	}
 
@@ -76,7 +76,7 @@ public class SimpleRoleImpl implements SimpleRole {
 	 *            the unique <code>UniqueIdentifier</code> representing the <code>SimpleRole</code> instance.
 	 * @return a <code>SimpleRole</code> instance representing the given <code>UniqueIdentifier</code>.
 	 */
-	public static final SimpleRole createSimpleRole(final UniqueIdentifier identifier) {
+	public static final SimpleRole createSimpleRole(final UniqueId identifier) {
 		SimpleRole simpleRole = uniqueRoles.get(identifier);
 		if (uniqueRoles.get(identifier) == null) {
 			simpleRole = new SimpleRoleImpl(identifier);

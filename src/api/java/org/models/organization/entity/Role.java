@@ -12,7 +12,7 @@ import java.util.Set;
 
 import org.models.organization.entity.basic.SimpleRole;
 import org.models.organization.function.RoleGoodnessFunction;
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 import org.models.organization.relation.Assignment;
 
 /**
@@ -38,7 +38,7 @@ public interface Role extends SimpleRole {
 	 * @param goalIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>SpecificationGoal</code> to remove.
 	 */
-	void removeAchieves(UniqueIdentifier goalIdentifier);
+	void removeAchieves(UniqueId goalIdentifier);
 
 	/**
 	 * Clears the set of <code>SpecificationGoal</code> that this <code>Role</code> achieves.
@@ -74,7 +74,7 @@ public interface Role extends SimpleRole {
 	 * @param capabilityIdentifier
 	 *            the <code>Capability</code> to be removed.
 	 */
-	void removeRequires(UniqueIdentifier capabilityIdentifier);
+	void removeRequires(UniqueId capabilityIdentifier);
 
 	/**
 	 * Clears the set of <code>Capability</code> that this <code>Role</code> requires.
@@ -102,7 +102,7 @@ public interface Role extends SimpleRole {
 	 * @param attributeIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>Attribute</code> to remove.
 	 */
-	void removeNeeds(UniqueIdentifier attributeIdentifier);
+	void removeNeeds(UniqueId attributeIdentifier);
 
 	/**
 	 * Clears the set of <code>Attribute</code> that this <code>Role</code> influences.
@@ -133,7 +133,7 @@ public interface Role extends SimpleRole {
 	 *            the <code>UniqueIdentifier</code> of the <code>Characteristic</code> to retrieve the value.
 	 * @return the value of this <code>Role</code> of the containing <code>Characteristic</code>.
 	 */
-	Double getContainsValue(UniqueIdentifier characteristicIdentifier);
+	Double getContainsValue(UniqueId characteristicIdentifier);
 
 	/**
 	 * Sets a new value for this <code>Role</code> of the containing <code>Characteristic</code> (from the given <code>UniqueIdentifier</code> ).
@@ -143,7 +143,7 @@ public interface Role extends SimpleRole {
 	 * @param value
 	 *            the new value of this <code>Role</code> of the containing <code>Characteristic</code>.
 	 */
-	void setContainsValue(UniqueIdentifier characteristicIdentifier, double value);
+	void setContainsValue(UniqueId characteristicIdentifier, double value);
 
 	/**
 	 * Removes the <code>Characteristic</code> (from the given <code>UniqueIdentifier</code>) from the set of <code>Characteristic</code> that this
@@ -151,7 +151,7 @@ public interface Role extends SimpleRole {
 	 *
 	 * @param characteristicIdentifier
 	 */
-	void removeContains(UniqueIdentifier characteristicIdentifier);
+	void removeContains(UniqueId characteristicIdentifier);
 
 	/**
 	 * Clears the set of <code>Characteristic</code> that this <code>Role</code> contains.
@@ -173,7 +173,7 @@ public interface Role extends SimpleRole {
 	 *            the <code>UniqueIdentifier</code> of the <code>PerformanceFunction</code> to retrieve.
 	 * @return the <code>PerformanceFunction</code> if it exists, <code>null</code> otherwise.
 	 */
-	PerformanceFunction getUses(UniqueIdentifier functionIdentifer);
+	PerformanceFunction getUses(UniqueId functionIdentifer);
 
 	/**
 	 * Returns the set of <code>PerformanceFunction</code> that is used by this <code>Role</code>.
@@ -189,7 +189,7 @@ public interface Role extends SimpleRole {
 	 * @param functionIdentifier
 	 *            the <code>PerformanceFunction</code> to remove.
 	 */
-	void removeUses(UniqueIdentifier functionIdentifier);
+	void removeUses(UniqueId functionIdentifier);
 
 	/**
 	 * Sets the <code>RoleGoodnessFunction</code> for this <code>Role</code>.
