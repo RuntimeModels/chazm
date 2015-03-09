@@ -8,7 +8,7 @@
 package org.models.organization.entity.basic;
 
 import org.models.organization.entity.Attribute;
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 
 /**
  * The <code>SimpleAttribute</code> interface defines the simplified version of the {@link Attribute} interface.
@@ -23,6 +23,6 @@ public interface SimpleAttribute {
 	 *
 	 * @return the unique <code>UniqueIdentifier</code> representing the <code>SimpleAttribute</code>.
 	 */
-	UniqueIdentifier getIdentifier();
+	UniqueId getIdentifier();
 
 }

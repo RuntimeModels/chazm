@@ -8,13 +8,13 @@
 package org.models.organization.identifier;
 
 /**
- * The <code>LongIdentifier</code> implements the {@link UniqueIdentifier} interface to represent <code>long</code> as entities in the Organization Model.
+ * The <code>LongIdentifier</code> implements the {@link UniqueId} interface to represent <code>long</code> as entities in the Organization Model.
  *
  * @author Christopher Zhong
  * @since 4.0
- * @see UniqueIdentifier
+ * @see UniqueId
  */
-public class LongIdentifier extends UniqueIdentifier {
+public class LongIdentifier extends UniqueId {
 
 	/**
 	 * Default serial version ID.

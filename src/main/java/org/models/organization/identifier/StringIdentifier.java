@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * The <code>StringIdentifier</code> class extends the {@link UniqueIdentifier} by using a {@link String} as the form of identification.
+ * The <code>StringIdentifier</code> class extends the {@link UniqueId} by using a {@link String} as the form of identification.
  * <p>
  * This <code>StringIdentifier</code> class is provided for easy of use only. The {@link #equals(Object)} method defaults to the {@link String#equals(Object)}
  * which is linear in the length of {@link String} . If performance is an issue, it is recommended that the {@link #equals(Object)} method is overridden to
@@ -22,9 +22,9 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  * @author Christopher Zhong, Scott Harmon
  * @since 4.0
- * @see UniqueIdentifier
+ * @see UniqueId
  */
-public class StringIdentifier extends UniqueIdentifier {
+public class StringIdentifier extends UniqueId {
 
 	/**
 	 * Default serial version ID.

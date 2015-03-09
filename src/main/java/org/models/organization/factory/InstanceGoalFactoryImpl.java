@@ -10,7 +10,7 @@ package org.models.organization.factory;
 import org.models.organization.entity.InstanceGoal;
 import org.models.organization.entity.InstanceGoalImpl;
 import org.models.organization.entity.SpecificationGoal;
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 
 /**
  * <code>InstanceGoalFactoryImpl</code> provides a default {@link InstanceGoalFactory} used for creating instances of {@link InstanceGoal}.
@@ -21,7 +21,7 @@ import org.models.organization.identifier.UniqueIdentifier;
 public class InstanceGoalFactoryImpl implements InstanceGoalFactory {
 
 	@Override
-	public <ParameterType> InstanceGoal<ParameterType> getInstanceGoal(final SpecificationGoal specification, final UniqueIdentifier instanceIdentifier,
+	public <ParameterType> InstanceGoal<ParameterType> getInstanceGoal(final SpecificationGoal specification, final UniqueId instanceIdentifier,
 			final ParameterType parameter) {
 		return new InstanceGoalImpl<ParameterType>(specification, instanceIdentifier, parameter, false);
 	}

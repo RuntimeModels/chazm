@@ -9,7 +9,7 @@ package org.models.organization.entity.basic;
 
 import org.models.organization.entity.InstanceGoal;
 import org.models.organization.entity.SpecificationGoal;
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 
 /**
  * The <code>SimpleCapability</code> interface defines the simplified version of the {@link SpecificationGoal} and {@link InstanceGoal} interface.
@@ -24,6 +24,6 @@ public interface SimpleGoal {
 	 *
 	 * @return the unique <code>UniqueIdentifier</code> representing the <code>SimpleGoal</code>.
 	 */
-	UniqueIdentifier getIdentifier();
+	UniqueId getIdentifier();
 
 }

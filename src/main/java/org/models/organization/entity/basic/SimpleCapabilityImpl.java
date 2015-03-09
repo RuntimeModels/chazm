@@ -10,7 +10,7 @@ package org.models.organization.entity.basic;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 
 /**
  * The <code>SimpleCapabilityImpl</code> class implements the the {@link SimpleCapability} interface.
@@ -23,12 +23,12 @@ public class SimpleCapabilityImpl implements SimpleCapability {
 	/**
 	 * A mapping for <code>UniqueIdentifier</code> that maps to <code>SimpleCapability</code> to ensure the uniqueness of <code>SimpleCapability</code>.
 	 */
-	private static final Map<UniqueIdentifier, SimpleCapability> uniqueCapabilities = new HashMap<>();
+	private static final Map<UniqueId, SimpleCapability> uniqueCapabilities = new HashMap<>();
 
 	/**
 	 * The unique <code>UniqueIdentifier</code> representing this <code>SimpleCapabilityImpl</code>.
 	 */
-	private final UniqueIdentifier identifier;
+	private final UniqueId identifier;
 
 	/**
 	 * Constructs a new instance of <code>SimpleCapabilityImpl</code>.
@@ -36,7 +36,7 @@ public class SimpleCapabilityImpl implements SimpleCapability {
 	 * @param identifier
 	 *            the unique <code>UniqueIdentifier</code> representing this <code>SimpleCapabilityImpl</code>.
 	 */
-	protected SimpleCapabilityImpl(final UniqueIdentifier identifier) {
+	protected SimpleCapabilityImpl(final UniqueId identifier) {
 		if (identifier == null) {
 			throw new IllegalArgumentException("Parameter (identifier) cannot be null");
 		}
@@ -44,7 +44,7 @@ public class SimpleCapabilityImpl implements SimpleCapability {
 	}
 
 	@Override
-	public final UniqueIdentifier getIdentifier() {
+	public final UniqueId getIdentifier() {
 		return identifier;
 	}
 
@@ -76,7 +76,7 @@ public class SimpleCapabilityImpl implements SimpleCapability {
 	 *            the unique <code>UniqueIdentifier</code> representing the <code>SimpleCapability</code> instance.
 	 * @return a <code>SimpleCapability</code> instance representing the given <code>UniqueIdentifier</code>.
 	 */
-	public static final SimpleCapability createSimpleCapability(final UniqueIdentifier identifier) {
+	public static final SimpleCapability createSimpleCapability(final UniqueId identifier) {
 		SimpleCapability simpleCapability = uniqueCapabilities.get(identifier);
 		if (simpleCapability == null) {
 			simpleCapability = new SimpleCapabilityImpl(identifier);

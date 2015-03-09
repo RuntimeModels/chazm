@@ -10,7 +10,7 @@ package org.models.organization.entity.basic;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 
 /**
  * The <code>SimpleAttributeImpl</code> class implements the {@link SimpleAttribute} interface.
@@ -24,12 +24,12 @@ public class SimpleAttributeImpl implements SimpleAttribute {
 	/**
 	 * A mapping for <code>UniqueIdentifier</code> that maps to <code>SimpleAttribute</code> to ensure the uniqueness of <code>SimpleAttribute</code>.
 	 */
-	private static final Map<UniqueIdentifier, SimpleAttribute> uniqueAttributes = new HashMap<>();
+	private static final Map<UniqueId, SimpleAttribute> uniqueAttributes = new HashMap<>();
 
 	/**
 	 * The unique <code>UniqueIdentifier</code> representing the <code>SimpleAttribute</code>.
 	 */
-	private final UniqueIdentifier identifier;
+	private final UniqueId identifier;
 
 	/**
 	 * Constructs a new instance of <code>SimpleAttributeImpl</code>.
@@ -37,7 +37,7 @@ public class SimpleAttributeImpl implements SimpleAttribute {
 	 * @param identifier
 	 *            the unique <code>UniqueIdentifier</code> representing the <code>SimpleAttribute</code>.
 	 */
-	protected SimpleAttributeImpl(final UniqueIdentifier identifier) {
+	protected SimpleAttributeImpl(final UniqueId identifier) {
 		if (identifier == null) {
 			throw new IllegalArgumentException("Parameter (identifier) cannot be null");
 		}
@@ -45,7 +45,7 @@ public class SimpleAttributeImpl implements SimpleAttribute {
 	}
 
 	@Override
-	public final UniqueIdentifier getIdentifier() {
+	public final UniqueId getIdentifier() {
 		return identifier;
 	}
 
@@ -77,7 +77,7 @@ public class SimpleAttributeImpl implements SimpleAttribute {
 	 *            the unique <code>UniqueIdentifier</code> representing the <code>SimpleAttribute</code> instance.
 	 * @return a <code>SimpleAttribute</code> instance representing the given <code>UniqueIdentifier</code>.
 	 */
-	public static final SimpleAttribute createSimpleAttribute(final UniqueIdentifier identifier) {
+	public static final SimpleAttribute createSimpleAttribute(final UniqueId identifier) {
 		SimpleAttribute simpleAttribute = uniqueAttributes.get(identifier);
 		if (simpleAttribute == null) {
 			simpleAttribute = new SimpleAttributeImpl(identifier);

@@ -10,7 +10,7 @@ package org.models.organization.entity.basic;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 
 /**
  * The <code>SimpleAgentImpl</code> class implements the {@link SimpleAgent} interface.
@@ -24,12 +24,12 @@ public class SimpleAgentImpl implements SimpleAgent {
 	/**
 	 * A mapping for <code>UniqueIdentifier</code> that maps to <code>SimpleAgent</code> to ensure the uniqueness of <code>SimpleAgent</code>.
 	 */
-	private static final Map<UniqueIdentifier, SimpleAgent> uniqueAgents = new HashMap<>();
+	private static final Map<UniqueId, SimpleAgent> uniqueAgents = new HashMap<>();
 
 	/**
 	 * The unique <code>UniqueIdentifier</code> representing the <code>SimpleAgentImpl</code>.
 	 */
-	private final UniqueIdentifier identifier;
+	private final UniqueId identifier;
 
 	/**
 	 * Constructs a new instance of <code>SimpleAgentImpl</code>.
@@ -37,7 +37,7 @@ public class SimpleAgentImpl implements SimpleAgent {
 	 * @param identifier
 	 *            the unique <code>UniqueIdentifier</code> representing the <code>SimpleAgentImpl</code>.
 	 */
-	protected SimpleAgentImpl(final UniqueIdentifier identifier) {
+	protected SimpleAgentImpl(final UniqueId identifier) {
 		if (identifier == null) {
 			throw new IllegalArgumentException("Parameter (identifier) cannot be null");
 		}
@@ -45,7 +45,7 @@ public class SimpleAgentImpl implements SimpleAgent {
 	}
 
 	@Override
-	public final UniqueIdentifier getIdentifier() {
+	public final UniqueId getIdentifier() {
 		return identifier;
 	}
 
@@ -77,7 +77,7 @@ public class SimpleAgentImpl implements SimpleAgent {
 	 *            the unique <code>UniqueIdentifier</code> representing the <code>SimpleAgent</code> instance.
 	 * @return a <code>SimpleAgent</code> instance representing the given <code>UniqueIdentifier</code>.
 	 */
-	public static final SimpleAgent createSimpleAgent(final UniqueIdentifier identifier) {
+	public static final SimpleAgent createSimpleAgent(final UniqueId identifier) {
 		SimpleAgent simpleAgent = uniqueAgents.get(identifier);
 		if (simpleAgent == null) {
 			simpleAgent = new SimpleAgentImpl(identifier);

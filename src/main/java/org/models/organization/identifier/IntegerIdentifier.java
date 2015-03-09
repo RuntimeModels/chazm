@@ -8,13 +8,13 @@
 package org.models.organization.identifier;
 
 /**
- * The <code>IntegerIdentifier</code> implements the {@link UniqueIdentifier} interface to represent <code>int</code> as entities in the Organization Model.
+ * The <code>IntegerIdentifier</code> implements the {@link UniqueId} interface to represent <code>int</code> as entities in the Organization Model.
  *
  * @author Christopher Zhong
  * @since 4.0
- * @see UniqueIdentifier
+ * @see UniqueId
  */
-public class IntegerIdentifier extends UniqueIdentifier {
+public class IntegerIdentifier extends UniqueId {
 
 	/**
 	 * Default serial version ID.

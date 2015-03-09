@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 import org.models.organization.registry.ChangeManager;
 import org.models.organization.registry.EventRegistry;
 import org.models.organization.relation.Assignment;
@@ -31,12 +31,12 @@ public class PerformanceFunctionImpl implements PerformanceFunction {
 	/**
 	 * The <code>UniqueIdentifier</code> representing the <code>PerformanceFunction</code>.
 	 */
-	private final UniqueIdentifier identifier;
+	private final UniqueId identifier;
 
 	/**
 	 * The set of <code>Task</code> that are linked to this <code>PerformanceFunction</code>.
 	 */
-	private final Map<UniqueIdentifier, UsesRelation> linkedBy = new ConcurrentHashMap<>();
+	private final Map<UniqueId, UsesRelation> linkedBy = new ConcurrentHashMap<>();
 
 	/**
 	 * The <code>Attribute</code> that this <code>PerformanceFunction</code> moderates.
@@ -49,7 +49,7 @@ public class PerformanceFunctionImpl implements PerformanceFunction {
 	 * @param identifier
 	 *            the <code>UniqueIdentifier</code> representing the <code>PerformanceFunction</code>.
 	 */
-	public PerformanceFunctionImpl(final UniqueIdentifier identifier) {
+	public PerformanceFunctionImpl(final UniqueId identifier) {
 		if (identifier == null) {
 			throw new IllegalArgumentException("Parameter (identifier) cannot be null");
 		}
@@ -57,7 +57,7 @@ public class PerformanceFunctionImpl implements PerformanceFunction {
 	}
 
 	@Override
-	public UniqueIdentifier getIdentifier() {
+	public UniqueId getIdentifier() {
 		return identifier;
 	}
 

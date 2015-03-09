@@ -10,7 +10,7 @@ package org.models.organization.entity;
 import java.util.Collection;
 import java.util.Set;
 
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 import org.models.organization.relation.Assignment;
 
 /**
@@ -26,7 +26,7 @@ public interface PerformanceFunction {
 	 *
 	 * @return the unique <code>UniqueIdentifier</code> representing the <code>PerformanceFunction</code>.
 	 */
-	UniqueIdentifier getIdentifier();
+	UniqueId getIdentifier();
 
 	/**
 	 * Returns the set of <code>Role</code> that are linked to this <code>PerformanceFunction</code>.

@@ -16,7 +16,7 @@ import org.models.organization.entity.PerformanceFunction;
 import org.models.organization.entity.Role;
 import org.models.organization.entity.SpecificationGoal;
 import org.models.organization.function.RoleGoodnessFunction;
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 
 /**
  * The <code>Task</code> class represents the task entity of the Organization Model.
@@ -32,13 +32,13 @@ public class Task {
 	private static final String STRING_FORMAT = "<%s>";
 
 	/**
-	 * The <code>TaskIdentifier</code> extends the {@link UniqueIdentifier} by using two {@link UniqueIdentifier} as the form of identification.
+	 * The <code>TaskIdentifier</code> extends the {@link UniqueId} by using two {@link UniqueId} as the form of identification.
 	 *
 	 * @author Christopher Zhong
-	 * @see UniqueIdentifier
+	 * @see UniqueId
 	 * @since 6.0
 	 */
-	private static class TaskIdentifier extends UniqueIdentifier {
+	private static class TaskIdentifier extends UniqueId {
 
 		/**
 		 * Default serial version ID.
@@ -53,12 +53,12 @@ public class Task {
 		/**
 		 * The <code>UniqueIdentifier</code> of the <code>Role</code>.
 		 */
-		private final UniqueIdentifier roleIdentifier;
+		private final UniqueId roleIdentifier;
 
 		/**
 		 * The <code>UniqueIdentifier</code> of the <code>SpecificationGoal</code>.
 		 */
-		private final UniqueIdentifier goalIdentifier;
+		private final UniqueId goalIdentifier;
 
 		/**
 		 * Optimization for hash code computation since it never changes.
@@ -78,7 +78,7 @@ public class Task {
 		 * @param goalIdentifier
 		 *            the <code>UniqueIdentifier</code> of the <code>SpecificationGoal</code>.
 		 */
-		public TaskIdentifier(final UniqueIdentifier roleIdentifier, final UniqueIdentifier goalIdentifier) {
+		public TaskIdentifier(final UniqueId roleIdentifier, final UniqueId goalIdentifier) {
 			this.roleIdentifier = roleIdentifier;
 			this.goalIdentifier = goalIdentifier;
 		}
@@ -88,7 +88,7 @@ public class Task {
 		 *
 		 * @return the <code>UniqueIdentifier</code> of the <code>Role</code>..
 		 */
-		private UniqueIdentifier getRoleIdentifier() {
+		private UniqueId getRoleIdentifier() {
 			return roleIdentifier;
 		}
 
@@ -97,7 +97,7 @@ public class Task {
 		 *
 		 * @return the <code>UniqueIdentifier</code> of the <code>SpecificationGoal</code>.
 		 */
-		private UniqueIdentifier getGoalIdentifier() {
+		private UniqueId getGoalIdentifier() {
 			return goalIdentifier;
 		}
 
@@ -131,7 +131,7 @@ public class Task {
 	/**
 	 * The <code>UniqueIdentifier</code> of the <code>Task</code>.
 	 */
-	private final UniqueIdentifier identifier;
+	private final UniqueId identifier;
 
 	/**
 	 * The <code>Role</code> of this <code>Task</code>.
@@ -170,7 +170,7 @@ public class Task {
 	 *
 	 * @return the unique <code>UniqueIdentifier</code> representing the <code>SimpleTask</code>.
 	 */
-	public final UniqueIdentifier getIdentifier() {
+	public final UniqueId getIdentifier() {
 		return identifier;
 	}
 

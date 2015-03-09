@@ -10,7 +10,7 @@ package org.models.organization.entity;
 import java.util.Set;
 
 import org.models.organization.entity.basic.SimpleGoal;
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 
 /**
  * The <code>SpecificationGoal</code> interface defines the static goal entity of the Organization Model by extending the {@link SimpleGoal} interface.
@@ -38,6 +38,6 @@ public interface SpecificationGoal extends SimpleGoal {
 	 *            the parameter of the <code>InstanceGoal</code>.
 	 * @return the <code>InstanceGoal</code>.
 	 */
-	<ParameterType> InstanceGoal<ParameterType> getInstanceGoal(UniqueIdentifier instanceIdentifier, ParameterType parameter);
+	<ParameterType> InstanceGoal<ParameterType> getInstanceGoal(UniqueId instanceIdentifier, ParameterType parameter);
 
 }

@@ -10,7 +10,7 @@ package org.models.organization.entity;
 import java.util.Set;
 
 import org.models.organization.entity.basic.SimpleCharacteristic;
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 
 /**
  * The <code>Characteristic</code> interface defines the basic characteristic entity of the Organization Model by extending the {@link SimpleCharacteristic}
@@ -36,6 +36,6 @@ public interface Characteristic extends SimpleCharacteristic {
 	 *            the <code>UniqueIdentifier</code> identifying the <code>Role</code> to retrieve the value.
 	 * @return the value if it exists, <code>null</code> otherwise.
 	 */
-	Double getContainedByValue(UniqueIdentifier roleIdentifier);
+	Double getContainedByValue(UniqueId roleIdentifier);
 
 }

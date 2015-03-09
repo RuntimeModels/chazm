@@ -7,7 +7,7 @@
  */
 package org.models.organization.entity;
 
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 
 /**
  * The <code>Policy</code> interface defines the basic policy entity of the Organization Model.
@@ -22,6 +22,6 @@ public interface Policy {
 	 *
 	 * @return the <code>UniqueIdentifier</code> of the <code>Policy</code>.
 	 */
-	UniqueIdentifier getIdentifier();
+	UniqueId getIdentifier();
 
 }

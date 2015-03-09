@@ -25,7 +25,7 @@ import java.io.Serializable;
  * @author Christopher Zhong
  * @since 4.0
  */
-public abstract class UniqueIdentifier implements Serializable {
+public abstract class UniqueId implements Serializable {
 
 	/**
 	 * Default serial version ID.

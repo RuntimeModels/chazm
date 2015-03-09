@@ -10,7 +10,7 @@ package org.models.organization.entity.basic;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 
 /**
  * The <code>SimpleGoalImpl</code> class implements the {@link SimpleGoal} interface.
@@ -23,12 +23,12 @@ public class SimpleGoalImpl implements SimpleGoal {
 	/**
 	 * A mapping for <code>UniqueIdentifier</code> that maps to <code>SimpleGoalImpl</code> to ensure the uniqueness of <code>SimpleGoalImpl</code>.
 	 */
-	private static final Map<UniqueIdentifier, SimpleGoal> uniqueGoals = new HashMap<>();
+	private static final Map<UniqueId, SimpleGoal> uniqueGoals = new HashMap<>();
 
 	/**
 	 * The unique <code>UniqueIdentifier</code> of the <code>SimpleGoalImpl</code>.
 	 */
-	private final UniqueIdentifier identifier;
+	private final UniqueId identifier;
 
 	/**
 	 * Constructs a new instance of <code>SimpleGoalImpl</code>.
@@ -36,7 +36,7 @@ public class SimpleGoalImpl implements SimpleGoal {
 	 * @param identifier
 	 *            the <code>UniqueIdentifier</code> representing the <code>SimpleGoalImpl</code>.
 	 */
-	protected SimpleGoalImpl(final UniqueIdentifier identifier) {
+	protected SimpleGoalImpl(final UniqueId identifier) {
 		if (identifier == null) {
 			throw new IllegalArgumentException("Parameter (identifier) cannot be null");
 		}
@@ -44,7 +44,7 @@ public class SimpleGoalImpl implements SimpleGoal {
 	}
 
 	@Override
-	public final UniqueIdentifier getIdentifier() {
+	public final UniqueId getIdentifier() {
 		return identifier;
 	}
 
@@ -76,7 +76,7 @@ public class SimpleGoalImpl implements SimpleGoal {
 	 *            the unique <code>UniqueIdentifier</code> representing the <code>SimpleGoal</code> instance.
 	 * @return a <code>SimpleGoal</code> instance representing the given <code>UniqueIdentifier</code>.
 	 */
-	public static final SimpleGoal createSimpleGoal(final UniqueIdentifier identifier) {
+	public static final SimpleGoal createSimpleGoal(final UniqueId identifier) {
 		SimpleGoal simpleGoal = uniqueGoals.get(identifier);
 		if (simpleGoal == null) {
 			simpleGoal = new SimpleGoalImpl(identifier);

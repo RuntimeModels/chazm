@@ -7,7 +7,7 @@
  */
 package org.models.organization.registry;
 
-import org.models.organization.identifier.UniqueIdentifier;
+import org.models.organization.identifier.UniqueId;
 
 /**
  * The <code>ChangeManager</code> interface defines the types of changes that can occur within the organization model.
@@ -23,7 +23,7 @@ public interface ChangeManager {
 	 * @param goalIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>SpecificationGoal</code> that was added.
 	 */
-	void notifySpecificationGoalAdded(UniqueIdentifier goalIdentifier);
+	void notifySpecificationGoalAdded(UniqueId goalIdentifier);
 
 	/**
 	 * Notification for when a <code>Specification</code> is removed.
@@ -31,7 +31,7 @@ public interface ChangeManager {
 	 * @param goalIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>SpecificationGoal</code> that was removed.
 	 */
-	void notifySpecificationGoalRemoved(UniqueIdentifier goalIdentifier);
+	void notifySpecificationGoalRemoved(UniqueId goalIdentifier);
 
 	/**
 	 * Notification for when a <code>Role</code> is added.
@@ -39,7 +39,7 @@ public interface ChangeManager {
 	 * @param roleIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>Role</code> that was added.
 	 */
-	void notifyRoleAdded(UniqueIdentifier roleIdentifier);
+	void notifyRoleAdded(UniqueId roleIdentifier);
 
 	/**
 	 * Notification for when a <code>Role</code> is removed.
@@ -47,7 +47,7 @@ public interface ChangeManager {
 	 * @param roleIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>Role</code> that was removed.
 	 */
-	void notifyRoleRemoved(UniqueIdentifier roleIdentifier);
+	void notifyRoleRemoved(UniqueId roleIdentifier);
 
 	/**
 	 * Notification for when an <code>Agent</code> is added.
@@ -55,7 +55,7 @@ public interface ChangeManager {
 	 * @param agentIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>Agent</code> that was added.
 	 */
-	void notifyAgentAdded(UniqueIdentifier agentIdentifier);
+	void notifyAgentAdded(UniqueId agentIdentifier);
 
 	/**
 	 * Notification for when an <code>Agent</code> is removed.
@@ -63,7 +63,7 @@ public interface ChangeManager {
 	 * @param agentIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>Agent</code> that was removed.
 	 */
-	void notifyAgentRemoved(UniqueIdentifier agentIdentifier);
+	void notifyAgentRemoved(UniqueId agentIdentifier);
 
 	/**
 	 * Notification for when a <code>Capability</code> is added.
@@ -71,7 +71,7 @@ public interface ChangeManager {
 	 * @param capabilityIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>Capability</code> that was added.
 	 */
-	void notifyCapabilityAdded(UniqueIdentifier capabilityIdentifier);
+	void notifyCapabilityAdded(UniqueId capabilityIdentifier);
 
 	/**
 	 * Notification for when a <code>Capability</code> is removed.
@@ -79,7 +79,7 @@ public interface ChangeManager {
 	 * @param capabilityIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>Capability</code> that was removed.
 	 */
-	void notifyCapabilityRemoved(UniqueIdentifier capabilityIdentifier);
+	void notifyCapabilityRemoved(UniqueId capabilityIdentifier);
 
 	/**
 	 * Notification for when a <code>Policy</code> is added.
@@ -87,7 +87,7 @@ public interface ChangeManager {
 	 * @param policyIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>Policy</code> that was added.
 	 */
-	void notifyPolicyAdded(UniqueIdentifier policyIdentifier);
+	void notifyPolicyAdded(UniqueId policyIdentifier);
 
 	/**
 	 * Notification for when a <code>Policy</code> is removed.
@@ -95,7 +95,7 @@ public interface ChangeManager {
 	 * @param policyIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>Policy</code> that was removed.
 	 */
-	void notifyPolicyRemoved(UniqueIdentifier policyIdentifier);
+	void notifyPolicyRemoved(UniqueId policyIdentifier);
 
 	/**
 	 * Notification for when an <code>Attribute</code> is added.
@@ -103,7 +103,7 @@ public interface ChangeManager {
 	 * @param attributeIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>Attribute</code> that was added.
 	 */
-	void notifyAttributeAdded(UniqueIdentifier attributeIdentifier);
+	void notifyAttributeAdded(UniqueId attributeIdentifier);
 
 	/**
 	 * Notification for when an <code>Attribute</code> is removed.
@@ -111,7 +111,7 @@ public interface ChangeManager {
 	 * @param attributeIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>Attribute</code> that was removed.
 	 */
-	void notifyAttributeRemoved(UniqueIdentifier attributeIdentifier);
+	void notifyAttributeRemoved(UniqueId attributeIdentifier);
 
 	/**
 	 * Notification for when an <code>InstanceGoal</code> is added.
@@ -121,7 +121,7 @@ public interface ChangeManager {
 	 * @param parameter
 	 *            the <code>Object</code> representing the parameter.
 	 */
-	void notifyInstanceGoalAdded(UniqueIdentifier goalIdentifier, Object parameter);
+	void notifyInstanceGoalAdded(UniqueId goalIdentifier, Object parameter);
 
 	/**
 	 * Notification for when an <code>InstanceGoal</code> is removed.
@@ -129,7 +129,7 @@ public interface ChangeManager {
 	 * @param goalIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>InstanceGoal</code> that was removed.
 	 */
-	void notifyInstanceGoalRemoved(UniqueIdentifier goalIdentifier);
+	void notifyInstanceGoalRemoved(UniqueId goalIdentifier);
 
 	/**
 	 * Notification for when an <code>Assignment</code> is added.
@@ -141,7 +141,7 @@ public interface ChangeManager {
 	 * @param goalIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>Agent</code> that was added.
 	 */
-	void notifyAssignmentAdded(UniqueIdentifier agentIdentifier, UniqueIdentifier roleIdentifier, UniqueIdentifier goalIdentifier);
+	void notifyAssignmentAdded(UniqueId agentIdentifier, UniqueId roleIdentifier, UniqueId goalIdentifier);
 
 	/**
 	 * Notification for when an <code>Assignment</code> is removed.
@@ -153,7 +153,7 @@ public interface ChangeManager {
 	 * @param goalIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>InstanceGoal</code> that was removed.
 	 */
-	void notifyAssignmentRemoved(UniqueIdentifier agentIdentifier, UniqueIdentifier roleIdentifier, UniqueIdentifier goalIdentifier);
+	void notifyAssignmentRemoved(UniqueId agentIdentifier, UniqueId roleIdentifier, UniqueId goalIdentifier);
 
 	/**
 	 * Notification for when a <code>Task</code> is added.
@@ -161,7 +161,7 @@ public interface ChangeManager {
 	 * @param taskIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>Task</code> that was added.
 	 */
-	void notifyTaskAdded(UniqueIdentifier taskIdentifier);
+	void notifyTaskAdded(UniqueId taskIdentifier);
 
 	/**
 	 * Notification for when a <code>Task</code> is removed.
@@ -169,7 +169,7 @@ public interface ChangeManager {
 	 * @param taskIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>Task</code> that was removed.
 	 */
-	void notifyTaskRemoved(UniqueIdentifier taskIdentifier);
+	void notifyTaskRemoved(UniqueId taskIdentifier);
 
 	/**
 	 * Notification for when a <code>PerformanceFunction</code> is added.
@@ -177,7 +177,7 @@ public interface ChangeManager {
 	 * @param performanceFunctionIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>PerformanceFunction</code> that was added.
 	 */
-	void notifyPerformanceFunctionAdded(UniqueIdentifier performanceFunctionIdentifier);
+	void notifyPerformanceFunctionAdded(UniqueId performanceFunctionIdentifier);
 
 	/**
 	 * Notification for when a <code>PerformanceFunction</code> is removed.
@@ -185,7 +185,7 @@ public interface ChangeManager {
 	 * @param performanceFunctionIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>PerformanceFunction</code> that was removed.
 	 */
-	void notifyPerformanceFunctionRemoved(UniqueIdentifier performanceFunctionIdentifier);
+	void notifyPerformanceFunctionRemoved(UniqueId performanceFunctionIdentifier);
 
 	/**
 	 * Notification for when a <code>Characteristic</code> is added.
@@ -193,7 +193,7 @@ public interface ChangeManager {
 	 * @param characteristicIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>Characteristic</code> that was added.
 	 */
-	void notifyCharacteristicAdded(UniqueIdentifier characteristicIdentifier);
+	void notifyCharacteristicAdded(UniqueId characteristicIdentifier);
 
 	/**
 	 * Notification for when a <code>Characteristic</code> is removed.
@@ -201,7 +201,7 @@ public interface ChangeManager {
 	 * @param characteristicIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>Characteristic</code> that was removed.
 	 */
-	void notifyCharacteristicRemoved(UniqueIdentifier characteristicIdentifier);
+	void notifyCharacteristicRemoved(UniqueId characteristicIdentifier);
 
 	/**
 	 * Notification for when an <code>Agent</code> gains a <code>Capability</code>.
@@ -213,7 +213,7 @@ public interface ChangeManager {
 	 * @param score
 	 *            the <code>double</code> representing the score of the <code>Capability</code>.
 	 */
-	void notifyPossessesAdded(UniqueIdentifier agentIdentifier, UniqueIdentifier capabilityIdentifier, double score);
+	void notifyPossessesAdded(UniqueId agentIdentifier, UniqueId capabilityIdentifier, double score);
 
 	/**
 	 * Notification for when the score of the possesses relation between an <code>Agent</code> and a <code>Capability</code> changes.
@@ -225,7 +225,7 @@ public interface ChangeManager {
 	 * @param score
 	 *            the <code>double</code> representing the score of the <code>Capability</code>.
 	 */
-	void notifyPossessesChanged(UniqueIdentifier agentIdentifier, UniqueIdentifier capabilityIdentifier, double score);
+	void notifyPossessesChanged(UniqueId agentIdentifier, UniqueId capabilityIdentifier, double score);
 
 	/**
 	 * Notification for when an <code>Agent</code> loses a <code>Capability</code>.
@@ -235,7 +235,7 @@ public interface ChangeManager {
 	 * @param capabilityIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>Capability</code> that was removed.
 	 */
-	void notifyPossessesRemoved(UniqueIdentifier agentIdentifier, UniqueIdentifier capabilityIdentifier);
+	void notifyPossessesRemoved(UniqueId agentIdentifier, UniqueId capabilityIdentifier);
 
 	/**
 	 * Notification for when a <code>Role</code> can achieve a <code>SpecificationGoal</code>.
@@ -245,7 +245,7 @@ public interface ChangeManager {
 	 * @param goalIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>SpecificationGoal</code> that was added.
 	 */
-	void notifyAchievesAdded(UniqueIdentifier roleIdentifier, UniqueIdentifier goalIdentifier);
+	void notifyAchievesAdded(UniqueId roleIdentifier, UniqueId goalIdentifier);
 
 	/**
 	 * Notification for when a <code>Role</code> cannot achieve a <code>SpecificationGoal</code>.
@@ -255,7 +255,7 @@ public interface ChangeManager {
 	 * @param goalIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>SpecificationGoal</code> that was removed.
 	 */
-	void notifyAchievesRemoved(UniqueIdentifier roleIdentifier, UniqueIdentifier goalIdentifier);
+	void notifyAchievesRemoved(UniqueId roleIdentifier, UniqueId goalIdentifier);
 
 	/**
 	 * Notification for when a <code>Role</code> requires a <code>Capability</code>.
@@ -265,7 +265,7 @@ public interface ChangeManager {
 	 * @param capabilityIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>Capability</code> that was added.
 	 */
-	void notifyRequiresAdded(UniqueIdentifier roleIdentifier, UniqueIdentifier capabilityIdentifier);
+	void notifyRequiresAdded(UniqueId roleIdentifier, UniqueId capabilityIdentifier);
 
 	/**
 	 * Notification for when a <code>Role</code> no longer requires a <code>Capability</code>.
@@ -275,7 +275,7 @@ public interface ChangeManager {
 	 * @param capabilityIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>Capability</code> that was removed.
 	 */
-	void notifyRequiresRemoves(UniqueIdentifier roleIdentifier, UniqueIdentifier capabilityIdentifier);
+	void notifyRequiresRemoves(UniqueId roleIdentifier, UniqueId capabilityIdentifier);
 
 	/**
 	 * Notification for when an <code>Agent</code> has an <code>Attribute</code> .
@@ -287,7 +287,7 @@ public interface ChangeManager {
 	 * @param value
 	 *            the <code>double</code> representing the value of the <code>Attribute</code>.
 	 */
-	void notifyHasAdded(UniqueIdentifier agentIdentifier, UniqueIdentifier attributeIdentifier, double value);
+	void notifyHasAdded(UniqueId agentIdentifier, UniqueId attributeIdentifier, double value);
 
 	/**
 	 * Notification for when the value of the has relation between an <code>Agent</code> and an <code>Attribute</code> changes.
@@ -299,7 +299,7 @@ public interface ChangeManager {
 	 * @param value
 	 *            the <code>double</code> representing the value of the <code>Attribute</code>.
 	 */
-	void notifyHasChanged(UniqueIdentifier agentIdentifier, UniqueIdentifier attributeIdentifier, double value);
+	void notifyHasChanged(UniqueId agentIdentifier, UniqueId attributeIdentifier, double value);
 
 	/**
 	 * Notification for when an <code>Agent</code> loses an <code>Attribute</code>.
@@ -309,7 +309,7 @@ public interface ChangeManager {
 	 * @param attributeIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>Attribute</code> that was removed.
 	 */
-	void notifyHasRemoved(UniqueIdentifier agentIdentifier, UniqueIdentifier attributeIdentifier);
+	void notifyHasRemoved(UniqueId agentIdentifier, UniqueId attributeIdentifier);
 
 	/**
 	 * Notification for when a <code>Role</code> influences an <code>Attribute</code>.
@@ -319,7 +319,7 @@ public interface ChangeManager {
 	 * @param attributeIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>Attribute</code> that was influenced.
 	 */
-	void notifyInfluencesAdded(UniqueIdentifier roleIdentifier, UniqueIdentifier attributeIdentifier);
+	void notifyInfluencesAdded(UniqueId roleIdentifier, UniqueId attributeIdentifier);
 
 	/**
 	 * Notification for when a <code>Role</code> no longer influences an <code>Attribute</code>.
@@ -329,7 +329,7 @@ public interface ChangeManager {
 	 * @param attributeIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>Attribute</code> that was influenced.
 	 */
-	void notifyInfluencesRemoved(UniqueIdentifier roleIdentifier, UniqueIdentifier attributeIdentifier);
+	void notifyInfluencesRemoved(UniqueId roleIdentifier, UniqueId attributeIdentifier);
 
 	/**
 	 * Notification for when a <code>Role</code> is linked to a <code>PerformanceFunction</code>.
@@ -339,7 +339,7 @@ public interface ChangeManager {
 	 * @param performanceFunctionIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>PerformanceFunction</code> that is linked.
 	 */
-	void notifyLinkedAdded(UniqueIdentifier roleIdentifier, UniqueIdentifier performanceFunctionIdentifier);
+	void notifyLinkedAdded(UniqueId roleIdentifier, UniqueId performanceFunctionIdentifier);
 
 	/**
 	 * Notification for when a <code>Role</code> is no longer linked to a <code>PerformanceFunction</code>.
@@ -349,7 +349,7 @@ public interface ChangeManager {
 	 * @param performanceFunctionIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>PerformanceFunction</code> that is no longer linked.
 	 */
-	void notifyLinkedRemoved(UniqueIdentifier roleIdentifier, UniqueIdentifier performanceFunctionIdentifier);
+	void notifyLinkedRemoved(UniqueId roleIdentifier, UniqueId performanceFunctionIdentifier);
 
 	/**
 	 * Notification for when a <code>PerformanceFunction</code> moderates an <code>Attribute</code>.
@@ -359,7 +359,7 @@ public interface ChangeManager {
 	 * @param attributeIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>Attribute</code> that is moderated.
 	 */
-	void notifyModeratesSet(UniqueIdentifier performanceFunctionIdentifier, UniqueIdentifier attributeIdentifier);
+	void notifyModeratesSet(UniqueId performanceFunctionIdentifier, UniqueId attributeIdentifier);
 
 	/**
 	 * Notification for when a <code>Role</code> contains a <code>Characteristic</code>.
@@ -371,7 +371,7 @@ public interface ChangeManager {
 	 * @param value
 	 *            the <code>double</code> representing the value of the <code>Characteristic</code>.
 	 */
-	void notifyContainsAdded(UniqueIdentifier roleIdentifier, UniqueIdentifier characteristicIdentifier, double value);
+	void notifyContainsAdded(UniqueId roleIdentifier, UniqueId characteristicIdentifier, double value);
 
 	/**
 	 * Notification for when the value of the contains relation between a <code>Role</code> and a <code>Characteristic</code> changes.
@@ -383,7 +383,7 @@ public interface ChangeManager {
 	 * @param value
 	 *            the <code>double</code> representing the value of the <code>Characteristic</code>.
 	 */
-	void notifyContainsChanged(UniqueIdentifier roleIdentifier, UniqueIdentifier characteristicIdentifier, double value);
+	void notifyContainsChanged(UniqueId roleIdentifier, UniqueId characteristicIdentifier, double value);
 
 	/**
 	 * Notification for when a <code>Role</code> no longer contains a <code>Characteristic</code>.
@@ -393,6 +393,6 @@ public interface ChangeManager {
 	 * @param characteristicIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>Characteristic</code> that was affected.
 	 */
-	void notifyContainsRemoved(UniqueIdentifier roleIdentifier, UniqueIdentifier characteristicIdentifier);
+	void notifyContainsRemoved(UniqueId roleIdentifier, UniqueId characteristicIdentifier);
 
 }
