@@ -49,7 +49,7 @@ public class CharacteristicImpl extends SimpleCharacteristicImpl implements Char
 		if (containsRelation == null) {
 			throw new IllegalArgumentException("Parameter (containsRelation) cannot be null");
 		}
-		containedBy.put(containsRelation.getRole().getIdentifier(), containsRelation);
+		containedBy.put(containsRelation.getRole().getId(), containsRelation);
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class CharacteristicImpl extends SimpleCharacteristicImpl implements Char
 		if (role == null) {
 			throw new IllegalArgumentException("Parameter (role) cannot be null");
 		}
-		containedBy.remove(role.getIdentifier());
+		containedBy.remove(role.getId());
 	}
 
 	@Override

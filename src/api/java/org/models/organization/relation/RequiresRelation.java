@@ -103,7 +103,7 @@ public class RequiresRelation {
 	@Override
 	public String toString() {
 		if (toString == null) {
-			toString = String.format(STRING_FORMAT, getRole().getIdentifier(), getCapability().getIdentifier());
+			toString = String.format(STRING_FORMAT, getRole().getId(), getCapability().getIdentifier());
 		}
 		return toString;
 	}

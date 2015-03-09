@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.models.organization.entity.basic.SimpleRoleImpl;
 import org.models.organization.function.RoleGoodnessFunction;
 import org.models.organization.function.RoleGoodnessFunction.DefaultRoleGoodnessFunction;
 import org.models.organization.identifier.UniqueId;
@@ -27,7 +26,7 @@ import org.models.organization.relation.RequiresRelation;
 import org.models.organization.relation.UsesRelation;
 
 /**
- * The <code>RoleImpl</code> class implements the {@link Role} interface.
+ * The {@linkplain RoleImpl} class is an implementation of the {@link Role}.
  *
  * @author Scott Harmon, Christopher Zhong
  * @see Agent
@@ -35,7 +34,11 @@ import org.models.organization.relation.UsesRelation;
  * @see SpecificationGoal
  * @since 1.0
  */
-public class RoleImpl extends SimpleRoleImpl implements Role {
+public class RoleImpl implements Role {
+	/**
+	 * The {@linkplain UniqueId} that represents this {@linkplain Role}.
+	 */
+	private final UniqueId id;
 
 	/**
 	 * The set of <code>SpecificationGoal</code> that this <code>Role</code> achieves.
@@ -68,13 +71,21 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 	private RoleGoodnessFunction goodnessFunction = new DefaultRoleGoodnessFunction();
 
 	/**
-	 * Constructs a new instance of <code>RoleImpl</code>.
+	 * Constructs a new instance of {@linkplain Role}.
 	 *
-	 * @param identifier
-	 *            the <code>UniqueIdentifier</code> identifying this <code>Role</code>.
+	 * @param id
+	 *            the {@linkplain UniqueId} that represents this {@linkplain Role}.
 	 */
-	public RoleImpl(final UniqueId identifier) {
-		super(identifier);
+	public RoleImpl(final UniqueId id) {
+		if (id == null) {
+			throw new IllegalArgumentException("Parameter (id) cannot be null");
+		}
+		this.id = id;
+	}
+
+	@Override
+	public final UniqueId getId() {
+		return id;
 	}
 
 	@Override
@@ -100,7 +111,7 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 
 			final ChangeManager changeManager = EventRegistry.get();
 			if (changeManager != null) {
-				changeManager.notifyAchievesRemoved(getIdentifier(), specificationGoal.getIdentifier());
+				changeManager.notifyAchievesRemoved(getId(), specificationGoal.getIdentifier());
 			}
 		}
 	}
@@ -128,7 +139,7 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyRequiresAdded(getIdentifier(), capability.getIdentifier());
+			changeManager.notifyRequiresAdded(getId(), capability.getIdentifier());
 		}
 	}
 
@@ -165,7 +176,7 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 
 			final ChangeManager changeManager = EventRegistry.get();
 			if (changeManager != null) {
-				changeManager.notifyRequiresRemoves(getIdentifier(), capability.getIdentifier());
+				changeManager.notifyRequiresRemoves(getId(), capability.getIdentifier());
 			}
 		}
 	}
@@ -193,7 +204,7 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyInfluencesAdded(getIdentifier(), attribute.getIdentifier());
+			changeManager.notifyInfluencesAdded(getId(), attribute.getIdentifier());
 		}
 	}
 
@@ -220,7 +231,7 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 
 			final ChangeManager changeManager = EventRegistry.get();
 			if (changeManager != null) {
-				changeManager.notifyInfluencesRemoved(getIdentifier(), attribute.getIdentifier());
+				changeManager.notifyInfluencesRemoved(getId(), attribute.getIdentifier());
 			}
 		}
 	}
@@ -248,7 +259,7 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyContainsAdded(getIdentifier(), characteristic.getIdentifier(), value);
+			changeManager.notifyContainsAdded(getId(), characteristic.getIdentifier(), value);
 		}
 	}
 
@@ -284,7 +295,7 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyContainsChanged(getIdentifier(), containsRelation.getCharacteristic().getIdentifier(), value);
+			changeManager.notifyContainsChanged(getId(), containsRelation.getCharacteristic().getIdentifier(), value);
 		}
 	}
 
@@ -302,7 +313,7 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 
 			final ChangeManager changeManager = EventRegistry.get();
 			if (changeManager != null) {
-				changeManager.notifyContainsRemoved(getIdentifier(), characterisitic.getIdentifier());
+				changeManager.notifyContainsRemoved(getId(), characterisitic.getIdentifier());
 			}
 		}
 	}
@@ -330,7 +341,7 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyLinkedAdded(getIdentifier(), performanceFunction.getIdentifier());
+			changeManager.notifyLinkedAdded(getId(), performanceFunction.getIdentifier());
 		}
 	}
 
@@ -366,7 +377,7 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 
 			final ChangeManager changeManager = EventRegistry.get();
 			if (changeManager != null) {
-				changeManager.notifyLinkedRemoved(getIdentifier(), performanceFunction.getIdentifier());
+				changeManager.notifyLinkedRemoved(getId(), performanceFunction.getIdentifier());
 			}
 		}
 	}
@@ -412,14 +423,18 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 	public boolean equals(final Object object) {
 		if (object instanceof Role) {
 			final Role role = (Role) object;
-			return super.equals(role);
+			return getId().equals(role.getId());
 		}
 		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		return super.hashCode();
+		return getId().hashCode();
 	}
 
+	@Override
+	public String toString() {
+		return getId().toString();
+	}
 }

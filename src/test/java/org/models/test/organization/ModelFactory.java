@@ -153,7 +153,7 @@ public class ModelFactory {
 			Collections.shuffle(roles);
 			for (int i = 0; i < rolesToAssign; i++) {
 				final Role role = roles.get(i);
-				organization.addAchievesRelation(role.getIdentifier(), goal.getIdentifier());
+				organization.addAchievesRelation(role.getId(), goal.getIdentifier());
 				if (DEBUG) {
 					System.out.println(String.format("    %s <-> %s", role, goal));
 				}

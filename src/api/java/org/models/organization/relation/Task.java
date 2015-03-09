@@ -160,7 +160,7 @@ public class Task {
 		if (role == null || specificationGoal == null) {
 			throw new IllegalArgumentException(String.format("Parameters (role: %s, goal: %s) cannot be null", role, specificationGoal));
 		}
-		identifier = new TaskIdentifier(role.getIdentifier(), specificationGoal.getIdentifier());
+		identifier = new TaskIdentifier(role.getId(), specificationGoal.getIdentifier());
 		this.role = role;
 		this.specificationGoal = specificationGoal;
 	}

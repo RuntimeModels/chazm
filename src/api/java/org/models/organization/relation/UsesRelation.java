@@ -103,7 +103,7 @@ public class UsesRelation {
 	@Override
 	public String toString() {
 		if (toString == null) {
-			toString = String.format(STRING_FORMAT, getRole().getIdentifier(), getPerformanceFunction().getIdentifier());
+			toString = String.format(STRING_FORMAT, getRole().getId(), getPerformanceFunction().getIdentifier());
 		}
 		return toString;
 	}

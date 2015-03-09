@@ -213,7 +213,7 @@ public class DetailedInformationPanel extends JPanel {
 			writeEntity(specificationGoal.getIdentifier().toString());
 			writeRelation("Achieved By Role(s):");
 			for (final Role role : specificationGoal.getAchievedBySet()) {
-				writeRelationEntity(role.getIdentifier().toString());
+				writeRelationEntity(role.getId().toString());
 			}
 		} catch (final BadLocationException e) {
 			e.printStackTrace();
@@ -254,7 +254,7 @@ public class DetailedInformationPanel extends JPanel {
 		try {
 			/* clears the contents of the document */
 			doc.remove(0, doc.getLength());
-			writeEntity(role.getIdentifier().toString());
+			writeEntity(role.getId().toString());
 			writeRelation("Achieves Goal(s):");
 			for (final SpecificationGoal specificationGoal : role.getAchievesSet()) {
 				writeRelationEntity(specificationGoal.getIdentifier().toString());
@@ -293,7 +293,7 @@ public class DetailedInformationPanel extends JPanel {
 			writeEntity(capability.getIdentifier().toString());
 			writeRelation("Required By Role(s):");
 			for (final Role role : capability.getRequiredBySet()) {
-				writeRelationEntity(role.getIdentifier().toString());
+				writeRelationEntity(role.getId().toString());
 			}
 			writeRelation("Possessed By Agent(s):");
 			for (final Agent agent : capability.getPossessedBySet()) {
@@ -318,7 +318,7 @@ public class DetailedInformationPanel extends JPanel {
 			writeEntityRelation("Agent:");
 			writeEntityEntity(assignment.getAgent().getIdentifier().toString());
 			writeEntityRelation("Playing Role:");
-			writeEntityEntity(assignment.getRole().getIdentifier().toString());
+			writeEntityEntity(assignment.getRole().getId().toString());
 			writeEntityRelation("Achieving Goal:");
 			writeEntityEntity(assignment.getInstanceGoal().getIdentifier().toString());
 			writeEntityRelation("Parameters:");
@@ -367,7 +367,7 @@ public class DetailedInformationPanel extends JPanel {
 			writeEntity(attribute.getIdentifier().toString());
 			writeRelation("Influenced By Role(s):");
 			for (final Role role : attribute.getInfluencedBySet()) {
-				writeRelationEntity(role.getIdentifier().toString());
+				writeRelationEntity(role.getId().toString());
 			}
 			writeRelation("Has By Agent(s):");
 			for (final Agent agent : attribute.getHadBySet()) {
@@ -394,7 +394,7 @@ public class DetailedInformationPanel extends JPanel {
 			doc.remove(0, doc.getLength());
 			writeEntity(task.getIdentifier().toString());
 			writeRelation("Role:");
-			writeRelationEntity(task.getRole().getIdentifier().toString());
+			writeRelationEntity(task.getRole().getId().toString());
 			writeRelation("Goal:");
 			writeRelationEntity(task.getSpecificationGoal().getIdentifier().toString());
 			writeRelation("Uses:");
@@ -422,7 +422,7 @@ public class DetailedInformationPanel extends JPanel {
 			writeRelationEntity(attribute.getIdentifier().toString());
 			writeRelation("Linked By Role(s):");
 			for (final Role role : performanceFunction.getUsedBySet()) {
-				writeRelationEntity(role.getIdentifier().toString());
+				writeRelationEntity(role.getId().toString());
 			}
 		} catch (final BadLocationException e) {
 			e.printStackTrace();
@@ -442,7 +442,7 @@ public class DetailedInformationPanel extends JPanel {
 			writeEntity(characteristic.getIdentifier().toString());
 			writeRelation("Contained By Role(s):");
 			for (final Role role : characteristic.getContainedBySet()) {
-				writeRelationEntityValue(role.getIdentifier().toString(), role.getContainsValue(characteristic.getIdentifier()));
+				writeRelationEntityValue(role.getId().toString(), role.getContainsValue(characteristic.getIdentifier()));
 			}
 		} catch (final BadLocationException e) {
 			e.printStackTrace();
