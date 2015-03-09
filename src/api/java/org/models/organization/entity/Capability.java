@@ -9,16 +9,22 @@ package org.models.organization.entity;
 
 import java.util.Set;
 
-import org.models.organization.entity.basic.SimpleCapability;
+import org.models.organization.Organization;
 import org.models.organization.identifier.UniqueId;
 
 /**
- * The <code>Capability</code> interface defines the basic capability entity of the Organization Model by extending {@link SimpleCapability}.
+ * The {@linkplain Capability} interface defines a capability entity of an {@linkplain Organization}.
  *
  * @author Christopher Zhong
  * @since 3.4
  */
-public interface Capability extends SimpleCapability {
+public interface Capability {
+	/**
+	 * Returns the {@linkplain UniqueId} that represents this {@linkplain Capability}.
+	 *
+	 * @return the {@linkplain UniqueId} that represents this {@linkplain Capability}.
+	 */
+	UniqueId getId();
 
 	/**
 	 * Returns the set of <code>Agent</code> that possesses this <code>Capability</code>.

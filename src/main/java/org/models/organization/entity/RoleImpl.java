@@ -128,18 +128,18 @@ public class RoleImpl implements Role {
 		if (capability == null) {
 			throw new IllegalArgumentException("Parameter (capability) cannot be null");
 		}
-		if (requires.containsKey(capability.getIdentifier())) {
+		if (requires.containsKey(capability.getId())) {
 			throw new IllegalArgumentException(String.format("Role (%s) already requires capability (%s)", this, capability));
 		}
 		final RequiresRelation requiresRelation = new RequiresRelation(this, capability);
-		requires.put(capability.getIdentifier(), requiresRelation);
+		requires.put(capability.getId(), requiresRelation);
 		if (capability instanceof CapabilityImpl) {
 			((CapabilityImpl) capability).addRequiredBy(requiresRelation);
 		}
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyRequiresAdded(getId(), capability.getIdentifier());
+			changeManager.notifyRequiresAdded(getId(), capability.getId());
 		}
 	}
 
@@ -176,7 +176,7 @@ public class RoleImpl implements Role {
 
 			final ChangeManager changeManager = EventRegistry.get();
 			if (changeManager != null) {
-				changeManager.notifyRequiresRemoves(getId(), capability.getIdentifier());
+				changeManager.notifyRequiresRemoves(getId(), capability.getId());
 			}
 		}
 	}
@@ -184,7 +184,7 @@ public class RoleImpl implements Role {
 	@Override
 	public final void removeAllRequires() {
 		for (final RequiresRelation requiresRelation : requires.values()) {
-			removeRequires(requiresRelation.getCapability().getIdentifier());
+			removeRequires(requiresRelation.getCapability().getId());
 		}
 	}
 
@@ -400,7 +400,7 @@ public class RoleImpl implements Role {
 
 	@Override
 	public final boolean requires(final Capability capability) {
-		return requires.containsKey(capability.getIdentifier());
+		return requires.containsKey(capability.getId());
 	}
 
 	@Override

@@ -425,14 +425,14 @@ public class OrganizationImpl implements Organization {
 		if (capability == null) {
 			throw new IllegalArgumentException("Parameter (capability) cannot be null");
 		}
-		if (entities.capabilities.containsKey(capability.getIdentifier())) {
+		if (entities.capabilities.containsKey(capability.getId())) {
 			throw new IllegalArgumentException(String.format("Capability (%s) already exists", capability));
 		}
-		entities.capabilities.put(capability.getIdentifier(), capability);
+		entities.capabilities.put(capability.getId(), capability);
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyCapabilityAdded(capability.getIdentifier());
+			changeManager.notifyCapabilityAdded(capability.getId());
 		}
 	}
 
@@ -478,7 +478,7 @@ public class OrganizationImpl implements Organization {
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyCapabilityRemoved(capability.getIdentifier());
+			changeManager.notifyCapabilityRemoved(capability.getId());
 		}
 	}
 
@@ -1139,7 +1139,7 @@ public class OrganizationImpl implements Organization {
 			throw new IllegalArgumentException(String.format("Both role (%s=%s) and capability (%s=%s) must exists", roleIdentifier, role,
 					capabilityIdentifier, capability));
 		}
-		role.removeRequires(capability.getIdentifier());
+		role.removeRequires(capability.getId());
 	}
 
 	@Override
@@ -1349,7 +1349,7 @@ public class OrganizationImpl implements Organization {
 					break;
 				}
 				for (final Capability capability : role.getRequiresSet()) {
-					result &= organization.getCapability(capability.getIdentifier()) != null;
+					result &= organization.getCapability(capability.getId()) != null;
 					if (!result) { /* short circuit */
 						/*
 						 * can stop checking because there is at least one capability required by a role that is not in the organization
@@ -1370,7 +1370,7 @@ public class OrganizationImpl implements Organization {
 				 */
 				for (final Agent agent : organization.getAgents()) {
 					for (final Capability capability : agent.getPossessesSet()) {
-						result &= organization.getCapability(capability.getIdentifier()) != null;
+						result &= organization.getCapability(capability.getId()) != null;
 						if (!result) { /* short circuit */
 							/*
 							 * can stop checking because there is at least one capability possessed by an agent that is not in the organization
