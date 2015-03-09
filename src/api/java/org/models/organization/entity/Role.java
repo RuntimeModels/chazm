@@ -26,14 +26,6 @@ import org.models.organization.relation.Assignment;
 public interface Role extends SimpleRole {
 
 	/**
-	 * Adds the given <code>SpecificationGoal</code> to the set of <code>SpecificationGoal</code> that this <code>Role</code> achieves.
-	 *
-	 * @param specificationGoal
-	 *            the <code>SpecificationGoal</code> to add.
-	 */
-	void addAchieves(SpecificationGoal specificationGoal);
-
-	/**
 	 * Returns the set of <code>SpecificationGoal</code> that this <code>Role</code> achieves.
 	 *
 	 * @return the set of <code>SpecificationGoal</code> that this <code>Role</code> achieves.

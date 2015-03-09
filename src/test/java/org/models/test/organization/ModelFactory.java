@@ -125,7 +125,7 @@ public class ModelFactory {
 			}
 			/*
 			 * compute range min .. max of roles needed to be assigned to the current goal to maintain the average role per goal
-			 *
+			 * 
 			 * average = (roles assigned + (goals left - 1)) / number of goals
 			 */
 			final int min = Math.max(1, averageNumberOfRolesPerGoal * numberOfGoals - totalRolesAssigned - (numberOfGoalsLeft - 1) * numberOfRoles);
@@ -153,7 +153,7 @@ public class ModelFactory {
 			Collections.shuffle(roles);
 			for (int i = 0; i < rolesToAssign; i++) {
 				final Role role = roles.get(i);
-				role.addAchieves(goal);
+				organization.addAchievesRelation(role.getIdentifier(), goal.getIdentifier());
 				if (DEBUG) {
 					System.out.println(String.format("    %s <-> %s", role, goal));
 				}
@@ -177,7 +177,7 @@ public class ModelFactory {
 			}
 			/*
 			 * compute range min .. max of agents needed to be assigned to the current role to maintain the average agent per role
-			 *
+			 * 
 			 * average = (agents assigned + (roles left - 1)) / number of roles
 			 */
 			final int min = Math.max(1, averageNumberOfAgentsPerRole * numberOfRoles - totalAgentsAssigned - (numberOfRolesLeft - 1) * numberOfAgents);

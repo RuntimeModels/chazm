@@ -78,26 +78,6 @@ public class RoleImpl extends SimpleRoleImpl implements Role {
 	}
 
 	@Override
-	public final void addAchieves(final SpecificationGoal specificationGoal) {
-		if (specificationGoal == null) {
-			throw new IllegalArgumentException(String.format("Specification goal (%s) cannot be null", specificationGoal));
-		}
-		if (achieves.containsKey(specificationGoal.getIdentifier())) {
-			throw new IllegalArgumentException(String.format("Role (%s) already achieves goal (%s)", this, specificationGoal));
-		}
-		final AchievesRelation achievesRelation = new AchievesRelation(this, specificationGoal);
-		achieves.put(specificationGoal.getIdentifier(), achievesRelation);
-		if (specificationGoal instanceof SpecificationGoalImpl) {
-			((SpecificationGoalImpl) specificationGoal).addAchievedBy(achievesRelation);
-		}
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyAchievesAdded(getIdentifier(), specificationGoal.getIdentifier());
-		}
-	}
-
-	@Override
 	public final Set<SpecificationGoal> getAchievesSet() {
 		final Set<SpecificationGoal> result = new HashSet<>();
 		for (final AchievesRelation achievesRelation : achieves.values()) {

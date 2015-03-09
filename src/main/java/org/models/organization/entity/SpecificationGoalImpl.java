@@ -47,22 +47,6 @@ public class SpecificationGoalImpl extends SimpleGoalImpl implements Specificati
 		super(identifier);
 	}
 
-	/**
-	 * Adds the given <code>AchievesRelation</code> to the set of <code>AchievesRelation</code> that achieves this <code>SpecificationGoal</code>.
-	 * <p>
-	 * The <code>AchievesRelation</code> will be indexed by the <code>String</code> identifying the <code>Role</code> associated with the given
-	 * <code>AchievesRelation</code>.
-	 *
-	 * @param achievesRelation
-	 *            the <code>AchievesRelation</code> to be added.
-	 */
-	final void addAchievedBy(final AchievesRelation achievesRelation) {
-		if (achievesRelation == null) {
-			throw new IllegalArgumentException("Parameter (achievesRelation) cannot be null");
-		}
-		achievedBy.put(achievesRelation.getRole().getIdentifier(), achievesRelation);
-	}
-
 	@Override
 	public final Set<Role> getAchievedBySet() {
 		final Set<Role> result = new HashSet<>();
