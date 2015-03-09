@@ -245,14 +245,14 @@ public class OrganizationImpl implements Organization {
 		if (role == null) {
 			throw new IllegalArgumentException("Parameter (role) cannot be null");
 		}
-		if (entities.roles.containsKey(role.getIdentifier())) {
+		if (entities.roles.containsKey(role.getId())) {
 			throw new IllegalArgumentException(String.format("Role (%s) already exists", role));
 		}
-		entities.roles.put(role.getIdentifier(), role);
+		entities.roles.put(role.getId(), role);
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyRoleAdded(role.getIdentifier());
+			changeManager.notifyRoleAdded(role.getId());
 		}
 	}
 
@@ -298,7 +298,7 @@ public class OrganizationImpl implements Organization {
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyRoleRemoved(role.getIdentifier());
+			changeManager.notifyRoleRemoved(role.getId());
 		}
 	}
 
@@ -989,7 +989,7 @@ public class OrganizationImpl implements Organization {
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyAssignmentAdded(assignment.getAgent().getIdentifier(), assignment.getRole().getIdentifier(), assignment.getInstanceGoal()
+			changeManager.notifyAssignmentAdded(assignment.getAgent().getIdentifier(), assignment.getRole().getId(), assignment.getInstanceGoal()
 					.getIdentifier());
 		}
 	}
@@ -1050,7 +1050,7 @@ public class OrganizationImpl implements Organization {
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyAssignmentRemoved(assignment.getAgent().getIdentifier(), assignment.getRole().getIdentifier(), assignment.getInstanceGoal()
+			changeManager.notifyAssignmentRemoved(assignment.getAgent().getIdentifier(), assignment.getRole().getId(), assignment.getInstanceGoal()
 					.getIdentifier());
 		}
 	}
@@ -1314,7 +1314,7 @@ public class OrganizationImpl implements Organization {
 		for (final SpecificationGoal goal : organization.getSpecificationGoals()) {
 			boolean isAchievable = false;
 			for (final Role role : goal.getAchievedBySet()) {
-				isAchievable |= organization.getRole(role.getIdentifier()) != null;
+				isAchievable |= organization.getRole(role.getId()) != null;
 				if (isAchievable) { /* short circuit */
 					/*
 					 * can stop checking because there is at least one role that can achieve the goal

@@ -72,7 +72,7 @@ public class PerformanceFunctionImpl implements PerformanceFunction {
 		if (linkedRelation == null) {
 			throw new IllegalArgumentException("Parameter (linkedRelation) cannot be null");
 		}
-		linkedBy.put(linkedRelation.getRole().getIdentifier(), linkedRelation);
+		linkedBy.put(linkedRelation.getRole().getId(), linkedRelation);
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class PerformanceFunctionImpl implements PerformanceFunction {
 		if (role == null) {
 			throw new IllegalArgumentException("Paramter (role) cannot be null");
 		}
-		linkedBy.remove(role.getIdentifier());
+		linkedBy.remove(role.getId());
 	}
 
 	@Override

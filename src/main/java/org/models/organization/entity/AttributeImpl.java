@@ -75,7 +75,7 @@ public class AttributeImpl extends SimpleAttributeImpl implements Attribute {
 		if (needsRelation == null) {
 			throw new IllegalArgumentException("Parameter (needsRelation) cannot be null");
 		}
-		influencedBy.put(needsRelation.getRole().getIdentifier(), needsRelation);
+		influencedBy.put(needsRelation.getRole().getId(), needsRelation);
 	}
 
 	@Override
@@ -97,7 +97,7 @@ public class AttributeImpl extends SimpleAttributeImpl implements Attribute {
 		if (role == null) {
 			throw new IllegalArgumentException("Parameter (role) cannot be null");
 		}
-		influencedBy.remove(role.getIdentifier());
+		influencedBy.remove(role.getId());
 	}
 
 	/**

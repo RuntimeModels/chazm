@@ -915,8 +915,8 @@ public interface Organization {
 	void setModeratesRelation(UniqueId performanceFunctionIdentifier, UniqueId attributeIdentifier);
 
 	/**
-	 * Creates the {@linkplain ContainsRelation} with the {@linkplain Role} (from the given {@linkplain UniqueId}), {@linkplain Characteristic} (from
-	 * the given {@linkplain UniqueId} ), and {@linkplain double} value.
+	 * Creates the {@linkplain ContainsRelation} with the {@linkplain Role} (from the given {@linkplain UniqueId}), {@linkplain Characteristic} (from the given
+	 * {@linkplain UniqueId} ), and {@linkplain double} value.
 	 *
 	 * @param roleIdentifier
 	 *            the {@linkplain UniqueId} of the {@linkplain Role} for the {@linkplain ContainsRelation}.
@@ -928,8 +928,8 @@ public interface Organization {
 	void addContainsRelation(UniqueId roleIdentifier, UniqueId characteristicIdentifier, double value);
 
 	/**
-	 * Removes the {@linkplain ContainsRelation} of the {@linkplain Role} (from the given {@linkplain UniqueId}) and {@linkplain Characteristic} (from
-	 * the given {@linkplain UniqueId}).
+	 * Removes the {@linkplain ContainsRelation} of the {@linkplain Role} (from the given {@linkplain UniqueId}) and {@linkplain Characteristic} (from the given
+	 * {@linkplain UniqueId}).
 	 *
 	 * @param roleIdentifier
 	 *            the {@linkplain UniqueId} of the {@linkplain Role} for the {@linkplain ContainsRelation}.
@@ -939,8 +939,8 @@ public interface Organization {
 	void removeContainsRelation(UniqueId roleIdentifier, UniqueId characteristicIdentifier);
 
 	/**
-	 * Updates the {@linkplain ContainsRelation} of the {@linkplain Role} (from the given {@linkplain UniqueId}) and {@linkplain Characteristic} (from
-	 * the given {@linkplain UniqueId}) with the given new {@linkplain double} value.
+	 * Updates the {@linkplain ContainsRelation} of the {@linkplain Role} (from the given {@linkplain UniqueId}) and {@linkplain Characteristic} (from the given
+	 * {@linkplain UniqueId}) with the given new {@linkplain double} value.
 	 *
 	 * @param roleIdentifier
 	 *            the {@linkplain UniqueId} of the {@linkplain Role} for the {@linkplain ContainsRelation}.

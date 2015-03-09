@@ -10,20 +10,25 @@ package org.models.organization.entity;
 import java.util.Collection;
 import java.util.Set;
 
-import org.models.organization.entity.basic.SimpleRole;
+import org.models.organization.Organization;
 import org.models.organization.function.RoleGoodnessFunction;
 import org.models.organization.identifier.UniqueId;
 import org.models.organization.relation.Assignment;
 
 /**
- * The <code>Role</code> interface defines the basic role entity of the Organization Model by extending the {@link SimpleRole} interface.
+ * The {@linkplain Role} interface defines a role entity of an {@linkplain Organization}.
  *
  * @author Christopher Zhong
- * @see SimpleRole
  * @see RoleGoodnessFunction
  * @since 3.4
  */
-public interface Role extends SimpleRole {
+public interface Role {
+	/**
+	 * Returns the {@linkplain UniqueId} that represents this {@linkplain Role}.
+	 *
+	 * @return the {@linkplain UniqueId} that represents this {@linkplain Role}.
+	 */
+	UniqueId getId();
 
 	/**
 	 * Returns the set of <code>SpecificationGoal</code> that this <code>Role</code> achieves.

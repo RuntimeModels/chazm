@@ -66,7 +66,7 @@ public class SpecificationGoalImpl extends SimpleGoalImpl implements Specificati
 		if (role == null) {
 			throw new IllegalArgumentException("Parameter (role) cannot be null");
 		}
-		achievedBy.remove(role.getIdentifier());
+		achievedBy.remove(role.getId());
 	}
 
 	@Override

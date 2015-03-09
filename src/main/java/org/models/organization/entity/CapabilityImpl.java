@@ -104,7 +104,7 @@ public class CapabilityImpl extends SimpleCapabilityImpl implements Capability {
 		if (requiresRelation == null) {
 			throw new IllegalArgumentException("Parameter (requiresRelation) cannot be null");
 		}
-		requiredBy.put(requiresRelation.getRole().getIdentifier(), requiresRelation);
+		requiredBy.put(requiresRelation.getRole().getId(), requiresRelation);
 	}
 
 	@Override
@@ -126,7 +126,7 @@ public class CapabilityImpl extends SimpleCapabilityImpl implements Capability {
 		if (role == null) {
 			throw new IllegalArgumentException("Parameter (role) cannot be null");
 		}
-		requiredBy.remove(role.getIdentifier());
+		requiredBy.remove(role.getId());
 	}
 
 	@Override
