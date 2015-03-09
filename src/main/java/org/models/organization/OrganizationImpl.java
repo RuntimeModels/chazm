@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.models.organization.Organization;
 import org.models.organization.entity.Agent;
 import org.models.organization.entity.Attribute;
 import org.models.organization.entity.Capability;
@@ -26,6 +25,7 @@ import org.models.organization.entity.SpecificationGoal;
 import org.models.organization.identifier.UniqueIdentifier;
 import org.models.organization.registry.ChangeManager;
 import org.models.organization.registry.EventRegistry;
+import org.models.organization.relation.AchievesRelation;
 import org.models.organization.relation.Assignment;
 import org.models.organization.relation.Task;
 
@@ -45,7 +45,7 @@ import org.models.organization.relation.Task;
 public class OrganizationImpl implements Organization {
 	/**
 	 * The {@linkplain Entities} class is an data class for the entities within an {@linkplain Organization}.
-	 * 
+	 *
 	 * @author Christopher Zhong
 	 * @since 7.0.0
 	 */
@@ -108,7 +108,7 @@ public class OrganizationImpl implements Organization {
 
 	/**
 	 * The {@linkplain Relations} is a data class for the relations that are within an {@linkplain Organization}.
-	 * 
+	 *
 	 * @author Christopher Zhong
 	 * @since 7.0.0
 	 */
@@ -122,6 +122,16 @@ public class OrganizationImpl implements Organization {
 		 * The set of {@linkplain Assignment} in this {@linkplain Organization} that is indexed by the {@linkplain Agent}.
 		 */
 		private final Map<UniqueIdentifier, Map<UniqueIdentifier, Assignment>> assignmentsByAgent = new ConcurrentHashMap<>();
+
+		/**
+		 * Contains a set of {@linkplain Role}s and the {@linkplain SpecificationGoal}s that are achieved by each {@linkplain Role}.
+		 */
+		private final Map<UniqueIdentifier, Map<UniqueIdentifier, AchievesRelation>> achieves = new ConcurrentHashMap<>();
+
+		/**
+		 * Contains a set of {@linkplain SpecificationGoal}s and the {@linkplain Role}s that achieve each {@linkplain SpecificationGoal}.
+		 */
+		private final Map<UniqueIdentifier, Map<UniqueIdentifier, AchievesRelation>> achievedBy = new ConcurrentHashMap<>();
 	}
 
 	/**
@@ -1074,13 +1084,30 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void addAchievesRelation(final UniqueIdentifier roleIdentifier, final UniqueIdentifier goalIdentifier) {
-		final Role role = getRole(roleIdentifier);
-		final SpecificationGoal goal = getSpecificationGoal(goalIdentifier);
-		if (role == null || goal == null) {
-			throw new IllegalArgumentException(String.format("Both role (%s=%s) and goal (%s=%s) must exists", roleIdentifier, role, goalIdentifier, goal));
+	public final void addAchievesRelation(final UniqueIdentifier roleId, final UniqueIdentifier specGoalId) {
+		final Role role = getRole(roleId);
+		if (role == null) {
+			throw new IllegalArgumentException(String.format("Role (%s) does not exists", roleId));
 		}
-		role.addAchieves(goal);
+		final SpecificationGoal specGoal = getSpecificationGoal(specGoalId);
+		if (specGoal == null) {
+			throw new IllegalArgumentException(String.format("Specification goal (%s) does not exists", specGoalId));
+		}
+		final Map<UniqueIdentifier, AchievesRelation> achieves = relations.achieves.computeIfAbsent(roleId, v -> new ConcurrentHashMap<>());
+		/* if the relation already exists do nothing */
+		if (achieves.containsKey(specGoalId)) {
+			return;
+		}
+		final AchievesRelation achievesRelation = new AchievesRelation(role, specGoal);
+		achieves.put(specGoalId, achievesRelation);
+		final Map<UniqueIdentifier, AchievesRelation> achievedBy = relations.achievedBy.computeIfAbsent(specGoalId, v -> new ConcurrentHashMap<>());
+		achievedBy.put(roleId, achievesRelation);
+
+		final ChangeManager changeManager = EventRegistry.get();
+		if (changeManager != null) {
+			changeManager.notifyAchievesAdded(roleId, specGoalId);
+		}
+
 	}
 
 	@Override
