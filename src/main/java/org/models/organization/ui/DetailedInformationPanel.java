@@ -261,7 +261,7 @@ public class DetailedInformationPanel extends JPanel {
 			}
 			writeRelation("Requires Capability(ies):");
 			for (final Capability capability : role.getRequiresSet()) {
-				writeRelationEntity(capability.getIdentifier().toString());
+				writeRelationEntity(capability.getId().toString());
 			}
 			writeRelation("Influences Attribute(s):");
 			for (final Attribute attribute : role.getNeedsSet()) {
@@ -290,7 +290,7 @@ public class DetailedInformationPanel extends JPanel {
 		try {
 			/* clears the contents of the document */
 			doc.remove(0, doc.getLength());
-			writeEntity(capability.getIdentifier().toString());
+			writeEntity(capability.getId().toString());
 			writeRelation("Required By Role(s):");
 			for (final Role role : capability.getRequiredBySet()) {
 				writeRelationEntity(role.getId().toString());
@@ -343,7 +343,7 @@ public class DetailedInformationPanel extends JPanel {
 			writeEntity(agent.getIdentifier().toString());
 			writeRelation("Possesses Capability(ies):");
 			for (final Capability capability : agent.getPossessesSet()) {
-				writeRelationEntityScore(capability.getIdentifier().toString(), agent.getPossessesScore(capability.getIdentifier()));
+				writeRelationEntityScore(capability.getId().toString(), agent.getPossessesScore(capability.getId()));
 			}
 			writeRelation("Has Attribute(s):");
 			for (final Attribute attribute : agent.getHasSet()) {

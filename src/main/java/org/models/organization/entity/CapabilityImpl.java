@@ -12,20 +12,23 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.models.organization.entity.basic.SimpleCapabilityImpl;
 import org.models.organization.identifier.UniqueId;
 import org.models.organization.relation.PossessesRelation;
 import org.models.organization.relation.RequiresRelation;
 
 /**
- * The <code>CapabilityImpl</code> class implements the {@link Capability} interface.
+ * The {@link CapabilityImpl} class is an implementation of the {@link Capability}.
  *
  * @author Scott Harmon, Christopher Zhong
  * @see Agent
  * @see Role
  * @since 1.0
  */
-public class CapabilityImpl extends SimpleCapabilityImpl implements Capability {
+public class CapabilityImpl implements Capability {
+	/**
+	 * The {@linkplain UniqueId} that represents this {@linkplain Capability}.
+	 */
+	private final UniqueId id;
 
 	/**
 	 * The set of <code>Agent</code> that possesses this <code>Capability</code> .
@@ -38,13 +41,21 @@ public class CapabilityImpl extends SimpleCapabilityImpl implements Capability {
 	private final Map<UniqueId, RequiresRelation> requiredBy = new ConcurrentHashMap<>();
 
 	/**
-	 * Constructs a new instance of <code>Capability</code>.
+	 * Constructs a new instance of {@linkplain Capability}.
 	 *
-	 * @param identifier
-	 *            the unique <code>UniqueIdentifier</code> identifying this <code>Capability</code>.
+	 * @param id
+	 *            the {@linkplain UniqueId} that represents this {@linkplain Capability}.
 	 */
-	public CapabilityImpl(final UniqueId identifier) {
-		super(identifier);
+	public CapabilityImpl(final UniqueId id) {
+		if (id == null) {
+			throw new IllegalArgumentException("Parameter (id) cannot be null");
+		}
+		this.id = id;
+	}
+
+	@Override
+	public final UniqueId getId() {
+		return id;
 	}
 
 	/**
@@ -133,14 +144,18 @@ public class CapabilityImpl extends SimpleCapabilityImpl implements Capability {
 	public boolean equals(final Object object) {
 		if (object instanceof Capability) {
 			final Capability capability = (Capability) object;
-			return super.equals(capability);
+			return getId().equals(capability.getId());
 		}
 		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		return super.hashCode();
+		return getId().hashCode();
 	}
 
+	@Override
+	public String toString() {
+		return getId().toString();
+	}
 }

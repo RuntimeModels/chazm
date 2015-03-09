@@ -62,18 +62,18 @@ public class AgentImpl extends SimpleAgentImpl implements Agent {
 		if (capability == null) {
 			throw new IllegalArgumentException("Parameter (capability) cannot be null");
 		}
-		if (possesses.containsKey(capability.getIdentifier())) {
+		if (possesses.containsKey(capability.getId())) {
 			throw new IllegalArgumentException(String.format("Agent (%s) already possesses capability (%s)", this, capability));
 		}
 		final PossessesRelation possessesRelation = new PossessesRelation(this, capability, score);
-		possesses.put(capability.getIdentifier(), possessesRelation);
+		possesses.put(capability.getId(), possessesRelation);
 		if (capability instanceof CapabilityImpl) {
 			((CapabilityImpl) capability).addPossessedBy(possessesRelation);
 		}
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyPossessesAdded(getIdentifier(), capability.getIdentifier(), score);
+			changeManager.notifyPossessesAdded(getIdentifier(), capability.getId(), score);
 		}
 	}
 
@@ -117,7 +117,7 @@ public class AgentImpl extends SimpleAgentImpl implements Agent {
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyPossessesChanged(getIdentifier(), possessesRelation.getCapability().getIdentifier(), score);
+			changeManager.notifyPossessesChanged(getIdentifier(), possessesRelation.getCapability().getId(), score);
 		}
 	}
 
@@ -135,7 +135,7 @@ public class AgentImpl extends SimpleAgentImpl implements Agent {
 
 			final ChangeManager changeManager = EventRegistry.get();
 			if (changeManager != null) {
-				changeManager.notifyPossessesRemoved(getIdentifier(), capability.getIdentifier());
+				changeManager.notifyPossessesRemoved(getIdentifier(), capability.getId());
 			}
 		}
 	}
@@ -143,7 +143,7 @@ public class AgentImpl extends SimpleAgentImpl implements Agent {
 	@Override
 	public final void removeAllPossesses() {
 		for (final PossessesRelation possessesRelation : possesses.values()) {
-			removePossesses(possessesRelation.getCapability().getIdentifier());
+			removePossesses(possessesRelation.getCapability().getId());
 		}
 	}
 
@@ -246,7 +246,7 @@ public class AgentImpl extends SimpleAgentImpl implements Agent {
 		if (capability == null) {
 			throw new IllegalArgumentException("Parameter (capability) cannot be null");
 		}
-		final PossessesRelation possessesRelation = possesses.get(capability.getIdentifier());
+		final PossessesRelation possessesRelation = possesses.get(capability.getId());
 		return possessesRelation == null ? PossessesRelation.MIN_SCORE : possessesRelation.getScore();
 	}
 
