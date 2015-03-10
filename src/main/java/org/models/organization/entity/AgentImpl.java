@@ -152,18 +152,18 @@ public class AgentImpl extends SimpleAgentImpl implements Agent {
 		if (attribute == null) {
 			throw new IllegalArgumentException("Paramteter (attribute) cannot be null");
 		}
-		if (has.containsKey(attribute.getIdentifier())) {
+		if (has.containsKey(attribute.getId())) {
 			throw new IllegalArgumentException(String.format("Agent (%s) already has attribute (%s)", this, attribute));
 		}
 		final HasRelation hasRelation = new HasRelation(this, attribute, value);
-		has.put(attribute.getIdentifier(), hasRelation);
+		has.put(attribute.getId(), hasRelation);
 		if (attribute instanceof AttributeImpl) {
 			((AttributeImpl) attribute).addHadBy(hasRelation);
 		}
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyHasAdded(getIdentifier(), attribute.getIdentifier(), value);
+			changeManager.notifyHasAdded(getIdentifier(), attribute.getId(), value);
 		}
 	}
 
@@ -198,7 +198,7 @@ public class AgentImpl extends SimpleAgentImpl implements Agent {
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyHasChanged(getIdentifier(), hasRelation.getAttribute().getIdentifier(), value);
+			changeManager.notifyHasChanged(getIdentifier(), hasRelation.getAttribute().getId(), value);
 		}
 	}
 
@@ -216,7 +216,7 @@ public class AgentImpl extends SimpleAgentImpl implements Agent {
 
 			final ChangeManager changeManager = EventRegistry.get();
 			if (changeManager != null) {
-				changeManager.notifyHasRemoved(getIdentifier(), attribute.getIdentifier());
+				changeManager.notifyHasRemoved(getIdentifier(), attribute.getId());
 			}
 		}
 	}
@@ -224,7 +224,7 @@ public class AgentImpl extends SimpleAgentImpl implements Agent {
 	@Override
 	public final void removeAllHas() {
 		for (final HasRelation hasRelation : has.values()) {
-			removeHas(hasRelation.getAttribute().getIdentifier());
+			removeHas(hasRelation.getAttribute().getId());
 		}
 	}
 
@@ -255,7 +255,7 @@ public class AgentImpl extends SimpleAgentImpl implements Agent {
 		if (attribute == null) {
 			throw new IllegalArgumentException("Parameter (attribute) cannot be null");
 		}
-		final HasRelation hasRelation = has.get(attribute.getIdentifier());
+		final HasRelation hasRelation = has.get(attribute.getId());
 		return hasRelation == null ? null : hasRelation.getValue();
 	}
 

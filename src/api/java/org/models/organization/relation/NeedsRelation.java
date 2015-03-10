@@ -101,7 +101,7 @@ public class NeedsRelation {
 	@Override
 	public String toString() {
 		if (toString == null) {
-			toString = String.format(STRING_FORMAT, getRole().getId(), getAttribute().getIdentifier());
+			toString = String.format(STRING_FORMAT, getRole().getId(), getAttribute().getId());
 		}
 		return toString;
 	}

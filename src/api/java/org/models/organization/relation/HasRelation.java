@@ -154,7 +154,7 @@ public class HasRelation {
 
 	@Override
 	public String toString() {
-		return String.format(STRING_FORMAT, getAgent().getIdentifier(), getAttribute().getIdentifier(), getValue());
+		return String.format(STRING_FORMAT, getAgent().getIdentifier(), getAttribute().getId(), getValue());
 	}
 
 }

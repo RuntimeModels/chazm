@@ -103,7 +103,7 @@ public class ModeratesRelation {
 	@Override
 	public String toString() {
 		if (toString == null) {
-			toString = String.format(STRING_FORMAT, getPerformanceFunction().getIdentifier(), getAttribute().getIdentifier());
+			toString = String.format(STRING_FORMAT, getPerformanceFunction().getIdentifier(), getAttribute().getId());
 		}
 		return toString;
 	}

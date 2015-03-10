@@ -9,100 +9,92 @@ package org.models.organization.entity;
 
 import java.util.Set;
 
-import org.models.organization.entity.basic.SimpleAttribute;
+import org.models.organization.Organization;
 import org.models.organization.identifier.UniqueId;
 
 /**
- * The <code>Attribute</code> interface defines the basic attribute entity of the Organization Model by extending the {@link SimpleAttribute} interface.
+ * The {@linkplain Attribute} interface defines the attribute entity of an {@linkplain Organization}.
  *
  * @author Christopher Zhong
- * @see SimpleAttribute
  * @since 5.0
  */
-public interface Attribute extends SimpleAttribute {
-
+public interface Attribute {
 	/**
-	 * The <code>Type</code> enumeration lists all the possible types that an <code>Attribute</code> can be.
+	 * The {@linkplain Type}> enumerates the different types of {@linkplain Attribute}.
 	 *
 	 * @author Christopher Zhong
 	 * @since 5.0
 	 */
 	enum Type {
 		/**
-		 * Indicates a quantity-type <code>Attribute</code> (whose range is from <code>0.0</code> to <code>&#8734;</code>), and that higher values are better.
+		 * Indicates a quantity-type {@linkplain Attribute} (whose range is from <code>0.0</code> to <code>&#8734;</code>), and that higher values are better.
 		 */
 		POSITIVE_QUANTITY {
-
 			@Override
 			public String toString() {
 				return "+ Quantity";
 			}
-
 		},
 		/**
-		 * Indicates a quantity-type <code>Attribute</code> (whose range is from <code>0.0</code> to <code>&#8734;</code>), and that lower values are better.
+		 * Indicates a quantity-type {@linkplain Attribute} (whose range is from <code>0.0</code> to <code>&#8734;</code>), and that lower values are better.
 		 */
 		NEGATIVE_QUANTITY {
-
 			@Override
 			public String toString() {
 				return "- Quantity";
 			}
-
 		},
 		/**
-		 * Indicates a quantity-type <code>Attribute</code> (whose range is from <code>0.0</code> to <code>1.0</code>), and that higher values are better.
+		 * Indicates a quantity-type {@linkplain Attribute} (whose range is from <code>0.0</code> to <code>1.0</code>), and that higher values are better.
 		 */
 		POSITIVE_QUALITY {
-
 			@Override
 			public String toString() {
 				return "+ Quality";
 			}
-
 		},
 		/**
-		 * Indicates a quantity-type <code>Attribute</code> (whose range is from <code>0.0</code> to <code>1.0</code>), and that lower values are better.
+		 * Indicates a quantity-type {@linkplain Attribute} (whose range is from <code>0.0</code> to <code>1.0</code>), and that lower values are better.
 		 */
 		NEGATIVE_QUALITY {
-
 			@Override
 			public String toString() {
 				return "- Quality";
 			}
-
 		},
 		/**
-		 * Indicates an unbounded-type <code>Attribute</code> (whose range is from <code>-&#8734;</code> to <code>+&#8734;</code>), and that higher values are
+		 * Indicates an unbounded-type {@linkplain Attribute} (whose range is from <code>-&#8734;</code> to <code>+&#8734;</code>), and that higher values are
 		 * better.
 		 */
 		POSITIVE_UNBOUNDED {
-
 			@Override
 			public String toString() {
 				return "+ Unbounded";
 			}
-
 		},
 		/**
-		 * Indicates an unbounded-type <code>Attribute</code> (whose range is from <code>-&#8734;</code> to <code>+&#8734;</code>), and that lower values are
+		 * Indicates an unbounded-type {@linkplain Attribute} (whose range is from <code>-&#8734;</code> to <code>+&#8734;</code>), and that lower values are
 		 * better.
 		 */
 		NEGATIVE_UNBOUNDED {
-
 			@Override
 			public String toString() {
 				return "- Unbounded";
 			}
-
 		};
-
 	}
 
 	/**
-	 * Returns the <code>Type</code> of this <code>Attribute</code>.
+	 * Returns the {@linkplain UniqueId} that represents this {@linkplain Attribute}.
 	 *
-	 * @return the <code>Type</code> of this <code>Attribute</code>.
+	 * @return the {@linkplain UniqueId} that represents this {@linkplain Attribute}.
+	 */
+	UniqueId getId();
+
+	/**
+	 * Returns the {@linkplain Attribute.Type} of this {@linkplain Attribute}.
+	 *
+	 * @return the {@linkplain Attribute.Type} of this {@linkplain Attribute}.
 	 */
 	Type getType();
 

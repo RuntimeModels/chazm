@@ -114,7 +114,7 @@ public class PerformanceFunctionImpl implements PerformanceFunction {
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyModeratesSet(getIdentifier(), attribute.getIdentifier());
+			changeManager.notifyModeratesSet(getIdentifier(), attribute.getId());
 		}
 	}
 

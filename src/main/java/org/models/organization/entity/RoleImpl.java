@@ -193,18 +193,18 @@ public class RoleImpl implements Role {
 		if (attribute == null) {
 			throw new IllegalArgumentException("Parameter (attribute) cannot be null");
 		}
-		if (needs.containsKey(attribute.getIdentifier())) {
+		if (needs.containsKey(attribute.getId())) {
 			throw new IllegalArgumentException(String.format("Role (%s) already needs attribute (%s)", this, attribute));
 		}
 		final NeedsRelation needsRelation = new NeedsRelation(this, attribute);
-		needs.put(attribute.getIdentifier(), needsRelation);
+		needs.put(attribute.getId(), needsRelation);
 		if (attribute instanceof AttributeImpl) {
 			((AttributeImpl) attribute).addInfluencedBy(needsRelation);
 		}
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyInfluencesAdded(getId(), attribute.getIdentifier());
+			changeManager.notifyInfluencesAdded(getId(), attribute.getId());
 		}
 	}
 
@@ -231,7 +231,7 @@ public class RoleImpl implements Role {
 
 			final ChangeManager changeManager = EventRegistry.get();
 			if (changeManager != null) {
-				changeManager.notifyInfluencesRemoved(getId(), attribute.getIdentifier());
+				changeManager.notifyInfluencesRemoved(getId(), attribute.getId());
 			}
 		}
 	}
@@ -239,7 +239,7 @@ public class RoleImpl implements Role {
 	@Override
 	public final void removeAllNeeds() {
 		for (final NeedsRelation needsRelation : needs.values()) {
-			removeNeeds(needsRelation.getAttribute().getIdentifier());
+			removeNeeds(needsRelation.getAttribute().getId());
 		}
 	}
 
@@ -405,7 +405,7 @@ public class RoleImpl implements Role {
 
 	@Override
 	public final boolean influences(final Attribute attribute) {
-		return needs.containsKey(attribute.getIdentifier());
+		return needs.containsKey(attribute.getId());
 	}
 
 	@Override
