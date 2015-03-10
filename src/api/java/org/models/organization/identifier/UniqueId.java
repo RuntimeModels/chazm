@@ -9,24 +9,26 @@ package org.models.organization.identifier;
 
 import java.io.Serializable;
 
+import org.models.organization.Organization;
+
 /**
- * The <code>UniqueIdentifier</code> abstract class allows custom mechanisms for identifying the entities of the Organization Model.
+ * The {@linkplain UniqueId} is class that allows customizable ways for identifying elements of an {@linkplain Organization}.
  * <p>
- * Implementations of <code>UniqueIdentifier</code> does not need to provide a means of ensuring uniqueness (i.e. the uniqueness property is provided through
- * parameter(s) of the constructor). Thus, there are two possible types of implementations.
+ * Implementations of {@linkplain UniqueId} are not required to ensure that instances of {@linkplain UniqueId} are unique because that is the responsibility of
+ * an {@linkplain Organization}.
  * <p>
- * In the case where uniqueness is provided from the parameter(s) of the constructor, then <code>new UniqueIdentifier(x).equals(new UniqueIdentifier(x))</code>
- * will return <code>true</code> because the parameter <code>x</code> is the same.
+ * In the typical case, uniqueness is ensured by the parameter that is passed to the constructor of a subclass of {@linkplain UniqueId}. For example, if
+ * <code>x = y</code>, then <code>UniqueId(x).equals(UniqueId(y))</code> should return <code>true</code>. But that does not mean that
+ * <code>UniqueId(x) = UniqueId(y)</code>.
  * <p>
- * In the case where uniqueness is ensured by the implementation, then <code>UniqueIdentifier.equals(UniqueIdentifier)</code> returns <code>true</code> if and
- * only if <code>UniqueIdentifier == UniqueIdentifier</code>. It is the responsibility of the programmer of the implementation to provide a means of retrieving
- * the correct instance of the <code>UniqueIdentifier</code> so that uses of the implementation across multiple JVMs exhibit correct behavior.
+ * Should a developer wish to ensure that if <code>x = y</code> then <code>UniqueId(x) = UniqueId(y)</code>, the developer should ensure that such an
+ * implementation can be used correctly across multiple JVMs because {@linkplain UniqueId} is {@linkplain Serializable}, so {@linkplain UniqueId} should
+ * de-serialize properly.
  *
  * @author Christopher Zhong
  * @since 4.0
  */
 public abstract class UniqueId implements Serializable {
-
 	/**
 	 * Default serial version ID.
 	 */

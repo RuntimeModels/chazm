@@ -32,7 +32,6 @@ public interface InstanceGoalFactory {
 	 *            the parameter of the <code>InstanceGoal</code> .
 	 * @return an instance of <code>InstanceGoal</code>.
 	 */
-	public <ParameterType> InstanceGoal<ParameterType> getInstanceGoal(SpecificationGoal specificationGoal, UniqueId instanceIdentifier,
-			ParameterType parameter);
+	public <ParameterType> InstanceGoal<ParameterType> getInstanceGoal(SpecificationGoal specificationGoal, UniqueId instanceIdentifier, ParameterType parameter);
 
 }

@@ -6,7 +6,7 @@ import org.models.organization.entity.Attribute;
 
 /**
  * The {@linkplain Has} interface defines the has relation, where an {@linkplain Agent} has an {@linkplain Attribute}, of an {@linkplain Organization}.
- * 
+ *
  * @author Christopher Zhong
  * @since 7.0.0
  */

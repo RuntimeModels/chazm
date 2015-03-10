@@ -13,8 +13,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.models.organization.function.DefaultRoleGoodnessFunction;
 import org.models.organization.function.RoleGoodnessFunction;
-import org.models.organization.function.RoleGoodnessFunction.DefaultRoleGoodnessFunction;
 import org.models.organization.identifier.UniqueId;
 import org.models.organization.registry.ChangeManager;
 import org.models.organization.registry.EventRegistry;

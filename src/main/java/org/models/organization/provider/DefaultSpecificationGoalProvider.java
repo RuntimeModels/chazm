@@ -9,8 +9,6 @@ package org.models.organization.provider;
 
 import org.models.organization.entity.SpecificationGoal;
 import org.models.organization.entity.SpecificationGoalEntity;
-import org.models.organization.provider.SpecificationGoalProvider;
-import org.models.organization.provider.UniqueIdentifierProvider;
 
 /**
  * The <code>DefaultSpecificationGoalProvider</code> provides a default implementation for the <code>SpecificationGoalProvider</code>.

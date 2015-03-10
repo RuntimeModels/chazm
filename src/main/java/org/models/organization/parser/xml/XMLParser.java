@@ -84,7 +84,7 @@ public class XMLParser {
 	 *             if any parse errors occur.
 	 */
 	public static Organization parse(final Path path, final SpecificationGoalProvider specificationGoalProvider) throws SAXException, IOException,
-	ParserConfigurationException {
+			ParserConfigurationException {
 		return parse(path, specificationGoalProvider, new DefaultUniqueIdentifierProvider(), new OrganizationImpl());
 	}
 
@@ -104,7 +104,7 @@ public class XMLParser {
 	 *             if any parse errors occur.
 	 */
 	public static Organization parse(final Path path, final UniqueIdentifierProvider uniqueIdentifierProvider) throws SAXException, IOException,
-	ParserConfigurationException {
+			ParserConfigurationException {
 		return parse(path, new DefaultSpecificationGoalProvider(), uniqueIdentifierProvider, new OrganizationImpl());
 	}
 
@@ -255,8 +255,7 @@ public class XMLParser {
 					final Role role = (Role) element;
 					/* only roles that are not inherited are added */
 					if (role.getDestRelationships(RelationshipType.INHERITS).size() == 0) {
-						final UniqueId roleIdentifier = uniqueIdentifierProvider.getUniqueIdentifier(role.getName(),
-								org.models.organization.entity.Role.class);
+						final UniqueId roleIdentifier = uniqueIdentifierProvider.getUniqueIdentifier(role.getName(), org.models.organization.entity.Role.class);
 						final org.models.organization.entity.Role r = new RoleEntity(roleIdentifier);
 						organization.addRole(r);
 						/* set up the achieves relation */

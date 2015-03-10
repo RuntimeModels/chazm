@@ -398,9 +398,9 @@ public class DetailedInformationPanel extends JPanel {
 			writeRelation("Goal:");
 			writeRelationEntity(taskRelation.getSpecificationGoal().getId().toString());
 			writeRelation("Uses:");
-//			for (final PerformanceFunction performanceFunction : taskRelation.getLinkedSet()) {
-//				writeRelationEntity(performanceFunction.getId().toString());
-//			}
+			// for (final PerformanceFunction performanceFunction : taskRelation.getLinkedSet()) {
+			// writeRelationEntity(performanceFunction.getId().toString());
+			// }
 		} catch (final BadLocationException e) {
 			e.printStackTrace();
 		}
