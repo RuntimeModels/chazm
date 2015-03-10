@@ -12,20 +12,19 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.models.organization.entity.basic.SimpleGoalImpl;
 import org.models.organization.factory.InstanceGoalFactory;
 import org.models.organization.factory.InstanceGoalFactoryImpl;
 import org.models.organization.identifier.UniqueId;
 import org.models.organization.relation.AchievesRelation;
 
 /**
- * The <code>SpecificationGoalImpl</code> class implements the {@link SpecificationGoal} interface.
+ * The {@link SpecificationGoalImpl} class is an implementation of the {@link SpecificationGoal}.
  *
  * @author Scott Harmon, Christopher Zhong
- * @see Role
+ * @see SpecificationGoal
  * @since 1.0
  */
-public class SpecificationGoalImpl extends SimpleGoalImpl implements SpecificationGoal {
+public class SpecificationGoalImpl implements SpecificationGoal {
 
 	/**
 	 * The <code>InstanceGoalFactory</code> that will be used to create new instances of this <code>SpecificationGoal</code> as <code>InstanceGoal</code>.
@@ -33,18 +32,31 @@ public class SpecificationGoalImpl extends SimpleGoalImpl implements Specificati
 	private static InstanceGoalFactory instanceGoalFactory = new InstanceGoalFactoryImpl();
 
 	/**
+	 * The {@linkplain UniqueId} that represents this {@link SpecificationGoal}.
+	 */
+	private final UniqueId id;
+
+	/**
 	 * The set of <code>Role</code> that achieves this <code>SpecificationGoal</code>.
 	 */
 	private final Map<UniqueId, AchievesRelation> achievedBy = new ConcurrentHashMap<>();
 
 	/**
-	 * Constructs a new instance of <code>SpecificationGoal</code> with the given <code>UniqueIdentifier</code>.
+	 * Constructs a new instance of {@link SpecificationGoal}.
 	 *
-	 * @param identifier
-	 *            the <code>UniqueIdentifier</code> identifying the <code>SpecificationGoal</code>.
+	 * @param id
+	 *            the {@linkplain UniqueId} that represents this {@link SpecificationGoal}.
 	 */
-	public SpecificationGoalImpl(final UniqueId identifier) {
-		super(identifier);
+	public SpecificationGoalImpl(final UniqueId id) {
+		if (id == null) {
+			throw new IllegalArgumentException("Parameter (id) cannot be null");
+		}
+		this.id = id;
+	}
+
+	@Override
+	public final UniqueId getId() {
+		return id;
 	}
 
 	@Override
@@ -82,14 +94,19 @@ public class SpecificationGoalImpl extends SimpleGoalImpl implements Specificati
 	public boolean equals(final Object object) {
 		if (object instanceof SpecificationGoal) {
 			final SpecificationGoal specificationGoal = (SpecificationGoal) object;
-			return super.equals(specificationGoal);
+			return getId().equals(specificationGoal.getId());
 		}
 		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		return super.hashCode();
+		return getId().hashCode();
+	}
+
+	@Override
+	public String toString() {
+		return getId().toString();
 	}
 
 	/**

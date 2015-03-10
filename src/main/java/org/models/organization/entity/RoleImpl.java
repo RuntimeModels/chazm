@@ -111,7 +111,7 @@ public class RoleImpl implements Role {
 
 			final ChangeManager changeManager = EventRegistry.get();
 			if (changeManager != null) {
-				changeManager.notifyAchievesRemoved(getId(), specificationGoal.getIdentifier());
+				changeManager.notifyAchievesRemoved(getId(), specificationGoal.getId());
 			}
 		}
 	}
@@ -119,7 +119,7 @@ public class RoleImpl implements Role {
 	@Override
 	public final void removeAllAchieves() {
 		for (final AchievesRelation achievesRelation : achieves.values()) {
-			removeAchieves(achievesRelation.getSpecificationGoal().getIdentifier());
+			removeAchieves(achievesRelation.getSpecificationGoal().getId());
 		}
 	}
 
@@ -389,7 +389,7 @@ public class RoleImpl implements Role {
 
 	@Override
 	public final boolean achieves(final SpecificationGoal specificationGoal) {
-		final AchievesRelation achievesRelation = achieves.get(specificationGoal.getIdentifier());
+		final AchievesRelation achievesRelation = achieves.get(specificationGoal.getId());
 		return achievesRelation != null;
 	}
 

@@ -155,15 +155,15 @@ public class OrganizationImpl implements Organization {
 		if (specificationGoal == null) {
 			throw new IllegalArgumentException("Parameter (specificationGoal) cannot be null");
 		}
-		if (entities.specificationGoals.containsKey(specificationGoal.getIdentifier())) {
+		if (entities.specificationGoals.containsKey(specificationGoal.getId())) {
 			throw new IllegalArgumentException(String.format("Specification goal (%s) already exists", specificationGoal));
 		}
-		entities.specificationGoals.put(specificationGoal.getIdentifier(), specificationGoal);
-		entities.instanceGoalsBySpecificationGoal.put(specificationGoal.getIdentifier(), new ConcurrentHashMap<UniqueId, InstanceGoal<?>>());
+		entities.specificationGoals.put(specificationGoal.getId(), specificationGoal);
+		entities.instanceGoalsBySpecificationGoal.put(specificationGoal.getId(), new ConcurrentHashMap<UniqueId, InstanceGoal<?>>());
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifySpecificationGoalAdded(specificationGoal.getIdentifier());
+			changeManager.notifySpecificationGoalAdded(specificationGoal.getId());
 		}
 	}
 
@@ -210,7 +210,7 @@ public class OrganizationImpl implements Organization {
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifySpecificationGoalRemoved(specificationGoal.getIdentifier());
+			changeManager.notifySpecificationGoalRemoved(specificationGoal.getId());
 		}
 	}
 
@@ -599,15 +599,15 @@ public class OrganizationImpl implements Organization {
 		if (instanceGoal == null) {
 			throw new IllegalArgumentException("Parameter (instanceGoal) cannot be null");
 		}
-		if (entities.instanceGoals.containsKey(instanceGoal.getIdentifier())) {
-			throw new IllegalArgumentException(String.format("Instance goal (%s) already exists", instanceGoal.getIdentifier()));
+		if (entities.instanceGoals.containsKey(instanceGoal.getId())) {
+			throw new IllegalArgumentException(String.format("Instance goal (%s) already exists", instanceGoal.getId()));
 		}
-		entities.instanceGoals.put(instanceGoal.getIdentifier(), instanceGoal);
-		entities.instanceGoalsBySpecificationGoal.get(instanceGoal.getSpecificationIdentifier()).put(instanceGoal.getInstanceIdentifier(), instanceGoal);
+		entities.instanceGoals.put(instanceGoal.getId(), instanceGoal);
+		entities.instanceGoalsBySpecificationGoal.get(instanceGoal.getSpecificationGoal().getId()).put(instanceGoal.getInstanceId(), instanceGoal);
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyInstanceGoalAdded(instanceGoal.getIdentifier(), instanceGoal.getParameter());
+			changeManager.notifyInstanceGoalAdded(instanceGoal.getId(), instanceGoal.getParameter());
 		}
 	}
 
@@ -650,11 +650,11 @@ public class OrganizationImpl implements Organization {
 			throw new IllegalArgumentException("Parameter (goalIdentifier) cannot be null");
 		}
 		final InstanceGoal<?> instanceGoal = entities.instanceGoals.remove(goalIdentifier);
-		entities.instanceGoalsBySpecificationGoal.get(instanceGoal.getSpecificationIdentifier()).remove(instanceGoal.getInstanceIdentifier());
+		entities.instanceGoalsBySpecificationGoal.get(instanceGoal.getSpecificationGoal().getId()).remove(instanceGoal.getInstanceId());
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyInstanceGoalRemoved(instanceGoal.getIdentifier());
+			changeManager.notifyInstanceGoalRemoved(instanceGoal.getId());
 		}
 	}
 
@@ -990,7 +990,7 @@ public class OrganizationImpl implements Organization {
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
 			changeManager.notifyAssignmentAdded(assignment.getAgent().getIdentifier(), assignment.getRole().getId(), assignment.getInstanceGoal()
-					.getIdentifier());
+					.getId());
 		}
 	}
 
@@ -1051,7 +1051,7 @@ public class OrganizationImpl implements Organization {
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
 			changeManager.notifyAssignmentRemoved(assignment.getAgent().getIdentifier(), assignment.getRole().getId(), assignment.getInstanceGoal()
-					.getIdentifier());
+					.getId());
 		}
 	}
 
@@ -1117,7 +1117,7 @@ public class OrganizationImpl implements Organization {
 		if (role == null || goal == null) {
 			throw new IllegalArgumentException(String.format("Both role (%s=%s) and goal (%s=%s) must exists", roleIdentifier, role, goalIdentifier, goal));
 		}
-		role.removeAchieves(goal.getIdentifier());
+		role.removeAchieves(goal.getId());
 	}
 
 	@Override

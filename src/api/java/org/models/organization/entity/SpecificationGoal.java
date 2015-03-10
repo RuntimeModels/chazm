@@ -9,16 +9,22 @@ package org.models.organization.entity;
 
 import java.util.Set;
 
-import org.models.organization.entity.basic.SimpleGoal;
+import org.models.organization.Organization;
 import org.models.organization.identifier.UniqueId;
 
 /**
- * The <code>SpecificationGoal</code> interface defines the static goal entity of the Organization Model by extending the {@link SimpleGoal} interface.
+ * The {@linkplain SpecificationGoal} interface defines the specification goal entity of an {@linkplain Organization}.
  *
  * @author Christopher Zhong
  * @since 3.4
  */
-public interface SpecificationGoal extends SimpleGoal {
+public interface SpecificationGoal {
+	/**
+	 * Returns the {@linkplain UniqueId} that represents this {@linkplain SpecificationGoal}.
+	 *
+	 * @return the {@linkplain UniqueId} that represents this {@linkplain SpecificationGoal}.
+	 */
+	UniqueId getId();
 
 	/**
 	 * Returns the set of <code>Role</code> that achieves this <code>SpecificationGoal</code>.
