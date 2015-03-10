@@ -105,7 +105,7 @@ public class AchievesRelation {
 	@Override
 	public String toString() {
 		if (toString == null) {
-			toString = String.format(STRING_FORMAT, getRole().getId(), getSpecificationGoal().getIdentifier());
+			toString = String.format(STRING_FORMAT, getRole().getId(), getSpecificationGoal().getId());
 		}
 		return toString;
 	}

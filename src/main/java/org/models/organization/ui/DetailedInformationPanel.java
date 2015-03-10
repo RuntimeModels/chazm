@@ -210,7 +210,7 @@ public class DetailedInformationPanel extends JPanel {
 		try {
 			/* clears the contents of the document */
 			doc.remove(0, doc.getLength());
-			writeEntity(specificationGoal.getIdentifier().toString());
+			writeEntity(specificationGoal.getId().toString());
 			writeRelation("Achieved By Role(s):");
 			for (final Role role : specificationGoal.getAchievedBySet()) {
 				writeRelationEntity(role.getId().toString());
@@ -230,11 +230,11 @@ public class DetailedInformationPanel extends JPanel {
 		try {
 			/* clears the contents of the document */
 			doc.remove(0, doc.getLength());
-			writeEntity(instanceGoal.getIdentifier().toString());
+			writeEntity(instanceGoal.getId().toString());
 			writeEntityRelation("Specification Goal:");
-			writeEntityEntity(instanceGoal.getSpecificationIdentifier().toString());
+			writeEntityEntity(instanceGoal.getSpecificationGoal().getId().toString());
 			writeEntityRelation("Instance Identifier:");
-			writeEntityEntity(instanceGoal.getInstanceIdentifier().toString());
+			writeEntityEntity(instanceGoal.getInstanceId().toString());
 			writeRelation("Parameter(s):");
 			if (instanceGoal.getParameter() != null) {
 				writeRelationEntity(instanceGoal.getParameter().toString());
@@ -257,7 +257,7 @@ public class DetailedInformationPanel extends JPanel {
 			writeEntity(role.getId().toString());
 			writeRelation("Achieves Goal(s):");
 			for (final SpecificationGoal specificationGoal : role.getAchievesSet()) {
-				writeRelationEntity(specificationGoal.getIdentifier().toString());
+				writeRelationEntity(specificationGoal.getId().toString());
 			}
 			writeRelation("Requires Capability(ies):");
 			for (final Capability capability : role.getRequiresSet()) {
@@ -320,7 +320,7 @@ public class DetailedInformationPanel extends JPanel {
 			writeEntityRelation("Playing Role:");
 			writeEntityEntity(assignment.getRole().getId().toString());
 			writeEntityRelation("Achieving Goal:");
-			writeEntityEntity(assignment.getInstanceGoal().getIdentifier().toString());
+			writeEntityEntity(assignment.getInstanceGoal().getId().toString());
 			writeEntityRelation("Parameters:");
 			if (assignment.getInstanceGoal().getParameter() != null) {
 				writeEntityEntity(assignment.getInstanceGoal().getParameter().toString());
@@ -396,7 +396,7 @@ public class DetailedInformationPanel extends JPanel {
 			writeRelation("Role:");
 			writeRelationEntity(task.getRole().getId().toString());
 			writeRelation("Goal:");
-			writeRelationEntity(task.getSpecificationGoal().getIdentifier().toString());
+			writeRelationEntity(task.getSpecificationGoal().getId().toString());
 			writeRelation("Uses:");
 			for (final PerformanceFunction performanceFunction : task.getLinkedSet()) {
 				writeRelationEntity(performanceFunction.getIdentifier().toString());

@@ -9,47 +9,46 @@ package org.models.organization.entity;
 
 import java.util.Set;
 
-import org.models.organization.entity.basic.SimpleGoal;
+import org.models.organization.Organization;
 import org.models.organization.identifier.UniqueId;
 
 /**
- * The <code>InstanceGoal</code> interface defines the concrete instance of a {@link SpecificationGoal} that belongs in the active goal set.
+ * The {@linkplain InstanceGoal} interface defines the instance goal, which is a concrete instantiation of a {@link SpecificationGoal}, of an
+ * {@linkplain Organization}.
  *
  * @author Christopher Zhong
- * @param <ParameterType>
- *            the sub-type of the parameter for the <code>InstanceGoal</code>.
+ * @param <T>
+ *            the type of the parameter of this {@linkplain InstanceGoal}.
  * @since 3.4
  */
-public interface InstanceGoal<ParameterType> extends SimpleGoal {
+public interface InstanceGoal<T> {
+	/**
+	 * Returns the {@linkplain UniqueId} that represents this {@linkplain InstanceGoal}.
+	 *
+	 * @return the {@linkplain UniqueId} that represents this {@linkplain InstanceGoal}.
+	 */
+	UniqueId getId();
 
 	/**
-	 * Returns the <code>SpecificationGoal</code> that this <code>InstanceGoal</code> is based on.
+	 * Returns the {@linkplain UniqueId} that represents this instance portion of this {@linkplain InstanceGoal}.
 	 *
-	 * @return the <code>SpecificationGoal</code> that this <code>InstanceGoal</code> is based on.
+	 * @return the {@linkplain UniqueId} that represents this instance portion of this {@linkplain InstanceGoal}.
+	 */
+	UniqueId getInstanceId();
+
+	/**
+	 * Returns the {@linkplain SpecificationGoal} that instantiated this {@linkplain InstanceGoal}.
+	 *
+	 * @return the {@linkplain SpecificationGoal} that instantiated this {@linkplain InstanceGoal}.
 	 */
 	SpecificationGoal getSpecificationGoal();
 
 	/**
-	 * Returns the <code>UniqueIdentifier</code> identifying the <code>SpecificationGoal</code> that this <code>InstanceGoal</code> is based on.
+	 * Returns the parameter(s) of this {@linkplain InstanceGoal}.
 	 *
-	 * @return the <code>UniqueIdentifier</code> identifying the <code>SpecificationGoal</code> that this <code>InstanceGoal</code> is based on.
+	 * @return the parameter(s) of this {@linkplain InstanceGoal}.
 	 */
-	UniqueId getSpecificationIdentifier();
-
-	/**
-	 * Returns the <code>UniqueIdentifier</code> identifying this <code>InstanceGoal</code> with respect to the <code>SpecificationGoal</code>.
-	 *
-	 * @return the <code>UniqueIdentifier</code> identifying this <code>InstanceGoal</code> with respect the <code>SpecificationGoal</code> that this
-	 *         <code>InstanceGoal</code> is based on.
-	 */
-	UniqueId getInstanceIdentifier();
-
-	/**
-	 * Returns the parameter(s) of this <code>InstanceGoal</code>.
-	 *
-	 * @return the parameter(s) of this <code>InstanceGoal</code>.
-	 */
-	ParameterType getParameter();
+	T getParameter();
 
 	/**
 	 * Returns the set of <code>Role</code> that achieves this <code>SpecificationGoal</code>.
