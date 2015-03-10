@@ -9,18 +9,22 @@ package org.models.organization.entity;
 
 import java.util.Set;
 
-import org.models.organization.entity.basic.SimpleCharacteristic;
+import org.models.organization.Organization;
 import org.models.organization.identifier.UniqueId;
 
 /**
- * The <code>Characteristic</code> interface defines the basic characteristic entity of the Organization Model by extending the {@link SimpleCharacteristic}
- * interface.
+ * The {@linkplain Characteristic} interface defines the characteristic entity of an {@linkplain Organization}.
  *
  * @author Christopher Zhong
- * @see SimpleCharacteristic
  * @since 6.0
  */
-public interface Characteristic extends SimpleCharacteristic {
+public interface Characteristic {
+	/**
+	 * Returns the {@linkplain UniqueId} that represents this {@linkplain Characteristic}.
+	 *
+	 * @return the {@linkplain UniqueId} that represents this {@linkplain Characteristic}.
+	 */
+	UniqueId getId();
 
 	/**
 	 * Returns the set of <code>Role</code> that contains this <code>Characteristic</code>.

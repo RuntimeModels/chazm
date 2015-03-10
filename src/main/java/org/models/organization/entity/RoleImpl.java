@@ -248,18 +248,18 @@ public class RoleImpl implements Role {
 		if (characteristic == null) {
 			throw new IllegalArgumentException("Parameter (characteristic) cannot be null");
 		}
-		if (contains.containsKey(characteristic.getIdentifier())) {
+		if (contains.containsKey(characteristic.getId())) {
 			throw new IllegalArgumentException(String.format("Role (%s) already contains characteristic (%s)", this, characteristic));
 		}
 		final ContainsRelation containsRelation = new ContainsRelation(this, characteristic, value);
-		contains.put(characteristic.getIdentifier(), containsRelation);
+		contains.put(characteristic.getId(), containsRelation);
 		if (characteristic instanceof CharacteristicImpl) {
 			((CharacteristicImpl) characteristic).addContainedBy(containsRelation);
 		}
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyContainsAdded(getId(), characteristic.getIdentifier(), value);
+			changeManager.notifyContainsAdded(getId(), characteristic.getId(), value);
 		}
 	}
 
@@ -295,7 +295,7 @@ public class RoleImpl implements Role {
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyContainsChanged(getId(), containsRelation.getCharacteristic().getIdentifier(), value);
+			changeManager.notifyContainsChanged(getId(), containsRelation.getCharacteristic().getId(), value);
 		}
 	}
 
@@ -313,7 +313,7 @@ public class RoleImpl implements Role {
 
 			final ChangeManager changeManager = EventRegistry.get();
 			if (changeManager != null) {
-				changeManager.notifyContainsRemoved(getId(), characterisitic.getIdentifier());
+				changeManager.notifyContainsRemoved(getId(), characterisitic.getId());
 			}
 		}
 	}
@@ -321,7 +321,7 @@ public class RoleImpl implements Role {
 	@Override
 	public final void removeAllContains() {
 		for (final ContainsRelation containsRelation : contains.values()) {
-			removeContains(containsRelation.getCharacteristic().getIdentifier());
+			removeContains(containsRelation.getCharacteristic().getId());
 		}
 	}
 
@@ -410,7 +410,7 @@ public class RoleImpl implements Role {
 
 	@Override
 	public final Double contains(final Characteristic characteristic) {
-		final ContainsRelation containsRelation = contains.get(characteristic.getIdentifier());
+		final ContainsRelation containsRelation = contains.get(characteristic.getId());
 		return containsRelation == null ? null : containsRelation.getValue();
 	}
 
