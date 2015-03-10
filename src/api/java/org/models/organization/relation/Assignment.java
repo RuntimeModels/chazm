@@ -1,250 +1,40 @@
-/*
- * Assignment.java
- *
- * Created on Dec 6, 2005
- *
- * See License.txt file the license agreement.
- */
 package org.models.organization.relation;
 
+import org.models.organization.Organization;
 import org.models.organization.entity.Agent;
 import org.models.organization.entity.InstanceGoal;
 import org.models.organization.entity.Role;
-import org.models.organization.identifier.UniqueId;
+import org.models.organization.identifier.Identifiable;
 
 /**
- * The <code>Assignment</code> class represents an assignment, which is a tuple relation of {@link Agent}s, {@link Role}s, and {@link InstanceGoal}s.
- * <p>
- * An assignment means that an {@link Agent} is assigned to play a {@link Role} to achieve a {@link InstanceGoal}
+ * The {@linkplain Assignment} interface defines the assignment relation, which means that an {@linkplain Agent} is assigned to play a {@linkplain Role} to
+ * achieve an {@linkplain InstanceGoal}, of an {@linkplain Organization}.
  *
  * @author Christopher Zhong
  * @see Agent
  * @see Role
  * @see InstanceGoal
- * @since 2.0
+ * @since 7.0.0
  */
-public class Assignment {
-
+public interface Assignment extends Identifiable {
 	/**
-	 * The <code>AssignmentIdentifier</code> extends the {@link UniqueId} by using three {@link UniqueId} as the form of identification.
+	 * Returns the {@linkplain Agent} of this {@linkplain Assignment}.
 	 *
-	 * @author Christopher Zhong
-	 * @see UniqueId
-	 * @since 4.0
+	 * @return the {@linkplain Agent} of this {@linkplain Assignment}.
 	 */
-	private static class AssignmentIdentifier extends UniqueId {
-
-		/**
-		 * Default serial version ID.
-		 */
-		private static final long serialVersionUID = 1L;
-
-		/**
-		 * Internal <code>String</code> for the formatting of <code>Assignment</code> class.
-		 */
-		private static final String STRING_FORMAT = "%s, %s, %s";
-
-		/**
-		 * The <code>UniqueIdentifier</code> of the <code>Agent</code>.
-		 */
-		private final UniqueId agentIdentifier;
-
-		/**
-		 * The <code>UniqueIdentifier</code> of the <code>Role</code>.
-		 */
-		private final UniqueId roleIdentifier;
-
-		/**
-		 * The <code>UniqueIdentifier</code> of the <code>InstanceGoal</code>.
-		 */
-		private final UniqueId goalIdentifier;
-
-		/**
-		 * Optimization for hash code computation since it never changes.
-		 */
-		private transient Integer hashCode = null;
-
-		/**
-		 * Optimization for <code>toString</code> method since it never changes.
-		 */
-		private transient String toString = null;
-
-		/**
-		 * Constructs a new instance of <code>AssignmentIdentifier</code>.
-		 *
-		 * @param agentIdentifier
-		 *            the <code>UniqueIdentifier</code> of the <code>Agent</code>.
-		 * @param roleIdentifier
-		 *            the <code>UniqueIdentifier</code> of the <code>Role</code> .
-		 * @param goalIdentifier
-		 *            the <code>UniqueIdentifier</code> of the <code>InstanceGoal</code>.
-		 */
-		public AssignmentIdentifier(final UniqueId agentIdentifier, final UniqueId roleIdentifier, final UniqueId goalIdentifier) {
-			this.agentIdentifier = agentIdentifier;
-			this.roleIdentifier = roleIdentifier;
-			this.goalIdentifier = goalIdentifier;
-		}
-
-		/**
-		 * Returns the <code>UniqueIdentifier</code> of the <code>Agent</code>.
-		 *
-		 * @return the <code>UniqueIdentifier</code> of the <code>Agent</code>.
-		 */
-		private UniqueId getAgentIdentifier() {
-			return agentIdentifier;
-		}
-
-		/**
-		 * Returns the <code>UniqueIdentifier</code> of the <code>Role</code>.
-		 *
-		 * @return the <code>UniqueIdentifier</code> of the <code>Role</code>.
-		 */
-		private UniqueId getRoleIdentifier() {
-			return roleIdentifier;
-		}
-
-		/**
-		 * Returns the <code>UniqueIdentifier</code> of the <code>InstanceGoal</code>.
-		 *
-		 * @return the <code>UniqueIdentifier</code> of the <code>InstanceGoal</code>.
-		 */
-		private UniqueId getGoalIdentifier() {
-			return goalIdentifier;
-		}
-
-		@Override
-		public boolean equals(final Object object) {
-			if (object instanceof AssignmentIdentifier) {
-				final AssignmentIdentifier assignmentIdentifier = (AssignmentIdentifier) object;
-				return getAgentIdentifier().equals(assignmentIdentifier.getAgentIdentifier())
-						&& getRoleIdentifier().equals(assignmentIdentifier.getRoleIdentifier())
-						&& getGoalIdentifier().equals(assignmentIdentifier.getGoalIdentifier());
-			}
-			return false;
-		}
-
-		@Override
-		public int hashCode() {
-			if (hashCode == null) {
-				hashCode = getAgentIdentifier().hashCode() << 22 | getRoleIdentifier().hashCode() << 11 | getGoalIdentifier().hashCode();
-			}
-			return hashCode;
-		}
-
-		@Override
-		public String toString() {
-			if (toString == null) {
-				toString = String.format(STRING_FORMAT, getAgentIdentifier(), getRoleIdentifier(), getGoalIdentifier());
-			}
-			return toString;
-		}
-
-	}
+	Agent getAgent();
 
 	/**
-	 * Internal <code>String</code> for the formatting of the <code>toString</code> method.
-	 */
-	private static final String STRING_FORMAT_PARAMETERS = "<%s (%s)>";
-
-	/**
-	 * Internal <code>String</code> for the formatting of the <code>toString</code> method.
-	 */
-	private static final String STRING_FORMAT_NO_PARAMETERS = "<%s>";
-
-	/**
-	 * The <code>UniqueIdentifier</code> identifying this <code>Assignment</code> relation.
-	 */
-	private final UniqueId identifier;
-
-	/**
-	 * The <code>Agent</code> of this <code>Assignment</code> relation.
-	 */
-	private final Agent agent;
-
-	/**
-	 * The <code>Role</code> of this <code>Assignment</code> relation.
-	 */
-	private final Role role;
-
-	/**
-	 * The <code>InstanceGoal</code> of this <code>Assignment</code> relation.
-	 */
-	private final InstanceGoal<?> instanceGoal;
-
-	/**
-	 * Constructs a new instance of <code>Assignment</code>.
+	 * Returns the {@linkplain Role} of this {@linkplain Assignment}.
 	 *
-	 * @param agent
-	 *            the <code>Agent</code> of this <code>Assignment</code> relation.
-	 * @param role
-	 *            the <code>Role</code> of this <code>Assignment</code> relation.
-	 * @param instanceGoal
-	 *            the <code>InstanceGoal</code> of this <code>Assignment</code> relation.
+	 * @return the {@linkplain Role} of this {@linkplain Assignment}.
 	 */
-	public Assignment(final Agent agent, final Role role, final InstanceGoal<?> instanceGoal) {
-		if (agent == null || role == null || instanceGoal == null) {
-			throw new IllegalArgumentException(String.format("Parameters (agent: %s, role: %s, instance goal: %s) cannot be null", agent, role, instanceGoal));
-		}
-		this.agent = agent;
-		this.role = role;
-		this.instanceGoal = instanceGoal;
-		identifier = new AssignmentIdentifier(agent.getId(), role.getId(), instanceGoal.getId());
-	}
+	Role getRole();
 
 	/**
-	 * Returns the <code>UniqueIdentifier</code> identifying this <code>Assignment</code> relation.
+	 * Returns the {@linkplain InstanceGoal} of this {@linkplain Assignment}.
 	 *
-	 * @return the <code>UniqueIdentifier</code> identifying this <code>Assignment</code> relation.
+	 * @return the {@linkplain InstanceGoal} of this {@linkplain Assignment}.
 	 */
-	public final UniqueId getIdentifier() {
-		return identifier;
-	}
-
-	/**
-	 * Returns the <code>Agent</code> of this <code>Assignment</code> relation.
-	 *
-	 * @return the <code>Agent</code> of this <code>Assignment</code> relation.
-	 */
-	public final Agent getAgent() {
-		return agent;
-	}
-
-	/**
-	 * Returns the <code>Role</code> of this <code>Assignment</code> relation.
-	 *
-	 * @return the <code>Role</code> of this <code>Assignment</code> relation.
-	 */
-	public final Role getRole() {
-		return role;
-	}
-
-	/**
-	 * Returns the <code>InstanceGoal</code> of this <code>Assignment</code> relation.
-	 *
-	 * @return the <code>InstanceGoal</code> of this <code>Assignment</code> relation.
-	 */
-	public final InstanceGoal<?> getInstanceGoal() {
-		return instanceGoal;
-	}
-
-	@Override
-	public boolean equals(final Object object) {
-		if (object instanceof Assignment) {
-			final Assignment assignment = (Assignment) object;
-			return getIdentifier().equals(assignment.getIdentifier());
-		}
-		return false;
-	}
-
-	@Override
-	public int hashCode() {
-		return getIdentifier().hashCode();
-	}
-
-	@Override
-	public String toString() {
-		return getInstanceGoal().getParameter() == null ? String.format(STRING_FORMAT_NO_PARAMETERS, getIdentifier()) : String.format(STRING_FORMAT_PARAMETERS,
-				getIdentifier(), getInstanceGoal().getParameter());
-	}
-
+	InstanceGoal<?> getGoal();
 }

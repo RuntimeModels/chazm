@@ -314,16 +314,16 @@ public class DetailedInformationPanel extends JPanel {
 		try {
 			/* clears the contents of the document */
 			doc.remove(0, doc.getLength());
-			writeEntity(assignment.getIdentifier().toString());
+			writeEntity(assignment.getId().toString());
 			writeEntityRelation("Agent:");
 			writeEntityEntity(assignment.getAgent().getId().toString());
 			writeEntityRelation("Playing Role:");
 			writeEntityEntity(assignment.getRole().getId().toString());
 			writeEntityRelation("Achieving Goal:");
-			writeEntityEntity(assignment.getInstanceGoal().getId().toString());
+			writeEntityEntity(assignment.getGoal().getId().toString());
 			writeEntityRelation("Parameters:");
-			if (assignment.getInstanceGoal().getParameter() != null) {
-				writeEntityEntity(assignment.getInstanceGoal().getParameter().toString());
+			if (assignment.getGoal().getParameter() != null) {
+				writeEntityEntity(assignment.getGoal().getParameter().toString());
 			}
 		} catch (final BadLocationException e) {
 			e.printStackTrace();

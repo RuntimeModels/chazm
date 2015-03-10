@@ -28,6 +28,7 @@ import org.models.organization.registry.EventRegistry;
 import org.models.organization.relation.Achieves;
 import org.models.organization.relation.AchievesRelation;
 import org.models.organization.relation.Assignment;
+import org.models.organization.relation.Assignment;
 import org.models.organization.relation.Task;
 
 /**
@@ -982,15 +983,15 @@ public class OrganizationImpl implements Organization {
 		if (assignment == null) {
 			throw new IllegalArgumentException("Parameter (assignment) cannot be null");
 		}
-		if (relations.assignments.containsKey(assignment.getIdentifier())) {
+		if (relations.assignments.containsKey(assignment.getId())) {
 			throw new IllegalArgumentException(String.format("Assignment (%s) already exists", assignment));
 		}
-		relations.assignments.put(assignment.getIdentifier(), assignment);
-		relations.assignmentsByAgent.get(assignment.getAgent().getId()).put(assignment.getIdentifier(), assignment);
+		relations.assignments.put(assignment.getId(), assignment);
+		relations.assignmentsByAgent.get(assignment.getAgent().getId()).put(assignment.getId(), assignment);
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyAssignmentAdded(assignment.getAgent().getId(), assignment.getRole().getId(), assignment.getInstanceGoal().getId());
+			changeManager.notifyAssignmentAdded(assignment.getAgent().getId(), assignment.getRole().getId(), assignment.getGoal().getId());
 		}
 	}
 
@@ -1045,12 +1046,12 @@ public class OrganizationImpl implements Organization {
 		if (assignmentIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (assignmentIdentifier) cannot be null");
 		}
-		final Assignment assignment = relations.assignments.remove(assignmentIdentifier);
-		relations.assignmentsByAgent.get(assignment.getAgent().getId()).remove(assignmentIdentifier);
+		final Assignment assignmentRelation = relations.assignments.remove(assignmentIdentifier);
+		relations.assignmentsByAgent.get(assignmentRelation.getAgent().getId()).remove(assignmentIdentifier);
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyAssignmentRemoved(assignment.getAgent().getId(), assignment.getRole().getId(), assignment.getInstanceGoal().getId());
+			changeManager.notifyAssignmentRemoved(assignmentRelation.getAgent().getId(), assignmentRelation.getRole().getId(), assignmentRelation.getGoal().getId());
 		}
 	}
 
