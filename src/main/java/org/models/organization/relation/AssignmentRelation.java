@@ -183,10 +183,10 @@ public class AssignmentRelation implements Assignment {
 		if (goal == null) {
 			throw new IllegalArgumentException("Parameter (goal) cannot be null");
 		}
+		id = new Id(agent.getId(), role.getId(), goal.getId());
 		this.agent = agent;
 		this.role = role;
 		this.goal = goal;
-		id = new Id(agent.getId(), role.getId(), goal.getId());
 	}
 
 	@Override
