@@ -21,16 +21,15 @@ import org.models.organization.identifier.UniqueId;
  * @since 3.2
  */
 public class InstanceGoalEntity<T> implements InstanceGoal<T> {
-
 	/**
-	 * The {@linkplain InstanceGoalEntity.Identifier} class extends the {@link UniqueId} by using two {@link UniqueId}s; the {@linkplain UniqueId} of a
-	 * {@linkplain SpecificationGoal} and the {@linkplain UniqueId} of instance portion of the {@linkplain InstanceGoal}.
+	 * The {@linkplain Id} class extends the {@link UniqueId} by using two {@link UniqueId}s; the {@linkplain UniqueId} of a {@linkplain SpecificationGoal} and
+	 * the {@linkplain UniqueId} of instance portion of the {@linkplain InstanceGoal}.
 	 *
 	 * @author Christopher Zhong
 	 * @since 4.0
 	 * @see UniqueId
 	 */
-	private static class Identifier extends UniqueId {
+	private static class Id extends UniqueId {
 		/**
 		 * Serial version ID
 		 */
@@ -62,14 +61,14 @@ public class InstanceGoalEntity<T> implements InstanceGoal<T> {
 		private transient String toString = null;
 
 		/**
-		 * Constructs a new instance of {@linkplain InstanceGoalEntity.Identifier}.
+		 * Constructs a new instance of {@linkplain Id}.
 		 *
 		 * @param specificationId
 		 *            the {@linkplain UniqueId} that represents the {@linkplain SpecificationGoal}.
 		 * @param instanceId
 		 *            the {@linkplain UniqueId} that represents the instance portion of the {@linkplain InstanceGoal}.
 		 */
-		public Identifier(final UniqueId specificationId, final UniqueId instanceId) {
+		public Id(final UniqueId specificationId, final UniqueId instanceId) {
 			if (specificationId == null) {
 				throw new IllegalArgumentException("Parameter (specificationId) cannot be null");
 			}
@@ -100,9 +99,9 @@ public class InstanceGoalEntity<T> implements InstanceGoal<T> {
 
 		@Override
 		public boolean equals(final Object object) {
-			if (object instanceof Identifier) {
-				final Identifier identifier = (Identifier) object;
-				return getSpecificationId().equals(identifier.getSpecificationId()) && getInstanceId().equals(identifier.getInstanceId());
+			if (object instanceof Id) {
+				final Id id = (Id) object;
+				return getSpecificationId().equals(id.getSpecificationId()) && getInstanceId().equals(id.getInstanceId());
 			}
 			return false;
 		}
@@ -160,7 +159,7 @@ public class InstanceGoalEntity<T> implements InstanceGoal<T> {
 	 *            the parameter(s) of this {@linkplain InstanceGoal}.
 	 */
 	public InstanceGoalEntity(final SpecificationGoal specificationGoal, final UniqueId instanceId, final T parameter) {
-		this.id = new Identifier(specificationGoal.getId(), instanceId);
+		this.id = new Id(specificationGoal.getId(), instanceId);
 		this.instanceId = instanceId;
 		this.specificationGoal = specificationGoal;
 		this.parameter = parameter;
