@@ -17,6 +17,7 @@ import org.models.organization.registry.ChangeManager;
 import org.models.organization.registry.EventRegistry;
 import org.models.organization.relation.Has;
 import org.models.organization.relation.HasRelation;
+import org.models.organization.relation.Possesses;
 import org.models.organization.relation.PossessesRelation;
 
 /**
@@ -92,14 +93,14 @@ public class AgentEntity implements Agent {
 		if (capabilityIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (capabilityIdentifier) cannot be null");
 		}
-		final PossessesRelation possessesRelation = possesses.get(capabilityIdentifier);
+		final Possesses possessesRelation = possesses.get(capabilityIdentifier);
 		return possessesRelation == null ? null : possessesRelation.getCapability();
 	}
 
 	@Override
 	public final Set<Capability> getPossessesSet() {
 		final Set<Capability> result = new HashSet<>();
-		for (final PossessesRelation possessesRelation : possesses.values()) {
+		for (final Possesses possessesRelation : possesses.values()) {
 			result.add(possessesRelation.getCapability());
 		}
 		return result;
@@ -110,8 +111,8 @@ public class AgentEntity implements Agent {
 		if (capabilityIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (capabilityIdentifier) cannot be null");
 		}
-		final PossessesRelation possessesRelation = possesses.get(capabilityIdentifier);
-		return possessesRelation == null ? PossessesRelation.MIN_SCORE : possessesRelation.getScore();
+		final Possesses possessesRelation = possesses.get(capabilityIdentifier);
+		return possessesRelation == null ? Possesses.MIN_SCORE : possessesRelation.getScore();
 	}
 
 	@Override
@@ -119,7 +120,7 @@ public class AgentEntity implements Agent {
 		if (capabilityIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (capabilityIdentifier) cannot be null");
 		}
-		final PossessesRelation possessesRelation = possesses.get(capabilityIdentifier);
+		final Possesses possessesRelation = possesses.get(capabilityIdentifier);
 		if (possessesRelation == null) {
 			throw new IllegalArgumentException(String.format("Cannot set score for a non-existent capability (%s)", capabilityIdentifier));
 		}
@@ -137,7 +138,7 @@ public class AgentEntity implements Agent {
 			throw new IllegalArgumentException("Parameter (capabilityIdentifier) cannot be null");
 		}
 		if (possesses.containsKey(capabilityIdentifier)) {
-			final PossessesRelation possessesRelation = possesses.remove(capabilityIdentifier);
+			final Possesses possessesRelation = possesses.remove(capabilityIdentifier);
 			final Capability capability = possessesRelation.getCapability();
 			if (capability instanceof CapabilityEntity) {
 				((CapabilityEntity) capability).removePossessedBy(this);
@@ -152,7 +153,7 @@ public class AgentEntity implements Agent {
 
 	@Override
 	public final void removeAllPossesses() {
-		for (final PossessesRelation possessesRelation : possesses.values()) {
+		for (final Possesses possessesRelation : possesses.values()) {
 			removePossesses(possessesRelation.getCapability().getId());
 		}
 	}
@@ -256,8 +257,8 @@ public class AgentEntity implements Agent {
 		if (capability == null) {
 			throw new IllegalArgumentException("Parameter (capability) cannot be null");
 		}
-		final PossessesRelation possessesRelation = possesses.get(capability.getId());
-		return possessesRelation == null ? PossessesRelation.MIN_SCORE : possessesRelation.getScore();
+		final Possesses possessesRelation = possesses.get(capability.getId());
+		return possessesRelation == null ? Possesses.MIN_SCORE : possessesRelation.getScore();
 	}
 
 	@Override

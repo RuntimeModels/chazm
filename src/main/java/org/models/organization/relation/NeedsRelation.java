@@ -7,7 +7,7 @@
  */
 package org.models.organization.relation;
 
-import org.models.organization.Messages;
+import org.models.organization.M;
 import org.models.organization.entity.Attribute;
 import org.models.organization.entity.Role;
 
@@ -54,10 +54,10 @@ public class NeedsRelation implements Needs {
 	 */
 	public NeedsRelation(final Role role, final Attribute attribute) {
 		if (role == null) {
-			throw new IllegalArgumentException(String.format(Messages.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "role"));
+			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "role"));
 		}
 		if (attribute == null) {
-			throw new IllegalArgumentException(String.format(Messages.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "attribute"));
+			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "attribute"));
 		}
 		this.role = role;
 		this.attribute = attribute;

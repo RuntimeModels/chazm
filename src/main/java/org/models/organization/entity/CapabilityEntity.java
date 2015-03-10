@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.models.organization.identifier.UniqueId;
+import org.models.organization.relation.Possesses;
 import org.models.organization.relation.PossessesRelation;
 import org.models.organization.relation.RequiresRelation;
 
@@ -77,7 +78,7 @@ public class CapabilityEntity implements Capability {
 	@Override
 	public final Set<Agent> getPossessedBySet() {
 		final Set<Agent> result = new HashSet<>();
-		for (final PossessesRelation possessesRelaton : possessedBy.values()) {
+		for (final Possesses possessesRelaton : possessedBy.values()) {
 			result.add(possessesRelaton.getAgent());
 		}
 		return result;
@@ -88,8 +89,8 @@ public class CapabilityEntity implements Capability {
 		if (agentIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (agentIdentifier) cannot be null");
 		}
-		final PossessesRelation possessesRelation = possessedBy.get(agentIdentifier);
-		return possessesRelation == null ? PossessesRelation.MIN_SCORE : possessesRelation.getScore();
+		final Possesses possessesRelation = possessedBy.get(agentIdentifier);
+		return possessesRelation == null ? Possesses.MIN_SCORE : possessesRelation.getScore();
 	}
 
 	/**
