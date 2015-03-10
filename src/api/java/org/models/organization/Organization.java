@@ -522,18 +522,18 @@ public interface Organization {
 	/**
 	 * Adds the given {@linkplain Task} to the set of {@linkplain Task}.
 	 *
-	 * @param task
+	 * @param taskRelation
 	 *            the {@linkplain Task} to be added.
 	 */
-	void addTask(Task task);
+	void addTask(Task taskRelation);
 
 	/**
 	 * Adds the given set of {@linkplain Task} to the set of {@linkplain Task}.
 	 *
-	 * @param tasks
+	 * @param taskRelations
 	 *            the set of {@linkplain Task} to be added.
 	 */
-	void addTasks(Collection<Task> tasks);
+	void addTasks(Collection<Task> taskRelations);
 
 	/**
 	 * Adds the given set of {@linkplain Task} to the set of {@linkplain Task}.

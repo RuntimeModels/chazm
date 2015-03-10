@@ -385,22 +385,22 @@ public class DetailedInformationPanel extends JPanel {
 	/**
 	 * Display additional information about the <code>Task</code>
 	 *
-	 * @param task
+	 * @param taskRelation
 	 *            the <code>Task</code> to process.
 	 */
-	public void showDetailedInformation(final Task task) {
+	public void showDetailedInformation(final Task taskRelation) {
 		try {
 			/* clears the contents of the document */
 			doc.remove(0, doc.getLength());
-			writeEntity(task.getIdentifier().toString());
+			writeEntity(taskRelation.getId().toString());
 			writeRelation("Role:");
-			writeRelationEntity(task.getRole().getId().toString());
+			writeRelationEntity(taskRelation.getRole().getId().toString());
 			writeRelation("Goal:");
-			writeRelationEntity(task.getSpecificationGoal().getId().toString());
+			writeRelationEntity(taskRelation.getSpecificationGoal().getId().toString());
 			writeRelation("Uses:");
-			for (final PerformanceFunction performanceFunction : task.getLinkedSet()) {
-				writeRelationEntity(performanceFunction.getId().toString());
-			}
+//			for (final PerformanceFunction performanceFunction : taskRelation.getLinkedSet()) {
+//				writeRelationEntity(performanceFunction.getId().toString());
+//			}
 		} catch (final BadLocationException e) {
 			e.printStackTrace();
 		}

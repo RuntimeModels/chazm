@@ -29,6 +29,7 @@ import org.models.organization.relation.Achieves;
 import org.models.organization.relation.AchievesRelation;
 import org.models.organization.relation.Assignment;
 import org.models.organization.relation.Task;
+import org.models.organization.relation.TaskRelation;
 
 /**
  * The {@linkplain OrganizationImpl} class implements the {@link Organization} interface.
@@ -92,9 +93,9 @@ public class OrganizationImpl implements Organization {
 		private final Map<UniqueId, Attribute> attributes = new ConcurrentHashMap<>();
 
 		/**
-		 * The set of {@linkplain Task} in this {@linkplain Organization}.
+		 * The set of {@linkplain TaskRelation} in this {@linkplain Organization}.
 		 */
-		private final Map<UniqueId, Task> tasks = new ConcurrentHashMap<>();
+		private final Map<UniqueId, Task> taskRelations = new ConcurrentHashMap<>();
 
 		/**
 		 * The set of {@linkplain PerformanceFunction} in this {@linkplain Organization}.
@@ -775,28 +776,28 @@ public class OrganizationImpl implements Organization {
 	}
 
 	@Override
-	public final void addTask(final Task task) {
-		if (task == null) {
+	public final void addTask(final Task taskRelation) {
+		if (taskRelation == null) {
 			throw new IllegalArgumentException("Parameter (task) cannot be null");
 		}
-		if (entities.tasks.containsKey(task.getIdentifier())) {
-			throw new IllegalArgumentException(String.format("Task (%s) already exists", task));
+		if (entities.taskRelations.containsKey(taskRelation.getId())) {
+			throw new IllegalArgumentException(String.format("Task (%s) already exists", taskRelation));
 		}
-		entities.tasks.put(task.getIdentifier(), task);
+		entities.taskRelations.put(taskRelation.getId(), taskRelation);
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyTaskAdded(task.getIdentifier());
+			changeManager.notifyTaskAdded(taskRelation.getId());
 		}
 	}
 
 	@Override
-	public final void addTasks(final Collection<Task> tasks) {
-		if (tasks == null) {
+	public final void addTasks(final Collection<Task> taskRelations) {
+		if (taskRelations == null) {
 			throw new IllegalArgumentException("Parameter (tasks) cannot be null");
 		}
-		for (final Task task : tasks) {
-			addTask(task);
+		for (final Task taskRelation : taskRelations) {
+			addTask(taskRelation);
 		}
 	}
 
@@ -805,8 +806,8 @@ public class OrganizationImpl implements Organization {
 		if (tasks == null) {
 			throw new IllegalArgumentException("Parameter (tasks) cannot be null");
 		}
-		for (final Task task : tasks) {
-			addTask(task);
+		for (final Task taskRelation : tasks) {
+			addTask(taskRelation);
 		}
 	}
 
@@ -815,12 +816,12 @@ public class OrganizationImpl implements Organization {
 		if (taskIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (taskIdentifier) cannot be null");
 		}
-		return entities.tasks.get(taskIdentifier);
+		return entities.taskRelations.get(taskIdentifier);
 	}
 
 	@Override
 	public final Set<Task> getTasks() {
-		return new HashSet<>(entities.tasks.values());
+		return new HashSet<>(entities.taskRelations.values());
 	}
 
 	@Override
@@ -828,17 +829,17 @@ public class OrganizationImpl implements Organization {
 		if (taskIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (taskIdentifier) cannot be null");
 		}
-		final Task task = entities.tasks.remove(taskIdentifier);
+		final Task taskRelation = entities.taskRelations.remove(taskIdentifier);
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyTaskRemoved(task.getIdentifier());
+			changeManager.notifyTaskRemoved(taskRelation.getId());
 		}
 	}
 
 	@Override
 	public final void removeAllTasks() {
-		entities.tasks.clear();
+		entities.taskRelations.clear();
 	}
 
 	@Override
@@ -1050,7 +1051,8 @@ public class OrganizationImpl implements Organization {
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyAssignmentRemoved(assignmentRelation.getAgent().getId(), assignmentRelation.getRole().getId(), assignmentRelation.getGoal().getId());
+			changeManager.notifyAssignmentRemoved(assignmentRelation.getAgent().getId(), assignmentRelation.getRole().getId(), assignmentRelation.getGoal()
+					.getId());
 		}
 	}
 
