@@ -10,53 +10,52 @@ package org.models.organization.entity;
 import org.models.organization.identifier.UniqueId;
 
 /**
- * The <code>Policy</code> class implements the {@link Policy} interface.
+ * The {@linkplain PolicyImpl} class is an implementation of the {@link Policy}.
  *
  * @author Christopher Zhong
+ * @see Policy
  * @since 1.0
  */
-public abstract class PolicyImpl implements Policy {
-
+public class PolicyImpl implements Policy {
 	/**
-	 * The <code>UniqueIdentifier</code> of the <code>Policy</code>.
+	 * The {@linkplain UniqueId} that represents this {@linkplain Policy}.
 	 */
-	private final UniqueId identifier;
+	private final UniqueId id;
 
 	/**
-	 * Constructs a new instance of <code>Policy</code>.
+	 * Constructs a new instance of {@linkplain Policy}.
 	 *
-	 * @param identifier
-	 *            the <code>UniqueIdentifier</code> of the <code>Policy</code>.
+	 * @param id
+	 *            the {@linkplain UniqueId} that represents this {@linkplain Policy}.
 	 */
-	protected PolicyImpl(final UniqueId identifier) {
-		if (identifier == null) {
-			throw new IllegalArgumentException("Parameter (identifier) cannot be null");
+	protected PolicyImpl(final UniqueId id) {
+		if (id == null) {
+			throw new IllegalArgumentException("Parameter (id) cannot be null");
 		}
-		this.identifier = identifier;
+		this.id = id;
 	}
 
 	@Override
-	public final UniqueId getIdentifier() {
-		return identifier;
+	public final UniqueId getId() {
+		return id;
 	}
 
 	@Override
 	public boolean equals(final Object object) {
 		if (object instanceof Policy) {
 			final Policy policy = (Policy) object;
-			return getIdentifier().equals(policy.getIdentifier());
+			return getId().equals(policy.getId());
 		}
 		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		return getIdentifier().hashCode();
+		return getId().hashCode();
 	}
 
 	@Override
 	public String toString() {
-		return getIdentifier().toString();
+		return getId().toString();
 	}
-
 }

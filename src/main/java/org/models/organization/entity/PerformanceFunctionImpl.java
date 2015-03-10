@@ -21,17 +21,17 @@ import org.models.organization.relation.ModeratesRelation;
 import org.models.organization.relation.UsesRelation;
 
 /**
- * The <code>PerformanceFunctionImpl</code> class implements the {@link PerformanceFunction} interface.
+ * The {@linkplain PerformanceFunctionImpl} class is an implementation of the {@link PerformanceFunction}.
  *
  * @author Christopher Zhong
+ * @see PerformanceFunction
  * @since 6.0
  */
 public class PerformanceFunctionImpl implements PerformanceFunction {
-
 	/**
-	 * The <code>UniqueIdentifier</code> representing the <code>PerformanceFunction</code>.
+	 * The {@linkplain UniqueId} that represents this {@linkplain PerformanceFunction}.
 	 */
-	private final UniqueId identifier;
+	private final UniqueId id;
 
 	/**
 	 * The set of <code>Task</code> that are linked to this <code>PerformanceFunction</code>.
@@ -44,21 +44,21 @@ public class PerformanceFunctionImpl implements PerformanceFunction {
 	private ModeratesRelation moderates = null;
 
 	/**
-	 * Constructs a new instance of <code>PerformanceFunctionImpl</code>.
+	 * Constructs a new instance of {@linkplain PerformanceFunction}.
 	 *
-	 * @param identifier
-	 *            the <code>UniqueIdentifier</code> representing the <code>PerformanceFunction</code>.
+	 * @param id
+	 *            the {@linkplain UniqueId} that represents this {@linkplain PerformanceFunction}.
 	 */
-	public PerformanceFunctionImpl(final UniqueId identifier) {
-		if (identifier == null) {
-			throw new IllegalArgumentException("Parameter (identifier) cannot be null");
+	public PerformanceFunctionImpl(final UniqueId id) {
+		if (id == null) {
+			throw new IllegalArgumentException("Parameter (id) cannot be null");
 		}
-		this.identifier = identifier;
+		this.id = id;
 	}
 
 	@Override
-	public UniqueId getIdentifier() {
-		return identifier;
+	public UniqueId getId() {
+		return id;
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class PerformanceFunctionImpl implements PerformanceFunction {
 			throw new IllegalArgumentException("Parameter (attribute) cannot be null");
 		}
 		if (moderates != null) {
-			throw new IllegalArgumentException(String.format("Cannot set attribute (%s) as function (%s) already moderates (%s)", attribute, getIdentifier(),
+			throw new IllegalArgumentException(String.format("Cannot set attribute (%s) as function (%s) already moderates (%s)", attribute, getId(),
 					moderates.getAttribute()));
 		}
 		final ModeratesRelation moderatesRelation = new ModeratesRelation(this, attribute);
@@ -114,7 +114,7 @@ public class PerformanceFunctionImpl implements PerformanceFunction {
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyModeratesSet(getIdentifier(), attribute.getId());
+			changeManager.notifyModeratesSet(getId(), attribute.getId());
 		}
 	}
 
@@ -134,19 +134,18 @@ public class PerformanceFunctionImpl implements PerformanceFunction {
 	public boolean equals(final Object object) {
 		if (object instanceof PerformanceFunction) {
 			final PerformanceFunction performanceFunction = (PerformanceFunction) object;
-			return getIdentifier().equals(performanceFunction.getIdentifier());
+			return getId().equals(performanceFunction.getId());
 		}
 		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		return getIdentifier().hashCode();
+		return getId().hashCode();
 	}
 
 	@Override
 	public String toString() {
-		return getIdentifier().toString();
+		return getId().toString();
 	}
-
 }

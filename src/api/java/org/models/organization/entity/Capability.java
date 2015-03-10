@@ -10,6 +10,7 @@ package org.models.organization.entity;
 import java.util.Set;
 
 import org.models.organization.Organization;
+import org.models.organization.identifier.Identifiable;
 import org.models.organization.identifier.UniqueId;
 
 /**
@@ -18,14 +19,7 @@ import org.models.organization.identifier.UniqueId;
  * @author Christopher Zhong
  * @since 3.4
  */
-public interface Capability {
-	/**
-	 * Returns the {@linkplain UniqueId} that represents this {@linkplain Capability}.
-	 *
-	 * @return the {@linkplain UniqueId} that represents this {@linkplain Capability}.
-	 */
-	UniqueId getId();
-
+public interface Capability extends Identifiable {
 	/**
 	 * Returns the set of <code>Agent</code> that possesses this <code>Capability</code>.
 	 *

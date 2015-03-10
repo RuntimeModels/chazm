@@ -10,6 +10,7 @@ package org.models.organization.entity;
 import java.util.Set;
 
 import org.models.organization.Organization;
+import org.models.organization.identifier.Identifiable;
 import org.models.organization.identifier.UniqueId;
 
 /**
@@ -18,7 +19,7 @@ import org.models.organization.identifier.UniqueId;
  * @author Christopher Zhong
  * @since 5.0
  */
-public interface Attribute {
+public interface Attribute extends Identifiable {
 	/**
 	 * The {@linkplain Type}> enumerates the different types of {@linkplain Attribute}.
 	 *
@@ -83,13 +84,6 @@ public interface Attribute {
 			}
 		};
 	}
-
-	/**
-	 * Returns the {@linkplain UniqueId} that represents this {@linkplain Attribute}.
-	 *
-	 * @return the {@linkplain UniqueId} that represents this {@linkplain Attribute}.
-	 */
-	UniqueId getId();
 
 	/**
 	 * Returns the {@linkplain Attribute.Type} of this {@linkplain Attribute}.

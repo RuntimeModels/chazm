@@ -269,7 +269,7 @@ public class DetailedInformationPanel extends JPanel {
 			}
 			writeRelation("Uses Performance Function(s):");
 			for (final PerformanceFunction performanceFunction : role.getUsesSet()) {
-				writeRelationEntity(performanceFunction.getIdentifier().toString());
+				writeRelationEntity(performanceFunction.getId().toString());
 			}
 			writeRelation("Contains Characteristic(s):");
 			for (final Characteristic characteristic : role.getContainsSet()) {
@@ -375,7 +375,7 @@ public class DetailedInformationPanel extends JPanel {
 			}
 			writeRelation("Moderated By Performance Function(s):");
 			for (final PerformanceFunction performanceFunction : attribute.getModeratedBySet()) {
-				writeRelationEntity(performanceFunction.getIdentifier().toString());
+				writeRelationEntity(performanceFunction.getId().toString());
 			}
 		} catch (final BadLocationException e) {
 			e.printStackTrace();
@@ -399,7 +399,7 @@ public class DetailedInformationPanel extends JPanel {
 			writeRelationEntity(task.getSpecificationGoal().getId().toString());
 			writeRelation("Uses:");
 			for (final PerformanceFunction performanceFunction : task.getLinkedSet()) {
-				writeRelationEntity(performanceFunction.getIdentifier().toString());
+				writeRelationEntity(performanceFunction.getId().toString());
 			}
 		} catch (final BadLocationException e) {
 			e.printStackTrace();
@@ -416,7 +416,7 @@ public class DetailedInformationPanel extends JPanel {
 		try {
 			/* clears the contents of the document */
 			doc.remove(0, doc.getLength());
-			writeEntity(performanceFunction.getIdentifier().toString());
+			writeEntity(performanceFunction.getId().toString());
 			writeRelation("Moderates Attribute:");
 			final Attribute attribute = performanceFunction.getModerates();
 			writeRelationEntity(attribute.getId().toString());

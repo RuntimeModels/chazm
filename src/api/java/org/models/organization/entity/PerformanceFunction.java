@@ -10,24 +10,17 @@ package org.models.organization.entity;
 import java.util.Collection;
 import java.util.Set;
 
-import org.models.organization.identifier.UniqueId;
+import org.models.organization.Organization;
+import org.models.organization.identifier.Identifiable;
 import org.models.organization.relation.Assignment;
 
 /**
- * The <code>PerformanceFunction</code> interface defines the entity Performance Function of the Organization Model.
+ * The {@linkplain PerformanceFunction} interface defines the performance function entity of an {@linkplain Organization}.
  *
  * @author Christopher Zhong
  * @since 6.0
  */
-public interface PerformanceFunction {
-
-	/**
-	 * Returns the unique <code>UniqueIdentifier</code> representing the <code>PerformanceFunction</code>.
-	 *
-	 * @return the unique <code>UniqueIdentifier</code> representing the <code>PerformanceFunction</code>.
-	 */
-	UniqueId getIdentifier();
-
+public interface PerformanceFunction extends Identifiable {
 	/**
 	 * Returns the set of <code>Role</code> that are linked to this <code>PerformanceFunction</code>.
 	 *

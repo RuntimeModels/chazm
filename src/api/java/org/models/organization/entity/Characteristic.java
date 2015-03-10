@@ -10,6 +10,7 @@ package org.models.organization.entity;
 import java.util.Set;
 
 import org.models.organization.Organization;
+import org.models.organization.identifier.Identifiable;
 import org.models.organization.identifier.UniqueId;
 
 /**
@@ -18,14 +19,7 @@ import org.models.organization.identifier.UniqueId;
  * @author Christopher Zhong
  * @since 6.0
  */
-public interface Characteristic {
-	/**
-	 * Returns the {@linkplain UniqueId} that represents this {@linkplain Characteristic}.
-	 *
-	 * @return the {@linkplain UniqueId} that represents this {@linkplain Characteristic}.
-	 */
-	UniqueId getId();
-
+public interface Characteristic extends Identifiable {
 	/**
 	 * Returns the set of <code>Role</code> that contains this <code>Characteristic</code>.
 	 *

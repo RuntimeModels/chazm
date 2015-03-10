@@ -10,6 +10,7 @@ package org.models.organization.entity;
 import java.util.Set;
 
 import org.models.organization.Organization;
+import org.models.organization.identifier.Identifiable;
 import org.models.organization.identifier.UniqueId;
 
 /**
@@ -18,7 +19,7 @@ import org.models.organization.identifier.UniqueId;
  * @author Christopher Zhong
  * @since 3.4
  */
-public interface Agent {
+public interface Agent extends Identifiable {
 
 	/**
 	 * The {@linkplain ContactInfo} defines the interface on how {@linkplain Agent}s can be contacted.
@@ -28,13 +29,6 @@ public interface Agent {
 	 */
 	interface ContactInfo {
 	}
-
-	/**
-	 * Returns the {@linkplain UniqueId} that represents this {@linkplain Agent}.
-	 *
-	 * @return the {@linkplain UniqueId} that represents this {@linkplain Agent}.
-	 */
-	UniqueId getId();
 
 	/**
 	 * Adds the given <code>Capability</code> to the the set of <code>Capability</code> that this <code>Agent</code> possesses.
