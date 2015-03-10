@@ -20,9 +20,10 @@ import javax.swing.event.ListSelectionEvent;
 
 import org.models.organization.Organization;
 import org.models.organization.relation.Task;
+import org.models.organization.relation.TaskRelation;
 
 /**
- * The <code>TaskVisualizationPanel</code> class is a Swing component to visualize the {@link Task} currently in the {@link Organization}.
+ * The <code>TaskVisualizationPanel</code> class is a Swing component to visualize the {@link TaskRelation} currently in the {@link Organization}.
  *
  * @author Christopher Zhong
  * @since 6.0
@@ -47,18 +48,18 @@ public class TaskVisualizationPanel extends AbstractListVisualizationPanel<Task>
 
 	@Override
 	public void valueChanged(final ListSelectionEvent e) {
-		final Task task = getList().getSelectedValue();
-		if (task != null) {
-			getDetailedInformationPanel().showDetailedInformation(task);
+		final Task taskRelation = getList().getSelectedValue();
+		if (taskRelation != null) {
+			getDetailedInformationPanel().showDetailedInformation(taskRelation);
 		}
 	}
 
 	@Override
 	List<Task> getCollection() {
-		final List<Task> tasks = new ArrayList<>(getOrganization().getTasks());
+		final List<Task> taskRelations = new ArrayList<>(getOrganization().getTasks());
 		final Comparator<Task> comparator = (task1, task2) -> task1.toString().compareTo(task2.toString());
-		Collections.sort(tasks, comparator);
-		return tasks;
+		Collections.sort(taskRelations, comparator);
+		return taskRelations;
 	}
 
 }
