@@ -20,10 +20,10 @@ import org.models.organization.identifier.UniqueId;
  * @see InstanceGoal
  * @since 3.2
  */
-public class InstanceGoalImpl<T> implements InstanceGoal<T> {
+public class InstanceGoalEntity<T> implements InstanceGoal<T> {
 
 	/**
-	 * The {@linkplain InstanceGoalImpl.Identifier} class extends the {@link UniqueId} by using two {@link UniqueId}s; the {@linkplain UniqueId} of a
+	 * The {@linkplain InstanceGoalEntity.Identifier} class extends the {@link UniqueId} by using two {@link UniqueId}s; the {@linkplain UniqueId} of a
 	 * {@linkplain SpecificationGoal} and the {@linkplain UniqueId} of instance portion of the {@linkplain InstanceGoal}.
 	 *
 	 * @author Christopher Zhong
@@ -62,7 +62,7 @@ public class InstanceGoalImpl<T> implements InstanceGoal<T> {
 		private transient String toString = null;
 
 		/**
-		 * Constructs a new instance of {@linkplain InstanceGoalImpl.Identifier}.
+		 * Constructs a new instance of {@linkplain InstanceGoalEntity.Identifier}.
 		 *
 		 * @param specificationId
 		 *            the {@linkplain UniqueId} that represents the {@linkplain SpecificationGoal}.
@@ -159,7 +159,7 @@ public class InstanceGoalImpl<T> implements InstanceGoal<T> {
 	 * @param parameter
 	 *            the parameter(s) of this {@linkplain InstanceGoal}.
 	 */
-	public InstanceGoalImpl(final SpecificationGoal specificationGoal, final UniqueId instanceId, final T parameter) {
+	public InstanceGoalEntity(final SpecificationGoal specificationGoal, final UniqueId instanceId, final T parameter) {
 		this.id = new Identifier(specificationGoal.getId(), instanceId);
 		this.instanceId = instanceId;
 		this.specificationGoal = specificationGoal;

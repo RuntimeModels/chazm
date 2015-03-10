@@ -17,14 +17,14 @@ import org.models.organization.relation.PossessesRelation;
 import org.models.organization.relation.RequiresRelation;
 
 /**
- * The {@link CapabilityImpl} class is an implementation of the {@link Capability}.
+ * The {@link CapabilityEntity} class is an implementation of the {@link Capability}.
  *
  * @author Scott Harmon, Christopher Zhong
  * @see Agent
  * @see Role
  * @since 1.0
  */
-public class CapabilityImpl implements Capability {
+public class CapabilityEntity implements Capability {
 	/**
 	 * The {@linkplain UniqueId} that represents this {@linkplain Capability}.
 	 */
@@ -46,7 +46,7 @@ public class CapabilityImpl implements Capability {
 	 * @param id
 	 *            the {@linkplain UniqueId} that represents this {@linkplain Capability}.
 	 */
-	public CapabilityImpl(final UniqueId id) {
+	public CapabilityEntity(final UniqueId id) {
 		if (id == null) {
 			throw new IllegalArgumentException("Parameter (id) cannot be null");
 		}

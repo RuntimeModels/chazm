@@ -17,8 +17,8 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.models.organization.Organization;
 import org.models.organization.OrganizationImpl;
-import org.models.organization.entity.CapabilityImpl;
-import org.models.organization.entity.RoleImpl;
+import org.models.organization.entity.CapabilityEntity;
+import org.models.organization.entity.RoleEntity;
 import org.models.organization.entity.SpecificationGoal;
 import org.models.organization.identifier.UniqueId;
 import org.models.organization.provider.DefaultSpecificationGoalProvider;
@@ -247,7 +247,7 @@ public class XMLParser {
 					final Capability capability = (Capability) element;
 					final UniqueId capabilityIdentifier = uniqueIdentifierProvider.getUniqueIdentifier(capability.getName(),
 							org.models.organization.entity.Capability.class);
-					final org.models.organization.entity.Capability c = new CapabilityImpl(capabilityIdentifier);
+					final org.models.organization.entity.Capability c = new CapabilityEntity(capabilityIdentifier);
 					organization.addCapability(c);
 				}
 				/* parse all the roles */
@@ -257,7 +257,7 @@ public class XMLParser {
 					if (role.getDestRelationships(RelationshipType.INHERITS).size() == 0) {
 						final UniqueId roleIdentifier = uniqueIdentifierProvider.getUniqueIdentifier(role.getName(),
 								org.models.organization.entity.Role.class);
-						final org.models.organization.entity.Role r = new RoleImpl(roleIdentifier);
+						final org.models.organization.entity.Role r = new RoleEntity(roleIdentifier);
 						organization.addRole(r);
 						/* set up the achieves relation */
 						for (final Relationship achieves : role.getSrcRelationships(RelationshipType.ACHIEVES)) {

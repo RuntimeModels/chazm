@@ -10,13 +10,13 @@ package org.models.organization.entity;
 import org.models.organization.identifier.UniqueId;
 
 /**
- * The {@linkplain PolicyImpl} class is an implementation of the {@link Policy}.
+ * The {@linkplain PolicyEntity} class is an implementation of the {@link Policy}.
  *
  * @author Christopher Zhong
  * @see Policy
  * @since 1.0
  */
-public class PolicyImpl implements Policy {
+public class PolicyEntity implements Policy {
 	/**
 	 * The {@linkplain UniqueId} that represents this {@linkplain Policy}.
 	 */
@@ -28,7 +28,7 @@ public class PolicyImpl implements Policy {
 	 * @param id
 	 *            the {@linkplain UniqueId} that represents this {@linkplain Policy}.
 	 */
-	protected PolicyImpl(final UniqueId id) {
+	protected PolicyEntity(final UniqueId id) {
 		if (id == null) {
 			throw new IllegalArgumentException("Parameter (id) cannot be null");
 		}

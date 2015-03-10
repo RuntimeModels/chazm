@@ -14,16 +14,16 @@ import java.util.List;
 import org.models.organization.Organization;
 import org.models.organization.OrganizationImpl;
 import org.models.organization.entity.Agent;
-import org.models.organization.entity.AgentImpl;
+import org.models.organization.entity.AgentEntity;
 import org.models.organization.entity.Attribute;
 import org.models.organization.entity.Attribute.Type;
-import org.models.organization.entity.AttributeImpl;
+import org.models.organization.entity.AttributeEntity;
 import org.models.organization.entity.Capability;
-import org.models.organization.entity.CapabilityImpl;
+import org.models.organization.entity.CapabilityEntity;
 import org.models.organization.entity.Role;
-import org.models.organization.entity.RoleImpl;
+import org.models.organization.entity.RoleEntity;
 import org.models.organization.entity.SpecificationGoal;
-import org.models.organization.entity.SpecificationGoalImpl;
+import org.models.organization.entity.SpecificationGoalEntity;
 import org.models.organization.identifier.StringIdentifier;
 
 /**
@@ -72,7 +72,7 @@ public class ModelFactory {
 		for (int i = 0; i < numberOfGoals; i++) {
 			final String goalName = String.format("Goal %s", i + 1);
 			final StringIdentifier goalIdentifier = StringIdentifier.getIdentifier(goalName);
-			final SpecificationGoal goal = new SpecificationGoalImpl(goalIdentifier);
+			final SpecificationGoal goal = new SpecificationGoalEntity(goalIdentifier);
 			goals.add(goal);
 			organization.addSpecificationGoal(goal);
 		}
@@ -81,13 +81,13 @@ public class ModelFactory {
 		for (int i = 0; i < numberOfRoles; i++) {
 			final String roleName = String.format("Role %s", i + 1);
 			final StringIdentifier roleIdentifier = StringIdentifier.getIdentifier(roleName);
-			final Role role = new RoleImpl(roleIdentifier);
+			final Role role = new RoleEntity(roleIdentifier);
 			roles.add(role);
 			organization.addRole(role);
 			/* create the capability for the role */
 			final String capabilityName = String.format("Capability %s", i + 1);
 			final StringIdentifier capabilityIdentifier = StringIdentifier.getIdentifier(capabilityName);
-			final Capability capability = new CapabilityImpl(capabilityIdentifier);
+			final Capability capability = new CapabilityEntity(capabilityIdentifier);
 			role.addRequires(capability);
 			organization.addCapability(capability);
 			/* create the attribute for the role */
@@ -95,7 +95,7 @@ public class ModelFactory {
 			final StringIdentifier attributeIdentifier = StringIdentifier.getIdentifier(attributeName);
 			final Type[] attributeTypes = Type.values();
 			final int index = (int) (Math.random() * attributeTypes.length);
-			final Attribute attribute = new AttributeImpl(attributeIdentifier, attributeTypes[index]);
+			final Attribute attribute = new AttributeEntity(attributeIdentifier, attributeTypes[index]);
 			role.addNeeds(attribute);
 			organization.addAttribute(attribute);
 		}
@@ -104,7 +104,7 @@ public class ModelFactory {
 		for (int i = 0; i < numberOfAgents; i++) {
 			final String agentName = String.format("Agent %s", i + 1);
 			final StringIdentifier agentIdentifier = StringIdentifier.getIdentifier(agentName);
-			final Agent agent = new AgentImpl(agentIdentifier);
+			final Agent agent = new AgentEntity(agentIdentifier);
 			agents.add(agent);
 			organization.addAgent(agent);
 		}
