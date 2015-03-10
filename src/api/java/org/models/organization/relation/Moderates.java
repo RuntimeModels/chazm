@@ -7,7 +7,7 @@ import org.models.organization.entity.PerformanceFunction;
 /**
  * The {@linkplain Moderates} interface defines the moderates relation, where a {@linkplain PerformanceFunction} moderates an {@linkplain Attribute}, of an
  * {@linkplain Organization}.
- * 
+ *
  * @author Christopher Zhong
  * @since 7.0.0
  */

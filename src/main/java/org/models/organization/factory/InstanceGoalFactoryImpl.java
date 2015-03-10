@@ -21,8 +21,7 @@ import org.models.organization.identifier.UniqueId;
 public class InstanceGoalFactoryImpl implements InstanceGoalFactory {
 
 	@Override
-	public <T> InstanceGoal<T> getInstanceGoal(final SpecificationGoal specification, final UniqueId instanceIdentifier,
-			final T parameter) {
+	public <T> InstanceGoal<T> getInstanceGoal(final SpecificationGoal specification, final UniqueId instanceIdentifier, final T parameter) {
 		return new InstanceGoalEntity<T>(specification, instanceIdentifier, parameter);
 	}
 

@@ -7,7 +7,7 @@ import org.models.organization.entity.Capability;
 /**
  * The {@linkplain Possesses} interface defines the possesses relation, where an {@linkplain Agent} possesses a {@linkplain Capability}, of an
  * {@linkplain Organization}.
- * 
+ *
  * @author Christopher Zhong
  * @since 7.0.0
  */

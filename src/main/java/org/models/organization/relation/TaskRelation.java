@@ -175,6 +175,7 @@ public class TaskRelation implements Task {
 		this.specificationGoal = specificationGoal;
 	}
 
+	@Override
 	public final UniqueId getId() {
 		return id;
 	}

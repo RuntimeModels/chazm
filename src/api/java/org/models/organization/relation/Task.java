@@ -7,7 +7,7 @@ import org.models.organization.identifier.Identifiable;
 
 /**
  * The {@linkplain Task} interface defines a task, which is a pair of a {@linkplain Role} and a {@linkplain SpecificationGoal}, of an {@linkplain Organization}.
- * 
+ *
  * @author Christopher Zhong
  * @since 7.0.0
  */

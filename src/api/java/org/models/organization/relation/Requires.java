@@ -7,7 +7,7 @@ import org.models.organization.entity.Role;
 /**
  * The {@linkplain Requires} interface defines the requires relation, where a {@linkplain Role} requires a {@linkplain Capability}, of an
  * {@linkplain Organization}.
- * 
+ *
  * @author Christopher Zhong
  * @since 7.0.0
  */

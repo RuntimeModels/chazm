@@ -14,7 +14,6 @@ import org.models.organization.entity.Role;
 import org.models.organization.entity.SpecificationGoal;
 import org.models.organization.identifier.StringIdentifier;
 import org.models.organization.identifier.UniqueId;
-import org.models.organization.provider.UniqueIdentifierProvider;
 
 /**
  * The <code>DefaultUniqueIdentifierProvider</code> provides a default implementation of the <code>UniqueIdentifierProvider</code>.
