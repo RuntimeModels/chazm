@@ -15,6 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.models.organization.identifier.UniqueId;
 import org.models.organization.registry.ChangeManager;
 import org.models.organization.registry.EventRegistry;
+import org.models.organization.relation.Has;
 import org.models.organization.relation.HasRelation;
 import org.models.organization.relation.PossessesRelation;
 
@@ -179,7 +180,7 @@ public class AgentEntity implements Agent {
 	@Override
 	public final Set<Attribute> getHasSet() {
 		final Set<Attribute> result = new HashSet<>();
-		for (final HasRelation hasRelation : has.values()) {
+		for (final Has hasRelation : has.values()) {
 			result.add(hasRelation.getAttribute());
 		}
 		return result;
@@ -190,7 +191,7 @@ public class AgentEntity implements Agent {
 		if (attributeIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (attributeIdentifier) cannot be null");
 		}
-		final HasRelation hasRelation = has.get(attributeIdentifier);
+		final Has hasRelation = has.get(attributeIdentifier);
 		return hasRelation == null ? null : hasRelation.getValue();
 	}
 
@@ -199,11 +200,11 @@ public class AgentEntity implements Agent {
 		if (attributeIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (attributeIdentifier) cannot be null");
 		}
-		final HasRelation hasRelation = has.get(attributeIdentifier);
+		final Has hasRelation = has.get(attributeIdentifier);
 		if (hasRelation == null) {
 			throw new IllegalArgumentException(String.format("Cannot set score for a non-existent attribute (%s)", attributeIdentifier));
 		}
-		hasRelation.setScore(value);
+		hasRelation.setValue(value);
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
@@ -217,7 +218,7 @@ public class AgentEntity implements Agent {
 			throw new IllegalArgumentException("Parameter (attributeIdentifier) cannot be null");
 		}
 		if (has.containsKey(attributeIdentifier)) {
-			final HasRelation hasRelation = has.remove(attributeIdentifier);
+			final Has hasRelation = has.remove(attributeIdentifier);
 			final Attribute attribute = hasRelation.getAttribute();
 			if (attribute instanceof AttributeEntity) {
 				((AttributeEntity) attribute).removeHadBy(this);
@@ -232,7 +233,7 @@ public class AgentEntity implements Agent {
 
 	@Override
 	public final void removeAllHas() {
-		for (final HasRelation hasRelation : has.values()) {
+		for (final Has hasRelation : has.values()) {
 			removeHas(hasRelation.getAttribute().getId());
 		}
 	}
@@ -264,7 +265,7 @@ public class AgentEntity implements Agent {
 		if (attribute == null) {
 			throw new IllegalArgumentException("Parameter (attribute) cannot be null");
 		}
-		final HasRelation hasRelation = has.get(attribute.getId());
+		final Has hasRelation = has.get(attribute.getId());
 		return hasRelation == null ? null : hasRelation.getValue();
 	}
 

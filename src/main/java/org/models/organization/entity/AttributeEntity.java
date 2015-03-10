@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.models.organization.identifier.UniqueId;
+import org.models.organization.relation.Has;
 import org.models.organization.relation.HasRelation;
 import org.models.organization.relation.ModeratesRelation;
 import org.models.organization.relation.NeedsRelation;
@@ -130,7 +131,7 @@ public class AttributeEntity implements Attribute {
 	@Override
 	public final Set<Agent> getHadBySet() {
 		final Set<Agent> result = new HashSet<>();
-		for (final HasRelation hasRelation : hadBy.values()) {
+		for (final Has hasRelation : hadBy.values()) {
 			result.add(hasRelation.getAgent());
 		}
 		return result;
@@ -141,7 +142,7 @@ public class AttributeEntity implements Attribute {
 		if (agentIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (agentIdentifier) cannot be null");
 		}
-		final HasRelation hasRelation = hadBy.get(agentIdentifier);
+		final Has hasRelation = hadBy.get(agentIdentifier);
 		return hasRelation == null ? null : hasRelation.getValue();
 	}
 

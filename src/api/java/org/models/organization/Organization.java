@@ -22,7 +22,7 @@ import org.models.organization.entity.SpecificationGoal;
 import org.models.organization.identifier.UniqueId;
 import org.models.organization.relation.Assignment;
 import org.models.organization.relation.Contains;
-import org.models.organization.relation.HasRelation;
+import org.models.organization.relation.Has;
 import org.models.organization.relation.ModeratesRelation;
 import org.models.organization.relation.NeedsRelation;
 import org.models.organization.relation.Task;
@@ -851,36 +851,36 @@ public interface Organization {
 	void removeNeedsRelation(UniqueId roleIdentifier, UniqueId attributeIdentifier);
 
 	/**
-	 * Creates the {@linkplain HasRelation} with the given {@linkplain Role}, {@linkplain Attribute}, and a {@linkplain double} representing the score.
+	 * Creates the {@linkplain Has} with the given {@linkplain Role}, {@linkplain Attribute}, and a {@linkplain double} representing the score.
 	 *
 	 * @param agentIdentifier
-	 *            the {@linkplain UniqueId} identifying the {@linkplain Agent} for the {@linkplain HasRelation}.
+	 *            the {@linkplain UniqueId} identifying the {@linkplain Agent} for the {@linkplain Has}.
 	 * @param attributeIdentifier
-	 *            the {@linkplain UniqueId} identifying the {@linkplain Attribute} for the {@linkplain HasRelation}.
+	 *            the {@linkplain UniqueId} identifying the {@linkplain Attribute} for the {@linkplain Has}.
 	 * @param value
-	 *            the {@linkplain double} representing the value for the {@linkplain HasRelation}.
+	 *            the {@linkplain double} representing the value for the {@linkplain Has}.
 	 */
 	void addHasRelation(UniqueId agentIdentifier, UniqueId attributeIdentifier, double value);
 
 	/**
-	 * Removes the {@linkplain HasRelation} with the given {@linkplain Agent} and {@linkplain Attribute}.
+	 * Removes the {@linkplain Has} with the given {@linkplain Agent} and {@linkplain Attribute}.
 	 *
 	 * @param agentIdentifier
-	 *            the {@linkplain UniqueId} identifying the {@linkplain Agent} for the {@linkplain HasRelation}.
+	 *            the {@linkplain UniqueId} identifying the {@linkplain Agent} for the {@linkplain Has}.
 	 * @param attributeIdentifier
-	 *            the {@linkplain UniqueId} identifying the {@linkplain Attribute} for the {@linkplain HasRelation}.
+	 *            the {@linkplain UniqueId} identifying the {@linkplain Attribute} for the {@linkplain Has}.
 	 */
 	void removeHasRelation(UniqueId agentIdentifier, UniqueId attributeIdentifier);
 
 	/**
-	 * Updates the {@linkplain HasRelation} with the given {@linkplain Agent}, {@linkplain Attribute}, and {@linkplain double} representing the score.
+	 * Updates the {@linkplain Has} with the given {@linkplain Agent}, {@linkplain Attribute}, and {@linkplain double} representing the score.
 	 *
 	 * @param agentIdentifier
-	 *            the {@linkplain UniqueId} identifying the {@linkplain Agent} for the {@linkplain HasRelation}.
+	 *            the {@linkplain UniqueId} identifying the {@linkplain Agent} for the {@linkplain Has}.
 	 * @param attributeIdentifier
-	 *            the {@linkplain UniqueId} identifying the {@linkplain Attribute} for the {@linkplain HasRelation}.
+	 *            the {@linkplain UniqueId} identifying the {@linkplain Attribute} for the {@linkplain Has}.
 	 * @param score
-	 *            the {@linkplain double} representing the score for the {@linkplain HasRelation}.
+	 *            the {@linkplain double} representing the score for the {@linkplain Has}.
 	 */
 	void updateHasRelation(UniqueId agentIdentifier, UniqueId attributeIdentifier, double score);
 
