@@ -25,6 +25,7 @@ import org.models.organization.relation.Contains;
 import org.models.organization.relation.ContainsRelation;
 import org.models.organization.relation.Needs;
 import org.models.organization.relation.NeedsRelation;
+import org.models.organization.relation.Requires;
 import org.models.organization.relation.RequiresRelation;
 import org.models.organization.relation.UsesRelation;
 
@@ -159,7 +160,7 @@ public class RoleEntity implements Role {
 	@Override
 	public final Set<Capability> getRequiresSet() {
 		final Set<Capability> result = new HashSet<>();
-		for (final RequiresRelation requiresRelation : requires.values()) {
+		for (final Requires requiresRelation : requires.values()) {
 			result.add(requiresRelation.getCapability());
 		}
 		return result;
@@ -171,7 +172,7 @@ public class RoleEntity implements Role {
 			throw new IllegalArgumentException("Parameter (capabilityIdentifier) cannot be null");
 		}
 		if (requires.containsKey(capabilityIdentifier)) {
-			final RequiresRelation requiresRelation = requires.remove(capabilityIdentifier);
+			final Requires requiresRelation = requires.remove(capabilityIdentifier);
 			final Capability capability = requiresRelation.getCapability();
 			if (capability instanceof CapabilityEntity) {
 				((CapabilityEntity) capability).removeRequiredBy(this);
@@ -186,7 +187,7 @@ public class RoleEntity implements Role {
 
 	@Override
 	public final void removeAllRequires() {
-		for (final RequiresRelation requiresRelation : requires.values()) {
+		for (final Requires requiresRelation : requires.values()) {
 			removeRequires(requiresRelation.getCapability().getId());
 		}
 	}

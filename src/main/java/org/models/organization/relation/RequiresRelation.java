@@ -7,22 +7,18 @@
  */
 package org.models.organization.relation;
 
+import org.models.organization.M;
 import org.models.organization.entity.Capability;
 import org.models.organization.entity.Role;
 
 /**
- * Represents the requires relation, where a {@link Role} requires a {@link Capability}.
+ * The {@linkplain RequiresRelation} class is an implementation of the {@linkplain Requires}.
  *
  * @author Christopher Zhong
- * @see Capability
- * @see Role
+ * @see Requires
  * @since 1.0
  */
-public class RequiresRelation {
-	/**
-	 * Internal <code>String</code> for the format of the <code>IllegalArgumentException</code>.
-	 */
-	private static final String EXCEPTION_FORMAT = "Parameters (role: %s, capability: %s) cannot be null";
+public class RequiresRelation implements Requires {
 
 	/**
 	 * Internal <code>String</code> for the format of the <code>toString</code> method.
@@ -30,12 +26,12 @@ public class RequiresRelation {
 	private static final String STRING_FORMAT = "%s <-> %s";
 
 	/**
-	 * The <code>Role</code> of this <code>RequiresRelation</code>.
+	 * The {@linkplain Role} of this {@linkplain Requires}.
 	 */
 	private final Role role;
 
 	/**
-	 * The <code>Capability</code> of this <code>RequiresRelation</code>.
+	 * The {@linkplain Capability} of this {@linkplain Requires}.
 	 */
 	private final Capability capability;
 
@@ -50,44 +46,39 @@ public class RequiresRelation {
 	private String toString = null;
 
 	/**
-	 * Constructs a new instance of <code>RequiresRelation</code>.
+	 * Constructs a new instance of {@linkplain Requires}.
 	 *
 	 * @param role
-	 *            the <code>Role</code> of this <code>RequiresRelation</code>.
+	 *            the {@linkplain Role} of this {@linkplain Requires}.
 	 * @param capability
-	 *            the <code>Capability</code> of this <code>RequiresRelation</code>.
+	 *            the {@linkplain Capability} of this {@linkplain Requires}.
 	 */
 	public RequiresRelation(final Role role, final Capability capability) {
-		if (role == null || capability == null) {
-			throw new IllegalArgumentException(String.format(EXCEPTION_FORMAT, role, capability));
+		if (role == null) {
+			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "role"));
+		}
+		if (capability == null) {
+			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "capability"));
 		}
 		this.role = role;
 		this.capability = capability;
 	}
 
-	/**
-	 * Returns the <code>Role</code> of this <code>RequiresRelation</code>.
-	 *
-	 * @return the <code>Role</code> of this <code>RequiresRelation</code>.
-	 */
+	@Override
 	public Role getRole() {
 		return role;
 	}
 
-	/**
-	 * Returns the <code>Capability</code> of this <code>RequiresRelation</code> .
-	 *
-	 * @return the <code>Capability</code> of this <code>RequiresRelation</code> .
-	 */
+	@Override
 	public Capability getCapability() {
 		return capability;
 	}
 
 	@Override
 	public boolean equals(final Object object) {
-		if (object instanceof RequiresRelation) {
-			final RequiresRelation requiresRelation = (RequiresRelation) object;
-			return getRole().equals(requiresRelation.getRole()) && getCapability().equals(requiresRelation.getCapability());
+		if (object instanceof Requires) {
+			final Requires requires = (Requires) object;
+			return getRole().equals(requires.getRole()) && getCapability().equals(requires.getCapability());
 		}
 		return false;
 	}
