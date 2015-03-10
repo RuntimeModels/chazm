@@ -28,7 +28,6 @@ import org.models.organization.registry.EventRegistry;
 import org.models.organization.relation.Achieves;
 import org.models.organization.relation.AchievesRelation;
 import org.models.organization.relation.Assignment;
-import org.models.organization.relation.Assignment;
 import org.models.organization.relation.Task;
 
 /**

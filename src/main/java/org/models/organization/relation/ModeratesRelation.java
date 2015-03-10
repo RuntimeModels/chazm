@@ -7,35 +7,30 @@
  */
 package org.models.organization.relation;
 
+import org.models.organization.Messages;
 import org.models.organization.entity.Attribute;
 import org.models.organization.entity.PerformanceFunction;
 
 /**
- * Represents the moderates relation, where a {@link PerformanceFunction} moderates an {@link Attribute}.
+ * The {@linkplain ModeratesRelation} class is an implementation of the {@linkplain Moderates}.
  *
  * @author Christopher Zhong
- * @see PerformanceFunction
- * @see Attribute
+ * @see Moderates
  * @since 6.0
  */
-public class ModeratesRelation {
-	/**
-	 * Internal <code>String</code> for the format of the <code>IllegalArgumentException</code>.
-	 */
-	private static final String EXCEPTION_FORMAT = "Parameters (performanceFunction: %s, attribute: %s) cannot be null";
-
+public class ModeratesRelation implements Moderates {
 	/**
 	 * Internal <code>String</code> for the format of the <code>toString</code> method.
 	 */
 	private static final String STRING_FORMAT = "%s <-> %s";
 
 	/**
-	 * The <code>PerformanceFunction</code> of this <code>ModeratesRelation</code>.
+	 * The {@linkplain PerformanceFunction} of this {@linkplain Moderates}.
 	 */
 	private final PerformanceFunction performanceFunction;
 
 	/**
-	 * The <code>Attribute</code> of this <code>ModeratesRelation</code>.
+	 * The {@linkplain Attribute} of this {@linkplain Moderates}.
 	 */
 	private final Attribute attribute;
 
@@ -50,44 +45,39 @@ public class ModeratesRelation {
 	private String toString = null;
 
 	/**
-	 * Constructs a new instance of <code>ModeratesRelation</code>.
+	 * Constructs a new instance of {@linkplain Moderates}.
 	 *
 	 * @param performanceFunction
-	 *            the <code>Role</code> of this <code>ModeratesRelation</code>.
+	 *            the {@linkplain PerformanceFunction} of this {@linkplain Moderates}.
 	 * @param attribute
-	 *            the <code>Attribute</code> of this <code>ModeratesRelation</code>.
+	 *            the {@linkplain Attribute} of this {@linkplain Moderates}.
 	 */
 	public ModeratesRelation(final PerformanceFunction performanceFunction, final Attribute attribute) {
-		if (performanceFunction == null || attribute == null) {
-			throw new IllegalArgumentException(String.format(EXCEPTION_FORMAT, performanceFunction, attribute));
+		if (performanceFunction == null) {
+			throw new IllegalArgumentException(String.format(Messages.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "performanceFunction"));
+		}
+		if (attribute == null) {
+			throw new IllegalArgumentException(String.format(Messages.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "attribute"));
 		}
 		this.performanceFunction = performanceFunction;
 		this.attribute = attribute;
 	}
 
-	/**
-	 * Returns the <code>PerformanceFunction</code> of this <code>ModeratesRelation</code>.
-	 *
-	 * @return the <code>PerformanceFunction</code> of this <code>ModeratesRelation</code>.
-	 */
+	@Override
 	public PerformanceFunction getPerformanceFunction() {
 		return performanceFunction;
 	}
 
-	/**
-	 * Returns the <code>Attribute</code> of this <code>ModeratesRelation</code>.
-	 *
-	 * @return the <code>Attribute</code> of this <code>ModeratesRelation</code>.
-	 */
+	@Override
 	public Attribute getAttribute() {
 		return attribute;
 	}
 
 	@Override
 	public boolean equals(final Object object) {
-		if (object instanceof ModeratesRelation) {
-			final ModeratesRelation moderatesRelation = (ModeratesRelation) object;
-			return getPerformanceFunction().equals(moderatesRelation.getPerformanceFunction()) && getAttribute().equals(moderatesRelation.getAttribute());
+		if (object instanceof Moderates) {
+			final Moderates moderates = (Moderates) object;
+			return getPerformanceFunction().equals(moderates.getPerformanceFunction()) && getAttribute().equals(moderates.getAttribute());
 		}
 		return false;
 	}
