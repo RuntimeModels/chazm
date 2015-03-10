@@ -691,14 +691,14 @@ public class OrganizationImpl implements Organization {
 		if (attribute == null) {
 			throw new IllegalArgumentException("Parameter (attribute) cannot be null");
 		}
-		if (entities.attributes.containsKey(attribute.getIdentifier())) {
+		if (entities.attributes.containsKey(attribute.getId())) {
 			throw new IllegalArgumentException(String.format("Attribute (%s) already exists", attribute));
 		}
-		entities.attributes.put(attribute.getIdentifier(), attribute);
+		entities.attributes.put(attribute.getId(), attribute);
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyAttributeAdded(attribute.getIdentifier());
+			changeManager.notifyAttributeAdded(attribute.getId());
 		}
 	}
 
@@ -744,7 +744,7 @@ public class OrganizationImpl implements Organization {
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyAttributeRemoved(attribute.getIdentifier());
+			changeManager.notifyAttributeRemoved(attribute.getId());
 		}
 	}
 

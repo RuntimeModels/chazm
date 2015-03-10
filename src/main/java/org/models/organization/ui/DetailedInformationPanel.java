@@ -265,7 +265,7 @@ public class DetailedInformationPanel extends JPanel {
 			}
 			writeRelation("Influences Attribute(s):");
 			for (final Attribute attribute : role.getNeedsSet()) {
-				writeRelationEntity(attribute.getIdentifier().toString());
+				writeRelationEntity(attribute.getId().toString());
 			}
 			writeRelation("Uses Performance Function(s):");
 			for (final PerformanceFunction performanceFunction : role.getUsesSet()) {
@@ -347,7 +347,7 @@ public class DetailedInformationPanel extends JPanel {
 			}
 			writeRelation("Has Attribute(s):");
 			for (final Attribute attribute : agent.getHasSet()) {
-				writeRelationEntityValue(attribute.getIdentifier().toString(), agent.getHasValue(attribute.getIdentifier()));
+				writeRelationEntityValue(attribute.getId().toString(), agent.getHasValue(attribute.getId()));
 			}
 		} catch (final BadLocationException e) {
 			e.printStackTrace();
@@ -364,7 +364,7 @@ public class DetailedInformationPanel extends JPanel {
 		try {
 			/* clears the contents of the document */
 			doc.remove(0, doc.getLength());
-			writeEntity(attribute.getIdentifier().toString());
+			writeEntity(attribute.getId().toString());
 			writeRelation("Influenced By Role(s):");
 			for (final Role role : attribute.getInfluencedBySet()) {
 				writeRelationEntity(role.getId().toString());
@@ -419,7 +419,7 @@ public class DetailedInformationPanel extends JPanel {
 			writeEntity(performanceFunction.getIdentifier().toString());
 			writeRelation("Moderates Attribute:");
 			final Attribute attribute = performanceFunction.getModerates();
-			writeRelationEntity(attribute.getIdentifier().toString());
+			writeRelationEntity(attribute.getId().toString());
 			writeRelation("Linked By Role(s):");
 			for (final Role role : performanceFunction.getUsedBySet()) {
 				writeRelationEntity(role.getId().toString());

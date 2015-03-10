@@ -12,25 +12,28 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.models.organization.entity.basic.SimpleAttributeImpl;
 import org.models.organization.identifier.UniqueId;
 import org.models.organization.relation.HasRelation;
 import org.models.organization.relation.ModeratesRelation;
 import org.models.organization.relation.NeedsRelation;
 
 /**
- * The <code>AttributeImpl</code> class implements the {@link Attribute} interface.
+ * The {@link AttributeImpl} class is an implementation of the {@link Attribute}.
  *
  * @author Christopher Zhong
  * @see Attribute
  * @since 5.0
  */
-public class AttributeImpl extends SimpleAttributeImpl implements Attribute {
+public class AttributeImpl implements Attribute {
+	/**
+	 * The {@linkplain UniqueId} that represents this {@link Attribute}.
+	 */
+	private final UniqueId id;
 
 	/**
-	 * The <code>Type</code> of this <code>Attribute</code>.
+	 * The {@linkplain Attribute.Type} of this {@linkplain Attribute}.
 	 */
-	private final Type attributeType;
+	private final Type type;
 
 	/**
 	 * The set of <code>Role</code> that needs this <code>Attribute</code>.
@@ -48,21 +51,32 @@ public class AttributeImpl extends SimpleAttributeImpl implements Attribute {
 	private final Map<UniqueId, ModeratesRelation> moderatedBy = new ConcurrentHashMap<>();
 
 	/**
-	 * Constructs a new instance of <code>AttributeImpl</code>.
+	 * Constructs a new instance of {@link Attribute}.
 	 *
-	 * @param identifier
-	 *            the <code>UniqueIdentifier</code> representing the <code>Attribute</code>.
-	 * @param attributeType
-	 *            the <code>Type</code> of the <code>Attribute</code>.
+	 * @param id
+	 *            the {@linkplain UniqueId} that represents this {@link Attribute}.
+	 * @param type
+	 *            the {@linkplain Attribute.Type} of this {@linkplain Attribute}.
 	 */
-	public AttributeImpl(final UniqueId identifier, final Type attributeType) {
-		super(identifier);
-		this.attributeType = attributeType;
+	public AttributeImpl(final UniqueId id, final Type type) {
+		if (id == null) {
+			throw new IllegalArgumentException("Parameter (id) cannot be null");
+		}
+		if (type == null) {
+			throw new IllegalArgumentException("Parameter (type) cannot be null");
+		}
+		this.id = id;
+		this.type = type;
+	}
+
+	@Override
+	public final UniqueId getId() {
+		return id;
 	}
 
 	@Override
 	public final Type getType() {
-		return attributeType;
+		return type;
 	}
 
 	/**
@@ -183,19 +197,19 @@ public class AttributeImpl extends SimpleAttributeImpl implements Attribute {
 	public boolean equals(final Object object) {
 		if (object instanceof Attribute) {
 			final Attribute attribute = (Attribute) object;
-			return super.equals(attribute);
+			return getId().equals(attribute.getId());
 		}
 		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		return super.hashCode();
+		return getId().hashCode();
 	}
 
 	@Override
 	public String toString() {
-		return String.format("%s [%s]", super.toString(), getType());
+		return String.format("%s [%s]", getId().toString(), getType());
 	}
 
 }
