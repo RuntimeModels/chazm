@@ -297,7 +297,7 @@ public class DetailedInformationPanel extends JPanel {
 			}
 			writeRelation("Possessed By Agent(s):");
 			for (final Agent agent : capability.getPossessedBySet()) {
-				writeRelationEntityScore(agent.getIdentifier().toString(), capability.getPossessedByScore(agent.getIdentifier()));
+				writeRelationEntityScore(agent.getId().toString(), capability.getPossessedByScore(agent.getId()));
 			}
 		} catch (final BadLocationException e) {
 			e.printStackTrace();
@@ -316,7 +316,7 @@ public class DetailedInformationPanel extends JPanel {
 			doc.remove(0, doc.getLength());
 			writeEntity(assignment.getIdentifier().toString());
 			writeEntityRelation("Agent:");
-			writeEntityEntity(assignment.getAgent().getIdentifier().toString());
+			writeEntityEntity(assignment.getAgent().getId().toString());
 			writeEntityRelation("Playing Role:");
 			writeEntityEntity(assignment.getRole().getId().toString());
 			writeEntityRelation("Achieving Goal:");
@@ -340,7 +340,7 @@ public class DetailedInformationPanel extends JPanel {
 		try {
 			/* clears the contents of the document */
 			doc.remove(0, doc.getLength());
-			writeEntity(agent.getIdentifier().toString());
+			writeEntity(agent.getId().toString());
 			writeRelation("Possesses Capability(ies):");
 			for (final Capability capability : agent.getPossessesSet()) {
 				writeRelationEntityScore(capability.getId().toString(), agent.getPossessesScore(capability.getId()));
@@ -371,7 +371,7 @@ public class DetailedInformationPanel extends JPanel {
 			}
 			writeRelation("Has By Agent(s):");
 			for (final Agent agent : attribute.getHadBySet()) {
-				writeRelationEntityValue(agent.getIdentifier().toString(), attribute.getHadByValue(agent.getIdentifier()));
+				writeRelationEntityValue(agent.getId().toString(), attribute.getHadByValue(agent.getId()));
 			}
 			writeRelation("Moderated By Performance Function(s):");
 			for (final PerformanceFunction performanceFunction : attribute.getModeratedBySet()) {

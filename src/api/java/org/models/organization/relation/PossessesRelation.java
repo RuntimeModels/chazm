@@ -133,7 +133,7 @@ public class PossessesRelation {
 
 	@Override
 	public String toString() {
-		return String.format(STRING_FORMAT, agent.getIdentifier(), capability.getId(), score);
+		return String.format(STRING_FORMAT, agent.getId(), capability.getId(), score);
 	}
 
 }

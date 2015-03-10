@@ -124,7 +124,7 @@ public class AttributeImpl implements Attribute {
 		if (hasRelation == null) {
 			throw new IllegalArgumentException("Parameter (hasRelation) cannot be null");
 		}
-		hadBy.put(hasRelation.getAgent().getIdentifier(), hasRelation);
+		hadBy.put(hasRelation.getAgent().getId(), hasRelation);
 	}
 
 	@Override
@@ -155,7 +155,7 @@ public class AttributeImpl implements Attribute {
 		if (agent == null) {
 			throw new IllegalArgumentException("Parameter (agent) cannot be null");
 		}
-		hadBy.remove(agent.getIdentifier());
+		hadBy.remove(agent.getId());
 	}
 
 	/**

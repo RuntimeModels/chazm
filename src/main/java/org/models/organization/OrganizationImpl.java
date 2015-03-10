@@ -332,16 +332,16 @@ public class OrganizationImpl implements Organization {
 		if (agent == null) {
 			throw new IllegalArgumentException("Parameter (agent) cannot be null");
 		}
-		if (entities.agents.containsKey(agent.getIdentifier())) {
+		if (entities.agents.containsKey(agent.getId())) {
 			throw new IllegalArgumentException(String.format("Agent (%s) already exists", agent));
 		}
-		entities.agents.put(agent.getIdentifier(), agent);
+		entities.agents.put(agent.getId(), agent);
 		final Map<UniqueId, Assignment> map = new ConcurrentHashMap<>();
-		relations.assignmentsByAgent.put(agent.getIdentifier(), map);
+		relations.assignmentsByAgent.put(agent.getId(), map);
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyAgentAdded(agent.getIdentifier());
+			changeManager.notifyAgentAdded(agent.getId());
 		}
 	}
 
@@ -389,7 +389,7 @@ public class OrganizationImpl implements Organization {
 		if (agent != null) {
 			final ChangeManager changeManager = EventRegistry.get();
 			if (changeManager != null) {
-				changeManager.notifyAgentRemoved(agent.getIdentifier());
+				changeManager.notifyAgentRemoved(agent.getId());
 			}
 		}
 	}
@@ -985,11 +985,11 @@ public class OrganizationImpl implements Organization {
 			throw new IllegalArgumentException(String.format("Assignment (%s) already exists", assignment));
 		}
 		relations.assignments.put(assignment.getIdentifier(), assignment);
-		relations.assignmentsByAgent.get(assignment.getAgent().getIdentifier()).put(assignment.getIdentifier(), assignment);
+		relations.assignmentsByAgent.get(assignment.getAgent().getId()).put(assignment.getIdentifier(), assignment);
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyAssignmentAdded(assignment.getAgent().getIdentifier(), assignment.getRole().getId(), assignment.getInstanceGoal()
+			changeManager.notifyAssignmentAdded(assignment.getAgent().getId(), assignment.getRole().getId(), assignment.getInstanceGoal()
 					.getId());
 		}
 	}
@@ -1046,11 +1046,11 @@ public class OrganizationImpl implements Organization {
 			throw new IllegalArgumentException("Parameter (assignmentIdentifier) cannot be null");
 		}
 		final Assignment assignment = relations.assignments.remove(assignmentIdentifier);
-		relations.assignmentsByAgent.get(assignment.getAgent().getIdentifier()).remove(assignmentIdentifier);
+		relations.assignmentsByAgent.get(assignment.getAgent().getId()).remove(assignmentIdentifier);
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyAssignmentRemoved(assignment.getAgent().getIdentifier(), assignment.getRole().getId(), assignment.getInstanceGoal()
+			changeManager.notifyAssignmentRemoved(assignment.getAgent().getId(), assignment.getRole().getId(), assignment.getInstanceGoal()
 					.getId());
 		}
 	}
