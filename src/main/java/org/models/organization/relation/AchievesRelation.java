@@ -18,13 +18,7 @@ import org.models.organization.entity.SpecificationGoal;
  * @see SpecificationGoal
  * @since 1.0
  */
-public class AchievesRelation {
-
-	/**
-	 * Internal <code>String</code> for the format of the <code>IllegalArgumentException</code>.
-	 */
-	private static final String EXCEPTION_FORMAT = "Parameters (role: %s, goal: %s) cannot be null";
-
+public class AchievesRelation implements Achieves {
 	/**
 	 * Internal <code>String</code> for the format of the <code>toString</code> method.
 	 */
@@ -59,36 +53,31 @@ public class AchievesRelation {
 	 *            the <code>SpecificationGoal</code> of this <code>AchievesRelation</code>.
 	 */
 	public AchievesRelation(final Role role, final SpecificationGoal specificationGoal) {
-		if (role == null || specificationGoal == null) {
-			throw new IllegalArgumentException(String.format(EXCEPTION_FORMAT, role, specificationGoal));
+		if (role == null) {
+			throw new IllegalArgumentException("Parameter (role) cannot be null");
+		}
+		if (specificationGoal == null) {
+			throw new IllegalArgumentException("Parameter (specificationGoal) cannot be null");
 		}
 		this.role = role;
 		this.specificationGoal = specificationGoal;
 	}
 
-	/**
-	 * Returns the <code>Role</code> of this <code>AchievesRelation</code>.
-	 *
-	 * @return the <code>Role</code> of this <code>AchievesRelation</code>.
-	 */
+	@Override
 	public Role getRole() {
 		return role;
 	}
 
-	/**
-	 * Returns the <code>SpecificationGoal</code> of this <code>AchievesRelation</code>.
-	 *
-	 * @return the <code>SpecificationGoal</code> of this <code>AchievesRelation</code>.
-	 */
+	@Override
 	public SpecificationGoal getSpecificationGoal() {
 		return specificationGoal;
 	}
 
 	@Override
 	public boolean equals(final Object object) {
-		if (object instanceof AchievesRelation) {
-			final AchievesRelation achievesRelation = (AchievesRelation) object;
-			return getRole().equals(achievesRelation.getRole()) && getSpecificationGoal().equals(achievesRelation.getSpecificationGoal());
+		if (object instanceof Achieves) {
+			final Achieves achieves = (Achieves) object;
+			return getRole().equals(achieves.getRole()) && getSpecificationGoal().equals(achieves.getSpecificationGoal());
 
 		}
 		return false;

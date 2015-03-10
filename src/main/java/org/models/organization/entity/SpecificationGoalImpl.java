@@ -15,6 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.models.organization.factory.InstanceGoalFactory;
 import org.models.organization.factory.InstanceGoalFactoryImpl;
 import org.models.organization.identifier.UniqueId;
+import org.models.organization.relation.Achieves;
 import org.models.organization.relation.AchievesRelation;
 
 /**
@@ -62,8 +63,8 @@ public class SpecificationGoalImpl implements SpecificationGoal {
 	@Override
 	public final Set<Role> getAchievedBySet() {
 		final Set<Role> result = new HashSet<>();
-		for (final AchievesRelation achievesRelation : achievedBy.values()) {
-			result.add(achievesRelation.getRole());
+		for (final Achieves achievesRelationImpl : achievedBy.values()) {
+			result.add(achievesRelationImpl.getRole());
 		}
 		return result;
 	}

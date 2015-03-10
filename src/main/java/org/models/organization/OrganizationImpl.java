@@ -25,6 +25,7 @@ import org.models.organization.entity.SpecificationGoal;
 import org.models.organization.identifier.UniqueId;
 import org.models.organization.registry.ChangeManager;
 import org.models.organization.registry.EventRegistry;
+import org.models.organization.relation.Achieves;
 import org.models.organization.relation.AchievesRelation;
 import org.models.organization.relation.Assignment;
 import org.models.organization.relation.Task;
@@ -126,12 +127,12 @@ public class OrganizationImpl implements Organization {
 		/**
 		 * Contains a set of {@linkplain Role}s and the {@linkplain SpecificationGoal}s that are achieved by each {@linkplain Role}.
 		 */
-		private final Map<UniqueId, Map<UniqueId, AchievesRelation>> achieves = new ConcurrentHashMap<>();
+		private final Map<UniqueId, Map<UniqueId, Achieves>> achieves = new ConcurrentHashMap<>();
 
 		/**
 		 * Contains a set of {@linkplain SpecificationGoal}s and the {@linkplain Role}s that achieve each {@linkplain SpecificationGoal}.
 		 */
-		private final Map<UniqueId, Map<UniqueId, AchievesRelation>> achievedBy = new ConcurrentHashMap<>();
+		private final Map<UniqueId, Map<UniqueId, Achieves>> achievedBy = new ConcurrentHashMap<>();
 	}
 
 	/**
@@ -989,8 +990,7 @@ public class OrganizationImpl implements Organization {
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyAssignmentAdded(assignment.getAgent().getId(), assignment.getRole().getId(), assignment.getInstanceGoal()
-					.getId());
+			changeManager.notifyAssignmentAdded(assignment.getAgent().getId(), assignment.getRole().getId(), assignment.getInstanceGoal().getId());
 		}
 	}
 
@@ -1050,8 +1050,7 @@ public class OrganizationImpl implements Organization {
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyAssignmentRemoved(assignment.getAgent().getId(), assignment.getRole().getId(), assignment.getInstanceGoal()
-					.getId());
+			changeManager.notifyAssignmentRemoved(assignment.getAgent().getId(), assignment.getRole().getId(), assignment.getInstanceGoal().getId());
 		}
 	}
 
@@ -1093,14 +1092,14 @@ public class OrganizationImpl implements Organization {
 		if (specGoal == null) {
 			throw new IllegalArgumentException(String.format("Specification goal (%s) does not exists", specGoalId));
 		}
-		final Map<UniqueId, AchievesRelation> achieves = relations.achieves.computeIfAbsent(roleId, v -> new ConcurrentHashMap<>());
+		final Map<UniqueId, Achieves> achieves = relations.achieves.computeIfAbsent(roleId, v -> new ConcurrentHashMap<>());
 		/* if the relation already exists do nothing */
 		if (achieves.containsKey(specGoalId)) {
 			return;
 		}
-		final AchievesRelation achievesRelation = new AchievesRelation(role, specGoal);
+		final Achieves achievesRelation = new AchievesRelation(role, specGoal);
 		achieves.put(specGoalId, achievesRelation);
-		final Map<UniqueId, AchievesRelation> achievedBy = relations.achievedBy.computeIfAbsent(specGoalId, v -> new ConcurrentHashMap<>());
+		final Map<UniqueId, Achieves> achievedBy = relations.achievedBy.computeIfAbsent(specGoalId, v -> new ConcurrentHashMap<>());
 		achievedBy.put(roleId, achievesRelation);
 
 		final ChangeManager changeManager = EventRegistry.get();
