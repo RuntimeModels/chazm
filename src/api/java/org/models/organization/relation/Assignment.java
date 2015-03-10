@@ -188,7 +188,7 @@ public class Assignment {
 		this.agent = agent;
 		this.role = role;
 		this.instanceGoal = instanceGoal;
-		identifier = new AssignmentIdentifier(agent.getIdentifier(), role.getId(), instanceGoal.getId());
+		identifier = new AssignmentIdentifier(agent.getId(), role.getId(), instanceGoal.getId());
 	}
 
 	/**

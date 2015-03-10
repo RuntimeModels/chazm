@@ -12,8 +12,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.models.organization.entity.basic.SimpleAgent;
-import org.models.organization.entity.basic.SimpleAgentImpl;
 import org.models.organization.identifier.UniqueId;
 import org.models.organization.registry.ChangeManager;
 import org.models.organization.registry.EventRegistry;
@@ -21,15 +19,19 @@ import org.models.organization.relation.HasRelation;
 import org.models.organization.relation.PossessesRelation;
 
 /**
- * The <code>AgentImpl</code> class implements the {@link Agent} interface.
+ * The {@link AgentImpl} class is an implementation of the {@link Agent}.
  *
  * @author Scott Harmon, Christopher Zhong
- * @see SimpleAgent
+ * @see Agent
  * @see Capability
  * @see Role
  * @since 1.0
  */
-public class AgentImpl extends SimpleAgentImpl implements Agent {
+public class AgentImpl implements Agent {
+	/**
+	 * The {@linkplain UniqueId} that represents this {@linkplain Agent}.
+	 */
+	private final UniqueId id;
 
 	/**
 	 * The set of <code>Capability</code> that this <code>Agent</code> possesses.
@@ -47,14 +49,21 @@ public class AgentImpl extends SimpleAgentImpl implements Agent {
 	private ContactInfo contactInfo = null;
 
 	/**
-	 * Constructs a new instance of <code>AgentImpl</code>.
-	 * <p>
+	 * Constructs a new instance of {@linkplain Agent}.
 	 *
-	 * @param identifier
-	 *            the <code>UniqueIdentifier</code> that identifies the <code>AgentImpl</code>.
+	 * @param id
+	 *            the {@linkplain UniqueId} that represents this {@linkplain Agent}.
 	 */
-	public AgentImpl(final UniqueId identifier) {
-		super(identifier);
+	public AgentImpl(final UniqueId id) {
+		if (id == null) {
+			throw new IllegalArgumentException("Parameter (id) cannot be null");
+		}
+		this.id = id;
+	}
+
+	@Override
+	public final UniqueId getId() {
+		return id;
 	}
 
 	@Override
@@ -73,7 +82,7 @@ public class AgentImpl extends SimpleAgentImpl implements Agent {
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyPossessesAdded(getIdentifier(), capability.getId(), score);
+			changeManager.notifyPossessesAdded(getId(), capability.getId(), score);
 		}
 	}
 
@@ -117,7 +126,7 @@ public class AgentImpl extends SimpleAgentImpl implements Agent {
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyPossessesChanged(getIdentifier(), possessesRelation.getCapability().getId(), score);
+			changeManager.notifyPossessesChanged(getId(), possessesRelation.getCapability().getId(), score);
 		}
 	}
 
@@ -135,7 +144,7 @@ public class AgentImpl extends SimpleAgentImpl implements Agent {
 
 			final ChangeManager changeManager = EventRegistry.get();
 			if (changeManager != null) {
-				changeManager.notifyPossessesRemoved(getIdentifier(), capability.getId());
+				changeManager.notifyPossessesRemoved(getId(), capability.getId());
 			}
 		}
 	}
@@ -163,7 +172,7 @@ public class AgentImpl extends SimpleAgentImpl implements Agent {
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyHasAdded(getIdentifier(), attribute.getId(), value);
+			changeManager.notifyHasAdded(getId(), attribute.getId(), value);
 		}
 	}
 
@@ -198,7 +207,7 @@ public class AgentImpl extends SimpleAgentImpl implements Agent {
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyHasChanged(getIdentifier(), hasRelation.getAttribute().getId(), value);
+			changeManager.notifyHasChanged(getId(), hasRelation.getAttribute().getId(), value);
 		}
 	}
 
@@ -216,7 +225,7 @@ public class AgentImpl extends SimpleAgentImpl implements Agent {
 
 			final ChangeManager changeManager = EventRegistry.get();
 			if (changeManager != null) {
-				changeManager.notifyHasRemoved(getIdentifier(), attribute.getId());
+				changeManager.notifyHasRemoved(getId(), attribute.getId());
 			}
 		}
 	}
@@ -263,14 +272,18 @@ public class AgentImpl extends SimpleAgentImpl implements Agent {
 	public boolean equals(final Object object) {
 		if (object instanceof Agent) {
 			final Agent agent = (Agent) object;
-			return super.equals(agent);
+			return getId().equals(agent.getId());
 		}
 		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		return super.hashCode();
+		return getId().hashCode();
 	}
 
+	@Override
+	public String toString() {
+		return getId().toString();
+	}
 }

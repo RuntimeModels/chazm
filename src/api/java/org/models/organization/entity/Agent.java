@@ -9,16 +9,16 @@ package org.models.organization.entity;
 
 import java.util.Set;
 
-import org.models.organization.entity.basic.SimpleAgent;
+import org.models.organization.Organization;
 import org.models.organization.identifier.UniqueId;
 
 /**
- * The <code>Agent</code> interface defines the basic agent entity of the Organization Model by extending the {@link SimpleAgent} interface.
+ * The {@linkplain Agent} interface defines the agent entity of an {@linkplain Organization}.
  *
  * @author Christopher Zhong
  * @since 3.4
  */
-public interface Agent extends SimpleAgent {
+public interface Agent {
 
 	/**
 	 * The {@linkplain ContactInfo} defines the interface on how {@linkplain Agent}s can be contacted.
@@ -28,6 +28,13 @@ public interface Agent extends SimpleAgent {
 	 */
 	interface ContactInfo {
 	}
+
+	/**
+	 * Returns the {@linkplain UniqueId} that represents this {@linkplain Agent}.
+	 *
+	 * @return the {@linkplain UniqueId} that represents this {@linkplain Agent}.
+	 */
+	UniqueId getId();
 
 	/**
 	 * Adds the given <code>Capability</code> to the the set of <code>Capability</code> that this <code>Agent</code> possesses.

@@ -71,7 +71,7 @@ public class CapabilityImpl implements Capability {
 		if (possessesRelation == null) {
 			throw new IllegalArgumentException("Parameter (possessesRelation) cannot be null");
 		}
-		possessedBy.put(possessesRelation.getAgent().getIdentifier(), possessesRelation);
+		possessedBy.put(possessesRelation.getAgent().getId(), possessesRelation);
 	}
 
 	@Override
@@ -102,7 +102,7 @@ public class CapabilityImpl implements Capability {
 		if (agent == null) {
 			throw new IllegalArgumentException("Parameter (agent) cannot be null");
 		}
-		possessedBy.remove(agent.getIdentifier());
+		possessedBy.remove(agent.getId());
 	}
 
 	/**
