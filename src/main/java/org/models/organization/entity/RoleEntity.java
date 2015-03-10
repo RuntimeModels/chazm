@@ -27,6 +27,7 @@ import org.models.organization.relation.Needs;
 import org.models.organization.relation.NeedsRelation;
 import org.models.organization.relation.Requires;
 import org.models.organization.relation.RequiresRelation;
+import org.models.organization.relation.Uses;
 import org.models.organization.relation.UsesRelation;
 
 /**
@@ -354,14 +355,14 @@ public class RoleEntity implements Role {
 		if (functionIdentifer == null) {
 			throw new IllegalArgumentException("Parameter (functionIdentifier) cannot be null");
 		}
-		final UsesRelation usesRelation = uses.get(functionIdentifer);
+		final Uses usesRelation = uses.get(functionIdentifer);
 		return usesRelation == null ? null : usesRelation.getPerformanceFunction();
 	}
 
 	@Override
 	public final Set<PerformanceFunction> getUsesSet() {
 		final Set<PerformanceFunction> result = new HashSet<>();
-		for (final UsesRelation linkedRelation : uses.values()) {
+		for (final Uses linkedRelation : uses.values()) {
 			result.add(linkedRelation.getPerformanceFunction());
 		}
 		return result;
@@ -373,7 +374,7 @@ public class RoleEntity implements Role {
 			throw new IllegalArgumentException("Parameter (functionIdentifier) cannot be null");
 		}
 		if (uses.containsKey(functionIdentifier)) {
-			final UsesRelation linkedRelation = uses.remove(functionIdentifier);
+			final Uses linkedRelation = uses.remove(functionIdentifier);
 			final PerformanceFunction performanceFunction = linkedRelation.getPerformanceFunction();
 			if (performanceFunction instanceof PerformanceFunctionEntity) {
 				((PerformanceFunctionEntity) performanceFunction).removeUsedBy(this);
