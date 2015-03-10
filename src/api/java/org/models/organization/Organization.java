@@ -21,6 +21,7 @@ import org.models.organization.entity.Role;
 import org.models.organization.entity.SpecificationGoal;
 import org.models.organization.identifier.UniqueId;
 import org.models.organization.relation.Assignment;
+import org.models.organization.relation.Assignment;
 import org.models.organization.relation.ContainsRelation;
 import org.models.organization.relation.HasRelation;
 import org.models.organization.relation.ModeratesRelation;

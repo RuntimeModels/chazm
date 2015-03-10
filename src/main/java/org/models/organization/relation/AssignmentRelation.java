@@ -1,0 +1,232 @@
+/*
+ * Assignment.java
+ *
+ * Created on Dec 6, 2005
+ *
+ * See License.txt file the license agreement.
+ */
+package org.models.organization.relation;
+
+import org.models.organization.entity.Agent;
+import org.models.organization.entity.InstanceGoal;
+import org.models.organization.entity.Role;
+import org.models.organization.identifier.UniqueId;
+
+/**
+ * The {@linkplain AssignmentRelation} class is an implementation of the {@linkplain Assignment}.
+ *
+ * @author Christopher Zhong
+ * @see Assignment
+ * @since 2.0
+ */
+public class AssignmentRelation implements Assignment {
+	/**
+	 * The {@linkplain Id} extends the {@link UniqueId} by using three {@link UniqueId}s; the {@linkplain UniqueId} of an {@linkplain Agent}, the
+	 * {@linkplain UniqueId} of a {@linkplain Role}, and the {@linkplain UniqueId} of an {@linkplain InstanceGoal}.
+	 *
+	 * @author Christopher Zhong
+	 * @see UniqueId
+	 * @since 4.0
+	 */
+	private static class Id extends UniqueId {
+		/**
+		 * Serial version ID.
+		 */
+		private static final long serialVersionUID = 7696865567559985410L;
+
+		/**
+		 * Internal <code>String</code> for the formatting of <code>Assignment</code> class.
+		 */
+		private static final String STRING_FORMAT = "%s, %s, %s";
+
+		/**
+		 * The {@linkplain UniqueId} that represents an {@linkplain Agent}.
+		 */
+		private final UniqueId agentId;
+
+		/**
+		 * The {@linkplain UniqueId} that represents a {@linkplain Role}.
+		 */
+		private final UniqueId roleId;
+
+		/**
+		 * The {@linkplain UniqueId} that represents an {@linkplain InstanceGoal}.
+		 */
+		private final UniqueId goalId;
+
+		/**
+		 * Optimization for hash code computation since it never changes.
+		 */
+		private transient Integer hashCode = null;
+
+		/**
+		 * Optimization for <code>toString</code> method since it never changes.
+		 */
+		private transient String toString = null;
+
+		/**
+		 * Constructs a new instance of {@linkplain Assignment}.
+		 *
+		 * @param agentId
+		 *            the {@linkplain UniqueId} that represents an {@linkplain Agent}.
+		 * @param roleId
+		 *            the {@linkplain UniqueId} that represents a {@linkplain Role}.
+		 * @param goalId
+		 *            the {@linkplain UniqueId} that represents an {@linkplain InstanceGoal}.
+		 */
+		public Id(final UniqueId agentId, final UniqueId roleId, final UniqueId goalId) {
+			this.agentId = agentId;
+			this.roleId = roleId;
+			this.goalId = goalId;
+		}
+
+		/**
+		 * Returns the {@linkplain UniqueId} that represents an {@linkplain Agent}.
+		 *
+		 * @return the {@linkplain UniqueId} that represents an {@linkplain Agent}.
+		 */
+		private UniqueId getAgentId() {
+			return agentId;
+		}
+
+		/**
+		 * Returns the {@linkplain UniqueId} that represents a {@linkplain Role}.
+		 *
+		 * @return the {@linkplain UniqueId} that represents a {@linkplain Role}.
+		 */
+		private UniqueId getRoleId() {
+			return roleId;
+		}
+
+		/**
+		 * Returns the {@linkplain UniqueId} that represents an {@linkplain InstanceGoal}.
+		 *
+		 * @return the {@linkplain UniqueId} that represents an {@linkplain InstanceGoal}.
+		 */
+		private UniqueId getGoalId() {
+			return goalId;
+		}
+
+		@Override
+		public boolean equals(final Object object) {
+			if (object instanceof Id) {
+				final Id id = (Id) object;
+				return getAgentId().equals(id.getAgentId()) && getRoleId().equals(id.getRoleId()) && getGoalId().equals(id.getGoalId());
+			}
+			return false;
+		}
+
+		@Override
+		public int hashCode() {
+			if (hashCode == null) {
+				hashCode = getAgentId().hashCode() << 22 | getRoleId().hashCode() << 11 | getGoalId().hashCode();
+			}
+			return hashCode;
+		}
+
+		@Override
+		public String toString() {
+			if (toString == null) {
+				toString = String.format(STRING_FORMAT, getAgentId(), getRoleId(), getGoalId());
+			}
+			return toString;
+		}
+	}
+
+	/**
+	 * Internal <code>String</code> for the formatting of the <code>toString</code> method.
+	 */
+	private static final String STRING_FORMAT_PARAMETERS = "<%s (%s)>";
+
+	/**
+	 * Internal <code>String</code> for the formatting of the <code>toString</code> method.
+	 */
+	private static final String STRING_FORMAT_NO_PARAMETERS = "<%s>";
+
+	/**
+	 * The {@linkplain UniqueId} that represents this {@linkplain Assignment}.
+	 */
+	private final UniqueId id;
+
+	/**
+	 * The {@linkplain Agent} of this {@linkplain Assignment}.
+	 */
+	private final Agent agent;
+
+	/**
+	 * The {@linkplain Role} of this {@linkplain Assignment}.
+	 */
+	private final Role role;
+
+	/**
+	 * The {@linkplain InstanceGoal} of this {@linkplain Assignment}.
+	 */
+	private final InstanceGoal<?> goal;
+
+	/**
+	 * Constructs a new instance of {@linkplain Assignment}.
+	 *
+	 * @param agent
+	 *            the {@linkplain Agent} of this {@linkplain Assignment}.
+	 * @param role
+	 *            the {@linkplain Role} of this {@linkplain Assignment}.
+	 * @param goal
+	 *            the {@linkplain InstanceGoal} of this {@linkplain Assignment}.
+	 */
+	public AssignmentRelation(final Agent agent, final Role role, final InstanceGoal<?> goal) {
+		if (agent == null) {
+			throw new IllegalArgumentException("Parameter (agent) cannot be null");
+		}
+		if (role == null) {
+			throw new IllegalArgumentException("Parameter (role) cannot be null");
+		}
+		if (goal == null) {
+			throw new IllegalArgumentException("Parameter (goal) cannot be null");
+		}
+		this.agent = agent;
+		this.role = role;
+		this.goal = goal;
+		id = new Id(agent.getId(), role.getId(), goal.getId());
+	}
+
+	@Override
+	public final UniqueId getId() {
+		return id;
+	}
+
+	@Override
+	public final Agent getAgent() {
+		return agent;
+	}
+
+	@Override
+	public final Role getRole() {
+		return role;
+	}
+
+	@Override
+	public final InstanceGoal<?> getGoal() {
+		return goal;
+	}
+
+	@Override
+	public boolean equals(final Object object) {
+		if (object instanceof Assignment) {
+			final Assignment assignment = (Assignment) object;
+			return getId().equals(assignment.getId());
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return getId().hashCode();
+	}
+
+	@Override
+	public String toString() {
+		return getGoal().getParameter() == null ? String.format(STRING_FORMAT_NO_PARAMETERS, getId()) : String.format(STRING_FORMAT_PARAMETERS, getId(),
+				getGoal().getParameter());
+	}
+
+}
