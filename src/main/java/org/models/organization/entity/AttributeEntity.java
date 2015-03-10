@@ -17,6 +17,7 @@ import org.models.organization.relation.Has;
 import org.models.organization.relation.HasRelation;
 import org.models.organization.relation.Moderates;
 import org.models.organization.relation.ModeratesRelation;
+import org.models.organization.relation.Needs;
 import org.models.organization.relation.NeedsRelation;
 
 /**
@@ -97,7 +98,7 @@ public class AttributeEntity implements Attribute {
 	@Override
 	public final Set<Role> getInfluencedBySet() {
 		final Set<Role> result = new HashSet<>();
-		for (final NeedsRelation needsRelation : influencedBy.values()) {
+		for (final Needs needsRelation : influencedBy.values()) {
 			result.add(needsRelation.getRole());
 		}
 		return result;

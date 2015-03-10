@@ -24,7 +24,7 @@ import org.models.organization.relation.Assignment;
 import org.models.organization.relation.Contains;
 import org.models.organization.relation.Has;
 import org.models.organization.relation.Moderates;
-import org.models.organization.relation.NeedsRelation;
+import org.models.organization.relation.Needs;
 import org.models.organization.relation.Task;
 import org.models.organization.relation.UsesRelation;
 
@@ -831,22 +831,22 @@ public interface Organization {
 	void updatePossessesRelation(UniqueId agentIdentifier, UniqueId capabilityIdentifier, double score);
 
 	/**
-	 * Creates the {@linkplain NeedsRelation} with the given {@linkplain Role} and {@linkplain Attribute}.
+	 * Creates the {@linkplain Needs} with the given {@linkplain Role} and {@linkplain Attribute}.
 	 *
 	 * @param roleIdentifier
-	 *            the {@linkplain UniqueId} identifying the {@linkplain Role} for the {@linkplain NeedsRelation}.
+	 *            the {@linkplain UniqueId} identifying the {@linkplain Role} for the {@linkplain Needs}.
 	 * @param attributeIdentifier
-	 *            the {@linkplain UniqueId} identifying the {@linkplain Attribute} for the {@linkplain NeedsRelation} .
+	 *            the {@linkplain UniqueId} identifying the {@linkplain Attribute} for the {@linkplain Needs} .
 	 */
 	void addNeedsRelation(UniqueId roleIdentifier, UniqueId attributeIdentifier);
 
 	/**
-	 * Removes the {@linkplain NeedsRelation} with the given {@linkplain Role} and {@linkplain Attribute}.
+	 * Removes the {@linkplain Needs} with the given {@linkplain Role} and {@linkplain Attribute}.
 	 *
 	 * @param roleIdentifier
-	 *            the {@linkplain UniqueId} identifying the {@linkplain Role} for the {@linkplain NeedsRelation}.
+	 *            the {@linkplain UniqueId} identifying the {@linkplain Role} for the {@linkplain Needs}.
 	 * @param attributeIdentifier
-	 *            the {@linkplain UniqueId} identifying the {@linkplain Attribute} for the {@linkplain NeedsRelation} .
+	 *            the {@linkplain UniqueId} identifying the {@linkplain Attribute} for the {@linkplain Needs} .
 	 */
 	void removeNeedsRelation(UniqueId roleIdentifier, UniqueId attributeIdentifier);
 

@@ -7,33 +7,30 @@
  */
 package org.models.organization.relation;
 
+import org.models.organization.Messages;
 import org.models.organization.entity.Attribute;
 import org.models.organization.entity.Role;
 
 /**
- * Represents the needs relation, where a {@link Role} needs an {@link Attribute}.
+ * The {@linkplain NeedsRelation} class is an implementation of the {@linkplain Needs}.
  *
  * @author Christopher Zhong
+ * @see Needs
  * @since 6.0
  */
-public class NeedsRelation {
-	/**
-	 * Internal <code>String</code> for the format of the <code>IllegalArgumentException</code>.
-	 */
-	private static final String EXCEPTION_FORMAT = "Parameters (role: %s, attribute: %s) cannot be null";
-
+public class NeedsRelation implements Needs {
 	/**
 	 * Internal <code>String</code> for the format of the <code>toString</code> method.
 	 */
 	private static final String STRING_FORMAT = "%s <-> %s";
 
 	/**
-	 * The <code>Role</code> of this <code>NeedsRelation</code>.
+	 * The {@linkplain Role} of this {@linkplain Needs}.
 	 */
 	private final Role role;
 
 	/**
-	 * The <code>Attribute</code> of this <code>NeedsRelation</code>.
+	 * The {@linkplain Attribute} of this {@linkplain Needs}.
 	 */
 	private final Attribute attribute;
 
@@ -48,44 +45,39 @@ public class NeedsRelation {
 	private String toString = null;
 
 	/**
-	 * Constructs a new instance of <code>NeedsRelation</code>.
+	 * Constructs a new instance of {@linkplain Needs}.
 	 *
 	 * @param role
-	 *            the <code>Role</code> of this <code>NeedsRelation</code>.
+	 *            the {@linkplain Role} of this {@linkplain Needs}.
 	 * @param attribute
-	 *            the <code>Attribute</code> of this <code>NeedsRelation</code>.
+	 *            the {@linkplain Attribute} of this {@linkplain Needs}.
 	 */
 	public NeedsRelation(final Role role, final Attribute attribute) {
-		if (role == null || attribute == null) {
-			throw new IllegalArgumentException(String.format(EXCEPTION_FORMAT, role, attribute));
+		if (role == null) {
+			throw new IllegalArgumentException(String.format(Messages.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "role"));
+		}
+		if (attribute == null) {
+			throw new IllegalArgumentException(String.format(Messages.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "attribute"));
 		}
 		this.role = role;
 		this.attribute = attribute;
 	}
 
-	/**
-	 * Returns the <code>Role</code> of this <code>NeedsRelation</code>.
-	 *
-	 * @return the <code>Role</code> of this <code>NeedsRelation</code>.
-	 */
+	@Override
 	public Role getRole() {
 		return role;
 	}
 
-	/**
-	 * Returns the <code>Attribute</code> of this <code>NeedsRelation</code>.
-	 *
-	 * @return the <code>Attribute</code> of this <code>NeedsRelation</code>.
-	 */
+	@Override
 	public Attribute getAttribute() {
 		return attribute;
 	}
 
 	@Override
 	public boolean equals(final Object object) {
-		if (object instanceof NeedsRelation) {
-			final NeedsRelation needsRelation = (NeedsRelation) object;
-			return getRole().equals(needsRelation.getRole()) && getAttribute().equals(needsRelation.getAttribute());
+		if (object instanceof Needs) {
+			final Needs needs = (Needs) object;
+			return getRole().equals(needs.getRole()) && getAttribute().equals(needs.getAttribute());
 		}
 		return false;
 	}
