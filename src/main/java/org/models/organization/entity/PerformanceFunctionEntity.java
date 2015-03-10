@@ -21,13 +21,13 @@ import org.models.organization.relation.ModeratesRelation;
 import org.models.organization.relation.UsesRelation;
 
 /**
- * The {@linkplain PerformanceFunctionImpl} class is an implementation of the {@link PerformanceFunction}.
+ * The {@linkplain PerformanceFunctionEntity} class is an implementation of the {@link PerformanceFunction}.
  *
  * @author Christopher Zhong
  * @see PerformanceFunction
  * @since 6.0
  */
-public class PerformanceFunctionImpl implements PerformanceFunction {
+public class PerformanceFunctionEntity implements PerformanceFunction {
 	/**
 	 * The {@linkplain UniqueId} that represents this {@linkplain PerformanceFunction}.
 	 */
@@ -49,7 +49,7 @@ public class PerformanceFunctionImpl implements PerformanceFunction {
 	 * @param id
 	 *            the {@linkplain UniqueId} that represents this {@linkplain PerformanceFunction}.
 	 */
-	public PerformanceFunctionImpl(final UniqueId id) {
+	public PerformanceFunctionEntity(final UniqueId id) {
 		if (id == null) {
 			throw new IllegalArgumentException("Parameter (id) cannot be null");
 		}
@@ -108,8 +108,8 @@ public class PerformanceFunctionImpl implements PerformanceFunction {
 		}
 		final ModeratesRelation moderatesRelation = new ModeratesRelation(this, attribute);
 		moderates = moderatesRelation;
-		if (attribute instanceof AttributeImpl) {
-			((AttributeImpl) attribute).addModeratedBy(moderatesRelation);
+		if (attribute instanceof AttributeEntity) {
+			((AttributeEntity) attribute).addModeratedBy(moderatesRelation);
 		}
 
 		final ChangeManager changeManager = EventRegistry.get();

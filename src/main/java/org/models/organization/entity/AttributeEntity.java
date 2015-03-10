@@ -18,13 +18,13 @@ import org.models.organization.relation.ModeratesRelation;
 import org.models.organization.relation.NeedsRelation;
 
 /**
- * The {@link AttributeImpl} class is an implementation of the {@link Attribute}.
+ * The {@link AttributeEntity} class is an implementation of the {@link Attribute}.
  *
  * @author Christopher Zhong
  * @see Attribute
  * @since 5.0
  */
-public class AttributeImpl implements Attribute {
+public class AttributeEntity implements Attribute {
 	/**
 	 * The {@linkplain UniqueId} that represents this {@link Attribute}.
 	 */
@@ -58,7 +58,7 @@ public class AttributeImpl implements Attribute {
 	 * @param type
 	 *            the {@linkplain Attribute.Type} of this {@linkplain Attribute}.
 	 */
-	public AttributeImpl(final UniqueId id, final Type type) {
+	public AttributeEntity(final UniqueId id, final Type type) {
 		if (id == null) {
 			throw new IllegalArgumentException("Parameter (id) cannot be null");
 		}

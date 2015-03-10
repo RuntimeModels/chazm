@@ -8,7 +8,7 @@
 package org.models.organization.factory;
 
 import org.models.organization.entity.InstanceGoal;
-import org.models.organization.entity.InstanceGoalImpl;
+import org.models.organization.entity.InstanceGoalEntity;
 import org.models.organization.entity.SpecificationGoal;
 import org.models.organization.identifier.UniqueId;
 
@@ -23,7 +23,7 @@ public class InstanceGoalFactoryImpl implements InstanceGoalFactory {
 	@Override
 	public <T> InstanceGoal<T> getInstanceGoal(final SpecificationGoal specification, final UniqueId instanceIdentifier,
 			final T parameter) {
-		return new InstanceGoalImpl<T>(specification, instanceIdentifier, parameter);
+		return new InstanceGoalEntity<T>(specification, instanceIdentifier, parameter);
 	}
 
 }

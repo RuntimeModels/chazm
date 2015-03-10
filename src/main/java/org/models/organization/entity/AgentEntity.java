@@ -19,7 +19,7 @@ import org.models.organization.relation.HasRelation;
 import org.models.organization.relation.PossessesRelation;
 
 /**
- * The {@link AgentImpl} class is an implementation of the {@link Agent}.
+ * The {@link AgentEntity} class is an implementation of the {@link Agent}.
  *
  * @author Scott Harmon, Christopher Zhong
  * @see Agent
@@ -27,7 +27,7 @@ import org.models.organization.relation.PossessesRelation;
  * @see Role
  * @since 1.0
  */
-public class AgentImpl implements Agent {
+public class AgentEntity implements Agent {
 	/**
 	 * The {@linkplain UniqueId} that represents this {@linkplain Agent}.
 	 */
@@ -54,7 +54,7 @@ public class AgentImpl implements Agent {
 	 * @param id
 	 *            the {@linkplain UniqueId} that represents this {@linkplain Agent}.
 	 */
-	public AgentImpl(final UniqueId id) {
+	public AgentEntity(final UniqueId id) {
 		if (id == null) {
 			throw new IllegalArgumentException("Parameter (id) cannot be null");
 		}
@@ -76,8 +76,8 @@ public class AgentImpl implements Agent {
 		}
 		final PossessesRelation possessesRelation = new PossessesRelation(this, capability, score);
 		possesses.put(capability.getId(), possessesRelation);
-		if (capability instanceof CapabilityImpl) {
-			((CapabilityImpl) capability).addPossessedBy(possessesRelation);
+		if (capability instanceof CapabilityEntity) {
+			((CapabilityEntity) capability).addPossessedBy(possessesRelation);
 		}
 
 		final ChangeManager changeManager = EventRegistry.get();
@@ -138,8 +138,8 @@ public class AgentImpl implements Agent {
 		if (possesses.containsKey(capabilityIdentifier)) {
 			final PossessesRelation possessesRelation = possesses.remove(capabilityIdentifier);
 			final Capability capability = possessesRelation.getCapability();
-			if (capability instanceof CapabilityImpl) {
-				((CapabilityImpl) capability).removePossessedBy(this);
+			if (capability instanceof CapabilityEntity) {
+				((CapabilityEntity) capability).removePossessedBy(this);
 			}
 
 			final ChangeManager changeManager = EventRegistry.get();
@@ -166,8 +166,8 @@ public class AgentImpl implements Agent {
 		}
 		final HasRelation hasRelation = new HasRelation(this, attribute, value);
 		has.put(attribute.getId(), hasRelation);
-		if (attribute instanceof AttributeImpl) {
-			((AttributeImpl) attribute).addHadBy(hasRelation);
+		if (attribute instanceof AttributeEntity) {
+			((AttributeEntity) attribute).addHadBy(hasRelation);
 		}
 
 		final ChangeManager changeManager = EventRegistry.get();
@@ -219,8 +219,8 @@ public class AgentImpl implements Agent {
 		if (has.containsKey(attributeIdentifier)) {
 			final HasRelation hasRelation = has.remove(attributeIdentifier);
 			final Attribute attribute = hasRelation.getAttribute();
-			if (attribute instanceof AttributeImpl) {
-				((AttributeImpl) attribute).removeHadBy(this);
+			if (attribute instanceof AttributeEntity) {
+				((AttributeEntity) attribute).removeHadBy(this);
 			}
 
 			final ChangeManager changeManager = EventRegistry.get();

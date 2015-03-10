@@ -16,13 +16,13 @@ import org.models.organization.identifier.UniqueId;
 import org.models.organization.relation.ContainsRelation;
 
 /**
- * The {@link CharacteristicImpl} class is an implementation of the {@link Characteristic}.
+ * The {@link CharacteristicEntity} class is an implementation of the {@link Characteristic}.
  *
  * @author Christopher Zhong
  * @see Characteristic
  * @since 6.0
  */
-public class CharacteristicImpl implements Characteristic {
+public class CharacteristicEntity implements Characteristic {
 	/**
 	 * The {@linkplain UniqueId} that represents this {@link Characteristic}.
 	 */
@@ -39,7 +39,7 @@ public class CharacteristicImpl implements Characteristic {
 	 * @param id
 	 *            the {@linkplain UniqueId} that represents this {@link Characteristic}.
 	 */
-	public CharacteristicImpl(final UniqueId id) {
+	public CharacteristicEntity(final UniqueId id) {
 		if (id == null) {
 			throw new IllegalArgumentException("Parameter (id) cannot be null");
 		}

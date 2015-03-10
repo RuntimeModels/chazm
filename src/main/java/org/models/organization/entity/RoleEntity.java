@@ -27,7 +27,7 @@ import org.models.organization.relation.RequiresRelation;
 import org.models.organization.relation.UsesRelation;
 
 /**
- * The {@linkplain RoleImpl} class is an implementation of the {@link Role}.
+ * The {@linkplain RoleEntity} class is an implementation of the {@link Role}.
  *
  * @author Scott Harmon, Christopher Zhong
  * @see Agent
@@ -35,7 +35,7 @@ import org.models.organization.relation.UsesRelation;
  * @see SpecificationGoal
  * @since 1.0
  */
-public class RoleImpl implements Role {
+public class RoleEntity implements Role {
 	/**
 	 * The {@linkplain UniqueId} that represents this {@linkplain Role}.
 	 */
@@ -77,7 +77,7 @@ public class RoleImpl implements Role {
 	 * @param id
 	 *            the {@linkplain UniqueId} that represents this {@linkplain Role}.
 	 */
-	public RoleImpl(final UniqueId id) {
+	public RoleEntity(final UniqueId id) {
 		if (id == null) {
 			throw new IllegalArgumentException("Parameter (id) cannot be null");
 		}
@@ -106,8 +106,8 @@ public class RoleImpl implements Role {
 		if (achieves.containsKey(goalIdentifier)) {
 			final Achieves achievesRelationImpl = achieves.remove(goalIdentifier);
 			final SpecificationGoal specificationGoal = achievesRelationImpl.getSpecificationGoal();
-			if (specificationGoal instanceof SpecificationGoalImpl) {
-				((SpecificationGoalImpl) specificationGoal).removeAchievedBy(this);
+			if (specificationGoal instanceof SpecificationGoalEntity) {
+				((SpecificationGoalEntity) specificationGoal).removeAchievedBy(this);
 			}
 
 			final ChangeManager changeManager = EventRegistry.get();
@@ -134,8 +134,8 @@ public class RoleImpl implements Role {
 		}
 		final RequiresRelation requiresRelation = new RequiresRelation(this, capability);
 		requires.put(capability.getId(), requiresRelation);
-		if (capability instanceof CapabilityImpl) {
-			((CapabilityImpl) capability).addRequiredBy(requiresRelation);
+		if (capability instanceof CapabilityEntity) {
+			((CapabilityEntity) capability).addRequiredBy(requiresRelation);
 		}
 
 		final ChangeManager changeManager = EventRegistry.get();
@@ -171,8 +171,8 @@ public class RoleImpl implements Role {
 		if (requires.containsKey(capabilityIdentifier)) {
 			final RequiresRelation requiresRelation = requires.remove(capabilityIdentifier);
 			final Capability capability = requiresRelation.getCapability();
-			if (capability instanceof CapabilityImpl) {
-				((CapabilityImpl) capability).removeRequiredBy(this);
+			if (capability instanceof CapabilityEntity) {
+				((CapabilityEntity) capability).removeRequiredBy(this);
 			}
 
 			final ChangeManager changeManager = EventRegistry.get();
@@ -199,8 +199,8 @@ public class RoleImpl implements Role {
 		}
 		final NeedsRelation needsRelation = new NeedsRelation(this, attribute);
 		needs.put(attribute.getId(), needsRelation);
-		if (attribute instanceof AttributeImpl) {
-			((AttributeImpl) attribute).addInfluencedBy(needsRelation);
+		if (attribute instanceof AttributeEntity) {
+			((AttributeEntity) attribute).addInfluencedBy(needsRelation);
 		}
 
 		final ChangeManager changeManager = EventRegistry.get();
@@ -226,8 +226,8 @@ public class RoleImpl implements Role {
 		if (needs.containsKey(attributeIdentifier)) {
 			final NeedsRelation needsRelation = needs.remove(attributeIdentifier);
 			final Attribute attribute = needsRelation.getAttribute();
-			if (attribute instanceof AttributeImpl) {
-				((AttributeImpl) attribute).removeInfluencedBy(this);
+			if (attribute instanceof AttributeEntity) {
+				((AttributeEntity) attribute).removeInfluencedBy(this);
 			}
 
 			final ChangeManager changeManager = EventRegistry.get();
@@ -254,8 +254,8 @@ public class RoleImpl implements Role {
 		}
 		final ContainsRelation containsRelation = new ContainsRelation(this, characteristic, value);
 		contains.put(characteristic.getId(), containsRelation);
-		if (characteristic instanceof CharacteristicImpl) {
-			((CharacteristicImpl) characteristic).addContainedBy(containsRelation);
+		if (characteristic instanceof CharacteristicEntity) {
+			((CharacteristicEntity) characteristic).addContainedBy(containsRelation);
 		}
 
 		final ChangeManager changeManager = EventRegistry.get();
@@ -308,8 +308,8 @@ public class RoleImpl implements Role {
 		if (contains.containsKey(characteristicIdentifier)) {
 			final ContainsRelation containsRelation = contains.remove(characteristicIdentifier);
 			final Characteristic characterisitic = containsRelation.getCharacteristic();
-			if (characterisitic instanceof CharacteristicImpl) {
-				((CharacteristicImpl) characterisitic).removeContainedBy(this);
+			if (characterisitic instanceof CharacteristicEntity) {
+				((CharacteristicEntity) characterisitic).removeContainedBy(this);
 			}
 
 			final ChangeManager changeManager = EventRegistry.get();
@@ -336,8 +336,8 @@ public class RoleImpl implements Role {
 		}
 		final UsesRelation linkedRelation = new UsesRelation(this, performanceFunction);
 		uses.put(performanceFunction.getId(), linkedRelation);
-		if (performanceFunction instanceof PerformanceFunctionImpl) {
-			((PerformanceFunctionImpl) performanceFunction).addUsedBy(linkedRelation);
+		if (performanceFunction instanceof PerformanceFunctionEntity) {
+			((PerformanceFunctionEntity) performanceFunction).addUsedBy(linkedRelation);
 		}
 
 		final ChangeManager changeManager = EventRegistry.get();
@@ -372,8 +372,8 @@ public class RoleImpl implements Role {
 		if (uses.containsKey(functionIdentifier)) {
 			final UsesRelation linkedRelation = uses.remove(functionIdentifier);
 			final PerformanceFunction performanceFunction = linkedRelation.getPerformanceFunction();
-			if (performanceFunction instanceof PerformanceFunctionImpl) {
-				((PerformanceFunctionImpl) performanceFunction).removeUsedBy(this);
+			if (performanceFunction instanceof PerformanceFunctionEntity) {
+				((PerformanceFunctionEntity) performanceFunction).removeUsedBy(this);
 			}
 
 			final ChangeManager changeManager = EventRegistry.get();

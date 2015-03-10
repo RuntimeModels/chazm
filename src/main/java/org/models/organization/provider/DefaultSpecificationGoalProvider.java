@@ -8,7 +8,7 @@
 package org.models.organization.provider;
 
 import org.models.organization.entity.SpecificationGoal;
-import org.models.organization.entity.SpecificationGoalImpl;
+import org.models.organization.entity.SpecificationGoalEntity;
 import org.models.organization.provider.SpecificationGoalProvider;
 import org.models.organization.provider.UniqueIdentifierProvider;
 
@@ -22,7 +22,7 @@ public class DefaultSpecificationGoalProvider implements SpecificationGoalProvid
 
 	@Override
 	public SpecificationGoal getSpecificationGoal(final String identifier, final UniqueIdentifierProvider uniqueIdentifierProvider) {
-		return new SpecificationGoalImpl(uniqueIdentifierProvider.getUniqueIdentifier(identifier, SpecificationGoal.class));
+		return new SpecificationGoalEntity(uniqueIdentifierProvider.getUniqueIdentifier(identifier, SpecificationGoal.class));
 	}
 
 }

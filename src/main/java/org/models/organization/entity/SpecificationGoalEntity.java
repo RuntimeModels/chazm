@@ -19,13 +19,13 @@ import org.models.organization.relation.Achieves;
 import org.models.organization.relation.AchievesRelation;
 
 /**
- * The {@link SpecificationGoalImpl} class is an implementation of the {@link SpecificationGoal}.
+ * The {@link SpecificationGoalEntity} class is an implementation of the {@link SpecificationGoal}.
  *
  * @author Scott Harmon, Christopher Zhong
  * @see SpecificationGoal
  * @since 1.0
  */
-public class SpecificationGoalImpl implements SpecificationGoal {
+public class SpecificationGoalEntity implements SpecificationGoal {
 
 	/**
 	 * The <code>InstanceGoalFactory</code> that will be used to create new instances of this <code>SpecificationGoal</code> as <code>InstanceGoal</code>.
@@ -48,7 +48,7 @@ public class SpecificationGoalImpl implements SpecificationGoal {
 	 * @param id
 	 *            the {@linkplain UniqueId} that represents this {@link SpecificationGoal}.
 	 */
-	public SpecificationGoalImpl(final UniqueId id) {
+	public SpecificationGoalEntity(final UniqueId id) {
 		if (id == null) {
 			throw new IllegalArgumentException("Parameter (id) cannot be null");
 		}
@@ -120,6 +120,6 @@ public class SpecificationGoalImpl implements SpecificationGoal {
 		if (instanceGoalFactory == null) {
 			throw new IllegalArgumentException("Parameter (instanceGoalFactory) cannot be null");
 		}
-		SpecificationGoalImpl.instanceGoalFactory = instanceGoalFactory;
+		SpecificationGoalEntity.instanceGoalFactory = instanceGoalFactory;
 	}
 }
