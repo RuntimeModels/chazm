@@ -15,6 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.models.organization.identifier.UniqueId;
 import org.models.organization.relation.Has;
 import org.models.organization.relation.HasRelation;
+import org.models.organization.relation.Moderates;
 import org.models.organization.relation.ModeratesRelation;
 import org.models.organization.relation.NeedsRelation;
 
@@ -175,7 +176,7 @@ public class AttributeEntity implements Attribute {
 	@Override
 	public final Set<PerformanceFunction> getModeratedBySet() {
 		final Set<PerformanceFunction> result = new HashSet<>();
-		for (final ModeratesRelation moderatesRelation : moderatedBy.values()) {
+		for (final Moderates moderatesRelation : moderatedBy.values()) {
 			result.add(moderatesRelation.getPerformanceFunction());
 		}
 		return result;

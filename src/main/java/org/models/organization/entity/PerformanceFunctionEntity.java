@@ -17,6 +17,7 @@ import org.models.organization.identifier.UniqueId;
 import org.models.organization.registry.ChangeManager;
 import org.models.organization.registry.EventRegistry;
 import org.models.organization.relation.Assignment;
+import org.models.organization.relation.Moderates;
 import org.models.organization.relation.ModeratesRelation;
 import org.models.organization.relation.UsesRelation;
 
@@ -41,7 +42,7 @@ public class PerformanceFunctionEntity implements PerformanceFunction {
 	/**
 	 * The <code>Attribute</code> that this <code>PerformanceFunction</code> moderates.
 	 */
-	private ModeratesRelation moderates = null;
+	private Moderates moderates = null;
 
 	/**
 	 * Constructs a new instance of {@linkplain PerformanceFunction}.

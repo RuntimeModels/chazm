@@ -23,7 +23,7 @@ import org.models.organization.identifier.UniqueId;
 import org.models.organization.relation.Assignment;
 import org.models.organization.relation.Contains;
 import org.models.organization.relation.Has;
-import org.models.organization.relation.ModeratesRelation;
+import org.models.organization.relation.Moderates;
 import org.models.organization.relation.NeedsRelation;
 import org.models.organization.relation.Task;
 import org.models.organization.relation.UsesRelation;
@@ -905,12 +905,12 @@ public interface Organization {
 	void removeUsesRelation(UniqueId roleIdentifier, UniqueId functionIdentifier);
 
 	/**
-	 * Creates the {@linkplain ModeratesRelation} with the given {@linkplain PerformanceFunction} and {@linkplain Attribute}.
+	 * Creates the {@linkplain Moderates} with the given {@linkplain PerformanceFunction} and {@linkplain Attribute}.
 	 *
 	 * @param performanceFunctionIdentifier
-	 *            the {@linkplain UniqueId} identifying the {@linkplain PerformanceFunction} for the {@linkplain ModeratesRelation}.
+	 *            the {@linkplain UniqueId} identifying the {@linkplain PerformanceFunction} for the {@linkplain Moderates}.
 	 * @param attributeIdentifier
-	 *            the {@linkplain UniqueId} identifying the {@linkplain Attribute} for the {@linkplain ModeratesRelation}.
+	 *            the {@linkplain UniqueId} identifying the {@linkplain Attribute} for the {@linkplain Moderates}.
 	 */
 	void setModeratesRelation(UniqueId performanceFunctionIdentifier, UniqueId attributeIdentifier);
 
