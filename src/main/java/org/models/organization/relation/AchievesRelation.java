@@ -11,11 +11,10 @@ import org.models.organization.entity.Role;
 import org.models.organization.entity.SpecificationGoal;
 
 /**
- * Represents the achieves relation, where a {@link Role} can achieve a {@link SpecificationGoal}.
+ * The {@linkplain AchievesRelation} class is an implementation of the {@linkplain Achieves}.
  *
  * @author Christopher Zhong
- * @see Role
- * @see SpecificationGoal
+ * @see Achieves
  * @since 1.0
  */
 public class AchievesRelation implements Achieves {
@@ -25,12 +24,12 @@ public class AchievesRelation implements Achieves {
 	private static final String STRING_FORMAT = "%s <-> %s";
 
 	/**
-	 * The <code>Role</code> of this <code>AchievesRelation</code>.
+	 * The {@linkplain Role} of this {@linkplain Achieves}.
 	 */
 	private final Role role;
 
 	/**
-	 * The <code>SpecificationGoal</code> of this <code>AchievesRelation</code>.
+	 * The {@linkplain SpecificationGoal} of this {@linkplain Achieves}.
 	 */
 	private final SpecificationGoal specificationGoal;
 
@@ -45,12 +44,12 @@ public class AchievesRelation implements Achieves {
 	private String toString = null;
 
 	/**
-	 * Constructs a new instance of <code>AchievesRelation</code>.
+	 * Constructs a new instance of {@linkplain Achieves}.
 	 *
 	 * @param role
-	 *            the <code>Role</code> of this <code>AchievesRelation</code>.
+	 *            the {@linkplain Role} of this {@linkplain Achieves}.
 	 * @param specificationGoal
-	 *            the <code>SpecificationGoal</code> of this <code>AchievesRelation</code>.
+	 *            the {@linkplain SpecificationGoal} of this {@linkplain Achieves}.
 	 */
 	public AchievesRelation(final Role role, final SpecificationGoal specificationGoal) {
 		if (role == null) {

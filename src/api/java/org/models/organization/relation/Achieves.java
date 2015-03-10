@@ -5,7 +5,8 @@ import org.models.organization.entity.Role;
 import org.models.organization.entity.SpecificationGoal;
 
 /**
- * The {@linkplain Achieves} interface defines the achieves relation of an {@linkplain Organization}.
+ * The {@linkplain Achieves} interface defines the achieves relation, which means that a {@linkplain Role} achieves a {@linkplain SpecificationGoal}, of an
+ * {@linkplain Organization}.
  * 
  * @author Christopher Zhong
  * @see Role
