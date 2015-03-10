@@ -12,6 +12,7 @@ import java.util.Set;
 
 import org.models.organization.Organization;
 import org.models.organization.function.RoleGoodnessFunction;
+import org.models.organization.identifier.Identifiable;
 import org.models.organization.identifier.UniqueId;
 import org.models.organization.relation.Assignment;
 
@@ -22,14 +23,7 @@ import org.models.organization.relation.Assignment;
  * @see RoleGoodnessFunction
  * @since 3.4
  */
-public interface Role {
-	/**
-	 * Returns the {@linkplain UniqueId} that represents this {@linkplain Role}.
-	 *
-	 * @return the {@linkplain UniqueId} that represents this {@linkplain Role}.
-	 */
-	UniqueId getId();
-
+public interface Role extends Identifiable {
 	/**
 	 * Returns the set of <code>SpecificationGoal</code> that this <code>Role</code> achieves.
 	 *

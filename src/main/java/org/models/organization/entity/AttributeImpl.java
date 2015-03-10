@@ -168,7 +168,7 @@ public class AttributeImpl implements Attribute {
 		if (moderatesRelation == null) {
 			throw new IllegalArgumentException("Parameter (moderatesRelation) cannot be null");
 		}
-		moderatedBy.put(moderatesRelation.getPerformanceFunction().getIdentifier(), moderatesRelation);
+		moderatedBy.put(moderatesRelation.getPerformanceFunction().getId(), moderatesRelation);
 	}
 
 	@Override
@@ -190,7 +190,7 @@ public class AttributeImpl implements Attribute {
 		if (performanceFunction == null) {
 			throw new IllegalArgumentException("Parameter (performanceFunction) cannot be null");
 		}
-		moderatedBy.remove(performanceFunction.getIdentifier());
+		moderatedBy.remove(performanceFunction.getId());
 	}
 
 	@Override

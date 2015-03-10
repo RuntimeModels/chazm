@@ -7,21 +7,14 @@
  */
 package org.models.organization.entity;
 
-import org.models.organization.identifier.UniqueId;
+import org.models.organization.Organization;
+import org.models.organization.identifier.Identifiable;
 
 /**
- * The <code>Policy</code> interface defines the basic policy entity of the Organization Model.
+ * The {@linkplain Policy} interface defines the policy entity of an {@linkplain Organization}.
  *
  * @author Christopher Zhong
  * @since 3.4
  */
-public interface Policy {
-
-	/**
-	 * Returns the <code>UniqueIdentifier</code> of the <code>Policy</code>.
-	 *
-	 * @return the <code>UniqueIdentifier</code> of the <code>Policy</code>.
-	 */
-	UniqueId getIdentifier();
-
+public interface Policy extends Identifiable {
 }

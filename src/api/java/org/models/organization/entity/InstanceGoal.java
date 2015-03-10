@@ -10,6 +10,7 @@ package org.models.organization.entity;
 import java.util.Set;
 
 import org.models.organization.Organization;
+import org.models.organization.identifier.Identifiable;
 import org.models.organization.identifier.UniqueId;
 
 /**
@@ -21,14 +22,7 @@ import org.models.organization.identifier.UniqueId;
  *            the type of the parameter of this {@linkplain InstanceGoal}.
  * @since 3.4
  */
-public interface InstanceGoal<T> {
-	/**
-	 * Returns the {@linkplain UniqueId} that represents this {@linkplain InstanceGoal}.
-	 *
-	 * @return the {@linkplain UniqueId} that represents this {@linkplain InstanceGoal}.
-	 */
-	UniqueId getId();
-
+public interface InstanceGoal<T> extends Identifiable {
 	/**
 	 * Returns the {@linkplain UniqueId} that represents this instance portion of this {@linkplain InstanceGoal}.
 	 *

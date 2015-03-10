@@ -330,18 +330,18 @@ public class RoleImpl implements Role {
 		if (performanceFunction == null) {
 			throw new IllegalArgumentException("Parameter (performanceFunction) cannot be null");
 		}
-		if (uses.containsKey(performanceFunction.getIdentifier())) {
+		if (uses.containsKey(performanceFunction.getId())) {
 			throw new IllegalArgumentException(String.format("Task (%s) already linked to performance function (%s)", this, performanceFunction));
 		}
 		final UsesRelation linkedRelation = new UsesRelation(this, performanceFunction);
-		uses.put(performanceFunction.getIdentifier(), linkedRelation);
+		uses.put(performanceFunction.getId(), linkedRelation);
 		if (performanceFunction instanceof PerformanceFunctionImpl) {
 			((PerformanceFunctionImpl) performanceFunction).addUsedBy(linkedRelation);
 		}
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyLinkedAdded(getId(), performanceFunction.getIdentifier());
+			changeManager.notifyLinkedAdded(getId(), performanceFunction.getId());
 		}
 	}
 
@@ -377,7 +377,7 @@ public class RoleImpl implements Role {
 
 			final ChangeManager changeManager = EventRegistry.get();
 			if (changeManager != null) {
-				changeManager.notifyLinkedRemoved(getId(), performanceFunction.getIdentifier());
+				changeManager.notifyLinkedRemoved(getId(), performanceFunction.getId());
 			}
 		}
 	}

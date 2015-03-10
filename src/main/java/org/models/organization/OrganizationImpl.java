@@ -512,14 +512,14 @@ public class OrganizationImpl implements Organization {
 		if (policy == null) {
 			throw new IllegalArgumentException("Parameter (policy) cannot be null");
 		}
-		if (entities.policies.containsKey(policy.getIdentifier())) {
+		if (entities.policies.containsKey(policy.getId())) {
 			throw new IllegalArgumentException(String.format("Policy (%s) already exists", policy));
 		}
-		entities.policies.put(policy.getIdentifier(), policy);
+		entities.policies.put(policy.getId(), policy);
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyPolicyAdded(policy.getIdentifier());
+			changeManager.notifyPolicyAdded(policy.getId());
 		}
 	}
 
@@ -565,7 +565,7 @@ public class OrganizationImpl implements Organization {
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyPolicyRemoved(policy.getIdentifier());
+			changeManager.notifyPolicyRemoved(policy.getId());
 		}
 	}
 
@@ -845,14 +845,14 @@ public class OrganizationImpl implements Organization {
 		if (performanceFunction == null) {
 			throw new IllegalArgumentException("Parameter (performanceFunction) cannot be null");
 		}
-		if (entities.performanceFunctions.containsKey(performanceFunction.getIdentifier())) {
+		if (entities.performanceFunctions.containsKey(performanceFunction.getId())) {
 			throw new IllegalArgumentException(String.format("Performance function (%s) already exists", performanceFunction));
 		}
-		entities.performanceFunctions.put(performanceFunction.getIdentifier(), performanceFunction);
+		entities.performanceFunctions.put(performanceFunction.getId(), performanceFunction);
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyPerformanceFunctionAdded(performanceFunction.getIdentifier());
+			changeManager.notifyPerformanceFunctionAdded(performanceFunction.getId());
 		}
 	}
 
@@ -898,7 +898,7 @@ public class OrganizationImpl implements Organization {
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyPerformanceFunctionRemoved(performanceFunction.getIdentifier());
+			changeManager.notifyPerformanceFunctionRemoved(performanceFunction.getId());
 		}
 	}
 

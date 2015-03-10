@@ -10,6 +10,7 @@ package org.models.organization.entity;
 import java.util.Set;
 
 import org.models.organization.Organization;
+import org.models.organization.identifier.Identifiable;
 import org.models.organization.identifier.UniqueId;
 
 /**
@@ -18,14 +19,7 @@ import org.models.organization.identifier.UniqueId;
  * @author Christopher Zhong
  * @since 3.4
  */
-public interface SpecificationGoal {
-	/**
-	 * Returns the {@linkplain UniqueId} that represents this {@linkplain SpecificationGoal}.
-	 *
-	 * @return the {@linkplain UniqueId} that represents this {@linkplain SpecificationGoal}.
-	 */
-	UniqueId getId();
-
+public interface SpecificationGoal extends Identifiable {
 	/**
 	 * Returns the set of <code>Role</code> that achieves this <code>SpecificationGoal</code>.
 	 *
