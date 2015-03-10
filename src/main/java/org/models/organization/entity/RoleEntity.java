@@ -23,6 +23,7 @@ import org.models.organization.relation.AchievesRelation;
 import org.models.organization.relation.Assignment;
 import org.models.organization.relation.Contains;
 import org.models.organization.relation.ContainsRelation;
+import org.models.organization.relation.Needs;
 import org.models.organization.relation.NeedsRelation;
 import org.models.organization.relation.RequiresRelation;
 import org.models.organization.relation.UsesRelation;
@@ -213,7 +214,7 @@ public class RoleEntity implements Role {
 	@Override
 	public final Set<Attribute> getNeedsSet() {
 		final Set<Attribute> result = new HashSet<>();
-		for (final NeedsRelation needsRelation : needs.values()) {
+		for (final Needs needsRelation : needs.values()) {
 			result.add(needsRelation.getAttribute());
 		}
 		return result;
@@ -225,7 +226,7 @@ public class RoleEntity implements Role {
 			throw new IllegalArgumentException("Parameter (attributeIdentifier) cannot be null");
 		}
 		if (needs.containsKey(attributeIdentifier)) {
-			final NeedsRelation needsRelation = needs.remove(attributeIdentifier);
+			final Needs needsRelation = needs.remove(attributeIdentifier);
 			final Attribute attribute = needsRelation.getAttribute();
 			if (attribute instanceof AttributeEntity) {
 				((AttributeEntity) attribute).removeInfluencedBy(this);
@@ -240,7 +241,7 @@ public class RoleEntity implements Role {
 
 	@Override
 	public final void removeAllNeeds() {
-		for (final NeedsRelation needsRelation : needs.values()) {
+		for (final Needs needsRelation : needs.values()) {
 			removeNeeds(needsRelation.getAttribute().getId());
 		}
 	}
