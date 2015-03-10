@@ -26,7 +26,7 @@ import org.models.organization.relation.Has;
 import org.models.organization.relation.Moderates;
 import org.models.organization.relation.Needs;
 import org.models.organization.relation.Task;
-import org.models.organization.relation.UsesRelation;
+import org.models.organization.relation.Uses;
 
 /**
  * The {@linkplain Organization} interface defines an organization.
@@ -885,22 +885,22 @@ public interface Organization {
 	void updateHasRelation(UniqueId agentIdentifier, UniqueId attributeIdentifier, double score);
 
 	/**
-	 * Creates the {@linkplain UsesRelation} with the given {@linkplain Role} and {@linkplain PerformanceFunction}.
+	 * Creates the {@linkplain Uses} with the given {@linkplain Role} and {@linkplain PerformanceFunction}.
 	 *
 	 * @param roleIdentifier
-	 *            the {@linkplain UniqueId} identifying the {@linkplain Role} for the {@linkplain UsesRelation}.
+	 *            the {@linkplain UniqueId} identifying the {@linkplain Role} for the {@linkplain Uses}.
 	 * @param functionIdentifier
-	 *            the {@linkplain UniqueId} identifying the {@linkplain PerformanceFunction} for the {@linkplain UsesRelation}.
+	 *            the {@linkplain UniqueId} identifying the {@linkplain PerformanceFunction} for the {@linkplain Uses}.
 	 */
 	void addUsesRelation(UniqueId roleIdentifier, UniqueId functionIdentifier);
 
 	/**
-	 * Removes the {@linkplain UsesRelation} with the given {@linkplain Role} and {@linkplain PerformanceFunction}.
+	 * Removes the {@linkplain Uses} with the given {@linkplain Role} and {@linkplain PerformanceFunction}.
 	 *
 	 * @param roleIdentifier
-	 *            the {@linkplain UniqueId} identifying the {@linkplain Role} for the {@linkplain UsesRelation}.
+	 *            the {@linkplain UniqueId} identifying the {@linkplain Role} for the {@linkplain Uses}.
 	 * @param functionIdentifier
-	 *            the {@linkplain UniqueId} identifying the {@linkplain PerformanceFunction} for the {@linkplain UsesRelation}.
+	 *            the {@linkplain UniqueId} identifying the {@linkplain PerformanceFunction} for the {@linkplain Uses}.
 	 */
 	void removeUsesRelation(UniqueId roleIdentifier, UniqueId functionIdentifier);
 

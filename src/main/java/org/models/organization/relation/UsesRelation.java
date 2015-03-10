@@ -7,22 +7,18 @@
  */
 package org.models.organization.relation;
 
+import org.models.organization.M;
 import org.models.organization.entity.PerformanceFunction;
 import org.models.organization.entity.Role;
 
 /**
- * Represents the uses relation, where a {@link Role} uses a {@link PerformanceFunction}.
+ * The {@linkplain UsesRelation} class is an implementation of the {@linkplain Uses}.
  *
  * @author Christopher Zhong
- * @see Role
- * @see PerformanceFunction
+ * @see Uses
  * @since 6.0
  */
-public class UsesRelation {
-	/**
-	 * Internal <code>String</code> for the format of the <code>IllegalArgumentException</code>.
-	 */
-	private static final String EXCEPTION_FORMAT = "Parameters (role: %s, performanceFunction: %s) cannot be null";
+public class UsesRelation implements Uses {
 
 	/**
 	 * Internal <code>String</code> for the format of the <code>toString</code> method.
@@ -30,12 +26,12 @@ public class UsesRelation {
 	private static final String STRING_FORMAT = "%s <-> %s";
 
 	/**
-	 * The <code>Role</code> of this <code>UsesRelation</code>.
+	 * The {@linkplain Role} of this {@linkplain Uses}.
 	 */
 	private final Role role;
 
 	/**
-	 * The <code>PerformanceFunction</code> of this <code>UsesRelation</code>.
+	 * The {@linkplain PerformanceFunction} of this {@linkplain Uses}.
 	 */
 	private final PerformanceFunction performanceFunction;
 
@@ -50,35 +46,30 @@ public class UsesRelation {
 	private String toString = null;
 
 	/**
-	 * Constructs a new instance of <code>UsesRelation</code>.
+	 * Constructs a new instance of {@linkplain Uses}.
 	 *
 	 * @param role
-	 *            the <code>Role</code> for the <code>UsesRelation</code>.
+	 *            the {@linkplain Role} of this {@linkplain Uses}.
 	 * @param performanceFunction
-	 *            the <code>PerformanceFunction</code> for the <code>UsesRelation</code>.
+	 *            the {@linkplain PerformanceFunction} of this {@linkplain Uses}.
 	 */
 	public UsesRelation(final Role role, final PerformanceFunction performanceFunction) {
-		if (role == null || performanceFunction == null) {
-			throw new IllegalArgumentException(String.format(EXCEPTION_FORMAT, role, performanceFunction));
+		if (role == null) {
+			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "role"));
+		}
+		if (performanceFunction == null) {
+			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "performanceFunction"));
 		}
 		this.role = role;
 		this.performanceFunction = performanceFunction;
 	}
 
-	/**
-	 * Returns the <code>Task</code>.
-	 *
-	 * @return the <code>Task</code>.
-	 */
+	@Override
 	public Role getRole() {
 		return role;
 	}
 
-	/**
-	 * Returns the <code>PerformanceFunction</code>.
-	 *
-	 * @return the <code>PerformanceFunction</code>.
-	 */
+	@Override
 	public PerformanceFunction getPerformanceFunction() {
 		return performanceFunction;
 	}
@@ -86,7 +77,7 @@ public class UsesRelation {
 	@Override
 	public boolean equals(final Object object) {
 		if (object instanceof UsesRelation) {
-			final UsesRelation usesRelation = (UsesRelation) object;
+			final Uses usesRelation = (Uses) object;
 			return getRole().equals(usesRelation.getRole()) && getPerformanceFunction().equals(usesRelation.getPerformanceFunction());
 		}
 		return false;

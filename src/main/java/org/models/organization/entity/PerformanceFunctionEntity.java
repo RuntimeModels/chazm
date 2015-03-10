@@ -19,6 +19,7 @@ import org.models.organization.registry.EventRegistry;
 import org.models.organization.relation.Assignment;
 import org.models.organization.relation.Moderates;
 import org.models.organization.relation.ModeratesRelation;
+import org.models.organization.relation.Uses;
 import org.models.organization.relation.UsesRelation;
 
 /**
@@ -79,7 +80,7 @@ public class PerformanceFunctionEntity implements PerformanceFunction {
 	@Override
 	public final Set<Role> getUsedBySet() {
 		final Set<Role> result = new HashSet<>();
-		for (final UsesRelation linkedRelation : linkedBy.values()) {
+		for (final Uses linkedRelation : linkedBy.values()) {
 			result.add(linkedRelation.getRole());
 		}
 		return result;
