@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.models.organization.identifier.UniqueId;
+import org.models.organization.relation.Contains;
 import org.models.organization.relation.ContainsRelation;
 
 /**
@@ -67,7 +68,7 @@ public class CharacteristicEntity implements Characteristic {
 	@Override
 	public final Set<Role> getContainedBySet() {
 		final Set<Role> result = new HashSet<>();
-		for (final ContainsRelation containsRelation : containedBy.values()) {
+		for (final Contains containsRelation : containedBy.values()) {
 			result.add(containsRelation.getRole());
 		}
 		return result;
@@ -78,7 +79,7 @@ public class CharacteristicEntity implements Characteristic {
 		if (roleIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (roleIdentifier) cannot be null");
 		}
-		final ContainsRelation containsRelation = containedBy.get(roleIdentifier);
+		final Contains containsRelation = containedBy.get(roleIdentifier);
 		return containsRelation == null ? null : containsRelation.getValue();
 	}
 

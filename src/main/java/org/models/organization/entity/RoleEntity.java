@@ -21,6 +21,7 @@ import org.models.organization.registry.EventRegistry;
 import org.models.organization.relation.Achieves;
 import org.models.organization.relation.AchievesRelation;
 import org.models.organization.relation.Assignment;
+import org.models.organization.relation.Contains;
 import org.models.organization.relation.ContainsRelation;
 import org.models.organization.relation.NeedsRelation;
 import org.models.organization.relation.RequiresRelation;
@@ -267,7 +268,7 @@ public class RoleEntity implements Role {
 	@Override
 	public final Set<Characteristic> getContainsSet() {
 		final Set<Characteristic> result = new HashSet<>();
-		for (final ContainsRelation containsRelation : contains.values()) {
+		for (final Contains containsRelation : contains.values()) {
 			result.add(containsRelation.getCharacteristic());
 		}
 		return result;
@@ -278,7 +279,7 @@ public class RoleEntity implements Role {
 		if (characteristicIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (characteristicIdentifier) cannot be null");
 		}
-		final ContainsRelation containsRelation = contains.get(characteristicIdentifier);
+		final Contains containsRelation = contains.get(characteristicIdentifier);
 		return containsRelation == null ? null : containsRelation.getValue();
 	}
 
@@ -287,7 +288,7 @@ public class RoleEntity implements Role {
 		if (characteristicIdentifier == null) {
 			throw new IllegalArgumentException("Parameter (characteristicIdentifier) cannot be null");
 		}
-		final ContainsRelation containsRelation = contains.get(characteristicIdentifier);
+		final Contains containsRelation = contains.get(characteristicIdentifier);
 		if (containsRelation == null) {
 			throw new IllegalArgumentException(String.format("Cannot set score for a non-existent characteristic (%s=%s)", characteristicIdentifier,
 					containsRelation));
@@ -306,7 +307,7 @@ public class RoleEntity implements Role {
 			throw new IllegalArgumentException("Parameter (characteristicsIdentifier) cannot be null");
 		}
 		if (contains.containsKey(characteristicIdentifier)) {
-			final ContainsRelation containsRelation = contains.remove(characteristicIdentifier);
+			final Contains containsRelation = contains.remove(characteristicIdentifier);
 			final Characteristic characterisitic = containsRelation.getCharacteristic();
 			if (characterisitic instanceof CharacteristicEntity) {
 				((CharacteristicEntity) characterisitic).removeContainedBy(this);
@@ -321,7 +322,7 @@ public class RoleEntity implements Role {
 
 	@Override
 	public final void removeAllContains() {
-		for (final ContainsRelation containsRelation : contains.values()) {
+		for (final Contains containsRelation : contains.values()) {
 			removeContains(containsRelation.getCharacteristic().getId());
 		}
 	}
@@ -411,7 +412,7 @@ public class RoleEntity implements Role {
 
 	@Override
 	public final Double contains(final Characteristic characteristic) {
-		final ContainsRelation containsRelation = contains.get(characteristic.getId());
+		final Contains containsRelation = contains.get(characteristic.getId());
 		return containsRelation == null ? null : containsRelation.getValue();
 	}
 

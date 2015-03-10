@@ -21,8 +21,7 @@ import org.models.organization.entity.Role;
 import org.models.organization.entity.SpecificationGoal;
 import org.models.organization.identifier.UniqueId;
 import org.models.organization.relation.Assignment;
-import org.models.organization.relation.Assignment;
-import org.models.organization.relation.ContainsRelation;
+import org.models.organization.relation.Contains;
 import org.models.organization.relation.HasRelation;
 import org.models.organization.relation.ModeratesRelation;
 import org.models.organization.relation.NeedsRelation;
@@ -916,39 +915,39 @@ public interface Organization {
 	void setModeratesRelation(UniqueId performanceFunctionIdentifier, UniqueId attributeIdentifier);
 
 	/**
-	 * Creates the {@linkplain ContainsRelation} with the {@linkplain Role} (from the given {@linkplain UniqueId}), {@linkplain Characteristic} (from the given
+	 * Creates a {@linkplain Contains} with the {@linkplain Role} (from the given {@linkplain UniqueId}), {@linkplain Characteristic} (from the given
 	 * {@linkplain UniqueId} ), and {@linkplain double} value.
 	 *
 	 * @param roleIdentifier
-	 *            the {@linkplain UniqueId} of the {@linkplain Role} for the {@linkplain ContainsRelation}.
+	 *            the {@linkplain UniqueId} of the {@linkplain Role} for the {@linkplain Contains}.
 	 * @param characteristicIdentifier
-	 *            the {@linkplain UniqueId} of the {@linkplain Characteristic} for the {@linkplain ContainsRelation}.
+	 *            the {@linkplain UniqueId} of the {@linkplain Characteristic} for the {@linkplain Contains}.
 	 * @param value
-	 *            the {@linkplain double} value for the {@linkplain ContainsRelation}.
+	 *            the {@linkplain double} value for the {@linkplain Contains}.
 	 */
 	void addContainsRelation(UniqueId roleIdentifier, UniqueId characteristicIdentifier, double value);
 
 	/**
-	 * Removes the {@linkplain ContainsRelation} of the {@linkplain Role} (from the given {@linkplain UniqueId}) and {@linkplain Characteristic} (from the given
+	 * Removes the {@linkplain Contains} of the {@linkplain Role} (from the given {@linkplain UniqueId}) and {@linkplain Characteristic} (from the given
 	 * {@linkplain UniqueId}).
 	 *
 	 * @param roleIdentifier
-	 *            the {@linkplain UniqueId} of the {@linkplain Role} for the {@linkplain ContainsRelation}.
+	 *            the {@linkplain UniqueId} of the {@linkplain Role} for the {@linkplain Contains}.
 	 * @param characteristicIdentifier
-	 *            the {@linkplain UniqueId} of the {@linkplain Characteristic} for the {@linkplain ContainsRelation}.
+	 *            the {@linkplain UniqueId} of the {@linkplain Characteristic} for the {@linkplain Contains}.
 	 */
 	void removeContainsRelation(UniqueId roleIdentifier, UniqueId characteristicIdentifier);
 
 	/**
-	 * Updates the {@linkplain ContainsRelation} of the {@linkplain Role} (from the given {@linkplain UniqueId}) and {@linkplain Characteristic} (from the given
+	 * Updates the {@linkplain Contains} of the {@linkplain Role} (from the given {@linkplain UniqueId}) and {@linkplain Characteristic} (from the given
 	 * {@linkplain UniqueId}) with the given new {@linkplain double} value.
 	 *
 	 * @param roleIdentifier
-	 *            the {@linkplain UniqueId} of the {@linkplain Role} for the {@linkplain ContainsRelation}.
+	 *            the {@linkplain UniqueId} of the {@linkplain Role} for the {@linkplain Contains}.
 	 * @param characteristicIdentifier
-	 *            the {@linkplain UniqueId} of the {@linkplain Characteristic} for the {@linkplain ContainsRelation}.
+	 *            the {@linkplain UniqueId} of the {@linkplain Characteristic} for the {@linkplain Contains}.
 	 * @param value
-	 *            the new {@linkplain double} value for the {@linkplain ContainsRelation}.
+	 *            the new {@linkplain double} value for the {@linkplain Contains}.
 	 */
 	void updateContainsRelation(UniqueId roleIdentifier, UniqueId characteristicIdentifier, double value);
 
