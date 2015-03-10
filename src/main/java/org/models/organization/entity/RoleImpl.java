@@ -18,6 +18,7 @@ import org.models.organization.function.RoleGoodnessFunction.DefaultRoleGoodness
 import org.models.organization.identifier.UniqueId;
 import org.models.organization.registry.ChangeManager;
 import org.models.organization.registry.EventRegistry;
+import org.models.organization.relation.Achieves;
 import org.models.organization.relation.AchievesRelation;
 import org.models.organization.relation.Assignment;
 import org.models.organization.relation.ContainsRelation;
@@ -91,8 +92,8 @@ public class RoleImpl implements Role {
 	@Override
 	public final Set<SpecificationGoal> getAchievesSet() {
 		final Set<SpecificationGoal> result = new HashSet<>();
-		for (final AchievesRelation achievesRelation : achieves.values()) {
-			result.add(achievesRelation.getSpecificationGoal());
+		for (final Achieves achievesRelationImpl : achieves.values()) {
+			result.add(achievesRelationImpl.getSpecificationGoal());
 		}
 		return result;
 	}
@@ -103,8 +104,8 @@ public class RoleImpl implements Role {
 			throw new IllegalArgumentException("Parameter (goalIdentifier) cannot be null");
 		}
 		if (achieves.containsKey(goalIdentifier)) {
-			final AchievesRelation achievesRelation = achieves.remove(goalIdentifier);
-			final SpecificationGoal specificationGoal = achievesRelation.getSpecificationGoal();
+			final Achieves achievesRelationImpl = achieves.remove(goalIdentifier);
+			final SpecificationGoal specificationGoal = achievesRelationImpl.getSpecificationGoal();
 			if (specificationGoal instanceof SpecificationGoalImpl) {
 				((SpecificationGoalImpl) specificationGoal).removeAchievedBy(this);
 			}
@@ -118,8 +119,8 @@ public class RoleImpl implements Role {
 
 	@Override
 	public final void removeAllAchieves() {
-		for (final AchievesRelation achievesRelation : achieves.values()) {
-			removeAchieves(achievesRelation.getSpecificationGoal().getId());
+		for (final Achieves achievesRelationImpl : achieves.values()) {
+			removeAchieves(achievesRelationImpl.getSpecificationGoal().getId());
 		}
 	}
 
@@ -389,8 +390,8 @@ public class RoleImpl implements Role {
 
 	@Override
 	public final boolean achieves(final SpecificationGoal specificationGoal) {
-		final AchievesRelation achievesRelation = achieves.get(specificationGoal.getId());
-		return achievesRelation != null;
+		final Achieves achievesRelationImpl = achieves.get(specificationGoal.getId());
+		return achievesRelationImpl != null;
 	}
 
 	@Override
