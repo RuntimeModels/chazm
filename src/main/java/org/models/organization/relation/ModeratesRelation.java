@@ -7,7 +7,7 @@
  */
 package org.models.organization.relation;
 
-import org.models.organization.Messages;
+import org.models.organization.M;
 import org.models.organization.entity.Attribute;
 import org.models.organization.entity.PerformanceFunction;
 
@@ -54,10 +54,10 @@ public class ModeratesRelation implements Moderates {
 	 */
 	public ModeratesRelation(final PerformanceFunction performanceFunction, final Attribute attribute) {
 		if (performanceFunction == null) {
-			throw new IllegalArgumentException(String.format(Messages.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "performanceFunction"));
+			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "performanceFunction"));
 		}
 		if (attribute == null) {
-			throw new IllegalArgumentException(String.format(Messages.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "attribute"));
+			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "attribute"));
 		}
 		this.performanceFunction = performanceFunction;
 		this.attribute = attribute;
