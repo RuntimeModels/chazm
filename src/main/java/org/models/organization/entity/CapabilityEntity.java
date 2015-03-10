@@ -15,6 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.models.organization.identifier.UniqueId;
 import org.models.organization.relation.Possesses;
 import org.models.organization.relation.PossessesRelation;
+import org.models.organization.relation.Requires;
 import org.models.organization.relation.RequiresRelation;
 
 /**
@@ -122,7 +123,7 @@ public class CapabilityEntity implements Capability {
 	@Override
 	public final Set<Role> getRequiredBySet() {
 		final Set<Role> result = new HashSet<>();
-		for (final RequiresRelation requiresRelation : requiredBy.values()) {
+		for (final Requires requiresRelation : requiredBy.values()) {
 			result.add(requiresRelation.getRole());
 		}
 		return result;
