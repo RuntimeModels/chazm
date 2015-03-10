@@ -12,17 +12,21 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.models.organization.entity.basic.SimpleCharacteristicImpl;
 import org.models.organization.identifier.UniqueId;
 import org.models.organization.relation.ContainsRelation;
 
 /**
- * The <code></code> class implements the {@link Characteristic} interface.
+ * The {@link CharacteristicImpl} class is an implementation of the {@link Characteristic}.
  *
  * @author Christopher Zhong
+ * @see Characteristic
  * @since 6.0
  */
-public class CharacteristicImpl extends SimpleCharacteristicImpl implements Characteristic {
+public class CharacteristicImpl implements Characteristic {
+	/**
+	 * The {@linkplain UniqueId} that represents this {@link Characteristic}.
+	 */
+	private final UniqueId id;
 
 	/**
 	 * The set of <code>Role</code> that contains this <code>Characteristic</code>.
@@ -30,13 +34,21 @@ public class CharacteristicImpl extends SimpleCharacteristicImpl implements Char
 	private final Map<UniqueId, ContainsRelation> containedBy = new ConcurrentHashMap<>();
 
 	/**
-	 * Constructs a new instance of <code>CharacteristicImpl</code>.
+	 * Constructs a new instance of {@link Characteristic}.
 	 *
-	 * @param identifier
-	 *            the <code>UniqueIdentifier</code> representing the <code>Characteristic</code>
+	 * @param id
+	 *            the {@linkplain UniqueId} that represents this {@link Characteristic}.
 	 */
-	public CharacteristicImpl(final UniqueId identifier) {
-		super(identifier);
+	public CharacteristicImpl(final UniqueId id) {
+		if (id == null) {
+			throw new IllegalArgumentException("Parameter (id) cannot be null");
+		}
+		this.id = id;
+	}
+
+	@Override
+	public final UniqueId getId() {
+		return id;
 	}
 
 	/**
@@ -87,14 +99,18 @@ public class CharacteristicImpl extends SimpleCharacteristicImpl implements Char
 	public boolean equals(final Object object) {
 		if (object instanceof Characteristic) {
 			final Characteristic characteristic = (Characteristic) object;
-			return super.equals(characteristic);
+			return getId().equals(characteristic.getId());
 		}
 		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		return super.hashCode();
+		return getId().hashCode();
 	}
 
+	@Override
+	public String toString() {
+		return getId().toString();
+	}
 }

@@ -122,6 +122,6 @@ public class ContainsRelation {
 
 	@Override
 	public String toString() {
-		return String.format(STRING_FORMAT, getRole().getId(), getCharacteristic().getIdentifier(), getValue());
+		return String.format(STRING_FORMAT, getRole().getId(), getCharacteristic().getId(), getValue());
 	}
 }

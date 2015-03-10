@@ -273,7 +273,7 @@ public class DetailedInformationPanel extends JPanel {
 			}
 			writeRelation("Contains Characteristic(s):");
 			for (final Characteristic characteristic : role.getContainsSet()) {
-				writeRelationEntityValue(characteristic.getIdentifier().toString(), role.getContainsValue(characteristic.getIdentifier()));
+				writeRelationEntityValue(characteristic.getId().toString(), role.getContainsValue(characteristic.getId()));
 			}
 		} catch (final BadLocationException e) {
 			e.printStackTrace();
@@ -439,10 +439,10 @@ public class DetailedInformationPanel extends JPanel {
 		try {
 			/* clears the contents of the document */
 			doc.remove(0, doc.getLength());
-			writeEntity(characteristic.getIdentifier().toString());
+			writeEntity(characteristic.getId().toString());
 			writeRelation("Contained By Role(s):");
 			for (final Role role : characteristic.getContainedBySet()) {
-				writeRelationEntityValue(role.getId().toString(), role.getContainsValue(characteristic.getIdentifier()));
+				writeRelationEntityValue(role.getId().toString(), role.getContainsValue(characteristic.getId()));
 			}
 		} catch (final BadLocationException e) {
 			e.printStackTrace();

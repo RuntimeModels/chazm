@@ -912,14 +912,14 @@ public class OrganizationImpl implements Organization {
 		if (characteristic == null) {
 			throw new IllegalArgumentException("Parameter (characteristic) cannot be null");
 		}
-		if (entities.characteristics.containsKey(characteristic.getIdentifier())) {
+		if (entities.characteristics.containsKey(characteristic.getId())) {
 			throw new IllegalArgumentException(String.format("Characteristic (%s) already exists", characteristic));
 		}
-		entities.characteristics.put(characteristic.getIdentifier(), characteristic);
+		entities.characteristics.put(characteristic.getId(), characteristic);
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifyCharacteristicAdded(characteristic.getIdentifier());
+			changeManager.notifyCharacteristicAdded(characteristic.getId());
 		}
 	}
 
@@ -966,7 +966,7 @@ public class OrganizationImpl implements Organization {
 
 			final ChangeManager changeManager = EventRegistry.get();
 			if (changeManager != null) {
-				changeManager.notifyCharacteristicRemoved(characteristic.getIdentifier());
+				changeManager.notifyCharacteristicRemoved(characteristic.getId());
 			}
 		}
 	}
