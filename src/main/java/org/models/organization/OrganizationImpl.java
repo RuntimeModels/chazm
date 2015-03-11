@@ -32,21 +32,15 @@ import org.models.organization.relation.Task;
 import org.models.organization.relation.TaskRelation;
 
 /**
- * The {@linkplain OrganizationImpl} class implements the {@link Organization} interface.
+ * The {@linkplain OrganizationImpl} class is an implementation of the {@link Organization}.
  *
  * @author Scott Harmon
  * @author Christopher Zhong
- * @see Agent
- * @see Capability
- * @see InstanceGoal
- * @see Policy
- * @see Role
- * @see SpecificationGoal
  * @since 1.0
  */
 public class OrganizationImpl implements Organization {
 	/**
-	 * The {@linkplain Entities} class is an data class for the entities within an {@linkplain Organization}.
+	 * The {@linkplain Entities} class is an data class that encapsulates the entities within an {@linkplain Organization}.
 	 *
 	 * @author Christopher Zhong
 	 * @since 7.0.0
@@ -109,7 +103,7 @@ public class OrganizationImpl implements Organization {
 	}
 
 	/**
-	 * The {@linkplain Relations} is a data class for the relations that are within an {@linkplain Organization}.
+	 * The {@linkplain Relations} is a data class that encapsulates the relations that are within an {@linkplain Organization}.
 	 *
 	 * @author Christopher Zhong
 	 * @since 7.0.0
@@ -147,25 +141,25 @@ public class OrganizationImpl implements Organization {
 	private final Relations relations = new Relations();
 
 	/**
-	 * Constructs an empty instance of an {@linkplain Organization}.
+	 * Constructs a new instance of an {@linkplain Organization}.
 	 */
 	public OrganizationImpl() {
 	}
 
 	@Override
-	public final void addSpecificationGoal(final SpecificationGoal specificationGoal) {
-		if (specificationGoal == null) {
-			throw new IllegalArgumentException("Parameter (specificationGoal) cannot be null");
+	public final void addSpecificationGoal(final SpecificationGoal goal) {
+		if (goal == null) {
+			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL,"specificationGoal"));
 		}
-		if (entities.specificationGoals.containsKey(specificationGoal.getId())) {
-			throw new IllegalArgumentException(String.format("Specification goal (%s) already exists", specificationGoal));
+		if (entities.specificationGoals.containsKey(goal.getId())) {
+			throw new IllegalArgumentException(String.format("Specification goal (%s) already exists", goal));
 		}
-		entities.specificationGoals.put(specificationGoal.getId(), specificationGoal);
-		entities.instanceGoalsBySpecificationGoal.put(specificationGoal.getId(), new ConcurrentHashMap<UniqueId, InstanceGoal<?>>());
+		entities.specificationGoals.put(goal.getId(), goal);
+		entities.instanceGoalsBySpecificationGoal.put(goal.getId(), new ConcurrentHashMap<UniqueId, InstanceGoal<?>>());
 
 		final ChangeManager changeManager = EventRegistry.get();
 		if (changeManager != null) {
-			changeManager.notifySpecificationGoalAdded(specificationGoal.getId());
+			changeManager.notifySpecificationGoalAdded(goal.getId());
 		}
 	}
 
