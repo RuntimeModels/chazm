@@ -5,42 +5,43 @@
  *
  * See License.txt file the license agreement.
  */
-package org.models.organization.provider;
+package org.models.organization.factory;
 
 import org.models.organization.entity.Agent;
 import org.models.organization.entity.Capability;
 import org.models.organization.entity.InstanceGoal;
 import org.models.organization.entity.Role;
 import org.models.organization.entity.SpecificationGoal;
+import org.models.organization.factory.UniqueIdFactory;
+import org.models.organization.identifier.Identifiable;
 import org.models.organization.identifier.StringIdentifier;
 import org.models.organization.identifier.UniqueId;
 
 /**
- * The <code>DefaultUniqueIdentifierProvider</code> provides a default implementation of the <code>UniqueIdentifierProvider</code>.
+ * The {@linkplain DefaultUniqueIdFactory} class is an implementation of the {@linkplain UniqueIdFactory}.
  *
  * @author Christopher Zhong
  * @since 4.0
  */
-public class DefaultUniqueIdentifierProvider implements UniqueIdentifierProvider {
-
+public class DefaultUniqueIdFactory implements UniqueIdFactory {
 	@Override
-	public UniqueId getUniqueIdentifier(final String identifier, final Class<?> type) {
+	public <T extends Identifiable> UniqueId getUniqueId(final String id, final Class<T> type) {
 		if (SpecificationGoal.class.isAssignableFrom(type)) {
-			return getUniqueIdentifierForSpecificationGoal(identifier, type);
+			return getUniqueIdentifierForSpecificationGoal(id, type);
 		}
 		if (InstanceGoal.class.isAssignableFrom(type)) {
-			return getUniqueIdentifierForInstanceGoal(identifier, type);
+			return getUniqueIdentifierForInstanceGoal(id, type);
 		}
 		if (Role.class.isAssignableFrom(type)) {
-			return getUniqueIdentifierForRole(identifier, type);
+			return getUniqueIdentifierForRole(id, type);
 		}
 		if (Capability.class.isAssignableFrom(type)) {
-			return getUniqueIdentifierForCapability(identifier, type);
+			return getUniqueIdentifierForCapability(id, type);
 		}
 		if (Agent.class.isAssignableFrom(type)) {
-			return getUniqueIdentifierForCapability(identifier, type);
+			return getUniqueIdentifierForCapability(id, type);
 		}
-		throw new IllegalArgumentException("Unknown Type");
+		throw new UnsupportedOperationException("Unknown type");
 	}
 
 	/**
@@ -53,7 +54,7 @@ public class DefaultUniqueIdentifierProvider implements UniqueIdentifierProvider
 	 * @return a <code>UniqueIdentifier</code> for the <code>SpecificationGoal</code>.
 	 */
 	protected UniqueId getUniqueIdentifierForSpecificationGoal(final String identifier, final Class<?> type) {
-		return StringIdentifier.getIdentifier(identifier);
+		return StringIdentifier.getId(identifier);
 	}
 
 	/**
@@ -66,7 +67,7 @@ public class DefaultUniqueIdentifierProvider implements UniqueIdentifierProvider
 	 * @return a <code>UniqueIdentifier</code> for the <code>InstanceGoal</code> .
 	 */
 	protected UniqueId getUniqueIdentifierForInstanceGoal(final String identifier, final Class<?> type) {
-		return StringIdentifier.getIdentifier(identifier);
+		return StringIdentifier.getId(identifier);
 	}
 
 	/**
@@ -79,7 +80,7 @@ public class DefaultUniqueIdentifierProvider implements UniqueIdentifierProvider
 	 * @return a <code>UniqueIdentifier</code> for the <code>Role</code>.
 	 */
 	protected UniqueId getUniqueIdentifierForRole(final String identifier, final Class<?> type) {
-		return StringIdentifier.getIdentifier(identifier);
+		return StringIdentifier.getId(identifier);
 	}
 
 	/**
@@ -92,7 +93,7 @@ public class DefaultUniqueIdentifierProvider implements UniqueIdentifierProvider
 	 * @return a <code>UniqueIdentifier</code> for the <code>Capability</code>.
 	 */
 	protected UniqueId getUniqueIdentifierForCapability(final String identifier, final Class<?> type) {
-		return StringIdentifier.getIdentifier(identifier);
+		return StringIdentifier.getId(identifier);
 	}
 
 	/**
@@ -105,7 +106,7 @@ public class DefaultUniqueIdentifierProvider implements UniqueIdentifierProvider
 	 * @return a <code>UniqueIdentifier</code> for the <code>Agent</code>.
 	 */
 	protected UniqueId getUniqueIdentifierForAgent(final String identifier, final Class<? extends Agent> type) {
-		return StringIdentifier.getIdentifier(identifier);
+		return StringIdentifier.getId(identifier);
 	}
 
 }
