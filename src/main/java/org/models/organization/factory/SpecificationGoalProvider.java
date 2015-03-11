@@ -5,7 +5,7 @@
  *
  * See License.txt file the license agreement.
  */
-package org.models.organization.provider;
+package org.models.organization.factory;
 
 import org.models.organization.entity.SpecificationGoal;
 
@@ -22,9 +22,9 @@ public interface SpecificationGoalProvider {
 	 *
 	 * @param identifier
 	 *            the <code>String</code> identifying the <code>SpecificationGoalType</code>.
-	 * @param uniqueIdentifierProvider
+	 * @param uniqueIdFactory
 	 * @return the <code>SpecificationGoalType</code> if it exists, <code>null</code> otherwise.
 	 */
-	SpecificationGoal getSpecificationGoal(String identifier, UniqueIdentifierProvider uniqueIdentifierProvider);
+	SpecificationGoal getSpecificationGoal(String identifier, UniqueIdFactory uniqueIdFactory);
 
 }

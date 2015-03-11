@@ -21,8 +21,8 @@ import java.util.concurrent.locks.ReentrantLock;
  * provide a constant time complexity.
  *
  * @author Christopher Zhong, Scott Harmon
- * @since 4.0
  * @see UniqueId
+ * @since 4.0
  */
 public class StringIdentifier extends UniqueId {
 
@@ -64,21 +64,21 @@ public class StringIdentifier extends UniqueId {
 	/**
 	 * A factory method for returning a <code>StringIdentifier</code> based on the given <code>String</code>.
 	 *
-	 * @param identifier
+	 * @param id
 	 *            the <code>String</code> used for identification.
 	 * @return a <code>StringIdentifier</code> representing the given <code>String</code>.
 	 */
-	public static StringIdentifier getIdentifier(final String identifier) {
+	public static StringIdentifier getId(final String id) {
 		lock.lock();
 		try {
-			final WeakReference<StringIdentifier> weakReference = STRING_IDENTIFIERS.get(identifier);
+			final WeakReference<StringIdentifier> weakReference = STRING_IDENTIFIERS.get(id);
 			StringIdentifier stringIdentifier = weakReference == null ? null : weakReference.get();
 			if (stringIdentifier == null) {
 				/*
 				 * this check is required because entry itself is not removed when the weak reference is garbage collected
 				 */
-				stringIdentifier = new StringIdentifier(identifier);
-				STRING_IDENTIFIERS.put(identifier, new WeakReference<>(stringIdentifier));
+				stringIdentifier = new StringIdentifier(id);
+				STRING_IDENTIFIERS.put(id, new WeakReference<>(stringIdentifier));
 			}
 			return stringIdentifier;
 		} finally {
@@ -122,7 +122,7 @@ public class StringIdentifier extends UniqueId {
 	 */
 	private Object readResolve() throws ObjectStreamException {
 		serialized = true;
-		return getIdentifier(identifier);
+		return getId(identifier);
 	}
 
 }

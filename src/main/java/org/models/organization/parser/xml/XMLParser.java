@@ -20,11 +20,11 @@ import org.models.organization.OrganizationImpl;
 import org.models.organization.entity.CapabilityEntity;
 import org.models.organization.entity.RoleEntity;
 import org.models.organization.entity.SpecificationGoal;
+import org.models.organization.factory.DefaultSpecificationGoalProvider;
+import org.models.organization.factory.DefaultUniqueIdFactory;
+import org.models.organization.factory.SpecificationGoalProvider;
+import org.models.organization.factory.UniqueIdFactory;
 import org.models.organization.identifier.UniqueId;
-import org.models.organization.provider.DefaultSpecificationGoalProvider;
-import org.models.organization.provider.DefaultUniqueIdentifierProvider;
-import org.models.organization.provider.SpecificationGoalProvider;
-import org.models.organization.provider.UniqueIdentifierProvider;
 import org.xml.sax.SAXException;
 
 import edu.ksu.cis.agenttool.core.model.Capability;
@@ -65,7 +65,7 @@ public class XMLParser {
 	 *             if any parse errors occur.
 	 */
 	public static Organization parse(final Path path) throws SAXException, IOException, ParserConfigurationException {
-		return parse(path, new DefaultSpecificationGoalProvider(), new DefaultUniqueIdentifierProvider(), new OrganizationImpl());
+		return parse(path, new DefaultSpecificationGoalProvider(), new DefaultUniqueIdFactory(), new OrganizationImpl());
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class XMLParser {
 	 */
 	public static Organization parse(final Path path, final SpecificationGoalProvider specificationGoalProvider) throws SAXException, IOException,
 			ParserConfigurationException {
-		return parse(path, specificationGoalProvider, new DefaultUniqueIdentifierProvider(), new OrganizationImpl());
+		return parse(path, specificationGoalProvider, new DefaultUniqueIdFactory(), new OrganizationImpl());
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class XMLParser {
 	 *
 	 * @param path
 	 *            the <code>Path</code> which contains the necessary information for construction an <code>Organization</code>.
-	 * @param uniqueIdentifierProvider
+	 * @param uniqueIdFactory
 	 *            the <code>UniqueIdentifierProvider</code> that produces <code>UniqueIdentifier</code>.
 	 * @return an <code>Organization</code> based on the given <code>Path</code> and <code>UniqueIdentifierProvider</code>.
 	 * @throws ParserConfigurationException
@@ -103,9 +103,9 @@ public class XMLParser {
 	 * @throws SAXException
 	 *             if any parse errors occur.
 	 */
-	public static Organization parse(final Path path, final UniqueIdentifierProvider uniqueIdentifierProvider) throws SAXException, IOException,
+	public static Organization parse(final Path path, final UniqueIdFactory uniqueIdFactory) throws SAXException, IOException,
 			ParserConfigurationException {
-		return parse(path, new DefaultSpecificationGoalProvider(), uniqueIdentifierProvider, new OrganizationImpl());
+		return parse(path, new DefaultSpecificationGoalProvider(), uniqueIdFactory, new OrganizationImpl());
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class XMLParser {
 	 *             if any parse errors occur.
 	 */
 	public static Organization parse(final Path path, final Organization organization) throws SAXException, IOException, ParserConfigurationException {
-		return parse(path, new DefaultSpecificationGoalProvider(), new DefaultUniqueIdentifierProvider(), organization);
+		return parse(path, new DefaultSpecificationGoalProvider(), new DefaultUniqueIdFactory(), organization);
 	}
 
 	/**
@@ -136,7 +136,7 @@ public class XMLParser {
 	 *            the <code>Path</code> which contains the necessary information for construction an <code>Organization</code>.
 	 * @param specificationGoalProvider
 	 *            the <code>SpecificationGoalProvider</code> in which to retrieve the <code>SpecificationGoal</code>.
-	 * @param uniqueIdentifierProvider
+	 * @param uniqueIdFactory
 	 *            the <code>UniqueIdentifierProvider</code> that produces <code>UniqueIdentifier</code>.
 	 * @return an <code>Organization</code> based on the given <code>Path</code> , <code>SpecificationGoalProvider</code>, and
 	 *         <code>UniqueIdentifierProvider</code>.
@@ -148,8 +148,8 @@ public class XMLParser {
 	 *             if any parse errors occur.
 	 */
 	public static Organization parse(final Path path, final SpecificationGoalProvider specificationGoalProvider,
-			final UniqueIdentifierProvider uniqueIdentifierProvider) throws SAXException, IOException, ParserConfigurationException {
-		return parse(path, specificationGoalProvider, uniqueIdentifierProvider, new OrganizationImpl());
+			final UniqueIdFactory uniqueIdFactory) throws SAXException, IOException, ParserConfigurationException {
+		return parse(path, specificationGoalProvider, uniqueIdFactory, new OrganizationImpl());
 	}
 
 	/**
@@ -171,7 +171,7 @@ public class XMLParser {
 	 */
 	public static Organization parse(final Path path, final SpecificationGoalProvider specificationGoalProvider, final Organization organization)
 			throws SAXException, IOException, ParserConfigurationException {
-		return parse(path, specificationGoalProvider, new DefaultUniqueIdentifierProvider(), organization);
+		return parse(path, specificationGoalProvider, new DefaultUniqueIdFactory(), organization);
 	}
 
 	/**
@@ -179,7 +179,7 @@ public class XMLParser {
 	 *
 	 * @param path
 	 *            the <code>Path</code> which contains the necessary information for construction an <code>Organization</code>.
-	 * @param uniqueIdentifierProvider
+	 * @param uniqueIdFactory
 	 *            the <code>UniqueIdentifierProvider</code> that produces <code>UniqueIdentifier</code>.
 	 * @param organization
 	 *            the <code>Organization</code> with which to populate based on the given <code>Path</code> and <code>UniqueIdentifierProvider</code>.
@@ -191,9 +191,9 @@ public class XMLParser {
 	 * @throws SAXException
 	 *             if any parse errors occur.
 	 */
-	public static Organization parse(final Path path, final UniqueIdentifierProvider uniqueIdentifierProvider, final Organization organization)
+	public static Organization parse(final Path path, final UniqueIdFactory uniqueIdFactory, final Organization organization)
 			throws SAXException, IOException, ParserConfigurationException {
-		return parse(path, new DefaultSpecificationGoalProvider(), uniqueIdentifierProvider, organization);
+		return parse(path, new DefaultSpecificationGoalProvider(), uniqueIdFactory, organization);
 	}
 
 	/**
@@ -204,7 +204,7 @@ public class XMLParser {
 	 *            the <code>Path</code> which contains the necessary information for construction an <code>Organization</code>.
 	 * @param specificationGoalProvider
 	 *            the <code>SpecificationGoalProvider</code> in which to retrieve the <code>SpecificationGoal</code>.
-	 * @param uniqueIdentifierProvider
+	 * @param uniqueIdFactory
 	 *            the <code>UniqueIdentifierProvider</code> that produces <code>UniqueIdentifier</code>.
 	 * @param organization
 	 *            the <code>Organization</code> with which to populate based on the given <code>Path</code>, <code>SpecificationGoalProvider</code>, and
@@ -219,12 +219,12 @@ public class XMLParser {
 	 *             if any parse errors occur.
 	 */
 	public static Organization parse(final Path path, final SpecificationGoalProvider specificationGoalProvider,
-			final UniqueIdentifierProvider uniqueIdentifierProvider, final Organization organization) throws SAXException, IOException,
+			final UniqueIdFactory uniqueIdFactory, final Organization organization) throws SAXException, IOException,
 			ParserConfigurationException {
-		if (path == null || specificationGoalProvider == null || uniqueIdentifierProvider == null || organization == null) {
+		if (path == null || specificationGoalProvider == null || uniqueIdFactory == null || organization == null) {
 			throw new IllegalArgumentException(String.format(
 					"Parameters (file: %s, Specification goal provider: %s, unique identifier provider: %s, organization: %s) cannot be null ", path,
-					specificationGoalProvider, uniqueIdentifierProvider, organization));
+					specificationGoalProvider, uniqueIdFactory, organization));
 		}
 		if (Files.exists(path)) {
 			if (DEBUG) {
@@ -236,7 +236,7 @@ public class XMLParser {
 				/* parse all the goals */
 				for (final ModelElement element : schema.getChildren(ModelElementType.GOAL)) {
 					final Goal goal = (Goal) element;
-					final SpecificationGoal specificationGoal = specificationGoalProvider.getSpecificationGoal(goal.getName(), uniqueIdentifierProvider);
+					final SpecificationGoal specificationGoal = specificationGoalProvider.getSpecificationGoal(goal.getName(), uniqueIdFactory);
 					if (specificationGoal == null) {
 						throw new IllegalArgumentException(String.format("Cannot find the '%s' specification goal in the given provider", goal.getName()));
 					}
@@ -245,7 +245,7 @@ public class XMLParser {
 				/* parse all the capabilities */
 				for (final ModelElement element : schema.getChildren(ModelElementType.CAPABILITY)) {
 					final Capability capability = (Capability) element;
-					final UniqueId capabilityIdentifier = uniqueIdentifierProvider.getUniqueIdentifier(capability.getName(),
+					final UniqueId capabilityIdentifier = uniqueIdFactory.getUniqueId(capability.getName(),
 							org.models.organization.entity.Capability.class);
 					final org.models.organization.entity.Capability c = new CapabilityEntity(capabilityIdentifier);
 					organization.addCapability(c);
@@ -255,19 +255,19 @@ public class XMLParser {
 					final Role role = (Role) element;
 					/* only roles that are not inherited are added */
 					if (role.getDestRelationships(RelationshipType.INHERITS).size() == 0) {
-						final UniqueId roleIdentifier = uniqueIdentifierProvider.getUniqueIdentifier(role.getName(), org.models.organization.entity.Role.class);
+						final UniqueId roleIdentifier = uniqueIdFactory.getUniqueId(role.getName(), org.models.organization.entity.Role.class);
 						final org.models.organization.entity.Role r = new RoleEntity(roleIdentifier);
 						organization.addRole(r);
 						/* set up the achieves relation */
 						for (final Relationship achieves : role.getSrcRelationships(RelationshipType.ACHIEVES)) {
 							final Goal goal = (Goal) achieves.getChild();
-							final UniqueId goalIdentifier = uniqueIdentifierProvider.getUniqueIdentifier(goal.getName(), SpecificationGoal.class);
+							final UniqueId goalIdentifier = uniqueIdFactory.getUniqueId(goal.getName(), SpecificationGoal.class);
 							organization.addAchievesRelation(roleIdentifier, goalIdentifier);
 						}
 						/* set up the requires relation */
 						for (final Relationship requires : role.getSrcRelationships(RelationshipType.REQUIRES)) {
 							final Capability capability = (Capability) requires.getChild();
-							final UniqueId capabilityIdentifier = uniqueIdentifierProvider.getUniqueIdentifier(capability.getName(),
+							final UniqueId capabilityIdentifier = uniqueIdFactory.getUniqueId(capability.getName(),
 									org.models.organization.entity.Capability.class);
 							organization.addRequiresRelation(roleIdentifier, capabilityIdentifier);
 						}
@@ -276,7 +276,7 @@ public class XMLParser {
 							final Role parent = (Role) inherits.remove(0).getChild();
 							for (final Relationship requires : parent.getSrcRelationships(RelationshipType.REQUIRES)) {
 								final Capability capability = (Capability) requires.getChild();
-								final UniqueId capabilityIdentifier = uniqueIdentifierProvider.getUniqueIdentifier(capability.getName(),
+								final UniqueId capabilityIdentifier = uniqueIdFactory.getUniqueId(capability.getName(),
 										org.models.organization.entity.Capability.class);
 								organization.addRequiresRelation(roleIdentifier, capabilityIdentifier);
 							}
