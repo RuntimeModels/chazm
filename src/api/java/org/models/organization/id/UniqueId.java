@@ -5,7 +5,7 @@
  *
  * See License.txt file the license agreement.
  */
-package org.models.organization.identifier;
+package org.models.organization.id;
 
 import java.io.Serializable;
 
@@ -26,13 +26,15 @@ import org.models.organization.Organization;
  * de-serialize properly.
  *
  * @author Christopher Zhong
+ * @param <T>
+ *            the type of the {@linkplain UniqueId}.
  * @since 4.0
  */
-public abstract class UniqueId implements Serializable {
+public abstract class UniqueId<T> implements Serializable {
 	/**
-	 * Default serial version ID.
+	 * Serial version ID
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2812867343219462118L;
 
 	@Override
 	public abstract boolean equals(Object object);

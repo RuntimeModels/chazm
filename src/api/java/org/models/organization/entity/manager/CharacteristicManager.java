@@ -1,10 +1,10 @@
-package org.models.organization.manager;
+package org.models.organization.entity.manager;
 
 import java.util.Collection;
 import java.util.Set;
 
 import org.models.organization.entity.Characteristic;
-import org.models.organization.identifier.UniqueId;
+import org.models.organization.id.UniqueId;
 
 /**
  * The @linkplain CharacteristicManager} interface defines the necessary APIs for managing {@linkplain Characteristic}s.
@@ -44,7 +44,7 @@ public interface CharacteristicManager {
 	 *            the {@linkplain UniqueId} that represents the {@linkplain Characteristic} to retrieve.
 	 * @return the {@linkplain Characteristic} if it exists, <code>null</code> otherwise.
 	 */
-	Characteristic getCharacteristic(UniqueId id);
+	Characteristic getCharacteristic(UniqueId<Characteristic> id);
 
 	/**
 	 * Returns a set of {@linkplain Characteristic}s from this {@linkplain CharacteristicManager}.
@@ -59,7 +59,15 @@ public interface CharacteristicManager {
 	 * @param id
 	 *            the {@linkplain UniqueId} that represents the {@linkplain Characteristic} to remove.
 	 */
-	void removeCharacteristic(UniqueId id);
+	void removeCharacteristic(UniqueId<Characteristic> id);
+
+	/**
+	 * Removes a set of {@linkplain Characteristic}s from this {@linkplain CharacteristicManager}.
+	 *
+	 * @param ids
+	 *            the set of {@linkplain UniqueId}s that represents the {@linkplain Characteristic}s to remove.
+	 */
+	void removeCharacteristics(Collection<UniqueId<Characteristic>> ids);
 
 	/**
 	 * Removes all {@linkplain Characteristic}s from this {@linkplain CharacteristicManager}.

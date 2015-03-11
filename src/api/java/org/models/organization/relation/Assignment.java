@@ -4,7 +4,7 @@ import org.models.organization.Organization;
 import org.models.organization.entity.Agent;
 import org.models.organization.entity.InstanceGoal;
 import org.models.organization.entity.Role;
-import org.models.organization.identifier.Identifiable;
+import org.models.organization.id.Identifiable;
 
 /**
  * The {@linkplain Assignment} interface defines the assignment relation, which means that an {@linkplain Agent} is assigned to play a {@linkplain Role} to
@@ -16,7 +16,7 @@ import org.models.organization.identifier.Identifiable;
  * @see InstanceGoal
  * @since 7.0.0
  */
-public interface Assignment extends Identifiable {
+public interface Assignment extends Identifiable<Assignment> {
 	/**
 	 * Returns the {@linkplain Agent} of this {@linkplain Assignment}.
 	 *

@@ -31,7 +31,7 @@ public class AchievesRelation implements Achieves {
 	/**
 	 * The {@linkplain SpecificationGoal} of this {@linkplain Achieves}.
 	 */
-	private final SpecificationGoal specificationGoal;
+	private final SpecificationGoal goal;
 
 	/**
 	 * Optimization for hash code computation since it never changes.
@@ -48,18 +48,18 @@ public class AchievesRelation implements Achieves {
 	 *
 	 * @param role
 	 *            the {@linkplain Role} of this {@linkplain Achieves}.
-	 * @param specificationGoal
+	 * @param goal
 	 *            the {@linkplain SpecificationGoal} of this {@linkplain Achieves}.
 	 */
-	public AchievesRelation(final Role role, final SpecificationGoal specificationGoal) {
+	public AchievesRelation(final Role role, final SpecificationGoal goal) {
 		if (role == null) {
 			throw new IllegalArgumentException("Parameter (role) cannot be null");
 		}
-		if (specificationGoal == null) {
+		if (goal == null) {
 			throw new IllegalArgumentException("Parameter (specificationGoal) cannot be null");
 		}
 		this.role = role;
-		this.specificationGoal = specificationGoal;
+		this.goal = goal;
 	}
 
 	@Override
@@ -68,15 +68,15 @@ public class AchievesRelation implements Achieves {
 	}
 
 	@Override
-	public SpecificationGoal getSpecificationGoal() {
-		return specificationGoal;
+	public SpecificationGoal getGoal() {
+		return goal;
 	}
 
 	@Override
 	public boolean equals(final Object object) {
 		if (object instanceof Achieves) {
 			final Achieves achieves = (Achieves) object;
-			return getRole().equals(achieves.getRole()) && getSpecificationGoal().equals(achieves.getSpecificationGoal());
+			return getRole().equals(achieves.getRole()) && getGoal().equals(achieves.getGoal());
 
 		}
 		return false;
@@ -85,7 +85,7 @@ public class AchievesRelation implements Achieves {
 	@Override
 	public int hashCode() {
 		if (hashCode == null) {
-			hashCode = getRole().hashCode() << 16 | getSpecificationGoal().hashCode();
+			hashCode = getRole().hashCode() << 16 | getGoal().hashCode();
 		}
 		return hashCode;
 	}
@@ -93,7 +93,7 @@ public class AchievesRelation implements Achieves {
 	@Override
 	public String toString() {
 		if (toString == null) {
-			toString = String.format(STRING_FORMAT, getRole().getId(), getSpecificationGoal().getId());
+			toString = String.format(STRING_FORMAT, getRole().getId(), getGoal().getId());
 		}
 		return toString;
 	}

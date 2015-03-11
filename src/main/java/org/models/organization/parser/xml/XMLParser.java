@@ -24,7 +24,7 @@ import org.models.organization.factory.DefaultSpecificationGoalProvider;
 import org.models.organization.factory.DefaultUniqueIdFactory;
 import org.models.organization.factory.SpecificationGoalProvider;
 import org.models.organization.factory.UniqueIdFactory;
-import org.models.organization.identifier.UniqueId;
+import org.models.organization.id.UniqueId;
 import org.xml.sax.SAXException;
 
 import edu.ksu.cis.agenttool.core.model.Capability;
@@ -103,8 +103,7 @@ public class XMLParser {
 	 * @throws SAXException
 	 *             if any parse errors occur.
 	 */
-	public static Organization parse(final Path path, final UniqueIdFactory uniqueIdFactory) throws SAXException, IOException,
-			ParserConfigurationException {
+	public static Organization parse(final Path path, final UniqueIdFactory uniqueIdFactory) throws SAXException, IOException, ParserConfigurationException {
 		return parse(path, new DefaultSpecificationGoalProvider(), uniqueIdFactory, new OrganizationImpl());
 	}
 
@@ -147,8 +146,8 @@ public class XMLParser {
 	 * @throws SAXException
 	 *             if any parse errors occur.
 	 */
-	public static Organization parse(final Path path, final SpecificationGoalProvider specificationGoalProvider,
-			final UniqueIdFactory uniqueIdFactory) throws SAXException, IOException, ParserConfigurationException {
+	public static Organization parse(final Path path, final SpecificationGoalProvider specificationGoalProvider, final UniqueIdFactory uniqueIdFactory)
+			throws SAXException, IOException, ParserConfigurationException {
 		return parse(path, specificationGoalProvider, uniqueIdFactory, new OrganizationImpl());
 	}
 
@@ -191,8 +190,8 @@ public class XMLParser {
 	 * @throws SAXException
 	 *             if any parse errors occur.
 	 */
-	public static Organization parse(final Path path, final UniqueIdFactory uniqueIdFactory, final Organization organization)
-			throws SAXException, IOException, ParserConfigurationException {
+	public static Organization parse(final Path path, final UniqueIdFactory uniqueIdFactory, final Organization organization) throws SAXException, IOException,
+			ParserConfigurationException {
 		return parse(path, new DefaultSpecificationGoalProvider(), uniqueIdFactory, organization);
 	}
 
@@ -218,9 +217,8 @@ public class XMLParser {
 	 * @throws SAXException
 	 *             if any parse errors occur.
 	 */
-	public static Organization parse(final Path path, final SpecificationGoalProvider specificationGoalProvider,
-			final UniqueIdFactory uniqueIdFactory, final Organization organization) throws SAXException, IOException,
-			ParserConfigurationException {
+	public static Organization parse(final Path path, final SpecificationGoalProvider specificationGoalProvider, final UniqueIdFactory uniqueIdFactory,
+			final Organization organization) throws SAXException, IOException, ParserConfigurationException {
 		if (path == null || specificationGoalProvider == null || uniqueIdFactory == null || organization == null) {
 			throw new IllegalArgumentException(String.format(
 					"Parameters (file: %s, Specification goal provider: %s, unique identifier provider: %s, organization: %s) cannot be null ", path,
@@ -245,8 +243,7 @@ public class XMLParser {
 				/* parse all the capabilities */
 				for (final ModelElement element : schema.getChildren(ModelElementType.CAPABILITY)) {
 					final Capability capability = (Capability) element;
-					final UniqueId capabilityIdentifier = uniqueIdFactory.getUniqueId(capability.getName(),
-							org.models.organization.entity.Capability.class);
+					final UniqueId capabilityIdentifier = uniqueIdFactory.buildId(capability.getName(), org.models.organization.entity.Capability.class);
 					final org.models.organization.entity.Capability c = new CapabilityEntity(capabilityIdentifier);
 					organization.addCapability(c);
 				}
@@ -255,30 +252,30 @@ public class XMLParser {
 					final Role role = (Role) element;
 					/* only roles that are not inherited are added */
 					if (role.getDestRelationships(RelationshipType.INHERITS).size() == 0) {
-						final UniqueId roleIdentifier = uniqueIdFactory.getUniqueId(role.getName(), org.models.organization.entity.Role.class);
+						final UniqueId roleIdentifier = uniqueIdFactory.buildId(role.getName(), org.models.organization.entity.Role.class);
 						final org.models.organization.entity.Role r = new RoleEntity(roleIdentifier);
 						organization.addRole(r);
 						/* set up the achieves relation */
 						for (final Relationship achieves : role.getSrcRelationships(RelationshipType.ACHIEVES)) {
 							final Goal goal = (Goal) achieves.getChild();
-							final UniqueId goalIdentifier = uniqueIdFactory.getUniqueId(goal.getName(), SpecificationGoal.class);
-							organization.addAchievesRelation(roleIdentifier, goalIdentifier);
+							final UniqueId goalIdentifier = uniqueIdFactory.buildId(goal.getName(), SpecificationGoal.class);
+							organization.addAchieves(roleIdentifier, goalIdentifier);
 						}
 						/* set up the requires relation */
 						for (final Relationship requires : role.getSrcRelationships(RelationshipType.REQUIRES)) {
 							final Capability capability = (Capability) requires.getChild();
-							final UniqueId capabilityIdentifier = uniqueIdFactory.getUniqueId(capability.getName(),
-									org.models.organization.entity.Capability.class);
-							organization.addRequiresRelation(roleIdentifier, capabilityIdentifier);
+							final UniqueId capabilityIdentifier = uniqueIdFactory
+									.buildId(capability.getName(), org.models.organization.entity.Capability.class);
+							organization.addRequires(roleIdentifier, capabilityIdentifier);
 						}
 						/* set up requires relation from inheritance */
 						for (final List<Relationship> inherits = role.getSrcRelationships(RelationshipType.INHERITS); !inherits.isEmpty();) {
 							final Role parent = (Role) inherits.remove(0).getChild();
 							for (final Relationship requires : parent.getSrcRelationships(RelationshipType.REQUIRES)) {
 								final Capability capability = (Capability) requires.getChild();
-								final UniqueId capabilityIdentifier = uniqueIdFactory.getUniqueId(capability.getName(),
+								final UniqueId capabilityIdentifier = uniqueIdFactory.buildId(capability.getName(),
 										org.models.organization.entity.Capability.class);
-								organization.addRequiresRelation(roleIdentifier, capabilityIdentifier);
+								organization.addRequires(roleIdentifier, capabilityIdentifier);
 							}
 							inherits.addAll(parent.getSrcRelationships(RelationshipType.INHERITS));
 						}

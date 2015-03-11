@@ -1,10 +1,10 @@
-package org.models.organization.manager;
+package org.models.organization.entity.manager;
 
 import java.util.Collection;
 import java.util.Set;
 
 import org.models.organization.entity.Agent;
-import org.models.organization.identifier.UniqueId;
+import org.models.organization.id.UniqueId;
 
 /**
  * The {@linkplain AgentManager} interface defines the necessary APIs for managing {@linkplain Agent}s.
@@ -44,7 +44,7 @@ public interface AgentManager {
 	 *            the {@linkplain UniqueId} that represents the {@linkplain Agent} to retrieve.
 	 * @return the {@linkplain Agent} if it exists, <code>null</code> otherwise.
 	 */
-	Agent getAgent(UniqueId id);
+	Agent getAgent(UniqueId<Agent> id);
 
 	/**
 	 * Returns a set of {@linkplain Agent}s from this {@linkplain AgentManager}.
@@ -59,7 +59,7 @@ public interface AgentManager {
 	 * @param id
 	 *            the {@linkplain UniqueId} that represents the {@linkplain Agent} to remove.
 	 */
-	void removeAgent(UniqueId id);
+	void removeAgent(UniqueId<Agent> id);
 
 	/**
 	 * Removes a set of {@linkplain Agent}s from this {@linkplain AgentManager}.
@@ -67,15 +67,7 @@ public interface AgentManager {
 	 * @param ids
 	 *            the set of {@linkplain UniqueId}s that represents the {@linkplain Agent}s to remove.
 	 */
-	void removeAgents(Collection<UniqueId> ids);
-
-	/**
-	 * Removes a set of {@linkplain Agent}s from this {@linkplain AgentManager}.
-	 *
-	 * @param ids
-	 *            the set of {@linkplain UniqueId}s that represents the {@linkplain Agent}s to remove.
-	 */
-	void removeAgents(UniqueId... ids);
+	void removeAgents(Collection<UniqueId<Agent>> ids);
 
 	/**
 	 * Removes all {@linkplain Agent}s from this {@linkplain AgentManager}.

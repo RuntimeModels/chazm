@@ -10,7 +10,7 @@ package org.models.organization.relation;
 import org.models.organization.entity.Agent;
 import org.models.organization.entity.InstanceGoal;
 import org.models.organization.entity.Role;
-import org.models.organization.identifier.UniqueId;
+import org.models.organization.id.UniqueId;
 
 /**
  * The {@linkplain AssignmentRelation} class is an implementation of the {@linkplain Assignment}.
@@ -28,7 +28,7 @@ public class AssignmentRelation implements Assignment {
 	 * @see UniqueId
 	 * @since 4.0
 	 */
-	private static class Id extends UniqueId {
+	public static class Id extends UniqueId<Assignment> {
 		/**
 		 * Serial version ID.
 		 */
@@ -42,17 +42,17 @@ public class AssignmentRelation implements Assignment {
 		/**
 		 * The {@linkplain UniqueId} that represents an {@linkplain Agent}.
 		 */
-		private final UniqueId agentId;
+		private final UniqueId<Agent> agentId;
 
 		/**
 		 * The {@linkplain UniqueId} that represents a {@linkplain Role}.
 		 */
-		private final UniqueId roleId;
+		private final UniqueId<Role> roleId;
 
 		/**
 		 * The {@linkplain UniqueId} that represents an {@linkplain InstanceGoal}.
 		 */
-		private final UniqueId goalId;
+		private final UniqueId<InstanceGoal<?>> goalId;
 
 		/**
 		 * Optimization for hash code computation since it never changes.
@@ -74,7 +74,7 @@ public class AssignmentRelation implements Assignment {
 		 * @param goalId
 		 *            the {@linkplain UniqueId} that represents an {@linkplain InstanceGoal}.
 		 */
-		public Id(final UniqueId agentId, final UniqueId roleId, final UniqueId goalId) {
+		public Id(final UniqueId<Agent> agentId, final UniqueId<Role> roleId, final UniqueId<InstanceGoal<?>> goalId) {
 			this.agentId = agentId;
 			this.roleId = roleId;
 			this.goalId = goalId;
@@ -85,7 +85,7 @@ public class AssignmentRelation implements Assignment {
 		 *
 		 * @return the {@linkplain UniqueId} that represents an {@linkplain Agent}.
 		 */
-		private UniqueId getAgentId() {
+		private UniqueId<Agent> getAgentId() {
 			return agentId;
 		}
 
@@ -94,7 +94,7 @@ public class AssignmentRelation implements Assignment {
 		 *
 		 * @return the {@linkplain UniqueId} that represents a {@linkplain Role}.
 		 */
-		private UniqueId getRoleId() {
+		private UniqueId<Role> getRoleId() {
 			return roleId;
 		}
 
@@ -103,7 +103,7 @@ public class AssignmentRelation implements Assignment {
 		 *
 		 * @return the {@linkplain UniqueId} that represents an {@linkplain InstanceGoal}.
 		 */
-		private UniqueId getGoalId() {
+		private UniqueId<InstanceGoal<?>> getGoalId() {
 			return goalId;
 		}
 
@@ -146,7 +146,7 @@ public class AssignmentRelation implements Assignment {
 	/**
 	 * The {@linkplain UniqueId} that represents this {@linkplain Assignment}.
 	 */
-	private final UniqueId id;
+	private final UniqueId<Assignment> id;
 
 	/**
 	 * The {@linkplain Agent} of this {@linkplain Assignment}.
@@ -190,22 +190,22 @@ public class AssignmentRelation implements Assignment {
 	}
 
 	@Override
-	public final UniqueId getId() {
+	public final UniqueId<Assignment> getId() {
 		return id;
 	}
 
 	@Override
-	public final Agent getAgent() {
+	public Agent getAgent() {
 		return agent;
 	}
 
 	@Override
-	public final Role getRole() {
+	public Role getRole() {
 		return role;
 	}
 
 	@Override
-	public final InstanceGoal<?> getGoal() {
+	public InstanceGoal<?> getGoal() {
 		return goal;
 	}
 

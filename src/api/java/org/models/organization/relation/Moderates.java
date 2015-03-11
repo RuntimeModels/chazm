@@ -2,10 +2,10 @@ package org.models.organization.relation;
 
 import org.models.organization.Organization;
 import org.models.organization.entity.Attribute;
-import org.models.organization.entity.PerformanceFunction;
+import org.models.organization.entity.Pmf;
 
 /**
- * The {@linkplain Moderates} interface defines the moderates relation, where a {@linkplain PerformanceFunction} moderates an {@linkplain Attribute}, of an
+ * The {@linkplain Moderates} interface defines the moderates relation, where a {@linkplain Pmf} moderates an {@linkplain Attribute}, of an
  * {@linkplain Organization}.
  *
  * @author Christopher Zhong
@@ -13,11 +13,11 @@ import org.models.organization.entity.PerformanceFunction;
  */
 public interface Moderates {
 	/**
-	 * Returns the {@linkplain PerformanceFunction} of this {@linkplain Moderates}.
+	 * Returns the {@linkplain Pmf} of this {@linkplain Moderates}.
 	 *
-	 * @return the {@linkplain PerformanceFunction} of this {@linkplain Moderates}.
+	 * @return the {@linkplain Pmf} of this {@linkplain Moderates}.
 	 */
-	PerformanceFunction getPerformanceFunction();
+	Pmf getPmf();
 
 	/**
 	 * Returns the {@linkplain Attribute} of this {@linkplain Moderates}.

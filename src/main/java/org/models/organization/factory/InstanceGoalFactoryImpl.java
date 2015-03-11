@@ -10,7 +10,7 @@ package org.models.organization.factory;
 import org.models.organization.entity.InstanceGoal;
 import org.models.organization.entity.InstanceGoalEntity;
 import org.models.organization.entity.SpecificationGoal;
-import org.models.organization.identifier.UniqueId;
+import org.models.organization.id.UniqueId;
 
 /**
  * <code>InstanceGoalFactoryImpl</code> provides a default {@link InstanceGoalFactory} used for creating instances of {@link InstanceGoal}.

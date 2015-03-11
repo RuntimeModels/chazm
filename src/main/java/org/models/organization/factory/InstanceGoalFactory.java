@@ -9,7 +9,7 @@ package org.models.organization.factory;
 
 import org.models.organization.entity.InstanceGoal;
 import org.models.organization.entity.SpecificationGoal;
-import org.models.organization.identifier.UniqueId;
+import org.models.organization.id.UniqueId;
 
 /**
  * The <code>InstanceGoalFactory</code> interface provides a standard way to instantiate {@link InstanceGoal} in the Organization Model.

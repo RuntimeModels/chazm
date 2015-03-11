@@ -19,16 +19,15 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ListSelectionEvent;
 
 import org.models.organization.Organization;
-import org.models.organization.entity.PerformanceFunction;
+import org.models.organization.entity.Pmf;
 
 /**
- * The <code>PerformanceFunctionVisualizationPanel</code> class is a Swing component to visualize the {@link PerformanceFunction} currently in the
- * {@link Organization}.
+ * The <code>PerformanceFunctionVisualizationPanel</code> class is a Swing component to visualize the {@link Pmf} currently in the {@link Organization}.
  *
  * @author Christopher Zhong
  * @since 6.0
  */
-public class PerformanceFunctionVisualizationPanel extends AbstractListVisualizationPanel<PerformanceFunction> {
+public class PerformanceFunctionVisualizationPanel extends AbstractListVisualizationPanel<Pmf> {
 
 	/**
 	 * Default serial version ID
@@ -48,19 +47,19 @@ public class PerformanceFunctionVisualizationPanel extends AbstractListVisualiza
 
 	@Override
 	public void valueChanged(final ListSelectionEvent e) {
-		final PerformanceFunction performanceFunction = getList().getSelectedValue();
-		if (performanceFunction != null) {
-			getDetailedInformationPanel().showDetailedInformation(performanceFunction);
+		final Pmf pmf = getList().getSelectedValue();
+		if (pmf != null) {
+			getDetailedInformationPanel().showDetailedInformation(pmf);
 		}
 	}
 
 	@Override
-	List<PerformanceFunction> getCollection() {
-		final List<PerformanceFunction> performanceFunctions = new ArrayList<>(getOrganization().getPerformanceFunctions());
-		final Comparator<PerformanceFunction> comparator = (performanceFunction1, performanceFunction2) -> performanceFunction1.toString().compareTo(
+	List<Pmf> getCollection() {
+		final List<Pmf> pmfs = new ArrayList<>(getOrganization().getPmfs());
+		final Comparator<Pmf> comparator = (performanceFunction1, performanceFunction2) -> performanceFunction1.toString().compareTo(
 				performanceFunction2.toString());
-		Collections.sort(performanceFunctions, comparator);
-		return performanceFunctions;
+		Collections.sort(pmfs, comparator);
+		return pmfs;
 	}
 
 }

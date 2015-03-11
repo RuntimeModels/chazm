@@ -7,11 +7,9 @@
  */
 package org.models.organization.entity;
 
-import java.util.Set;
-
 import org.models.organization.Organization;
-import org.models.organization.identifier.Identifiable;
-import org.models.organization.identifier.UniqueId;
+import org.models.organization.id.Identifiable;
+import org.models.organization.id.UniqueId;
 
 /**
  * The {@linkplain InstanceGoal} interface defines the instance goal, which is a concrete instantiation of a {@link SpecificationGoal}, of an
@@ -22,13 +20,13 @@ import org.models.organization.identifier.UniqueId;
  *            the type of the parameter of this {@linkplain InstanceGoal}.
  * @since 3.4
  */
-public interface InstanceGoal<T> extends Identifiable {
+public interface InstanceGoal<T> extends Identifiable<InstanceGoal<?>> {
 	/**
 	 * Returns the {@linkplain UniqueId} that represents this instance portion of this {@linkplain InstanceGoal}.
 	 *
 	 * @return the {@linkplain UniqueId} that represents this instance portion of this {@linkplain InstanceGoal}.
 	 */
-	UniqueId getInstanceId();
+	UniqueId<InstanceGoal<?>> getInstanceId();
 
 	/**
 	 * Returns the {@linkplain SpecificationGoal} that instantiated this {@linkplain InstanceGoal}.
@@ -43,13 +41,4 @@ public interface InstanceGoal<T> extends Identifiable {
 	 * @return the parameter(s) of this {@linkplain InstanceGoal}.
 	 */
 	T getParameter();
-
-	/**
-	 * Returns the set of <code>Role</code> that achieves this <code>SpecificationGoal</code>.
-	 *
-	 * @return the set of <code>Role</code> that achieves this <code>SpecificationGoal</code>.
-	 * @see SpecificationGoal#getAchievedBySet()
-	 */
-	Set<Role> getAchievedBySet();
-
 }

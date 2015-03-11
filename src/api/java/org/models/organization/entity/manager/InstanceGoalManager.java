@@ -1,10 +1,10 @@
-package org.models.organization.manager;
+package org.models.organization.entity.manager;
 
 import java.util.Collection;
 import java.util.Set;
 
 import org.models.organization.entity.InstanceGoal;
-import org.models.organization.identifier.UniqueId;
+import org.models.organization.id.UniqueId;
 
 /**
  * The {@linkplain InstanceGoalManager} interface defines the necessary APIs for managing {@linkplain InstanceGoal}s.
@@ -44,7 +44,7 @@ public interface InstanceGoalManager {
 	 *            the {@linkplain UniqueId} that represents the {@linkplain InstanceGoal} to retrieve.
 	 * @return the {@linkplain InstanceGoal} if it exists, <code>null</code> otherwise.
 	 */
-	InstanceGoal<?> getInstanceGoal(UniqueId id);
+	InstanceGoal<?> getInstanceGoal(UniqueId<InstanceGoal<?>> id);
 
 	/**
 	 * Returns a set of {@linkplain InstanceGoal} from this {@linkplain InstanceGoalManager}.
@@ -59,7 +59,7 @@ public interface InstanceGoalManager {
 	 * @param id
 	 *            the {@linkplain UniqueId} that represents the {@linkplain InstanceGoal} to remove.
 	 */
-	void removeInstanceGoal(UniqueId id);
+	void removeInstanceGoal(UniqueId<InstanceGoal<?>> id);
 
 	/**
 	 * Removes a set of {@linkplain InstanceGoal}s from this {@linkplain InstanceGoalManager}.
@@ -67,15 +67,7 @@ public interface InstanceGoalManager {
 	 * @param ids
 	 *            the set of {@linkplain UniqueId} that represents the {@linkplain InstanceGoal}s to remove.
 	 */
-	void removeInstanceGoals(Collection<UniqueId> ids);
-
-	/**
-	 * Removes a set of {@linkplain InstanceGoal}s from this {@linkplain InstanceGoalManager}.
-	 *
-	 * @param ids
-	 *            the set of {@linkplain UniqueId} that represents the {@linkplain InstanceGoal}s to remove.
-	 */
-	void removeInstanceGoals(UniqueId... ids);
+	void removeInstanceGoals(Collection<UniqueId<InstanceGoal<?>>> ids);
 
 	/**
 	 * Removes all {@linkplain InstanceGoal}s from this {@linkplain InstanceGoalManager}.

@@ -7,8 +7,7 @@
  */
 package org.models.organization.factory;
 
-import org.models.organization.identifier.Identifiable;
-import org.models.organization.identifier.UniqueId;
+import org.models.organization.id.UniqueId;
 
 /**
  * The {@linkplain UniqueIdFactory} interface defines a factory for obtaining {@linkplain UniqueId}s.
@@ -20,14 +19,14 @@ import org.models.organization.identifier.UniqueId;
 public interface UniqueIdFactory {
 	/**
 	 * Returns a {@linkplain UniqueId}.
-	 * 
+	 *
 	 * @param <T>
 	 *            the {@linkplain UniqueId} is based on the {@linkplain Class} type.
 	 * @param id
 	 *            the {@linkplain String} of the {@linkplain UniqueId}.
 	 * @param type
-	 *            the <code>Class</code> or a sub-<code>Class</code> of one of the entities of the Organization Model.
+	 *            the type of the {@linkplain UniqueId}.
 	 * @return a {@linkplain UniqueId}.
 	 */
-	<T extends Identifiable> UniqueId getUniqueId(String id, Class<T> type);
+	<T> UniqueId<T> buildId(String id, Class<T> type);
 }

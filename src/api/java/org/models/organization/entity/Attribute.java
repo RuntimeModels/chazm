@@ -7,11 +7,8 @@
  */
 package org.models.organization.entity;
 
-import java.util.Set;
-
 import org.models.organization.Organization;
-import org.models.organization.identifier.Identifiable;
-import org.models.organization.identifier.UniqueId;
+import org.models.organization.id.Identifiable;
 
 /**
  * The {@linkplain Attribute} interface defines the attribute entity of an {@linkplain Organization}.
@@ -19,7 +16,7 @@ import org.models.organization.identifier.UniqueId;
  * @author Christopher Zhong
  * @since 5.0
  */
-public interface Attribute extends Identifiable {
+public interface Attribute extends Identifiable<Attribute> {
 	/**
 	 * The {@linkplain Type}> enumerates the various types of {@linkplain Attribute}s.
 	 *
@@ -61,34 +58,4 @@ public interface Attribute extends Identifiable {
 	 * @return the {@linkplain Attribute.Type} of this {@linkplain Attribute}.
 	 */
 	Type getType();
-
-	/**
-	 * Returns the set of <code>Role</code>s that influences this <code>Attribute</code>.
-	 *
-	 * @return the set of <code>Role</code>s that influences this <code>Attribute</code>.
-	 */
-	Set<Role> getInfluencedBySet();
-
-	/**
-	 * Returns the set of <code>Agent</code> that has this <code>Attribute</code>.
-	 *
-	 * @return the set of <code>Agent</code> that has this <code>Attribute</code>.
-	 */
-	Set<Agent> getHadBySet();
-
-	/**
-	 * Returns the score of the <code>Agent</code> (from the given <code>UniqueIdentifier</code>) that has this <code>Attribute</code>.
-	 *
-	 * @param agentIdentifier
-	 *            the <code>UniqueIdentifier</code> identifying the <code>Agent</code> to retrieve the score.
-	 * @return the score if it exists, <code>null</code> otherwise.
-	 */
-	Double getHadByValue(UniqueId agentIdentifier);
-
-	/**
-	 * Returns the set of <code>PerformanceFunction</code> that moderates this <code>Attribute</code>.
-	 *
-	 * @return the set of <code>PerformanceFunction</code> that moderates this <code>Attribute</code>.
-	 */
-	Set<PerformanceFunction> getModeratedBySet();
 }

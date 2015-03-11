@@ -3,7 +3,7 @@ package org.models.organization.relation;
 import org.models.organization.Organization;
 import org.models.organization.entity.Role;
 import org.models.organization.entity.SpecificationGoal;
-import org.models.organization.identifier.Identifiable;
+import org.models.organization.id.Identifiable;
 
 /**
  * The {@linkplain Task} interface defines a task, which is a pair of a {@linkplain Role} and a {@linkplain SpecificationGoal}, of an {@linkplain Organization}.
@@ -11,7 +11,7 @@ import org.models.organization.identifier.Identifiable;
  * @author Christopher Zhong
  * @since 7.0.0
  */
-public interface Task extends Identifiable {
+public interface Task extends Identifiable<Task> {
 	/**
 	 * Returns the {@linkplain Role} of this {@linkplain Task}.
 	 *
