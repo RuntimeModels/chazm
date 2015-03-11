@@ -5,24 +5,27 @@
  *
  * See License.txt file the license agreement.
  */
-package org.models.organization.identifier;
+package org.models.organization.id;
+
+import org.models.organization.id.UniqueId;
 
 /**
- * The <code>LongIdentifier</code> implements the {@link UniqueId} interface to represent <code>long</code> as entities in the Organization Model.
+ * The {@linkplain LongId} class extends {@link UniqueId} by using a <code>long</code> as the id.
  *
  * @author Christopher Zhong
- * @since 4.0
+ * @param <T>
+ *            the type of the {@linkplain UniqueId}.
  * @see UniqueId
+ * @since 4.0
  */
-public class LongIdentifier extends UniqueId {
-
+public class LongId<T> extends UniqueId<T> {
 	/**
-	 * Default serial version ID.
+	 * Serial version ID.
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 8542765061773217208L;
 
 	/**
-	 * The <code>long</code> that is used as the <code>UniqueIdentifier</code>.
+	 * The <code>long</code> of this {@linkplain LongId}.
 	 */
 	private final long value;
 
@@ -37,20 +40,20 @@ public class LongIdentifier extends UniqueId {
 	private String toString = null;
 
 	/**
-	 * Constructs a new instance of <code>LongIdentifier</code>.
+	 * Constructs a new instance of {@linkplain LongId}.
 	 *
 	 * @param value
-	 *            the <code>long</code> that is used as the <code>UniqueIdentifier</code>.
+	 *            the <code>long</code> of this {@linkplain LongId}.
 	 */
-	public LongIdentifier(final long value) {
+	public LongId(final long value) {
 		this.value = value;
 	}
 
 	@Override
 	public boolean equals(final Object object) {
-		if (object instanceof LongIdentifier) {
-			final LongIdentifier longIdentifier = (LongIdentifier) object;
-			return value == longIdentifier.value;
+		if (object instanceof LongId) {
+			final LongId<?> otherId = (LongId<?>) object;
+			return value == otherId.value;
 		}
 		return false;
 	}
@@ -70,5 +73,4 @@ public class LongIdentifier extends UniqueId {
 		}
 		return toString;
 	}
-
 }

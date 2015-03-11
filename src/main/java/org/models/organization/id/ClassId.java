@@ -5,24 +5,27 @@
  *
  * See License.txt file the license agreement.
  */
-package org.models.organization.identifier;
+package org.models.organization.id;
+
+import org.models.organization.id.UniqueId;
 
 /**
- * The <code>ClassIdentifier</code> implements the {@link UniqueId} interface to represent {@link Class} as entities in the Organization Model.
+ * The {@linkplain ClassId} extends the {@link UniqueId} by using a {@linkplain Class} as the id.
  *
  * @author Christopher Zhong
- * @since 4.0
+ * @param <T>
+ *            the type of the {@linkplain UniqueId}.
  * @see UniqueId
+ * @since 4.0
  */
-public class ClassIdentifier extends UniqueId {
-
+public class ClassId<T> extends UniqueId<T> {
 	/**
-	 * Default serial version ID.
+	 * Serial version ID.
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 5751013993559212419L;
 
 	/**
-	 * The <code>Class</code> that is used as the <code>UniqueIdentifier</code>.
+	 * The {@linkplain Class} of this {@linkplain ClassId}.
 	 */
 	private final Class<?> classType;
 
@@ -37,19 +40,19 @@ public class ClassIdentifier extends UniqueId {
 	private String toString = null;
 
 	/**
-	 * Constructs a new instance of <code>ClassIdentifier</code>.
+	 * Constructs a new instance of {@linkplain ClassId}.
 	 *
 	 * @param classType
-	 *            the <code>Class</code> that is used as the <code>UniqueIdentifier</code>.
+	 *            the {@linkplain Class} of this {@linkplain ClassId}.
 	 */
-	public ClassIdentifier(final Class<?> classType) {
+	public ClassId(final Class<?> classType) {
 		this.classType = classType;
 	}
 
 	@Override
 	public boolean equals(final Object object) {
-		if (object instanceof ClassIdentifier) {
-			final ClassIdentifier classIdentifier = (ClassIdentifier) object;
+		if (object instanceof ClassId) {
+			final ClassId<?> classIdentifier = (ClassId<?>) object;
 			return classType.equals(classIdentifier.classType);
 		}
 		return false;
@@ -70,5 +73,4 @@ public class ClassIdentifier extends UniqueId {
 		}
 		return toString;
 	}
-
 }

@@ -26,5 +26,5 @@ public interface Achieves {
 	 *
 	 * @return the {@linkplain SpecificationGoal} of this {@linkplain Achieves}.
 	 */
-	SpecificationGoal getSpecificationGoal();
+	SpecificationGoal getGoal();
 }

@@ -1,10 +1,10 @@
-package org.models.organization.manager;
+package org.models.organization.entity.manager;
 
 import java.util.Collection;
 import java.util.Set;
 
 import org.models.organization.entity.Attribute;
-import org.models.organization.identifier.UniqueId;
+import org.models.organization.id.UniqueId;
 
 /**
  * The {@linkplain AttributeManager} interface defines the necessary APIs for managing {@linkplain Attribute}s.
@@ -44,7 +44,7 @@ public interface AttributeManager {
 	 *            the {@linkplain UniqueId} that represents the {@linkplain Attribute} to retrieve.
 	 * @return the {@linkplain Attribute} if it exists, <code>null</code> otherwise.
 	 */
-	Attribute getAttribute(UniqueId id);
+	Attribute getAttribute(UniqueId<Attribute> id);
 
 	/**
 	 * Returns a set of {@linkplain Attribute}s from this {@linkplain AttributeManager}.
@@ -59,7 +59,7 @@ public interface AttributeManager {
 	 * @param id
 	 *            the {@linkplain UniqueId} that represents the {@linkplain Attribute} to remove.
 	 */
-	void removeAttribute(UniqueId id);
+	void removeAttribute(UniqueId<Attribute> id);
 
 	/**
 	 * Removes a set of {@linkplain Attribute}s from this {@linkplain AttributeManager}.
@@ -67,15 +67,7 @@ public interface AttributeManager {
 	 * @param ids
 	 *            the set of {@linkplain UniqueId}s that represents the {@linkplain Attribute}s to remove.
 	 */
-	void removeAttributes(Collection<UniqueId> ids);
-
-	/**
-	 * Removes a set of {@linkplain Attribute}s from this {@linkplain AttributeManager}.
-	 *
-	 * @param ids
-	 *            the set of {@linkplain UniqueId}s that represents the {@linkplain Attribute}s to remove.
-	 */
-	void removeAttributes(UniqueId... ids);
+	void removeAttributes(Collection<UniqueId<Attribute>> ids);
 
 	/**
 	 * Removes all {@linkplain Attribute}s from this {@linkplain AttributeManager}.

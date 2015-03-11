@@ -1,10 +1,10 @@
-package org.models.organization.manager;
+package org.models.organization.entity.manager;
 
 import java.util.Collection;
 import java.util.Set;
 
 import org.models.organization.entity.Policy;
-import org.models.organization.identifier.UniqueId;
+import org.models.organization.id.UniqueId;
 
 /**
  * The {@linkplain PolicyManager} interface defines the necessary APIs for managing {@linkplain Policy}s.
@@ -44,7 +44,7 @@ public interface PolicyManager {
 	 *            the {@linkplain UniqueId} that represents the {@linkplain Policy} to retrieve.
 	 * @return the {@linkplain Policy} if it exists, <code>null</code> otherwise.
 	 */
-	Policy getPolicy(UniqueId id);
+	Policy getPolicy(UniqueId<Policy> id);
 
 	/**
 	 * Returns a set of {@linkplain Policy} from this {@linkplain PolicyManager}.
@@ -59,7 +59,7 @@ public interface PolicyManager {
 	 * @param policyId
 	 *            the {@linkplain UniqueId} that represents the {@linkplain Policy} to remove.
 	 */
-	void removePolicy(UniqueId policyId);
+	void removePolicy(UniqueId<Policy> policyId);
 
 	/**
 	 * Removes a set of {@linkplain Policy}s from this {@linkplain PolicyManager}.
@@ -67,15 +67,7 @@ public interface PolicyManager {
 	 * @param ids
 	 *            the set of {@linkplain UniqueId}s that represents the {@linkplain Policy}s to remove.
 	 */
-	void removePolicies(Collection<UniqueId> ids);
-
-	/**
-	 * Removes a set of {@linkplain Policy}s from this {@linkplain PolicyManager}.
-	 *
-	 * @param ids
-	 *            the set of {@linkplain UniqueId}s that represents the {@linkplain Policy}s to remove.
-	 */
-	void removePolicies(UniqueId... ids);
+	void removePolicies(Collection<UniqueId<Policy>> ids);
 
 	/**
 	 * Removes all {@linkplain Policy}s from this {@linkplain PolicyManager}.

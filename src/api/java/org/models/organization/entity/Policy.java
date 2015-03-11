@@ -8,7 +8,7 @@
 package org.models.organization.entity;
 
 import org.models.organization.Organization;
-import org.models.organization.identifier.Identifiable;
+import org.models.organization.id.Identifiable;
 
 /**
  * The {@linkplain Policy} interface defines the policy entity of an {@linkplain Organization}.
@@ -16,5 +16,5 @@ import org.models.organization.identifier.Identifiable;
  * @author Christopher Zhong
  * @since 3.4
  */
-public interface Policy extends Identifiable {
+public interface Policy extends Identifiable<Policy> {
 }

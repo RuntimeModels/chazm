@@ -7,7 +7,7 @@
  */
 package org.models.organization.registry;
 
-import org.models.organization.identifier.UniqueId;
+import org.models.organization.id.UniqueId;
 
 /**
  * The <code>ChangeManager</code> interface defines the types of changes that can occur within the organization model.
@@ -359,7 +359,7 @@ public interface ChangeManager {
 	 * @param attributeIdentifier
 	 *            the <code>UniqueIdentifier</code> of the <code>Attribute</code> that is moderated.
 	 */
-	void notifyModeratesSet(UniqueId performanceFunctionIdentifier, UniqueId attributeIdentifier);
+	void notifyModeratesAdded(UniqueId performanceFunctionIdentifier, UniqueId attributeIdentifier);
 
 	/**
 	 * Notification for when a <code>Role</code> contains a <code>Characteristic</code>.

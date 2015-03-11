@@ -9,7 +9,7 @@ package org.models.organization.relation;
 
 import org.models.organization.M;
 import org.models.organization.entity.Attribute;
-import org.models.organization.entity.PerformanceFunction;
+import org.models.organization.entity.Pmf;
 
 /**
  * The {@linkplain ModeratesRelation} class is an implementation of the {@linkplain Moderates}.
@@ -25,9 +25,9 @@ public class ModeratesRelation implements Moderates {
 	private static final String STRING_FORMAT = "%s <-> %s";
 
 	/**
-	 * The {@linkplain PerformanceFunction} of this {@linkplain Moderates}.
+	 * The {@linkplain Pmf} of this {@linkplain Moderates}.
 	 */
-	private final PerformanceFunction performanceFunction;
+	private final Pmf pmf;
 
 	/**
 	 * The {@linkplain Attribute} of this {@linkplain Moderates}.
@@ -47,25 +47,25 @@ public class ModeratesRelation implements Moderates {
 	/**
 	 * Constructs a new instance of {@linkplain Moderates}.
 	 *
-	 * @param performanceFunction
-	 *            the {@linkplain PerformanceFunction} of this {@linkplain Moderates}.
+	 * @param pmf
+	 *            the {@linkplain Pmf} of this {@linkplain Moderates}.
 	 * @param attribute
 	 *            the {@linkplain Attribute} of this {@linkplain Moderates}.
 	 */
-	public ModeratesRelation(final PerformanceFunction performanceFunction, final Attribute attribute) {
-		if (performanceFunction == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "performanceFunction"));
+	public ModeratesRelation(final Pmf pmf, final Attribute attribute) {
+		if (pmf == null) {
+			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "pmf"));
 		}
 		if (attribute == null) {
 			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "attribute"));
 		}
-		this.performanceFunction = performanceFunction;
+		this.pmf = pmf;
 		this.attribute = attribute;
 	}
 
 	@Override
-	public PerformanceFunction getPerformanceFunction() {
-		return performanceFunction;
+	public Pmf getPmf() {
+		return pmf;
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class ModeratesRelation implements Moderates {
 	public boolean equals(final Object object) {
 		if (object instanceof Moderates) {
 			final Moderates moderates = (Moderates) object;
-			return getPerformanceFunction().equals(moderates.getPerformanceFunction()) && getAttribute().equals(moderates.getAttribute());
+			return getPmf().equals(moderates.getPmf()) && getAttribute().equals(moderates.getAttribute());
 		}
 		return false;
 	}
@@ -85,7 +85,7 @@ public class ModeratesRelation implements Moderates {
 	@Override
 	public int hashCode() {
 		if (hashCode == null) {
-			hashCode = getPerformanceFunction().hashCode() << 16 | getAttribute().hashCode();
+			hashCode = getPmf().hashCode() << 16 | getAttribute().hashCode();
 		}
 		return hashCode;
 	}
@@ -93,7 +93,7 @@ public class ModeratesRelation implements Moderates {
 	@Override
 	public String toString() {
 		if (toString == null) {
-			toString = String.format(STRING_FORMAT, getPerformanceFunction().getId(), getAttribute().getId());
+			toString = String.format(STRING_FORMAT, getPmf().getId(), getAttribute().getId());
 		}
 		return toString;
 	}

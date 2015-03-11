@@ -8,16 +8,14 @@
 package org.models.organization.relation;
 
 import java.util.Collection;
-import java.util.Set;
 
 import org.models.organization.M;
 import org.models.organization.entity.Agent;
 import org.models.organization.entity.InstanceGoal;
-import org.models.organization.entity.PerformanceFunction;
 import org.models.organization.entity.Role;
 import org.models.organization.entity.SpecificationGoal;
 import org.models.organization.function.RoleGoodnessFunction;
-import org.models.organization.identifier.UniqueId;
+import org.models.organization.id.UniqueId;
 
 /**
  * The {@linkplain TaskRelation} class is an implementation of the {@linkplain Task}.
@@ -27,12 +25,6 @@ import org.models.organization.identifier.UniqueId;
  * @since 6.0
  */
 public class TaskRelation implements Task {
-
-	/**
-	 * Internal <code>String</code> for the formatting of the <code>toString</code> method.
-	 */
-	private static final String STRING_FORMAT = "<%s>";
-
 	/**
 	 * The {@linkplain Id} extends the {@linkplain UniqueId} by using two {@linkplain UniqueId}s; the {@linkplain UniqueId} of a {@linkplain Role} and the
 	 * {@linkplain UniqueId} of a {@linkplain SpecificationGoal}.
@@ -41,7 +33,7 @@ public class TaskRelation implements Task {
 	 * @see UniqueId
 	 * @since 6.0
 	 */
-	private static class Id extends UniqueId {
+	public static class Id extends UniqueId<Task> {
 		/**
 		 * Serial version ID.
 		 */
@@ -55,12 +47,12 @@ public class TaskRelation implements Task {
 		/**
 		 * The {@linkplain UniqueId} of the {@linkplain Role}.
 		 */
-		private final UniqueId roleId;
+		private final UniqueId<Role> roleId;
 
 		/**
 		 * The {@linkplain UniqueId} of the {@linkplain SpecificationGoal}.
 		 */
-		private final UniqueId goalId;
+		private final UniqueId<SpecificationGoal> goalId;
 
 		/**
 		 * Optimization for hash code computation since it never changes.
@@ -80,7 +72,7 @@ public class TaskRelation implements Task {
 		 * @param goalId
 		 *            the {@linkplain UniqueId} of the {@linkplain SpecificationGoal}.
 		 */
-		Id(final UniqueId roleId, final UniqueId goalId) {
+		public Id(final UniqueId<Role> roleId, final UniqueId<SpecificationGoal> goalId) {
 			if (roleId == null) {
 				throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "roleId"));
 			}
@@ -96,7 +88,7 @@ public class TaskRelation implements Task {
 		 *
 		 * @return the {@linkplain UniqueId} of the {@linkplain Role}.
 		 */
-		private UniqueId getRoleId() {
+		private UniqueId<Role> getRoleId() {
 			return roleId;
 		}
 
@@ -105,7 +97,7 @@ public class TaskRelation implements Task {
 		 *
 		 * @return the {@linkplain UniqueId} of the {@linkplain SpecificationGoal}.
 		 */
-		private UniqueId getGoalId() {
+		private UniqueId<SpecificationGoal> getGoalId() {
 			return goalId;
 		}
 
@@ -136,9 +128,14 @@ public class TaskRelation implements Task {
 	}
 
 	/**
+	 * Internal <code>String</code> for the formatting of the <code>toString</code> method.
+	 */
+	private static final String STRING_FORMAT = "<%s>";
+
+	/**
 	 * The {@linkplain UniqueId} of this {@linkplain Task}.
 	 */
-	private final UniqueId id;
+	private final UniqueId<Task> id;
 
 	/**
 	 * The {@linkplain Role} of this {@linkplain Task}.
@@ -176,7 +173,7 @@ public class TaskRelation implements Task {
 	}
 
 	@Override
-	public final UniqueId getId() {
+	public final UniqueId<Task> getId() {
 		return id;
 	}
 
@@ -188,15 +185,6 @@ public class TaskRelation implements Task {
 	@Override
 	public final SpecificationGoal getSpecificationGoal() {
 		return specificationGoal;
-	}
-
-	/**
-	 * Returns the set of <code>PerformanceFunction</code> that is linked to this <code>Task</code>.
-	 *
-	 * @return the set of <code>PerformanceFunction</code> that is linked to this <code>Task</code>.
-	 */
-	public final Set<PerformanceFunction> getLinkedSet() {
-		return getRole().getUsesSet();
 	}
 
 	/**

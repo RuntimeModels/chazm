@@ -7,7 +7,8 @@
  */
 package org.models.organization.entity;
 
-import org.models.organization.identifier.UniqueId;
+import org.models.organization.M;
+import org.models.organization.id.UniqueId;
 
 /**
  * The {@linkplain PolicyEntity} class is an implementation of the {@link Policy}.
@@ -20,7 +21,7 @@ public class PolicyEntity implements Policy {
 	/**
 	 * The {@linkplain UniqueId} that represents this {@linkplain Policy}.
 	 */
-	private final UniqueId id;
+	private final UniqueId<Policy> id;
 
 	/**
 	 * Constructs a new instance of {@linkplain Policy}.
@@ -28,15 +29,15 @@ public class PolicyEntity implements Policy {
 	 * @param id
 	 *            the {@linkplain UniqueId} that represents this {@linkplain Policy}.
 	 */
-	protected PolicyEntity(final UniqueId id) {
+	protected PolicyEntity(final UniqueId<Policy> id) {
 		if (id == null) {
-			throw new IllegalArgumentException("Parameter (id) cannot be null");
+			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "id"));
 		}
 		this.id = id;
 	}
 
 	@Override
-	public final UniqueId getId() {
+	public final UniqueId<Policy> getId() {
 		return id;
 	}
 

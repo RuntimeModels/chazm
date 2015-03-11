@@ -1,10 +1,10 @@
-package org.models.organization.manager;
+package org.models.organization.entity.manager;
 
 import java.util.Collection;
 import java.util.Set;
 
 import org.models.organization.entity.Role;
-import org.models.organization.identifier.UniqueId;
+import org.models.organization.id.UniqueId;
 
 /**
  * The {@linkplain RoleManager} interface defines the necessary APIs for managing {@linkplain Role}s.
@@ -44,7 +44,7 @@ public interface RoleManager {
 	 *            the {@linkplain UniqueId} that represents the {@linkplain Role} to retrieve.
 	 * @return the {@linkplain Role} if it exists, <code>null</code> otherwise.
 	 */
-	Role getRole(UniqueId id);
+	Role getRole(UniqueId<Role> id);
 
 	/**
 	 * Returns a set of {@linkplain Role}s from this {@linkplain RoleManager}.
@@ -59,7 +59,7 @@ public interface RoleManager {
 	 * @param id
 	 *            the {@linkplain UniqueId} that represents the {@linkplain Role} to remove.
 	 */
-	void removeRole(UniqueId id);
+	void removeRole(UniqueId<Role> id);
 
 	/**
 	 * Removes a set of {@linkplain Role}s from this {@linkplain RoleManager}.
@@ -67,15 +67,7 @@ public interface RoleManager {
 	 * @param ids
 	 *            the set of {@linkplain UniqueId}s that represents the {@linkplain Role}s to remove.
 	 */
-	void removeRoles(Collection<UniqueId> ids);
-
-	/**
-	 * Removes a set of {@linkplain Role}s from this {@linkplain RoleManager}.
-	 *
-	 * @param roleIds
-	 *            the set of {@linkplain UniqueId}s that represents the {@linkplain Role}s to remove.
-	 */
-	void removeRoles(UniqueId... roleIds);
+	void removeRoles(Collection<UniqueId<Role>> ids);
 
 	/**
 	 * Removes all {@linkplain Role}s from this {@linkplain RoleManager}.

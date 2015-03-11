@@ -1,10 +1,10 @@
-package org.models.organization.manager;
+package org.models.organization.entity.manager;
 
 import java.util.Collection;
 import java.util.Set;
 
 import org.models.organization.entity.Capability;
-import org.models.organization.identifier.UniqueId;
+import org.models.organization.id.UniqueId;
 
 /**
  * The {@linkplain CapabilityManager} interface defines the necessary APIs for managing {@linkplain Capability}s.
@@ -44,7 +44,7 @@ public interface CapabilityManager {
 	 *            the {@linkplain UniqueId} that represents the {@linkplain Capability} to retrieve.
 	 * @return the {@linkplain Capability} if it exists, <code>null</code> otherwise.
 	 */
-	Capability getCapability(UniqueId id);
+	Capability getCapability(UniqueId<Capability> id);
 
 	/**
 	 * Returns a set of {@linkplain Capability}s from this {@linkplain CapabilityManager}.
@@ -59,7 +59,7 @@ public interface CapabilityManager {
 	 * @param id
 	 *            the {@linkplain UniqueId} that represents the {@linkplain Capability} to remove.
 	 */
-	void removeCapability(UniqueId id);
+	void removeCapability(UniqueId<Capability> id);
 
 	/**
 	 * Removes a set of {@linkplain Capability}s from this {@linkplain CapabilityManager}.
@@ -67,15 +67,7 @@ public interface CapabilityManager {
 	 * @param ids
 	 *            the set of {@linkplain UniqueId}s that represents the {@linkplain Capability}s to remove.
 	 */
-	void removeCapabilities(Collection<UniqueId> ids);
-
-	/**
-	 * Removes a set of {@linkplain Capability}s from this {@linkplain CapabilityManager}.
-	 *
-	 * @param ids
-	 *            the set of {@linkplain UniqueId}s that represents the {@linkplain Capability}s to remove.
-	 */
-	void removeCapabilities(UniqueId... ids);
+	void removeCapabilities(Collection<UniqueId<Capability>> ids);
 
 	/**
 	 * Removes all {@linkplain Capability}s from this {@linkplain CapabilityManager}.

@@ -7,9 +7,8 @@
  */
 package org.models.organization.entity;
 
-import java.util.Set;
-
-import org.models.organization.identifier.UniqueId;
+import org.models.organization.M;
+import org.models.organization.id.UniqueId;
 
 /**
  * The {@link InstanceGoal} class is an implementation of the {@link InstanceGoal}.
@@ -29,7 +28,7 @@ public class InstanceGoalEntity<T> implements InstanceGoal<T> {
 	 * @since 4.0
 	 * @see UniqueId
 	 */
-	private static class Id extends UniqueId {
+	public static class Id extends UniqueId<InstanceGoal<?>> {
 		/**
 		 * Serial version ID
 		 */
@@ -43,12 +42,12 @@ public class InstanceGoalEntity<T> implements InstanceGoal<T> {
 		/**
 		 * The {@linkplain UniqueId} that represents the {@linkplain SpecificationGoal}.
 		 */
-		private final UniqueId specificationId;
+		private final UniqueId<SpecificationGoal> specificationId;
 
 		/**
 		 * The {@linkplain UniqueId} that represents the instance portion of the {@linkplain InstanceGoal}.
 		 */
-		private final UniqueId instanceId;
+		private final UniqueId<InstanceGoal<?>> instanceId;
 
 		/**
 		 * Optimization for hash code computation since it never changes.
@@ -68,12 +67,12 @@ public class InstanceGoalEntity<T> implements InstanceGoal<T> {
 		 * @param instanceId
 		 *            the {@linkplain UniqueId} that represents the instance portion of the {@linkplain InstanceGoal}.
 		 */
-		public Id(final UniqueId specificationId, final UniqueId instanceId) {
+		public Id(final UniqueId<SpecificationGoal> specificationId, final UniqueId<InstanceGoal<?>> instanceId) {
 			if (specificationId == null) {
-				throw new IllegalArgumentException("Parameter (specificationId) cannot be null");
+				throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "specificationId"));
 			}
 			if (instanceId == null) {
-				throw new IllegalArgumentException("Parameter (instanceId) cannot be null");
+				throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "instanceId"));
 			}
 			this.specificationId = specificationId;
 			this.instanceId = instanceId;
@@ -84,7 +83,7 @@ public class InstanceGoalEntity<T> implements InstanceGoal<T> {
 		 *
 		 * @return the {@linkplain UniqueId} that represents the {@linkplain SpecificationGoal}.
 		 */
-		private UniqueId getSpecificationId() {
+		private UniqueId<SpecificationGoal> getSpecificationId() {
 			return specificationId;
 		}
 
@@ -93,7 +92,7 @@ public class InstanceGoalEntity<T> implements InstanceGoal<T> {
 		 *
 		 * @return the {@linkplain UniqueId} that represents the instance portion of the {@linkplain InstanceGoal}.
 		 */
-		private UniqueId getInstanceId() {
+		private UniqueId<InstanceGoal<?>> getInstanceId() {
 			return instanceId;
 		}
 
@@ -131,12 +130,12 @@ public class InstanceGoalEntity<T> implements InstanceGoal<T> {
 	/**
 	 * The {@linkplain UniqueId} that represents this {@linkplain InstanceGoal}.
 	 */
-	private final UniqueId id;
+	private final UniqueId<InstanceGoal<?>> id;
 
 	/**
 	 * The {@linkplain UniqueId} that represents the instance portion of this {@linkplain InstanceGoal}.
 	 */
-	private final UniqueId instanceId;
+	private final UniqueId<InstanceGoal<?>> instanceId;
 
 	/**
 	 * The {@linkplain SpecificationGoal} that instantiated this {@linkplain InstanceGoal}.
@@ -158,7 +157,7 @@ public class InstanceGoalEntity<T> implements InstanceGoal<T> {
 	 * @param parameter
 	 *            the parameter(s) of this {@linkplain InstanceGoal}.
 	 */
-	public InstanceGoalEntity(final SpecificationGoal specificationGoal, final UniqueId instanceId, final T parameter) {
+	public InstanceGoalEntity(final SpecificationGoal specificationGoal, final UniqueId<InstanceGoal<?>> instanceId, final T parameter) {
 		this.id = new Id(specificationGoal.getId(), instanceId);
 		this.instanceId = instanceId;
 		this.specificationGoal = specificationGoal;
@@ -166,28 +165,23 @@ public class InstanceGoalEntity<T> implements InstanceGoal<T> {
 	}
 
 	@Override
-	public final UniqueId getId() {
+	public UniqueId<InstanceGoal<?>> getId() {
 		return id;
 	}
 
 	@Override
-	public final UniqueId getInstanceId() {
+	public UniqueId<InstanceGoal<?>> getInstanceId() {
 		return instanceId;
 	}
 
 	@Override
-	public final SpecificationGoal getSpecificationGoal() {
+	public SpecificationGoal getSpecificationGoal() {
 		return specificationGoal;
 	}
 
 	@Override
-	public final T getParameter() {
+	public T getParameter() {
 		return parameter;
-	}
-
-	@Override
-	public final Set<Role> getAchievedBySet() {
-		return getSpecificationGoal().getAchievedBySet();
 	}
 
 	@Override
@@ -209,5 +203,4 @@ public class InstanceGoalEntity<T> implements InstanceGoal<T> {
 		final T parameter = getParameter();
 		return String.format(STRING_FORMAT, super.toString(), parameter == null ? "" : parameter);
 	}
-
 }

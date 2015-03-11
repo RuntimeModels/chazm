@@ -1,10 +1,10 @@
-package org.models.organization.manager;
+package org.models.organization.entity.manager;
 
 import java.util.Collection;
 import java.util.Set;
 
 import org.models.organization.entity.SpecificationGoal;
-import org.models.organization.identifier.UniqueId;
+import org.models.organization.id.UniqueId;
 
 /**
  * The {@linkplain SpecificationGoalManager} interface defines the necessary APIs for managing {@linkplain SpecificationGoal}s.
@@ -44,7 +44,7 @@ public interface SpecificationGoalManager {
 	 *            the {@linkplain UniqueId} that represents a {@linkplain SpecificationGoal} to retrieve.
 	 * @return the {@linkplain SpecificationGoal} if it exists, <code>null</code> otherwise.
 	 */
-	SpecificationGoal getSpecificationGoal(UniqueId id);
+	SpecificationGoal getSpecificationGoal(UniqueId<SpecificationGoal> id);
 
 	/**
 	 * Returns a set of {@linkplain SpecificationGoal}s from this {@linkplain SpecificationGoalManager}.
@@ -59,7 +59,7 @@ public interface SpecificationGoalManager {
 	 * @param id
 	 *            the {@linkplain UniqueId} that represents the {@linkplain SpecificationGoal} to remove.
 	 */
-	void removeSpecificationGoal(UniqueId id);
+	void removeSpecificationGoal(UniqueId<SpecificationGoal> id);
 
 	/**
 	 * Removes a set of {@linkplain SpecificationGoal}s from this {@linkplain SpecificationGoalManager}.
@@ -67,15 +67,7 @@ public interface SpecificationGoalManager {
 	 * @param ids
 	 *            a set of {@linkplain UniqueId}s that represents the {@linkplain SpecificationGoal}s to remove.
 	 */
-	void removeSpecificationGoals(Collection<UniqueId> ids);
-
-	/**
-	 * Removes a set of {@linkplain SpecificationGoal}s from this {@linkplain SpecificationGoalManager}.
-	 *
-	 * @param ids
-	 *            a set of {@linkplain UniqueId}s that represents the {@linkplain SpecificationGoal}s to remove.
-	 */
-	void removeSpecificationGoals(UniqueId... ids);
+	void removeSpecificationGoals(Collection<UniqueId<SpecificationGoal>> ids);
 
 	/**
 	 * Removes all {@linkplain SpecificationGoal}s from this {@linkplain SpecificationGoalManager}.

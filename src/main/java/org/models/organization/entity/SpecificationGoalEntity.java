@@ -7,16 +7,9 @@
  */
 package org.models.organization.entity;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
 import org.models.organization.factory.InstanceGoalFactory;
 import org.models.organization.factory.InstanceGoalFactoryImpl;
-import org.models.organization.identifier.UniqueId;
-import org.models.organization.relation.Achieves;
-import org.models.organization.relation.AchievesRelation;
+import org.models.organization.id.UniqueId;
 
 /**
  * The {@link SpecificationGoalEntity} class is an implementation of the {@link SpecificationGoal}.
@@ -35,12 +28,7 @@ public class SpecificationGoalEntity implements SpecificationGoal {
 	/**
 	 * The {@linkplain UniqueId} that represents this {@link SpecificationGoal}.
 	 */
-	private final UniqueId id;
-
-	/**
-	 * The set of <code>Role</code> that achieves this <code>SpecificationGoal</code>.
-	 */
-	private final Map<UniqueId, AchievesRelation> achievedBy = new ConcurrentHashMap<>();
+	private final UniqueId<SpecificationGoal> id;
 
 	/**
 	 * Constructs a new instance of {@link SpecificationGoal}.
@@ -48,7 +36,7 @@ public class SpecificationGoalEntity implements SpecificationGoal {
 	 * @param id
 	 *            the {@linkplain UniqueId} that represents this {@link SpecificationGoal}.
 	 */
-	public SpecificationGoalEntity(final UniqueId id) {
+	public SpecificationGoalEntity(final UniqueId<SpecificationGoal> id) {
 		if (id == null) {
 			throw new IllegalArgumentException("Parameter (id) cannot be null");
 		}
@@ -56,30 +44,8 @@ public class SpecificationGoalEntity implements SpecificationGoal {
 	}
 
 	@Override
-	public final UniqueId getId() {
+	public final UniqueId<SpecificationGoal> getId() {
 		return id;
-	}
-
-	@Override
-	public final Set<Role> getAchievedBySet() {
-		final Set<Role> result = new HashSet<>();
-		for (final Achieves achievesRelationImpl : achievedBy.values()) {
-			result.add(achievesRelationImpl.getRole());
-		}
-		return result;
-	}
-
-	/**
-	 * Removes the given <code>Role</code> from the set of <code>Role</code> that achieves this <code>SpecificationGoal</code>.
-	 *
-	 * @param role
-	 *            the <code>Role</code> to be removed.
-	 */
-	final void removeAchievedBy(final Role role) {
-		if (role == null) {
-			throw new IllegalArgumentException("Parameter (role) cannot be null");
-		}
-		achievedBy.remove(role.getId());
 	}
 
 	@Override
