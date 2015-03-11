@@ -21,7 +21,7 @@ import org.models.organization.identifier.UniqueId;
  */
 public interface Attribute extends Identifiable {
 	/**
-	 * The {@linkplain Type}> enumerates the different types of {@linkplain Attribute}.
+	 * The {@linkplain Type}> enumerates the various types of {@linkplain Attribute}s.
 	 *
 	 * @author Christopher Zhong
 	 * @since 5.0
@@ -30,59 +30,29 @@ public interface Attribute extends Identifiable {
 		/**
 		 * Indicates a quantity-type {@linkplain Attribute} (whose range is from <code>0.0</code> to <code>&#8734;</code>), and that higher values are better.
 		 */
-		POSITIVE_QUANTITY {
-			@Override
-			public String toString() {
-				return "+ Quantity";
-			}
-		},
+		POSITIVE_QUANTITY,
 		/**
 		 * Indicates a quantity-type {@linkplain Attribute} (whose range is from <code>0.0</code> to <code>&#8734;</code>), and that lower values are better.
 		 */
-		NEGATIVE_QUANTITY {
-			@Override
-			public String toString() {
-				return "- Quantity";
-			}
-		},
+		NEGATIVE_QUANTITY,
 		/**
 		 * Indicates a quantity-type {@linkplain Attribute} (whose range is from <code>0.0</code> to <code>1.0</code>), and that higher values are better.
 		 */
-		POSITIVE_QUALITY {
-			@Override
-			public String toString() {
-				return "+ Quality";
-			}
-		},
+		POSITIVE_QUALITY,
 		/**
 		 * Indicates a quantity-type {@linkplain Attribute} (whose range is from <code>0.0</code> to <code>1.0</code>), and that lower values are better.
 		 */
-		NEGATIVE_QUALITY {
-			@Override
-			public String toString() {
-				return "- Quality";
-			}
-		},
+		NEGATIVE_QUALITY,
 		/**
 		 * Indicates an unbounded-type {@linkplain Attribute} (whose range is from <code>-&#8734;</code> to <code>+&#8734;</code>), and that higher values are
 		 * better.
 		 */
-		POSITIVE_UNBOUNDED {
-			@Override
-			public String toString() {
-				return "+ Unbounded";
-			}
-		},
+		POSITIVE_UNBOUNDED,
 		/**
 		 * Indicates an unbounded-type {@linkplain Attribute} (whose range is from <code>-&#8734;</code> to <code>+&#8734;</code>), and that lower values are
 		 * better.
 		 */
-		NEGATIVE_UNBOUNDED {
-			@Override
-			public String toString() {
-				return "- Unbounded";
-			}
-		};
+		NEGATIVE_UNBOUNDED;
 	}
 
 	/**
