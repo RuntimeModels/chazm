@@ -4,8 +4,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.models.organization.entity.Capability;
 import org.models.organization.entity.CapabilityEntity;
-import org.models.organization.identifier.IntId;
-import org.models.organization.identifier.UniqueId;
+import org.models.organization.id.IntId;
+import org.models.organization.id.UniqueId;
 
 @SuppressWarnings("javadoc")
 public class CapabilityEntityTest {
