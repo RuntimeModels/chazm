@@ -26,6 +26,8 @@ sourceSets {
 
 dependencies {
 	compile fileTree(dir: 'src/main/resources', include: '*.jar')
+	compile 'org.slf4j:slf4j-api:+'
+	compile 'javax:javaee-api:+'
 	testCompile 'junit:junit:+'
 	testCompile 'org.mockito:mockito-core:+'
 }
