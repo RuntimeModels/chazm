@@ -49,6 +49,6 @@ public interface RoleGoodnessFunction {
 	 *         achieve the given {@link InstanceGoal}. A value of <code>0.0</code> indicates that the {@link Agent} cannot perform the {@link Role} or the
 	 *         {@link InstanceGoal} cannot be achieved by the {@link Role}.
 	 */
-	double goodness(Role role, Agent agent, InstanceGoal<?> goal, Collection<Assignment> assignments);
+	double goodness(Role role, Agent agent, InstanceGoal goal, Collection<Assignment> assignments);
 
 }

@@ -226,7 +226,7 @@ public class DetailedInformationPanel extends JPanel {
 	 * @param instanceGoal
 	 *            the <code>InstanceGoal</code> to process.
 	 */
-	public void showDetailedInformation(final InstanceGoal<?> instanceGoal) {
+	public void showDetailedInformation(final InstanceGoal instanceGoal) {
 		try {
 			/* clears the contents of the document */
 			doc.remove(0, doc.getLength());
@@ -396,7 +396,7 @@ public class DetailedInformationPanel extends JPanel {
 			writeRelation("Role:");
 			writeRelationEntity(taskRelation.getRole().getId().toString());
 			writeRelation("Goal:");
-			writeRelationEntity(taskRelation.getSpecificationGoal().getId().toString());
+			writeRelationEntity(taskRelation.getGoal().getId().toString());
 			writeRelation("Uses:");
 			// for (final PerformanceFunction performanceFunction : taskRelation.getLinkedSet()) {
 			// writeRelationEntity(performanceFunction.getId().toString());

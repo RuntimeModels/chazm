@@ -7,8 +7,6 @@
  */
 package org.models.organization.entity;
 
-import org.models.organization.factory.InstanceGoalFactory;
-import org.models.organization.factory.InstanceGoalFactoryImpl;
 import org.models.organization.id.UniqueId;
 
 /**
@@ -19,12 +17,6 @@ import org.models.organization.id.UniqueId;
  * @since 1.0
  */
 public class SpecificationGoalEntity implements SpecificationGoal {
-
-	/**
-	 * The <code>InstanceGoalFactory</code> that will be used to create new instances of this <code>SpecificationGoal</code> as <code>InstanceGoal</code>.
-	 */
-	private static InstanceGoalFactory instanceGoalFactory = new InstanceGoalFactoryImpl();
-
 	/**
 	 * The {@linkplain UniqueId} that represents this {@link SpecificationGoal}.
 	 */
@@ -49,15 +41,6 @@ public class SpecificationGoalEntity implements SpecificationGoal {
 	}
 
 	@Override
-	public final <ParameterType> InstanceGoal<ParameterType> getInstanceGoal(final UniqueId instanceIdentifier, final ParameterType parameter) {
-		if (instanceIdentifier == null) {
-			throw new IllegalArgumentException(String.format("Parameter cannot be null: (Unique Identifier: %s)", instanceIdentifier));
-		}
-		final InstanceGoal<ParameterType> instanceGoal = instanceGoalFactory.getInstanceGoal(this, instanceIdentifier, parameter);
-		return instanceGoal;
-	}
-
-	@Override
 	public boolean equals(final Object object) {
 		if (object instanceof SpecificationGoal) {
 			final SpecificationGoal specificationGoal = (SpecificationGoal) object;
@@ -74,18 +57,5 @@ public class SpecificationGoalEntity implements SpecificationGoal {
 	@Override
 	public String toString() {
 		return getId().toString();
-	}
-
-	/**
-	 * Sets the <code>InstanceGoalFactory</code> to the given <code>InstanceGoalFactory</code>.
-	 *
-	 * @param instanceGoalFactory
-	 *            the new <>InstanceGoalFactory</code> to be set.
-	 */
-	public static final void setFactory(final InstanceGoalFactory instanceGoalFactory) {
-		if (instanceGoalFactory == null) {
-			throw new IllegalArgumentException("Parameter (instanceGoalFactory) cannot be null");
-		}
-		SpecificationGoalEntity.instanceGoalFactory = instanceGoalFactory;
 	}
 }

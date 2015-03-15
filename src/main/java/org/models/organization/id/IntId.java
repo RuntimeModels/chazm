@@ -7,8 +7,6 @@
  */
 package org.models.organization.id;
 
-import org.models.organization.id.UniqueId;
-
 /**
  * The {@linkplain IntId} extends the {@link UniqueId} by using a <code>int</code> as the id.
  *
@@ -25,9 +23,9 @@ public class IntId<T> extends UniqueId<T> {
 	private static final long serialVersionUID = -5052735277036535425L;
 
 	/**
-	 * The <code>long</code> of this {@linkplain IntId}.
+	 * The <code>int</code> of this {@linkplain IntId}.
 	 */
-	private final int value;
+	private final int id;
 
 	/**
 	 * Optimization for the <code>toString()</code> method since it never changes.
@@ -37,31 +35,34 @@ public class IntId<T> extends UniqueId<T> {
 	/**
 	 * Constructs a new instance of {@linkplain IntId}.
 	 *
+	 * @param type
+	 *            the type of the {@linkplain IntId}.
 	 * @param value
 	 *            the <code>int</code> of this {@linkplain IntId}.
 	 */
-	public IntId(final int value) {
-		this.value = value;
+	public IntId(final Class<T> type, final int value) {
+		super(type);
+		this.id = value;
 	}
 
 	@Override
 	public boolean equals(final Object object) {
 		if (object instanceof IntId) {
 			final IntId<?> otherId = (IntId<?>) object;
-			return value == otherId.value;
+			return id == otherId.id;
 		}
 		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		return value;
+		return id;
 	}
 
 	@Override
 	public String toString() {
 		if (toString == null) {
-			toString = String.valueOf(value);
+			toString = String.valueOf(id);
 		}
 		return toString;
 	}

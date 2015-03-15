@@ -7,8 +7,6 @@
  */
 package org.models.organization.id;
 
-import org.models.organization.id.UniqueId;
-
 /**
  * The {@linkplain ClassId} extends the {@link UniqueId} by using a {@linkplain Class} as the id.
  *
@@ -27,7 +25,7 @@ public class ClassId<T> extends UniqueId<T> {
 	/**
 	 * The {@linkplain Class} of this {@linkplain ClassId}.
 	 */
-	private final Class<?> classType;
+	private final Class<?> id;
 
 	/**
 	 * Optimization for hash code computation since it never changes.
@@ -42,18 +40,21 @@ public class ClassId<T> extends UniqueId<T> {
 	/**
 	 * Constructs a new instance of {@linkplain ClassId}.
 	 *
-	 * @param classType
+	 * @param type
+	 *            the type of the {@linkplain ClassId}.
+	 * @param id
 	 *            the {@linkplain Class} of this {@linkplain ClassId}.
 	 */
-	public ClassId(final Class<?> classType) {
-		this.classType = classType;
+	public ClassId(final Class<T> type, final Class<?> id) {
+		super(type);
+		this.id = id;
 	}
 
 	@Override
 	public boolean equals(final Object object) {
 		if (object instanceof ClassId) {
 			final ClassId<?> classIdentifier = (ClassId<?>) object;
-			return classType.equals(classIdentifier.classType);
+			return id.equals(classIdentifier.id);
 		}
 		return false;
 	}
@@ -61,7 +62,7 @@ public class ClassId<T> extends UniqueId<T> {
 	@Override
 	public int hashCode() {
 		if (hashCode == null) {
-			hashCode = classType.hashCode();
+			hashCode = id.hashCode();
 		}
 		return hashCode;
 	}
@@ -69,7 +70,7 @@ public class ClassId<T> extends UniqueId<T> {
 	@Override
 	public String toString() {
 		if (toString == null) {
-			toString = classType.getName();
+			toString = id.getName();
 		}
 		return toString;
 	}

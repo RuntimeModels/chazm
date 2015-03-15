@@ -46,7 +46,7 @@ public class GoalVisualizationPanel extends AbstractTreeVisualizationPanel {
 	/**
 	 * A <code>Map</code> of the <code>InstanceGoal</code> to a <code>DefaultMutableTreeNode</code>.
 	 */
-	private final Map<InstanceGoal<?>, MutableTreeNode> instanceGoals = new ConcurrentHashMap<>();
+	private final Map<InstanceGoal, MutableTreeNode> instanceGoals = new ConcurrentHashMap<>();
 
 	/**
 	 * Constructs a new instance of <code>GoalVisualizationPanel</code>.
@@ -62,7 +62,7 @@ public class GoalVisualizationPanel extends AbstractTreeVisualizationPanel {
 	@Override
 	void updateVisualizationPanel() {
 		final Collection<MutableTreeNode> instanceGoalsToRemove = new ArrayList<>();
-		for (final InstanceGoal<?> instanceGoal : instanceGoals.keySet()) {
+		for (final InstanceGoal instanceGoal : instanceGoals.keySet()) {
 			if (!getOrganization().getInstanceGoals().contains(instanceGoal)) {
 				instanceGoalsToRemove.add(instanceGoals.remove(instanceGoal));
 			}
@@ -96,7 +96,7 @@ public class GoalVisualizationPanel extends AbstractTreeVisualizationPanel {
 					getTreeModel().reload();
 				}
 			}
-			for (final InstanceGoal<?> goal2 : getOrganization().getInstanceGoals()) {
+			for (final InstanceGoal goal2 : getOrganization().getInstanceGoals()) {
 				if (!instanceGoals.containsKey(goal2) && specificationGoals.containsKey(goal2.getSpecificationGoal())) {
 					final DefaultMutableTreeNode node2 = new DefaultMutableTreeNode(goal2);
 					instanceGoals.put(goal2, node2);
@@ -115,8 +115,8 @@ public class GoalVisualizationPanel extends AbstractTreeVisualizationPanel {
 			if (nodeInfo instanceof SpecificationGoal) {
 				final SpecificationGoal specificationGoal = (SpecificationGoal) nodeInfo;
 				getDetailedInformationPanel().showDetailedInformation(specificationGoal);
-			} else if (nodeInfo instanceof InstanceGoal<?>) {
-				final InstanceGoal<?> instanceGoal = (InstanceGoal<?>) nodeInfo;
+			} else if (nodeInfo instanceof InstanceGoal) {
+				final InstanceGoal instanceGoal = (InstanceGoal) nodeInfo;
 				getDetailedInformationPanel().showDetailedInformation(instanceGoal);
 			}
 		}

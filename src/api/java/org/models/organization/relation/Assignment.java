@@ -36,5 +36,5 @@ public interface Assignment extends Identifiable<Assignment> {
 	 *
 	 * @return the {@linkplain InstanceGoal} of this {@linkplain Assignment}.
 	 */
-	InstanceGoal<?> getGoal();
+	InstanceGoal getGoal();
 }

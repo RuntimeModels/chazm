@@ -30,14 +30,6 @@ public interface SpecificationGoalManager {
 	void addSpecificationGoals(Collection<SpecificationGoal> goals);
 
 	/**
-	 * Adds a set of {@linkplain SpecificationGoal}s to this {@linkplain SpecificationGoalManager}.
-	 *
-	 * @param goals
-	 *            the set of {@linkplain SpecificationGoal}s to add.
-	 */
-	void addSpecificationGoals(SpecificationGoal... goals);
-
-	/**
 	 * Returns a {@linkplain SpecificationGoal} from this {@linkplain SpecificationGoalManager}.
 	 *
 	 * @param id

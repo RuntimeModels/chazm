@@ -52,7 +52,7 @@ public class AssignmentRelation implements Assignment {
 		/**
 		 * The {@linkplain UniqueId} that represents an {@linkplain InstanceGoal}.
 		 */
-		private final UniqueId<InstanceGoal<?>> goalId;
+		private final UniqueId<InstanceGoal> goalId;
 
 		/**
 		 * Optimization for hash code computation since it never changes.
@@ -74,7 +74,8 @@ public class AssignmentRelation implements Assignment {
 		 * @param goalId
 		 *            the {@linkplain UniqueId} that represents an {@linkplain InstanceGoal}.
 		 */
-		public Id(final UniqueId<Agent> agentId, final UniqueId<Role> roleId, final UniqueId<InstanceGoal<?>> goalId) {
+		public Id(final UniqueId<Agent> agentId, final UniqueId<Role> roleId, final UniqueId<InstanceGoal> goalId) {
+			super(Assignment.class);
 			this.agentId = agentId;
 			this.roleId = roleId;
 			this.goalId = goalId;
@@ -103,7 +104,7 @@ public class AssignmentRelation implements Assignment {
 		 *
 		 * @return the {@linkplain UniqueId} that represents an {@linkplain InstanceGoal}.
 		 */
-		private UniqueId<InstanceGoal<?>> getGoalId() {
+		private UniqueId<InstanceGoal> getGoalId() {
 			return goalId;
 		}
 
@@ -161,7 +162,7 @@ public class AssignmentRelation implements Assignment {
 	/**
 	 * The {@linkplain InstanceGoal} of this {@linkplain Assignment}.
 	 */
-	private final InstanceGoal<?> goal;
+	private final InstanceGoal goal;
 
 	/**
 	 * Constructs a new instance of {@linkplain Assignment}.
@@ -173,7 +174,7 @@ public class AssignmentRelation implements Assignment {
 	 * @param goal
 	 *            the {@linkplain InstanceGoal} of this {@linkplain Assignment}.
 	 */
-	public AssignmentRelation(final Agent agent, final Role role, final InstanceGoal<?> goal) {
+	public AssignmentRelation(final Agent agent, final Role role, final InstanceGoal goal) {
 		if (agent == null) {
 			throw new IllegalArgumentException("Parameter (agent) cannot be null");
 		}
@@ -205,7 +206,7 @@ public class AssignmentRelation implements Assignment {
 	}
 
 	@Override
-	public InstanceGoal<?> getGoal() {
+	public InstanceGoal getGoal() {
 		return goal;
 	}
 

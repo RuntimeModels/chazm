@@ -25,14 +25,6 @@ public interface AssignmentManager {
 	void addAssignments(Collection<Assignment> assignments);
 
 	/**
-	 * Adds the given set of {@linkplain Assignment} to the set of {@linkplain Assignment}.
-	 *
-	 * @param assignments
-	 *            the set of {@linkplain Assignment} to be added.
-	 */
-	void addAssignments(Assignment... assignments);
-
-	/**
 	 * Returns the {@linkplain Assignment} by the given {@linkplain UniqueId} that identifies the {@linkplain Assignment} .
 	 *
 	 * @param id
@@ -55,7 +47,7 @@ public interface AssignmentManager {
 	 *            the {@linkplain UniqueId} that represents the {@linkplain Agent}.
 	 * @return the set of {@linkplain Assignment}s that is assigned the {@linkplain Agent}.
 	 */
-	Set<Assignment> getAgentAssignments(UniqueId<Agent> id);
+	Set<Assignment> getAssignmentsByAgent(UniqueId<Agent> id);
 
 	/**
 	 * Removes the {@linkplain Assignment} by the given {@linkplain UniqueId} that identifies the {@linkplain Assignment} .

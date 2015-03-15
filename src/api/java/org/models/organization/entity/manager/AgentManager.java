@@ -30,14 +30,6 @@ public interface AgentManager {
 	void addAgents(Collection<Agent> agents);
 
 	/**
-	 * Adds a set of {@linkplain Agent}s to this {@linkplain AgentManager} .
-	 *
-	 * @param agents
-	 *            the set of {@linkplain Agent}s to add.
-	 */
-	void addAgents(Agent... agents);
-
-	/**
 	 * Returns an {@linkplain Agent} from this {@linkplain AgentManager}.
 	 *
 	 * @param id

@@ -30,14 +30,6 @@ public interface AttributeManager {
 	void addAttributes(Collection<Attribute> attributes);
 
 	/**
-	 * Adds a set of {@linkplain Attribute}s to this {@linkplain AttributeManager}.
-	 *
-	 * @param attributes
-	 *            the set of {@linkplain Attribute} to add.
-	 */
-	void addAttributes(Attribute... attributes);
-
-	/**
 	 * Returns an {@linkplain Attribute} from this {@linkplain AttributeManager} .
 	 *
 	 * @param id

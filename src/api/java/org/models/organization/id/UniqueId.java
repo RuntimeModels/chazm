@@ -9,6 +9,7 @@ package org.models.organization.id;
 
 import java.io.Serializable;
 
+import org.models.organization.M;
 import org.models.organization.Organization;
 
 /**
@@ -35,6 +36,23 @@ public abstract class UniqueId<T> implements Serializable {
 	 * Serial version ID
 	 */
 	private static final long serialVersionUID = 2812867343219462118L;
+	private final Class<? super T> type;
+
+	protected UniqueId(final Class<? super T> type) {
+		if (type == null) {
+			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "type"));
+		}
+		this.type = type;
+	}
+
+	/**
+	 * Returns the type of this {@linkplain UniqueId}.
+	 *
+	 * @return the type.
+	 */
+	public Class<? super T> getType() {
+		return type;
+	}
 
 	@Override
 	public abstract boolean equals(Object object);
@@ -44,36 +62,4 @@ public abstract class UniqueId<T> implements Serializable {
 
 	@Override
 	public abstract String toString();
-
-	/**
-	 * Utilizes the <code>equals</code> method from <code>Object</code> to determine equality.
-	 *
-	 * @param object
-	 *            the <code>Object</code> with which to compare.
-	 * @return <code>true</code> if this object is the same as the given <code>Object</code>, <code>false</code> otherwise.
-	 * @see Object#equals(Object)
-	 */
-	public final boolean getObjectEquals(final Object object) {
-		return super.equals(object);
-	}
-
-	/**
-	 * Utilizes the <code>hashCode</code> method from <code>Object</code> to compute the hash code.
-	 *
-	 * @return the hash code value.
-	 * @see Object#hashCode()
-	 */
-	public final int getObjectHashCode() {
-		return super.hashCode();
-	}
-
-	/**
-	 * Utilizes the <code>toString</code> method from <code>Object</code> to return a <code>String</code> representation.
-	 *
-	 * @return a <code>String</code> representation.
-	 * @see Object#toString()
-	 */
-	public final String getObjectToString() {
-		return super.toString();
-	}
 }

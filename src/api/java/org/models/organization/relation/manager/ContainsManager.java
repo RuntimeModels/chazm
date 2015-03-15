@@ -9,7 +9,7 @@ import org.models.organization.relation.Contains;
 
 /**
  * The {@linkplain ContainsManager} interface defines the APIs for managing {@linkplain Contains}.
- * 
+ *
  * @author Christopher Zhong
  * @since 7.0.0
  */
@@ -28,7 +28,7 @@ public interface ContainsManager {
 
 	/**
 	 * Returns a set of {@linkplain Characteristic}s that is contained by a {@linkplain Role} from this {@linkplain ContainsManager}.
-	 * 
+	 *
 	 * @param id
 	 *            the {@linkplain UniqueId} that represents the {@linkplain Role}.
 	 * @return a set of {@linkplain Characteristic}s.
@@ -37,7 +37,7 @@ public interface ContainsManager {
 
 	/**
 	 * Returns a set of {@linkplain Role}s that contains a {@linkplain Characteristic} from this {@linkplain ContainsManager}.
-	 * 
+	 *
 	 * @param id
 	 *            the {@linkplain UniqueId} that represents the {@linkplain Characteristic}.
 	 * @return a set of {@linkplain Role}s.
@@ -47,7 +47,7 @@ public interface ContainsManager {
 	/**
 	 * Return a {@linkplain Double} value (if it exists) of the contains relation between a {@linkplain Role} and a {@linkplain Characteristic} from this
 	 * {@linkplain ContainsManager}.
-	 * 
+	 *
 	 * @param roleId
 	 *            the {@linkplain UniqueId} that represents the {@linkplain Role}.
 	 * @param characteristicId
@@ -59,7 +59,7 @@ public interface ContainsManager {
 	/**
 	 * Sets a new <code>double</code> value of the contains relation between a {@linkplain Role} and a {@linkplain Characteristic} in this
 	 * {@linkplain ContainsManager}.
-	 * 
+	 *
 	 * @param roleId
 	 *            the {@linkplain UniqueId} that represents the {@linkplain Role}.
 	 * @param characteristicId
