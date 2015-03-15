@@ -8,7 +8,6 @@
 package org.models.organization.id;
 
 import org.models.organization.M;
-import org.models.organization.id.UniqueId;
 
 /**
  * The {@linkplain StringId} class extends the {@link UniqueId} by using a {@link String} as the id.
@@ -32,37 +31,40 @@ public class StringId<T> extends UniqueId<T> {
 	/**
 	 * The {@linkplain String} of this {@linkplain StringId}.
 	 */
-	private final String string;
+	private final String id;
 
 	/**
 	 * Constructs a new instance of {@linkplain StringId}.
 	 *
+	 * @param type
+	 *            the type of the {@linkplain StringId}.
 	 * @param id
 	 *            the {@linkplain String} of the {@linkplain StringId}.
 	 */
-	public StringId(final String id) {
+	public StringId(final Class<T> type, final String id) {
+		super(type);
 		if (id == null) {
 			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "id"));
 		}
-		this.string = id;
+		this.id = id;
 	}
 
 	@Override
 	public boolean equals(final Object object) {
 		if (object instanceof StringId) {
 			final StringId<?> otherId = (StringId<?>) object;
-			return string.equals(otherId.string);
+			return id.equals(otherId.id);
 		}
 		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		return string.hashCode();
+		return id.hashCode();
 	}
 
 	@Override
 	public String toString() {
-		return string;
+		return id;
 	}
 }

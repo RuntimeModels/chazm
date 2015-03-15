@@ -30,14 +30,6 @@ public interface PolicyManager {
 	void addPolicies(Collection<Policy> policies);
 
 	/**
-	 * Adds a set of {@linkplain Policy}s to this {@linkplain PolicyManager}.
-	 *
-	 * @param policies
-	 *            the set of {@linkplain Policy} to add.
-	 */
-	void addPolicies(Policy... policies);
-
-	/**
 	 * Returns a {@linkplain Policy} from this {@linkplain PolicyManager}.
 	 *
 	 * @param id

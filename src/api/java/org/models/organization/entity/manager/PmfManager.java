@@ -30,14 +30,6 @@ public interface PmfManager {
 	void addPmfs(Collection<Pmf> pmfs);
 
 	/**
-	 * Adds a set of {@linkplain Pmf}s to this {@linkplain PmfManager}.
-	 *
-	 * @param pmfs
-	 *            the set of {@linkplain Pmf}s to add.
-	 */
-	void addPmfs(Pmf... pmfs);
-
-	/**
 	 * Returns a {@linkplain Pmf} from this {@linkplain PmfManager}.
 	 *
 	 * @param id

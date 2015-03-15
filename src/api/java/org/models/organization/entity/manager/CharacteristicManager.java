@@ -30,14 +30,6 @@ public interface CharacteristicManager {
 	void addCharacteristics(Collection<Characteristic> characteristics);
 
 	/**
-	 * Adds a set of {@linkplain Characteristic}s to this {@linkplain CharacteristicManager}.
-	 *
-	 * @param characteristics
-	 *            the set of {@linkplain Characteristic} to add.
-	 */
-	void addCharacteristics(Characteristic... characteristics);
-
-	/**
 	 * Returns a {@linkplain Characteristic} from this {@linkplain CharacteristicManager}.
 	 *
 	 * @param id

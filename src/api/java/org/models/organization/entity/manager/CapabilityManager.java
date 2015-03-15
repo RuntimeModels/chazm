@@ -30,14 +30,6 @@ public interface CapabilityManager {
 	void addCapabilities(Collection<Capability> capabilities);
 
 	/**
-	 * Adds a set of {@linkplain Capability}s to this {@linkplain CapabilityManager}.
-	 *
-	 * @param capabilities
-	 *            the set of {@linkplain Capability}s to add.
-	 */
-	void addCapabilities(Capability... capabilities);
-
-	/**
 	 * Returns a {@linkplain Capability} from this {@linkplain CapabilityManager}.
 	 *
 	 * @param id

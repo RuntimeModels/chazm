@@ -16,17 +16,24 @@ import org.models.organization.id.UniqueId;
  * {@linkplain Organization}.
  *
  * @author Christopher Zhong
- * @param <T>
- *            the type of the parameter of this {@linkplain InstanceGoal}.
  * @since 3.4
  */
-public interface InstanceGoal<T> extends Identifiable<InstanceGoal<?>> {
+public interface InstanceGoal extends Identifiable<InstanceGoal> {
+	/**
+	 * The {@linkplain P} interface defines the parameter of an {@linkplain InstanceGoal}.
+	 *
+	 * @author Christopher Zhong
+	 * @since 7.0.0
+	 */
+	interface P {
+	}
+
 	/**
 	 * Returns the {@linkplain UniqueId} that represents this instance portion of this {@linkplain InstanceGoal}.
 	 *
 	 * @return the {@linkplain UniqueId} that represents this instance portion of this {@linkplain InstanceGoal}.
 	 */
-	UniqueId<InstanceGoal<?>> getInstanceId();
+	UniqueId<InstanceGoal> getInstanceId();
 
 	/**
 	 * Returns the {@linkplain SpecificationGoal} that instantiated this {@linkplain InstanceGoal}.
@@ -40,5 +47,5 @@ public interface InstanceGoal<T> extends Identifiable<InstanceGoal<?>> {
 	 *
 	 * @return the parameter(s) of this {@linkplain InstanceGoal}.
 	 */
-	T getParameter();
+	P getParameter();
 }

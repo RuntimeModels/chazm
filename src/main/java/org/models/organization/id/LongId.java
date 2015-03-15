@@ -7,8 +7,6 @@
  */
 package org.models.organization.id;
 
-import org.models.organization.id.UniqueId;
-
 /**
  * The {@linkplain LongId} class extends {@link UniqueId} by using a <code>long</code> as the id.
  *
@@ -27,7 +25,7 @@ public class LongId<T> extends UniqueId<T> {
 	/**
 	 * The <code>long</code> of this {@linkplain LongId}.
 	 */
-	private final long value;
+	private final long id;
 
 	/**
 	 * Optimization for hash code computation since it never changes.
@@ -42,18 +40,21 @@ public class LongId<T> extends UniqueId<T> {
 	/**
 	 * Constructs a new instance of {@linkplain LongId}.
 	 *
-	 * @param value
+	 * @param type
+	 *            the type of the {@linkplain UniqueId}.
+	 * @param id
 	 *            the <code>long</code> of this {@linkplain LongId}.
 	 */
-	public LongId(final long value) {
-		this.value = value;
+	public LongId(final Class<T> type, final long id) {
+		super(type);
+		this.id = id;
 	}
 
 	@Override
 	public boolean equals(final Object object) {
 		if (object instanceof LongId) {
 			final LongId<?> otherId = (LongId<?>) object;
-			return value == otherId.value;
+			return id == otherId.id;
 		}
 		return false;
 	}
@@ -61,7 +62,7 @@ public class LongId<T> extends UniqueId<T> {
 	@Override
 	public int hashCode() {
 		if (hashCode == null) {
-			hashCode = (int) value;
+			hashCode = (int) id;
 		}
 		return hashCode;
 	}
@@ -69,7 +70,7 @@ public class LongId<T> extends UniqueId<T> {
 	@Override
 	public String toString() {
 		if (toString == null) {
-			toString = String.valueOf(value);
+			toString = String.valueOf(id);
 		}
 		return toString;
 	}

@@ -11,14 +11,14 @@ import org.models.organization.id.StringId;
 import org.models.organization.id.UniqueId;
 
 /**
- * The {@linkplain DefaultUniqueIdFactory} class is an implementation of the {@linkplain UniqueIdFactory}.
+ * The {@linkplain DefaultIdFactory} class is an implementation of the {@linkplain UniqueIdFactory}.
  *
  * @author Christopher Zhong
  * @since 4.0
  */
-public class DefaultUniqueIdFactory implements UniqueIdFactory {
+public class DefaultIdFactory implements UniqueIdFactory {
 	@Override
-	public <T> UniqueId<T> buildId(final String id, final Class<T> type) {
-		return new StringId<T>(id);
+	public <T, U> UniqueId<T> buildId(final Class<T> type, final U id) {
+		return new StringId<>(type, id.toString());
 	}
 }

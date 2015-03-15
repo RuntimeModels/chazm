@@ -26,5 +26,5 @@ public interface Pmf extends Identifiable<Pmf> {
 	 *            the {@link Assignment} that may be used in computing the PMF.
 	 * @return a <code>Double</code> value indicating the PMF value, or <code>null</code> if not applicable.
 	 */
-	Double pmf(Agent agent, Role role, InstanceGoal<?> goal, Collection<Assignment> assignments);
+	Double pmf(Agent agent, Role role, InstanceGoal goal, Collection<Assignment> assignments);
 }

@@ -30,14 +30,6 @@ public interface RoleManager {
 	void addRoles(Collection<Role> roles);
 
 	/**
-	 * Adds a set of {@linkplain Role}s to this {@linkplain RoleManager}.
-	 *
-	 * @param roles
-	 *            the set of {@linkplain Role} to add.
-	 */
-	void addRoles(Role... roles);
-
-	/**
 	 * Returns a {@linkplain Role} from this {@linkplain RoleManager}.
 	 *
 	 * @param id

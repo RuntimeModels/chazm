@@ -73,6 +73,7 @@ public class TaskRelation implements Task {
 		 *            the {@linkplain UniqueId} of the {@linkplain SpecificationGoal}.
 		 */
 		public Id(final UniqueId<Role> roleId, final UniqueId<SpecificationGoal> goalId) {
+			super(Task.class);
 			if (roleId == null) {
 				throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "roleId"));
 			}
@@ -145,7 +146,7 @@ public class TaskRelation implements Task {
 	/**
 	 * The {@linkplain SpecificationGoal} of this {@linkplain Task}.
 	 */
-	private final SpecificationGoal specificationGoal;
+	private final SpecificationGoal goal;
 
 	/**
 	 * Optimization for <code>toString</code> method since it never changes.
@@ -157,19 +158,19 @@ public class TaskRelation implements Task {
 	 *
 	 * @param role
 	 *            the {@linkplain Role} of this {@linkplain Task}.
-	 * @param specificationGoal
+	 * @param goal
 	 *            the {@linkplain SpecificationGoal} of this {@linkplain Task}.
 	 */
-	public TaskRelation(final Role role, final SpecificationGoal specificationGoal) {
+	public TaskRelation(final Role role, final SpecificationGoal goal) {
 		if (role == null) {
 			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "role"));
 		}
-		if (specificationGoal == null) {
+		if (goal == null) {
 			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "specificationGoal"));
 		}
-		id = new Id(role.getId(), specificationGoal.getId());
+		id = new Id(role.getId(), goal.getId());
 		this.role = role;
-		this.specificationGoal = specificationGoal;
+		this.goal = goal;
 	}
 
 	@Override
@@ -183,8 +184,8 @@ public class TaskRelation implements Task {
 	}
 
 	@Override
-	public final SpecificationGoal getSpecificationGoal() {
-		return specificationGoal;
+	public final SpecificationGoal getGoal() {
+		return goal;
 	}
 
 	/**
@@ -202,8 +203,8 @@ public class TaskRelation implements Task {
 	 *         the {@link TaskRelation} or the given {@link InstanceGoal} is not an instance of the {@link SpecificationGoal} of this {@link TaskRelation}.
 	 * @see RoleGoodnessFunction#goodness(Role, Agent, InstanceGoal, Collection)
 	 */
-	public final double goodness(final Agent agent, final InstanceGoal<?> instanceGoal, final Collection<Assignment> assignments) {
-		if (getSpecificationGoal().equals(instanceGoal.getSpecificationGoal())) {
+	public final double goodness(final Agent agent, final InstanceGoal instanceGoal, final Collection<Assignment> assignments) {
+		if (getGoal().equals(instanceGoal.getSpecificationGoal())) {
 			return getRole().goodness(agent, instanceGoal, assignments);
 		}
 		return RoleGoodnessFunction.MIN_SCORE;

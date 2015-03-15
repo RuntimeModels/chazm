@@ -12,8 +12,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import org.models.organization.entity.Agent;
 import org.models.organization.entity.Attribute;
@@ -24,9 +26,9 @@ import org.models.organization.entity.Pmf;
 import org.models.organization.entity.Policy;
 import org.models.organization.entity.Role;
 import org.models.organization.entity.SpecificationGoal;
+import org.models.organization.event.Publisher;
+import org.models.organization.id.Identifiable;
 import org.models.organization.id.UniqueId;
-import org.models.organization.registry.ChangeManager;
-import org.models.organization.registry.EventRegistry;
 import org.models.organization.relation.Achieves;
 import org.models.organization.relation.AchievesRelation;
 import org.models.organization.relation.Assignment;
@@ -46,6 +48,8 @@ import org.models.organization.relation.Task;
 import org.models.organization.relation.TaskRelation;
 import org.models.organization.relation.Uses;
 import org.models.organization.relation.UsesRelation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The {@linkplain OrganizationImpl} class is an implementation of the {@link Organization}.
@@ -54,7 +58,7 @@ import org.models.organization.relation.UsesRelation;
  * @author Christopher Zhong
  * @since 1.0
  */
-public class OrganizationImpl implements Organization {
+public class OrganizationImpl implements Organization, Publisher {
 	/**
 	 * The {@linkplain Entities} class is an data class that encapsulates the entities within an {@linkplain Organization}.
 	 *
@@ -85,11 +89,11 @@ public class OrganizationImpl implements Organization {
 		/**
 		 * The set of {@linkplain InstanceGoal} in this {@linkplain Organization}.
 		 */
-		private final Map<UniqueId<InstanceGoal<?>>, InstanceGoal<?>> instanceGoals = new ConcurrentHashMap<>();
+		private final Map<UniqueId<InstanceGoal>, InstanceGoal> instanceGoals = new ConcurrentHashMap<>();
 		/**
 		 * The set of {@linkplain InstanceGoal} in this {@linkplain Organization} that is indexed by the {@linkplain SpecificationGoal}.
 		 */
-		private final Map<UniqueId<SpecificationGoal>, Map<UniqueId<InstanceGoal<?>>, InstanceGoal<?>>> instanceGoalsBySpecificationGoal = new ConcurrentHashMap<>();
+		private final Map<UniqueId<SpecificationGoal>, Map<UniqueId<InstanceGoal>, InstanceGoal>> instanceGoalsBySpecificationGoal = new ConcurrentHashMap<>();
 		/**
 		 * The set of {@linkplain Attribute} in this {@linkplain Organization}.
 		 */
@@ -189,6 +193,7 @@ public class OrganizationImpl implements Organization {
 		private final Map<UniqueId<Characteristic>, Map<UniqueId<Role>, Contains>> containedBy = new ConcurrentHashMap<>();
 	}
 
+	private static final Logger logger = LoggerFactory.getLogger(Organization.class);
 	/**
 	 * The entities within this {@linkplain Organization}.
 	 */
@@ -206,1044 +211,728 @@ public class OrganizationImpl implements Organization {
 
 	@Override
 	public void addSpecificationGoal(final SpecificationGoal goal) {
-		if (goal == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "goal"));
-		}
-		if (entities.specificationGoals.containsKey(goal.getId())) {
-			throw new IllegalArgumentException(String.format("Specification goal (%s) already exists", goal));
-		}
+		checkNotExists(goal, "goal", entities.specificationGoals::containsKey);
+		/* add the specification goal, instanceGoalsBySpecificationGoal map, achievedBy map */
 		entities.specificationGoals.put(goal.getId(), goal);
-		entities.instanceGoalsBySpecificationGoal.put(goal.getId(), new ConcurrentHashMap<UniqueId<InstanceGoal<?>>, InstanceGoal<?>>());
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifySpecificationGoalAdded(goal.getId());
-		}
+		entities.instanceGoalsBySpecificationGoal.put(goal.getId(), new ConcurrentHashMap<>());
+		relations.achievedBy.put(goal.getId(), new ConcurrentHashMap<>());
+		publishAdd(SpecificationGoal.class, goal.getId());
 	}
 
 	@Override
 	public void addSpecificationGoals(final Collection<SpecificationGoal> goals) {
-		if (goals == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "goals"));
-		}
-		for (final SpecificationGoal goal : goals) {
-			addSpecificationGoal(goal);
-		}
-	}
-
-	@Override
-	public void addSpecificationGoals(final SpecificationGoal... goals) {
-		if (goals == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "goals"));
-		}
-		for (final SpecificationGoal specificationGoal : goals) {
-			addSpecificationGoal(specificationGoal);
-		}
+		checkNotNull(goals, "goals");
+		goals.parallelStream().forEach(this::addSpecificationGoal);
 	}
 
 	@Override
 	public SpecificationGoal getSpecificationGoal(final UniqueId<SpecificationGoal> id) {
-		if (id == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "id"));
-		}
+		checkNotNull(id, "id");
 		return entities.specificationGoals.get(id);
 	}
 
 	@Override
 	public Set<SpecificationGoal> getSpecificationGoals() {
-		return new HashSet<>(entities.specificationGoals.values());
+		return entities.specificationGoals.values().parallelStream().collect(Collectors.toCollection(HashSet::new));
 	}
 
 	@Override
 	public void removeSpecificationGoal(final UniqueId<SpecificationGoal> id) {
-		if (id == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "id"));
-		}
-		final SpecificationGoal goal = entities.specificationGoals.remove(id);
-		entities.instanceGoalsBySpecificationGoal.remove(id);
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifySpecificationGoalRemoved(goal.getId());
+		checkNotNull(id, "id");
+		if (entities.specificationGoals.containsKey(id)) {
+			/* remove the specification goal, all associated instance goals, all associated achieves relations */
+			entities.specificationGoals.remove(id);
+			remove(id, entities.instanceGoalsBySpecificationGoal, "instanceGoalsBySpecificationGoal", c -> removeInstanceGoal(c), InstanceGoal.class);
+			remove(id, relations.achievedBy, "achievedBy", c -> removeAchieves(c, id), Role.class);
+			publishRemove(SpecificationGoal.class, id);
 		}
 	}
 
 	@Override
 	public void removeSpecificationGoals(final Collection<UniqueId<SpecificationGoal>> ids) {
-		if (ids == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "ids"));
-		}
-		for (final UniqueId<SpecificationGoal> id : ids) {
-			removeSpecificationGoal(id);
-		}
+		checkNotNull(ids, "ids");
+		ids.parallelStream().forEach(this::removeSpecificationGoal);
 	}
 
 	@Override
 	public void removeAllSpecificationGoals() {
-		entities.specificationGoals.clear();
-		entities.instanceGoalsBySpecificationGoal.clear();
+		removeSpecificationGoals(entities.specificationGoals.keySet());
 	}
 
 	@Override
 	public void addRole(final Role role) {
-		if (role == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "role"));
-		}
-		if (entities.roles.containsKey(role.getId())) {
-			throw new IllegalArgumentException(String.format("Role (%s) already exists", role));
-		}
+		checkNotExists(role, "role", entities.roles::containsKey);
+		/* add the role, achieves map, requires map, needs map, uses, contains map */
 		entities.roles.put(role.getId(), role);
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyRoleAdded(role.getId());
-		}
+		relations.achieves.put(role.getId(), new ConcurrentHashMap<>());
+		relations.requires.put(role.getId(), new ConcurrentHashMap<>());
+		relations.needs.put(role.getId(), new ConcurrentHashMap<>());
+		relations.uses.put(role.getId(), new ConcurrentHashMap<>());
+		relations.contains.put(role.getId(), new ConcurrentHashMap<>());
+		publishAdd(Role.class, role.getId());
 	}
 
 	@Override
 	public void addRoles(final Collection<Role> roles) {
-		if (roles == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "roles"));
-		}
-		for (final Role role : roles) {
-			addRole(role);
-		}
-	}
-
-	@Override
-	public void addRoles(final Role... roles) {
-		if (roles == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "roles"));
-		}
-		for (final Role role : roles) {
-			addRole(role);
-		}
+		checkNotNull(roles, "roles");
+		roles.parallelStream().forEach(this::addRole);
 	}
 
 	@Override
 	public Role getRole(final UniqueId<Role> id) {
-		if (id == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "id"));
-		}
+		checkNotNull(id, "id");
 		return entities.roles.get(id);
 	}
 
 	@Override
 	public Set<Role> getRoles() {
-		return new HashSet<>(entities.roles.values());
+		return entities.roles.values().parallelStream().collect(Collectors.toCollection(HashSet::new));
 	}
 
 	@Override
 	public void removeRole(final UniqueId<Role> id) {
-		if (id == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "id"));
-		}
-		final Role role = entities.roles.remove(id);
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyRoleRemoved(role.getId());
+		checkNotNull(id, "id");
+		if (entities.roles.containsKey(id)) {
+			/*
+			 * remove role, all associated achieves relations, all associated requires relations, all associated needs relations, all associated uses relations,
+			 * all associated contains relations
+			 */
+			entities.roles.remove(id);
+			remove(id, relations.achieves, "achieves", c -> removeAchieves(id, c), SpecificationGoal.class);
+			remove(id, relations.requires, "requires", c -> removeRequires(id, c), Capability.class);
+			remove(id, relations.needs, "needs", c -> removeNeeds(id, c), Attribute.class);
+			remove(id, relations.uses, "uses", c -> removeUses(id, c), Pmf.class);
+			remove(id, relations.contains, "contains", c -> removeContains(id, c), Characteristic.class);
+			publishRemove(Role.class, id);
 		}
 	}
 
 	@Override
 	public void removeRoles(final Collection<UniqueId<Role>> ids) {
-		if (ids == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "ids"));
-		}
-		for (final UniqueId<Role> id : ids) {
-			removeRole(id);
-		}
+		checkNotNull(ids, "ids");
+		ids.parallelStream().forEach(this::removeRole);
 	}
 
 	@Override
 	public void removeAllRoles() {
-		entities.roles.clear();
+		removeRoles(entities.roles.keySet());
 	}
 
 	@Override
 	public void addAgent(final Agent agent) {
-		if (agent == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "agent"));
-		}
-		if (entities.agents.containsKey(agent.getId())) {
-			throw new IllegalArgumentException(String.format("Agent (%s) already exists", agent));
-		}
+		checkNotExists(agent, "agent", entities.agents::containsKey);
+		/* add the agent, assignmentsByAgent map, possesses map, has map */
 		entities.agents.put(agent.getId(), agent);
-		final Map<UniqueId<Assignment>, Assignment> map = new ConcurrentHashMap<>();
-		relations.assignmentsByAgent.put(agent.getId(), map);
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyAgentAdded(agent.getId());
-		}
+		relations.assignmentsByAgent.put(agent.getId(), new ConcurrentHashMap<>());
+		relations.possesses.put(agent.getId(), new ConcurrentHashMap<>());
+		relations.has.put(agent.getId(), new ConcurrentHashMap<>());
+		publishAdd(Agent.class, agent.getId());
 	}
 
 	@Override
 	public void addAgents(final Collection<Agent> agents) {
-		if (agents == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "agents"));
-		}
-		for (final Agent agent : agents) {
-			addAgent(agent);
-		}
-	}
-
-	@Override
-	public void addAgents(final Agent... agents) {
-		if (agents == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "agents"));
-		}
-		for (final Agent agent : agents) {
-			addAgent(agent);
-		}
+		checkNotNull(agents, "agents");
+		agents.parallelStream().forEach(this::addAgent);
 	}
 
 	@Override
 	public Agent getAgent(final UniqueId<Agent> id) {
-		if (id == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "id"));
-		}
+		checkNotNull(id, "id");
 		return entities.agents.get(id);
 	}
 
 	@Override
 	public Set<Agent> getAgents() {
-		return new HashSet<>(entities.agents.values());
+		return entities.agents.values().parallelStream().collect(Collectors.toCollection(HashSet::new));
 	}
 
 	@Override
 	public void removeAgent(final UniqueId<Agent> id) {
-		if (id == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "id"));
-		}
-		final Agent agent = entities.agents.remove(id);
-		relations.assignmentsByAgent.remove(id);
-
-		if (agent != null) {
-			final ChangeManager changeManager = EventRegistry.get();
-			if (changeManager != null) {
-				changeManager.notifyAgentRemoved(agent.getId());
-			}
+		checkNotNull(id, "id");
+		if (entities.agents.containsKey(id)) {
+			/* remove the agent, all associated assignments, all associated possesses relations, all associated has relations */
+			entities.agents.remove(id);
+			remove(id, relations.assignmentsByAgent, "assignmentsByAgent", c -> removeAssignment(c), Assignment.class);
+			remove(id, relations.possesses, "possesses", c -> removePossesses(id, c), Capability.class);
+			remove(id, relations.has, "possesses", c -> removeHas(id, c), Attribute.class);
+			publishRemove(Agent.class, id);
 		}
 	}
 
 	@Override
 	public void removeAgents(final Collection<UniqueId<Agent>> ids) {
-		if (ids == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "ids"));
-		}
-		for (final UniqueId<Agent> id : ids) {
-			removeAgent(id);
-		}
+		checkNotNull(ids, "ids");
+		ids.parallelStream().forEach(this::removeAgent);
 	}
 
 	@Override
 	public void removeAllAgents() {
-		entities.agents.clear();
-		relations.assignmentsByAgent.clear();
+		removeAgents(entities.agents.keySet());
 	}
 
 	@Override
 	public void addCapability(final Capability capability) {
-		if (capability == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "capability"));
-		}
-		if (entities.capabilities.containsKey(capability.getId())) {
-			throw new IllegalArgumentException(String.format("Capability (%s) already exists", capability));
-		}
+		checkNotExists(capability, "capability", entities.capabilities::containsKey);
+		/* add the capability, requiredBy map, possessedBy map */
 		entities.capabilities.put(capability.getId(), capability);
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyCapabilityAdded(capability.getId());
-		}
+		relations.requiredBy.put(capability.getId(), new ConcurrentHashMap<>());
+		relations.possessedBy.put(capability.getId(), new ConcurrentHashMap<>());
+		publishAdd(Capability.class, capability.getId());
 	}
 
 	@Override
 	public void addCapabilities(final Collection<Capability> capabilities) {
-		if (capabilities == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "capabilities"));
-		}
-		for (final Capability capability : capabilities) {
-			addCapability(capability);
-		}
-	}
-
-	@Override
-	public void addCapabilities(final Capability... capabilities) {
-		if (capabilities == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "capabilities"));
-		}
-		for (final Capability capability : capabilities) {
-			addCapability(capability);
-		}
+		checkNotNull(capabilities, "capabilities");
+		capabilities.parallelStream().forEach(this::addCapability);
 	}
 
 	@Override
 	public Capability getCapability(final UniqueId<Capability> id) {
-		if (id == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "id"));
-		}
+		checkNotNull(id, "id");
 		return entities.capabilities.get(id);
 	}
 
 	@Override
 	public Set<Capability> getCapabilities() {
-		return new HashSet<>(entities.capabilities.values());
+		return entities.capabilities.values().parallelStream().collect(Collectors.toCollection(HashSet::new));
 	}
 
 	@Override
 	public void removeCapability(final UniqueId<Capability> id) {
-		if (id == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "id"));
-		}
-		final Capability capability = entities.capabilities.remove(id);
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyCapabilityRemoved(capability.getId());
+		checkNotNull(id, "id");
+		if (entities.capabilities.containsKey(id)) {
+			/* remove the capability, all associated requires relations, all associated possesses relations */
+			entities.capabilities.remove(id);
+			remove(id, relations.requiredBy, "requiredBy", c -> removeRequires(c, id), Role.class);
+			remove(id, relations.possessedBy, "possessedBy", c -> removePossesses(c, id), Agent.class);
+			publishRemove(Capability.class, id);
 		}
 	}
 
 	@Override
 	public void removeCapabilities(final Collection<UniqueId<Capability>> ids) {
-		if (ids == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "ids"));
-		}
-		for (final UniqueId<Capability> id : ids) {
-			removeCapability(id);
-		}
+		checkNotNull(ids, "ids");
+		ids.parallelStream().forEach(this::removeCapability);
 	}
 
 	@Override
 	public void removeAllCapabilities() {
-		entities.capabilities.clear();
+		removeCapabilities(entities.capabilities.keySet());
 	}
 
 	@Override
 	public void addPolicy(final Policy policy) {
-		if (policy == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "policy"));
-		}
-		if (entities.policies.containsKey(policy.getId())) {
-			throw new IllegalArgumentException(String.format("Policy (%s) already exists", policy));
-		}
+		checkNotExists(policy, "policy", entities.policies::containsKey);
+		/* add the policy */
 		entities.policies.put(policy.getId(), policy);
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyPolicyAdded(policy.getId());
-		}
+		publishAdd(Policy.class, policy.getId());
 	}
 
 	@Override
 	public void addPolicies(final Collection<Policy> policies) {
-		if (policies == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "policies"));
-		}
-		for (final Policy policy : policies) {
-			addPolicy(policy);
-		}
-	}
-
-	@Override
-	public void addPolicies(final Policy... policies) {
-		if (policies == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "policies"));
-		}
-		for (final Policy policy : policies) {
-			addPolicy(policy);
-		}
+		checkNotNull(policies, "policies");
+		policies.parallelStream().forEach(this::addPolicy);
 	}
 
 	@Override
 	public Policy getPolicy(final UniqueId<Policy> id) {
-		if (id == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "id"));
-		}
+		checkNotNull(id, "id");
 		return entities.policies.get(id);
 	}
 
 	@Override
 	public Set<Policy> getPolicies() {
-		return new HashSet<>(entities.policies.values());
+		return entities.policies.values().parallelStream().collect(Collectors.toCollection(HashSet::new));
 	}
 
 	@Override
 	public void removePolicy(final UniqueId<Policy> id) {
-		if (id == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "id"));
-		}
-		final Policy policy = entities.policies.remove(id);
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyPolicyRemoved(policy.getId());
+		checkNotNull(id, "id");
+		if (entities.policies.containsKey(id)) {
+			/* remove the policy */
+			entities.policies.remove(id);
+			publishRemove(Policy.class, id);
 		}
 	}
 
 	@Override
 	public void removePolicies(final Collection<UniqueId<Policy>> ids) {
-		if (ids == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "ids"));
-		}
-		for (final UniqueId<Policy> id : ids) {
-			removePolicy(id);
-		}
+		checkNotNull(ids, "ids");
+		ids.parallelStream().forEach(this::removePolicy);
 	}
 
 	@Override
 	public void removeAllPolicies() {
-		entities.policies.clear();
+		removePolicies(entities.policies.keySet());
 	}
 
 	@Override
-	public void addInstanceGoal(final InstanceGoal<?> goal) {
-		if (goal == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "goal"));
-		}
-		if (entities.instanceGoals.containsKey(goal.getId())) {
-			throw new IllegalArgumentException(String.format("Instance goal (%s) already exists", goal.getId()));
-		}
+	public void addInstanceGoal(final InstanceGoal goal) {
+		checkNotExists(goal, "goal", entities.instanceGoals::containsKey);
+		checkExists(goal.getSpecificationGoal().getId(), null, this::getSpecificationGoal);
+		/* add the instance goal, instanceGoalsBySpecificationGoal map */
 		entities.instanceGoals.put(goal.getId(), goal);
-		entities.instanceGoalsBySpecificationGoal.get(goal.getSpecificationGoal().getId()).put(goal.getInstanceId(), goal);
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyInstanceGoalAdded(goal.getId(), goal.getParameter());
+		Map<UniqueId<InstanceGoal>, InstanceGoal> map = entities.instanceGoalsBySpecificationGoal.get(goal.getSpecificationGoal().getId());
+		if (map == null) {
+			logger.warn("instanceGoalsBySpecificationGoal is missing ({} -> instance goal) entry", goal.getSpecificationGoal().getId());
+			map = new ConcurrentHashMap<>();
+			entities.instanceGoalsBySpecificationGoal.put(goal.getSpecificationGoal().getId(), map);
 		}
+		map.put(goal.getInstanceId(), goal);
+		publishAdd(InstanceGoal.class, goal.getId());
 	}
 
 	@Override
-	public void addInstanceGoals(final Collection<InstanceGoal<?>> goals) {
-		if (goals == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "goals"));
-		}
-		for (final InstanceGoal<?> goal : goals) {
-			addInstanceGoal(goal);
-		}
+	public void addInstanceGoals(final Collection<InstanceGoal> goals) {
+		checkNotNull(goals, "goals");
+		goals.parallelStream().forEach(this::addInstanceGoal);
 	}
 
 	@Override
-	public void addInstanceGoals(final InstanceGoal<?>... goals) {
-		if (goals == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "goals"));
-		}
-		for (final InstanceGoal<?> goal : goals) {
-			addInstanceGoal(goal);
-		}
-	}
-
-	@Override
-	public InstanceGoal<?> getInstanceGoal(final UniqueId<InstanceGoal<?>> id) {
-		if (id == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "id"));
-		}
+	public InstanceGoal getInstanceGoal(final UniqueId<InstanceGoal> id) {
+		checkNotNull(id, "id");
 		return entities.instanceGoals.get(id);
 	}
 
 	@Override
-	public Set<InstanceGoal<?>> getInstanceGoals() {
-		return new HashSet<>(entities.instanceGoals.values());
+	public Set<InstanceGoal> getInstanceGoals() {
+		return entities.instanceGoals.values().parallelStream().collect(Collectors.toCollection(HashSet::new));
 	}
 
 	@Override
-	public void removeInstanceGoal(final UniqueId<InstanceGoal<?>> id) {
-		if (id == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "id"));
-		}
-		final InstanceGoal<?> goal = entities.instanceGoals.remove(id);
-		entities.instanceGoalsBySpecificationGoal.get(goal.getSpecificationGoal().getId()).remove(goal.getInstanceId());
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyInstanceGoalRemoved(goal.getId());
+	public void removeInstanceGoal(final UniqueId<InstanceGoal> id) {
+		checkNotNull(id, "id");
+		if (entities.instanceGoals.containsKey(id)) {
+			/* remove the instance goal, instanceGoalsBySpecificationGoal map */
+			final InstanceGoal goal = entities.instanceGoals.remove(id);
+			if (entities.instanceGoalsBySpecificationGoal.containsKey(goal.getSpecificationGoal().getId())) {
+				final Map<UniqueId<InstanceGoal>, InstanceGoal> map = entities.instanceGoalsBySpecificationGoal.get(goal.getSpecificationGoal().getId());
+				if (map.containsKey(goal.getInstanceId())) {
+					map.remove(goal.getInstanceId());
+				} else {
+					logger.warn("instanceGoalsBySpecificationGoal is missing ({} -> {}) entry", goal.getSpecificationGoal().getId(), goal.getInstanceId());
+				}
+			} else {
+				logger.warn("instanceGoalsBySpecificationGoal is missing ({} -> InstanceGoal) entry", goal.getSpecificationGoal().getId());
+				entities.instanceGoalsBySpecificationGoal.put(goal.getSpecificationGoal().getId(), new ConcurrentHashMap<>());
+			}
+			publishRemove(InstanceGoal.class, id);
 		}
 	}
 
 	@Override
-	public void removeInstanceGoals(final Collection<UniqueId<InstanceGoal<?>>> ids) {
-		if (ids == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "ids"));
-		}
-		for (final UniqueId<InstanceGoal<?>> id : ids) {
-			removeInstanceGoal(id);
-		}
+	public void removeInstanceGoals(final Collection<UniqueId<InstanceGoal>> ids) {
+		checkNotNull(ids, "ids");
+		ids.parallelStream().forEach(this::removeInstanceGoal);
 	}
 
 	@Override
 	public void removeAllInstanceGoals() {
-		entities.instanceGoals.clear();
-		for (final Map<UniqueId<InstanceGoal<?>>, InstanceGoal<?>> map : entities.instanceGoalsBySpecificationGoal.values()) {
-			map.clear();
-		}
+		removeInstanceGoals(entities.instanceGoals.keySet());
 	}
 
 	@Override
 	public void addAttribute(final Attribute attribute) {
-		if (attribute == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "attribute"));
-		}
-		if (entities.attributes.containsKey(attribute.getId())) {
-			throw new IllegalArgumentException(String.format("Attribute (%s) already exists", attribute));
-		}
+		checkNotExists(attribute, "attribute", entities.attributes::containsKey);
+		/* add the attribute, neededBy map, hadBy map, moderatedBy map */
 		entities.attributes.put(attribute.getId(), attribute);
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyAttributeAdded(attribute.getId());
-		}
+		relations.neededBy.put(attribute.getId(), new ConcurrentHashMap<>());
+		relations.hadBy.put(attribute.getId(), new ConcurrentHashMap<>());
+		relations.moderatedBy.put(attribute.getId(), new ConcurrentHashMap<>());
+		publishAdd(Attribute.class, attribute.getId());
 	}
 
 	@Override
 	public void addAttributes(final Collection<Attribute> attributes) {
-		if (attributes == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "attributes"));
-		}
-		for (final Attribute attribute : attributes) {
-			addAttribute(attribute);
-		}
-	}
-
-	@Override
-	public void addAttributes(final Attribute... attributes) {
-		if (attributes == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "attributes"));
-		}
-		for (final Attribute attribute : attributes) {
-			addAttribute(attribute);
-		}
+		checkNotNull(attributes, "attributes");
+		attributes.parallelStream().forEach(this::addAttribute);
 	}
 
 	@Override
 	public Attribute getAttribute(final UniqueId<Attribute> id) {
-		if (id == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "id"));
-		}
+		checkNotNull(id, "id");
 		return entities.attributes.get(id);
 	}
 
 	@Override
 	public Set<Attribute> getAttributes() {
-		return new HashSet<>(entities.attributes.values());
+		return entities.attributes.values().parallelStream().collect(Collectors.toCollection(HashSet::new));
 	}
 
 	@Override
 	public void removeAttribute(final UniqueId<Attribute> id) {
-		if (id == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "id"));
-		}
-		final Attribute attribute = entities.attributes.remove(id);
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyAttributeRemoved(attribute.getId());
+		checkNotNull(id, "id");
+		if (entities.attributes.containsKey(id)) {
+			/* remove the attribute, all associated needs relations, all associated has relations, all associated moderates relations */
+			entities.attributes.remove(id);
+			remove(id, relations.neededBy, "neededBy", c -> removeNeeds(c, id), Role.class);
+			remove(id, relations.hadBy, "hadBy", c -> removeHas(c, id), Agent.class);
+			remove(id, relations.moderatedBy, "moderatedBy", c -> removeModerates(c, id), Pmf.class);
+			publishRemove(Attribute.class, id);
 		}
 	}
 
 	@Override
 	public void removeAttributes(final Collection<UniqueId<Attribute>> ids) {
-		if (ids == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "ids"));
-		}
-		for (final UniqueId<Attribute> id : ids) {
-			removeAttribute(id);
-		}
+		checkNotNull(ids, "ids");
+		ids.parallelStream().forEach(this::removeAttribute);
 	}
 
 	@Override
 	public void removeAllAttributes() {
-		entities.attributes.clear();
+		removeAttributes(entities.attributes.keySet());
 	}
 
 	@Override
 	public void addPmf(final Pmf pmf) {
-		if (pmf == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "pmf"));
-		}
-		if (entities.pmfs.containsKey(pmf.getId())) {
-			throw new IllegalArgumentException(String.format("Performance function (%s) already exists", pmf));
-		}
+		checkNotExists(pmf, "pmf", entities.pmfs::containsKey);
+		/* add the pmf */
 		entities.pmfs.put(pmf.getId(), pmf);
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyPerformanceFunctionAdded(pmf.getId());
-		}
+		publishAdd(Pmf.class, pmf.getId());
 	}
 
 	@Override
 	public void addPmfs(final Collection<Pmf> pmfs) {
-		if (pmfs == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "pmfs"));
-		}
-		for (final Pmf pmf : pmfs) {
-			addPmf(pmf);
-		}
-	}
-
-	@Override
-	public void addPmfs(final Pmf... pmfs) {
-		if (pmfs == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "pmfs"));
-		}
-		for (final Pmf pmf : pmfs) {
-			addPmf(pmf);
-		}
+		checkNotNull(pmfs, "pmfs");
+		pmfs.parallelStream().forEach(this::addPmf);
 	}
 
 	@Override
 	public Pmf getPmf(final UniqueId<Pmf> id) {
-		if (id == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "id"));
-		}
+		checkNotNull(id, "id");
 		return entities.pmfs.get(id);
 	}
 
 	@Override
 	public Set<Pmf> getPmfs() {
-		return new HashSet<>(entities.pmfs.values());
+		return entities.pmfs.values().parallelStream().collect(Collectors.toCollection(HashSet::new));
 	}
 
 	@Override
 	public void removePmf(final UniqueId<Pmf> id) {
-		if (id == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "id"));
-		}
-		final Pmf pmf = entities.pmfs.remove(id);
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyPerformanceFunctionRemoved(pmf.getId());
+		checkNotNull(id, "id");
+		if (entities.pmfs.containsKey(id)) {
+			/* remove the pmf, all associated moderates relations */
+			entities.pmfs.remove(id);
+			if (relations.moderates.containsKey(id)) {
+				removeModerates(id, relations.moderates.get(id).getAttribute().getId());
+			}
+			publishRemove(Pmf.class, id);
 		}
 	}
 
 	@Override
 	public void removePmfs(final Collection<UniqueId<Pmf>> ids) {
-		if (ids == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "ids"));
-		}
-		for (final UniqueId<Pmf> id : ids) {
-			removePmf(id);
-		}
+		checkNotNull(ids, "ids");
+		ids.parallelStream().forEach(this::removePmf);
 	}
 
 	@Override
 	public void removeAllPmfs() {
-		entities.pmfs.clear();
+		removePmfs(entities.pmfs.keySet());
 	}
 
 	@Override
 	public void addCharacteristic(final Characteristic characteristic) {
-		if (characteristic == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "characteristic"));
-		}
-		if (entities.characteristics.containsKey(characteristic.getId())) {
-			throw new IllegalArgumentException(String.format("Characteristic (%s) already exists", characteristic));
-		}
+		checkNotExists(characteristic, "characteristic", entities.characteristics::containsKey);
+		/* add the characteristic, containedBy map */
 		entities.characteristics.put(characteristic.getId(), characteristic);
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyCharacteristicAdded(characteristic.getId());
-		}
+		relations.containedBy.put(characteristic.getId(), new ConcurrentHashMap<>());
+		publishAdd(Characteristic.class, characteristic.getId());
 	}
 
 	@Override
 	public void addCharacteristics(final Collection<Characteristic> characteristics) {
-		if (characteristics == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "characteristics"));
-		}
-		for (final Characteristic characteristic : characteristics) {
-			addCharacteristic(characteristic);
-		}
-	}
-
-	@Override
-	public void addCharacteristics(final Characteristic... characteristics) {
-		if (characteristics == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "characteristics"));
-		}
-		for (final Characteristic characteristic : characteristics) {
-			addCharacteristic(characteristic);
-		}
+		checkNotNull(characteristics, "characteristic");
+		characteristics.parallelStream().forEach(this::addCharacteristic);
 	}
 
 	@Override
 	public Characteristic getCharacteristic(final UniqueId<Characteristic> id) {
-		if (id == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "id"));
-		}
+		checkNotNull(id, "id");
 		return entities.characteristics.get(id);
 	}
 
 	@Override
 	public Set<Characteristic> getCharacteristics() {
-		return new HashSet<>(entities.characteristics.values());
+		return entities.characteristics.values().parallelStream().collect(Collectors.toCollection(HashSet::new));
 	}
 
 	@Override
 	public void removeCharacteristic(final UniqueId<Characteristic> id) {
-		if (id == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "id"));
-		}
+		checkNotNull(id, "id");
 		if (entities.characteristics.containsKey(id)) {
-			final Characteristic characteristic = entities.characteristics.remove(id);
-
-			final ChangeManager changeManager = EventRegistry.get();
-			if (changeManager != null) {
-				changeManager.notifyCharacteristicRemoved(characteristic.getId());
-			}
+			/* remove characteristics, all associated contains relations */
+			entities.characteristics.remove(id);
+			remove(id, relations.containedBy, "containedBy", c -> removeContains(c, id), Role.class);
+			publishRemove(Characteristic.class, id);
 		}
 	}
 
 	@Override
 	public void removeCharacteristics(final Collection<UniqueId<Characteristic>> ids) {
-		if (ids == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "ids"));
-		}
-		for (final UniqueId<Characteristic> id : ids) {
-			removeCharacteristic(id);
-		}
+		checkNotNull(ids, "ids");
+		ids.parallelStream().forEach(this::removeCharacteristic);
 	}
 
 	@Override
 	public void removeAllCharacteristic() {
-		entities.characteristics.clear();
+		removeCharacteristics(entities.characteristics.keySet());
 	}
 
 	@Override
 	public void addAssignment(final Assignment assignment) {
-		if (assignment == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "assignment"));
-		}
-		if (relations.assignments.containsKey(assignment.getId())) {
-			throw new IllegalArgumentException(String.format("Assignment (%s) already exists", assignment));
-		}
+		checkNotExists(assignment, "assignment", relations.assignments::containsKey);
+		checkExists(assignment.getAgent().getId(), null, this::getAgent);
+		checkExists(assignment.getRole().getId(), null, this::getRole);
+		checkExists(assignment.getGoal().getId(), null, this::getInstanceGoal);
+		/* add the assignment */
 		relations.assignments.put(assignment.getId(), assignment);
 		relations.assignmentsByAgent.get(assignment.getAgent().getId()).put(assignment.getId(), assignment);
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyAssignmentAdded(assignment.getAgent().getId(), assignment.getRole().getId(), assignment.getGoal().getId());
-		}
+		publishAdd(Assignment.class, assignment.getAgent().getId(), assignment.getRole().getId(), assignment.getGoal().getId());
 	}
 
 	@Override
 	public void addAssignments(final Collection<Assignment> assignments) {
-		if (assignments == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "assignments"));
-		}
-		for (final Assignment assignment : assignments) {
-			addAssignment(assignment);
-		}
-	}
-
-	@Override
-	public void addAssignments(final Assignment... assignments) {
-		if (assignments == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "assignments"));
-		}
-		for (final Assignment assignment : assignments) {
-			addAssignment(assignment);
-		}
+		checkNotNull(assignments, "assignments");
+		assignments.parallelStream().forEach(this::addAssignment);
 	}
 
 	@Override
 	public Assignment getAssignment(final UniqueId<Assignment> id) {
-		if (id == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "id"));
-		}
+		checkNotNull(id, "id");
 		return relations.assignments.get(id);
 	}
 
 	@Override
 	public Set<Assignment> getAssignments() {
-		return new HashSet<>(relations.assignments.values());
+		return relations.assignments.values().parallelStream().collect(Collectors.toCollection(HashSet::new));
 	}
 
 	@Override
-	public Set<Assignment> getAgentAssignments(final UniqueId<Agent> id) {
-		if (id == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "id"));
+	public Set<Assignment> getAssignmentsByAgent(final UniqueId<Agent> id) {
+		checkNotNull(id, "id");
+		if (relations.assignmentsByAgent.containsKey(id)) {
+			return relations.assignmentsByAgent.get(id).values().parallelStream().collect(Collectors.toCollection(HashSet::new));
 		}
-		final Set<Assignment> results = new HashSet<>();
-		final Map<UniqueId<Assignment>, Assignment> map = relations.assignmentsByAgent.get(id);
-		if (map != null) {
-			results.addAll(map.values());
-		}
-		return results;
+		return new HashSet<>();
 	}
 
 	@Override
 	public void removeAssignment(final UniqueId<Assignment> id) {
-		if (id == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "id"));
-		}
-		final Assignment assignment = relations.assignments.remove(id);
-		relations.assignmentsByAgent.get(assignment.getAgent().getId()).remove(id);
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyAssignmentRemoved(assignment.getAgent().getId(), assignment.getRole().getId(), assignment.getGoal().getId());
+		checkNotNull(id, "id");
+		if (relations.assignments.containsKey(id)) {
+			final Assignment assignment = relations.assignments.remove(id);
+			if (relations.assignmentsByAgent.containsKey(assignment.getAgent().getId())) {
+				if (relations.assignmentsByAgent.get(assignment.getAgent().getId()).remove(id) == null) {
+					logger.warn("assignmentsByAgent is missing ({} -> {}) entry", assignment.getAgent().getId(), id);
+				}
+			} else {
+				logger.warn("assignmentsByAgent is missing ({} -> assignment) entry", assignment.getAgent().getId());
+				relations.assignmentsByAgent.put(assignment.getAgent().getId(), new ConcurrentHashMap<>());
+			}
+			publishRemove(Assignment.class, assignment.getAgent().getId(), assignment.getRole().getId(), assignment.getGoal().getId());
 		}
 	}
 
 	@Override
 	public void removeAssignments(final Collection<UniqueId<Assignment>> ids) {
-		if (ids == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "ids"));
-		}
-		for (final UniqueId<Assignment> id : ids) {
-			removeAssignment(id);
-		}
+		checkNotNull(ids, "ids");
+		ids.parallelStream().forEach(this::removeAssignment);
 	}
 
 	@Override
 	public void removeAllAssignments() {
-		relations.assignments.clear();
-		for (final Map<UniqueId<Assignment>, Assignment> map : relations.assignmentsByAgent.values()) {
-			map.clear();
-		}
+		removeAssignments(relations.assignments.keySet());
 	}
 
 	private void addTask(final Task task) {
-		if (task == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "task"));
-		}
-		if (relations.tasks.containsKey(task.getId())) {
-			/* task already exists so do nothing , but this should not be happening */
-			return;
-		}
 		relations.tasks.put(task.getId(), task);
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyTaskAdded(task.getId());
-		}
+		publishAdd(Task.class, task.getRole().getId(), task.getGoal().getId());
 	}
 
 	@Override
 	public Task getTask(final UniqueId<Task> id) {
-		if (id == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "id"));
-		}
+		checkNotNull(id, "id");
 		return relations.tasks.get(id);
 	}
 
 	@Override
 	public Set<Task> getTasks() {
-		return new HashSet<>(relations.tasks.values());
+		return relations.tasks.values().parallelStream().collect(Collectors.toCollection(HashSet::new));
 	}
 
 	private void removeTask(final UniqueId<Task> id) {
-		if (id == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "id"));
-		}
-		final Task task = relations.tasks.remove(id);
-		if (task == null) {
-			/* task did not exists so do nothing, but this should not be happening */
-			return;
-		}
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyTaskRemoved(id);
+		if (relations.tasks.containsKey(id)) {
+			relations.tasks.remove(id);
+			publishRemove(Task.class, id);
+		} else {
+			logger.warn("tasks is missing {}", id);
 		}
 	}
 
 	@Override
 	public void addAchieves(final UniqueId<Role> roleId, final UniqueId<SpecificationGoal> goalId) {
-		final Role role = getOrThrow(roleId, Role.class, i -> getRole(i));
-		final SpecificationGoal goal = getOrThrow(goalId, SpecificationGoal.class, i -> getSpecificationGoal(i));
-		final Map<UniqueId<SpecificationGoal>, Achieves> map = relations.achieves.computeIfAbsent(roleId, m -> new ConcurrentHashMap<>());
-		if (map.containsKey(goalId)) {
-			/* if the relation already exists do nothing */
+		final Role role = checkExists(roleId, "roleId", this::getRole);
+		final SpecificationGoal goal = checkExists(goalId, "goalId", this::getSpecificationGoal);
+		Map<UniqueId<SpecificationGoal>, Achieves> map = relations.achieves.get(roleId);
+		if (map == null) {
+			logger.warn("achieves is missing ({} -> goal) entry", roleId);
+			map = new ConcurrentHashMap<>();
+			relations.achieves.put(roleId, map);
+		} else if (map.containsKey(goalId)) {
+			/* relation already exists do nothing */
 			return;
 		}
 		final Achieves achieves = new AchievesRelation(role, goal);
 		map.put(goalId, achieves);
 		addAchievedBy(achieves);
 		addTask(new TaskRelation(role, goal));
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyAchievesAdded(roleId, goalId);
-		}
-
+		publishAdd(Achieves.class, roleId, goalId);
 	}
 
 	private void addAchievedBy(final Achieves achieves) {
-		final Map<UniqueId<Role>, Achieves> map = relations.achievedBy.computeIfAbsent(achieves.getGoal().getId(), m -> new ConcurrentHashMap<>());
+		Map<UniqueId<Role>, Achieves> map = relations.achievedBy.get(achieves.getGoal().getId());
+		if (map == null) {
+			logger.warn("achievedBy is missing ({} -> role) entry", achieves.getGoal().getId());
+			map = new ConcurrentHashMap<>();
+			relations.achievedBy.put(achieves.getGoal().getId(), map);
+		}
 		map.put(achieves.getRole().getId(), achieves);
 	}
 
 	@Override
 	public Set<SpecificationGoal> getAchieves(final UniqueId<Role> id) {
-		if (id == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "id"));
+		checkNotNull(id, "id");
+		if (relations.achieves.containsKey(id)) {
+			return relations.achieves.get(id).values().parallelStream().map(Achieves::getGoal).collect(Collectors.toCollection(HashSet::new));
 		}
-		final Set<SpecificationGoal> result = new HashSet<>();
-		final Map<UniqueId<SpecificationGoal>, Achieves> map = relations.achieves.get(id);
-		if (map == null) {
-			/* there are no achieves relation for the role */
-			return result;
-		}
-		for (final Achieves achieves : map.values()) {
-			result.add(achieves.getGoal());
-		}
-		return result;
+		return new HashSet<>();
 	}
 
 	@Override
 	public Set<Role> getAchievedBy(final UniqueId<SpecificationGoal> id) {
-		if (id == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "id"));
+		checkNotNull(id, "id");
+		if (relations.achievedBy.containsKey(id)) {
+			return relations.achievedBy.get(id).values().parallelStream().map(Achieves::getRole).collect(Collectors.toCollection(HashSet::new));
 		}
-		final Set<Role> result = new HashSet<>();
-		final Map<UniqueId<Role>, Achieves> map = relations.achievedBy.get(id);
-		if (map == null) {
-			/* there are no achieves relation for the goal */
-			return result;
-		}
-		for (final Achieves achieves : map.values()) {
-			result.add(achieves.getRole());
-		}
-		return result;
+		return new HashSet<>();
 	}
 
 	@Override
 	public void removeAchieves(final UniqueId<Role> roleId, final UniqueId<SpecificationGoal> goalId) {
-		final Map<UniqueId<SpecificationGoal>, Achieves> map = relations.achieves.get(roleId);
-		if (map == null) {
-			/* there are no achieves relations for the role */
-			return;
-		}
-		if (map.remove(goalId) == null) {
-			/* there is no achieves relation between the role and goal */
-			return;
-		}
-		removeAchievedBy(goalId, roleId);
-		removeTask(new TaskRelation.Id(roleId, goalId));
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyAchievesRemoved(roleId, goalId);
+		checkNotNull(roleId, "roleId");
+		checkNotNull(goalId, "goalId");
+		if (relations.achieves.containsKey(roleId) && relations.achieves.get(roleId).containsKey(goalId)) {
+			relations.achieves.get(roleId).remove(goalId);
+			removeAchievedBy(goalId, roleId);
+			removeTask(new TaskRelation.Id(roleId, goalId));
+			publishRemove(Achieves.class, roleId, goalId);
 		}
 	}
 
 	private void removeAchievedBy(final UniqueId<SpecificationGoal> goalId, final UniqueId<Role> roleId) {
-		final Map<UniqueId<Role>, Achieves> map = relations.achievedBy.get(goalId);
-		if (map == null) {
-			/* the relation does not exists, but this should not happen */
-			return;
+		if (relations.achievedBy.containsKey(goalId)) {
+			if (relations.achievedBy.get(goalId).containsKey(roleId)) {
+				relations.achievedBy.get(goalId).remove(roleId);
+			} else {
+				logger.warn("achievedBy map is missing ({} -> {}) entry", goalId, roleId);
+			}
+		} else {
+			logger.warn("achievedBy map is missing ({} -> role) entry", goalId);
+			relations.achievedBy.put(goalId, new ConcurrentHashMap<>());
 		}
-		map.remove(roleId);
 	}
 
 	@Override
 	public void removeAllAchieves() {
-		relations.achieves.clear();
-		relations.achievedBy.clear();
+		final Set<Achieves> collect = relations.achieves.values().parallelStream().flatMap(m -> m.values().parallelStream())
+				.collect(Collectors.toCollection(HashSet::new));
+		collect.parallelStream().forEach(c -> removeAchieves(c.getRole().getId(), c.getGoal().getId()));
 	}
 
 	@Override
 	public void addRequires(final UniqueId<Role> roleId, final UniqueId<Capability> capabilityId) {
-		final Role role = getOrThrow(roleId, Role.class, i -> getRole(i));
-		final Capability capability = getOrThrow(capabilityId, Capability.class, i -> getCapability(i));
-		final Map<UniqueId<Capability>, Requires> map = relations.requires.computeIfAbsent(roleId, m -> new ConcurrentHashMap<>());
-		if (map.containsKey(capabilityId)) {
-			/* if the relation already exists do nothing */
+		final Role role = checkExists(roleId, "roleId", this::getRole);
+		final Capability capability = checkExists(capabilityId, "capabilityId", this::getCapability);
+		Map<UniqueId<Capability>, Requires> map = relations.requires.get(roleId);
+		if (map == null) {
+			logger.warn("requires is missing ({} -> capability) entry", roleId);
+			map = new ConcurrentHashMap<>();
+			relations.requires.put(roleId, map);
+		} else if (map.containsKey(capabilityId)) {
+			/* relation already exists do nothing */
 			return;
 		}
 		final Requires requires = new RequiresRelation(role, capability);
 		map.put(capabilityId, requires);
 		addRequiredBy(requires);
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyRequiresAdded(roleId, capabilityId);
-		}
+		publishAdd(Requires.class, roleId, capabilityId);
 	}
 
 	private void addRequiredBy(final Requires requires) {
-		final Map<UniqueId<Role>, Requires> map = relations.requiredBy.computeIfAbsent(requires.getCapability().getId(), m -> new ConcurrentHashMap<>());
+		Map<UniqueId<Role>, Requires> map = relations.requiredBy.get(requires.getCapability().getId());
+		if (map == null) {
+			logger.warn("requiredBy is missing ({} -> role) entry", requires.getCapability().getId());
+			map = new ConcurrentHashMap<>();
+			relations.requiredBy.put(requires.getCapability().getId(), map);
+		}
 		map.put(requires.getRole().getId(), requires);
 	}
 
 	@Override
 	public Set<Capability> getRequires(final UniqueId<Role> id) {
-		if (id == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "id"));
+		checkNotNull(id, "id");
+		if (relations.requires.containsKey(id)) {
+			return relations.requires.get(id).values().parallelStream().map(Requires::getCapability).collect(Collectors.toCollection(HashSet::new));
 		}
-		final Set<Capability> result = new HashSet<>();
-		final Map<UniqueId<Capability>, Requires> map = relations.requires.get(id);
-		if (map == null) {
-			/* there are not requires relation for the role */
-			return result;
-		}
-		for (final Requires requires : map.values()) {
-			result.add(requires.getCapability());
-		}
-		return result;
+		return new HashSet<>();
 	}
 
 	@Override
 	public Set<Role> getRequiredBy(final UniqueId<Capability> id) {
-		if (id == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, "id"));
+		checkNotNull(id, "id");
+		if (relations.requiredBy.containsKey(id)) {
+			return relations.requiredBy.get(id).values().parallelStream().map(Requires::getRole).collect(Collectors.toCollection(HashSet::new));
 		}
-		final Set<Role> result = new HashSet<>();
-		final Map<UniqueId<Role>, Requires> map = relations.requiredBy.get(id);
-		if (map == null) {
-			/* there are no achieves relation for the goal */
-			return result;
-		}
-		for (final Requires requires : map.values()) {
-			result.add(requires.getRole());
-		}
-		return result;
+		return new HashSet<>();
 	}
 
 	@Override
 	public void removeRequires(final UniqueId<Role> roleId, final UniqueId<Capability> capabilityId) {
-		final Map<UniqueId<Capability>, Requires> map = relations.requires.get(roleId);
-		if (map == null) {
-			/* there are no requires relation for the role */
-			return;
-		}
-		if (map.remove(capabilityId) == null) {
-			/* there is no requires relation between the role and capability */
-			return;
-		}
-		removeRequiredBy(capabilityId, roleId);
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyRequiresRemoves(roleId, capabilityId);
+		checkNotNull(roleId, "roleId");
+		checkNotNull(capabilityId, "capabilityId");
+		if (relations.requires.containsKey(roleId) && relations.requires.get(roleId).containsKey(capabilityId)) {
+			relations.requires.get(roleId).remove(capabilityId);
+			removeRequiredBy(capabilityId, roleId);
+			publishRemove(Requires.class, roleId, capabilityId);
 		}
 	}
 
 	private void removeRequiredBy(final UniqueId<Capability> capabilityId, final UniqueId<Role> roleId) {
-		final Map<UniqueId<Role>, Requires> map = relations.requiredBy.get(capabilityId);
-		if (map == null) {
-			/* the relation does not exists, but this should not happen */
-			return;
+		if (relations.requiredBy.containsKey(capabilityId)) {
+			if (relations.requiredBy.get(capabilityId).containsKey(roleId)) {
+				relations.requiredBy.get(capabilityId).remove(roleId);
+			} else {
+				logger.warn("requiredBy is missing ({} -> {}) entry", capabilityId, roleId);
+			}
+		} else {
+			logger.warn("requiredBy is missing ({} -> role) entry");
+			relations.requiredBy.put(capabilityId, new ConcurrentHashMap<>());
 		}
-		map.remove(roleId);
 	}
 
 	@Override
 	public void removeAllRequires() {
-		relations.requires.clear();
-		relations.requiredBy.clear();
+		final Set<Requires> collect = relations.requires.values().parallelStream().flatMap(m -> m.values().parallelStream())
+				.collect(Collectors.toCollection(HashSet::new));
+		collect.parallelStream().forEach(c -> removeRequires(c.getRole().getId(), c.getCapability().getId()));
 	}
 
 	@Override
 	public void addPossesses(final UniqueId<Agent> agentId, final UniqueId<Capability> capabilityId, final double score) {
-		final Agent agent = getOrThrow(agentId, Agent.class, i -> getAgent(i));
-		final Capability capability = getOrThrow(capabilityId, Capability.class, i -> getCapability(i));
+		final Agent agent = checkExists(agentId, "agentId", this::getAgent);
+		final Capability capability = checkExists(capabilityId, "capabilityId", this::getCapability);
 		final Map<UniqueId<Capability>, Possesses> map = relations.possesses.computeIfAbsent(agentId, m -> new ConcurrentHashMap<>());
 		if (map.containsKey(capabilityId)) {
 			/* if relation already exists do nothing */
@@ -1252,11 +941,7 @@ public class OrganizationImpl implements Organization {
 		final Possesses possesses = new PossessesRelation(agent, capability, score);
 		map.put(capabilityId, possesses);
 		addPossessedBy(possesses);
-
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyPossessesAdded(agentId, capabilityId, score);
-		}
+		publishAdd(Possesses.class, agentId, capabilityId); // FIXME add score
 	}
 
 	private void addPossessedBy(final Possesses possesses) {
@@ -1324,10 +1009,7 @@ public class OrganizationImpl implements Organization {
 		}
 		possesses.setScore(score);
 
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyPossessesChanged(agentId, capabilityId, score);
-		}
+		publishChange(Possesses.class, agentId, capabilityId); // FIXME add score
 	}
 
 	@Override
@@ -1343,10 +1025,7 @@ public class OrganizationImpl implements Organization {
 		}
 		removePossessedBy(capabilityId, agentId);
 
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyPossessesRemoved(agentId, capabilityId);
-		}
+		publishRemove(Possesses.class, agentId, capabilityId);
 	}
 
 	private void removePossessedBy(final UniqueId<Capability> capabilityId, final UniqueId<Agent> agentId) {
@@ -1377,10 +1056,7 @@ public class OrganizationImpl implements Organization {
 		map.put(attributeId, needs);
 		addNeededBy(needs);
 
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyInfluencesAdded(roleId, attributeId);
-		}
+		publishAdd(Needs.class, roleId, attributeId);
 	}
 
 	private void addNeededBy(final Needs needs) {
@@ -1431,10 +1107,7 @@ public class OrganizationImpl implements Organization {
 		}
 		removeNeededBy(attributeId, roleId);
 
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyInfluencesRemoved(roleId, attributeId);
-		}
+		publishRemove(Needs.class, roleId, attributeId);
 	}
 
 	private void removeNeededBy(final UniqueId<Attribute> attributeId, final UniqueId<Role> roleId) {
@@ -1463,10 +1136,7 @@ public class OrganizationImpl implements Organization {
 		map.put(attributeId, has);
 		addHadBy(has);
 
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyHasAdded(agentId, attributeId, value);
-		}
+		publishAdd(Has.class, agentId, attributeId); // FIXME add value
 	}
 
 	private void addHadBy(final Has has) {
@@ -1531,10 +1201,7 @@ public class OrganizationImpl implements Organization {
 		}
 		has.setValue(value);
 
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyHasChanged(agentId, attributeId, value);
-		}
+		publishChange(Has.class, agentId, attributeId); // FIXME add value
 	}
 
 	@Override
@@ -1548,10 +1215,7 @@ public class OrganizationImpl implements Organization {
 		}
 		removeHadBy(attributeId, agentId);
 
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyHasRemoved(agentId, attributeId);
-		}
+		publishRemove(Has.class, agentId, attributeId);
 	}
 
 	private void removeHadBy(final UniqueId<Attribute> attributeId, final UniqueId<Agent> agentId) {
@@ -1580,16 +1244,12 @@ public class OrganizationImpl implements Organization {
 		map.put(pmfId, uses);
 		addUsedBy(uses);
 
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyLinkedAdded(roleId, pmfId);
-		}
+		publishAdd(Uses.class, roleId, pmfId);
 	}
 
 	private void addUsedBy(final Uses uses) {
 		final Map<UniqueId<Role>, Uses> map = relations.usedBy.computeIfAbsent(uses.getPmf().getId(), m -> new ConcurrentHashMap<>());
 		map.put(uses.getRole().getId(), uses);
-
 	}
 
 	@Override
@@ -1635,10 +1295,7 @@ public class OrganizationImpl implements Organization {
 		}
 		removeUsedBy(pmfId, roleId);
 
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyLinkedRemoved(roleId, pmfId);
-		}
+		publishRemove(Uses.class, roleId, pmfId);
 	}
 
 	private void removeUsedBy(final UniqueId<Pmf> pmfId, final UniqueId<Role> roleId) {
@@ -1666,10 +1323,7 @@ public class OrganizationImpl implements Organization {
 		relations.moderates.put(pmfId, moderates);
 		addModeratedBy(moderates);
 
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyModeratesAdded(pmfId, attributeId);
-		}
+		publishAdd(Moderates.class, pmfId, attributeId);
 	}
 
 	private void addModeratedBy(final Moderates moderates) {
@@ -1713,10 +1367,7 @@ public class OrganizationImpl implements Organization {
 		}
 		removedModeratedBy(attributeId, pmfId);
 
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			// changeManager.notifyModeratesRemoved(pmfId, attributeId);
-		}
+		publishRemove(Moderates.class, pmfId, attributeId);
 	}
 
 	private void removedModeratedBy(final UniqueId<Attribute> attributeId, final UniqueId<Pmf> pmfId) {
@@ -1745,10 +1396,7 @@ public class OrganizationImpl implements Organization {
 		map.put(characteristicId, contains);
 		addContainedBy(contains);
 
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyContainsAdded(roleId, characteristicId, value);
-		}
+		publishAdd(Contains.class, roleId, characteristicId); // FIXME add value
 	}
 
 	private void addContainedBy(final Contains contains) {
@@ -1813,10 +1461,7 @@ public class OrganizationImpl implements Organization {
 		}
 		contains.setValue(value);
 
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyContainsChanged(roleId, characteristicId, value);
-		}
+		publishChange(Contains.class, roleId, characteristicId); // FIXME add value
 	}
 
 	@Override
@@ -1830,10 +1475,7 @@ public class OrganizationImpl implements Organization {
 		}
 		removeContainedBy(characteristicId, roleId);
 
-		final ChangeManager changeManager = EventRegistry.get();
-		if (changeManager != null) {
-			changeManager.notifyContainsRemoved(roleId, characteristicId);
-		}
+		publishRemove(Contains.class, roleId, characteristicId);
 	}
 
 	private void removeContainedBy(final UniqueId<Characteristic> characteristicId, final UniqueId<Role> roleId) {
@@ -1850,30 +1492,45 @@ public class OrganizationImpl implements Organization {
 		relations.containedBy.clear();
 	}
 
-	private <T> T getOrThrow(final UniqueId<T> i, final Class<T> c, final Function<UniqueId<T>, T> f) {
-		final T t = f.apply(i);
+	private <T> void checkNotNull(final T t, final String name) {
 		if (t == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_ENTITY_DOES_NOT_EXISTS, c.getSimpleName(), i));
+			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, name));
+		}
+	}
+
+	private <T extends Identifiable<T>> void checkNotExists(final T t, final String name, final Predicate<UniqueId<T>> p) {
+		checkNotNull(t, name);
+		if (p.test(t.getId())) {
+			throw new IllegalArgumentException(String.format(M.EXCEPTION_ENTITY_EXISTS, t.getClass().getSimpleName(), t));
+		}
+	}
+
+	private <T, U extends UniqueId<T>> T checkExists(final U id, final String name, final Function<U, T> f) {
+		checkNotNull(id, name);
+		final T t = f.apply(id);
+		if (t == null) {
+			throw new IllegalArgumentException(String.format(M.EXCEPTION_ENTITY_DOES_NOT_EXISTS, id.getType().getSimpleName(), id));
 		}
 		return t;
 	}
 
-	<T1, T2, T3> void removeR(final UniqueId<T1> id1, final UniqueId<T2> id2, final Map<UniqueId<T1>, Map<UniqueId<T2>, T3>> m1,
-			final Map<UniqueId<T2>, Map<UniqueId<T1>, T3>> m2, final BiConsumer<UniqueId<T1>, UniqueId<T2>> c) {
-		final Map<UniqueId<T2>, T3> map1 = m1.get(id1);
-		if (map1 == null) {
-			return;
+	private <T, U, V> void remove(final UniqueId<T> id, final Map<UniqueId<T>, Map<UniqueId<U>, V>> map, final String name,
+			final Consumer<UniqueId<U>> consumer, final Class<U> clazz) {
+		if (map.containsKey(id)) {
+			final Set<UniqueId<U>> ids = map.get(id).keySet();
+			ids.parallelStream().forEach(c -> consumer.accept(c));
+			map.remove(id);
+		} else {
+			logger.warn("{} is missing ({} -> {}) entry", name, id, clazz.getSimpleName());
 		}
-		final T3 relation = map1.remove(id2);
-		if (relation == null) {
-			return;
+	}
+
+	private <T> T getOrThrow(final UniqueId<T> id, final Class<T> clazz, final Function<UniqueId<T>, T> f) {
+		final T t = f.apply(id);
+		if (t == null) {
+			throw new IllegalArgumentException(String.format(M.EXCEPTION_ENTITY_DOES_NOT_EXISTS, clazz.getSimpleName(), id));
 		}
-		final Map<UniqueId<T1>, T3> map2 = m2.get(id2);
-		if (map2 == null) {
-			return;
-		}
-		map2.remove(id1);
-		c.accept(id1, id2);
+		return t;
 	}
 
 	/**

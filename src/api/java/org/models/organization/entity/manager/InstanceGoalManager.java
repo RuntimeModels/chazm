@@ -19,7 +19,7 @@ public interface InstanceGoalManager {
 	 * @param goal
 	 *            the {@linkplain InstanceGoal} to add.
 	 */
-	void addInstanceGoal(InstanceGoal<?> goal);
+	void addInstanceGoal(InstanceGoal goal);
 
 	/**
 	 * Adds a set of {@linkplain InstanceGoal}s to this {@linkplain InstanceGoalManager}.
@@ -27,15 +27,7 @@ public interface InstanceGoalManager {
 	 * @param goals
 	 *            the set of {@linkplain InstanceGoal} to add.
 	 */
-	void addInstanceGoals(Collection<InstanceGoal<?>> goals);
-
-	/**
-	 * Adds a set of {@linkplain InstanceGoal}s to this {@linkplain InstanceGoalManager}.
-	 *
-	 * @param goals
-	 *            the set of {@linkplain InstanceGoal} to add.
-	 */
-	void addInstanceGoals(InstanceGoal<?>... goals);
+	void addInstanceGoals(Collection<InstanceGoal> goals);
 
 	/**
 	 * Returns an {@linkplain InstanceGoal} from this {@linkplain InstanceGoalManager}.
@@ -44,14 +36,14 @@ public interface InstanceGoalManager {
 	 *            the {@linkplain UniqueId} that represents the {@linkplain InstanceGoal} to retrieve.
 	 * @return the {@linkplain InstanceGoal} if it exists, <code>null</code> otherwise.
 	 */
-	InstanceGoal<?> getInstanceGoal(UniqueId<InstanceGoal<?>> id);
+	InstanceGoal getInstanceGoal(UniqueId<InstanceGoal> id);
 
 	/**
 	 * Returns a set of {@linkplain InstanceGoal} from this {@linkplain InstanceGoalManager}.
 	 *
 	 * @return the set of {@linkplain InstanceGoal}.
 	 */
-	Set<InstanceGoal<?>> getInstanceGoals();
+	Set<InstanceGoal> getInstanceGoals();
 
 	/**
 	 * Removes an {@linkplain InstanceGoal} from this {@linkplain InstanceGoalManager}.
@@ -59,7 +51,7 @@ public interface InstanceGoalManager {
 	 * @param id
 	 *            the {@linkplain UniqueId} that represents the {@linkplain InstanceGoal} to remove.
 	 */
-	void removeInstanceGoal(UniqueId<InstanceGoal<?>> id);
+	void removeInstanceGoal(UniqueId<InstanceGoal> id);
 
 	/**
 	 * Removes a set of {@linkplain InstanceGoal}s from this {@linkplain InstanceGoalManager}.
@@ -67,7 +59,7 @@ public interface InstanceGoalManager {
 	 * @param ids
 	 *            the set of {@linkplain UniqueId} that represents the {@linkplain InstanceGoal}s to remove.
 	 */
-	void removeInstanceGoals(Collection<UniqueId<InstanceGoal<?>>> ids);
+	void removeInstanceGoals(Collection<UniqueId<InstanceGoal>> ids);
 
 	/**
 	 * Removes all {@linkplain InstanceGoal}s from this {@linkplain InstanceGoalManager}.

@@ -18,7 +18,7 @@ import org.models.organization.relation.Assignment;
  */
 public final class DefaultRoleGoodnessFunction implements RoleGoodnessFunction {
 	@Override
-	public double goodness(final Role role, final Agent agent, final InstanceGoal<?> goal, final Collection<Assignment> assignments) {
+	public double goodness(final Role role, final Agent agent, final InstanceGoal goal, final Collection<Assignment> assignments) {
 		/*
 		 * first, check that the agent has all the necessary attributes. otherwise, return a null to indicate that the agent cannot play the role
 		 */

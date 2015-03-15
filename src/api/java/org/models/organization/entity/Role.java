@@ -45,6 +45,6 @@ public interface Role extends Identifiable<Role> {
 	 *         {@link InstanceGoal} cannot be achieved by the {@link Role}.
 	 * @see RoleGoodnessFunction#goodness(Role, Agent, InstanceGoal, Collection)
 	 */
-	double goodness(Agent agent, InstanceGoal<?> goal, Collection<Assignment> assignments);
+	double goodness(Agent agent, InstanceGoal goal, Collection<Assignment> assignments);
 
 }

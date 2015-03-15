@@ -24,5 +24,5 @@ public interface Task extends Identifiable<Task> {
 	 *
 	 * @return the {@linkplain SpecificationGoal} of this {@linkplain Task}.
 	 */
-	SpecificationGoal getSpecificationGoal();
+	SpecificationGoal getGoal();
 }
