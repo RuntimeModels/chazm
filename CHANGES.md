@@ -1,3 +1,11 @@
+# Version 7.0.0
+* Added Gradle for building. Currently, it builds two artifacts that can be deployed: organization-model-api-{version}.jar and organization-model-{version}.jar.
+* Guice added for dependency injection; as a result
+    * All implementing classes are not package private; the means of obtaining instances are through factories
+    * Currently, there are four factories: OrganizationFactory, EntityFactory, RelationFactory, and IdFactory
+* New XML parsing format
+* New mediator-based publish/subscribe interface and implementation
+
 # Version: 6.0.0
 * An overhaul of the performance moderator functions (PMFs) functionality
 
