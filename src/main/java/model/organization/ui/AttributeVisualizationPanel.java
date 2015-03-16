@@ -19,7 +19,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ListSelectionEvent;
 
 import model.organization.Organization;
-import model.organization.entities.Attribute;
+import model.organization.entity.Attribute;
 
 /**
  * The <code>AttributeVisualizationPanel</code> class is a Swing component to visualize the <code>Attribute</code> currently in the <code>Organization</code>.

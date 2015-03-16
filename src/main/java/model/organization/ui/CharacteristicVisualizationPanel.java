@@ -19,7 +19,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ListSelectionEvent;
 
 import model.organization.Organization;
-import model.organization.entities.Characteristic;
+import model.organization.entity.Characteristic;
 
 /**
  * The <code>CharacteristicVisualizationPanel</code> class is a Swing component to visualize the {@link Characteristic} currently in the {@link Organization} .

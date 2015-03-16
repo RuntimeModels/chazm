@@ -2,13 +2,13 @@ package model.organization.function;
 
 import java.util.Collection;
 
-import model.organization.entities.Agent;
-import model.organization.entities.Attribute;
-import model.organization.entities.Capability;
-import model.organization.entities.InstanceGoal;
-import model.organization.entities.Role;
+import model.organization.entity.Agent;
+import model.organization.entity.Attribute;
+import model.organization.entity.Capability;
+import model.organization.entity.InstanceGoal;
+import model.organization.entity.Role;
 import model.organization.functions.RoleGoodnessFunction;
-import model.organization.relations.Assignment;
+import model.organization.relation.Assignment;
 
 /**
  * The <code>DefaultRoleGoodnessFunction</code> provides a very basic goodness function that only checks if the given <code>Agent</code> has the necessary

@@ -19,7 +19,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ListSelectionEvent;
 
 import model.organization.Organization;
-import model.organization.entities.Role;
+import model.organization.entity.Role;
 
 /**
  * The <code>RoleVisualizationPanel</code> class is a Swing component to visualize the <code>Role</code> currently in the <code>Organization</code>.

@@ -21,8 +21,8 @@ import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
 import model.organization.Organization;
-import model.organization.entities.InstanceGoal;
-import model.organization.entities.SpecificationGoal;
+import model.organization.entity.InstanceGoal;
+import model.organization.entity.SpecificationGoal;
 
 /**
  * The <code>GoalVisualizationPanel</code> class is a Swing component to visualize the <code>SpecificationGoal</code> and <code>InstanceGoal</code> currently in
@@ -97,11 +97,10 @@ public class GoalVisualizationPanel extends AbstractTreeVisualizationPanel {
 				}
 			}
 			for (final InstanceGoal goal2 : getOrganization().getInstanceGoals()) {
-				if (!instanceGoals.containsKey(goal2) && specificationGoals.containsKey(goal2.getSpecificationGoal())) {
+				if (!instanceGoals.containsKey(goal2) && specificationGoals.containsKey(goal2.getGoal())) {
 					final DefaultMutableTreeNode node2 = new DefaultMutableTreeNode(goal2);
 					instanceGoals.put(goal2, node2);
-					getTreeModel().insertNodeInto(node2, specificationGoals.get(goal2.getSpecificationGoal()),
-							specificationGoals.get(goal2.getSpecificationGoal()).getChildCount());
+					getTreeModel().insertNodeInto(node2, specificationGoals.get(goal2.getGoal()), specificationGoals.get(goal2.getGoal()).getChildCount());
 				}
 			}
 		});

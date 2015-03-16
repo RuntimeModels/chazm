@@ -19,7 +19,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ListSelectionEvent;
 
 import model.organization.Organization;
-import model.organization.relations.Assignment;
+import model.organization.relation.Assignment;
 
 /**
  * The <code>AssignmentVisualizationPanel</code> class is a Swing component to visualize the <code>Assignment</code> currently in the <code>Organization</code>.

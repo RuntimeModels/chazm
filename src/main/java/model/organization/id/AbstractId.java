@@ -7,7 +7,7 @@
  */
 package model.organization.id;
 
-import model.organization.NullCheck;
+import static model.organization.Checks.checkNotNull;
 
 /**
  * The {@linkplain AbstractId} class is an abstract implementation of {@linkplain UniqueId}.
@@ -17,10 +17,8 @@ import model.organization.NullCheck;
  *            the type of the {@linkplain UniqueId}
  * @since 7.0.0
  */
-public abstract class AbstractId<T> implements UniqueId<T>, NullCheck {
-	/**
-	 * Serial version ID
-	 */
+public abstract class AbstractId<T> implements UniqueId<T> {
+
 	private static final long serialVersionUID = 2812867343219462118L;
 	private final Class<T> type;
 
@@ -42,4 +40,5 @@ public abstract class AbstractId<T> implements UniqueId<T>, NullCheck {
 
 	@Override
 	public abstract String toString();
+
 }

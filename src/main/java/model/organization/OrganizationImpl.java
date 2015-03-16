@@ -1,11 +1,8 @@
-/*
- * Organization.java
- *
- * Created on Sep 22, 2004
- *
- * See License.txt file the license agreement.
- */
 package model.organization;
+
+import static model.organization.Checks.checkExists;
+import static model.organization.Checks.checkNotExists;
+import static model.organization.Checks.checkNotNull;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -17,198 +14,83 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
-import model.organization.entities.Agent;
-import model.organization.entities.Attribute;
-import model.organization.entities.Capability;
-import model.organization.entities.Characteristic;
-import model.organization.entities.InstanceGoal;
-import model.organization.entities.Pmf;
-import model.organization.entities.Policy;
-import model.organization.entities.Role;
-import model.organization.entities.SpecificationGoal;
+import model.organization.entity.Agent;
+import model.organization.entity.Attribute;
+import model.organization.entity.Capability;
+import model.organization.entity.Characteristic;
+import model.organization.entity.InstanceGoal;
+import model.organization.entity.Pmf;
+import model.organization.entity.Policy;
+import model.organization.entity.Role;
+import model.organization.entity.SpecificationGoal;
 import model.organization.event.Publisher;
 import model.organization.id.UniqueId;
-import model.organization.relations.Achieves;
-import model.organization.relations.AchievesRelation;
-import model.organization.relations.Assignment;
-import model.organization.relations.Contains;
-import model.organization.relations.ContainsRelation;
-import model.organization.relations.Has;
-import model.organization.relations.HasRelation;
-import model.organization.relations.Moderates;
-import model.organization.relations.ModeratesRelation;
-import model.organization.relations.Needs;
-import model.organization.relations.NeedsRelation;
-import model.organization.relations.Possesses;
-import model.organization.relations.PossessesRelation;
-import model.organization.relations.Requires;
-import model.organization.relations.RequiresRelation;
-import model.organization.relations.Task;
-import model.organization.relations.TaskRelation;
-import model.organization.relations.Uses;
-import model.organization.relations.UsesRelation;
+import model.organization.relation.Achieves;
+import model.organization.relation.Assignment;
+import model.organization.relation.Contains;
+import model.organization.relation.Has;
+import model.organization.relation.Moderates;
+import model.organization.relation.Needs;
+import model.organization.relation.Possesses;
+import model.organization.relation.RelationFactory;
+import model.organization.relation.Requires;
+import model.organization.relation.Uses;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * The {@linkplain OrganizationImpl} class is an implementation of the {@link Organization}.
- *
- * @author Scott Harmon
- * @author Christopher Zhong
- * @since 1.0
- */
-public class OrganizationImpl implements Organization, Publisher, NullCheck {
-	/**
-	 * The {@linkplain Entities} class is an data class that encapsulates the entities within an {@linkplain Organization}.
-	 *
-	 * @author Christopher Zhong
-	 * @since 7.0.0
-	 */
+class OrganizationImpl implements Organization, Publisher {
+
 	private static class Entities {
-		/**
-		 * The set of {@linkplain SpecificationGoal} in this {@linkplain Organization}.
-		 */
+
 		private final Map<UniqueId<SpecificationGoal>, SpecificationGoal> specificationGoals = new ConcurrentHashMap<>();
-		/**
-		 * The set of {@linkplain Role} in this {@linkplain Organization}.
-		 */
 		private final Map<UniqueId<Role>, Role> roles = new ConcurrentHashMap<>();
-		/**
-		 * The set of {@linkplain Agent} in this {@linkplain Organization}.
-		 */
 		private final Map<UniqueId<Agent>, Agent> agents = new ConcurrentHashMap<>();
-		/**
-		 * The set of {@linkplain Capability} in this {@linkplain Organization}.
-		 */
 		private final Map<UniqueId<Capability>, Capability> capabilities = new ConcurrentHashMap<>();
-		/**
-		 * The set of {@linkplain Policy} in this {@linkplain Organization}.
-		 */
 		private final Map<UniqueId<Policy>, Policy> policies = new ConcurrentHashMap<>();
-		/**
-		 * The set of {@linkplain InstanceGoal} in this {@linkplain Organization}.
-		 */
 		private final Map<UniqueId<InstanceGoal>, InstanceGoal> instanceGoals = new ConcurrentHashMap<>();
-		/**
-		 * The set of {@linkplain InstanceGoal} in this {@linkplain Organization} that is indexed by the {@linkplain SpecificationGoal}.
-		 */
 		private final Map<UniqueId<SpecificationGoal>, Map<UniqueId<InstanceGoal>, InstanceGoal>> instanceGoalsBySpecificationGoal = new ConcurrentHashMap<>();
-		/**
-		 * The set of {@linkplain Attribute} in this {@linkplain Organization}.
-		 */
 		private final Map<UniqueId<Attribute>, Attribute> attributes = new ConcurrentHashMap<>();
-		/**
-		 * The set of {@linkplain Pmf} in this {@linkplain Organization}.
-		 */
 		private final Map<UniqueId<Pmf>, Pmf> pmfs = new ConcurrentHashMap<>();
-		/**
-		 * The set of {@linkplain Characteristic} in this {@linkplain Organization}.
-		 */
 		private final Map<UniqueId<Characteristic>, Characteristic> characteristics = new ConcurrentHashMap<>();
+
 	}
 
-	/**
-	 * The {@linkplain Relations} is a data class that encapsulates the relations that are within an {@linkplain Organization}.
-	 *
-	 * @author Christopher Zhong
-	 * @since 7.0.0
-	 */
 	private static class Relations {
-		/**
-		 * A set of {@linkplain Assignment}s.
-		 */
+
 		private final Map<UniqueId<Assignment>, Assignment> assignments = new ConcurrentHashMap<>();
-		/**
-		 * An {@linkplain Agent}'s set of {@linkplain Assignment}.
-		 */
 		private final Map<UniqueId<Agent>, Map<UniqueId<Assignment>, Assignment>> assignmentsByAgent = new ConcurrentHashMap<>();
-		/**
-		 * A set of {@linkplain Task}s.
-		 */
-		private final Map<UniqueId<Task>, Task> tasks = new ConcurrentHashMap<>();
-		/**
-		 * A {@linkplain Role} that achieves a set of {@linkplain SpecificationGoal}s.
-		 */
 		private final Map<UniqueId<Role>, Map<UniqueId<SpecificationGoal>, Achieves>> achieves = new ConcurrentHashMap<>();
-		/**
-		 * A {@linkplain SpecificationGoal} that is achieved by a set of {@linkplain Role}s.
-		 */
 		private final Map<UniqueId<SpecificationGoal>, Map<UniqueId<Role>, Achieves>> achievedBy = new ConcurrentHashMap<>();
-		/**
-		 * A {@linkplain Role} that requires a set of {@linkplain Capability}s.
-		 */
 		private final Map<UniqueId<Role>, Map<UniqueId<Capability>, Requires>> requires = new ConcurrentHashMap<>();
-		/**
-		 * A {@linkplain Capability} that is required by a set of {@linkplain Role}s.
-		 */
 		private final Map<UniqueId<Capability>, Map<UniqueId<Role>, Requires>> requiredBy = new ConcurrentHashMap<>();
-		/**
-		 * An {@linkplain Agent} that possesses a set of {@linkplain Capability}s.
-		 */
 		private final Map<UniqueId<Agent>, Map<UniqueId<Capability>, Possesses>> possesses = new ConcurrentHashMap<>();
-		/**
-		 * A {@linkplain Capability} that is possessed by a set of {@linkplain Agent}s.
-		 */
 		private final Map<UniqueId<Capability>, Map<UniqueId<Agent>, Possesses>> possessedBy = new ConcurrentHashMap<>();
-		/**
-		 * A {@linkplain Role} that needs a set of {@linkplain Attribute}s.
-		 */
 		private final Map<UniqueId<Role>, Map<UniqueId<Attribute>, Needs>> needs = new ConcurrentHashMap<>();
-		/**
-		 * An {@linkplain Attribute} that is needed by a set of {@linkplain Role}s.
-		 */
 		private final Map<UniqueId<Attribute>, Map<UniqueId<Role>, Needs>> neededBy = new ConcurrentHashMap<>();
-		/**
-		 * An {@linkplain Agent}s that has a set of {@linkplain Attribute}s.
-		 */
 		private final Map<UniqueId<Agent>, Map<UniqueId<Attribute>, Has>> has = new ConcurrentHashMap<>();
-		/**
-		 * An {@linkplain Attribute} that is had by a set of {@linkplain Agent}s.
-		 */
 		private final Map<UniqueId<Attribute>, Map<UniqueId<Agent>, Has>> hadBy = new ConcurrentHashMap<>();
-		/**
-		 * A {@linkplain Role} that uses a set of {@linkplain Pmf}s.
-		 */
 		private final Map<UniqueId<Role>, Map<UniqueId<Pmf>, Uses>> uses = new ConcurrentHashMap<>();
-		/**
-		 * A {@linkplain Pmf} that is used by a set of {@linkplain Role}s.
-		 */
 		private final Map<UniqueId<Pmf>, Map<UniqueId<Role>, Uses>> usedBy = new ConcurrentHashMap<>();
-		/**
-		 * A {@linkplain Pmf} that moderates an {@linkplain Attribute}.
-		 */
 		private final Map<UniqueId<Pmf>, Moderates> moderates = new ConcurrentHashMap<>();
-		/**
-		 * An {@linkplain Attribute} that is moderated by a set of {@linkplain Pmf}s.
-		 */
 		private final Map<UniqueId<Attribute>, Map<UniqueId<Pmf>, Moderates>> moderatedBy = new ConcurrentHashMap<>();
-		/**
-		 * A {@linkplain Role} that contains a set of {@linkplain Characteristic}s.
-		 */
 		private final Map<UniqueId<Role>, Map<UniqueId<Characteristic>, Contains>> contains = new ConcurrentHashMap<>();
-		/**
-		 * A {@linkplain Characteristic} that is contained by a set of {@linkplain Role}s.
-		 */
 		private final Map<UniqueId<Characteristic>, Map<UniqueId<Role>, Contains>> containedBy = new ConcurrentHashMap<>();
+
 	}
 
 	private static final Logger logger = LoggerFactory.getLogger(Organization.class);
-	/**
-	 * The entities within this {@linkplain Organization}.
-	 */
 	private final Entities entities = new Entities();
-	/**
-	 * The relations within this {@linkplain Organization}.
-	 */
 	private final Relations relations = new Relations();
-
-	/**
-	 * Constructs a new instance of an {@linkplain Organization}.
-	 */
-	public OrganizationImpl() {
+	private final RelationFactory relationFactory;
+	private Publisher publisher;
+	
+	@Inject
+	OrganizationImpl(@NotNull final RelationFactory relationFactory) {
+		this.relationFactory = relationFactory;
 	}
 
 	@Override
@@ -471,16 +353,16 @@ public class OrganizationImpl implements Organization, Publisher, NullCheck {
 	@Override
 	public void addInstanceGoal(final InstanceGoal goal) {
 		checkNotExists(goal, "goal", entities.instanceGoals::containsKey);
-		checkExists(goal.getSpecificationGoal().getId(), null, this::getSpecificationGoal);
+		checkExists(goal.getGoal().getId(), null, this::getSpecificationGoal);
 		/* add the instance goal, instanceGoalsBySpecificationGoal map */
 		entities.instanceGoals.put(goal.getId(), goal);
-		Map<UniqueId<InstanceGoal>, InstanceGoal> map = entities.instanceGoalsBySpecificationGoal.get(goal.getSpecificationGoal().getId());
+		Map<UniqueId<InstanceGoal>, InstanceGoal> map = entities.instanceGoalsBySpecificationGoal.get(goal.getGoal().getId());
 		if (map == null) {
-			logger.warn("instanceGoalsBySpecificationGoal is missing ({} -> instance goal) entry", goal.getSpecificationGoal().getId());
+			logger.warn("instanceGoalsBySpecificationGoal is missing ({} -> instance goal) entry", goal.getGoal().getId());
 			map = new ConcurrentHashMap<>();
-			entities.instanceGoalsBySpecificationGoal.put(goal.getSpecificationGoal().getId(), map);
+			entities.instanceGoalsBySpecificationGoal.put(goal.getGoal().getId(), map);
 		}
-		map.put(goal.getInstanceId(), goal);
+		map.put(goal.getId(), goal);
 		publishAdd(InstanceGoal.class, goal.getId());
 	}
 
@@ -507,16 +389,16 @@ public class OrganizationImpl implements Organization, Publisher, NullCheck {
 		if (entities.instanceGoals.containsKey(id)) {
 			/* remove the instance goal, instanceGoalsBySpecificationGoal map */
 			final InstanceGoal goal = entities.instanceGoals.remove(id);
-			if (entities.instanceGoalsBySpecificationGoal.containsKey(goal.getSpecificationGoal().getId())) {
-				final Map<UniqueId<InstanceGoal>, InstanceGoal> map = entities.instanceGoalsBySpecificationGoal.get(goal.getSpecificationGoal().getId());
-				if (map.containsKey(goal.getInstanceId())) {
-					map.remove(goal.getInstanceId());
+			if (entities.instanceGoalsBySpecificationGoal.containsKey(goal.getGoal().getId())) {
+				final Map<UniqueId<InstanceGoal>, InstanceGoal> map = entities.instanceGoalsBySpecificationGoal.get(goal.getGoal().getId());
+				if (map.containsKey(goal.getId())) {
+					map.remove(goal.getId());
 				} else {
-					logger.warn("instanceGoalsBySpecificationGoal is missing ({} -> {}) entry", goal.getSpecificationGoal().getId(), goal.getInstanceId());
+					logger.warn("instanceGoalsBySpecificationGoal is missing ({} -> {}) entry", goal.getGoal().getId(), goal.getId());
 				}
 			} else {
-				logger.warn("instanceGoalsBySpecificationGoal is missing ({} -> InstanceGoal) entry", goal.getSpecificationGoal().getId());
-				entities.instanceGoalsBySpecificationGoal.put(goal.getSpecificationGoal().getId(), new ConcurrentHashMap<>());
+				logger.warn("instanceGoalsBySpecificationGoal is missing ({} -> InstanceGoal) entry", goal.getGoal().getId());
+				entities.instanceGoalsBySpecificationGoal.put(goal.getGoal().getId(), new ConcurrentHashMap<>());
 			}
 			publishRemove(InstanceGoal.class, id);
 		}
@@ -748,31 +630,6 @@ public class OrganizationImpl implements Organization, Publisher, NullCheck {
 		removeAssignments(relations.assignments.keySet());
 	}
 
-	private void addTask(final Task task) {
-		relations.tasks.put(task.getId(), task);
-		publishAdd(Task.class, task.getRole().getId(), task.getGoal().getId());
-	}
-
-	@Override
-	public Task getTask(final UniqueId<Task> id) {
-		checkNotNull(id, "id");
-		return relations.tasks.get(id);
-	}
-
-	@Override
-	public Set<Task> getTasks() {
-		return relations.tasks.values().parallelStream().collect(Collectors.toCollection(HashSet::new));
-	}
-
-	private void removeTask(final UniqueId<Task> id) {
-		if (relations.tasks.containsKey(id)) {
-			relations.tasks.remove(id);
-			publishRemove(Task.class, id);
-		} else {
-			logger.warn("tasks is missing {}", id);
-		}
-	}
-
 	@Override
 	public void addAchieves(final UniqueId<Role> roleId, final UniqueId<SpecificationGoal> goalId) {
 		final Role role = checkExists(roleId, "roleId", this::getRole);
@@ -785,10 +642,9 @@ public class OrganizationImpl implements Organization, Publisher, NullCheck {
 			/* relation already exists do nothing */
 			return;
 		}
-		final Achieves achieves = new AchievesRelation(role, goal);
+		final Achieves achieves = relationFactory.buildAchieves(role, goal);
 		map.put(goalId, achieves);
 		addBy(achieves, relations.achievedBy, "achievedBy", goalId, roleId);
-		addTask(new TaskRelation(role, goal));
 		publishAdd(Achieves.class, roleId, goalId);
 	}
 
@@ -811,7 +667,6 @@ public class OrganizationImpl implements Organization, Publisher, NullCheck {
 		if (relations.achieves.containsKey(roleId) && relations.achieves.get(roleId).containsKey(goalId)) {
 			relations.achieves.get(roleId).remove(goalId);
 			removeBy(goalId, roleId, relations.achievedBy, "achievedBy");
-			removeTask(new TaskRelation.Id(roleId, goalId));
 			publishRemove(Achieves.class, roleId, goalId);
 		}
 	}
@@ -833,7 +688,7 @@ public class OrganizationImpl implements Organization, Publisher, NullCheck {
 			/* relation already exists do nothing */
 			return;
 		}
-		final Requires requires = new RequiresRelation(role, capability);
+		final Requires requires = relationFactory.buildRequires(role, capability);
 		map.put(capabilityId, requires);
 		addBy(requires, relations.requiredBy, "requiredBy", capabilityId, roleId);
 		publishAdd(Requires.class, roleId, capabilityId);
@@ -879,7 +734,7 @@ public class OrganizationImpl implements Organization, Publisher, NullCheck {
 			/* relation already exists do nothing */
 			return;
 		}
-		final Possesses possesses = new PossessesRelation(agent, capability, score);
+		final Possesses possesses = relationFactory.buildPossesses(agent, capability, score);
 		map.put(capabilityId, possesses);
 		addBy(possesses, relations.possessedBy, "possessedBy", capabilityId, agentId);
 		publishAdd(Possesses.class, agentId, capabilityId); // FIXME add score
@@ -945,7 +800,7 @@ public class OrganizationImpl implements Organization, Publisher, NullCheck {
 			/* relation already exists do nothing */
 			return;
 		}
-		final Needs needs = new NeedsRelation(role, attribute);
+		final Needs needs = relationFactory.buildNeeds(role, attribute);
 		map.put(attributeId, needs);
 		addBy(needs, relations.neededBy, "neededBy", attributeId, roleId);
 		publishAdd(Needs.class, roleId, attributeId);
@@ -991,7 +846,7 @@ public class OrganizationImpl implements Organization, Publisher, NullCheck {
 			/* relation already exists do nothing */
 			return;
 		}
-		final Has has = new HasRelation(agent, attribute, value);
+		final Has has = relationFactory.buildHas(agent, attribute, value);
 		map.put(attributeId, has);
 		addBy(has, relations.hadBy, "hadBy", attributeId, agentId);
 		publishAdd(Has.class, agentId, attributeId); // FIXME add value
@@ -1057,7 +912,7 @@ public class OrganizationImpl implements Organization, Publisher, NullCheck {
 			/* relation already exists do nothing */
 			return;
 		}
-		final Uses uses = new UsesRelation(role, pmf);
+		final Uses uses = relationFactory.buildUses(role, pmf);
 		map.put(pmfId, uses);
 		addBy(uses, relations.usedBy, "usedBy", pmfId, roleId);
 		publishAdd(Uses.class, roleId, pmfId);
@@ -1098,7 +953,7 @@ public class OrganizationImpl implements Organization, Publisher, NullCheck {
 		if (relations.moderates.containsKey(pmfId)) {
 			return;
 		}
-		final Moderates moderates = new ModeratesRelation(pmf, attribute);
+		final Moderates moderates = relationFactory.buildModerates(pmf, attribute);
 		relations.moderates.put(pmfId, moderates);
 		addBy(moderates, relations.moderatedBy, "moderatedBy", attributeId, pmfId);
 		publishAdd(Moderates.class, pmfId, attributeId);
@@ -1148,7 +1003,7 @@ public class OrganizationImpl implements Organization, Publisher, NullCheck {
 			/* relation already exists do nothing */
 			return;
 		}
-		final Contains contains = new ContainsRelation(role, characteristic, value);
+		final Contains contains = relationFactory.buildContains(role, characteristic, value);
 		map.put(characteristicId, contains);
 		addBy(contains, relations.containedBy, "containedBy", characteristicId, roleId);
 		publishAdd(Contains.class, roleId, characteristicId); // FIXME add value
