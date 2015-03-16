@@ -4,7 +4,7 @@ apply plugin: 'maven-publish'
 
 sourceCompatibility = '1.8'
 
-group = 'org.models'
+group = 'model'
 version = '7.0.0'
 
 ext {
