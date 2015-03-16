@@ -1,11 +1,12 @@
 package org.models.test.organization.entity;
 
+import model.organization.entities.Capability;
+import model.organization.entities.CapabilityEntity;
+import model.organization.id.UniqueId;
+import model.organization.ids.IntId;
+
 import org.junit.Assert;
 import org.junit.Test;
-import org.models.organization.entity.Capability;
-import org.models.organization.entity.CapabilityEntity;
-import org.models.organization.id.IntId;
-import org.models.organization.id.UniqueId;
 
 @SuppressWarnings("javadoc")
 public class CapabilityEntityTest {

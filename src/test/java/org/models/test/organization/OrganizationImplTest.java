@@ -1,14 +1,15 @@
 package org.models.test.organization;
 
+import model.organization.Organization;
+import model.organization.OrganizationImpl;
+import model.organization.entities.Role;
+import model.organization.entities.RoleEntity;
+import model.organization.entities.SpecificationGoal;
+import model.organization.entities.SpecificationGoalEntity;
+import model.organization.ids.StringId;
+
 import org.junit.Assert;
 import org.junit.Test;
-import org.models.organization.Organization;
-import org.models.organization.OrganizationImpl;
-import org.models.organization.entity.Role;
-import org.models.organization.entity.RoleEntity;
-import org.models.organization.entity.SpecificationGoal;
-import org.models.organization.entity.SpecificationGoalEntity;
-import org.models.organization.id.StringId;
 
 @SuppressWarnings("javadoc")
 public class OrganizationImplTest {
