@@ -16,7 +16,6 @@ import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
 
 import model.organization.Organization;
-import model.organization.OrganizationImpl;
 import model.organization.entity.SpecificationGoal;
 import model.organization.id.UniqueId;
 import model.organization.id.UniqueIdFactory;

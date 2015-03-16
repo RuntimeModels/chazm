@@ -16,5 +16,4 @@ import model.organization.id.Identifiable;
  * @author Christopher Zhong
  * @since 6.0
  */
-public interface Characteristic extends Identifiable<Characteristic> {
-}
+public interface Characteristic extends Identifiable<Characteristic> {}

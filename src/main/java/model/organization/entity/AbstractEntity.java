@@ -1,6 +1,9 @@
 package model.organization.entity;
 
 import static model.organization.Checks.checkNotNull;
+
+import javax.validation.constraints.NotNull;
+
 import model.organization.id.Identifiable;
 import model.organization.id.UniqueId;
 
@@ -16,7 +19,7 @@ public class AbstractEntity<T> implements Identifiable<T> {
 
 	private final UniqueId<T> id;
 
-	protected AbstractEntity(final UniqueId<T> id) {
+	protected AbstractEntity(@NotNull final UniqueId<T> id) {
 		checkNotNull(id, "id");
 		this.id = id;
 	}

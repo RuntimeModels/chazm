@@ -10,7 +10,7 @@ public interface OrganizationFactory {
 
 	/**
 	 * Constructs an {@linkplain Organization}.
-	 * 
+	 *
 	 * @return an {@linkplain Organization}.
 	 */
 	Organization buildOrganization();

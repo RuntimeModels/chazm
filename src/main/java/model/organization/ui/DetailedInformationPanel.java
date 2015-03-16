@@ -52,8 +52,7 @@ public class DetailedInformationPanel extends JPanel {
 		 */
 		REGULAR {
 			@Override
-			void define(final Style style) {
-			}
+			void define(final Style style) {}
 		},
 		/**
 		 * Style for main entity.
