@@ -1,8 +1,9 @@
 package org.models.test.organization.id;
 
+import model.organization.ids.StringId;
+
 import org.junit.Assert;
 import org.junit.Test;
-import org.models.organization.id.StringId;
 
 @SuppressWarnings("javadoc")
 public class StringIdTest {
