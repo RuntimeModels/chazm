@@ -25,8 +25,7 @@ public interface InstanceGoal extends Identifiable<InstanceGoal> {
 	 * @author Christopher Zhong
 	 * @since 7.0.0
 	 */
-	interface Parameter {
-	}
+	interface Parameter {}
 
 	/**
 	 * Returns the {@linkplain SpecificationGoal} that instantiated this {@linkplain InstanceGoal}.

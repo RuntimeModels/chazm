@@ -1,6 +1,6 @@
 package org.models.test.organization.id;
 
-import model.organization.ids.StringId;
+import model.organization.id.StringId;
 
 import org.junit.Assert;
 import org.junit.Test;

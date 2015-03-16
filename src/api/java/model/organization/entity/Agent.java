@@ -23,8 +23,7 @@ public interface Agent extends Identifiable<Agent> {
 	 * @author Christopher Zhong
 	 * @since 7.0.0
 	 */
-	interface ContactInfo {
-	}
+	interface ContactInfo {}
 
 	/**
 	 * Returns the {@linkplain ContactInfo} for this {@linkplain Agent}.

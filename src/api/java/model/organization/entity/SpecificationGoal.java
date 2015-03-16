@@ -16,5 +16,4 @@ import model.organization.id.Identifiable;
  * @author Christopher Zhong
  * @since 3.4
  */
-public interface SpecificationGoal extends Identifiable<SpecificationGoal> {
-}
+public interface SpecificationGoal extends Identifiable<SpecificationGoal> {}

@@ -87,7 +87,7 @@ class OrganizationImpl implements Organization, Publisher {
 	private final Relations relations = new Relations();
 	private final RelationFactory relationFactory;
 	private Publisher publisher;
-	
+
 	@Inject
 	OrganizationImpl(@NotNull final RelationFactory relationFactory) {
 		this.relationFactory = relationFactory;

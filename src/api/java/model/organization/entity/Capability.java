@@ -16,5 +16,4 @@ import model.organization.id.Identifiable;
  * @author Christopher Zhong
  * @since 3.4
  */
-public interface Capability extends Identifiable<Capability> {
-}
+public interface Capability extends Identifiable<Capability> {}
