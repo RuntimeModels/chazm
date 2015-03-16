@@ -7,8 +7,12 @@ sourceCompatibility = '1.8'
 group = 'org.models'
 version = '7.0.0'
 
+ext {
+	guiceVersion = '4.0-beta5'
+}
+
 repositories {
-	mavenCentral()
+	jcenter()
 }
 
 sourceSets {
@@ -25,9 +29,12 @@ sourceSets {
 }
 
 dependencies {
+	println "com.google.inject:guice:${guiceVersion}"
 	compile fileTree(dir: 'src/main/resources', include: '*.jar')
 	compile 'org.slf4j:slf4j-api:1.7.10'
 	compile 'javax:javaee-api:7.0'
+	compile "com.google.inject:guice:${guiceVersion}"
+	compile "com.google.inject.extensions:guice-assistedinject:${guiceVersion}"
 	testCompile 'junit:junit:4.12'
 	testCompile 'org.mockito:mockito-core:2.0.5-beta'
 }
