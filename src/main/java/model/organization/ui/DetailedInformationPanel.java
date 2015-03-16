@@ -20,16 +20,15 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
 
-import model.organization.entities.Agent;
-import model.organization.entities.Attribute;
-import model.organization.entities.Capability;
-import model.organization.entities.Characteristic;
-import model.organization.entities.InstanceGoal;
-import model.organization.entities.Pmf;
-import model.organization.entities.Role;
-import model.organization.entities.SpecificationGoal;
-import model.organization.relations.Assignment;
-import model.organization.relations.Task;
+import model.organization.entity.Agent;
+import model.organization.entity.Attribute;
+import model.organization.entity.Capability;
+import model.organization.entity.Characteristic;
+import model.organization.entity.InstanceGoal;
+import model.organization.entity.Pmf;
+import model.organization.entity.Role;
+import model.organization.entity.SpecificationGoal;
+import model.organization.relation.Assignment;
 
 /**
  * The <code>DetailedInformationPanel</code> class is a Swing component that is used by the other visualization <code>JPanel</code> to present additional
@@ -232,9 +231,9 @@ public class DetailedInformationPanel extends JPanel {
 			doc.remove(0, doc.getLength());
 			writeEntity(instanceGoal.getId().toString());
 			writeEntityRelation("Specification Goal:");
-			writeEntityEntity(instanceGoal.getSpecificationGoal().getId().toString());
+			writeEntityEntity(instanceGoal.getGoal().getId().toString());
 			writeEntityRelation("Instance Identifier:");
-			writeEntityEntity(instanceGoal.getInstanceId().toString());
+			writeEntityEntity(instanceGoal.getId().toString());
 			writeRelation("Parameter(s):");
 			if (instanceGoal.getParameter() != null) {
 				writeRelationEntity(instanceGoal.getParameter().toString());
@@ -376,30 +375,6 @@ public class DetailedInformationPanel extends JPanel {
 			writeRelation("Moderated By Performance Function(s):");
 			// for (final Pmf pmf : attribute.getModeratedBySet()) {
 			// writeRelationEntity(pmf.getId().toString());
-			// }
-		} catch (final BadLocationException e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Display additional information about the <code>Task</code>
-	 *
-	 * @param taskRelation
-	 *            the <code>Task</code> to process.
-	 */
-	public void showDetailedInformation(final Task taskRelation) {
-		try {
-			/* clears the contents of the document */
-			doc.remove(0, doc.getLength());
-			writeEntity(taskRelation.getId().toString());
-			writeRelation("Role:");
-			writeRelationEntity(taskRelation.getRole().getId().toString());
-			writeRelation("Goal:");
-			writeRelationEntity(taskRelation.getGoal().getId().toString());
-			writeRelation("Uses:");
-			// for (final PerformanceFunction performanceFunction : taskRelation.getLinkedSet()) {
-			// writeRelationEntity(performanceFunction.getId().toString());
 			// }
 		} catch (final BadLocationException e) {
 			e.printStackTrace();

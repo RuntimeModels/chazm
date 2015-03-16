@@ -9,10 +9,10 @@ package model.organization.functions;
 
 import java.util.Collection;
 
-import model.organization.entities.Agent;
-import model.organization.entities.InstanceGoal;
-import model.organization.entities.Role;
-import model.organization.relations.Assignment;
+import model.organization.entity.Agent;
+import model.organization.entity.InstanceGoal;
+import model.organization.entity.Role;
+import model.organization.relation.Assignment;
 
 /**
  * The <code>RoleGoodnessFunction</code> interface provides the necessary functionality for computing the goodness score of how good an {@link Agent} plays a

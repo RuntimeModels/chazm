@@ -17,12 +17,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import model.organization.Organization;
 import model.organization.OrganizationImpl;
-import model.organization.entities.CapabilityEntity;
-import model.organization.entities.RoleEntity;
-import model.organization.entities.SpecificationGoal;
-import model.organization.factory.DefaultGoalFactory;
-import model.organization.factory.DefaultIdFactory;
-import model.organization.factory.GoalFactory;
+import model.organization.entity.SpecificationGoal;
 import model.organization.id.UniqueId;
 import model.organization.id.UniqueIdFactory;
 
@@ -244,9 +239,9 @@ public class XmlParser {
 				/* parse all the capabilities */
 				for (final ModelElement element : schema.getChildren(ModelElementType.CAPABILITY)) {
 					final Capability capability = (Capability) element;
-					final UniqueId<model.organization.entities.Capability> capabilityId = idFactory.buildId(model.organization.entities.Capability.class,
+					final UniqueId<model.organization.entity.Capability> capabilityId = idFactory.buildId(model.organization.entity.Capability.class,
 							capability.getName());
-					final model.organization.entities.Capability c = new CapabilityEntity(capabilityId);
+					final model.organization.entity.Capability c = new CapabilityEntity(capabilityId);
 					organization.addCapability(c);
 				}
 				/* parse all the roles */
@@ -254,8 +249,8 @@ public class XmlParser {
 					final Role role = (Role) element;
 					/* only roles that are not inherited are added */
 					if (role.getDestRelationships(RelationshipType.INHERITS).size() == 0) {
-						final UniqueId<model.organization.entities.Role> roleId = idFactory.buildId(model.organization.entities.Role.class, role.getName());
-						final model.organization.entities.Role r = new RoleEntity(roleId);
+						final UniqueId<model.organization.entity.Role> roleId = idFactory.buildId(model.organization.entity.Role.class, role.getName());
+						final model.organization.entity.Role r = new RoleEntity(roleId);
 						organization.addRole(r);
 						/* set up the achieves relation */
 						for (final Relationship achieves : role.getSrcRelationships(RelationshipType.ACHIEVES)) {
@@ -266,8 +261,8 @@ public class XmlParser {
 						/* set up the requires relation */
 						for (final Relationship requires : role.getSrcRelationships(RelationshipType.REQUIRES)) {
 							final Capability capability = (Capability) requires.getChild();
-							final UniqueId<model.organization.entities.Capability> capabilityId = idFactory.buildId(
-									model.organization.entities.Capability.class, capability.getName());
+							final UniqueId<model.organization.entity.Capability> capabilityId = idFactory.buildId(model.organization.entity.Capability.class,
+									capability.getName());
 							organization.addRequires(roleId, capabilityId);
 						}
 						/* set up requires relation from inheritance */
@@ -275,8 +270,8 @@ public class XmlParser {
 							final Role parent = (Role) inherits.remove(0).getChild();
 							for (final Relationship requires : parent.getSrcRelationships(RelationshipType.REQUIRES)) {
 								final Capability capability = (Capability) requires.getChild();
-								final UniqueId<model.organization.entities.Capability> capabilityId = idFactory.buildId(
-										model.organization.entities.Capability.class, capability.getName());
+								final UniqueId<model.organization.entity.Capability> capabilityId = idFactory.buildId(
+										model.organization.entity.Capability.class, capability.getName());
 								organization.addRequires(roleId, capabilityId);
 							}
 							inherits.addAll(parent.getSrcRelationships(RelationshipType.INHERITS));

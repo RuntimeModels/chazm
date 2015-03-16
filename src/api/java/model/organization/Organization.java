@@ -9,25 +9,24 @@ package model.organization;
 
 import java.util.function.Predicate;
 
-import model.organization.entities.managers.AgentManager;
-import model.organization.entities.managers.AttributeManager;
-import model.organization.entities.managers.CapabilityManager;
-import model.organization.entities.managers.CharacteristicManager;
-import model.organization.entities.managers.InstanceGoalManager;
-import model.organization.entities.managers.PmfManager;
-import model.organization.entities.managers.PolicyManager;
-import model.organization.entities.managers.RoleManager;
-import model.organization.entities.managers.SpecificationGoalManager;
-import model.organization.relations.managers.AchievesManager;
-import model.organization.relations.managers.AssignmentManager;
-import model.organization.relations.managers.ContainsManager;
-import model.organization.relations.managers.HasManager;
-import model.organization.relations.managers.ModeratesManager;
-import model.organization.relations.managers.NeedsManager;
-import model.organization.relations.managers.PossessesManager;
-import model.organization.relations.managers.RequiresManager;
-import model.organization.relations.managers.TaskManager;
-import model.organization.relations.managers.UsesManager;
+import model.organization.entity.manager.AgentManager;
+import model.organization.entity.manager.AttributeManager;
+import model.organization.entity.manager.CapabilityManager;
+import model.organization.entity.manager.CharacteristicManager;
+import model.organization.entity.manager.InstanceGoalManager;
+import model.organization.entity.manager.PmfManager;
+import model.organization.entity.manager.PolicyManager;
+import model.organization.entity.manager.RoleManager;
+import model.organization.entity.manager.SpecificationGoalManager;
+import model.organization.relation.manager.AchievesManager;
+import model.organization.relation.manager.AssignmentManager;
+import model.organization.relation.manager.ContainsManager;
+import model.organization.relation.manager.HasManager;
+import model.organization.relation.manager.ModeratesManager;
+import model.organization.relation.manager.NeedsManager;
+import model.organization.relation.manager.PossessesManager;
+import model.organization.relation.manager.RequiresManager;
+import model.organization.relation.manager.UsesManager;
 
 /**
  * The {@linkplain Organization} interface defines an organization, which consists of entities and relations between the entities.
@@ -36,8 +35,8 @@ import model.organization.relations.managers.UsesManager;
  * @since 4.0
  */
 public interface Organization extends SpecificationGoalManager, RoleManager, AgentManager, CapabilityManager, PolicyManager, InstanceGoalManager,
-		AttributeManager, TaskManager, PmfManager, CharacteristicManager, AssignmentManager, AchievesManager, RequiresManager, PossessesManager, NeedsManager,
-		HasManager, UsesManager, ModeratesManager, ContainsManager {
+		AttributeManager, PmfManager, CharacteristicManager, AssignmentManager, AchievesManager, RequiresManager, PossessesManager, NeedsManager, HasManager,
+		UsesManager, ModeratesManager, ContainsManager {
 	/**
 	 * Checks if this {@linkplain Organization} is valid. Validity rules differ from one organization to another, so there is no general algorithm to determine
 	 * the validity of an {@linkplain Organization}.

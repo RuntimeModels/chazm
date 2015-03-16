@@ -80,7 +80,6 @@ public class DefaultVisualizationFrame extends JFrame {
 		centerPanel.add(new PerformanceFunctionVisualizationPanel(organization));
 
 		final JPanel bottomPanel = new JPanel(new GridLayout(1, 3));
-		bottomPanel.add(new TaskVisualizationPanel(organization));
 		bottomPanel.add(new AssignmentVisualizationPanel(organization));
 		bottomPanel.add(new AgentVisualizationPanel(organization));
 

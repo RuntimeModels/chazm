@@ -19,7 +19,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ListSelectionEvent;
 
 import model.organization.Organization;
-import model.organization.entities.Pmf;
+import model.organization.entity.Pmf;
 
 /**
  * The <code>PerformanceFunctionVisualizationPanel</code> class is a Swing component to visualize the {@link Pmf} currently in the {@link Organization}.

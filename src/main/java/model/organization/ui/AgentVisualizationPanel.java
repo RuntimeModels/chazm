@@ -19,7 +19,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ListSelectionEvent;
 
 import model.organization.Organization;
-import model.organization.entities.Agent;
+import model.organization.entity.Agent;
 
 /**
  * The <code>AgentVisualizationPanel</code> class is a Swing component to visualize the <code>Agent</code> currently in the <code>Organization</code>.
