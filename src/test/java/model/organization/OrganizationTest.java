@@ -1,4 +1,4 @@
-package org.models.test.organization;
+package model.organization;
 
 import model.organization.Organization;
 import model.organization.OrganizationFactory;
