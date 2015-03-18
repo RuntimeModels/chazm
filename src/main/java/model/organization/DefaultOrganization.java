@@ -1,5 +1,8 @@
 package model.organization;
 
+import static model.organization.event.UpdateCategory.ADDED;
+import static model.organization.event.UpdateCategory.CHANGED;
+import static model.organization.event.UpdateCategory.REMOVED;
 import static model.organization.validation.Checks.checkExists;
 import static model.organization.validation.Checks.checkNotExists;
 import static model.organization.validation.Checks.checkNotNull;
@@ -26,6 +29,24 @@ import model.organization.entity.Pmf;
 import model.organization.entity.Policy;
 import model.organization.entity.Role;
 import model.organization.entity.SpecificationGoal;
+import model.organization.event.AchievesEvent;
+import model.organization.event.AgentEvent;
+import model.organization.event.AssignmentEvent;
+import model.organization.event.AttributeEvent;
+import model.organization.event.CapabilityEvent;
+import model.organization.event.CharacteristicEvent;
+import model.organization.event.ContainsEvent;
+import model.organization.event.HasEvent;
+import model.organization.event.InstanceGoalEvent;
+import model.organization.event.ModeratesEvent;
+import model.organization.event.NeedsEvent;
+import model.organization.event.PmfEvent;
+import model.organization.event.PolicyEvent;
+import model.organization.event.PossessesEvent;
+import model.organization.event.RequiresEvent;
+import model.organization.event.RoleEvent;
+import model.organization.event.SpecificationGoalEvent;
+import model.organization.event.UsesEvent;
 import model.organization.function.Effectiveness;
 import model.organization.function.Goodness;
 import model.organization.id.UniqueId;
@@ -47,50 +68,6 @@ import event.Publisher;
 
 class DefaultOrganization implements Organization {
 
-	private static class Entities {
-
-		private final Map<UniqueId<SpecificationGoal>, SpecificationGoal> specificationGoals = new ConcurrentHashMap<>();
-		private final Map<UniqueId<Role>, Role> roles = new ConcurrentHashMap<>();
-		private final Map<UniqueId<Agent>, Agent> agents = new ConcurrentHashMap<>();
-		private final Map<UniqueId<Capability>, Capability> capabilities = new ConcurrentHashMap<>();
-		private final Map<UniqueId<Policy>, Policy> policies = new ConcurrentHashMap<>();
-		private final Map<UniqueId<InstanceGoal>, InstanceGoal> instanceGoals = new ConcurrentHashMap<>();
-		private final Map<UniqueId<SpecificationGoal>, Map<UniqueId<InstanceGoal>, InstanceGoal>> instanceGoalsBySpecificationGoal = new ConcurrentHashMap<>();
-		private final Map<UniqueId<Attribute>, Attribute> attributes = new ConcurrentHashMap<>();
-		private final Map<UniqueId<Pmf>, Pmf> pmfs = new ConcurrentHashMap<>();
-		private final Map<UniqueId<Characteristic>, Characteristic> characteristics = new ConcurrentHashMap<>();
-
-	}
-
-	private static class Relations {
-
-		private final Map<UniqueId<Assignment>, Assignment> assignments = new ConcurrentHashMap<>();
-		private final Map<UniqueId<Agent>, Map<UniqueId<Assignment>, Assignment>> assignmentsByAgent = new ConcurrentHashMap<>();
-		private final Map<UniqueId<Role>, Map<UniqueId<SpecificationGoal>, Achieves>> achieves = new ConcurrentHashMap<>();
-		private final Map<UniqueId<SpecificationGoal>, Map<UniqueId<Role>, Achieves>> achievedBy = new ConcurrentHashMap<>();
-		private final Map<UniqueId<Role>, Map<UniqueId<Capability>, Requires>> requires = new ConcurrentHashMap<>();
-		private final Map<UniqueId<Capability>, Map<UniqueId<Role>, Requires>> requiredBy = new ConcurrentHashMap<>();
-		private final Map<UniqueId<Agent>, Map<UniqueId<Capability>, Possesses>> possesses = new ConcurrentHashMap<>();
-		private final Map<UniqueId<Capability>, Map<UniqueId<Agent>, Possesses>> possessedBy = new ConcurrentHashMap<>();
-		private final Map<UniqueId<Role>, Map<UniqueId<Attribute>, Needs>> needs = new ConcurrentHashMap<>();
-		private final Map<UniqueId<Attribute>, Map<UniqueId<Role>, Needs>> neededBy = new ConcurrentHashMap<>();
-		private final Map<UniqueId<Agent>, Map<UniqueId<Attribute>, Has>> has = new ConcurrentHashMap<>();
-		private final Map<UniqueId<Attribute>, Map<UniqueId<Agent>, Has>> hadBy = new ConcurrentHashMap<>();
-		private final Map<UniqueId<Role>, Map<UniqueId<Pmf>, Uses>> uses = new ConcurrentHashMap<>();
-		private final Map<UniqueId<Pmf>, Map<UniqueId<Role>, Uses>> usedBy = new ConcurrentHashMap<>();
-		private final Map<UniqueId<Pmf>, Moderates> moderates = new ConcurrentHashMap<>();
-		private final Map<UniqueId<Attribute>, Map<UniqueId<Pmf>, Moderates>> moderatedBy = new ConcurrentHashMap<>();
-		private final Map<UniqueId<Role>, Map<UniqueId<Characteristic>, Contains>> contains = new ConcurrentHashMap<>();
-		private final Map<UniqueId<Characteristic>, Map<UniqueId<Role>, Contains>> containedBy = new ConcurrentHashMap<>();
-
-	}
-
-	private static class Functions {
-
-		private final Map<UniqueId<Role>, Goodness> goodnesses = new ConcurrentHashMap<>();
-
-	}
-
 	private static final Logger logger = LoggerFactory.getLogger(Organization.class);
 	private final Entities entities = new Entities();
 	private final Relations relations = new Relations();
@@ -110,117 +87,6 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addSpecificationGoal(final SpecificationGoal goal) {
-		checkNotExists(goal, "goal", entities.specificationGoals::containsKey);
-		/* add the specification goal, instanceGoalsBySpecificationGoal map, achievedBy map */
-		entities.specificationGoals.put(goal.getId(), goal);
-		entities.instanceGoalsBySpecificationGoal.put(goal.getId(), new ConcurrentHashMap<>());
-		relations.achievedBy.put(goal.getId(), new ConcurrentHashMap<>());
-		publisher.publishAdd(SpecificationGoal.class, goal.getId());
-	}
-
-	@Override
-	public void addSpecificationGoals(final Collection<SpecificationGoal> goals) {
-		checkNotNull(goals, "goals");
-		goals.parallelStream().forEach(this::addSpecificationGoal);
-	}
-
-	@Override
-	public SpecificationGoal getSpecificationGoal(final UniqueId<SpecificationGoal> id) {
-		checkNotNull(id, "id");
-		return entities.specificationGoals.get(id);
-	}
-
-	@Override
-	public Set<SpecificationGoal> getSpecificationGoals() {
-		return entities.specificationGoals.values().parallelStream().collect(Collectors.toCollection(HashSet::new));
-	}
-
-	@Override
-	public void removeSpecificationGoal(final UniqueId<SpecificationGoal> id) {
-		checkNotNull(id, "id");
-		if (entities.specificationGoals.containsKey(id)) {
-			/* remove the specification goal, all associated instance goals, all associated achieves relations */
-			entities.specificationGoals.remove(id);
-			remove(id, entities.instanceGoalsBySpecificationGoal, "instanceGoalsBySpecificationGoal", c -> removeInstanceGoal(c), InstanceGoal.class);
-			remove(id, relations.achievedBy, "achievedBy", c -> removeAchieves(c, id), Role.class);
-			publisher.publishRemove(SpecificationGoal.class, id);
-		}
-	}
-
-	@Override
-	public void removeSpecificationGoals(final Collection<UniqueId<SpecificationGoal>> ids) {
-		checkNotNull(ids, "ids");
-		ids.parallelStream().forEach(this::removeSpecificationGoal);
-	}
-
-	@Override
-	public void removeAllSpecificationGoals() {
-		removeSpecificationGoals(entities.specificationGoals.keySet());
-	}
-
-	@Override
-	public void addRole(final Role role) {
-		checkNotExists(role, "role", entities.roles::containsKey);
-		/* add the role, achieves map, requires map, needs map, uses, contains map */
-		entities.roles.put(role.getId(), role);
-		relations.achieves.put(role.getId(), new ConcurrentHashMap<>());
-		relations.requires.put(role.getId(), new ConcurrentHashMap<>());
-		relations.needs.put(role.getId(), new ConcurrentHashMap<>());
-		relations.uses.put(role.getId(), new ConcurrentHashMap<>());
-		relations.contains.put(role.getId(), new ConcurrentHashMap<>());
-		functions.goodnesses.put(role.getId(), goodness);
-		publisher.publishAdd(Role.class, role.getId());
-	}
-
-	@Override
-	public void addRoles(final Collection<Role> roles) {
-		checkNotNull(roles, "roles");
-		roles.parallelStream().forEach(this::addRole);
-	}
-
-	@Override
-	public Role getRole(final UniqueId<Role> id) {
-		checkNotNull(id, "id");
-		return entities.roles.get(id);
-	}
-
-	@Override
-	public Set<Role> getRoles() {
-		return entities.roles.values().parallelStream().collect(Collectors.toCollection(HashSet::new));
-	}
-
-	@Override
-	public void removeRole(final UniqueId<Role> id) {
-		checkNotNull(id, "id");
-		if (entities.roles.containsKey(id)) {
-			/*
-			 * remove role, all associated achieves relations, all associated requires relations, all associated needs relations, all associated uses relations,
-			 * all associated contains relations
-			 */
-			entities.roles.remove(id);
-			remove(id, relations.achieves, "achieves", c -> removeAchieves(id, c), SpecificationGoal.class);
-			remove(id, relations.requires, "requires", c -> removeRequires(id, c), Capability.class);
-			remove(id, relations.needs, "needs", c -> removeNeeds(id, c), Attribute.class);
-			remove(id, relations.uses, "uses", c -> removeUses(id, c), Pmf.class);
-			remove(id, relations.contains, "contains", c -> removeContains(id, c), Characteristic.class);
-			functions.goodnesses.remove(id);
-			publisher.publishRemove(Role.class, id);
-		}
-	}
-
-	@Override
-	public void removeRoles(final Collection<UniqueId<Role>> ids) {
-		checkNotNull(ids, "ids");
-		ids.parallelStream().forEach(this::removeRole);
-	}
-
-	@Override
-	public void removeAllRoles() {
-		removeRoles(entities.roles.keySet());
-	}
-
-	@Override
 	public void addAgent(final Agent agent) {
 		checkNotExists(agent, "agent", entities.agents::containsKey);
 		/* add the agent, assignmentsByAgent map, possesses map, has map */
@@ -228,7 +94,7 @@ class DefaultOrganization implements Organization {
 		relations.assignmentsByAgent.put(agent.getId(), new ConcurrentHashMap<>());
 		relations.possesses.put(agent.getId(), new ConcurrentHashMap<>());
 		relations.has.put(agent.getId(), new ConcurrentHashMap<>());
-		publisher.publishAdd(Agent.class, agent.getId());
+		publisher.post(new AgentEvent(agent, ADDED));
 	}
 
 	@Override
@@ -253,11 +119,11 @@ class DefaultOrganization implements Organization {
 		checkNotNull(id, "id");
 		if (entities.agents.containsKey(id)) {
 			/* remove the agent, all associated assignments, all associated possesses relations, all associated has relations */
-			entities.agents.remove(id);
+			final Agent agent = entities.agents.remove(id);
 			remove(id, relations.assignmentsByAgent, "assignmentsByAgent", c -> removeAssignment(c), Assignment.class);
 			remove(id, relations.possesses, "possesses", c -> removePossesses(id, c), Capability.class);
 			remove(id, relations.has, "possesses", c -> removeHas(id, c), Attribute.class);
-			publisher.publishRemove(Agent.class, id);
+			publisher.post(new AgentEvent(agent, REMOVED));
 		}
 	}
 
@@ -273,13 +139,65 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
+	public void addAttribute(final Attribute attribute) {
+		checkNotExists(attribute, "attribute", entities.attributes::containsKey);
+		/* add the attribute, neededBy map, hadBy map, moderatedBy map */
+		entities.attributes.put(attribute.getId(), attribute);
+		relations.neededBy.put(attribute.getId(), new ConcurrentHashMap<>());
+		relations.hadBy.put(attribute.getId(), new ConcurrentHashMap<>());
+		relations.moderatedBy.put(attribute.getId(), new ConcurrentHashMap<>());
+		publisher.post(new AttributeEvent(attribute, ADDED));
+	}
+
+	@Override
+	public void addAttributes(final Collection<Attribute> attributes) {
+		checkNotNull(attributes, "attributes");
+		attributes.parallelStream().forEach(this::addAttribute);
+	}
+
+	@Override
+	public Attribute getAttribute(final UniqueId<Attribute> id) {
+		checkNotNull(id, "id");
+		return entities.attributes.get(id);
+	}
+
+	@Override
+	public Set<Attribute> getAttributes() {
+		return entities.attributes.values().parallelStream().collect(Collectors.toCollection(HashSet::new));
+	}
+
+	@Override
+	public void removeAttribute(final UniqueId<Attribute> id) {
+		checkNotNull(id, "id");
+		if (entities.attributes.containsKey(id)) {
+			/* remove the attribute, all associated needs relations, all associated has relations, all associated moderates relations */
+			final Attribute attribute = entities.attributes.remove(id);
+			remove(id, relations.neededBy, "neededBy", c -> removeNeeds(c, id), Role.class);
+			remove(id, relations.hadBy, "hadBy", c -> removeHas(c, id), Agent.class);
+			remove(id, relations.moderatedBy, "moderatedBy", c -> removeModerates(c, id), Pmf.class);
+			publisher.post(new AttributeEvent(attribute, REMOVED));
+		}
+	}
+
+	@Override
+	public void removeAttributes(final Collection<UniqueId<Attribute>> ids) {
+		checkNotNull(ids, "ids");
+		ids.parallelStream().forEach(this::removeAttribute);
+	}
+
+	@Override
+	public void removeAllAttributes() {
+		removeAttributes(entities.attributes.keySet());
+	}
+
+	@Override
 	public void addCapability(final Capability capability) {
 		checkNotExists(capability, "capability", entities.capabilities::containsKey);
 		/* add the capability, requiredBy map, possessedBy map */
 		entities.capabilities.put(capability.getId(), capability);
 		relations.requiredBy.put(capability.getId(), new ConcurrentHashMap<>());
 		relations.possessedBy.put(capability.getId(), new ConcurrentHashMap<>());
-		publisher.publishAdd(Capability.class, capability.getId());
+		publisher.post(new CapabilityEvent(capability, ADDED));
 	}
 
 	@Override
@@ -304,10 +222,10 @@ class DefaultOrganization implements Organization {
 		checkNotNull(id, "id");
 		if (entities.capabilities.containsKey(id)) {
 			/* remove the capability, all associated requires relations, all associated possesses relations */
-			entities.capabilities.remove(id);
+			final Capability capability = entities.capabilities.remove(id);
 			remove(id, relations.requiredBy, "requiredBy", c -> removeRequires(c, id), Role.class);
 			remove(id, relations.possessedBy, "possessedBy", c -> removePossesses(c, id), Agent.class);
-			publisher.publishRemove(Capability.class, id);
+			publisher.post(new CapabilityEvent(capability, REMOVED));
 		}
 	}
 
@@ -323,49 +241,51 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addPolicy(final Policy policy) {
-		checkNotExists(policy, "policy", entities.policies::containsKey);
-		/* add the policy */
-		entities.policies.put(policy.getId(), policy);
-		publisher.publishAdd(Policy.class, policy.getId());
+	public void addCharacteristic(final Characteristic characteristic) {
+		checkNotExists(characteristic, "characteristic", entities.characteristics::containsKey);
+		/* add the characteristic, containedBy map */
+		entities.characteristics.put(characteristic.getId(), characteristic);
+		relations.containedBy.put(characteristic.getId(), new ConcurrentHashMap<>());
+		publisher.post(new CharacteristicEvent(characteristic, ADDED));
 	}
 
 	@Override
-	public void addPolicies(final Collection<Policy> policies) {
-		checkNotNull(policies, "policies");
-		policies.parallelStream().forEach(this::addPolicy);
+	public void addCharacteristics(final Collection<Characteristic> characteristics) {
+		checkNotNull(characteristics, "characteristic");
+		characteristics.parallelStream().forEach(this::addCharacteristic);
 	}
 
 	@Override
-	public Policy getPolicy(final UniqueId<Policy> id) {
+	public Characteristic getCharacteristic(final UniqueId<Characteristic> id) {
 		checkNotNull(id, "id");
-		return entities.policies.get(id);
+		return entities.characteristics.get(id);
 	}
 
 	@Override
-	public Set<Policy> getPolicies() {
-		return entities.policies.values().parallelStream().collect(Collectors.toCollection(HashSet::new));
+	public Set<Characteristic> getCharacteristics() {
+		return entities.characteristics.values().parallelStream().collect(Collectors.toCollection(HashSet::new));
 	}
 
 	@Override
-	public void removePolicy(final UniqueId<Policy> id) {
+	public void removeCharacteristic(final UniqueId<Characteristic> id) {
 		checkNotNull(id, "id");
-		if (entities.policies.containsKey(id)) {
-			/* remove the policy */
-			entities.policies.remove(id);
-			publisher.publishRemove(Policy.class, id);
+		if (entities.characteristics.containsKey(id)) {
+			/* remove characteristics, all associated contains relations */
+			final Characteristic characteristic = entities.characteristics.remove(id);
+			remove(id, relations.containedBy, "containedBy", c -> removeContains(c, id), Role.class);
+			publisher.post(new CharacteristicEvent(characteristic, REMOVED));
 		}
 	}
 
 	@Override
-	public void removePolicies(final Collection<UniqueId<Policy>> ids) {
+	public void removeCharacteristics(final Collection<UniqueId<Characteristic>> ids) {
 		checkNotNull(ids, "ids");
-		ids.parallelStream().forEach(this::removePolicy);
+		ids.parallelStream().forEach(this::removeCharacteristic);
 	}
 
 	@Override
-	public void removeAllPolicies() {
-		removePolicies(entities.policies.keySet());
+	public void removeAllCharacteristic() {
+		removeCharacteristics(entities.characteristics.keySet());
 	}
 
 	@Override
@@ -381,7 +301,7 @@ class DefaultOrganization implements Organization {
 			entities.instanceGoalsBySpecificationGoal.put(goal.getGoal().getId(), map);
 		}
 		map.put(goal.getId(), goal);
-		publisher.publishAdd(InstanceGoal.class, goal.getId());
+		publisher.post(new InstanceGoalEvent(goal, ADDED));
 	}
 
 	@Override
@@ -418,7 +338,7 @@ class DefaultOrganization implements Organization {
 				logger.warn("instanceGoalsBySpecificationGoal is missing ({} -> InstanceGoal) entry", goal.getGoal().getId());
 				entities.instanceGoalsBySpecificationGoal.put(goal.getGoal().getId(), new ConcurrentHashMap<>());
 			}
-			publisher.publishRemove(InstanceGoal.class, id);
+			publisher.post(new InstanceGoalEvent(goal, REMOVED));
 		}
 	}
 
@@ -434,63 +354,11 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addAttribute(final Attribute attribute) {
-		checkNotExists(attribute, "attribute", entities.attributes::containsKey);
-		/* add the attribute, neededBy map, hadBy map, moderatedBy map */
-		entities.attributes.put(attribute.getId(), attribute);
-		relations.neededBy.put(attribute.getId(), new ConcurrentHashMap<>());
-		relations.hadBy.put(attribute.getId(), new ConcurrentHashMap<>());
-		relations.moderatedBy.put(attribute.getId(), new ConcurrentHashMap<>());
-		publisher.publishAdd(Attribute.class, attribute.getId());
-	}
-
-	@Override
-	public void addAttributes(final Collection<Attribute> attributes) {
-		checkNotNull(attributes, "attributes");
-		attributes.parallelStream().forEach(this::addAttribute);
-	}
-
-	@Override
-	public Attribute getAttribute(final UniqueId<Attribute> id) {
-		checkNotNull(id, "id");
-		return entities.attributes.get(id);
-	}
-
-	@Override
-	public Set<Attribute> getAttributes() {
-		return entities.attributes.values().parallelStream().collect(Collectors.toCollection(HashSet::new));
-	}
-
-	@Override
-	public void removeAttribute(final UniqueId<Attribute> id) {
-		checkNotNull(id, "id");
-		if (entities.attributes.containsKey(id)) {
-			/* remove the attribute, all associated needs relations, all associated has relations, all associated moderates relations */
-			entities.attributes.remove(id);
-			remove(id, relations.neededBy, "neededBy", c -> removeNeeds(c, id), Role.class);
-			remove(id, relations.hadBy, "hadBy", c -> removeHas(c, id), Agent.class);
-			remove(id, relations.moderatedBy, "moderatedBy", c -> removeModerates(c, id), Pmf.class);
-			publisher.publishRemove(Attribute.class, id);
-		}
-	}
-
-	@Override
-	public void removeAttributes(final Collection<UniqueId<Attribute>> ids) {
-		checkNotNull(ids, "ids");
-		ids.parallelStream().forEach(this::removeAttribute);
-	}
-
-	@Override
-	public void removeAllAttributes() {
-		removeAttributes(entities.attributes.keySet());
-	}
-
-	@Override
 	public void addPmf(final Pmf pmf) {
 		checkNotExists(pmf, "pmf", entities.pmfs::containsKey);
 		/* add the pmf */
 		entities.pmfs.put(pmf.getId(), pmf);
-		publisher.publishAdd(Pmf.class, pmf.getId());
+		publisher.post(new PmfEvent(pmf, ADDED));
 	}
 
 	@Override
@@ -515,11 +383,11 @@ class DefaultOrganization implements Organization {
 		checkNotNull(id, "id");
 		if (entities.pmfs.containsKey(id)) {
 			/* remove the pmf, all associated moderates relations */
-			entities.pmfs.remove(id);
+			final Pmf pmf = entities.pmfs.remove(id);
 			if (relations.moderates.containsKey(id)) {
 				removeModerates(id, relations.moderates.get(id).getAttribute().getId());
 			}
-			publisher.publishRemove(Pmf.class, id);
+			publisher.post(new PmfEvent(pmf, REMOVED));
 		}
 	}
 
@@ -535,51 +403,206 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addCharacteristic(final Characteristic characteristic) {
-		checkNotExists(characteristic, "characteristic", entities.characteristics::containsKey);
-		/* add the characteristic, containedBy map */
-		entities.characteristics.put(characteristic.getId(), characteristic);
-		relations.containedBy.put(characteristic.getId(), new ConcurrentHashMap<>());
-		publisher.publishAdd(Characteristic.class, characteristic.getId());
+	public void addPolicy(final Policy policy) {
+		checkNotExists(policy, "policy", entities.policies::containsKey);
+		/* add the policy */
+		entities.policies.put(policy.getId(), policy);
+		publisher.post(new PolicyEvent(policy, ADDED));
 	}
 
 	@Override
-	public void addCharacteristics(final Collection<Characteristic> characteristics) {
-		checkNotNull(characteristics, "characteristic");
-		characteristics.parallelStream().forEach(this::addCharacteristic);
+	public void addPolicies(final Collection<Policy> policies) {
+		checkNotNull(policies, "policies");
+		policies.parallelStream().forEach(this::addPolicy);
 	}
 
 	@Override
-	public Characteristic getCharacteristic(final UniqueId<Characteristic> id) {
+	public Policy getPolicy(final UniqueId<Policy> id) {
 		checkNotNull(id, "id");
-		return entities.characteristics.get(id);
+		return entities.policies.get(id);
 	}
 
 	@Override
-	public Set<Characteristic> getCharacteristics() {
-		return entities.characteristics.values().parallelStream().collect(Collectors.toCollection(HashSet::new));
+	public Set<Policy> getPolicies() {
+		return entities.policies.values().parallelStream().collect(Collectors.toCollection(HashSet::new));
 	}
 
 	@Override
-	public void removeCharacteristic(final UniqueId<Characteristic> id) {
+	public void removePolicy(final UniqueId<Policy> id) {
 		checkNotNull(id, "id");
-		if (entities.characteristics.containsKey(id)) {
-			/* remove characteristics, all associated contains relations */
-			entities.characteristics.remove(id);
-			remove(id, relations.containedBy, "containedBy", c -> removeContains(c, id), Role.class);
-			publisher.publishRemove(Characteristic.class, id);
+		if (entities.policies.containsKey(id)) {
+			/* remove the policy */
+			final Policy policy = entities.policies.remove(id);
+			publisher.post(new PolicyEvent(policy, REMOVED));
 		}
 	}
 
 	@Override
-	public void removeCharacteristics(final Collection<UniqueId<Characteristic>> ids) {
+	public void removePolicies(final Collection<UniqueId<Policy>> ids) {
 		checkNotNull(ids, "ids");
-		ids.parallelStream().forEach(this::removeCharacteristic);
+		ids.parallelStream().forEach(this::removePolicy);
 	}
 
 	@Override
-	public void removeAllCharacteristic() {
-		removeCharacteristics(entities.characteristics.keySet());
+	public void removeAllPolicies() {
+		removePolicies(entities.policies.keySet());
+	}
+
+	@Override
+	public void addRole(final Role role) {
+		checkNotExists(role, "role", entities.roles::containsKey);
+		/* add the role, achieves map, requires map, needs map, uses, contains map */
+		entities.roles.put(role.getId(), role);
+		relations.achieves.put(role.getId(), new ConcurrentHashMap<>());
+		relations.requires.put(role.getId(), new ConcurrentHashMap<>());
+		relations.needs.put(role.getId(), new ConcurrentHashMap<>());
+		relations.uses.put(role.getId(), new ConcurrentHashMap<>());
+		relations.contains.put(role.getId(), new ConcurrentHashMap<>());
+		functions.goodnesses.put(role.getId(), goodness);
+		publisher.post(new RoleEvent(role, ADDED));
+	}
+
+	@Override
+	public void addRoles(final Collection<Role> roles) {
+		checkNotNull(roles, "roles");
+		roles.parallelStream().forEach(this::addRole);
+	}
+
+	@Override
+	public Role getRole(final UniqueId<Role> id) {
+		checkNotNull(id, "id");
+		return entities.roles.get(id);
+	}
+
+	@Override
+	public Set<Role> getRoles() {
+		return entities.roles.values().parallelStream().collect(Collectors.toCollection(HashSet::new));
+	}
+
+	@Override
+	public void removeRole(final UniqueId<Role> id) {
+		checkNotNull(id, "id");
+		if (entities.roles.containsKey(id)) {
+			/*
+			 * remove role, all associated achieves relations, all associated requires relations, all associated needs relations, all associated uses relations,
+			 * all associated contains relations
+			 */
+			final Role role = entities.roles.remove(id);
+			remove(id, relations.achieves, "achieves", c -> removeAchieves(id, c), SpecificationGoal.class);
+			remove(id, relations.requires, "requires", c -> removeRequires(id, c), Capability.class);
+			remove(id, relations.needs, "needs", c -> removeNeeds(id, c), Attribute.class);
+			remove(id, relations.uses, "uses", c -> removeUses(id, c), Pmf.class);
+			remove(id, relations.contains, "contains", c -> removeContains(id, c), Characteristic.class);
+			functions.goodnesses.remove(id);
+			publisher.post(new RoleEvent(role, REMOVED));
+		}
+	}
+
+	@Override
+	public void removeRoles(final Collection<UniqueId<Role>> ids) {
+		checkNotNull(ids, "ids");
+		ids.parallelStream().forEach(this::removeRole);
+	}
+
+	@Override
+	public void removeAllRoles() {
+		removeRoles(entities.roles.keySet());
+	}
+
+	@Override
+	public void addSpecificationGoal(final SpecificationGoal goal) {
+		checkNotExists(goal, "goal", entities.specificationGoals::containsKey);
+		/* add the specification goal, instanceGoalsBySpecificationGoal map, achievedBy map */
+		entities.specificationGoals.put(goal.getId(), goal);
+		entities.instanceGoalsBySpecificationGoal.put(goal.getId(), new ConcurrentHashMap<>());
+		relations.achievedBy.put(goal.getId(), new ConcurrentHashMap<>());
+		publisher.post(new SpecificationGoalEvent(goal, ADDED));
+	}
+
+	@Override
+	public void addSpecificationGoals(final Collection<SpecificationGoal> goals) {
+		checkNotNull(goals, "goals");
+		goals.parallelStream().forEach(this::addSpecificationGoal);
+	}
+
+	@Override
+	public SpecificationGoal getSpecificationGoal(final UniqueId<SpecificationGoal> id) {
+		checkNotNull(id, "id");
+		return entities.specificationGoals.get(id);
+	}
+
+	@Override
+	public Set<SpecificationGoal> getSpecificationGoals() {
+		return entities.specificationGoals.values().parallelStream().collect(Collectors.toCollection(HashSet::new));
+	}
+
+	@Override
+	public void removeSpecificationGoal(final UniqueId<SpecificationGoal> id) {
+		checkNotNull(id, "id");
+		if (entities.specificationGoals.containsKey(id)) {
+			/* remove the specification goal, all associated instance goals, all associated achieves relations */
+			final SpecificationGoal goal = entities.specificationGoals.remove(id);
+			remove(id, entities.instanceGoalsBySpecificationGoal, "instanceGoalsBySpecificationGoal", c -> removeInstanceGoal(c), InstanceGoal.class);
+			remove(id, relations.achievedBy, "achievedBy", c -> removeAchieves(c, id), Role.class);
+			publisher.post(new SpecificationGoalEvent(goal, REMOVED));
+		}
+	}
+
+	@Override
+	public void removeSpecificationGoals(final Collection<UniqueId<SpecificationGoal>> ids) {
+		checkNotNull(ids, "ids");
+		ids.parallelStream().forEach(this::removeSpecificationGoal);
+	}
+
+	@Override
+	public void removeAllSpecificationGoals() {
+		removeSpecificationGoals(entities.specificationGoals.keySet());
+	}
+
+	@Override
+	public void addAchieves(final UniqueId<Role> roleId, final UniqueId<SpecificationGoal> goalId) {
+		final Role role = checkExists(roleId, "roleId", this::getRole);
+		final SpecificationGoal goal = checkExists(goalId, "goalId", this::getSpecificationGoal);
+		final Map<UniqueId<SpecificationGoal>, Achieves> map = relations.achieves.computeIfAbsent(roleId, m -> {
+			logger.warn("achieves is missing ({} -> goal) entry", roleId);
+			return new ConcurrentHashMap<>();
+		});
+		if (map.containsKey(goalId)) {
+			/* relation already exists do nothing */
+			return;
+		}
+		final Achieves achieves = relationFactory.buildAchieves(role, goal);
+		map.put(goalId, achieves);
+		addBy(achieves, relations.achievedBy, "achievedBy", goalId, roleId);
+		publisher.post(new AchievesEvent(achieves, ADDED));
+	}
+
+	@Override
+	public Set<SpecificationGoal> getAchieves(final UniqueId<Role> id) {
+		checkNotNull(id, "id");
+		return get(id, relations.achieves, Achieves::getGoal);
+	}
+
+	@Override
+	public Set<Role> getAchievedBy(final UniqueId<SpecificationGoal> id) {
+		checkNotNull(id, "id");
+		return get(id, relations.achievedBy, Achieves::getRole);
+	}
+
+	@Override
+	public void removeAchieves(final UniqueId<Role> roleId, final UniqueId<SpecificationGoal> goalId) {
+		checkNotNull(roleId, "roleId");
+		checkNotNull(goalId, "goalId");
+		if (relations.achieves.containsKey(roleId) && relations.achieves.get(roleId).containsKey(goalId)) {
+			final Achieves achieves = relations.achieves.get(roleId).remove(goalId);
+			removeBy(goalId, roleId, relations.achievedBy, "achievedBy");
+			publisher.post(new AchievesEvent(achieves, REMOVED));
+		}
+	}
+
+	@Override
+	public void removeAllAchieves() {
+		removeAll(relations.achieves, this::removeAchieves, f -> f.getRole().getId(), f -> f.getGoal().getId());
 	}
 
 	@Override
@@ -591,7 +614,7 @@ class DefaultOrganization implements Organization {
 		/* add the assignment */
 		relations.assignments.put(assignment.getId(), assignment);
 		relations.assignmentsByAgent.get(assignment.getAgent().getId()).put(assignment.getId(), assignment);
-		publisher.publishAdd(Assignment.class, assignment.getAgent().getId(), assignment.getRole().getId(), assignment.getGoal().getId());
+		publisher.post(new AssignmentEvent(assignment, ADDED));
 	}
 
 	@Override
@@ -633,7 +656,7 @@ class DefaultOrganization implements Organization {
 				logger.warn("assignmentsByAgent is missing ({} -> assignment) entry", assignment.getAgent().getId());
 				relations.assignmentsByAgent.put(assignment.getAgent().getId(), new ConcurrentHashMap<>());
 			}
-			publisher.publishRemove(Assignment.class, assignment.getAgent().getId(), assignment.getRole().getId(), assignment.getGoal().getId());
+			publisher.post(new AssignmentEvent(assignment, REMOVED));
 		}
 	}
 
@@ -646,367 +669,6 @@ class DefaultOrganization implements Organization {
 	@Override
 	public void removeAllAssignments() {
 		removeAssignments(relations.assignments.keySet());
-	}
-
-	@Override
-	public void addAchieves(final UniqueId<Role> roleId, final UniqueId<SpecificationGoal> goalId) {
-		final Role role = checkExists(roleId, "roleId", this::getRole);
-		final SpecificationGoal goal = checkExists(goalId, "goalId", this::getSpecificationGoal);
-		final Map<UniqueId<SpecificationGoal>, Achieves> map = relations.achieves.computeIfAbsent(roleId, m -> {
-			logger.warn("achieves is missing ({} -> goal) entry", roleId);
-			return new ConcurrentHashMap<>();
-		});
-		if (map.containsKey(goalId)) {
-			/* relation already exists do nothing */
-			return;
-		}
-		final Achieves achieves = relationFactory.buildAchieves(role, goal);
-		map.put(goalId, achieves);
-		addBy(achieves, relations.achievedBy, "achievedBy", goalId, roleId);
-		publisher.publishAdd(Achieves.class, roleId, goalId);
-	}
-
-	@Override
-	public Set<SpecificationGoal> getAchieves(final UniqueId<Role> id) {
-		checkNotNull(id, "id");
-		return get(id, relations.achieves, Achieves::getGoal);
-	}
-
-	@Override
-	public Set<Role> getAchievedBy(final UniqueId<SpecificationGoal> id) {
-		checkNotNull(id, "id");
-		return get(id, relations.achievedBy, Achieves::getRole);
-	}
-
-	@Override
-	public void removeAchieves(final UniqueId<Role> roleId, final UniqueId<SpecificationGoal> goalId) {
-		checkNotNull(roleId, "roleId");
-		checkNotNull(goalId, "goalId");
-		if (relations.achieves.containsKey(roleId) && relations.achieves.get(roleId).containsKey(goalId)) {
-			relations.achieves.get(roleId).remove(goalId);
-			removeBy(goalId, roleId, relations.achievedBy, "achievedBy");
-			publisher.publishRemove(Achieves.class, roleId, goalId);
-		}
-	}
-
-	@Override
-	public void removeAllAchieves() {
-		removeAll(relations.achieves, this::removeAchieves, f -> f.getRole().getId(), f -> f.getGoal().getId());
-	}
-
-	@Override
-	public void addRequires(final UniqueId<Role> roleId, final UniqueId<Capability> capabilityId) {
-		final Role role = checkExists(roleId, "roleId", this::getRole);
-		final Capability capability = checkExists(capabilityId, "capabilityId", this::getCapability);
-		final Map<UniqueId<Capability>, Requires> map = relations.requires.computeIfAbsent(roleId, m -> {
-			logger.warn("requires is missing ({} -> capability) entry", roleId);
-			return new ConcurrentHashMap<>();
-		});
-		if (map.containsKey(capabilityId)) {
-			/* relation already exists do nothing */
-			return;
-		}
-		final Requires requires = relationFactory.buildRequires(role, capability);
-		map.put(capabilityId, requires);
-		addBy(requires, relations.requiredBy, "requiredBy", capabilityId, roleId);
-		publisher.publishAdd(Requires.class, roleId, capabilityId);
-	}
-
-	@Override
-	public Set<Capability> getRequires(final UniqueId<Role> id) {
-		checkNotNull(id, "id");
-		return get(id, relations.requires, Requires::getCapability);
-	}
-
-	@Override
-	public Set<Role> getRequiredBy(final UniqueId<Capability> id) {
-		checkNotNull(id, "id");
-		return get(id, relations.requiredBy, Requires::getRole);
-	}
-
-	@Override
-	public void removeRequires(final UniqueId<Role> roleId, final UniqueId<Capability> capabilityId) {
-		checkNotNull(roleId, "roleId");
-		checkNotNull(capabilityId, "capabilityId");
-		if (relations.requires.containsKey(roleId) && relations.requires.get(roleId).containsKey(capabilityId)) {
-			relations.requires.get(roleId).remove(capabilityId);
-			removeBy(capabilityId, roleId, relations.requiredBy, "requiredBy");
-			publisher.publishRemove(Requires.class, roleId, capabilityId);
-		}
-	}
-
-	@Override
-	public void removeAllRequires() {
-		removeAll(relations.requires, this::removeRequires, f -> f.getRole().getId(), f -> f.getCapability().getId());
-	}
-
-	@Override
-	public void addPossesses(final UniqueId<Agent> agentId, final UniqueId<Capability> capabilityId, final double score) {
-		final Agent agent = checkExists(agentId, "agentId", this::getAgent);
-		final Capability capability = checkExists(capabilityId, "capabilityId", this::getCapability);
-		final Map<UniqueId<Capability>, Possesses> map = relations.possesses.computeIfAbsent(agentId, m -> {
-			logger.warn("possesses is missing ({} -> capability) entry", agentId);
-			return new ConcurrentHashMap<>();
-		});
-		if (map.containsKey(capabilityId)) {
-			/* relation already exists do nothing */
-			return;
-		}
-		final Possesses possesses = relationFactory.buildPossesses(agent, capability, score);
-		map.put(capabilityId, possesses);
-		addBy(possesses, relations.possessedBy, "possessedBy", capabilityId, agentId);
-		publisher.publishAdd(Possesses.class, agentId, capabilityId); // FIXME add score
-	}
-
-	@Override
-	public Set<Capability> getPossesses(final UniqueId<Agent> id) {
-		checkNotNull(id, "id");
-		return get(id, relations.possesses, Possesses::getCapability);
-	}
-
-	@Override
-	public Set<Agent> getPossessedBy(final UniqueId<Capability> id) {
-		checkNotNull(id, "id");
-		return get(id, relations.possessedBy, Possesses::getAgent);
-	}
-
-	@Override
-	public double getPossessesScore(final UniqueId<Agent> agentId, final UniqueId<Capability> capabilityId) {
-		checkNotNull(agentId, "agentId");
-		checkNotNull(capabilityId, "capabilityId");
-		if (relations.possesses.containsKey(agentId) && relations.possesses.get(agentId).containsKey(capabilityId)) {
-			return relations.possesses.get(agentId).get(capabilityId).getScore();
-		}
-		return Possesses.MIN_SCORE;
-	}
-
-	@Override
-	public void setPossessesScore(final UniqueId<Agent> agentId, final UniqueId<Capability> capabilityId, final double score) {
-		checkNotNull(agentId, "agentId");
-		checkNotNull(capabilityId, "capabilityId");
-		if (relations.possesses.containsKey(agentId) && relations.possesses.get(agentId).containsKey(capabilityId)) {
-			relations.possesses.get(agentId).get(capabilityId).setScore(score);
-			publisher.publishChange(Possesses.class, agentId, capabilityId); // FIXME add score
-		}
-	}
-
-	@Override
-	public void removePossesses(final @NotNull UniqueId<Agent> agentId, final @NotNull UniqueId<Capability> capabilityId) {
-		checkNotNull(agentId, "agentId");
-		checkNotNull(capabilityId, "capabilityId");
-		if (relations.possesses.containsKey(agentId) && relations.possesses.get(agentId).containsKey(capabilityId)) {
-			relations.possesses.get(agentId).remove(capabilityId);
-			removeBy(capabilityId, agentId, relations.possessedBy, "possessedBy");
-			publisher.publishRemove(Possesses.class, agentId, capabilityId);
-		}
-	}
-
-	@Override
-	public void removeAllPossesses() {
-		removeAll(relations.possesses, this::removePossesses, f -> f.getAgent().getId(), f -> f.getCapability().getId());
-	}
-
-	@Override
-	public void addNeeds(final UniqueId<Role> roleId, final UniqueId<Attribute> attributeId) {
-		final Role role = checkExists(roleId, "roleId", this::getRole);
-		final Attribute attribute = checkExists(attributeId, "attributeId", this::getAttribute);
-		final Map<UniqueId<Attribute>, Needs> map = relations.needs.computeIfAbsent(roleId, m -> {
-			logger.warn("needs is missing ({} -> attribute) entry", roleId);
-			return new ConcurrentHashMap<>();
-		});
-		if (map.containsKey(attributeId)) {
-			/* relation already exists do nothing */
-			return;
-		}
-		final Needs needs = relationFactory.buildNeeds(role, attribute);
-		map.put(attributeId, needs);
-		addBy(needs, relations.neededBy, "neededBy", attributeId, roleId);
-		publisher.publishAdd(Needs.class, roleId, attributeId);
-	}
-
-	@Override
-	public Set<Attribute> getNeeds(final UniqueId<Role> id) {
-		checkNotNull(id, "id");
-		return get(id, relations.needs, Needs::getAttribute);
-	}
-
-	@Override
-	public Set<Role> getNeededBy(final UniqueId<Attribute> id) {
-		checkNotNull(id, "id");
-		return get(id, relations.neededBy, Needs::getRole);
-	}
-
-	@Override
-	public void removeNeeds(final UniqueId<Role> roleId, final UniqueId<Attribute> attributeId) {
-		checkNotNull(roleId, "roleId");
-		checkNotNull(attributeId, "attributeId");
-		if (relations.needs.containsKey(roleId) && relations.needs.get(roleId).containsKey(attributeId)) {
-			relations.needs.get(roleId).remove(attributeId);
-			removeBy(attributeId, roleId, relations.neededBy, "neededBy");
-			publisher.publishRemove(Needs.class, roleId, attributeId);
-		}
-	}
-
-	@Override
-	public void removeAllNeeds() {
-		removeAll(relations.needs, this::removeNeeds, f -> f.getRole().getId(), f -> f.getAttribute().getId());
-	}
-
-	@Override
-	public void addHas(final UniqueId<Agent> agentId, final UniqueId<Attribute> attributeId, final double value) {
-		final Agent agent = checkExists(agentId, "agentId", this::getAgent);
-		final Attribute attribute = checkExists(attributeId, "attributeId", this::getAttribute);
-		final Map<UniqueId<Attribute>, Has> map = relations.has.computeIfAbsent(agentId, m -> {
-			logger.warn("has is missing ({} -> attribute) entry", agentId);
-			return new ConcurrentHashMap<>();
-		});
-		if (map.containsKey(attributeId)) {
-			/* relation already exists do nothing */
-			return;
-		}
-		final Has has = relationFactory.buildHas(agent, attribute, value);
-		map.put(attributeId, has);
-		addBy(has, relations.hadBy, "hadBy", attributeId, agentId);
-		publisher.publishAdd(Has.class, agentId, attributeId); // FIXME add value
-	}
-
-	@Override
-	public Set<Attribute> getHas(final UniqueId<Agent> id) {
-		checkNotNull(id, "id");
-		return get(id, relations.has, Has::getAttribute);
-	}
-
-	@Override
-	public Set<Agent> getHadBy(final UniqueId<Attribute> id) {
-		checkNotNull(id, "id");
-		return get(id, relations.hadBy, Has::getAgent);
-	}
-
-	@Override
-	public Double getHasValue(final UniqueId<Agent> agentId, final UniqueId<Attribute> attributeId) {
-		checkNotNull(agentId, "agentId");
-		checkNotNull(attributeId, "attributeId");
-		if (relations.has.containsKey(agentId) && relations.has.get(agentId).containsKey(attributeId)) {
-			return relations.has.get(agentId).get(attributeId).getValue();
-		}
-		return null;
-	}
-
-	@Override
-	public void setHasValue(final UniqueId<Agent> agentId, final UniqueId<Attribute> attributeId, final double value) {
-		checkNotNull(agentId, "agentId");
-		checkNotNull(attributeId, "attributeId");
-		if (relations.has.containsKey(agentId) && relations.has.get(agentId).containsKey(attributeId)) {
-			relations.has.get(agentId).get(attributeId).setValue(value);
-			publisher.publishChange(Has.class, agentId, attributeId); // FIXME add value
-		}
-	}
-
-	@Override
-	public void removeHas(final UniqueId<Agent> agentId, final UniqueId<Attribute> attributeId) {
-		checkNotNull(agentId, "agentId");
-		checkNotNull(attributeId, "attributeId");
-		if (relations.has.containsKey(agentId) && relations.has.get(agentId).containsKey(attributeId)) {
-			relations.has.get(agentId).remove(attributeId);
-			removeBy(attributeId, agentId, relations.hadBy, "hadBy");
-			publisher.publishRemove(Has.class, agentId, attributeId);
-		}
-	}
-
-	@Override
-	public void removeAllHas() {
-		removeAll(relations.has, this::removeHas, f -> f.getAgent().getId(), f -> f.getAttribute().getId());
-	}
-
-	@Override
-	public void addUses(final UniqueId<Role> roleId, final UniqueId<Pmf> pmfId) {
-		final Role role = checkExists(roleId, "roleId", this::getRole);
-		final Pmf pmf = checkExists(pmfId, "pmfId", this::getPmf);
-		final Map<UniqueId<Pmf>, Uses> map = relations.uses.computeIfAbsent(roleId, m -> {
-			logger.warn("uses is missing ({} -> pmf) entry", roleId);
-			return new ConcurrentHashMap<>();
-		});
-		if (map.containsKey(pmfId)) {
-			/* relation already exists do nothing */
-			return;
-		}
-		final Uses uses = relationFactory.buildUses(role, pmf);
-		map.put(pmfId, uses);
-		addBy(uses, relations.usedBy, "usedBy", pmfId, roleId);
-		publisher.publishAdd(Uses.class, roleId, pmfId);
-	}
-
-	@Override
-	public Set<Pmf> getUses(final UniqueId<Role> id) {
-		checkNotNull(id, "id");
-		return get(id, relations.uses, Uses::getPmf);
-	}
-
-	@Override
-	public Set<Role> getUsedBy(final UniqueId<Pmf> id) {
-		checkNotNull(id, "id");
-		return get(id, relations.usedBy, Uses::getRole);
-	}
-
-	@Override
-	public void removeUses(final UniqueId<Role> roleId, final UniqueId<Pmf> pmfId) {
-		checkNotNull(roleId, "roleId");
-		checkNotNull(pmfId, "pmfId");
-		if (relations.uses.containsKey(roleId) && relations.uses.get(roleId).containsKey(pmfId)) {
-			relations.uses.get(roleId).remove(pmfId);
-			removeBy(pmfId, roleId, relations.usedBy, "usedBy");
-			publisher.publishRemove(Uses.class, roleId, pmfId);
-		}
-	}
-
-	@Override
-	public void removeAllUses() {
-		removeAll(relations.uses, this::removeUses, f -> f.getRole().getId(), f -> f.getPmf().getId());
-	}
-
-	@Override
-	public void addModerates(final UniqueId<Pmf> pmfId, final UniqueId<Attribute> attributeId) {
-		final Pmf pmf = checkExists(pmfId, "pmfId", this::getPmf);
-		final Attribute attribute = checkExists(attributeId, "attributeId", this::getAttribute);
-		if (relations.moderates.containsKey(pmfId)) {
-			return;
-		}
-		final Moderates moderates = relationFactory.buildModerates(pmf, attribute);
-		relations.moderates.put(pmfId, moderates);
-		addBy(moderates, relations.moderatedBy, "moderatedBy", attributeId, pmfId);
-		publisher.publishAdd(Moderates.class, pmfId, attributeId);
-	}
-
-	@Override
-	public Attribute getModerates(final UniqueId<Pmf> id) {
-		checkNotNull(id, "id");
-		if (relations.moderates.containsKey(id)) {
-			return relations.moderates.get(id).getAttribute();
-		}
-		return null;
-	}
-
-	@Override
-	public Set<Pmf> getModeratedBy(final UniqueId<Attribute> id) {
-		checkNotNull(id, "id");
-		return get(id, relations.moderatedBy, Moderates::getPmf);
-	}
-
-	@Override
-	public void removeModerates(final UniqueId<Pmf> pmfId, final UniqueId<Attribute> attributeId) {
-		checkNotNull(pmfId, "pmfId");
-		checkNotNull(attributeId, "attributeId");
-		if (relations.moderates.containsKey(pmfId)) {
-			relations.moderates.remove(pmfId);
-			removeBy(attributeId, pmfId, relations.moderatedBy, "moderatedBy");
-			publisher.publishRemove(Moderates.class, pmfId, attributeId);
-		}
-	}
-
-	@Override
-	public void removeAllModerates() {
-		relations.moderates.values().parallelStream().collect(Collectors.toCollection(HashSet::new)).parallelStream()
-				.forEach(c -> removeModerates(c.getPmf().getId(), c.getAttribute().getId()));
 	}
 
 	@Override
@@ -1024,7 +686,7 @@ class DefaultOrganization implements Organization {
 		final Contains contains = relationFactory.buildContains(role, characteristic, value);
 		map.put(characteristicId, contains);
 		addBy(contains, relations.containedBy, "containedBy", characteristicId, roleId);
-		publisher.publishAdd(Contains.class, roleId, characteristicId); // FIXME add value
+		publisher.post(new ContainsEvent(contains, ADDED));
 	}
 
 	@Override
@@ -1054,8 +716,9 @@ class DefaultOrganization implements Organization {
 		checkNotNull(roleId, "roleId");
 		checkNotNull(characteristicId, "characteristicId");
 		if (relations.contains.containsKey(roleId) && relations.contains.get(roleId).containsKey(characteristicId)) {
-			relations.contains.get(roleId).get(characteristicId).setValue(value);
-			publisher.publishChange(Contains.class, roleId, characteristicId); // FIXME add value
+			final Contains contains = relations.contains.get(roleId).get(characteristicId);
+			contains.setValue(value);
+			publisher.post(new ContainsEvent(contains, CHANGED));
 		}
 	}
 
@@ -1064,15 +727,332 @@ class DefaultOrganization implements Organization {
 		checkNotNull(roleId, "roleId");
 		checkNotNull(characteristicId, "characteristicId");
 		if (relations.contains.containsKey(roleId) && relations.contains.get(roleId).containsKey(characteristicId)) {
-			relations.contains.get(roleId).remove(characteristicId);
+			final Contains contains = relations.contains.get(roleId).remove(characteristicId);
 			removeBy(characteristicId, roleId, relations.containedBy, "containedBy");
-			publisher.publishRemove(Contains.class, roleId, characteristicId);
+			publisher.post(new ContainsEvent(contains, REMOVED));
 		}
 	}
 
 	@Override
 	public void removeAllContains() {
 		removeAll(relations.contains, this::removeContains, f -> f.getRole().getId(), f -> f.getCharacteristic().getId());
+	}
+
+	@Override
+	public void addHas(final UniqueId<Agent> agentId, final UniqueId<Attribute> attributeId, final double value) {
+		final Agent agent = checkExists(agentId, "agentId", this::getAgent);
+		final Attribute attribute = checkExists(attributeId, "attributeId", this::getAttribute);
+		final Map<UniqueId<Attribute>, Has> map = relations.has.computeIfAbsent(agentId, m -> {
+			logger.warn("has is missing ({} -> attribute) entry", agentId);
+			return new ConcurrentHashMap<>();
+		});
+		if (map.containsKey(attributeId)) {
+			/* relation already exists do nothing */
+			return;
+		}
+		final Has has = relationFactory.buildHas(agent, attribute, value);
+		map.put(attributeId, has);
+		addBy(has, relations.hadBy, "hadBy", attributeId, agentId);
+		publisher.post(new HasEvent(has, ADDED));
+	}
+
+	@Override
+	public Set<Attribute> getHas(final UniqueId<Agent> id) {
+		checkNotNull(id, "id");
+		return get(id, relations.has, Has::getAttribute);
+	}
+
+	@Override
+	public Set<Agent> getHadBy(final UniqueId<Attribute> id) {
+		checkNotNull(id, "id");
+		return get(id, relations.hadBy, Has::getAgent);
+	}
+
+	@Override
+	public Double getHasValue(final UniqueId<Agent> agentId, final UniqueId<Attribute> attributeId) {
+		checkNotNull(agentId, "agentId");
+		checkNotNull(attributeId, "attributeId");
+		if (relations.has.containsKey(agentId) && relations.has.get(agentId).containsKey(attributeId)) {
+			return relations.has.get(agentId).get(attributeId).getValue();
+		}
+		return null;
+	}
+
+	@Override
+	public void setHasValue(final UniqueId<Agent> agentId, final UniqueId<Attribute> attributeId, final double value) {
+		checkNotNull(agentId, "agentId");
+		checkNotNull(attributeId, "attributeId");
+		if (relations.has.containsKey(agentId) && relations.has.get(agentId).containsKey(attributeId)) {
+			final Has has = relations.has.get(agentId).get(attributeId);
+			has.setValue(value);
+			publisher.post(new HasEvent(has, CHANGED));
+		}
+	}
+
+	@Override
+	public void removeHas(final UniqueId<Agent> agentId, final UniqueId<Attribute> attributeId) {
+		checkNotNull(agentId, "agentId");
+		checkNotNull(attributeId, "attributeId");
+		if (relations.has.containsKey(agentId) && relations.has.get(agentId).containsKey(attributeId)) {
+			final Has has = relations.has.get(agentId).remove(attributeId);
+			removeBy(attributeId, agentId, relations.hadBy, "hadBy");
+			publisher.post(new HasEvent(has, REMOVED));
+		}
+	}
+
+	@Override
+	public void removeAllHas() {
+		removeAll(relations.has, this::removeHas, f -> f.getAgent().getId(), f -> f.getAttribute().getId());
+	}
+
+	@Override
+	public void addModerates(final UniqueId<Pmf> pmfId, final UniqueId<Attribute> attributeId) {
+		final Pmf pmf = checkExists(pmfId, "pmfId", this::getPmf);
+		final Attribute attribute = checkExists(attributeId, "attributeId", this::getAttribute);
+		if (relations.moderates.containsKey(pmfId)) {
+			return;
+		}
+		final Moderates moderates = relationFactory.buildModerates(pmf, attribute);
+		relations.moderates.put(pmfId, moderates);
+		addBy(moderates, relations.moderatedBy, "moderatedBy", attributeId, pmfId);
+		publisher.post(new ModeratesEvent(moderates, ADDED));
+	}
+
+	@Override
+	public Attribute getModerates(final UniqueId<Pmf> id) {
+		checkNotNull(id, "id");
+		if (relations.moderates.containsKey(id)) {
+			return relations.moderates.get(id).getAttribute();
+		}
+		return null;
+	}
+
+	@Override
+	public Set<Pmf> getModeratedBy(final UniqueId<Attribute> id) {
+		checkNotNull(id, "id");
+		return get(id, relations.moderatedBy, Moderates::getPmf);
+	}
+
+	@Override
+	public void removeModerates(final UniqueId<Pmf> pmfId, final UniqueId<Attribute> attributeId) {
+		checkNotNull(pmfId, "pmfId");
+		checkNotNull(attributeId, "attributeId");
+		if (relations.moderates.containsKey(pmfId)) {
+			final Moderates moderates = relations.moderates.remove(pmfId);
+			removeBy(attributeId, pmfId, relations.moderatedBy, "moderatedBy");
+			publisher.post(new ModeratesEvent(moderates, REMOVED));
+		}
+	}
+
+	@Override
+	public void removeAllModerates() {
+		relations.moderates.values().parallelStream().collect(Collectors.toCollection(HashSet::new)).parallelStream()
+				.forEach(c -> removeModerates(c.getPmf().getId(), c.getAttribute().getId()));
+	}
+
+	@Override
+	public void addNeeds(final UniqueId<Role> roleId, final UniqueId<Attribute> attributeId) {
+		final Role role = checkExists(roleId, "roleId", this::getRole);
+		final Attribute attribute = checkExists(attributeId, "attributeId", this::getAttribute);
+		final Map<UniqueId<Attribute>, Needs> map = relations.needs.computeIfAbsent(roleId, m -> {
+			logger.warn("needs is missing ({} -> attribute) entry", roleId);
+			return new ConcurrentHashMap<>();
+		});
+		if (map.containsKey(attributeId)) {
+			/* relation already exists do nothing */
+			return;
+		}
+		final Needs needs = relationFactory.buildNeeds(role, attribute);
+		map.put(attributeId, needs);
+		addBy(needs, relations.neededBy, "neededBy", attributeId, roleId);
+		publisher.post(new NeedsEvent(needs, ADDED));
+	}
+
+	@Override
+	public Set<Attribute> getNeeds(final UniqueId<Role> id) {
+		checkNotNull(id, "id");
+		return get(id, relations.needs, Needs::getAttribute);
+	}
+
+	@Override
+	public Set<Role> getNeededBy(final UniqueId<Attribute> id) {
+		checkNotNull(id, "id");
+		return get(id, relations.neededBy, Needs::getRole);
+	}
+
+	@Override
+	public void removeNeeds(final UniqueId<Role> roleId, final UniqueId<Attribute> attributeId) {
+		checkNotNull(roleId, "roleId");
+		checkNotNull(attributeId, "attributeId");
+		if (relations.needs.containsKey(roleId) && relations.needs.get(roleId).containsKey(attributeId)) {
+			final Needs needs = relations.needs.get(roleId).remove(attributeId);
+			removeBy(attributeId, roleId, relations.neededBy, "neededBy");
+			publisher.post(new NeedsEvent(needs, REMOVED));
+		}
+	}
+
+	@Override
+	public void removeAllNeeds() {
+		removeAll(relations.needs, this::removeNeeds, f -> f.getRole().getId(), f -> f.getAttribute().getId());
+	}
+
+	@Override
+	public void addPossesses(final UniqueId<Agent> agentId, final UniqueId<Capability> capabilityId, final double score) {
+		final Agent agent = checkExists(agentId, "agentId", this::getAgent);
+		final Capability capability = checkExists(capabilityId, "capabilityId", this::getCapability);
+		final Map<UniqueId<Capability>, Possesses> map = relations.possesses.computeIfAbsent(agentId, m -> {
+			logger.warn("possesses is missing ({} -> capability) entry", agentId);
+			return new ConcurrentHashMap<>();
+		});
+		if (map.containsKey(capabilityId)) {
+			/* relation already exists do nothing */
+			return;
+		}
+		final Possesses possesses = relationFactory.buildPossesses(agent, capability, score);
+		map.put(capabilityId, possesses);
+		addBy(possesses, relations.possessedBy, "possessedBy", capabilityId, agentId);
+		publisher.post(new PossessesEvent(possesses, ADDED));
+	}
+
+	@Override
+	public Set<Capability> getPossesses(final UniqueId<Agent> id) {
+		checkNotNull(id, "id");
+		return get(id, relations.possesses, Possesses::getCapability);
+	}
+
+	@Override
+	public Set<Agent> getPossessedBy(final UniqueId<Capability> id) {
+		checkNotNull(id, "id");
+		return get(id, relations.possessedBy, Possesses::getAgent);
+	}
+
+	@Override
+	public double getPossessesScore(final UniqueId<Agent> agentId, final UniqueId<Capability> capabilityId) {
+		checkNotNull(agentId, "agentId");
+		checkNotNull(capabilityId, "capabilityId");
+		if (relations.possesses.containsKey(agentId) && relations.possesses.get(agentId).containsKey(capabilityId)) {
+			return relations.possesses.get(agentId).get(capabilityId).getScore();
+		}
+		return Possesses.MIN_SCORE;
+	}
+
+	@Override
+	public void setPossessesScore(final UniqueId<Agent> agentId, final UniqueId<Capability> capabilityId, final double score) {
+		checkNotNull(agentId, "agentId");
+		checkNotNull(capabilityId, "capabilityId");
+		if (relations.possesses.containsKey(agentId) && relations.possesses.get(agentId).containsKey(capabilityId)) {
+			final Possesses possesses = relations.possesses.get(agentId).get(capabilityId);
+			possesses.setScore(score);
+			publisher.post(new PossessesEvent(possesses, CHANGED));
+		}
+	}
+
+	@Override
+	public void removePossesses(final @NotNull UniqueId<Agent> agentId, final @NotNull UniqueId<Capability> capabilityId) {
+		checkNotNull(agentId, "agentId");
+		checkNotNull(capabilityId, "capabilityId");
+		if (relations.possesses.containsKey(agentId) && relations.possesses.get(agentId).containsKey(capabilityId)) {
+			final Possesses possesses = relations.possesses.get(agentId).remove(capabilityId);
+			removeBy(capabilityId, agentId, relations.possessedBy, "possessedBy");
+			publisher.post(new PossessesEvent(possesses, REMOVED));
+		}
+	}
+
+	@Override
+	public void removeAllPossesses() {
+		removeAll(relations.possesses, this::removePossesses, f -> f.getAgent().getId(), f -> f.getCapability().getId());
+	}
+
+	@Override
+	public void addRequires(final UniqueId<Role> roleId, final UniqueId<Capability> capabilityId) {
+		final Role role = checkExists(roleId, "roleId", this::getRole);
+		final Capability capability = checkExists(capabilityId, "capabilityId", this::getCapability);
+		final Map<UniqueId<Capability>, Requires> map = relations.requires.computeIfAbsent(roleId, m -> {
+			logger.warn("requires is missing ({} -> capability) entry", roleId);
+			return new ConcurrentHashMap<>();
+		});
+		if (map.containsKey(capabilityId)) {
+			/* relation already exists do nothing */
+			return;
+		}
+		final Requires requires = relationFactory.buildRequires(role, capability);
+		map.put(capabilityId, requires);
+		addBy(requires, relations.requiredBy, "requiredBy", capabilityId, roleId);
+		publisher.post(new RequiresEvent(requires, ADDED));
+	}
+
+	@Override
+	public Set<Capability> getRequires(final UniqueId<Role> id) {
+		checkNotNull(id, "id");
+		return get(id, relations.requires, Requires::getCapability);
+	}
+
+	@Override
+	public Set<Role> getRequiredBy(final UniqueId<Capability> id) {
+		checkNotNull(id, "id");
+		return get(id, relations.requiredBy, Requires::getRole);
+	}
+
+	@Override
+	public void removeRequires(final UniqueId<Role> roleId, final UniqueId<Capability> capabilityId) {
+		checkNotNull(roleId, "roleId");
+		checkNotNull(capabilityId, "capabilityId");
+		if (relations.requires.containsKey(roleId) && relations.requires.get(roleId).containsKey(capabilityId)) {
+			final Requires requires = relations.requires.get(roleId).remove(capabilityId);
+			removeBy(capabilityId, roleId, relations.requiredBy, "requiredBy");
+			publisher.post(new RequiresEvent(requires, REMOVED));
+		}
+	}
+
+	@Override
+	public void removeAllRequires() {
+		removeAll(relations.requires, this::removeRequires, f -> f.getRole().getId(), f -> f.getCapability().getId());
+	}
+
+	@Override
+	public void addUses(final UniqueId<Role> roleId, final UniqueId<Pmf> pmfId) {
+		final Role role = checkExists(roleId, "roleId", this::getRole);
+		final Pmf pmf = checkExists(pmfId, "pmfId", this::getPmf);
+		final Map<UniqueId<Pmf>, Uses> map = relations.uses.computeIfAbsent(roleId, m -> {
+			logger.warn("uses is missing ({} -> pmf) entry", roleId);
+			return new ConcurrentHashMap<>();
+		});
+		if (map.containsKey(pmfId)) {
+			/* relation already exists do nothing */
+			return;
+		}
+		final Uses uses = relationFactory.buildUses(role, pmf);
+		map.put(pmfId, uses);
+		addBy(uses, relations.usedBy, "usedBy", pmfId, roleId);
+		publisher.post(new UsesEvent(uses, ADDED));
+	}
+
+	@Override
+	public Set<Pmf> getUses(final UniqueId<Role> id) {
+		checkNotNull(id, "id");
+		return get(id, relations.uses, Uses::getPmf);
+	}
+
+	@Override
+	public Set<Role> getUsedBy(final UniqueId<Pmf> id) {
+		checkNotNull(id, "id");
+		return get(id, relations.usedBy, Uses::getRole);
+	}
+
+	@Override
+	public void removeUses(final UniqueId<Role> roleId, final UniqueId<Pmf> pmfId) {
+		checkNotNull(roleId, "roleId");
+		checkNotNull(pmfId, "pmfId");
+		if (relations.uses.containsKey(roleId) && relations.uses.get(roleId).containsKey(pmfId)) {
+			final Uses uses = relations.uses.get(roleId).remove(pmfId);
+			removeBy(pmfId, roleId, relations.usedBy, "usedBy");
+			publisher.post(new UsesEvent(uses, REMOVED));
+		}
+	}
+
+	@Override
+	public void removeAllUses() {
+		removeAll(relations.uses, this::removeUses, f -> f.getRole().getId(), f -> f.getPmf().getId());
 	}
 
 	@Override

@@ -2,7 +2,7 @@ package event;
 
 /**
  * The {@linkplain Mediator} interface defines the APIs for being a mediator between publishers and subscribers.
- * 
+ *
  * @author Christopher Zhong
  * @since 7.0.0
  */
@@ -26,7 +26,7 @@ public interface Mediator {
 
 	/**
 	 * Unregisters a {@linkplain Subscriber} from this {@linkplain Mediator}.
-	 * 
+	 *
 	 * @param subscriber
 	 *            the {@linkplain Subscriber}.
 	 */
