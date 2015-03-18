@@ -1,4 +1,4 @@
-package model.organization.profiling;
+package profiling;
 
 import javax.interceptor.Interceptor;
 

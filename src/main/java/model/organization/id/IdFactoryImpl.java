@@ -1,6 +1,6 @@
 package model.organization.id;
 
-import model.organization.profiling.DoNotProfile;
+import profiling.DoNotProfile;
 
 @DoNotProfile
 class IdFactoryImpl implements IdFactory {
