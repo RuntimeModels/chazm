@@ -1,6 +1,6 @@
 package model.organization.entity;
 
-import static model.organization.Checks.checkNotNull;
+import static model.organization.validation.Checks.checkNotNull;
 
 import javax.validation.constraints.NotNull;
 

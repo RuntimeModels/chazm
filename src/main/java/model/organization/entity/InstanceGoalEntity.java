@@ -1,6 +1,6 @@
 package model.organization.entity;
 
-import static model.organization.Checks.checkNotNull;
+import static model.organization.validation.Checks.checkNotNull;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -13,8 +13,8 @@ import com.google.inject.assistedinject.Assisted;
 class InstanceGoalEntity extends AbstractEntity<InstanceGoal> implements InstanceGoal {
 
 	/**
-	 * The {@linkplain Id} class extends the {@link AbstractId} by using two {@link UniqueId}s; the {@linkplain UniqueId} of a {@linkplain SpecificationGoal}
-	 * and the {@linkplain UniqueId} of instance portion of the {@linkplain InstanceGoal}.
+	 * The {@linkplain Id} class extends the {@linkplain AbstractId} by using two {@linkplain UniqueId}s; the {@linkplain UniqueId} of a
+	 * {@linkplain SpecificationGoal} and the {@linkplain UniqueId} of instance portion of the {@linkplain InstanceGoal}.
 	 *
 	 * @author Christopher Zhong
 	 * @since 4.0
