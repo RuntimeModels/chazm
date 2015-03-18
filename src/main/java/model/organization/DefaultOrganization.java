@@ -44,7 +44,7 @@ import model.organization.relation.Uses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-class OrganizationImpl implements Organization {
+class DefaultOrganization implements Organization {
 
 	private static class Entities {
 
@@ -97,13 +97,15 @@ class OrganizationImpl implements Organization {
 	private final RelationFactory relationFactory;
 	private final Goodness goodness;
 	private final Effectiveness effectiveness;
-	private final Publisher publisher = new Publisher() {}; // TODO switch to inject as parameter in constructor
+	private final Publisher publisher;
 
 	@Inject
-	OrganizationImpl(@NotNull final RelationFactory relationFactory, @NotNull final Goodness goodness, @NotNull final Effectiveness effectiveness) {
+	DefaultOrganization(@NotNull final RelationFactory relationFactory, @NotNull final Goodness goodness, @NotNull final Effectiveness effectiveness,
+			@NotNull final Publisher publisher) {
 		this.relationFactory = relationFactory;
 		this.goodness = goodness;
 		this.effectiveness = effectiveness;
+		this.publisher = publisher;
 	}
 
 	@Override
