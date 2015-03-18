@@ -1,8 +1,8 @@
 package model.organization;
 
-import static model.organization.Checks.checkExists;
-import static model.organization.Checks.checkNotExists;
-import static model.organization.Checks.checkNotNull;
+import static model.organization.validation.Checks.checkExists;
+import static model.organization.validation.Checks.checkNotExists;
+import static model.organization.validation.Checks.checkNotNull;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -27,6 +27,8 @@ import model.organization.entity.Policy;
 import model.organization.entity.Role;
 import model.organization.entity.SpecificationGoal;
 import model.organization.event.Publisher;
+import model.organization.function.Effectiveness;
+import model.organization.function.Goodness;
 import model.organization.id.UniqueId;
 import model.organization.relation.Achieves;
 import model.organization.relation.Assignment;
@@ -42,7 +44,7 @@ import model.organization.relation.Uses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-class OrganizationImpl implements Organization, Publisher {
+class OrganizationImpl implements Organization {
 
 	private static class Entities {
 
@@ -82,15 +84,26 @@ class OrganizationImpl implements Organization, Publisher {
 
 	}
 
+	private static class Functions {
+
+		private final Map<UniqueId<Role>, Goodness> goodnesses = new ConcurrentHashMap<>();
+
+	}
+
 	private static final Logger logger = LoggerFactory.getLogger(Organization.class);
 	private final Entities entities = new Entities();
 	private final Relations relations = new Relations();
+	private final Functions functions = new Functions();
 	private final RelationFactory relationFactory;
-	private Publisher publisher;
+	private final Goodness goodness;
+	private final Effectiveness effectiveness;
+	private final Publisher publisher = new Publisher() {}; // TODO switch to inject as parameter in constructor
 
 	@Inject
-	OrganizationImpl(@NotNull final RelationFactory relationFactory) {
+	OrganizationImpl(@NotNull final RelationFactory relationFactory, @NotNull final Goodness goodness, @NotNull final Effectiveness effectiveness) {
 		this.relationFactory = relationFactory;
+		this.goodness = goodness;
+		this.effectiveness = effectiveness;
 	}
 
 	@Override
@@ -100,7 +113,7 @@ class OrganizationImpl implements Organization, Publisher {
 		entities.specificationGoals.put(goal.getId(), goal);
 		entities.instanceGoalsBySpecificationGoal.put(goal.getId(), new ConcurrentHashMap<>());
 		relations.achievedBy.put(goal.getId(), new ConcurrentHashMap<>());
-		publishAdd(SpecificationGoal.class, goal.getId());
+		publisher.publishAdd(SpecificationGoal.class, goal.getId());
 	}
 
 	@Override
@@ -128,7 +141,7 @@ class OrganizationImpl implements Organization, Publisher {
 			entities.specificationGoals.remove(id);
 			remove(id, entities.instanceGoalsBySpecificationGoal, "instanceGoalsBySpecificationGoal", c -> removeInstanceGoal(c), InstanceGoal.class);
 			remove(id, relations.achievedBy, "achievedBy", c -> removeAchieves(c, id), Role.class);
-			publishRemove(SpecificationGoal.class, id);
+			publisher.publishRemove(SpecificationGoal.class, id);
 		}
 	}
 
@@ -153,7 +166,8 @@ class OrganizationImpl implements Organization, Publisher {
 		relations.needs.put(role.getId(), new ConcurrentHashMap<>());
 		relations.uses.put(role.getId(), new ConcurrentHashMap<>());
 		relations.contains.put(role.getId(), new ConcurrentHashMap<>());
-		publishAdd(Role.class, role.getId());
+		functions.goodnesses.put(role.getId(), goodness);
+		publisher.publishAdd(Role.class, role.getId());
 	}
 
 	@Override
@@ -187,7 +201,8 @@ class OrganizationImpl implements Organization, Publisher {
 			remove(id, relations.needs, "needs", c -> removeNeeds(id, c), Attribute.class);
 			remove(id, relations.uses, "uses", c -> removeUses(id, c), Pmf.class);
 			remove(id, relations.contains, "contains", c -> removeContains(id, c), Characteristic.class);
-			publishRemove(Role.class, id);
+			functions.goodnesses.remove(id);
+			publisher.publishRemove(Role.class, id);
 		}
 	}
 
@@ -210,7 +225,7 @@ class OrganizationImpl implements Organization, Publisher {
 		relations.assignmentsByAgent.put(agent.getId(), new ConcurrentHashMap<>());
 		relations.possesses.put(agent.getId(), new ConcurrentHashMap<>());
 		relations.has.put(agent.getId(), new ConcurrentHashMap<>());
-		publishAdd(Agent.class, agent.getId());
+		publisher.publishAdd(Agent.class, agent.getId());
 	}
 
 	@Override
@@ -239,7 +254,7 @@ class OrganizationImpl implements Organization, Publisher {
 			remove(id, relations.assignmentsByAgent, "assignmentsByAgent", c -> removeAssignment(c), Assignment.class);
 			remove(id, relations.possesses, "possesses", c -> removePossesses(id, c), Capability.class);
 			remove(id, relations.has, "possesses", c -> removeHas(id, c), Attribute.class);
-			publishRemove(Agent.class, id);
+			publisher.publishRemove(Agent.class, id);
 		}
 	}
 
@@ -261,7 +276,7 @@ class OrganizationImpl implements Organization, Publisher {
 		entities.capabilities.put(capability.getId(), capability);
 		relations.requiredBy.put(capability.getId(), new ConcurrentHashMap<>());
 		relations.possessedBy.put(capability.getId(), new ConcurrentHashMap<>());
-		publishAdd(Capability.class, capability.getId());
+		publisher.publishAdd(Capability.class, capability.getId());
 	}
 
 	@Override
@@ -289,7 +304,7 @@ class OrganizationImpl implements Organization, Publisher {
 			entities.capabilities.remove(id);
 			remove(id, relations.requiredBy, "requiredBy", c -> removeRequires(c, id), Role.class);
 			remove(id, relations.possessedBy, "possessedBy", c -> removePossesses(c, id), Agent.class);
-			publishRemove(Capability.class, id);
+			publisher.publishRemove(Capability.class, id);
 		}
 	}
 
@@ -309,7 +324,7 @@ class OrganizationImpl implements Organization, Publisher {
 		checkNotExists(policy, "policy", entities.policies::containsKey);
 		/* add the policy */
 		entities.policies.put(policy.getId(), policy);
-		publishAdd(Policy.class, policy.getId());
+		publisher.publishAdd(Policy.class, policy.getId());
 	}
 
 	@Override
@@ -335,7 +350,7 @@ class OrganizationImpl implements Organization, Publisher {
 		if (entities.policies.containsKey(id)) {
 			/* remove the policy */
 			entities.policies.remove(id);
-			publishRemove(Policy.class, id);
+			publisher.publishRemove(Policy.class, id);
 		}
 	}
 
@@ -363,7 +378,7 @@ class OrganizationImpl implements Organization, Publisher {
 			entities.instanceGoalsBySpecificationGoal.put(goal.getGoal().getId(), map);
 		}
 		map.put(goal.getId(), goal);
-		publishAdd(InstanceGoal.class, goal.getId());
+		publisher.publishAdd(InstanceGoal.class, goal.getId());
 	}
 
 	@Override
@@ -400,7 +415,7 @@ class OrganizationImpl implements Organization, Publisher {
 				logger.warn("instanceGoalsBySpecificationGoal is missing ({} -> InstanceGoal) entry", goal.getGoal().getId());
 				entities.instanceGoalsBySpecificationGoal.put(goal.getGoal().getId(), new ConcurrentHashMap<>());
 			}
-			publishRemove(InstanceGoal.class, id);
+			publisher.publishRemove(InstanceGoal.class, id);
 		}
 	}
 
@@ -423,7 +438,7 @@ class OrganizationImpl implements Organization, Publisher {
 		relations.neededBy.put(attribute.getId(), new ConcurrentHashMap<>());
 		relations.hadBy.put(attribute.getId(), new ConcurrentHashMap<>());
 		relations.moderatedBy.put(attribute.getId(), new ConcurrentHashMap<>());
-		publishAdd(Attribute.class, attribute.getId());
+		publisher.publishAdd(Attribute.class, attribute.getId());
 	}
 
 	@Override
@@ -452,7 +467,7 @@ class OrganizationImpl implements Organization, Publisher {
 			remove(id, relations.neededBy, "neededBy", c -> removeNeeds(c, id), Role.class);
 			remove(id, relations.hadBy, "hadBy", c -> removeHas(c, id), Agent.class);
 			remove(id, relations.moderatedBy, "moderatedBy", c -> removeModerates(c, id), Pmf.class);
-			publishRemove(Attribute.class, id);
+			publisher.publishRemove(Attribute.class, id);
 		}
 	}
 
@@ -472,7 +487,7 @@ class OrganizationImpl implements Organization, Publisher {
 		checkNotExists(pmf, "pmf", entities.pmfs::containsKey);
 		/* add the pmf */
 		entities.pmfs.put(pmf.getId(), pmf);
-		publishAdd(Pmf.class, pmf.getId());
+		publisher.publishAdd(Pmf.class, pmf.getId());
 	}
 
 	@Override
@@ -501,7 +516,7 @@ class OrganizationImpl implements Organization, Publisher {
 			if (relations.moderates.containsKey(id)) {
 				removeModerates(id, relations.moderates.get(id).getAttribute().getId());
 			}
-			publishRemove(Pmf.class, id);
+			publisher.publishRemove(Pmf.class, id);
 		}
 	}
 
@@ -522,7 +537,7 @@ class OrganizationImpl implements Organization, Publisher {
 		/* add the characteristic, containedBy map */
 		entities.characteristics.put(characteristic.getId(), characteristic);
 		relations.containedBy.put(characteristic.getId(), new ConcurrentHashMap<>());
-		publishAdd(Characteristic.class, characteristic.getId());
+		publisher.publishAdd(Characteristic.class, characteristic.getId());
 	}
 
 	@Override
@@ -549,7 +564,7 @@ class OrganizationImpl implements Organization, Publisher {
 			/* remove characteristics, all associated contains relations */
 			entities.characteristics.remove(id);
 			remove(id, relations.containedBy, "containedBy", c -> removeContains(c, id), Role.class);
-			publishRemove(Characteristic.class, id);
+			publisher.publishRemove(Characteristic.class, id);
 		}
 	}
 
@@ -573,7 +588,7 @@ class OrganizationImpl implements Organization, Publisher {
 		/* add the assignment */
 		relations.assignments.put(assignment.getId(), assignment);
 		relations.assignmentsByAgent.get(assignment.getAgent().getId()).put(assignment.getId(), assignment);
-		publishAdd(Assignment.class, assignment.getAgent().getId(), assignment.getRole().getId(), assignment.getGoal().getId());
+		publisher.publishAdd(Assignment.class, assignment.getAgent().getId(), assignment.getRole().getId(), assignment.getGoal().getId());
 	}
 
 	@Override
@@ -615,7 +630,7 @@ class OrganizationImpl implements Organization, Publisher {
 				logger.warn("assignmentsByAgent is missing ({} -> assignment) entry", assignment.getAgent().getId());
 				relations.assignmentsByAgent.put(assignment.getAgent().getId(), new ConcurrentHashMap<>());
 			}
-			publishRemove(Assignment.class, assignment.getAgent().getId(), assignment.getRole().getId(), assignment.getGoal().getId());
+			publisher.publishRemove(Assignment.class, assignment.getAgent().getId(), assignment.getRole().getId(), assignment.getGoal().getId());
 		}
 	}
 
@@ -645,7 +660,7 @@ class OrganizationImpl implements Organization, Publisher {
 		final Achieves achieves = relationFactory.buildAchieves(role, goal);
 		map.put(goalId, achieves);
 		addBy(achieves, relations.achievedBy, "achievedBy", goalId, roleId);
-		publishAdd(Achieves.class, roleId, goalId);
+		publisher.publishAdd(Achieves.class, roleId, goalId);
 	}
 
 	@Override
@@ -667,7 +682,7 @@ class OrganizationImpl implements Organization, Publisher {
 		if (relations.achieves.containsKey(roleId) && relations.achieves.get(roleId).containsKey(goalId)) {
 			relations.achieves.get(roleId).remove(goalId);
 			removeBy(goalId, roleId, relations.achievedBy, "achievedBy");
-			publishRemove(Achieves.class, roleId, goalId);
+			publisher.publishRemove(Achieves.class, roleId, goalId);
 		}
 	}
 
@@ -691,7 +706,7 @@ class OrganizationImpl implements Organization, Publisher {
 		final Requires requires = relationFactory.buildRequires(role, capability);
 		map.put(capabilityId, requires);
 		addBy(requires, relations.requiredBy, "requiredBy", capabilityId, roleId);
-		publishAdd(Requires.class, roleId, capabilityId);
+		publisher.publishAdd(Requires.class, roleId, capabilityId);
 	}
 
 	@Override
@@ -713,7 +728,7 @@ class OrganizationImpl implements Organization, Publisher {
 		if (relations.requires.containsKey(roleId) && relations.requires.get(roleId).containsKey(capabilityId)) {
 			relations.requires.get(roleId).remove(capabilityId);
 			removeBy(capabilityId, roleId, relations.requiredBy, "requiredBy");
-			publishRemove(Requires.class, roleId, capabilityId);
+			publisher.publishRemove(Requires.class, roleId, capabilityId);
 		}
 	}
 
@@ -737,7 +752,7 @@ class OrganizationImpl implements Organization, Publisher {
 		final Possesses possesses = relationFactory.buildPossesses(agent, capability, score);
 		map.put(capabilityId, possesses);
 		addBy(possesses, relations.possessedBy, "possessedBy", capabilityId, agentId);
-		publishAdd(Possesses.class, agentId, capabilityId); // FIXME add score
+		publisher.publishAdd(Possesses.class, agentId, capabilityId); // FIXME add score
 	}
 
 	@Override
@@ -768,7 +783,7 @@ class OrganizationImpl implements Organization, Publisher {
 		checkNotNull(capabilityId, "capabilityId");
 		if (relations.possesses.containsKey(agentId) && relations.possesses.get(agentId).containsKey(capabilityId)) {
 			relations.possesses.get(agentId).get(capabilityId).setScore(score);
-			publishChange(Possesses.class, agentId, capabilityId); // FIXME add score
+			publisher.publishChange(Possesses.class, agentId, capabilityId); // FIXME add score
 		}
 	}
 
@@ -779,7 +794,7 @@ class OrganizationImpl implements Organization, Publisher {
 		if (relations.possesses.containsKey(agentId) && relations.possesses.get(agentId).containsKey(capabilityId)) {
 			relations.possesses.get(agentId).remove(capabilityId);
 			removeBy(capabilityId, agentId, relations.possessedBy, "possessedBy");
-			publishRemove(Possesses.class, agentId, capabilityId);
+			publisher.publishRemove(Possesses.class, agentId, capabilityId);
 		}
 	}
 
@@ -803,7 +818,7 @@ class OrganizationImpl implements Organization, Publisher {
 		final Needs needs = relationFactory.buildNeeds(role, attribute);
 		map.put(attributeId, needs);
 		addBy(needs, relations.neededBy, "neededBy", attributeId, roleId);
-		publishAdd(Needs.class, roleId, attributeId);
+		publisher.publishAdd(Needs.class, roleId, attributeId);
 	}
 
 	@Override
@@ -825,7 +840,7 @@ class OrganizationImpl implements Organization, Publisher {
 		if (relations.needs.containsKey(roleId) && relations.needs.get(roleId).containsKey(attributeId)) {
 			relations.needs.get(roleId).remove(attributeId);
 			removeBy(attributeId, roleId, relations.neededBy, "neededBy");
-			publishRemove(Needs.class, roleId, attributeId);
+			publisher.publishRemove(Needs.class, roleId, attributeId);
 		}
 	}
 
@@ -849,7 +864,7 @@ class OrganizationImpl implements Organization, Publisher {
 		final Has has = relationFactory.buildHas(agent, attribute, value);
 		map.put(attributeId, has);
 		addBy(has, relations.hadBy, "hadBy", attributeId, agentId);
-		publishAdd(Has.class, agentId, attributeId); // FIXME add value
+		publisher.publishAdd(Has.class, agentId, attributeId); // FIXME add value
 	}
 
 	@Override
@@ -880,7 +895,7 @@ class OrganizationImpl implements Organization, Publisher {
 		checkNotNull(attributeId, "attributeId");
 		if (relations.has.containsKey(agentId) && relations.has.get(agentId).containsKey(attributeId)) {
 			relations.has.get(agentId).get(attributeId).setValue(value);
-			publishChange(Has.class, agentId, attributeId); // FIXME add value
+			publisher.publishChange(Has.class, agentId, attributeId); // FIXME add value
 		}
 	}
 
@@ -891,7 +906,7 @@ class OrganizationImpl implements Organization, Publisher {
 		if (relations.has.containsKey(agentId) && relations.has.get(agentId).containsKey(attributeId)) {
 			relations.has.get(agentId).remove(attributeId);
 			removeBy(attributeId, agentId, relations.hadBy, "hadBy");
-			publishRemove(Has.class, agentId, attributeId);
+			publisher.publishRemove(Has.class, agentId, attributeId);
 		}
 	}
 
@@ -915,7 +930,7 @@ class OrganizationImpl implements Organization, Publisher {
 		final Uses uses = relationFactory.buildUses(role, pmf);
 		map.put(pmfId, uses);
 		addBy(uses, relations.usedBy, "usedBy", pmfId, roleId);
-		publishAdd(Uses.class, roleId, pmfId);
+		publisher.publishAdd(Uses.class, roleId, pmfId);
 	}
 
 	@Override
@@ -937,7 +952,7 @@ class OrganizationImpl implements Organization, Publisher {
 		if (relations.uses.containsKey(roleId) && relations.uses.get(roleId).containsKey(pmfId)) {
 			relations.uses.get(roleId).remove(pmfId);
 			removeBy(pmfId, roleId, relations.usedBy, "usedBy");
-			publishRemove(Uses.class, roleId, pmfId);
+			publisher.publishRemove(Uses.class, roleId, pmfId);
 		}
 	}
 
@@ -956,7 +971,7 @@ class OrganizationImpl implements Organization, Publisher {
 		final Moderates moderates = relationFactory.buildModerates(pmf, attribute);
 		relations.moderates.put(pmfId, moderates);
 		addBy(moderates, relations.moderatedBy, "moderatedBy", attributeId, pmfId);
-		publishAdd(Moderates.class, pmfId, attributeId);
+		publisher.publishAdd(Moderates.class, pmfId, attributeId);
 	}
 
 	@Override
@@ -981,7 +996,7 @@ class OrganizationImpl implements Organization, Publisher {
 		if (relations.moderates.containsKey(pmfId)) {
 			relations.moderates.remove(pmfId);
 			removeBy(attributeId, pmfId, relations.moderatedBy, "moderatedBy");
-			publishRemove(Moderates.class, pmfId, attributeId);
+			publisher.publishRemove(Moderates.class, pmfId, attributeId);
 		}
 	}
 
@@ -1006,7 +1021,7 @@ class OrganizationImpl implements Organization, Publisher {
 		final Contains contains = relationFactory.buildContains(role, characteristic, value);
 		map.put(characteristicId, contains);
 		addBy(contains, relations.containedBy, "containedBy", characteristicId, roleId);
-		publishAdd(Contains.class, roleId, characteristicId); // FIXME add value
+		publisher.publishAdd(Contains.class, roleId, characteristicId); // FIXME add value
 	}
 
 	@Override
@@ -1037,7 +1052,7 @@ class OrganizationImpl implements Organization, Publisher {
 		checkNotNull(characteristicId, "characteristicId");
 		if (relations.contains.containsKey(roleId) && relations.contains.get(roleId).containsKey(characteristicId)) {
 			relations.contains.get(roleId).get(characteristicId).setValue(value);
-			publishChange(Contains.class, roleId, characteristicId); // FIXME add value
+			publisher.publishChange(Contains.class, roleId, characteristicId); // FIXME add value
 		}
 	}
 
@@ -1048,13 +1063,30 @@ class OrganizationImpl implements Organization, Publisher {
 		if (relations.contains.containsKey(roleId) && relations.contains.get(roleId).containsKey(characteristicId)) {
 			relations.contains.get(roleId).remove(characteristicId);
 			removeBy(characteristicId, roleId, relations.containedBy, "containedBy");
-			publishRemove(Contains.class, roleId, characteristicId);
+			publisher.publishRemove(Contains.class, roleId, characteristicId);
 		}
 	}
 
 	@Override
 	public void removeAllContains() {
 		removeAll(relations.contains, this::removeContains, f -> f.getRole().getId(), f -> f.getCharacteristic().getId());
+	}
+
+	@Override
+	public double effectiveness(final Collection<Assignment> assignments) {
+		return effectiveness.compute(this, assignments);
+	}
+
+	@Override
+	public Goodness getGoodness(final UniqueId<Role> id) {
+		checkNotNull(id, "id");
+		return functions.goodnesses.get(id);
+	}
+
+	@Override
+	public void setGoodness(final UniqueId<Role> id, final Goodness goodness) {
+		checkExists(id, "id", this::getRole);
+		functions.goodnesses.put(id, goodness);
 	}
 
 	private <T, U, V> void addBy(final T value, final Map<UniqueId<U>, Map<UniqueId<V>, T>> map, final String mapName, final UniqueId<U> id1,
