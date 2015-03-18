@@ -23,6 +23,7 @@ import model.organization.Organization;
  *            the type of the {@linkplain UniqueId}.
  * @since 4.0
  */
+@FunctionalInterface
 public interface UniqueId<T> extends Serializable {
 	/**
 	 * Returns the type of this {@linkplain UniqueId}.
