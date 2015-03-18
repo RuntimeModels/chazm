@@ -1,4 +1,4 @@
-package model.organization.event;
+package event;
 
 import com.google.inject.AbstractModule;
 

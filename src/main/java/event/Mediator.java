@@ -1,4 +1,4 @@
-package model.organization.event;
+package event;
 
 /**
  * @author Christopher Zhong

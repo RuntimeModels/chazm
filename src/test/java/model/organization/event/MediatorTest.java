@@ -8,6 +8,11 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Provider;
 
+import event.EventModule;
+import event.Mediator;
+import event.Subscribe;
+import event.Subscriber;
+
 @SuppressWarnings("javadoc")
 public class MediatorTest {
 

@@ -1,4 +1,4 @@
-package model.organization.event;
+package event;
 
 /**
  * The {@linkplain Event} interface defines an event that carries a payload. A {@linkplain Subscriber} must annotate one or more methods with
@@ -7,7 +7,9 @@ package model.organization.event;
  * <pre>
  * &#064;Subscribe
  * public void onEvent(Event&lt;Agent&gt; event);
- * 
+ * </pre>
+ *
+ * <pre>
  * &#064;Subscribe
  * public void someOtherEvent(Event&lt;Role&gt; event);
  * </pre>

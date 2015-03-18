@@ -1,4 +1,4 @@
-package model.organization.event;
+package event;
 
 import model.organization.id.UniqueId;
 

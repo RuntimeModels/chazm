@@ -1,4 +1,4 @@
-package model.organization.event;
+package event;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -14,7 +14,9 @@ import java.lang.annotation.Target;
  * <pre>
  * &#064;Subscribe
  * public void onEvent(Event&lt;Agent&gt; event);
- * 
+ * </pre>
+ *
+ * <pre>
  * &#064;Subscribe
  * public void someOtherEvent(Event&lt;Role&gt; event);
  * </pre>
