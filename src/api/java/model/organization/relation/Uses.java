@@ -4,7 +4,7 @@ import model.organization.entity.Pmf;
 import model.organization.entity.Role;
 
 /**
- * Represents the uses relation, where a {@link Role} uses a {@link Pmf}.
+ * Represents the uses relation, where a {@linkplain Role} uses a {@linkplain Pmf}.
  *
  * @author Christopher Zhong
  * @since 7.0.0

@@ -1,17 +1,10 @@
-/*
- * InstanceGoal.java
- *
- * Created on Jul 30, 2007
- *
- * See License.txt file the license agreement.
- */
 package model.organization.entity;
 
 import model.organization.Organization;
 import model.organization.id.Identifiable;
 
 /**
- * The {@linkplain InstanceGoal} interface defines the instance goal, which is a concrete instantiation of a {@link SpecificationGoal}, of an
+ * The {@linkplain InstanceGoal} interface defines the instance goal, which is a concrete instantiation of a {@linkplain SpecificationGoal}, of an
  * {@linkplain Organization}.
  *
  * @author Christopher Zhong

@@ -1,10 +1,3 @@
-/*
- * Capability.java
- *
- * Created on Jul 30, 2007
- *
- * See License.txt file the license agreement.
- */
 package model.organization.entity;
 
 import model.organization.Organization;
