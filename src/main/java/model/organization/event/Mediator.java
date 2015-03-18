@@ -1,26 +1,25 @@
 package model.organization.event;
 
-import model.organization.event.Publisher.Type;
-import model.organization.id.UniqueId;
-
 /**
  * @author Christopher Zhong
  * @since 7.0.0
  */
 public interface Mediator {
-	/**
-	 * @param publisher
-	 * @param type
-	 * @param clazz
-	 * @param id
-	 */
-	<T> void publish(Publisher publisher, Type type, Class<T> clazz, UniqueId<? extends T> id);
 
 	/**
-	 * @param publisher
-	 * @param type
-	 * @param clazz
-	 * @param ids
+	 * Pushes an {@linkplain Event} to interested {@linkplain Subscriber}s.
+	 *
+	 * @param event
+	 *            the {@linkplain Event}.
 	 */
-	<T> void publish(Publisher publisher, Type type, Class<T> clazz, UniqueId<?>... ids);
+	<T> void post(Event<T> event);
+
+	/**
+	 * Registers a {@linkplain Subscriber} with this {@linkplain Mediator}.
+	 *
+	 * @param subscriber
+	 *            the {@linkplain Subscriber}.
+	 */
+	void register(Subscriber subscriber);
+
 }

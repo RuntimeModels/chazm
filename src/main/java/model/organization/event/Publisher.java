@@ -10,6 +10,7 @@ import model.organization.id.UniqueId;
  * @since 7.0.0
  */
 public interface Publisher {
+
 	/**
 	 * The {@linkplain Type} enumerates the types of update.
 	 *
@@ -41,10 +42,7 @@ public interface Publisher {
 	 * @param id
 	 *            the {@linkplain UniqueId} that represent an instance of the class.
 	 */
-	default <T> void publish(final Type type, final Class<T> clazz, final UniqueId<? extends T> id) {
-		final Mediator mediator = MediatorFactory.getMediator();
-		// mediator.publish(this, type, clazz, id);
-	}
+	<T> void post(final Type type, final Class<T> clazz, final UniqueId<? extends T> id);
 
 	/**
 	 * Publishes an update.
@@ -55,17 +53,14 @@ public interface Publisher {
 	 *            the {@linkplain Class} of the instance.
 	 * @param ids
 	 */
-	default <T> void publish(final Type type, final Class<T> clazz, final UniqueId<?>... ids) {
-		final Mediator mediator = MediatorFactory.getMediator();
-		// mediator.publish(this, type, clazz, ids);
-	}
+	<T> void post(final Type type, final Class<T> clazz, final UniqueId<?>... ids);
 
 	/**
 	 * @param clazz
 	 * @param id
 	 */
 	default <T> void publishAdd(final Class<T> clazz, final UniqueId<? extends T> id) {
-		publish(Type.ADDED, clazz, id);
+		post(Type.ADDED, clazz, id);
 	}
 
 	/**
@@ -73,7 +68,7 @@ public interface Publisher {
 	 * @param id
 	 */
 	default <T> void publishRemove(final Class<T> clazz, final UniqueId<? extends T> id) {
-		publish(Type.REMOVED, clazz, id);
+		post(Type.REMOVED, clazz, id);
 	}
 
 	/**
@@ -81,7 +76,7 @@ public interface Publisher {
 	 * @param ids
 	 */
 	default <T> void publishAdd(final Class<T> clazz, final UniqueId<?>... ids) {
-		publish(Type.ADDED, clazz, ids);
+		post(Type.ADDED, clazz, ids);
 	}
 
 	/**
@@ -89,7 +84,7 @@ public interface Publisher {
 	 * @param ids
 	 */
 	default <T> void publishRemove(final Class<T> clazz, final UniqueId<?>... ids) {
-		publish(Type.REMOVED, clazz, ids);
+		post(Type.REMOVED, clazz, ids);
 	}
 
 	/**
@@ -97,6 +92,7 @@ public interface Publisher {
 	 * @param ids
 	 */
 	default <T> void publishChange(final Class<T> clazz, final UniqueId<?>... ids) {
-		publish(Type.CHANGED, clazz, ids);
+		post(Type.CHANGED, clazz, ids);
 	}
+
 }

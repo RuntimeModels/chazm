@@ -1,5 +1,6 @@
 package model.organization;
 
+import model.organization.event.EventModule;
 import model.organization.function.FunctionModule;
 import model.organization.relation.RelationModule;
 
@@ -15,9 +16,10 @@ public class OrganizationModule extends AbstractModule {
 
 	@Override
 	protected void configure() {
+		bind(Organization.class).to(DefaultOrganization.class);
 		install(new RelationModule());
 		install(new FunctionModule());
-		bind(Organization.class).to(OrganizationImpl.class);
+		install(new EventModule());
 	}
 
 }
