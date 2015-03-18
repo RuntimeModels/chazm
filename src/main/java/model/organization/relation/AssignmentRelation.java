@@ -1,6 +1,6 @@
 package model.organization.relation;
 
-import static model.organization.Checks.checkNotNull;
+import static model.organization.validation.Checks.checkNotNull;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -15,7 +15,7 @@ import com.google.inject.assistedinject.Assisted;
 
 class AssignmentRelation implements Assignment {
 	/**
-	 * The {@linkplain Id} extends the {@link AbstractId} by using three {@link UniqueId}s; the {@linkplain UniqueId} of an {@linkplain Agent}, the
+	 * The {@linkplain Id} extends the {@linkplain AbstractId} by using three {@linkplain UniqueId}s; the {@linkplain UniqueId} of an {@linkplain Agent}, the
 	 * {@linkplain UniqueId} of a {@linkplain Role}, and the {@linkplain UniqueId} of an {@linkplain InstanceGoal}.
 	 *
 	 * @author Christopher Zhong

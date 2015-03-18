@@ -1,4 +1,4 @@
-package model.organization;
+package model.organization.validation;
 
 import java.util.function.Function;
 import java.util.function.Predicate;
