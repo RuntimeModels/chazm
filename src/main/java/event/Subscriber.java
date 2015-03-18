@@ -6,16 +6,15 @@ package event;
  *
  * <pre>
  * &#064;Subscribe
- * public void onEvent(Event&lt;Agent&gt; event);
+ * public void onEvent(String event);
  * </pre>
  *
  * <pre>
  * &#064;Subscribe
- * public void someOtherEvent(Event&lt;Role&gt; event);
+ * public void someOtherEvent(Integer event);
  * </pre>
  *
  * @author Christopher Zhong
- * @see Event
  * @see Subscribe
  * @since 7.0.0
  */
