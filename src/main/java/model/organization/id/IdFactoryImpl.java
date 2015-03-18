@@ -1,17 +1,22 @@
 package model.organization.id;
 
+import model.organization.profiling.DoNotProfile;
+
+@DoNotProfile
 class IdFactoryImpl implements IdFactory {
 
-	public <T, U> UniqueId<T> buildId(Class<T> clazz, Class<U> id) {
+	@Override
+	public <T, U> UniqueId<T> buildId(final Class<T> clazz, final Class<U> id) {
 		return new ClassId<>(clazz, id);
 	}
 
-	public <T> UniqueId<T> buildId(Class<T> clazz, long id) {
+	@Override
+	public <T> UniqueId<T> buildId(final Class<T> clazz, final long id) {
 		return new LongId<>(clazz, id);
 	}
 
 	@Override
-	public <T> StringId<T> buildId(Class<T> clazz, String id) {
+	public <T> StringId<T> buildId(final Class<T> clazz, final String id) {
 		return new StringId<>(clazz, id);
 	}
 
