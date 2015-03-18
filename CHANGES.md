@@ -1,4 +1,5 @@
-# Version 7.0.0
+#Change Log
+##Version 7.0.0
 * Added Gradle for building. Currently, it builds two artifacts that can be deployed: organization-model-api-{version}.jar and organization-model-{version}.jar.
 * Guice added for dependency injection; as a result
     * All implementing classes are not package private; the means of obtaining instances are through factories
@@ -6,17 +7,17 @@
 * New XML parsing format
 * New mediator-based publish/subscribe interface and implementation
 
-# Version: 6.0.0
+##Version: 6.0.0
 * An overhaul of the performance moderator functions (PMFs) functionality
 
-# Version: 5.0.0
+##Version: 5.0.0
 * Initial version that allows the use of performance moderator functions (PMFs)
 
-# Version: 4.1.0
+##Version: 4.1.0
 * Deprecated some methods to be consistent when using `UniqueIdentifier` instead of the actual class
 * Added an event-based notification interface that can be used for push updates of changes to the organization model
 
-# Version: 4.0.0
+##Version: 4.0.0
 * Encapsulated the notion of identifiers
 * Added the ability to load and initialize an organization model from a given XML file
 * Updated collection to be thread-safe
@@ -44,7 +45,7 @@
 * `asserts` statements have been replaced with code to throw `IllegalArgumentException`
 * Methods that were previously marked as deprecated have been removed
 
-# Version: 3.4.1
+##Version: 3.4.1
 * Generic method signatures has changed in a number of classes; e.g. `void method(C<?> p)` to  `<T> void method(C<T> p)`
 * Extracted interfaces for the following classes:
     * `SimpleAgent` (interface) to `SimpleAgentImpl`
@@ -74,10 +75,10 @@
 * Factory method `setFactory()` has been removed from interface definition and made a static method in the implementation class
 * Added convenience method `removeActiveGoals()` to remove a set of goals
 
-# Version: 3.4.0
+##Version: 3.4.0
 * All the relation classes (`AchievesRelation`, `CapableRelation`, and `PossessesRelation`) are now hidden except for the minimum/maximum score
 
-# Version: 3.3.0
+##Version: 3.3.0
 * Added simplified versions the following organizational entities:
     * `Agent`: `SimpleAgent`
     * `Capability`: `SimpleCapability`
@@ -85,18 +86,18 @@
     * `Role`: `SimpleRole`
 * The `DefaultGoalFactory` class has been renamed to `GoalFactoryImpl`
 
-# Version: 3.2.1
+##Version: 3.2.1
 * Fixed a bug in the `rcf()` method of the `Role` class, where integer division is used instead of double division
 * The `oaf()` method has been extracted into an interface, `OrganizationAssignmentFunction`
 * Modified the `Goal` and `InstanceGoal` classes so that they are easier to extend
 
-# Version: 3.2.0
+##Version: 3.2.0
 * Removed generic <T> from the `Goal` class
 * Added the `InstanceGoal` class to represent a concrete instance of a `Goal`
 * Renamed the `PotentialRelation` class back to `Assignment`
 * Added a factory interface and an implementation for creating instances of the `Goal` class
 
-# Version: 3.1.0
+##Version: 3.1.0
 * Split the policy functionality into a different project
 * The following classes have been removed:
     * `AssignmentPolicy`
@@ -122,10 +123,10 @@
         * `updateScore()`
 * The `isValid()` method has been updated reflect removal of structural policies
 
-# Version: 3.0.1
+##Version: 3.0.1
 * Added missing code to `isValid()` method
 
-# Version: 3.0.0
+##Version: 3.0.0
 * Split the `GoalTree` functionality into a different project
 * Split the utilities code into a different project
 * The `Goal` class have been added with the following functionality:
@@ -203,8 +204,8 @@
     * `addAssignmentSet()` to `addAssignments()`
     * `clearAssignmentSet()` to `clearAssignments()`
 
-# Version: 2.0.0
+##Version: 2.0.0
 * Major overhaul
 
-# Version: 1.0.0
+##Version: 1.0.0
 * Initial Release
