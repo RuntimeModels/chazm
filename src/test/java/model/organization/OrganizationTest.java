@@ -1,39 +1,44 @@
 package model.organization;
 
-import model.organization.Organization;
-import model.organization.OrganizationFactory;
-import model.organization.OrganizationModule;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertThat;
 import model.organization.entity.EntityFactory;
-import model.organization.entity.EntityModule;
 import model.organization.entity.Role;
 import model.organization.entity.SpecificationGoal;
 import model.organization.id.IdFactory;
-import model.organization.id.IdModule;
-import model.organization.relation.RelationModule;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.Provider;
 
 @SuppressWarnings("javadoc")
 public class OrganizationTest {
 
-	private Injector injector = Guice.createInjector(new OrganizationModule(), new EntityModule(), new RelationModule(), new IdModule());
-	private OrganizationFactory organizationFactory = injector.getInstance(OrganizationFactory.class);
-	private EntityFactory entityFactory = injector.getInstance(EntityFactory.class);
-	private IdFactory idFactory = injector.getInstance(IdFactory.class);
+	private final Injector injector = Guice.createInjector(new OrganizationModule());
+	private final Provider<Organization> provider = injector.getProvider(Organization.class);
+	private final EntityFactory entityFactory = injector.getInstance(EntityFactory.class);
+	private final IdFactory idFactory = injector.getInstance(IdFactory.class);
+
+	@Test
+	public void testOrganization() {
+		final Organization o1 = provider.get();
+		final Organization o2 = provider.get();
+		assertThat("o1 == o2", o1, is(not(sameInstance(o2))));
+	}
 
 	@Test
 	public void testAddRole() {
-		final Organization o = organizationFactory.buildOrganization();
+		final Organization o = provider.get();
 		Assert.assertEquals("# roles should be 0", 0, o.getRoles().size());
 		try {
 			o.addRole(null);
 			Assert.fail("IllegalArgumentException should be thrown when adding a null role");
-		} catch (final IllegalArgumentException e) {
-		}
+		} catch (final IllegalArgumentException e) {}
 		final Role r1 = entityFactory.buildRole(idFactory.buildId(Role.class, "role1"));
 		o.addRole(r1);
 		Assert.assertEquals("# roles should be 1", 1, o.getRoles().size());
@@ -49,13 +54,12 @@ public class OrganizationTest {
 		try {
 			o.addRole(r5);
 			Assert.fail("IllegalArgumentException should be thrown when adding a duplicate role");
-		} catch (final IllegalArgumentException e) {
-		}
+		} catch (final IllegalArgumentException e) {}
 	}
 
 	@Test
 	public void testAddSpecificationGoal() {
-		final Organization o = organizationFactory.buildOrganization();
+		final Organization o = provider.get();
 		Assert.assertEquals("# specification goals should be 0", 0, o.getSpecificationGoals().size());
 		final SpecificationGoal goal1 = entityFactory.buildSpecificationGoal(idFactory.buildId(SpecificationGoal.class, "goal1"));
 		o.addSpecificationGoal(goal1);
@@ -65,7 +69,7 @@ public class OrganizationTest {
 
 	@Test
 	public void testAddAchieves() {
-		final Organization o = organizationFactory.buildOrganization();
+		final Organization o = provider.get();
 		final Role r1 = entityFactory.buildRole(idFactory.buildId(Role.class, "role1"));
 		o.addRole(r1);
 		final SpecificationGoal g1 = entityFactory.buildSpecificationGoal(idFactory.buildId(SpecificationGoal.class, "goal1"));
@@ -73,18 +77,15 @@ public class OrganizationTest {
 		try {
 			o.addAchieves(null, null);
 			Assert.fail("IllegalArgumentException should be thrown when adding null elements");
-		} catch (final IllegalArgumentException e) {
-		}
+		} catch (final IllegalArgumentException e) {}
 		try {
 			o.addAchieves(r1.getId(), null);
 			Assert.fail("IllegalArgumentException should be thrown when adding null elements");
-		} catch (final IllegalArgumentException e) {
-		}
+		} catch (final IllegalArgumentException e) {}
 		try {
 			o.addAchieves(null, g1.getId());
 			Assert.fail("IllegalArgumentException should be thrown when adding null elements");
-		} catch (final IllegalArgumentException e) {
-		}
+		} catch (final IllegalArgumentException e) {}
 		o.addAchieves(idFactory.buildId(Role.class, "role1"), idFactory.buildId(SpecificationGoal.class, "goal1"));
 		Assert.assertEquals("# goals achieved by role1 should be 1", 1, o.getAchieves(idFactory.buildId(Role.class, "role1")).size());
 		Assert.assertEquals("# roles that achieves goal1 should be 1", 1, o.getAchievedBy(idFactory.buildId(SpecificationGoal.class, "goal1")).size());
