@@ -1,3 +1,3 @@
-package model.organization.event;
+package event;
 
 class DefaultSubscriber implements Subscriber {}

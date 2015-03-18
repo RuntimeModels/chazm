@@ -1,4 +1,4 @@
-package model.organization.event;
+package event;
 
 /**
  * The {@linkplain Subscriber} interface defines the APIs for a publish/subscribe pattern (a.k.a. observer pattern). Subscribers receive updates that have been
@@ -7,7 +7,9 @@ package model.organization.event;
  * <pre>
  * &#064;Subscribe
  * public void onEvent(Event&lt;Agent&gt; event);
- * 
+ * </pre>
+ *
+ * <pre>
  * &#064;Subscribe
  * public void someOtherEvent(Event&lt;Role&gt; event);
  * </pre>

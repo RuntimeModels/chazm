@@ -1,10 +1,11 @@
 package model.organization;
 
-import model.organization.event.EventModule;
 import model.organization.function.FunctionModule;
 import model.organization.relation.RelationModule;
 
 import com.google.inject.AbstractModule;
+
+import event.EventModule;
 
 /**
  * The {@linkplain OrganizationModule} class provides a Guice binding module for entities.

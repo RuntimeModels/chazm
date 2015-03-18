@@ -26,7 +26,6 @@ import model.organization.entity.Pmf;
 import model.organization.entity.Policy;
 import model.organization.entity.Role;
 import model.organization.entity.SpecificationGoal;
-import model.organization.event.Publisher;
 import model.organization.function.Effectiveness;
 import model.organization.function.Goodness;
 import model.organization.id.UniqueId;
@@ -43,6 +42,8 @@ import model.organization.relation.Uses;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import event.Publisher;
 
 class DefaultOrganization implements Organization {
 

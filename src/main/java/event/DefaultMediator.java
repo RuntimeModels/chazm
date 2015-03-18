@@ -1,4 +1,4 @@
-package model.organization.event;
+package event;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
