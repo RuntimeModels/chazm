@@ -1,5 +1,7 @@
 package model.organization.entity;
 
+import java.io.Serializable;
+
 import model.organization.Organization;
 import model.organization.id.Identifiable;
 
@@ -18,7 +20,7 @@ public interface InstanceGoal extends Identifiable<InstanceGoal> {
 	 * @author Christopher Zhong
 	 * @since 7.0.0
 	 */
-	interface Parameter {}
+	interface Parameter extends Serializable {}
 
 	/**
 	 * Returns the {@linkplain SpecificationGoal} that instantiated this {@linkplain InstanceGoal}.
