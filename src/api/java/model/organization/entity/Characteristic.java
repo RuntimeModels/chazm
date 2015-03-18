@@ -1,10 +1,3 @@
-/*
- * Characteristic.java
- *
- * Created on May 25, 2010
- *
- * See License.txt file the license agreement.
- */
 package model.organization.entity;
 
 import model.organization.Organization;

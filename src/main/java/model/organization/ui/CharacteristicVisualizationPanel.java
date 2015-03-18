@@ -22,7 +22,8 @@ import model.organization.Organization;
 import model.organization.entity.Characteristic;
 
 /**
- * The <code>CharacteristicVisualizationPanel</code> class is a Swing component to visualize the {@link Characteristic} currently in the {@link Organization} .
+ * The <code>CharacteristicVisualizationPanel</code> class is a Swing component to visualize the {@linkplain Characteristic} currently in the
+ * {@linkplain Organization} .
  *
  * @author Christopher Zhong
  * @since 6.0

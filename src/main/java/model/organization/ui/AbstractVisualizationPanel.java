@@ -125,8 +125,8 @@ public abstract class AbstractVisualizationPanel extends JPanel {
 	}
 
 	/**
-	 * Starts pulling information from the <code>Organization</code>. Subsequent calls to this method have no effect unless the {@link #stopPolling()} method is
-	 * called first.
+	 * Starts pulling information from the <code>Organization</code>. Subsequent calls to this method have no effect unless the {@linkplain #stopPolling()}
+	 * method is called first.
 	 */
 	void startPolling() {
 		if (isThreadRunning.compareAndSet(false, true)) {
@@ -146,7 +146,7 @@ public abstract class AbstractVisualizationPanel extends JPanel {
 	}
 
 	/**
-	 * Stops pulling information from the <code>Organization</code>. This method only sets the value of the {@link #isPolling} to <code>false</code>.
+	 * Stops pulling information from the <code>Organization</code>. This method only sets the value of the {@linkplain #isPolling} to <code>false</code>.
 	 */
 	void stopPolling() {
 		isPolling.set(false);

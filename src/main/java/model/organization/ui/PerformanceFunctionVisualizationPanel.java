@@ -22,7 +22,8 @@ import model.organization.Organization;
 import model.organization.entity.Pmf;
 
 /**
- * The <code>PerformanceFunctionVisualizationPanel</code> class is a Swing component to visualize the {@link Pmf} currently in the {@link Organization}.
+ * The <code>PerformanceFunctionVisualizationPanel</code> class is a Swing component to visualize the {@linkplain Pmf} currently in the
+ * {@linkplain Organization}.
  *
  * @author Christopher Zhong
  * @since 6.0

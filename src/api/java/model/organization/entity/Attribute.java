@@ -1,10 +1,3 @@
-/*
- * Attribute.java
- *
- * Created on Oct 15, 2009
- *
- * See License.txt file the license agreement.
- */
 package model.organization.entity;
 
 import model.organization.Organization;
