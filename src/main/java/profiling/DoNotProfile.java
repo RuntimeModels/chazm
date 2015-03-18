@@ -1,4 +1,4 @@
-package model.organization.profiling;
+package profiling;
 
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;
