@@ -1,7 +1,9 @@
 package model.organization;
 
+import model.organization.function.FunctionModule;
+import model.organization.relation.RelationModule;
+
 import com.google.inject.AbstractModule;
-import com.google.inject.assistedinject.FactoryModuleBuilder;
 
 /**
  * The {@linkplain OrganizationModule} class provides a Guice binding module for entities.
@@ -13,7 +15,9 @@ public class OrganizationModule extends AbstractModule {
 
 	@Override
 	protected void configure() {
-		install(new FactoryModuleBuilder().implement(Organization.class, OrganizationImpl.class).build(OrganizationFactory.class));
+		install(new RelationModule());
+		install(new FunctionModule());
+		bind(Organization.class).to(OrganizationImpl.class);
 	}
 
 }
