@@ -1,12 +1,10 @@
-# README #
-
-This README would normally document whatever steps are necessary to get your application up and running.
+#organization-model
+**Version**: 7.0.0
+**Continuous Integration**: [![Build Status](https://travis-ci.org/ChrisZhong/organization-model.svg?branch=master)](https://travis-ci.org/ChrisZhong/organization-model)
 
 ### What is this repository for? ###
 
 * Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
 ### How do I get set up? ###
 
