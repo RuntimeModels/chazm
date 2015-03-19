@@ -8,7 +8,11 @@ group = 'model'
 version = '7.0.0'
 
 ext {
-	guiceVersion = '4.0-beta5'
+	slf4j_version = '1.7.10'
+	javaee_version = '7.0'
+	guice_version = '4.0-beta5'
+	junit_version = '4.12'
+	mockito_version = '2.0.5-beta'
 }
 
 repositories {
@@ -29,32 +33,27 @@ sourceSets {
 }
 
 dependencies {
-	println "com.google.inject:guice:${guiceVersion}"
 	compile fileTree(dir: 'src/main/resources', include: '*.jar')
-	compile 'org.slf4j:slf4j-api:1.7.10'
-	compile 'javax:javaee-api:7.0'
-	compile "com.google.inject:guice:${guiceVersion}"
-	compile "com.google.inject.extensions:guice-assistedinject:${guiceVersion}"
-	testCompile 'junit:junit:4.12'
-	testCompile 'org.mockito:mockito-core:2.0.5-beta'
-}
-
-
-task apiJar(type: Jar) {
-	baseName = baseName + "-$sourceSets.api.name"
-	from sourceSets.api.output
+	compile "org.slf4j:slf4j-api:${slf4j_version}"
+	compile "javax:javaee-api:${javaee_version}"
+	compile "com.google.inject:guice:${guice_version}"
+	compile "com.google.inject.extensions:guice-assistedinject:${guice_version}"
+	testCompile "junit:junit:${junit_version}"
+	testCompile "org.mockito:mockito-core:${mockito_version}"
 }
 
 task wrapper(type: Wrapper) {
 	gradleVersion = '2.3'
 }
 
-artifacts {
-	archives apiJar
+task apiJar(type: Jar) {
+	baseName = baseName + "-$sourceSets.api.name"
+	from sourceSets.api.output
+	from sourceSets.api.allSource
 }
 
 jar {
-	from sourceSets.api.output
+	from sourceSets.main.allJava
 }
 
 publishing {
