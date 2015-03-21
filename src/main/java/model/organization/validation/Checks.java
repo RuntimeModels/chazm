@@ -31,6 +31,16 @@ public final class Checks {
 		}
 	}
 
+	/**
+	 * Checks and throws an {@linkplain IllegalArgumentException} if the {@linkplain Identifiable} object exists.
+	 *
+	 * @param t
+	 *            the {@linkplain Identifiable} object.
+	 * @param name
+	 *            the variable name.
+	 * @param p
+	 *            the {@linkplain Predicate}.
+	 */
 	public static <T extends Identifiable<T>> void checkNotExists(final T t, final String name, final Predicate<UniqueId<T>> p) {
 		checkNotNull(t, name);
 		if (p.test(t.getId())) {
@@ -38,6 +48,17 @@ public final class Checks {
 		}
 	}
 
+	/**
+	 * Checks and returns the object represented by the {@linkplain UniqueId} if it exists, otherwise throws an {@linkplain IllegalArgumentException}.
+	 *
+	 * @param id
+	 *            the {@linkplain UniqueId} that represents the object.
+	 * @param name
+	 *            the variable name.
+	 * @param f
+	 *            the {@linkplain Function}.
+	 * @return the object if it exists.
+	 */
 	public static <T, U extends UniqueId<T>> T checkExists(final U id, final String name, final Function<U, T> f) {
 		checkNotNull(id, name);
 		final T t = f.apply(id);

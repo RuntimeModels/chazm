@@ -1,0 +1,89 @@
+package model.organization;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import model.organization.entity.EntityFactory;
+import model.organization.entity.Role;
+import model.organization.entity.SpecificationGoal;
+import model.organization.id.IdFactory;
+import model.organization.id.UniqueId;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Provider;
+
+@SuppressWarnings("javadoc")
+public class AchievesManagerTest {
+
+	private final Injector injector = Guice.createInjector(new OrganizationModule());
+	private final Provider<Organization> provider = injector.getProvider(Organization.class);
+	private final EntityFactory entityFactory = injector.getInstance(EntityFactory.class);
+	private final IdFactory idFactory = injector.getInstance(IdFactory.class);
+
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
+
+	@Test
+	public void testAddAchieves() {
+		final Organization o = provider.get();
+		final UniqueId<Role> i1 = idFactory.buildId(Role.class, "role1");
+		final UniqueId<SpecificationGoal> i2 = idFactory.buildId(SpecificationGoal.class, "goal1");
+		final Role r1 = entityFactory.buildRole(i1);
+		final SpecificationGoal g1 = entityFactory.buildSpecificationGoal(i2);
+		o.addRole(r1);
+		o.addSpecificationGoal(g1);
+		o.addAchieves(i1, i2);
+		assertThat(o.getAchieves(i1).size(), is(equalTo(1)));
+		assertThat(o.getAchievedBy(i2).size(), is(equalTo(1)));
+	}
+
+	@Test
+	public void testAddAchieves1() {
+		final Organization o = provider.get();
+		exception.expect(is(instanceOf(IllegalArgumentException.class)));
+		exception.expectMessage(equalTo("Parameter (roleId) cannot be null"));
+		o.addAchieves(null, null);
+	}
+
+	@Test
+	public void testAddAchieves2() {
+		final Organization o = provider.get();
+		final UniqueId<Role> i1 = idFactory.buildId(Role.class, "role1");
+		final Role r1 = entityFactory.buildRole(i1);
+		o.addRole(r1);
+		exception.expect(is(instanceOf(IllegalArgumentException.class)));
+		exception.expectMessage(equalTo("Parameter (goalId) cannot be null"));
+		o.addAchieves(i1, null);
+	}
+
+	@Test
+	public void testAddAchieves3() {
+		final Organization o = provider.get();
+		final UniqueId<Role> i1 = idFactory.buildId(Role.class, "role1");
+		final UniqueId<SpecificationGoal> i2 = idFactory.buildId(SpecificationGoal.class, "goal1");
+		final SpecificationGoal g1 = entityFactory.buildSpecificationGoal(i2);
+		o.addSpecificationGoal(g1);
+		exception.expect(is(instanceOf(IllegalArgumentException.class)));
+		exception.expectMessage(equalTo("(Role) entity (role1) does not exists"));
+		o.addAchieves(i1, i2);
+	}
+
+	@Test
+	public void testAddAchieves4() {
+		final Organization o = provider.get();
+		final UniqueId<Role> i1 = idFactory.buildId(Role.class, "role1");
+		final UniqueId<SpecificationGoal> i2 = idFactory.buildId(SpecificationGoal.class, "goal1");
+		final Role r1 = entityFactory.buildRole(i1);
+		o.addRole(r1);
+		exception.expect(is(instanceOf(IllegalArgumentException.class)));
+		exception.expectMessage(equalTo("(SpecificationGoal) entity (goal1) does not exists"));
+		o.addAchieves(i1, i2);
+	}
+
+}
