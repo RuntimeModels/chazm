@@ -31,33 +31,30 @@ public class CapabilityTest {
 	public ExpectedException exception = ExpectedException.none();
 
 	@Test
-	public void testCapability1() {
-		final UniqueId<Capability> i1 = idFactory.buildId(Capability.class, 1);
+	public void testCapability() {
+		final UniqueId<Capability> i1 = idFactory.buildId(Capability.class, 1L);
 		final Capability c1 = capabilityFactory.buildCapability(i1);
+		assertThat("c1 == null", c1, notNullValue());
+	}
 
+	@Test
+	public void testCapability1() {
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
-
-		assertThat("c1 == null", c1, notNullValue());
 		capabilityFactory.buildCapability(null);
 	}
 
 	@Test
 	public void testCapability2() {
-		final UniqueId<Capability> i1 = idFactory.buildId(Capability.class, 1);
-		final Capability c1 = capabilityFactory.buildCapability(i1);
-
 		exception.expect(instanceOf(IllegalArgumentException.class));
 		exception.expectMessage(equalTo("Parameter (id) cannot be null"));
-
-		assertThat("c1 == null", c1, notNullValue());
 		new CapabilityEntity(null);
 	}
 
 	@Test
 	public void testGetId() {
-		final UniqueId<Capability> i1 = idFactory.buildId(Capability.class, 1);
-		final UniqueId<Capability> i2 = idFactory.buildId(Capability.class, 1);
+		final UniqueId<Capability> i1 = idFactory.buildId(Capability.class, 1L);
+		final UniqueId<Capability> i2 = idFactory.buildId(Capability.class, 1L);
 		final Capability c1 = capabilityFactory.buildCapability(i1);
 		final Capability c2 = capabilityFactory.buildCapability(i2);
 
@@ -67,8 +64,8 @@ public class CapabilityTest {
 
 	@Test
 	public void testEqualsObject() {
-		final UniqueId<Capability> i1 = idFactory.buildId(Capability.class, 1);
-		final UniqueId<Capability> i2 = idFactory.buildId(Capability.class, 2);
+		final UniqueId<Capability> i1 = idFactory.buildId(Capability.class, 1L);
+		final UniqueId<Capability> i2 = idFactory.buildId(Capability.class, 2L);
 		final Capability c1 = capabilityFactory.buildCapability(i1);
 		final Capability c2 = capabilityFactory.buildCapability(i2);
 		final Capability c3 = capabilityFactory.buildCapability(i1);
@@ -83,8 +80,8 @@ public class CapabilityTest {
 
 	@Test
 	public void testHashCode() {
-		final UniqueId<Capability> i1 = idFactory.buildId(Capability.class, 1);
-		final UniqueId<Capability> i2 = idFactory.buildId(Capability.class, 2);
+		final UniqueId<Capability> i1 = idFactory.buildId(Capability.class, 1L);
+		final UniqueId<Capability> i2 = idFactory.buildId(Capability.class, 2L);
 		final Capability c1 = capabilityFactory.buildCapability(i1);
 		final Capability c2 = capabilityFactory.buildCapability(i2);
 
@@ -96,8 +93,8 @@ public class CapabilityTest {
 
 	@Test
 	public void testToString() {
-		final UniqueId<Capability> i1 = idFactory.buildId(Capability.class, 1);
-		final UniqueId<Capability> i2 = idFactory.buildId(Capability.class, 2);
+		final UniqueId<Capability> i1 = idFactory.buildId(Capability.class, 1L);
+		final UniqueId<Capability> i2 = idFactory.buildId(Capability.class, 2L);
 		final Capability c1 = capabilityFactory.buildCapability(i1);
 		final Capability c2 = capabilityFactory.buildCapability(i2);
 

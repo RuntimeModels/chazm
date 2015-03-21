@@ -11,6 +11,7 @@ class StringId<T> extends AbstractId<T> {
 
 	private static final long serialVersionUID = 522905742372399827L;
 	private final String id;
+	private transient Integer hashCode = null;
 
 	@Inject
 	StringId(@NotNull @Assisted final Class<T> type, @NotNull @Assisted final String id) {
@@ -30,7 +31,10 @@ class StringId<T> extends AbstractId<T> {
 
 	@Override
 	public int hashCode() {
-		return id.hashCode();
+		if (hashCode == null) {
+			hashCode = id.hashCode();
+		}
+		return hashCode;
 	}
 
 	@Override

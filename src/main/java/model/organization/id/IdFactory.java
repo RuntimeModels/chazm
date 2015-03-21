@@ -28,7 +28,7 @@ public interface IdFactory {
 	 *            the <code>long</code> id for the {@linkplain UniqueId}.
 	 * @return an {@linkplain UniqueId}.
 	 */
-	<T> UniqueId<T> buildId(Class<T> clazz, long id);
+	<T> UniqueId<T> buildId(Class<T> clazz, Long id);
 
 	/**
 	 * Constructs an {@linkplain UniqueId}.

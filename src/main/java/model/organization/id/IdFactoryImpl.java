@@ -11,7 +11,7 @@ class IdFactoryImpl implements IdFactory {
 	}
 
 	@Override
-	public <T> UniqueId<T> buildId(final Class<T> clazz, final long id) {
+	public <T> UniqueId<T> buildId(final Class<T> clazz, final Long id) {
 		return new LongId<>(clazz, id);
 	}
 

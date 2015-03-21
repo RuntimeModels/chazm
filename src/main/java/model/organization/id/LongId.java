@@ -10,12 +10,12 @@ import com.google.inject.assistedinject.Assisted;
 class LongId<T> extends AbstractId<T> {
 
 	private static final long serialVersionUID = 8542765061773217208L;
-	private final long id;
+	private final Long id;
 	private transient Integer hashCode = null;
 	private transient String toString = null;
 
 	@Inject
-	LongId(@NotNull @Assisted final Class<T> type, @NotNull @Assisted final long id) {
+	LongId(@NotNull @Assisted final Class<T> type, @NotNull @Assisted final Long id) {
 		super(type);
 		checkNotNull(id, "id");
 		this.id = id;
@@ -33,7 +33,7 @@ class LongId<T> extends AbstractId<T> {
 	@Override
 	public int hashCode() {
 		if (hashCode == null) {
-			hashCode = (int) id;
+			hashCode = id.hashCode();
 		}
 		return hashCode;
 	}
