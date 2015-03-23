@@ -2,8 +2,8 @@
 
 **Version**: 7.0.0
 
-**Badges**: [![Build Status](https://travis-ci.org/ChrisZhong/organization-model.svg?branch=master)](https://travis-ci.org/ChrisZhong/organization-model)
-[![Coverage Status](https://coveralls.io/repos/ChrisZhong/organization-model/badge.svg)](https://coveralls.io/r/ChrisZhong/organization-model)
+**Badges**: [![Build Status][ci-img]][ci-lnk]
+[![Coverage Status][co-img]][co-lnk]
 
 ##What is this repository for?
 
@@ -28,3 +28,8 @@ This project is based on my PhD work at Kansas State University. It is a runtime
 
 * Repo owner or admin
 * Other community or team contact
+
+[ci-img]: https://travis-ci.org/ChrisZhong/organization-model.svg?branch=master
+[ci-lnk]: https://travis-ci.org/ChrisZhong/organization-model
+[co-img]: https://coveralls.io/repos/ChrisZhong/organization-model/badge.svg
+[co-lnk]: https://coveralls.io/r/ChrisZhong/organization-model
