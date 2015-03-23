@@ -22,42 +22,42 @@ import com.google.inject.Injector;
 import com.google.inject.ProvisionException;
 
 @SuppressWarnings("javadoc")
-public class CapabilityTest {
+public class CharacteristicTest {
 
 	private final Injector injector = Guice.createInjector(new EntityModule(), new IdModule());
-	private final CapabilityFactory capabilityFactory = injector.getInstance(CapabilityFactory.class);
+	private final CharacteristicFactory characteristicFactory = injector.getInstance(CharacteristicFactory.class);
 	private final IdFactory idFactory = injector.getInstance(IdFactory.class);
 
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
 
 	@Test
-	public void testCapability() {
-		final UniqueId<Capability> i1 = idFactory.buildId(Capability.class, 1L);
-		final Capability c1 = capabilityFactory.buildCapability(i1);
+	public void testCharacteristic() {
+		final UniqueId<Characteristic> i1 = idFactory.buildId(Characteristic.class, 1L);
+		final Characteristic c1 = characteristicFactory.buildCharacteristic(i1);
 		assertThat(c1, is(not(nullValue())));
 	}
 
 	@Test
-	public void testCapability1() {
+	public void testCharacteristic1() {
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
-		capabilityFactory.buildCapability(null);
+		characteristicFactory.buildCharacteristic(null);
 	}
 
 	@Test
-	public void testCapability2() {
+	public void testCharacteristic2() {
 		exception.expect(instanceOf(IllegalArgumentException.class));
 		exception.expectMessage(equalTo("Parameter (id) cannot be null"));
-		new CapabilityEntity(null);
+		new CharacteristicEntity(null);
 	}
 
 	@Test
 	public void testGetId() {
-		final UniqueId<Capability> i1 = idFactory.buildId(Capability.class, 1L);
-		final UniqueId<Capability> i2 = idFactory.buildId(Capability.class, 1L);
-		final Capability c1 = capabilityFactory.buildCapability(i1);
-		final Capability c2 = capabilityFactory.buildCapability(i2);
+		final UniqueId<Characteristic> i1 = idFactory.buildId(Characteristic.class, 1L);
+		final UniqueId<Characteristic> i2 = idFactory.buildId(Characteristic.class, 1L);
+		final Characteristic c1 = characteristicFactory.buildCharacteristic(i1);
+		final Characteristic c2 = characteristicFactory.buildCharacteristic(i2);
 
 		assertThat(c1.getId(), is(sameInstance(i1)));
 		assertThat(c1.getId(), is(not(sameInstance(c2.getId()))));
@@ -65,11 +65,11 @@ public class CapabilityTest {
 
 	@Test
 	public void testEqualsObject() {
-		final UniqueId<Capability> i1 = idFactory.buildId(Capability.class, 1L);
-		final UniqueId<Capability> i2 = idFactory.buildId(Capability.class, 2L);
-		final Capability c1 = capabilityFactory.buildCapability(i1);
-		final Capability c2 = capabilityFactory.buildCapability(i2);
-		final Capability c3 = capabilityFactory.buildCapability(i1);
+		final UniqueId<Characteristic> i1 = idFactory.buildId(Characteristic.class, 1L);
+		final UniqueId<Characteristic> i2 = idFactory.buildId(Characteristic.class, 2L);
+		final Characteristic c1 = characteristicFactory.buildCharacteristic(i1);
+		final Characteristic c2 = characteristicFactory.buildCharacteristic(i2);
+		final Characteristic c3 = characteristicFactory.buildCharacteristic(i1);
 
 		assertThat(c1, is(not(equalTo(i1))));
 		assertThat(c2, is(not(equalTo(i2))));
@@ -81,10 +81,10 @@ public class CapabilityTest {
 
 	@Test
 	public void testHashCode() {
-		final UniqueId<Capability> i1 = idFactory.buildId(Capability.class, 1L);
-		final UniqueId<Capability> i2 = idFactory.buildId(Capability.class, 2L);
-		final Capability c1 = capabilityFactory.buildCapability(i1);
-		final Capability c2 = capabilityFactory.buildCapability(i2);
+		final UniqueId<Characteristic> i1 = idFactory.buildId(Characteristic.class, 1L);
+		final UniqueId<Characteristic> i2 = idFactory.buildId(Characteristic.class, 2L);
+		final Characteristic c1 = characteristicFactory.buildCharacteristic(i1);
+		final Characteristic c2 = characteristicFactory.buildCharacteristic(i2);
 
 		assertThat(c1.hashCode(), is(equalTo(i1.hashCode())));
 		assertThat(c2.hashCode(), is(equalTo(i2.hashCode())));
@@ -93,10 +93,10 @@ public class CapabilityTest {
 
 	@Test
 	public void testToString() {
-		final UniqueId<Capability> i1 = idFactory.buildId(Capability.class, 1L);
-		final UniqueId<Capability> i2 = idFactory.buildId(Capability.class, 2L);
-		final Capability c1 = capabilityFactory.buildCapability(i1);
-		final Capability c2 = capabilityFactory.buildCapability(i2);
+		final UniqueId<Characteristic> i1 = idFactory.buildId(Characteristic.class, 1L);
+		final UniqueId<Characteristic> i2 = idFactory.buildId(Characteristic.class, 2L);
+		final Characteristic c1 = characteristicFactory.buildCharacteristic(i1);
+		final Characteristic c2 = characteristicFactory.buildCharacteristic(i2);
 
 		assertThat(c1.toString(), is(equalTo(i1.toString())));
 		assertThat(c2.toString(), is(equalTo(i2.toString())));
