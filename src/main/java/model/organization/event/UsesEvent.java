@@ -2,12 +2,15 @@ package model.organization.event;
 
 import static model.organization.validation.Checks.checkNotNull;
 
+import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
 import model.organization.entity.Pmf;
 import model.organization.entity.Role;
 import model.organization.id.UniqueId;
 import model.organization.relation.Uses;
+
+import com.google.inject.assistedinject.Assisted;
 
 /**
  * The {@linkplain UsesEvent} class indicates that there is an update about an {@linkplain Uses} relation.
@@ -21,15 +24,8 @@ public class UsesEvent extends AbstractEvent {
 	private final UniqueId<Role> roleId;
 	private final UniqueId<Pmf> pmfId;
 
-	/**
-	 * Constructs a new instance of {@linkplain UsesEvent}.
-	 *
-	 * @param uses
-	 *            the {@linkplain Uses}.
-	 * @param category
-	 *            the category of the update.
-	 */
-	public UsesEvent(@NotNull final Uses uses, @NotNull final UpdateCategory category) {
+	@Inject
+	UsesEvent(@NotNull @Assisted final Uses uses, @NotNull @Assisted final EventCategory category) {
 		super(category);
 		checkNotNull(uses, "uses");
 		roleId = uses.getRole().getId();

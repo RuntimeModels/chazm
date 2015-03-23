@@ -2,12 +2,15 @@ package model.organization.event;
 
 import static model.organization.validation.Checks.checkNotNull;
 
+import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
 import model.organization.entity.Agent;
 import model.organization.entity.Attribute;
 import model.organization.id.UniqueId;
 import model.organization.relation.Has;
+
+import com.google.inject.assistedinject.Assisted;
 
 /**
  * The {@linkplain HasEvent} class indicates that there is an update about a {@linkplain Has} relation.
@@ -22,15 +25,8 @@ public class HasEvent extends AbstractEvent {
 	private final UniqueId<Attribute> attributeId;
 	private final double value;
 
-	/**
-	 * Constructs a new instance of {@linkplain HasEvent}.
-	 *
-	 * @param has
-	 *            the {@linkplain Has}.
-	 * @param category
-	 *            the category of the update.
-	 */
-	public HasEvent(@NotNull final Has has, @NotNull final UpdateCategory category) {
+	@Inject
+	HasEvent(@NotNull @Assisted final Has has, @NotNull @Assisted final EventCategory category) {
 		super(category);
 		checkNotNull(has, "has");
 		agentId = has.getAgent().getId();

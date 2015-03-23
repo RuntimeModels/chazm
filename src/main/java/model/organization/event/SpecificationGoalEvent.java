@@ -2,10 +2,13 @@ package model.organization.event;
 
 import static model.organization.validation.Checks.checkNotNull;
 
+import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
 import model.organization.entity.SpecificationGoal;
 import model.organization.id.UniqueId;
+
+import com.google.inject.assistedinject.Assisted;
 
 /**
  * The {@linkplain SpecificationGoalEvent} class indicates that there is an update about an {@linkplain SpecificationGoal}.
@@ -18,15 +21,8 @@ public class SpecificationGoalEvent extends AbstractEvent {
 	private static final long serialVersionUID = 602095857291387756L;
 	private final UniqueId<SpecificationGoal> id;
 
-	/**
-	 * Constructs a new instance of {@linkplain SpecificationGoalEvent}.
-	 *
-	 * @param goal
-	 *            the {@linkplain SpecificationGoal}.
-	 * @param category
-	 *            the category of the update.
-	 */
-	public SpecificationGoalEvent(@NotNull final SpecificationGoal goal, @NotNull final UpdateCategory category) {
+	@Inject
+	SpecificationGoalEvent(@NotNull @Assisted final SpecificationGoal goal, @NotNull @Assisted final EventCategory category) {
 		super(category);
 		checkNotNull(goal, "goal");
 		id = goal.getId();

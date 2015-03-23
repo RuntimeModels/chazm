@@ -2,12 +2,15 @@ package model.organization.event;
 
 import static model.organization.validation.Checks.checkNotNull;
 
+import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
 import model.organization.entity.Capability;
 import model.organization.entity.Role;
 import model.organization.id.UniqueId;
 import model.organization.relation.Requires;
+
+import com.google.inject.assistedinject.Assisted;
 
 /**
  * The {@linkplain RequiresEvent} class indicates that there is an update about a {@linkplain Requires} relation.
@@ -21,15 +24,8 @@ public class RequiresEvent extends AbstractEvent {
 	private final UniqueId<Role> roleId;
 	private final UniqueId<Capability> capabilityId;
 
-	/**
-	 * Constructs a new instance of {@linkplain RequiresEvent}.
-	 *
-	 * @param requires
-	 *            the {@linkplain Requires}.
-	 * @param category
-	 *            the category of the update.
-	 */
-	public RequiresEvent(@NotNull final Requires requires, @NotNull final UpdateCategory category) {
+	@Inject
+	RequiresEvent(@NotNull @Assisted final Requires requires, @NotNull @Assisted final EventCategory category) {
 		super(category);
 		checkNotNull(requires, "requires");
 		roleId = requires.getRole().getId();

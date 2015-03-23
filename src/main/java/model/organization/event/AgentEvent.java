@@ -21,16 +21,8 @@ public class AgentEvent extends AbstractEvent {
 	private static final long serialVersionUID = -1802353103746617813L;
 	private final UniqueId<Agent> id;
 
-	/**
-	 * Constructs a new instance of {@linkplain AgentEvent}.
-	 *
-	 * @param agent
-	 *            the {@linkplain Agent}.
-	 * @param category
-	 *            the category of the update.
-	 */
 	@Inject
-	AgentEvent(@NotNull @Assisted final Agent agent, @NotNull @Assisted final UpdateCategory category) {
+	AgentEvent(@NotNull @Assisted final Agent agent, @NotNull @Assisted final EventCategory category) {
 		super(category);
 		checkNotNull(agent, "agent");
 		id = agent.getId();

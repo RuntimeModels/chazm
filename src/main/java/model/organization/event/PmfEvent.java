@@ -2,10 +2,13 @@ package model.organization.event;
 
 import static model.organization.validation.Checks.checkNotNull;
 
+import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
 import model.organization.entity.Pmf;
 import model.organization.id.UniqueId;
+
+import com.google.inject.assistedinject.Assisted;
 
 /**
  * The {@linkplain PmfEvent} class indicates that there is an update about a {@linkplain Pmf} entity.
@@ -18,15 +21,8 @@ public class PmfEvent extends AbstractEvent {
 	private static final long serialVersionUID = 4714992287654266663L;
 	private final UniqueId<Pmf> id;
 
-	/**
-	 * Constructs a new instance of {@linkplain PmfEvent}.
-	 *
-	 * @param pmf
-	 *            the {@linkplain Pmf}.
-	 * @param category
-	 *            the category of the update.
-	 */
-	public PmfEvent(@NotNull final Pmf pmf, @NotNull final UpdateCategory category) {
+	@Inject
+	PmfEvent(@NotNull @Assisted final Pmf pmf, @NotNull @Assisted final EventCategory category) {
 		super(category);
 		checkNotNull(pmf, "pmf");
 		id = pmf.getId();

@@ -2,10 +2,13 @@ package model.organization.event;
 
 import static model.organization.validation.Checks.checkNotNull;
 
+import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
 import model.organization.entity.Policy;
 import model.organization.id.UniqueId;
+
+import com.google.inject.assistedinject.Assisted;
 
 /**
  * The {@linkplain PolicyEvent} class indicates that there is an update about a {@linkplain Policy} entity.
@@ -18,15 +21,8 @@ public class PolicyEvent extends AbstractEvent {
 	private static final long serialVersionUID = 1100497597698058236L;
 	private final UniqueId<Policy> id;
 
-	/**
-	 * Constructs a new instance of {@linkplain PolicyEvent}.
-	 *
-	 * @param policy
-	 *            the {@linkplain Policy}.
-	 * @param category
-	 *            the category of the update.
-	 */
-	public PolicyEvent(@NotNull final Policy policy, @NotNull final UpdateCategory category) {
+	@Inject
+	PolicyEvent(@NotNull @Assisted final Policy policy, @NotNull @Assisted final EventCategory category) {
 		super(category);
 		checkNotNull(policy, "policy");
 		id = policy.getId();

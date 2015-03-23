@@ -2,6 +2,7 @@ package model.organization.event;
 
 import static model.organization.validation.Checks.checkNotNull;
 
+import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
 import model.organization.entity.Agent;
@@ -9,6 +10,8 @@ import model.organization.entity.InstanceGoal;
 import model.organization.entity.Role;
 import model.organization.id.UniqueId;
 import model.organization.relation.Assignment;
+
+import com.google.inject.assistedinject.Assisted;
 
 /**
  * The {@linkplain AssignmentEvent} class indicates that there is an update about an {@linkplain Assignment}.
@@ -23,15 +26,8 @@ public class AssignmentEvent extends AbstractEvent {
 	private final UniqueId<Role> roleId;
 	private final UniqueId<InstanceGoal> goalId;
 
-	/**
-	 * Constructs a new instance of {@linkplain AssignmentEvent}.
-	 *
-	 * @param assignment
-	 *            the {@linkplain Assignment}.
-	 * @param category
-	 *            the category of the update.
-	 */
-	public AssignmentEvent(@NotNull final Assignment assignment, @NotNull final UpdateCategory category) {
+	@Inject
+	AssignmentEvent(@NotNull @Assisted final Assignment assignment, @NotNull @Assisted final EventCategory category) {
 		super(category);
 		checkNotNull(assignment, "assignment");
 		agentId = assignment.getAgent().getId();
