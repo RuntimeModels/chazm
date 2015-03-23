@@ -33,7 +33,7 @@ public class RoleTest {
 
 	@Test
 	public void testRole() {
-		final UniqueId<Role> i1 = idFactory.buildId(Role.class, 1L);
+		final UniqueId<Role> i1 = idFactory.build(Role.class, 1L);
 		final Role r1 = roleFactory.buildRole(i1);
 		assertThat(r1, is(not(nullValue())));
 	}
@@ -54,8 +54,8 @@ public class RoleTest {
 
 	@Test
 	public void testGetId() {
-		final UniqueId<Role> i1 = idFactory.buildId(Role.class, 1L);
-		final UniqueId<Role> i2 = idFactory.buildId(Role.class, 1L);
+		final UniqueId<Role> i1 = idFactory.build(Role.class, 1L);
+		final UniqueId<Role> i2 = idFactory.build(Role.class, 1L);
 		final Role r1 = roleFactory.buildRole(i1);
 		final Role r2 = roleFactory.buildRole(i2);
 
@@ -65,8 +65,8 @@ public class RoleTest {
 
 	@Test
 	public void testEqualsObject() {
-		final UniqueId<Role> i1 = idFactory.buildId(Role.class, 1L);
-		final UniqueId<Role> i2 = idFactory.buildId(Role.class, 2L);
+		final UniqueId<Role> i1 = idFactory.build(Role.class, 1L);
+		final UniqueId<Role> i2 = idFactory.build(Role.class, 2L);
 		final Role r1 = roleFactory.buildRole(i1);
 		final Role r2 = roleFactory.buildRole(i2);
 		final Role r3 = roleFactory.buildRole(i1);
@@ -81,8 +81,8 @@ public class RoleTest {
 
 	@Test
 	public void testHashCode() {
-		final UniqueId<Role> i1 = idFactory.buildId(Role.class, 1L);
-		final UniqueId<Role> i2 = idFactory.buildId(Role.class, 2L);
+		final UniqueId<Role> i1 = idFactory.build(Role.class, 1L);
+		final UniqueId<Role> i2 = idFactory.build(Role.class, 2L);
 		final Role r1 = roleFactory.buildRole(i1);
 		final Role r2 = roleFactory.buildRole(i2);
 
@@ -93,8 +93,8 @@ public class RoleTest {
 
 	@Test
 	public void testToString() {
-		final UniqueId<Role> i1 = idFactory.buildId(Role.class, 1L);
-		final UniqueId<Role> i2 = idFactory.buildId(Role.class, 2L);
+		final UniqueId<Role> i1 = idFactory.build(Role.class, 1L);
+		final UniqueId<Role> i2 = idFactory.build(Role.class, 2L);
 		final Role r1 = roleFactory.buildRole(i1);
 		final Role r2 = roleFactory.buildRole(i2);
 

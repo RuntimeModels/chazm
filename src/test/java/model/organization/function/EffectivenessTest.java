@@ -40,14 +40,14 @@ public class EffectivenessTest {
 	@Test
 	public void testCompute() {
 		final Organization o = provider.get();
-		final Agent a1 = entityFactory.buildAgent(idFactory.buildId(Agent.class, "a1"), new Agent.ContactInfo() {});
-		final Agent a2 = entityFactory.buildAgent(idFactory.buildId(Agent.class, "a2"), new Agent.ContactInfo() {});
-		final Role r = entityFactory.buildRole(idFactory.buildId(Role.class, "r"));
-		final SpecificationGoal sg = entityFactory.buildSpecificationGoal(idFactory.buildId(SpecificationGoal.class, "sg"));
-		final InstanceGoal ig1 = entityFactory.buildInstanceGoal(idFactory.buildId(InstanceGoal.class, "ig1"), sg, new InstanceGoal.Parameter() {});
-		final InstanceGoal ig2 = entityFactory.buildInstanceGoal(idFactory.buildId(InstanceGoal.class, "ig2"), sg, new InstanceGoal.Parameter() {});
-		final Capability c1 = entityFactory.buildCapability(idFactory.buildId(Capability.class, "c1"));
-		final Capability c2 = entityFactory.buildCapability(idFactory.buildId(Capability.class, "c2"));
+		final Agent a1 = entityFactory.buildAgent(idFactory.build(Agent.class, "a1"), new Agent.ContactInfo() {});
+		final Agent a2 = entityFactory.buildAgent(idFactory.build(Agent.class, "a2"), new Agent.ContactInfo() {});
+		final Role r = entityFactory.buildRole(idFactory.build(Role.class, "r"));
+		final SpecificationGoal sg = entityFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
+		final InstanceGoal ig1 = entityFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig1"), sg, new InstanceGoal.Parameter() {});
+		final InstanceGoal ig2 = entityFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig2"), sg, new InstanceGoal.Parameter() {});
+		final Capability c1 = entityFactory.buildCapability(idFactory.build(Capability.class, "c1"));
+		final Capability c2 = entityFactory.buildCapability(idFactory.build(Capability.class, "c2"));
 		final Assignment as1 = relationFactory.buildAssignment(a1, r, ig1);
 		final Assignment as2 = relationFactory.buildAssignment(a1, r, ig2);
 		final Assignment as3 = relationFactory.buildAssignment(a2, r, ig1);

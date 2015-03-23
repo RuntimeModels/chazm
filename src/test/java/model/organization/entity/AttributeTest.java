@@ -33,7 +33,7 @@ public class AttributeTest {
 
 	@Test
 	public void testAttribute() {
-		final UniqueId<Attribute> i1 = idFactory.buildId(Attribute.class, 1L);
+		final UniqueId<Attribute> i1 = idFactory.build(Attribute.class, 1L);
 		final Attribute a1 = attributeFactory.buildAttribute(i1, Attribute.Type.NEGATIVE_QUALITY);
 		assertThat(a1, is(not(nullValue())));
 	}
@@ -54,7 +54,7 @@ public class AttributeTest {
 
 	@Test
 	public void testAttribute3() {
-		final UniqueId<Attribute> i1 = idFactory.buildId(Attribute.class, 1L);
+		final UniqueId<Attribute> i1 = idFactory.build(Attribute.class, 1L);
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
 		attributeFactory.buildAttribute(i1, null);
@@ -62,7 +62,7 @@ public class AttributeTest {
 
 	@Test
 	public void testGetType() {
-		final UniqueId<Attribute> i1 = idFactory.buildId(Attribute.class, 1L);
+		final UniqueId<Attribute> i1 = idFactory.build(Attribute.class, 1L);
 		final Attribute a1 = attributeFactory.buildAttribute(i1, Attribute.Type.NEGATIVE_QUALITY);
 		final Attribute a2 = attributeFactory.buildAttribute(i1, Attribute.Type.NEGATIVE_QUANTITY);
 		final Attribute a3 = attributeFactory.buildAttribute(i1, Attribute.Type.NEGATIVE_UNBOUNDED);
@@ -79,7 +79,7 @@ public class AttributeTest {
 
 	@Test
 	public void testAttribute4() {
-		final UniqueId<Attribute> i1 = idFactory.buildId(Attribute.class, 1L);
+		final UniqueId<Attribute> i1 = idFactory.build(Attribute.class, 1L);
 		exception.expect(instanceOf(IllegalArgumentException.class));
 		exception.expectMessage(equalTo("Parameter (type) cannot be null"));
 		new AttributeEntity(i1, null);
@@ -87,8 +87,8 @@ public class AttributeTest {
 
 	@Test
 	public void testGetId() {
-		final UniqueId<Attribute> i1 = idFactory.buildId(Attribute.class, 1L);
-		final UniqueId<Attribute> i2 = idFactory.buildId(Attribute.class, 1L);
+		final UniqueId<Attribute> i1 = idFactory.build(Attribute.class, 1L);
+		final UniqueId<Attribute> i2 = idFactory.build(Attribute.class, 1L);
 		final Attribute c1 = attributeFactory.buildAttribute(i1, Attribute.Type.NEGATIVE_QUALITY);
 		final Attribute c2 = attributeFactory.buildAttribute(i2, Attribute.Type.NEGATIVE_QUALITY);
 
@@ -98,8 +98,8 @@ public class AttributeTest {
 
 	@Test
 	public void testEqualsObject() {
-		final UniqueId<Attribute> i1 = idFactory.buildId(Attribute.class, 1L);
-		final UniqueId<Attribute> i2 = idFactory.buildId(Attribute.class, 2L);
+		final UniqueId<Attribute> i1 = idFactory.build(Attribute.class, 1L);
+		final UniqueId<Attribute> i2 = idFactory.build(Attribute.class, 2L);
 		final Attribute c1 = attributeFactory.buildAttribute(i1, Attribute.Type.NEGATIVE_QUALITY);
 		final Attribute c2 = attributeFactory.buildAttribute(i2, Attribute.Type.NEGATIVE_QUALITY);
 		final Attribute c3 = attributeFactory.buildAttribute(i1, Attribute.Type.NEGATIVE_QUALITY);
@@ -114,8 +114,8 @@ public class AttributeTest {
 
 	@Test
 	public void testHashCode() {
-		final UniqueId<Attribute> i1 = idFactory.buildId(Attribute.class, 1L);
-		final UniqueId<Attribute> i2 = idFactory.buildId(Attribute.class, 2L);
+		final UniqueId<Attribute> i1 = idFactory.build(Attribute.class, 1L);
+		final UniqueId<Attribute> i2 = idFactory.build(Attribute.class, 2L);
 		final Attribute c1 = attributeFactory.buildAttribute(i1, Attribute.Type.NEGATIVE_QUALITY);
 		final Attribute c2 = attributeFactory.buildAttribute(i2, Attribute.Type.NEGATIVE_QUALITY);
 
@@ -126,8 +126,8 @@ public class AttributeTest {
 
 	@Test
 	public void testToString() {
-		final UniqueId<Attribute> i1 = idFactory.buildId(Attribute.class, 1L);
-		final UniqueId<Attribute> i2 = idFactory.buildId(Attribute.class, 2L);
+		final UniqueId<Attribute> i1 = idFactory.build(Attribute.class, 1L);
+		final UniqueId<Attribute> i2 = idFactory.build(Attribute.class, 2L);
 		final Attribute c1 = attributeFactory.buildAttribute(i1, Attribute.Type.NEGATIVE_QUALITY);
 		final Attribute c2 = attributeFactory.buildAttribute(i2, Attribute.Type.NEGATIVE_QUALITY);
 

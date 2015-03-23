@@ -33,7 +33,7 @@ public class PmfTest {
 
 	@Test
 	public void testPmf() {
-		final UniqueId<Pmf> i1 = idFactory.buildId(Pmf.class, 1L);
+		final UniqueId<Pmf> i1 = idFactory.build(Pmf.class, 1L);
 		final Pmf p1 = pmfFactory.buildPmf(i1);
 		assertThat(p1, is(not(nullValue())));
 	}
@@ -54,8 +54,8 @@ public class PmfTest {
 
 	@Test
 	public void testGetId() {
-		final UniqueId<Pmf> i1 = idFactory.buildId(Pmf.class, 1L);
-		final UniqueId<Pmf> i2 = idFactory.buildId(Pmf.class, 1L);
+		final UniqueId<Pmf> i1 = idFactory.build(Pmf.class, 1L);
+		final UniqueId<Pmf> i2 = idFactory.build(Pmf.class, 1L);
 		final Pmf p1 = pmfFactory.buildPmf(i1);
 		final Pmf p2 = pmfFactory.buildPmf(i2);
 
@@ -65,8 +65,8 @@ public class PmfTest {
 
 	@Test
 	public void testEqualsObject() {
-		final UniqueId<Pmf> i1 = idFactory.buildId(Pmf.class, 1L);
-		final UniqueId<Pmf> i2 = idFactory.buildId(Pmf.class, 2L);
+		final UniqueId<Pmf> i1 = idFactory.build(Pmf.class, 1L);
+		final UniqueId<Pmf> i2 = idFactory.build(Pmf.class, 2L);
 		final Pmf p1 = pmfFactory.buildPmf(i1);
 		final Pmf p2 = pmfFactory.buildPmf(i2);
 		final Pmf p3 = pmfFactory.buildPmf(i1);
@@ -81,8 +81,8 @@ public class PmfTest {
 
 	@Test
 	public void testHashCode() {
-		final UniqueId<Pmf> i1 = idFactory.buildId(Pmf.class, 1L);
-		final UniqueId<Pmf> i2 = idFactory.buildId(Pmf.class, 2L);
+		final UniqueId<Pmf> i1 = idFactory.build(Pmf.class, 1L);
+		final UniqueId<Pmf> i2 = idFactory.build(Pmf.class, 2L);
 		final Pmf p1 = pmfFactory.buildPmf(i1);
 		final Pmf p2 = pmfFactory.buildPmf(i2);
 
@@ -93,8 +93,8 @@ public class PmfTest {
 
 	@Test
 	public void testToString() {
-		final UniqueId<Pmf> i1 = idFactory.buildId(Pmf.class, 1L);
-		final UniqueId<Pmf> i2 = idFactory.buildId(Pmf.class, 2L);
+		final UniqueId<Pmf> i1 = idFactory.build(Pmf.class, 1L);
+		final UniqueId<Pmf> i2 = idFactory.build(Pmf.class, 2L);
 		final Pmf p1 = pmfFactory.buildPmf(i1);
 		final Pmf p2 = pmfFactory.buildPmf(i2);
 

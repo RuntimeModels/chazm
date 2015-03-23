@@ -32,8 +32,8 @@ public class AchievesManagerTest {
 	@Test
 	public void testAddAchieves() {
 		final Organization o = provider.get();
-		final UniqueId<Role> i1 = idFactory.buildId(Role.class, "role1");
-		final UniqueId<SpecificationGoal> i2 = idFactory.buildId(SpecificationGoal.class, "goal1");
+		final UniqueId<Role> i1 = idFactory.build(Role.class, "role1");
+		final UniqueId<SpecificationGoal> i2 = idFactory.build(SpecificationGoal.class, "goal1");
 		final Role r1 = entityFactory.buildRole(i1);
 		final SpecificationGoal g1 = entityFactory.buildSpecificationGoal(i2);
 		o.addRole(r1);
@@ -54,7 +54,7 @@ public class AchievesManagerTest {
 	@Test
 	public void testAddAchieves2() {
 		final Organization o = provider.get();
-		final UniqueId<Role> i1 = idFactory.buildId(Role.class, "role1");
+		final UniqueId<Role> i1 = idFactory.build(Role.class, "role1");
 		final Role r1 = entityFactory.buildRole(i1);
 		o.addRole(r1);
 		exception.expect(is(instanceOf(IllegalArgumentException.class)));
@@ -65,8 +65,8 @@ public class AchievesManagerTest {
 	@Test
 	public void testAddAchieves3() {
 		final Organization o = provider.get();
-		final UniqueId<Role> i1 = idFactory.buildId(Role.class, "role1");
-		final UniqueId<SpecificationGoal> i2 = idFactory.buildId(SpecificationGoal.class, "goal1");
+		final UniqueId<Role> i1 = idFactory.build(Role.class, "role1");
+		final UniqueId<SpecificationGoal> i2 = idFactory.build(SpecificationGoal.class, "goal1");
 		final SpecificationGoal g1 = entityFactory.buildSpecificationGoal(i2);
 		o.addSpecificationGoal(g1);
 		exception.expect(is(instanceOf(IllegalArgumentException.class)));
@@ -77,8 +77,8 @@ public class AchievesManagerTest {
 	@Test
 	public void testAddAchieves4() {
 		final Organization o = provider.get();
-		final UniqueId<Role> i1 = idFactory.buildId(Role.class, "role1");
-		final UniqueId<SpecificationGoal> i2 = idFactory.buildId(SpecificationGoal.class, "goal1");
+		final UniqueId<Role> i1 = idFactory.build(Role.class, "role1");
+		final UniqueId<SpecificationGoal> i2 = idFactory.build(SpecificationGoal.class, "goal1");
 		final Role r1 = entityFactory.buildRole(i1);
 		o.addRole(r1);
 		exception.expect(is(instanceOf(IllegalArgumentException.class)));

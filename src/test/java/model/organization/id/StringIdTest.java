@@ -26,7 +26,7 @@ public class StringIdTest {
 
 	@Test
 	public void testStringId() {
-		final UniqueId<Object> i1 = idFactory.buildId(Object.class, "");
+		final UniqueId<Object> i1 = idFactory.build(Object.class, "");
 		assertThat(i1, is(not(nullValue())));
 		assertThat(i1, is(instanceOf(StringId.class)));
 	}
@@ -35,14 +35,14 @@ public class StringIdTest {
 	public void testStringId1() {
 		exception.expect(IllegalArgumentException.class);
 		exception.expectMessage(equalTo("Parameter (id) cannot be null"));
-		idFactory.buildId(Object.class, (String) null);
+		idFactory.build(Object.class, (String) null);
 	}
 
 	@Test
 	public void testGetType() {
-		final UniqueId<Object> i1 = idFactory.buildId(Object.class, "");
-		final UniqueId<String> i2 = idFactory.buildId(String.class, "");
-		final UniqueId<Double> i3 = idFactory.buildId(Double.class, "");
+		final UniqueId<Object> i1 = idFactory.build(Object.class, "");
+		final UniqueId<String> i2 = idFactory.build(String.class, "");
+		final UniqueId<Double> i3 = idFactory.build(Double.class, "");
 
 		assertThat(i1.getType(), is(equalTo(Object.class)));
 		assertThat(i2.getType(), is(equalTo(String.class)));
@@ -51,9 +51,9 @@ public class StringIdTest {
 
 	@Test
 	public void testHashCode() {
-		final UniqueId<Object> i1 = idFactory.buildId(Object.class, "r1");
-		final UniqueId<Object> i2 = idFactory.buildId(Object.class, "r1");
-		final UniqueId<Object> i3 = idFactory.buildId(Object.class, "r3");
+		final UniqueId<Object> i1 = idFactory.build(Object.class, "r1");
+		final UniqueId<Object> i2 = idFactory.build(Object.class, "r1");
+		final UniqueId<Object> i3 = idFactory.build(Object.class, "r3");
 
 		assertThat(i1, is(not(sameInstance(i2))));
 		assertThat(i1, is(not(sameInstance(i3))));
@@ -65,9 +65,9 @@ public class StringIdTest {
 
 	@Test
 	public void testEqualsObject() {
-		final UniqueId<Object> i1 = idFactory.buildId(Object.class, "r1");
-		final UniqueId<Object> i2 = idFactory.buildId(Object.class, "r1");
-		final UniqueId<Object> i3 = idFactory.buildId(Object.class, "r3");
+		final UniqueId<Object> i1 = idFactory.build(Object.class, "r1");
+		final UniqueId<Object> i2 = idFactory.build(Object.class, "r1");
+		final UniqueId<Object> i3 = idFactory.build(Object.class, "r3");
 
 		assertThat(i1, is(not(sameInstance(i2))));
 		assertThat(i1, is(not(sameInstance(i3))));
@@ -80,9 +80,9 @@ public class StringIdTest {
 
 	@Test
 	public void testToString() {
-		final UniqueId<Object> i1 = idFactory.buildId(Object.class, "r1");
-		final UniqueId<Object> i2 = idFactory.buildId(Object.class, "r1");
-		final UniqueId<Object> i3 = idFactory.buildId(Object.class, "r3");
+		final UniqueId<Object> i1 = idFactory.build(Object.class, "r1");
+		final UniqueId<Object> i2 = idFactory.build(Object.class, "r1");
+		final UniqueId<Object> i3 = idFactory.build(Object.class, "r3");
 
 		assertThat(i1, is(not(sameInstance(i2))));
 		assertThat(i1, is(not(sameInstance(i3))));

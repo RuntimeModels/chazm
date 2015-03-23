@@ -61,7 +61,7 @@ public class ChecksTest {
 
 	@Test
 	public void testCheckNotExists() {
-		final UniqueId<Capability> i1 = idFactory.buildId(Capability.class, 1L);
+		final UniqueId<Capability> i1 = idFactory.build(Capability.class, 1L);
 		final Capability c1 = entityFactory.buildCapability(i1);
 
 		checkNotExists(c1, "i1", p -> false);
@@ -69,7 +69,7 @@ public class ChecksTest {
 
 	@Test
 	public void testCheckNotExists1() {
-		final UniqueId<Role> i1 = idFactory.buildId(Role.class, 1L);
+		final UniqueId<Role> i1 = idFactory.build(Role.class, 1L);
 		final Role r1 = entityFactory.buildRole(i1);
 
 		exception.expect(IllegalArgumentException.class);
@@ -88,7 +88,7 @@ public class ChecksTest {
 
 	@Test
 	public void testCheckNotExists3() {
-		final UniqueId<Role> i1 = idFactory.buildId(Role.class, 1L);
+		final UniqueId<Role> i1 = idFactory.build(Role.class, 1L);
 		final Role r1 = entityFactory.buildRole(i1);
 
 		exception.expect(IllegalArgumentException.class);
@@ -99,7 +99,7 @@ public class ChecksTest {
 
 	@Test
 	public void testCheckExists() {
-		final UniqueId<Role> i1 = idFactory.buildId(Role.class, 1L);
+		final UniqueId<Role> i1 = idFactory.build(Role.class, 1L);
 		final Role r1 = entityFactory.buildRole(i1);
 
 		checkExists(i1, "i1", f -> r1);
@@ -107,7 +107,7 @@ public class ChecksTest {
 
 	@Test
 	public void testCheckExists1() {
-		final UniqueId<Role> i1 = idFactory.buildId(Role.class, 1L);
+		final UniqueId<Role> i1 = idFactory.build(Role.class, 1L);
 
 		exception.expect(IllegalArgumentException.class);
 		exception.expectMessage(equalTo("(Role) entity (1) does not exists"));
@@ -125,7 +125,7 @@ public class ChecksTest {
 
 	@Test
 	public void testCheckExists3() {
-		final UniqueId<Role> i1 = idFactory.buildId(Role.class, 1L);
+		final UniqueId<Role> i1 = idFactory.build(Role.class, 1L);
 
 		exception.expect(IllegalArgumentException.class);
 		exception.expectMessage(equalTo("Parameter (f) cannot be null"));

@@ -17,7 +17,7 @@ public interface IdFactory {
 	 *            the {@linkplain Class} id for the {@linkplain UniqueId}.
 	 * @return an {@linkplain UniqueId}.
 	 */
-	<T, U> UniqueId<T> buildId(Class<T> clazz, Class<U> id);
+	<T, U> UniqueId<T> build(Class<T> clazz, Class<U> id);
 
 	/**
 	 * Constructs an {@linkplain UniqueId}.
@@ -28,7 +28,7 @@ public interface IdFactory {
 	 *            the <code>long</code> id for the {@linkplain UniqueId}.
 	 * @return an {@linkplain UniqueId}.
 	 */
-	<T> UniqueId<T> buildId(Class<T> clazz, Long id);
+	<T> UniqueId<T> build(Class<T> clazz, Long id);
 
 	/**
 	 * Constructs an {@linkplain UniqueId}.
@@ -39,6 +39,6 @@ public interface IdFactory {
 	 *            the {@linkplain String} id for the {@linkplain UniqueId}.
 	 * @return an {@linkplain UniqueId}.
 	 */
-	<T> UniqueId<T> buildId(Class<T> clazz, String id);
+	<T> UniqueId<T> build(Class<T> clazz, String id);
 
 }

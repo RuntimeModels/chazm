@@ -26,7 +26,7 @@ public class LongIdTest {
 
 	@Test
 	public void testLongId() {
-		final UniqueId<Object> i1 = idFactory.buildId(Object.class, 1L);
+		final UniqueId<Object> i1 = idFactory.build(Object.class, 1L);
 		assertThat(i1, is(not(nullValue())));
 		assertThat(i1, is(instanceOf(LongId.class)));
 	}
@@ -35,14 +35,14 @@ public class LongIdTest {
 	public void testLongId1() {
 		exception.expect(IllegalArgumentException.class);
 		exception.expectMessage(is("Parameter (id) cannot be null"));
-		idFactory.buildId(Object.class, (Long) null);
+		idFactory.build(Object.class, (Long) null);
 	}
 
 	@Test
 	public void testGetType() {
-		final UniqueId<Object> i1 = idFactory.buildId(Object.class, 1L);
-		final UniqueId<String> i2 = idFactory.buildId(String.class, 1L);
-		final UniqueId<Double> i3 = idFactory.buildId(Double.class, 1L);
+		final UniqueId<Object> i1 = idFactory.build(Object.class, 1L);
+		final UniqueId<String> i2 = idFactory.build(String.class, 1L);
+		final UniqueId<Double> i3 = idFactory.build(Double.class, 1L);
 
 		assertThat(i1.getType(), is(equalTo(Object.class)));
 		assertThat(i2.getType(), is(equalTo(String.class)));
@@ -51,9 +51,9 @@ public class LongIdTest {
 
 	@Test
 	public void testHashCode() {
-		final UniqueId<Object> i1 = idFactory.buildId(Object.class, 1L);
-		final UniqueId<Object> i2 = idFactory.buildId(Object.class, 1L);
-		final UniqueId<Object> i3 = idFactory.buildId(Object.class, 2L);
+		final UniqueId<Object> i1 = idFactory.build(Object.class, 1L);
+		final UniqueId<Object> i2 = idFactory.build(Object.class, 1L);
+		final UniqueId<Object> i3 = idFactory.build(Object.class, 2L);
 
 		assertThat(i1, is(not(sameInstance(i2))));
 		assertThat(i1, is(not(sameInstance(i3))));
@@ -65,9 +65,9 @@ public class LongIdTest {
 
 	@Test
 	public void testEqualsObject() {
-		final UniqueId<Object> i1 = idFactory.buildId(Object.class, 1L);
-		final UniqueId<Object> i2 = idFactory.buildId(Object.class, 1L);
-		final UniqueId<Object> i3 = idFactory.buildId(Object.class, 2L);
+		final UniqueId<Object> i1 = idFactory.build(Object.class, 1L);
+		final UniqueId<Object> i2 = idFactory.build(Object.class, 1L);
+		final UniqueId<Object> i3 = idFactory.build(Object.class, 2L);
 
 		assertThat(i1, is(not(sameInstance(i2))));
 		assertThat(i1, is(not(sameInstance(i3))));
@@ -80,9 +80,9 @@ public class LongIdTest {
 
 	@Test
 	public void testToString() {
-		final UniqueId<Object> i1 = idFactory.buildId(Object.class, 1L);
-		final UniqueId<Object> i2 = idFactory.buildId(Object.class, 1L);
-		final UniqueId<Object> i3 = idFactory.buildId(Object.class, 2L);
+		final UniqueId<Object> i1 = idFactory.build(Object.class, 1L);
+		final UniqueId<Object> i2 = idFactory.build(Object.class, 1L);
+		final UniqueId<Object> i3 = idFactory.build(Object.class, 2L);
 
 		assertThat(i1, is(not(sameInstance(i2))));
 		assertThat(i1, is(not(sameInstance(i3))));

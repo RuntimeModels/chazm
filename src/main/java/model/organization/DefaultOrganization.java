@@ -30,7 +30,6 @@ import model.organization.entity.Policy;
 import model.organization.entity.Role;
 import model.organization.entity.SpecificationGoal;
 import model.organization.event.AchievesEvent;
-import model.organization.event.AgentEvent;
 import model.organization.event.AssignmentEvent;
 import model.organization.event.AttributeEvent;
 import model.organization.event.CapabilityEvent;

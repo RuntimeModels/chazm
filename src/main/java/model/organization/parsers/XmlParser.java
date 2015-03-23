@@ -223,8 +223,7 @@ public class XmlParser {
 				/* parse all the goals */
 				for (final ModelElement element : schema.getChildren(ModelElementType.GOAL)) {
 					final Goal goal = (Goal) element;
-					final SpecificationGoal specificationGoal = entityFactory
-							.buildSpecificationGoal(idFactory.buildId(SpecificationGoal.class, goal.getName()));
+					final SpecificationGoal specificationGoal = entityFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, goal.getName()));
 					if (specificationGoal == null) {
 						throw new IllegalArgumentException(String.format("Cannot find the '%s' specification goal in the given provider", goal.getName()));
 					}
@@ -233,7 +232,7 @@ public class XmlParser {
 				/* parse all the capabilities */
 				for (final ModelElement element : schema.getChildren(ModelElementType.CAPABILITY)) {
 					final edu.ksu.cis.agenttool.core.model.Capability capability = (edu.ksu.cis.agenttool.core.model.Capability) element;
-					final UniqueId<Capability> id = idFactory.buildId(Capability.class, capability.getName());
+					final UniqueId<Capability> id = idFactory.build(Capability.class, capability.getName());
 					final Capability c = entityFactory.buildCapability(id);
 					organization.addCapability(c);
 				}
@@ -242,19 +241,19 @@ public class XmlParser {
 					final edu.ksu.cis.agenttool.core.model.Role role = (edu.ksu.cis.agenttool.core.model.Role) element;
 					/* only roles that are not inherited are added */
 					if (role.getDestRelationships(RelationshipType.INHERITS).size() == 0) {
-						final UniqueId<Role> roleId = idFactory.buildId(Role.class, role.getName());
+						final UniqueId<Role> roleId = idFactory.build(Role.class, role.getName());
 						final Role r = entityFactory.buildRole(roleId);
 						organization.addRole(r);
 						/* set up the achieves relation */
 						for (final Relationship achieves : role.getSrcRelationships(RelationshipType.ACHIEVES)) {
 							final Goal goal = (Goal) achieves.getChild();
-							final UniqueId<SpecificationGoal> goalId = idFactory.buildId(SpecificationGoal.class, goal.getName());
+							final UniqueId<SpecificationGoal> goalId = idFactory.build(SpecificationGoal.class, goal.getName());
 							organization.addAchieves(roleId, goalId);
 						}
 						/* set up the requires relation */
 						for (final Relationship requires : role.getSrcRelationships(RelationshipType.REQUIRES)) {
 							final edu.ksu.cis.agenttool.core.model.Capability capability = (edu.ksu.cis.agenttool.core.model.Capability) requires.getChild();
-							final UniqueId<Capability> capabilityId = idFactory.buildId(Capability.class, capability.getName());
+							final UniqueId<Capability> capabilityId = idFactory.build(Capability.class, capability.getName());
 							organization.addRequires(roleId, capabilityId);
 						}
 						/* set up requires relation from inheritance */
@@ -263,7 +262,7 @@ public class XmlParser {
 							for (final Relationship requires : parent.getSrcRelationships(RelationshipType.REQUIRES)) {
 								final edu.ksu.cis.agenttool.core.model.Capability capability = (edu.ksu.cis.agenttool.core.model.Capability) requires
 										.getChild();
-								final UniqueId<Capability> capabilityId = idFactory.buildId(Capability.class, capability.getName());
+								final UniqueId<Capability> capabilityId = idFactory.build(Capability.class, capability.getName());
 								organization.addRequires(roleId, capabilityId);
 							}
 							inherits.addAll(parent.getSrcRelationships(RelationshipType.INHERITS));

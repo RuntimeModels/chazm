@@ -34,10 +34,10 @@ public class RoleManagerTest {
 	@Test
 	public void testAddRole() {
 		final Organization o = provider.get();
-		final UniqueId<Role> i1 = idFactory.buildId(Role.class, "role1");
-		final UniqueId<Role> i2 = idFactory.buildId(Role.class, "");
+		final UniqueId<Role> i1 = idFactory.build(Role.class, "role1");
+		final UniqueId<Role> i2 = idFactory.build(Role.class, "");
 		final Role r1 = entityFactory.buildRole(i1);
-		final Role r2 = entityFactory.buildRole(idFactory.buildId(Role.class, "role2"));
+		final Role r2 = entityFactory.buildRole(idFactory.build(Role.class, "role2"));
 		assertThat(o.getRoles().size(), is(equalTo(0)));
 		o.addRole(r1);
 		assertThat(o.getRoles().size(), is(equalTo(1)));
@@ -58,7 +58,7 @@ public class RoleManagerTest {
 	@Test
 	public void testAddRole2() {
 		final Organization o = provider.get();
-		final UniqueId<Role> i1 = idFactory.buildId(Role.class, "role1");
+		final UniqueId<Role> i1 = idFactory.build(Role.class, "role1");
 		final Role r1 = entityFactory.buildRole(i1);
 		final Role r2 = entityFactory.buildRole(i1);
 		exception.expect(is(instanceOf(IllegalArgumentException.class)));

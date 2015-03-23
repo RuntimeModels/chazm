@@ -4,7 +4,7 @@ import model.organization.entity.Agent;
 
 /**
  * The {@linkplain EventFactory} interface defines the APIs for constructing events.
- * 
+ *
  * @author Christopher Zhong
  * @since 7.0.0
  */

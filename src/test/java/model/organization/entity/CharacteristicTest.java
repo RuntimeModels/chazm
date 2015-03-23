@@ -33,7 +33,7 @@ public class CharacteristicTest {
 
 	@Test
 	public void testCharacteristic() {
-		final UniqueId<Characteristic> i1 = idFactory.buildId(Characteristic.class, 1L);
+		final UniqueId<Characteristic> i1 = idFactory.build(Characteristic.class, 1L);
 		final Characteristic c1 = characteristicFactory.buildCharacteristic(i1);
 		assertThat(c1, is(not(nullValue())));
 	}
@@ -54,8 +54,8 @@ public class CharacteristicTest {
 
 	@Test
 	public void testGetId() {
-		final UniqueId<Characteristic> i1 = idFactory.buildId(Characteristic.class, 1L);
-		final UniqueId<Characteristic> i2 = idFactory.buildId(Characteristic.class, 1L);
+		final UniqueId<Characteristic> i1 = idFactory.build(Characteristic.class, 1L);
+		final UniqueId<Characteristic> i2 = idFactory.build(Characteristic.class, 1L);
 		final Characteristic c1 = characteristicFactory.buildCharacteristic(i1);
 		final Characteristic c2 = characteristicFactory.buildCharacteristic(i2);
 
@@ -65,8 +65,8 @@ public class CharacteristicTest {
 
 	@Test
 	public void testEqualsObject() {
-		final UniqueId<Characteristic> i1 = idFactory.buildId(Characteristic.class, 1L);
-		final UniqueId<Characteristic> i2 = idFactory.buildId(Characteristic.class, 2L);
+		final UniqueId<Characteristic> i1 = idFactory.build(Characteristic.class, 1L);
+		final UniqueId<Characteristic> i2 = idFactory.build(Characteristic.class, 2L);
 		final Characteristic c1 = characteristicFactory.buildCharacteristic(i1);
 		final Characteristic c2 = characteristicFactory.buildCharacteristic(i2);
 		final Characteristic c3 = characteristicFactory.buildCharacteristic(i1);
@@ -81,8 +81,8 @@ public class CharacteristicTest {
 
 	@Test
 	public void testHashCode() {
-		final UniqueId<Characteristic> i1 = idFactory.buildId(Characteristic.class, 1L);
-		final UniqueId<Characteristic> i2 = idFactory.buildId(Characteristic.class, 2L);
+		final UniqueId<Characteristic> i1 = idFactory.build(Characteristic.class, 1L);
+		final UniqueId<Characteristic> i2 = idFactory.build(Characteristic.class, 2L);
 		final Characteristic c1 = characteristicFactory.buildCharacteristic(i1);
 		final Characteristic c2 = characteristicFactory.buildCharacteristic(i2);
 
@@ -93,8 +93,8 @@ public class CharacteristicTest {
 
 	@Test
 	public void testToString() {
-		final UniqueId<Characteristic> i1 = idFactory.buildId(Characteristic.class, 1L);
-		final UniqueId<Characteristic> i2 = idFactory.buildId(Characteristic.class, 2L);
+		final UniqueId<Characteristic> i1 = idFactory.build(Characteristic.class, 1L);
+		final UniqueId<Characteristic> i2 = idFactory.build(Characteristic.class, 2L);
 		final Characteristic c1 = characteristicFactory.buildCharacteristic(i1);
 		final Characteristic c2 = characteristicFactory.buildCharacteristic(i2);
 
