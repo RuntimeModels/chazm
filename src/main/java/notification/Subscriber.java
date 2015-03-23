@@ -1,4 +1,4 @@
-package event;
+package notification;
 
 /**
  * The {@linkplain Subscriber} interface defines the APIs for a publish/subscribe pattern (a.k.a. observer pattern). Subscribers receive updates that have been

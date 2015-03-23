@@ -1,14 +1,14 @@
-package event;
+package notification;
 
 import com.google.inject.AbstractModule;
 
 /**
- * The {@linkplain EventModule} class provides a Guice binding module for events (such as pub/sub event notifications).
+ * The {@linkplain NotificationModule} class provides a Guice binding module for events (such as pub/sub event notifications).
  *
  * @author Christopher Zhong
  * @since 7.0.0
  */
-public class EventModule extends AbstractModule {
+public class NotificationModule extends AbstractModule {
 
 	@Override
 	protected void configure() {
