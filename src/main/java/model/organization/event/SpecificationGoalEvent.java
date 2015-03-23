@@ -1,6 +1,9 @@
 package model.organization.event;
 
 import static model.organization.validation.Checks.checkNotNull;
+
+import javax.validation.constraints.NotNull;
+
 import model.organization.entity.SpecificationGoal;
 import model.organization.id.UniqueId;
 
@@ -23,7 +26,7 @@ public class SpecificationGoalEvent extends AbstractEvent {
 	 * @param category
 	 *            the category of the update.
 	 */
-	public SpecificationGoalEvent(final SpecificationGoal goal, final UpdateCategory category) {
+	public SpecificationGoalEvent(@NotNull final SpecificationGoal goal, @NotNull final UpdateCategory category) {
 		super(category);
 		checkNotNull(goal, "goal");
 		id = goal.getId();

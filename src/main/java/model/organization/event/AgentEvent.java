@@ -1,6 +1,9 @@
 package model.organization.event;
 
 import static model.organization.validation.Checks.checkNotNull;
+
+import javax.validation.constraints.NotNull;
+
 import model.organization.entity.Agent;
 import model.organization.id.UniqueId;
 
@@ -23,7 +26,7 @@ public class AgentEvent extends AbstractEvent {
 	 * @param category
 	 *            the category of the update.
 	 */
-	public AgentEvent(final Agent agent, final UpdateCategory category) {
+	public AgentEvent(@NotNull final Agent agent, @NotNull final UpdateCategory category) {
 		super(category);
 		checkNotNull(agent, "agent");
 		id = agent.getId();

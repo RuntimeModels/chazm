@@ -1,6 +1,9 @@
 package model.organization.event;
 
 import static model.organization.validation.Checks.checkNotNull;
+
+import javax.validation.constraints.NotNull;
+
 import model.organization.entity.Capability;
 import model.organization.entity.Role;
 import model.organization.id.UniqueId;
@@ -26,7 +29,7 @@ public class RequiresEvent extends AbstractEvent {
 	 * @param category
 	 *            the category of the update.
 	 */
-	public RequiresEvent(final Requires requires, final UpdateCategory category) {
+	public RequiresEvent(@NotNull final Requires requires, @NotNull final UpdateCategory category) {
 		super(category);
 		checkNotNull(requires, "requires");
 		roleId = requires.getRole().getId();

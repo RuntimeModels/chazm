@@ -4,6 +4,8 @@ import static model.organization.validation.Checks.checkNotNull;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * The {@linkplain AbstractEvent} class provides an easier way to implement events as they all have the category.
  *
@@ -21,7 +23,7 @@ public abstract class AbstractEvent implements Serializable {
 	 * @param category
 	 *            the category of the update.
 	 */
-	protected AbstractEvent(final UpdateCategory category) {
+	protected AbstractEvent(@NotNull final UpdateCategory category) {
 		checkNotNull(category, "category");
 		this.category = category;
 	}

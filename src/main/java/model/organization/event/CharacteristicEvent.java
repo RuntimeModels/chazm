@@ -1,6 +1,9 @@
 package model.organization.event;
 
 import static model.organization.validation.Checks.checkNotNull;
+
+import javax.validation.constraints.NotNull;
+
 import model.organization.entity.Characteristic;
 import model.organization.id.UniqueId;
 
@@ -23,7 +26,7 @@ public class CharacteristicEvent extends AbstractEvent {
 	 * @param category
 	 *            the category of the update.
 	 */
-	public CharacteristicEvent(final Characteristic characteristic, final UpdateCategory category) {
+	public CharacteristicEvent(@NotNull final Characteristic characteristic, @NotNull final UpdateCategory category) {
 		super(category);
 		checkNotNull(characteristic, "characteristic");
 		id = characteristic.getId();

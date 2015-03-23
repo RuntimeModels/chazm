@@ -1,6 +1,9 @@
 package model.organization.event;
 
 import static model.organization.validation.Checks.checkNotNull;
+
+import javax.validation.constraints.NotNull;
+
 import model.organization.entity.Role;
 import model.organization.entity.SpecificationGoal;
 import model.organization.id.UniqueId;
@@ -26,7 +29,7 @@ public class AchievesEvent extends AbstractEvent {
 	 * @param category
 	 *            the category of the update.
 	 */
-	public AchievesEvent(final Achieves achieves, final UpdateCategory category) {
+	public AchievesEvent(@NotNull final Achieves achieves, @NotNull final UpdateCategory category) {
 		super(category);
 		checkNotNull(achieves, "achieves");
 		roleId = achieves.getRole().getId();
