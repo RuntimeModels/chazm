@@ -36,6 +36,7 @@ import model.organization.event.AttributeEvent;
 import model.organization.event.CapabilityEvent;
 import model.organization.event.CharacteristicEvent;
 import model.organization.event.ContainsEvent;
+import model.organization.event.EventFactory;
 import model.organization.event.HasEvent;
 import model.organization.event.InstanceGoalEvent;
 import model.organization.event.ModeratesEvent;
@@ -60,11 +61,10 @@ import model.organization.relation.Possesses;
 import model.organization.relation.RelationFactory;
 import model.organization.relation.Requires;
 import model.organization.relation.Uses;
+import notification.Publisher;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import event.Publisher;
 
 class DefaultOrganization implements Organization {
 
@@ -73,14 +73,16 @@ class DefaultOrganization implements Organization {
 	private final Relations relations = new Relations();
 	private final Functions functions = new Functions();
 	private final RelationFactory relationFactory;
+	private final EventFactory eventFactory;
 	private final Goodness goodness;
 	private final Effectiveness effectiveness;
 	private final Publisher publisher;
 
 	@Inject
-	DefaultOrganization(@NotNull final RelationFactory relationFactory, @NotNull final Goodness goodness, @NotNull final Effectiveness effectiveness,
-			@NotNull final Publisher publisher) {
+	DefaultOrganization(@NotNull final RelationFactory relationFactory, @NotNull final EventFactory eventFactory, @NotNull final Goodness goodness,
+			@NotNull final Effectiveness effectiveness, @NotNull final Publisher publisher) {
 		this.relationFactory = relationFactory;
+		this.eventFactory = eventFactory;
 		this.goodness = goodness;
 		this.effectiveness = effectiveness;
 		this.publisher = publisher;
@@ -94,7 +96,7 @@ class DefaultOrganization implements Organization {
 		relations.assignmentsByAgent.put(agent.getId(), new ConcurrentHashMap<>());
 		relations.possesses.put(agent.getId(), new ConcurrentHashMap<>());
 		relations.has.put(agent.getId(), new ConcurrentHashMap<>());
-		publisher.post(new AgentEvent(agent, ADDED));
+		publisher.post(eventFactory.build(agent, ADDED));
 	}
 
 	@Override
@@ -123,7 +125,7 @@ class DefaultOrganization implements Organization {
 			remove(id, relations.assignmentsByAgent, "assignmentsByAgent", c -> removeAssignment(c), Assignment.class);
 			remove(id, relations.possesses, "possesses", c -> removePossesses(id, c), Capability.class);
 			remove(id, relations.has, "possesses", c -> removeHas(id, c), Attribute.class);
-			publisher.post(new AgentEvent(agent, REMOVED));
+			publisher.post(eventFactory.build(agent, REMOVED));
 		}
 	}
 

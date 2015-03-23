@@ -1,4 +1,4 @@
-package event;
+package notification;
 
 /**
  * The {@linkplain Mediator} interface defines the APIs for being a mediator between publishers and subscribers.

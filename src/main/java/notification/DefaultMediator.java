@@ -1,4 +1,4 @@
-package event;
+package notification;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

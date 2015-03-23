@@ -2,6 +2,11 @@ package event;
 
 import java.util.Collection;
 
+import notification.Mediator;
+import notification.NotificationModule;
+import notification.Subscribe;
+import notification.Subscriber;
+
 import org.junit.Test;
 
 import com.google.inject.Guice;
@@ -11,7 +16,7 @@ import com.google.inject.Provider;
 @SuppressWarnings("javadoc")
 public class MediatorTest {
 
-	private final Injector injector = Guice.createInjector(new EventModule());
+	private final Injector injector = Guice.createInjector(new NotificationModule());
 	private final Provider<Mediator> provider = injector.getProvider(Mediator.class);
 
 	@Test

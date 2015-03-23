@@ -1,3 +1,3 @@
-package event;
+package notification;
 
 class DefaultSubscriber implements Subscriber {}

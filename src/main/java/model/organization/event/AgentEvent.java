@@ -2,7 +2,10 @@ package model.organization.event;
 
 import static model.organization.validation.Checks.checkNotNull;
 
+import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
+
+import com.google.inject.assistedinject.Assisted;
 
 import model.organization.entity.Agent;
 import model.organization.id.UniqueId;
@@ -26,7 +29,8 @@ public class AgentEvent extends AbstractEvent {
 	 * @param category
 	 *            the category of the update.
 	 */
-	public AgentEvent(@NotNull final Agent agent, @NotNull final UpdateCategory category) {
+	@Inject
+	AgentEvent(@NotNull @Assisted final Agent agent, @NotNull @Assisted final UpdateCategory category) {
 		super(category);
 		checkNotNull(agent, "agent");
 		id = agent.getId();

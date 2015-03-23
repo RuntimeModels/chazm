@@ -1,4 +1,4 @@
-package event;
+package notification;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
