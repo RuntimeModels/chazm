@@ -7,6 +7,4 @@ public final class M {
 	public static final String EXCEPTION_ENTITY_DOES_NOT_EXISTS = "(%s) entity (%s) does not exists";
 	public static final String EXCEPTION_ENTITY_EXISTS = "(%s) entity (%s) already exists";
 
-	private M() {}
-
 }
