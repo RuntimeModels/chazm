@@ -1,5 +1,6 @@
 package model.organization;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.sameInstance;
@@ -27,6 +28,15 @@ public class OrganizationTest {
 		final Organization o1 = provider.get();
 		final Organization o2 = provider.get();
 		assertThat(o1, is(not(sameInstance(o2))));
+		assertThat(o1.getAgents().size(), is(equalTo(0)));
+		assertThat(o1.getAttributes().size(), is(equalTo(0)));
+		assertThat(o1.getCapabilities().size(), is(equalTo(0)));
+		assertThat(o1.getCharacteristics().size(), is(equalTo(0)));
+		assertThat(o1.getInstanceGoals().size(), is(equalTo(0)));
+		assertThat(o1.getPmfs().size(), is(equalTo(0)));
+		assertThat(o1.getPolicies().size(), is(equalTo(0)));
+		assertThat(o1.getRoles().size(), is(equalTo(0)));
+		assertThat(o1.getSpecificationGoals().size(), is(equalTo(0)));
 	}
 
 }
