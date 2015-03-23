@@ -1,5 +1,7 @@
 package model.organization.function;
 
+import static model.organization.validation.Checks.checkNotNull;
+
 import java.util.Collection;
 
 import javax.inject.Singleton;
@@ -12,6 +14,8 @@ class DefaultEffectiveness implements Effectiveness {
 
 	@Override
 	public double compute(final Organization organization, final Collection<Assignment> assignments) {
+		checkNotNull(organization, "organization");
+		checkNotNull(assignments, "assignments");
 		return assignments
 				.parallelStream()
 				.mapToDouble(
