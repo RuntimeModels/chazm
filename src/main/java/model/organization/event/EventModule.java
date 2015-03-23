@@ -22,7 +22,7 @@ public class EventModule extends AbstractModule {
 		// .implement(PossessesEvent.class, PossessesEvent.class).implement(RequiresEvent.class, RequiresEvent.class)
 		// .implement(RoleEvent.class, RoleEvent.class).implement(SpecificationGoalEvent.class, SpecificationGoalEvent.class)
 		// .implement(UsesEvent.class, UsesEvent.class)
-		FactoryModuleBuilder factoryModuleBuilder = new FactoryModuleBuilder();
+		final FactoryModuleBuilder factoryModuleBuilder = new FactoryModuleBuilder();
 		install(factoryModuleBuilder.build(EventFactory.class));
 	}
 

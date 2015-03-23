@@ -33,7 +33,7 @@ public class AgentTest {
 
 	@Test
 	public void testAgent() {
-		final UniqueId<Agent> i1 = idFactory.buildId(Agent.class, 1L);
+		final UniqueId<Agent> i1 = idFactory.build(Agent.class, 1L);
 		final Agent a1 = agentFactory.buildAgent(i1, new Agent.ContactInfo() {});
 		assertThat(a1, is(not(nullValue())));
 	}
@@ -54,7 +54,7 @@ public class AgentTest {
 
 	@Test
 	public void testAgent3() {
-		final UniqueId<Agent> i1 = idFactory.buildId(Agent.class, 1L);
+		final UniqueId<Agent> i1 = idFactory.build(Agent.class, 1L);
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
 		agentFactory.buildAgent(i1, null);
@@ -62,7 +62,7 @@ public class AgentTest {
 
 	@Test
 	public void testAgent4() {
-		final UniqueId<Agent> i1 = idFactory.buildId(Agent.class, 1L);
+		final UniqueId<Agent> i1 = idFactory.build(Agent.class, 1L);
 		exception.expect(instanceOf(IllegalArgumentException.class));
 		exception.expectMessage(equalTo("Parameter (contactInfo) cannot be null"));
 		new AgentEntity(i1, null);
@@ -70,7 +70,7 @@ public class AgentTest {
 
 	@Test
 	public void testGetContactInfo() {
-		final UniqueId<Agent> i1 = idFactory.buildId(Agent.class, 1L);
+		final UniqueId<Agent> i1 = idFactory.build(Agent.class, 1L);
 		final Agent.ContactInfo contactInfo = new Agent.ContactInfo() {};
 		final Agent a1 = agentFactory.buildAgent(i1, contactInfo);
 		assertThat(a1.getContactInfo(), is(sameInstance(contactInfo)));
@@ -78,8 +78,8 @@ public class AgentTest {
 
 	@Test
 	public void testGetId() {
-		final UniqueId<Agent> i1 = idFactory.buildId(Agent.class, 1L);
-		final UniqueId<Agent> i2 = idFactory.buildId(Agent.class, 1L);
+		final UniqueId<Agent> i1 = idFactory.build(Agent.class, 1L);
+		final UniqueId<Agent> i2 = idFactory.build(Agent.class, 1L);
 		final Agent a1 = agentFactory.buildAgent(i1, new Agent.ContactInfo() {});
 		final Agent a2 = agentFactory.buildAgent(i2, new Agent.ContactInfo() {});
 
@@ -89,8 +89,8 @@ public class AgentTest {
 
 	@Test
 	public void testEqualsObject() {
-		final UniqueId<Agent> i1 = idFactory.buildId(Agent.class, 1L);
-		final UniqueId<Agent> i2 = idFactory.buildId(Agent.class, 2L);
+		final UniqueId<Agent> i1 = idFactory.build(Agent.class, 1L);
+		final UniqueId<Agent> i2 = idFactory.build(Agent.class, 2L);
 		final Agent a1 = agentFactory.buildAgent(i1, new Agent.ContactInfo() {});
 		final Agent a2 = agentFactory.buildAgent(i2, new Agent.ContactInfo() {});
 		final Agent a3 = agentFactory.buildAgent(i1, new Agent.ContactInfo() {});
@@ -105,8 +105,8 @@ public class AgentTest {
 
 	@Test
 	public void testHashCode() {
-		final UniqueId<Agent> i1 = idFactory.buildId(Agent.class, 1L);
-		final UniqueId<Agent> i2 = idFactory.buildId(Agent.class, 2L);
+		final UniqueId<Agent> i1 = idFactory.build(Agent.class, 1L);
+		final UniqueId<Agent> i2 = idFactory.build(Agent.class, 2L);
 		final Agent a1 = agentFactory.buildAgent(i1, new Agent.ContactInfo() {});
 		final Agent a2 = agentFactory.buildAgent(i2, new Agent.ContactInfo() {});
 
@@ -117,8 +117,8 @@ public class AgentTest {
 
 	@Test
 	public void testToString() {
-		final UniqueId<Agent> i1 = idFactory.buildId(Agent.class, 1L);
-		final UniqueId<Agent> i2 = idFactory.buildId(Agent.class, 2L);
+		final UniqueId<Agent> i1 = idFactory.build(Agent.class, 1L);
+		final UniqueId<Agent> i2 = idFactory.build(Agent.class, 2L);
 		final Agent a1 = agentFactory.buildAgent(i1, new Agent.ContactInfo() {});
 		final Agent a2 = agentFactory.buildAgent(i2, new Agent.ContactInfo() {});
 

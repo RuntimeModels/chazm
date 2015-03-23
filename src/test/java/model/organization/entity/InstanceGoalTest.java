@@ -34,10 +34,10 @@ public class InstanceGoalTest {
 
 	@Test
 	public void testInstanceGoal() {
-		final UniqueId<SpecificationGoal> x1 = idFactory.buildId(SpecificationGoal.class, 1L);
+		final UniqueId<SpecificationGoal> x1 = idFactory.build(SpecificationGoal.class, 1L);
 		final SpecificationGoal y1 = specificationGoalFactory.buildSpecificationGoal(x1);
 
-		final UniqueId<InstanceGoal> i1 = idFactory.buildId(InstanceGoal.class, 1L);
+		final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
 		final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, y1, new InstanceGoal.Parameter() {});
 
 		assertThat(g1, is(not(nullValue())));
@@ -61,7 +61,7 @@ public class InstanceGoalTest {
 
 	@Test
 	public void testInstanceGoal3() {
-		final UniqueId<InstanceGoal> i1 = idFactory.buildId(InstanceGoal.class, 1L);
+		final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
 
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
@@ -71,7 +71,7 @@ public class InstanceGoalTest {
 
 	@Test
 	public void testInstanceGoal4() {
-		final UniqueId<InstanceGoal> i1 = idFactory.buildId(InstanceGoal.class, 1L);
+		final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
 
 		exception.expect(instanceOf(IllegalArgumentException.class));
 		exception.expectMessage(equalTo("Parameter (goal) cannot be null"));
@@ -81,10 +81,10 @@ public class InstanceGoalTest {
 
 	@Test
 	public void testInstanceGoal5() {
-		final UniqueId<SpecificationGoal> x1 = idFactory.buildId(SpecificationGoal.class, 1L);
+		final UniqueId<SpecificationGoal> x1 = idFactory.build(SpecificationGoal.class, 1L);
 		final SpecificationGoal y1 = specificationGoalFactory.buildSpecificationGoal(x1);
 
-		final UniqueId<InstanceGoal> i1 = idFactory.buildId(InstanceGoal.class, 1L);
+		final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
 
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
@@ -94,10 +94,10 @@ public class InstanceGoalTest {
 
 	@Test
 	public void testInstanceGoal6() {
-		final UniqueId<SpecificationGoal> x1 = idFactory.buildId(SpecificationGoal.class, 1L);
+		final UniqueId<SpecificationGoal> x1 = idFactory.build(SpecificationGoal.class, 1L);
 		final SpecificationGoal y1 = specificationGoalFactory.buildSpecificationGoal(x1);
 
-		final UniqueId<InstanceGoal> i1 = idFactory.buildId(InstanceGoal.class, 1L);
+		final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
 
 		exception.expect(instanceOf(IllegalArgumentException.class));
 		exception.expectMessage(equalTo("Parameter (parameter) cannot be null"));
@@ -107,13 +107,13 @@ public class InstanceGoalTest {
 
 	@Test
 	public void testGetGoal() {
-		final UniqueId<SpecificationGoal> x1 = idFactory.buildId(SpecificationGoal.class, 1L);
-		final UniqueId<SpecificationGoal> x2 = idFactory.buildId(SpecificationGoal.class, 2L);
+		final UniqueId<SpecificationGoal> x1 = idFactory.build(SpecificationGoal.class, 1L);
+		final UniqueId<SpecificationGoal> x2 = idFactory.build(SpecificationGoal.class, 2L);
 		final SpecificationGoal y1 = specificationGoalFactory.buildSpecificationGoal(x1);
 		final SpecificationGoal y2 = specificationGoalFactory.buildSpecificationGoal(x2);
 
-		final UniqueId<InstanceGoal> i1 = idFactory.buildId(InstanceGoal.class, 1L);
-		final UniqueId<InstanceGoal> i2 = idFactory.buildId(InstanceGoal.class, 2L);
+		final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
+		final UniqueId<InstanceGoal> i2 = idFactory.build(InstanceGoal.class, 2L);
 		final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, y1, new InstanceGoal.Parameter() {});
 		final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i2, y2, new InstanceGoal.Parameter() {});
 
@@ -124,10 +124,10 @@ public class InstanceGoalTest {
 
 	@Test
 	public void testGetParameter() {
-		final UniqueId<SpecificationGoal> x1 = idFactory.buildId(SpecificationGoal.class, 1L);
+		final UniqueId<SpecificationGoal> x1 = idFactory.build(SpecificationGoal.class, 1L);
 		final SpecificationGoal y1 = specificationGoalFactory.buildSpecificationGoal(x1);
 
-		final UniqueId<InstanceGoal> i1 = idFactory.buildId(InstanceGoal.class, 1L);
+		final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
 		final InstanceGoal.Parameter p1 = new InstanceGoal.Parameter() {};
 		final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, y1, p1);
 
@@ -136,13 +136,13 @@ public class InstanceGoalTest {
 
 	@Test
 	public void testGetId() {
-		final UniqueId<SpecificationGoal> x1 = idFactory.buildId(SpecificationGoal.class, 1L);
-		final UniqueId<SpecificationGoal> x2 = idFactory.buildId(SpecificationGoal.class, 1L);
+		final UniqueId<SpecificationGoal> x1 = idFactory.build(SpecificationGoal.class, 1L);
+		final UniqueId<SpecificationGoal> x2 = idFactory.build(SpecificationGoal.class, 1L);
 		final SpecificationGoal y1 = specificationGoalFactory.buildSpecificationGoal(x1);
 		final SpecificationGoal y2 = specificationGoalFactory.buildSpecificationGoal(x2);
 
-		final UniqueId<InstanceGoal> i1 = idFactory.buildId(InstanceGoal.class, 1L);
-		final UniqueId<InstanceGoal> i2 = idFactory.buildId(InstanceGoal.class, 1L);
+		final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
+		final UniqueId<InstanceGoal> i2 = idFactory.build(InstanceGoal.class, 1L);
 		final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, y1, new InstanceGoal.Parameter() {});
 		final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i2, y2, new InstanceGoal.Parameter() {});
 
@@ -152,14 +152,14 @@ public class InstanceGoalTest {
 
 	@Test
 	public void testEqualsObject() {
-		final UniqueId<SpecificationGoal> x1 = idFactory.buildId(SpecificationGoal.class, 1L);
-		final UniqueId<SpecificationGoal> x2 = idFactory.buildId(SpecificationGoal.class, 2L);
+		final UniqueId<SpecificationGoal> x1 = idFactory.build(SpecificationGoal.class, 1L);
+		final UniqueId<SpecificationGoal> x2 = idFactory.build(SpecificationGoal.class, 2L);
 		final SpecificationGoal y1 = specificationGoalFactory.buildSpecificationGoal(x1);
 		final SpecificationGoal y2 = specificationGoalFactory.buildSpecificationGoal(x2);
 		final SpecificationGoal y3 = specificationGoalFactory.buildSpecificationGoal(x1);
 
-		final UniqueId<InstanceGoal> i1 = idFactory.buildId(InstanceGoal.class, 1L);
-		final UniqueId<InstanceGoal> i2 = idFactory.buildId(InstanceGoal.class, 2L);
+		final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
+		final UniqueId<InstanceGoal> i2 = idFactory.build(InstanceGoal.class, 2L);
 		final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, y1, new InstanceGoal.Parameter() {});
 		final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i2, y2, new InstanceGoal.Parameter() {});
 		final InstanceGoal g3 = instanceGoalFactory.buildInstanceGoal(i1, y3, new InstanceGoal.Parameter() {});
@@ -174,13 +174,13 @@ public class InstanceGoalTest {
 
 	@Test
 	public void testHashCode() {
-		final UniqueId<SpecificationGoal> x1 = idFactory.buildId(SpecificationGoal.class, 1L);
-		final UniqueId<SpecificationGoal> x2 = idFactory.buildId(SpecificationGoal.class, 2L);
+		final UniqueId<SpecificationGoal> x1 = idFactory.build(SpecificationGoal.class, 1L);
+		final UniqueId<SpecificationGoal> x2 = idFactory.build(SpecificationGoal.class, 2L);
 		final SpecificationGoal y1 = specificationGoalFactory.buildSpecificationGoal(x1);
 		final SpecificationGoal y2 = specificationGoalFactory.buildSpecificationGoal(x2);
 
-		final UniqueId<InstanceGoal> i1 = idFactory.buildId(InstanceGoal.class, 1L);
-		final UniqueId<InstanceGoal> i2 = idFactory.buildId(InstanceGoal.class, 2L);
+		final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
+		final UniqueId<InstanceGoal> i2 = idFactory.build(InstanceGoal.class, 2L);
 		final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, y1, new InstanceGoal.Parameter() {});
 		final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i2, y2, new InstanceGoal.Parameter() {});
 
@@ -191,13 +191,13 @@ public class InstanceGoalTest {
 
 	@Test
 	public void testToString() {
-		final UniqueId<SpecificationGoal> x1 = idFactory.buildId(SpecificationGoal.class, 1L);
-		final UniqueId<SpecificationGoal> x2 = idFactory.buildId(SpecificationGoal.class, 2L);
+		final UniqueId<SpecificationGoal> x1 = idFactory.build(SpecificationGoal.class, 1L);
+		final UniqueId<SpecificationGoal> x2 = idFactory.build(SpecificationGoal.class, 2L);
 		final SpecificationGoal y1 = specificationGoalFactory.buildSpecificationGoal(x1);
 		final SpecificationGoal y2 = specificationGoalFactory.buildSpecificationGoal(x2);
 
-		final UniqueId<InstanceGoal> i1 = idFactory.buildId(InstanceGoal.class, 1L);
-		final UniqueId<InstanceGoal> i2 = idFactory.buildId(InstanceGoal.class, 2L);
+		final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
+		final UniqueId<InstanceGoal> i2 = idFactory.build(InstanceGoal.class, 2L);
 		final InstanceGoal.Parameter p1 = new InstanceGoal.Parameter() {
 			@Override
 			public String toString() {

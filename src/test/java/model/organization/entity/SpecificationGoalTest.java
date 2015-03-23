@@ -33,7 +33,7 @@ public class SpecificationGoalTest {
 
 	@Test
 	public void testSpecificationGoal() {
-		final UniqueId<SpecificationGoal> i1 = idFactory.buildId(SpecificationGoal.class, 1L);
+		final UniqueId<SpecificationGoal> i1 = idFactory.build(SpecificationGoal.class, 1L);
 		final SpecificationGoal g1 = goalFactory.buildSpecificationGoal(i1);
 		assertThat(g1, is(not(nullValue())));
 	}
@@ -54,8 +54,8 @@ public class SpecificationGoalTest {
 
 	@Test
 	public void testGetId() {
-		final UniqueId<SpecificationGoal> i1 = idFactory.buildId(SpecificationGoal.class, 1L);
-		final UniqueId<SpecificationGoal> i2 = idFactory.buildId(SpecificationGoal.class, 1L);
+		final UniqueId<SpecificationGoal> i1 = idFactory.build(SpecificationGoal.class, 1L);
+		final UniqueId<SpecificationGoal> i2 = idFactory.build(SpecificationGoal.class, 1L);
 		final SpecificationGoal g1 = goalFactory.buildSpecificationGoal(i1);
 		final SpecificationGoal g2 = goalFactory.buildSpecificationGoal(i2);
 
@@ -65,8 +65,8 @@ public class SpecificationGoalTest {
 
 	@Test
 	public void testEqualsObject() {
-		final UniqueId<SpecificationGoal> i1 = idFactory.buildId(SpecificationGoal.class, 1L);
-		final UniqueId<SpecificationGoal> i2 = idFactory.buildId(SpecificationGoal.class, 2L);
+		final UniqueId<SpecificationGoal> i1 = idFactory.build(SpecificationGoal.class, 1L);
+		final UniqueId<SpecificationGoal> i2 = idFactory.build(SpecificationGoal.class, 2L);
 		final SpecificationGoal g1 = goalFactory.buildSpecificationGoal(i1);
 		final SpecificationGoal g2 = goalFactory.buildSpecificationGoal(i2);
 		final SpecificationGoal g3 = goalFactory.buildSpecificationGoal(i1);
@@ -81,8 +81,8 @@ public class SpecificationGoalTest {
 
 	@Test
 	public void testHashCode() {
-		final UniqueId<SpecificationGoal> i1 = idFactory.buildId(SpecificationGoal.class, 1L);
-		final UniqueId<SpecificationGoal> i2 = idFactory.buildId(SpecificationGoal.class, 2L);
+		final UniqueId<SpecificationGoal> i1 = idFactory.build(SpecificationGoal.class, 1L);
+		final UniqueId<SpecificationGoal> i2 = idFactory.build(SpecificationGoal.class, 2L);
 		final SpecificationGoal g1 = goalFactory.buildSpecificationGoal(i1);
 		final SpecificationGoal g2 = goalFactory.buildSpecificationGoal(i2);
 
@@ -93,8 +93,8 @@ public class SpecificationGoalTest {
 
 	@Test
 	public void testToString() {
-		final UniqueId<SpecificationGoal> i1 = idFactory.buildId(SpecificationGoal.class, 1L);
-		final UniqueId<SpecificationGoal> i2 = idFactory.buildId(SpecificationGoal.class, 2L);
+		final UniqueId<SpecificationGoal> i1 = idFactory.build(SpecificationGoal.class, 1L);
+		final UniqueId<SpecificationGoal> i2 = idFactory.build(SpecificationGoal.class, 2L);
 		final SpecificationGoal g1 = goalFactory.buildSpecificationGoal(i1);
 		final SpecificationGoal g2 = goalFactory.buildSpecificationGoal(i2);
 

@@ -33,7 +33,7 @@ public class CapabilityTest {
 
 	@Test
 	public void testCapability() {
-		final UniqueId<Capability> i1 = idFactory.buildId(Capability.class, 1L);
+		final UniqueId<Capability> i1 = idFactory.build(Capability.class, 1L);
 		final Capability c1 = capabilityFactory.buildCapability(i1);
 		assertThat(c1, is(not(nullValue())));
 	}
@@ -54,8 +54,8 @@ public class CapabilityTest {
 
 	@Test
 	public void testGetId() {
-		final UniqueId<Capability> i1 = idFactory.buildId(Capability.class, 1L);
-		final UniqueId<Capability> i2 = idFactory.buildId(Capability.class, 1L);
+		final UniqueId<Capability> i1 = idFactory.build(Capability.class, 1L);
+		final UniqueId<Capability> i2 = idFactory.build(Capability.class, 1L);
 		final Capability c1 = capabilityFactory.buildCapability(i1);
 		final Capability c2 = capabilityFactory.buildCapability(i2);
 
@@ -65,8 +65,8 @@ public class CapabilityTest {
 
 	@Test
 	public void testEqualsObject() {
-		final UniqueId<Capability> i1 = idFactory.buildId(Capability.class, 1L);
-		final UniqueId<Capability> i2 = idFactory.buildId(Capability.class, 2L);
+		final UniqueId<Capability> i1 = idFactory.build(Capability.class, 1L);
+		final UniqueId<Capability> i2 = idFactory.build(Capability.class, 2L);
 		final Capability c1 = capabilityFactory.buildCapability(i1);
 		final Capability c2 = capabilityFactory.buildCapability(i2);
 		final Capability c3 = capabilityFactory.buildCapability(i1);
@@ -81,8 +81,8 @@ public class CapabilityTest {
 
 	@Test
 	public void testHashCode() {
-		final UniqueId<Capability> i1 = idFactory.buildId(Capability.class, 1L);
-		final UniqueId<Capability> i2 = idFactory.buildId(Capability.class, 2L);
+		final UniqueId<Capability> i1 = idFactory.build(Capability.class, 1L);
+		final UniqueId<Capability> i2 = idFactory.build(Capability.class, 2L);
 		final Capability c1 = capabilityFactory.buildCapability(i1);
 		final Capability c2 = capabilityFactory.buildCapability(i2);
 
@@ -93,8 +93,8 @@ public class CapabilityTest {
 
 	@Test
 	public void testToString() {
-		final UniqueId<Capability> i1 = idFactory.buildId(Capability.class, 1L);
-		final UniqueId<Capability> i2 = idFactory.buildId(Capability.class, 2L);
+		final UniqueId<Capability> i1 = idFactory.build(Capability.class, 1L);
+		final UniqueId<Capability> i2 = idFactory.build(Capability.class, 2L);
 		final Capability c1 = capabilityFactory.buildCapability(i1);
 		final Capability c2 = capabilityFactory.buildCapability(i2);
 

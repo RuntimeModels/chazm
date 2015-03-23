@@ -34,8 +34,8 @@ public class SpecificationGoalManagerTest {
 	@Test
 	public void testAddSpecificationGoal() {
 		final Organization o = provider.get();
-		final UniqueId<SpecificationGoal> i1 = idFactory.buildId(SpecificationGoal.class, "goal1");
-		final UniqueId<SpecificationGoal> i2 = idFactory.buildId(SpecificationGoal.class, "");
+		final UniqueId<SpecificationGoal> i1 = idFactory.build(SpecificationGoal.class, "goal1");
+		final UniqueId<SpecificationGoal> i2 = idFactory.build(SpecificationGoal.class, "");
 		final SpecificationGoal g1 = entityFactory.buildSpecificationGoal(i1);
 		final SpecificationGoal g2 = entityFactory.buildSpecificationGoal(i2);
 
@@ -59,7 +59,7 @@ public class SpecificationGoalManagerTest {
 	@Test
 	public void testAddSpecificationGoal2() {
 		final Organization o = provider.get();
-		final UniqueId<SpecificationGoal> i1 = idFactory.buildId(SpecificationGoal.class, "goal1");
+		final UniqueId<SpecificationGoal> i1 = idFactory.build(SpecificationGoal.class, "goal1");
 		final SpecificationGoal g1 = entityFactory.buildSpecificationGoal(i1);
 		final SpecificationGoal g2 = entityFactory.buildSpecificationGoal(i1);
 		exception.expect(is(instanceOf(IllegalArgumentException.class)));

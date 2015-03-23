@@ -1,9 +1,9 @@
 package model.organization;
 
-import notification.NotificationModule;
 import model.organization.event.EventModule;
 import model.organization.function.FunctionModule;
 import model.organization.relation.RelationModule;
+import notification.NotificationModule;
 
 import com.google.inject.AbstractModule;
 

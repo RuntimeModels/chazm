@@ -5,10 +5,10 @@ import static model.organization.validation.Checks.checkNotNull;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
-import com.google.inject.assistedinject.Assisted;
-
 import model.organization.entity.Agent;
 import model.organization.id.UniqueId;
+
+import com.google.inject.assistedinject.Assisted;
 
 /**
  * The {@linkplain AgentEvent} class indicates that there is an update about an {@linkplain Agent} entity.

@@ -33,7 +33,7 @@ public class PolicyTest {
 
 	@Test
 	public void testPolicy() {
-		final UniqueId<Policy> i1 = idFactory.buildId(Policy.class, 1L);
+		final UniqueId<Policy> i1 = idFactory.build(Policy.class, 1L);
 		final Policy p1 = policyFactory.buildPolicy(i1);
 		assertThat(p1, is(not(nullValue())));
 	}
@@ -54,8 +54,8 @@ public class PolicyTest {
 
 	@Test
 	public void testGetId() {
-		final UniqueId<Policy> i1 = idFactory.buildId(Policy.class, 1L);
-		final UniqueId<Policy> i2 = idFactory.buildId(Policy.class, 1L);
+		final UniqueId<Policy> i1 = idFactory.build(Policy.class, 1L);
+		final UniqueId<Policy> i2 = idFactory.build(Policy.class, 1L);
 		final Policy p1 = policyFactory.buildPolicy(i1);
 		final Policy p2 = policyFactory.buildPolicy(i2);
 
@@ -65,8 +65,8 @@ public class PolicyTest {
 
 	@Test
 	public void testEqualsObject() {
-		final UniqueId<Policy> i1 = idFactory.buildId(Policy.class, 1L);
-		final UniqueId<Policy> i2 = idFactory.buildId(Policy.class, 2L);
+		final UniqueId<Policy> i1 = idFactory.build(Policy.class, 1L);
+		final UniqueId<Policy> i2 = idFactory.build(Policy.class, 2L);
 		final Policy p1 = policyFactory.buildPolicy(i1);
 		final Policy p2 = policyFactory.buildPolicy(i2);
 		final Policy p3 = policyFactory.buildPolicy(i1);
@@ -81,8 +81,8 @@ public class PolicyTest {
 
 	@Test
 	public void testHashCode() {
-		final UniqueId<Policy> i1 = idFactory.buildId(Policy.class, 1L);
-		final UniqueId<Policy> i2 = idFactory.buildId(Policy.class, 2L);
+		final UniqueId<Policy> i1 = idFactory.build(Policy.class, 1L);
+		final UniqueId<Policy> i2 = idFactory.build(Policy.class, 2L);
 		final Policy p1 = policyFactory.buildPolicy(i1);
 		final Policy p2 = policyFactory.buildPolicy(i2);
 
@@ -93,8 +93,8 @@ public class PolicyTest {
 
 	@Test
 	public void testToString() {
-		final UniqueId<Policy> i1 = idFactory.buildId(Policy.class, 1L);
-		final UniqueId<Policy> i2 = idFactory.buildId(Policy.class, 2L);
+		final UniqueId<Policy> i1 = idFactory.build(Policy.class, 1L);
+		final UniqueId<Policy> i2 = idFactory.build(Policy.class, 2L);
 		final Policy p1 = policyFactory.buildPolicy(i1);
 		final Policy p2 = policyFactory.buildPolicy(i2);
 

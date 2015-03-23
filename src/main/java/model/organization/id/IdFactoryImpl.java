@@ -8,17 +8,17 @@ import profiling.DoNotProfile;
 class IdFactoryImpl implements IdFactory {
 
 	@Override
-	public <T, U> UniqueId<T> buildId(@NotNull final Class<T> clazz, @NotNull final Class<U> id) {
+	public <T, U> UniqueId<T> build(@NotNull final Class<T> clazz, @NotNull final Class<U> id) {
 		return new ClassId<>(clazz, id);
 	}
 
 	@Override
-	public <T> UniqueId<T> buildId(@NotNull final Class<T> clazz, @NotNull final Long id) {
+	public <T> UniqueId<T> build(@NotNull final Class<T> clazz, @NotNull final Long id) {
 		return new LongId<>(clazz, id);
 	}
 
 	@Override
-	public <T> StringId<T> buildId(@NotNull final Class<T> clazz, @NotNull final String id) {
+	public <T> StringId<T> build(@NotNull final Class<T> clazz, @NotNull final String id) {
 		return new StringId<>(clazz, id);
 	}
 
