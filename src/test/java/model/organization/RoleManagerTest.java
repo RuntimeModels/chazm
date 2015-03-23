@@ -62,7 +62,7 @@ public class RoleManagerTest {
 		final Role r1 = entityFactory.buildRole(i1);
 		final Role r2 = entityFactory.buildRole(i1);
 		exception.expect(is(instanceOf(IllegalArgumentException.class)));
-		exception.expectMessage(equalTo("(RoleEntity) entity (role1) already exists"));
+		exception.expectMessage(equalTo("([Role]) entity (role1) already exists"));
 		assertThat(r1, is(not(sameInstance(r2))));
 		o.addRole(r1);
 		o.addRole(r2);
