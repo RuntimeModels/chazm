@@ -69,12 +69,13 @@ public class StringIdTest {
 		final UniqueId<Object> i2 = idFactory.buildId(Object.class, "r1");
 		final UniqueId<Object> i3 = idFactory.buildId(Object.class, "r3");
 
-		assertThat("i1 == i2", i1, is(not(sameInstance(i2))));
-		assertThat("i1 == i3", i1, is(not(sameInstance(i3))));
-		assertThat("i2 == i3", i2, is(not(sameInstance(i3))));
+		assertThat(i1, is(not(sameInstance(i2))));
+		assertThat(i1, is(not(sameInstance(i3))));
+		assertThat(i2, is(not(sameInstance(i3))));
 
-		assertThat("i1.equals != i2.equals", i1, is(equalTo(i2)));
-		assertThat("i1.equals == i3.equals", i1, is(not(equalTo(i3))));
+		assertThat(i1, is(equalTo(i2)));
+		assertThat(i1, is(not(equalTo(i3))));
+		assertThat(i1, is(not(equalTo(""))));
 	}
 
 	@Test
@@ -83,12 +84,12 @@ public class StringIdTest {
 		final UniqueId<Object> i2 = idFactory.buildId(Object.class, "r1");
 		final UniqueId<Object> i3 = idFactory.buildId(Object.class, "r3");
 
-		assertThat("i1 == i2", i1, is(not(sameInstance(i2))));
-		assertThat("i1 == i3", i1, is(not(sameInstance(i3))));
-		assertThat("i2 == i3", i2, is(not(sameInstance(i3))));
+		assertThat(i1, is(not(sameInstance(i2))));
+		assertThat(i1, is(not(sameInstance(i3))));
+		assertThat(i2, is(not(sameInstance(i3))));
 
-		assertThat("i1.toString != i2.toString", i1.toString(), is(equalTo(i2.toString())));
-		assertThat("i1.toString == i3.toString", i1.toString(), is(not(equalTo(i3.toString()))));
+		assertThat(i1.toString(), is(equalTo(i2.toString())));
+		assertThat(i1.toString(), is(not(equalTo(i3.toString()))));
 	}
 
 }

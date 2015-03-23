@@ -75,6 +75,7 @@ public class ClassIdTest {
 
 		assertThat(i1, is(equalTo(i2)));
 		assertThat(i1, is(not(equalTo(i3))));
+		assertThat(i1, is(not(equalTo(""))));
 	}
 
 	@Test
