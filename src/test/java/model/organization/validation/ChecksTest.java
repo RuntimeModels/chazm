@@ -4,6 +4,10 @@ import static model.organization.validation.Checks.checkExists;
 import static model.organization.validation.Checks.checkNotExists;
 import static model.organization.validation.Checks.checkNotNull;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 import model.organization.entity.Capability;
 import model.organization.entity.EntityFactory;
 import model.organization.entity.EntityModule;
@@ -28,6 +32,11 @@ public class ChecksTest {
 
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
+
+	@Test
+	public void testChecks() {
+		assertThat(new Checks(), is(not(nullValue())));
+	}
 
 	@Test
 	public void testCheckNotNull() {

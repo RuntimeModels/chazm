@@ -19,8 +19,6 @@ import model.organization.id.UniqueId;
  */
 public final class Checks {
 
-	private Checks() {}
-
 	/**
 	 * Checks and throws an {@linkplain IllegalArgumentException} if the variable is <code>null</code>.
 	 *
