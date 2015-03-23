@@ -1,6 +1,9 @@
 package model.organization.event;
 
 import static model.organization.validation.Checks.checkNotNull;
+
+import javax.validation.constraints.NotNull;
+
 import model.organization.entity.Pmf;
 import model.organization.entity.Role;
 import model.organization.id.UniqueId;
@@ -26,7 +29,7 @@ public class UsesEvent extends AbstractEvent {
 	 * @param category
 	 *            the category of the update.
 	 */
-	public UsesEvent(final Uses uses, final UpdateCategory category) {
+	public UsesEvent(@NotNull final Uses uses, @NotNull final UpdateCategory category) {
 		super(category);
 		checkNotNull(uses, "uses");
 		roleId = uses.getRole().getId();

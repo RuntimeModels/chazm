@@ -1,6 +1,9 @@
 package model.organization.event;
 
 import static model.organization.validation.Checks.checkNotNull;
+
+import javax.validation.constraints.NotNull;
+
 import model.organization.entity.Attribute;
 import model.organization.entity.Pmf;
 import model.organization.id.UniqueId;
@@ -26,7 +29,7 @@ public class ModeratesEvent extends AbstractEvent {
 	 * @param category
 	 *            the category of the update.
 	 */
-	public ModeratesEvent(final Moderates moderates, final UpdateCategory category) {
+	public ModeratesEvent(@NotNull final Moderates moderates, @NotNull final UpdateCategory category) {
 		super(category);
 		checkNotNull(moderates, "agent");
 		pmfId = moderates.getPmf().getId();

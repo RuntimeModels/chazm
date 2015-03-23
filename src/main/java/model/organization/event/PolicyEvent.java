@@ -1,6 +1,9 @@
 package model.organization.event;
 
 import static model.organization.validation.Checks.checkNotNull;
+
+import javax.validation.constraints.NotNull;
+
 import model.organization.entity.Policy;
 import model.organization.id.UniqueId;
 
@@ -23,7 +26,7 @@ public class PolicyEvent extends AbstractEvent {
 	 * @param category
 	 *            the category of the update.
 	 */
-	public PolicyEvent(final Policy policy, final UpdateCategory category) {
+	public PolicyEvent(@NotNull final Policy policy, @NotNull final UpdateCategory category) {
 		super(category);
 		checkNotNull(policy, "policy");
 		id = policy.getId();

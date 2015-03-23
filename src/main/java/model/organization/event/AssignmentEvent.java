@@ -1,6 +1,9 @@
 package model.organization.event;
 
 import static model.organization.validation.Checks.checkNotNull;
+
+import javax.validation.constraints.NotNull;
+
 import model.organization.entity.Agent;
 import model.organization.entity.InstanceGoal;
 import model.organization.entity.Role;
@@ -28,7 +31,7 @@ public class AssignmentEvent extends AbstractEvent {
 	 * @param category
 	 *            the category of the update.
 	 */
-	public AssignmentEvent(final Assignment assignment, final UpdateCategory category) {
+	public AssignmentEvent(@NotNull final Assignment assignment, @NotNull final UpdateCategory category) {
 		super(category);
 		checkNotNull(assignment, "assignment");
 		agentId = assignment.getAgent().getId();

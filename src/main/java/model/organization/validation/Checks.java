@@ -7,6 +7,8 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import javax.validation.constraints.NotNull;
+
 import message.M;
 import model.organization.id.Identifiable;
 import model.organization.id.UniqueId;
@@ -45,7 +47,7 @@ public final class Checks {
 	 * @param p
 	 *            the {@linkplain Predicate}.
 	 */
-	public static <T extends Identifiable<T>> void checkNotExists(final T t, final String name, final Predicate<UniqueId<T>> p) {
+	public static <T extends Identifiable<T>> void checkNotExists(@NotNull final T t, final String name, @NotNull final Predicate<UniqueId<T>> p) {
 		checkNotNull(t, name);
 		checkNotNull(p, "p");
 		if (p.test(t.getId())) {
@@ -66,7 +68,7 @@ public final class Checks {
 	 *            the {@linkplain Function}.
 	 * @return the object if it exists.
 	 */
-	public static <T, U extends UniqueId<T>> T checkExists(final U id, final String name, final Function<U, T> f) {
+	public static <T, U extends UniqueId<T>> T checkExists(@NotNull final U id, final String name, @NotNull final Function<U, T> f) {
 		checkNotNull(id, name);
 		checkNotNull(f, "f");
 		final T t = f.apply(id);

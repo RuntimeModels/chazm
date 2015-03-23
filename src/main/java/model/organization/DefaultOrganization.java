@@ -87,7 +87,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addAgent(final Agent agent) {
+	public void addAgent(@NotNull final Agent agent) {
 		checkNotExists(agent, "agent", entities.agents::containsKey);
 		/* add the agent, assignmentsByAgent map, possesses map, has map */
 		entities.agents.put(agent.getId(), agent);
@@ -98,13 +98,13 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addAgents(final Collection<Agent> agents) {
+	public void addAgents(@NotNull final Collection<Agent> agents) {
 		checkNotNull(agents, "agents");
 		agents.parallelStream().forEach(this::addAgent);
 	}
 
 	@Override
-	public Agent getAgent(final UniqueId<Agent> id) {
+	public Agent getAgent(@NotNull final UniqueId<Agent> id) {
 		checkNotNull(id, "id");
 		return entities.agents.get(id);
 	}
@@ -115,7 +115,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void removeAgent(final UniqueId<Agent> id) {
+	public void removeAgent(@NotNull final UniqueId<Agent> id) {
 		checkNotNull(id, "id");
 		if (entities.agents.containsKey(id)) {
 			/* remove the agent, all associated assignments, all associated possesses relations, all associated has relations */
@@ -128,7 +128,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void removeAgents(final Collection<UniqueId<Agent>> ids) {
+	public void removeAgents(@NotNull final Collection<UniqueId<Agent>> ids) {
 		checkNotNull(ids, "ids");
 		ids.parallelStream().forEach(this::removeAgent);
 	}
@@ -139,7 +139,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addAttribute(final Attribute attribute) {
+	public void addAttribute(@NotNull final Attribute attribute) {
 		checkNotExists(attribute, "attribute", entities.attributes::containsKey);
 		/* add the attribute, neededBy map, hadBy map, moderatedBy map */
 		entities.attributes.put(attribute.getId(), attribute);
@@ -150,13 +150,13 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addAttributes(final Collection<Attribute> attributes) {
+	public void addAttributes(@NotNull final Collection<Attribute> attributes) {
 		checkNotNull(attributes, "attributes");
 		attributes.parallelStream().forEach(this::addAttribute);
 	}
 
 	@Override
-	public Attribute getAttribute(final UniqueId<Attribute> id) {
+	public Attribute getAttribute(@NotNull final UniqueId<Attribute> id) {
 		checkNotNull(id, "id");
 		return entities.attributes.get(id);
 	}
@@ -167,7 +167,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void removeAttribute(final UniqueId<Attribute> id) {
+	public void removeAttribute(@NotNull final UniqueId<Attribute> id) {
 		checkNotNull(id, "id");
 		if (entities.attributes.containsKey(id)) {
 			/* remove the attribute, all associated needs relations, all associated has relations, all associated moderates relations */
@@ -180,7 +180,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void removeAttributes(final Collection<UniqueId<Attribute>> ids) {
+	public void removeAttributes(@NotNull final Collection<UniqueId<Attribute>> ids) {
 		checkNotNull(ids, "ids");
 		ids.parallelStream().forEach(this::removeAttribute);
 	}
@@ -191,7 +191,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addCapability(final Capability capability) {
+	public void addCapability(@NotNull final Capability capability) {
 		checkNotExists(capability, "capability", entities.capabilities::containsKey);
 		/* add the capability, requiredBy map, possessedBy map */
 		entities.capabilities.put(capability.getId(), capability);
@@ -201,13 +201,13 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addCapabilities(final Collection<Capability> capabilities) {
+	public void addCapabilities(@NotNull final Collection<Capability> capabilities) {
 		checkNotNull(capabilities, "capabilities");
 		capabilities.parallelStream().forEach(this::addCapability);
 	}
 
 	@Override
-	public Capability getCapability(final UniqueId<Capability> id) {
+	public Capability getCapability(@NotNull final UniqueId<Capability> id) {
 		checkNotNull(id, "id");
 		return entities.capabilities.get(id);
 	}
@@ -218,7 +218,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void removeCapability(final UniqueId<Capability> id) {
+	public void removeCapability(@NotNull final UniqueId<Capability> id) {
 		checkNotNull(id, "id");
 		if (entities.capabilities.containsKey(id)) {
 			/* remove the capability, all associated requires relations, all associated possesses relations */
@@ -230,7 +230,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void removeCapabilities(final Collection<UniqueId<Capability>> ids) {
+	public void removeCapabilities(@NotNull final Collection<UniqueId<Capability>> ids) {
 		checkNotNull(ids, "ids");
 		ids.parallelStream().forEach(this::removeCapability);
 	}
@@ -241,7 +241,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addCharacteristic(final Characteristic characteristic) {
+	public void addCharacteristic(@NotNull final Characteristic characteristic) {
 		checkNotExists(characteristic, "characteristic", entities.characteristics::containsKey);
 		/* add the characteristic, containedBy map */
 		entities.characteristics.put(characteristic.getId(), characteristic);
@@ -250,13 +250,13 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addCharacteristics(final Collection<Characteristic> characteristics) {
+	public void addCharacteristics(@NotNull final Collection<Characteristic> characteristics) {
 		checkNotNull(characteristics, "characteristic");
 		characteristics.parallelStream().forEach(this::addCharacteristic);
 	}
 
 	@Override
-	public Characteristic getCharacteristic(final UniqueId<Characteristic> id) {
+	public Characteristic getCharacteristic(@NotNull final UniqueId<Characteristic> id) {
 		checkNotNull(id, "id");
 		return entities.characteristics.get(id);
 	}
@@ -267,7 +267,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void removeCharacteristic(final UniqueId<Characteristic> id) {
+	public void removeCharacteristic(@NotNull final UniqueId<Characteristic> id) {
 		checkNotNull(id, "id");
 		if (entities.characteristics.containsKey(id)) {
 			/* remove characteristics, all associated contains relations */
@@ -278,7 +278,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void removeCharacteristics(final Collection<UniqueId<Characteristic>> ids) {
+	public void removeCharacteristics(@NotNull final Collection<UniqueId<Characteristic>> ids) {
 		checkNotNull(ids, "ids");
 		ids.parallelStream().forEach(this::removeCharacteristic);
 	}
@@ -289,7 +289,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addInstanceGoal(final InstanceGoal goal) {
+	public void addInstanceGoal(@NotNull final InstanceGoal goal) {
 		checkNotExists(goal, "goal", entities.instanceGoals::containsKey);
 		checkExists(goal.getGoal().getId(), null, this::getSpecificationGoal);
 		/* add the instance goal, instanceGoalsBySpecificationGoal map */
@@ -305,13 +305,13 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addInstanceGoals(final Collection<InstanceGoal> goals) {
+	public void addInstanceGoals(@NotNull final Collection<InstanceGoal> goals) {
 		checkNotNull(goals, "goals");
 		goals.parallelStream().forEach(this::addInstanceGoal);
 	}
 
 	@Override
-	public InstanceGoal getInstanceGoal(final UniqueId<InstanceGoal> id) {
+	public InstanceGoal getInstanceGoal(@NotNull final UniqueId<InstanceGoal> id) {
 		checkNotNull(id, "id");
 		return entities.instanceGoals.get(id);
 	}
@@ -322,7 +322,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void removeInstanceGoal(final UniqueId<InstanceGoal> id) {
+	public void removeInstanceGoal(@NotNull final UniqueId<InstanceGoal> id) {
 		checkNotNull(id, "id");
 		if (entities.instanceGoals.containsKey(id)) {
 			/* remove the instance goal, instanceGoalsBySpecificationGoal map */
@@ -343,7 +343,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void removeInstanceGoals(final Collection<UniqueId<InstanceGoal>> ids) {
+	public void removeInstanceGoals(@NotNull final Collection<UniqueId<InstanceGoal>> ids) {
 		checkNotNull(ids, "ids");
 		ids.parallelStream().forEach(this::removeInstanceGoal);
 	}
@@ -354,7 +354,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addPmf(final Pmf pmf) {
+	public void addPmf(@NotNull final Pmf pmf) {
 		checkNotExists(pmf, "pmf", entities.pmfs::containsKey);
 		/* add the pmf */
 		entities.pmfs.put(pmf.getId(), pmf);
@@ -362,13 +362,13 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addPmfs(final Collection<Pmf> pmfs) {
+	public void addPmfs(@NotNull final Collection<Pmf> pmfs) {
 		checkNotNull(pmfs, "pmfs");
 		pmfs.parallelStream().forEach(this::addPmf);
 	}
 
 	@Override
-	public Pmf getPmf(final UniqueId<Pmf> id) {
+	public Pmf getPmf(@NotNull final UniqueId<Pmf> id) {
 		checkNotNull(id, "id");
 		return entities.pmfs.get(id);
 	}
@@ -379,7 +379,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void removePmf(final UniqueId<Pmf> id) {
+	public void removePmf(@NotNull final UniqueId<Pmf> id) {
 		checkNotNull(id, "id");
 		if (entities.pmfs.containsKey(id)) {
 			/* remove the pmf, all associated moderates relations */
@@ -392,7 +392,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void removePmfs(final Collection<UniqueId<Pmf>> ids) {
+	public void removePmfs(@NotNull final Collection<UniqueId<Pmf>> ids) {
 		checkNotNull(ids, "ids");
 		ids.parallelStream().forEach(this::removePmf);
 	}
@@ -403,7 +403,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addPolicy(final Policy policy) {
+	public void addPolicy(@NotNull final Policy policy) {
 		checkNotExists(policy, "policy", entities.policies::containsKey);
 		/* add the policy */
 		entities.policies.put(policy.getId(), policy);
@@ -411,13 +411,13 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addPolicies(final Collection<Policy> policies) {
+	public void addPolicies(@NotNull final Collection<Policy> policies) {
 		checkNotNull(policies, "policies");
 		policies.parallelStream().forEach(this::addPolicy);
 	}
 
 	@Override
-	public Policy getPolicy(final UniqueId<Policy> id) {
+	public Policy getPolicy(@NotNull final UniqueId<Policy> id) {
 		checkNotNull(id, "id");
 		return entities.policies.get(id);
 	}
@@ -428,7 +428,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void removePolicy(final UniqueId<Policy> id) {
+	public void removePolicy(@NotNull final UniqueId<Policy> id) {
 		checkNotNull(id, "id");
 		if (entities.policies.containsKey(id)) {
 			/* remove the policy */
@@ -438,7 +438,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void removePolicies(final Collection<UniqueId<Policy>> ids) {
+	public void removePolicies(@NotNull final Collection<UniqueId<Policy>> ids) {
 		checkNotNull(ids, "ids");
 		ids.parallelStream().forEach(this::removePolicy);
 	}
@@ -449,7 +449,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addRole(final Role role) {
+	public void addRole(@NotNull final Role role) {
 		checkNotExists(role, "role", entities.roles::containsKey);
 		/* add the role, achieves map, requires map, needs map, uses, contains map */
 		entities.roles.put(role.getId(), role);
@@ -463,13 +463,13 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addRoles(final Collection<Role> roles) {
+	public void addRoles(@NotNull final Collection<Role> roles) {
 		checkNotNull(roles, "roles");
 		roles.parallelStream().forEach(this::addRole);
 	}
 
 	@Override
-	public Role getRole(final UniqueId<Role> id) {
+	public Role getRole(@NotNull final UniqueId<Role> id) {
 		checkNotNull(id, "id");
 		return entities.roles.get(id);
 	}
@@ -480,7 +480,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void removeRole(final UniqueId<Role> id) {
+	public void removeRole(@NotNull final UniqueId<Role> id) {
 		checkNotNull(id, "id");
 		if (entities.roles.containsKey(id)) {
 			/*
@@ -499,7 +499,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void removeRoles(final Collection<UniqueId<Role>> ids) {
+	public void removeRoles(@NotNull final Collection<UniqueId<Role>> ids) {
 		checkNotNull(ids, "ids");
 		ids.parallelStream().forEach(this::removeRole);
 	}
@@ -510,7 +510,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addSpecificationGoal(final SpecificationGoal goal) {
+	public void addSpecificationGoal(@NotNull final SpecificationGoal goal) {
 		checkNotExists(goal, "goal", entities.specificationGoals::containsKey);
 		/* add the specification goal, instanceGoalsBySpecificationGoal map, achievedBy map */
 		entities.specificationGoals.put(goal.getId(), goal);
@@ -520,13 +520,13 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addSpecificationGoals(final Collection<SpecificationGoal> goals) {
+	public void addSpecificationGoals(@NotNull final Collection<SpecificationGoal> goals) {
 		checkNotNull(goals, "goals");
 		goals.parallelStream().forEach(this::addSpecificationGoal);
 	}
 
 	@Override
-	public SpecificationGoal getSpecificationGoal(final UniqueId<SpecificationGoal> id) {
+	public SpecificationGoal getSpecificationGoal(@NotNull final UniqueId<SpecificationGoal> id) {
 		checkNotNull(id, "id");
 		return entities.specificationGoals.get(id);
 	}
@@ -537,7 +537,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void removeSpecificationGoal(final UniqueId<SpecificationGoal> id) {
+	public void removeSpecificationGoal(@NotNull final UniqueId<SpecificationGoal> id) {
 		checkNotNull(id, "id");
 		if (entities.specificationGoals.containsKey(id)) {
 			/* remove the specification goal, all associated instance goals, all associated achieves relations */
@@ -549,7 +549,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void removeSpecificationGoals(final Collection<UniqueId<SpecificationGoal>> ids) {
+	public void removeSpecificationGoals(@NotNull final Collection<UniqueId<SpecificationGoal>> ids) {
 		checkNotNull(ids, "ids");
 		ids.parallelStream().forEach(this::removeSpecificationGoal);
 	}
@@ -560,7 +560,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addAchieves(final UniqueId<Role> roleId, final UniqueId<SpecificationGoal> goalId) {
+	public void addAchieves(@NotNull final UniqueId<Role> roleId, @NotNull final UniqueId<SpecificationGoal> goalId) {
 		final Role role = checkExists(roleId, "roleId", this::getRole);
 		final SpecificationGoal goal = checkExists(goalId, "goalId", this::getSpecificationGoal);
 		final Map<UniqueId<SpecificationGoal>, Achieves> map = relations.achieves.computeIfAbsent(roleId, m -> {
@@ -578,19 +578,19 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public Set<SpecificationGoal> getAchieves(final UniqueId<Role> id) {
+	public Set<SpecificationGoal> getAchieves(@NotNull final UniqueId<Role> id) {
 		checkNotNull(id, "id");
 		return get(id, relations.achieves, Achieves::getGoal);
 	}
 
 	@Override
-	public Set<Role> getAchievedBy(final UniqueId<SpecificationGoal> id) {
+	public Set<Role> getAchievedBy(@NotNull final UniqueId<SpecificationGoal> id) {
 		checkNotNull(id, "id");
 		return get(id, relations.achievedBy, Achieves::getRole);
 	}
 
 	@Override
-	public void removeAchieves(final UniqueId<Role> roleId, final UniqueId<SpecificationGoal> goalId) {
+	public void removeAchieves(@NotNull final UniqueId<Role> roleId, @NotNull final UniqueId<SpecificationGoal> goalId) {
 		checkNotNull(roleId, "roleId");
 		checkNotNull(goalId, "goalId");
 		if (relations.achieves.containsKey(roleId) && relations.achieves.get(roleId).containsKey(goalId)) {
@@ -606,7 +606,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addAssignment(final Assignment assignment) {
+	public void addAssignment(@NotNull final Assignment assignment) {
 		checkNotExists(assignment, "assignment", relations.assignments::containsKey);
 		checkExists(assignment.getAgent().getId(), null, this::getAgent);
 		checkExists(assignment.getRole().getId(), null, this::getRole);
@@ -618,13 +618,13 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addAssignments(final Collection<Assignment> assignments) {
+	public void addAssignments(@NotNull final Collection<Assignment> assignments) {
 		checkNotNull(assignments, "assignments");
 		assignments.parallelStream().forEach(this::addAssignment);
 	}
 
 	@Override
-	public Assignment getAssignment(final UniqueId<Assignment> id) {
+	public Assignment getAssignment(@NotNull final UniqueId<Assignment> id) {
 		checkNotNull(id, "id");
 		return relations.assignments.get(id);
 	}
@@ -635,7 +635,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public Set<Assignment> getAssignmentsByAgent(final UniqueId<Agent> id) {
+	public Set<Assignment> getAssignmentsByAgent(@NotNull final UniqueId<Agent> id) {
 		checkNotNull(id, "id");
 		if (relations.assignmentsByAgent.containsKey(id)) {
 			return relations.assignmentsByAgent.get(id).values().parallelStream().collect(Collectors.toCollection(HashSet::new));
@@ -644,7 +644,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void removeAssignment(final UniqueId<Assignment> id) {
+	public void removeAssignment(@NotNull final UniqueId<Assignment> id) {
 		checkNotNull(id, "id");
 		if (relations.assignments.containsKey(id)) {
 			final Assignment assignment = relations.assignments.remove(id);
@@ -661,7 +661,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void removeAssignments(final Collection<UniqueId<Assignment>> ids) {
+	public void removeAssignments(@NotNull final Collection<UniqueId<Assignment>> ids) {
 		checkNotNull(ids, "ids");
 		ids.parallelStream().forEach(this::removeAssignment);
 	}
@@ -672,7 +672,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addContains(final UniqueId<Role> roleId, final UniqueId<Characteristic> characteristicId, final double value) {
+	public void addContains(@NotNull final UniqueId<Role> roleId, @NotNull final UniqueId<Characteristic> characteristicId, final double value) {
 		final Role role = checkExists(roleId, "roleId", this::getRole);
 		final Characteristic characteristic = checkExists(characteristicId, "characteristicId", this::getCharacteristic);
 		final Map<UniqueId<Characteristic>, Contains> map = relations.contains.computeIfAbsent(roleId, m -> {
@@ -690,19 +690,19 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public Set<Characteristic> getContains(final UniqueId<Role> id) {
+	public Set<Characteristic> getContains(@NotNull final UniqueId<Role> id) {
 		checkNotNull(id, "id");
 		return get(id, relations.contains, Contains::getCharacteristic);
 	}
 
 	@Override
-	public Set<Role> getContainedBy(final UniqueId<Characteristic> id) {
+	public Set<Role> getContainedBy(@NotNull final UniqueId<Characteristic> id) {
 		checkNotNull(id, "id");
 		return get(id, relations.containedBy, Contains::getRole);
 	}
 
 	@Override
-	public Double getContainsValue(final UniqueId<Role> roleId, final UniqueId<Characteristic> characteristicId) {
+	public Double getContainsValue(@NotNull final UniqueId<Role> roleId, @NotNull final UniqueId<Characteristic> characteristicId) {
 		checkNotNull(roleId, "roleId");
 		checkNotNull(characteristicId, "characteristicId");
 		if (relations.contains.containsKey(roleId) && relations.contains.get(roleId).containsKey(characteristicId)) {
@@ -712,7 +712,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void setContainsValue(final UniqueId<Role> roleId, final UniqueId<Characteristic> characteristicId, final double value) {
+	public void setContainsValue(@NotNull final UniqueId<Role> roleId, @NotNull final UniqueId<Characteristic> characteristicId, final double value) {
 		checkNotNull(roleId, "roleId");
 		checkNotNull(characteristicId, "characteristicId");
 		if (relations.contains.containsKey(roleId) && relations.contains.get(roleId).containsKey(characteristicId)) {
@@ -723,7 +723,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void removeContains(final UniqueId<Role> roleId, final UniqueId<Characteristic> characteristicId) {
+	public void removeContains(@NotNull final UniqueId<Role> roleId, @NotNull final UniqueId<Characteristic> characteristicId) {
 		checkNotNull(roleId, "roleId");
 		checkNotNull(characteristicId, "characteristicId");
 		if (relations.contains.containsKey(roleId) && relations.contains.get(roleId).containsKey(characteristicId)) {
@@ -739,7 +739,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addHas(final UniqueId<Agent> agentId, final UniqueId<Attribute> attributeId, final double value) {
+	public void addHas(@NotNull final UniqueId<Agent> agentId, @NotNull final UniqueId<Attribute> attributeId, final double value) {
 		final Agent agent = checkExists(agentId, "agentId", this::getAgent);
 		final Attribute attribute = checkExists(attributeId, "attributeId", this::getAttribute);
 		final Map<UniqueId<Attribute>, Has> map = relations.has.computeIfAbsent(agentId, m -> {
@@ -757,19 +757,19 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public Set<Attribute> getHas(final UniqueId<Agent> id) {
+	public Set<Attribute> getHas(@NotNull final UniqueId<Agent> id) {
 		checkNotNull(id, "id");
 		return get(id, relations.has, Has::getAttribute);
 	}
 
 	@Override
-	public Set<Agent> getHadBy(final UniqueId<Attribute> id) {
+	public Set<Agent> getHadBy(@NotNull final UniqueId<Attribute> id) {
 		checkNotNull(id, "id");
 		return get(id, relations.hadBy, Has::getAgent);
 	}
 
 	@Override
-	public Double getHasValue(final UniqueId<Agent> agentId, final UniqueId<Attribute> attributeId) {
+	public Double getHasValue(@NotNull final UniqueId<Agent> agentId, @NotNull final UniqueId<Attribute> attributeId) {
 		checkNotNull(agentId, "agentId");
 		checkNotNull(attributeId, "attributeId");
 		if (relations.has.containsKey(agentId) && relations.has.get(agentId).containsKey(attributeId)) {
@@ -779,7 +779,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void setHasValue(final UniqueId<Agent> agentId, final UniqueId<Attribute> attributeId, final double value) {
+	public void setHasValue(@NotNull final UniqueId<Agent> agentId, @NotNull final UniqueId<Attribute> attributeId, final double value) {
 		checkNotNull(agentId, "agentId");
 		checkNotNull(attributeId, "attributeId");
 		if (relations.has.containsKey(agentId) && relations.has.get(agentId).containsKey(attributeId)) {
@@ -790,7 +790,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void removeHas(final UniqueId<Agent> agentId, final UniqueId<Attribute> attributeId) {
+	public void removeHas(@NotNull final UniqueId<Agent> agentId, @NotNull final UniqueId<Attribute> attributeId) {
 		checkNotNull(agentId, "agentId");
 		checkNotNull(attributeId, "attributeId");
 		if (relations.has.containsKey(agentId) && relations.has.get(agentId).containsKey(attributeId)) {
@@ -806,7 +806,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addModerates(final UniqueId<Pmf> pmfId, final UniqueId<Attribute> attributeId) {
+	public void addModerates(@NotNull final UniqueId<Pmf> pmfId, @NotNull final UniqueId<Attribute> attributeId) {
 		final Pmf pmf = checkExists(pmfId, "pmfId", this::getPmf);
 		final Attribute attribute = checkExists(attributeId, "attributeId", this::getAttribute);
 		if (relations.moderates.containsKey(pmfId)) {
@@ -819,7 +819,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public Attribute getModerates(final UniqueId<Pmf> id) {
+	public Attribute getModerates(@NotNull final UniqueId<Pmf> id) {
 		checkNotNull(id, "id");
 		if (relations.moderates.containsKey(id)) {
 			return relations.moderates.get(id).getAttribute();
@@ -828,13 +828,13 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public Set<Pmf> getModeratedBy(final UniqueId<Attribute> id) {
+	public Set<Pmf> getModeratedBy(@NotNull final UniqueId<Attribute> id) {
 		checkNotNull(id, "id");
 		return get(id, relations.moderatedBy, Moderates::getPmf);
 	}
 
 	@Override
-	public void removeModerates(final UniqueId<Pmf> pmfId, final UniqueId<Attribute> attributeId) {
+	public void removeModerates(@NotNull final UniqueId<Pmf> pmfId, @NotNull final UniqueId<Attribute> attributeId) {
 		checkNotNull(pmfId, "pmfId");
 		checkNotNull(attributeId, "attributeId");
 		if (relations.moderates.containsKey(pmfId)) {
@@ -851,7 +851,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addNeeds(final UniqueId<Role> roleId, final UniqueId<Attribute> attributeId) {
+	public void addNeeds(@NotNull final UniqueId<Role> roleId, @NotNull final UniqueId<Attribute> attributeId) {
 		final Role role = checkExists(roleId, "roleId", this::getRole);
 		final Attribute attribute = checkExists(attributeId, "attributeId", this::getAttribute);
 		final Map<UniqueId<Attribute>, Needs> map = relations.needs.computeIfAbsent(roleId, m -> {
@@ -869,19 +869,19 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public Set<Attribute> getNeeds(final UniqueId<Role> id) {
+	public Set<Attribute> getNeeds(@NotNull final UniqueId<Role> id) {
 		checkNotNull(id, "id");
 		return get(id, relations.needs, Needs::getAttribute);
 	}
 
 	@Override
-	public Set<Role> getNeededBy(final UniqueId<Attribute> id) {
+	public Set<Role> getNeededBy(@NotNull final UniqueId<Attribute> id) {
 		checkNotNull(id, "id");
 		return get(id, relations.neededBy, Needs::getRole);
 	}
 
 	@Override
-	public void removeNeeds(final UniqueId<Role> roleId, final UniqueId<Attribute> attributeId) {
+	public void removeNeeds(@NotNull final UniqueId<Role> roleId, @NotNull final UniqueId<Attribute> attributeId) {
 		checkNotNull(roleId, "roleId");
 		checkNotNull(attributeId, "attributeId");
 		if (relations.needs.containsKey(roleId) && relations.needs.get(roleId).containsKey(attributeId)) {
@@ -897,7 +897,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addPossesses(final UniqueId<Agent> agentId, final UniqueId<Capability> capabilityId, final double score) {
+	public void addPossesses(@NotNull final UniqueId<Agent> agentId, @NotNull final UniqueId<Capability> capabilityId, final double score) {
 		final Agent agent = checkExists(agentId, "agentId", this::getAgent);
 		final Capability capability = checkExists(capabilityId, "capabilityId", this::getCapability);
 		final Map<UniqueId<Capability>, Possesses> map = relations.possesses.computeIfAbsent(agentId, m -> {
@@ -915,19 +915,19 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public Set<Capability> getPossesses(final UniqueId<Agent> id) {
+	public Set<Capability> getPossesses(@NotNull final UniqueId<Agent> id) {
 		checkNotNull(id, "id");
 		return get(id, relations.possesses, Possesses::getCapability);
 	}
 
 	@Override
-	public Set<Agent> getPossessedBy(final UniqueId<Capability> id) {
+	public Set<Agent> getPossessedBy(@NotNull final UniqueId<Capability> id) {
 		checkNotNull(id, "id");
 		return get(id, relations.possessedBy, Possesses::getAgent);
 	}
 
 	@Override
-	public double getPossessesScore(final UniqueId<Agent> agentId, final UniqueId<Capability> capabilityId) {
+	public double getPossessesScore(@NotNull final UniqueId<Agent> agentId, @NotNull final UniqueId<Capability> capabilityId) {
 		checkNotNull(agentId, "agentId");
 		checkNotNull(capabilityId, "capabilityId");
 		if (relations.possesses.containsKey(agentId) && relations.possesses.get(agentId).containsKey(capabilityId)) {
@@ -937,7 +937,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void setPossessesScore(final UniqueId<Agent> agentId, final UniqueId<Capability> capabilityId, final double score) {
+	public void setPossessesScore(@NotNull final UniqueId<Agent> agentId, @NotNull final UniqueId<Capability> capabilityId, final double score) {
 		checkNotNull(agentId, "agentId");
 		checkNotNull(capabilityId, "capabilityId");
 		if (relations.possesses.containsKey(agentId) && relations.possesses.get(agentId).containsKey(capabilityId)) {
@@ -948,7 +948,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void removePossesses(final @NotNull UniqueId<Agent> agentId, final @NotNull UniqueId<Capability> capabilityId) {
+	public void removePossesses(@NotNull final UniqueId<Agent> agentId, @NotNull final UniqueId<Capability> capabilityId) {
 		checkNotNull(agentId, "agentId");
 		checkNotNull(capabilityId, "capabilityId");
 		if (relations.possesses.containsKey(agentId) && relations.possesses.get(agentId).containsKey(capabilityId)) {
@@ -964,7 +964,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addRequires(final UniqueId<Role> roleId, final UniqueId<Capability> capabilityId) {
+	public void addRequires(@NotNull final UniqueId<Role> roleId, @NotNull final UniqueId<Capability> capabilityId) {
 		final Role role = checkExists(roleId, "roleId", this::getRole);
 		final Capability capability = checkExists(capabilityId, "capabilityId", this::getCapability);
 		final Map<UniqueId<Capability>, Requires> map = relations.requires.computeIfAbsent(roleId, m -> {
@@ -982,19 +982,19 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public Set<Capability> getRequires(final UniqueId<Role> id) {
+	public Set<Capability> getRequires(@NotNull final UniqueId<Role> id) {
 		checkNotNull(id, "id");
 		return get(id, relations.requires, Requires::getCapability);
 	}
 
 	@Override
-	public Set<Role> getRequiredBy(final UniqueId<Capability> id) {
+	public Set<Role> getRequiredBy(@NotNull final UniqueId<Capability> id) {
 		checkNotNull(id, "id");
 		return get(id, relations.requiredBy, Requires::getRole);
 	}
 
 	@Override
-	public void removeRequires(final UniqueId<Role> roleId, final UniqueId<Capability> capabilityId) {
+	public void removeRequires(@NotNull final UniqueId<Role> roleId, @NotNull final UniqueId<Capability> capabilityId) {
 		checkNotNull(roleId, "roleId");
 		checkNotNull(capabilityId, "capabilityId");
 		if (relations.requires.containsKey(roleId) && relations.requires.get(roleId).containsKey(capabilityId)) {
@@ -1010,7 +1010,7 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public void addUses(final UniqueId<Role> roleId, final UniqueId<Pmf> pmfId) {
+	public void addUses(@NotNull final UniqueId<Role> roleId, @NotNull final UniqueId<Pmf> pmfId) {
 		final Role role = checkExists(roleId, "roleId", this::getRole);
 		final Pmf pmf = checkExists(pmfId, "pmfId", this::getPmf);
 		final Map<UniqueId<Pmf>, Uses> map = relations.uses.computeIfAbsent(roleId, m -> {
@@ -1028,19 +1028,19 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public Set<Pmf> getUses(final UniqueId<Role> id) {
+	public Set<Pmf> getUses(@NotNull final UniqueId<Role> id) {
 		checkNotNull(id, "id");
 		return get(id, relations.uses, Uses::getPmf);
 	}
 
 	@Override
-	public Set<Role> getUsedBy(final UniqueId<Pmf> id) {
+	public Set<Role> getUsedBy(@NotNull final UniqueId<Pmf> id) {
 		checkNotNull(id, "id");
 		return get(id, relations.usedBy, Uses::getRole);
 	}
 
 	@Override
-	public void removeUses(final UniqueId<Role> roleId, final UniqueId<Pmf> pmfId) {
+	public void removeUses(@NotNull final UniqueId<Role> roleId, @NotNull final UniqueId<Pmf> pmfId) {
 		checkNotNull(roleId, "roleId");
 		checkNotNull(pmfId, "pmfId");
 		if (relations.uses.containsKey(roleId) && relations.uses.get(roleId).containsKey(pmfId)) {
@@ -1056,18 +1056,18 @@ class DefaultOrganization implements Organization {
 	}
 
 	@Override
-	public double effectiveness(final Collection<Assignment> assignments) {
+	public double effectiveness(@NotNull final Collection<Assignment> assignments) {
 		return effectiveness.compute(this, assignments);
 	}
 
 	@Override
-	public Goodness getGoodness(final UniqueId<Role> id) {
+	public Goodness getGoodness(@NotNull final UniqueId<Role> id) {
 		checkNotNull(id, "id");
 		return functions.goodnesses.get(id);
 	}
 
 	@Override
-	public void setGoodness(final UniqueId<Role> id, final Goodness goodness) {
+	public void setGoodness(@NotNull final UniqueId<Role> id, @NotNull final Goodness goodness) {
 		checkExists(id, "id", this::getRole);
 		functions.goodnesses.put(id, goodness);
 	}

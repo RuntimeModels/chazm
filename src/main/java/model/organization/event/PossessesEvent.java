@@ -1,6 +1,9 @@
 package model.organization.event;
 
 import static model.organization.validation.Checks.checkNotNull;
+
+import javax.validation.constraints.NotNull;
+
 import model.organization.entity.Agent;
 import model.organization.entity.Capability;
 import model.organization.id.UniqueId;
@@ -27,7 +30,7 @@ public class PossessesEvent extends AbstractEvent {
 	 * @param category
 	 *            the category of the update.
 	 */
-	public PossessesEvent(final Possesses possesses, final UpdateCategory category) {
+	public PossessesEvent(@NotNull final Possesses possesses, @NotNull final UpdateCategory category) {
 		super(category);
 		checkNotNull(possesses, "possesses");
 		agentId = possesses.getAgent().getId();

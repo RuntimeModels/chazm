@@ -5,6 +5,7 @@ import static model.organization.validation.Checks.checkNotNull;
 import java.util.Collection;
 
 import javax.inject.Singleton;
+import javax.validation.constraints.NotNull;
 
 import model.organization.Organization;
 import model.organization.entity.Agent;
@@ -17,7 +18,8 @@ import model.organization.relation.Assignment;
 class DefaultGoodness implements Goodness {
 
 	@Override
-	public double compute(final Organization organization, final Agent agent, final Role role, final InstanceGoal goal, final Collection<Assignment> assignments) {
+	public double compute(@NotNull final Organization organization, @NotNull final Agent agent, @NotNull final Role role, @NotNull final InstanceGoal goal,
+			@NotNull final Collection<Assignment> assignments) {
 		checkNotNull(organization, "organization");
 		checkNotNull(agent, "agent");
 		checkNotNull(role, "role");

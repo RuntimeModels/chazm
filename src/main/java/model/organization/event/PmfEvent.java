@@ -1,6 +1,9 @@
 package model.organization.event;
 
 import static model.organization.validation.Checks.checkNotNull;
+
+import javax.validation.constraints.NotNull;
+
 import model.organization.entity.Pmf;
 import model.organization.id.UniqueId;
 
@@ -23,7 +26,7 @@ public class PmfEvent extends AbstractEvent {
 	 * @param category
 	 *            the category of the update.
 	 */
-	public PmfEvent(final Pmf pmf, final UpdateCategory category) {
+	public PmfEvent(@NotNull final Pmf pmf, @NotNull final UpdateCategory category) {
 		super(category);
 		checkNotNull(pmf, "pmf");
 		id = pmf.getId();

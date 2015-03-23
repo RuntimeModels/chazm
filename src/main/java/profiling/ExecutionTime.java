@@ -1,6 +1,7 @@
 package profiling;
 
 import javax.interceptor.Interceptor;
+import javax.validation.constraints.NotNull;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
@@ -19,7 +20,7 @@ public class ExecutionTime implements MethodInterceptor {
 	private static final Logger logger = LoggerFactory.getLogger(ExecutionTime.class);
 
 	@Override
-	public Object invoke(final MethodInvocation invocation) throws Throwable {
+	public Object invoke(@NotNull final MethodInvocation invocation) throws Throwable {
 		final long start = System.nanoTime();
 		try {
 			return invocation.proceed();
