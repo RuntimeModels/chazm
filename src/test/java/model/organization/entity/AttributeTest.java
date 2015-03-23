@@ -1,0 +1,139 @@
+package model.organization.entity;
+
+import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertThat;
+import model.organization.id.IdFactory;
+import model.organization.id.IdModule;
+import model.organization.id.UniqueId;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.ProvisionException;
+
+@SuppressWarnings("javadoc")
+public class AttributeTest {
+
+	private final Injector injector = Guice.createInjector(new EntityModule(), new IdModule());
+	private final AttributeFactory attributeFactory = injector.getInstance(AttributeFactory.class);
+	private final IdFactory idFactory = injector.getInstance(IdFactory.class);
+
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
+
+	@Test
+	public void testAttribute() {
+		final UniqueId<Attribute> i1 = idFactory.buildId(Attribute.class, 1L);
+		final Attribute a1 = attributeFactory.buildAttribute(i1, Attribute.Type.NEGATIVE_QUALITY);
+		assertThat(a1, is(not(nullValue())));
+	}
+
+	@Test
+	public void testAttribute1() {
+		exception.expect(instanceOf(ProvisionException.class));
+		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+		attributeFactory.buildAttribute(null, Attribute.Type.NEGATIVE_QUALITY);
+	}
+
+	@Test
+	public void testAttribute2() {
+		exception.expect(instanceOf(IllegalArgumentException.class));
+		exception.expectMessage(equalTo("Parameter (id) cannot be null"));
+		new AttributeEntity(null, Attribute.Type.NEGATIVE_QUALITY);
+	}
+
+	@Test
+	public void testAttribute3() {
+		final UniqueId<Attribute> i1 = idFactory.buildId(Attribute.class, 1L);
+		exception.expect(instanceOf(ProvisionException.class));
+		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+		attributeFactory.buildAttribute(i1, null);
+	}
+
+	@Test
+	public void testGetType() {
+		final UniqueId<Attribute> i1 = idFactory.buildId(Attribute.class, 1L);
+		final Attribute a1 = attributeFactory.buildAttribute(i1, Attribute.Type.NEGATIVE_QUALITY);
+		final Attribute a2 = attributeFactory.buildAttribute(i1, Attribute.Type.NEGATIVE_QUANTITY);
+		final Attribute a3 = attributeFactory.buildAttribute(i1, Attribute.Type.NEGATIVE_UNBOUNDED);
+		final Attribute a4 = attributeFactory.buildAttribute(i1, Attribute.Type.POSITIVE_QUALITY);
+		final Attribute a5 = attributeFactory.buildAttribute(i1, Attribute.Type.POSITIVE_QUANTITY);
+		final Attribute a6 = attributeFactory.buildAttribute(i1, Attribute.Type.POSITIVE_UNBOUNDED);
+		assertThat(a1.getType(), is(equalTo(Attribute.Type.NEGATIVE_QUALITY)));
+		assertThat(a2.getType(), is(equalTo(Attribute.Type.NEGATIVE_QUANTITY)));
+		assertThat(a3.getType(), is(equalTo(Attribute.Type.NEGATIVE_UNBOUNDED)));
+		assertThat(a4.getType(), is(equalTo(Attribute.Type.POSITIVE_QUALITY)));
+		assertThat(a5.getType(), is(equalTo(Attribute.Type.POSITIVE_QUANTITY)));
+		assertThat(a6.getType(), is(equalTo(Attribute.Type.POSITIVE_UNBOUNDED)));
+	}
+
+	@Test
+	public void testAttribute4() {
+		final UniqueId<Attribute> i1 = idFactory.buildId(Attribute.class, 1L);
+		exception.expect(instanceOf(IllegalArgumentException.class));
+		exception.expectMessage(equalTo("Parameter (type) cannot be null"));
+		new AttributeEntity(i1, null);
+	}
+
+	@Test
+	public void testGetId() {
+		final UniqueId<Attribute> i1 = idFactory.buildId(Attribute.class, 1L);
+		final UniqueId<Attribute> i2 = idFactory.buildId(Attribute.class, 1L);
+		final Attribute c1 = attributeFactory.buildAttribute(i1, Attribute.Type.NEGATIVE_QUALITY);
+		final Attribute c2 = attributeFactory.buildAttribute(i2, Attribute.Type.NEGATIVE_QUALITY);
+
+		assertThat(c1.getId(), is(sameInstance(i1)));
+		assertThat(c1.getId(), is(not(sameInstance(c2.getId()))));
+	}
+
+	@Test
+	public void testEqualsObject() {
+		final UniqueId<Attribute> i1 = idFactory.buildId(Attribute.class, 1L);
+		final UniqueId<Attribute> i2 = idFactory.buildId(Attribute.class, 2L);
+		final Attribute c1 = attributeFactory.buildAttribute(i1, Attribute.Type.NEGATIVE_QUALITY);
+		final Attribute c2 = attributeFactory.buildAttribute(i2, Attribute.Type.NEGATIVE_QUALITY);
+		final Attribute c3 = attributeFactory.buildAttribute(i1, Attribute.Type.NEGATIVE_QUALITY);
+
+		assertThat(c1, is(not(equalTo(i1))));
+		assertThat(c2, is(not(equalTo(i2))));
+		assertThat(c1, is(not(equalTo(c2))));
+		assertThat(c1, is(not(sameInstance(c3))));
+		assertThat(c1, is(equalTo(c3)));
+		assertThat(c1, is(not(equalTo(""))));
+	}
+
+	@Test
+	public void testHashCode() {
+		final UniqueId<Attribute> i1 = idFactory.buildId(Attribute.class, 1L);
+		final UniqueId<Attribute> i2 = idFactory.buildId(Attribute.class, 2L);
+		final Attribute c1 = attributeFactory.buildAttribute(i1, Attribute.Type.NEGATIVE_QUALITY);
+		final Attribute c2 = attributeFactory.buildAttribute(i2, Attribute.Type.NEGATIVE_QUALITY);
+
+		assertThat(c1.hashCode(), is(equalTo(i1.hashCode())));
+		assertThat(c2.hashCode(), is(equalTo(i2.hashCode())));
+		assertThat(c1.hashCode(), is(not(equalTo(c2.hashCode()))));
+	}
+
+	@Test
+	public void testToString() {
+		final UniqueId<Attribute> i1 = idFactory.buildId(Attribute.class, 1L);
+		final UniqueId<Attribute> i2 = idFactory.buildId(Attribute.class, 2L);
+		final Attribute c1 = attributeFactory.buildAttribute(i1, Attribute.Type.NEGATIVE_QUALITY);
+		final Attribute c2 = attributeFactory.buildAttribute(i2, Attribute.Type.NEGATIVE_QUALITY);
+
+		assertThat(c1.toString(), is(equalTo(String.format("%s [%s]", i1.toString(), Attribute.Type.NEGATIVE_QUALITY))));
+		assertThat(c2.toString(), is(equalTo(String.format("%s [%s]", i2.toString(), Attribute.Type.NEGATIVE_QUALITY))));
+		assertThat(c1.toString(), is(not(equalTo(c2.toString()))));
+	}
+
+}
