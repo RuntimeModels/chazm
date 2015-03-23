@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 public abstract class AbstractEvent implements Serializable {
 
 	private static final long serialVersionUID = 3392050291256215349L;
-	private final UpdateCategory category;
+	private final EventCategory category;
 
 	/**
 	 * Constructs a new instance of {@linkplain AbstractEvent}.
@@ -23,7 +23,7 @@ public abstract class AbstractEvent implements Serializable {
 	 * @param category
 	 *            the category of the update.
 	 */
-	protected AbstractEvent(@NotNull final UpdateCategory category) {
+	protected AbstractEvent(@NotNull final EventCategory category) {
 		checkNotNull(category, "category");
 		this.category = category;
 	}
@@ -33,7 +33,7 @@ public abstract class AbstractEvent implements Serializable {
 	 *
 	 * @return the category.
 	 */
-	public UpdateCategory getCategory() {
+	public EventCategory getCategory() {
 		return category;
 	}
 

@@ -2,12 +2,15 @@ package model.organization.event;
 
 import static model.organization.validation.Checks.checkNotNull;
 
+import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
 import model.organization.entity.Attribute;
 import model.organization.entity.Pmf;
 import model.organization.id.UniqueId;
 import model.organization.relation.Moderates;
+
+import com.google.inject.assistedinject.Assisted;
 
 /**
  * The {@linkplain ModeratesEvent} class indicates that there is an update about a {@linkplain Moderates} relation.
@@ -21,15 +24,8 @@ public class ModeratesEvent extends AbstractEvent {
 	private final UniqueId<Pmf> pmfId;
 	private final UniqueId<Attribute> attributeId;
 
-	/**
-	 * Constructs a new instance of {@linkplain ModeratesEvent}.
-	 *
-	 * @param moderates
-	 *            the {@linkplain Moderates}.
-	 * @param category
-	 *            the category of the update.
-	 */
-	public ModeratesEvent(@NotNull final Moderates moderates, @NotNull final UpdateCategory category) {
+	@Inject
+	ModeratesEvent(@NotNull @Assisted final Moderates moderates, @NotNull @Assisted final EventCategory category) {
 		super(category);
 		checkNotNull(moderates, "agent");
 		pmfId = moderates.getPmf().getId();

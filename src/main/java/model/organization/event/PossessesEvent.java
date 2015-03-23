@@ -2,12 +2,15 @@ package model.organization.event;
 
 import static model.organization.validation.Checks.checkNotNull;
 
+import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
 import model.organization.entity.Agent;
 import model.organization.entity.Capability;
 import model.organization.id.UniqueId;
 import model.organization.relation.Possesses;
+
+import com.google.inject.assistedinject.Assisted;
 
 /**
  * The {@linkplain PossessesEvent} class indicates that there is an update about a {@linkplain Possesses} relation.
@@ -22,15 +25,8 @@ public class PossessesEvent extends AbstractEvent {
 	private final UniqueId<Capability> capabilityId;
 	private final double score;
 
-	/**
-	 * Constructs a new instance of {@linkplain PossessesEvent}.
-	 *
-	 * @param possesses
-	 *            the {@linkplain Possesses}.
-	 * @param category
-	 *            the category of the update.
-	 */
-	public PossessesEvent(@NotNull final Possesses possesses, @NotNull final UpdateCategory category) {
+	@Inject
+	PossessesEvent(@NotNull @Assisted final Possesses possesses, @NotNull @Assisted final EventCategory category) {
 		super(category);
 		checkNotNull(possesses, "possesses");
 		agentId = possesses.getAgent().getId();

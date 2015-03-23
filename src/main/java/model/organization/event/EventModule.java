@@ -13,16 +13,25 @@ public class EventModule extends AbstractModule {
 
 	@Override
 	protected void configure() {
-		// .implement(AchievesEvent.class, AchievesEvent.class).implement(AgentEvent.class, AgentEvent.class)
-		// .implement(AssignmentEvent.class, AssignmentEvent.class).implement(AttributeEvent.class, AttributeEvent.class)
-		// .implement(CapabilityEvent.class, CapabilityEvent.class).implement(CharacteristicEvent.class, CharacteristicEvent.class)
-		// .implement(ContainsEvent.class, ContainsEvent.class).implement(HasEvent.class, HasEvent.class)
-		// .implement(InstanceGoalEvent.class, InstanceGoalEvent.class).implement(ModeratesEvent.class, ModeratesEvent.class)
-		// .implement(NeedsEvent.class, NeedsEvent.class).implement(PmfEvent.class, PmfEvent.class).implement(PolicyEvent.class, PolicyEvent.class)
-		// .implement(PossessesEvent.class, PossessesEvent.class).implement(RequiresEvent.class, RequiresEvent.class)
-		// .implement(RoleEvent.class, RoleEvent.class).implement(SpecificationGoalEvent.class, SpecificationGoalEvent.class)
-		// .implement(UsesEvent.class, UsesEvent.class)
 		final FactoryModuleBuilder factoryModuleBuilder = new FactoryModuleBuilder();
+		install(factoryModuleBuilder.build(AchievesEventFactory.class));
+		install(factoryModuleBuilder.build(AgentEventFactory.class));
+		install(factoryModuleBuilder.build(AssignmentEventFactory.class));
+		install(factoryModuleBuilder.build(AttributeEventFactory.class));
+		install(factoryModuleBuilder.build(CapabilityEventFactory.class));
+		install(factoryModuleBuilder.build(CharacteristicEventFactory.class));
+		install(factoryModuleBuilder.build(ContainsEventFactory.class));
+		install(factoryModuleBuilder.build(HasEventFactory.class));
+		install(factoryModuleBuilder.build(InstanceGoalEventFactory.class));
+		install(factoryModuleBuilder.build(ModeratesEventFactory.class));
+		install(factoryModuleBuilder.build(NeedsEventFactory.class));
+		install(factoryModuleBuilder.build(PmfEventFactory.class));
+		install(factoryModuleBuilder.build(PolicyEventFactory.class));
+		install(factoryModuleBuilder.build(PossessesEventFactory.class));
+		install(factoryModuleBuilder.build(RequiresEventFactory.class));
+		install(factoryModuleBuilder.build(RoleEventFactory.class));
+		install(factoryModuleBuilder.build(SpecificationGoalEventFactory.class));
+		install(factoryModuleBuilder.build(UsesEventFactory.class));
 		install(factoryModuleBuilder.build(EventFactory.class));
 	}
 

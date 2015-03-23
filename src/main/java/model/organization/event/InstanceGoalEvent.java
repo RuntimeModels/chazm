@@ -2,12 +2,15 @@ package model.organization.event;
 
 import static model.organization.validation.Checks.checkNotNull;
 
+import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
 import model.organization.entity.InstanceGoal;
 import model.organization.entity.InstanceGoal.Parameter;
 import model.organization.entity.SpecificationGoal;
 import model.organization.id.UniqueId;
+
+import com.google.inject.assistedinject.Assisted;
 
 /**
  * The {@linkplain InstanceGoalEvent} class indicates that there is an update about an {@linkplain InstanceGoal} entity.
@@ -22,15 +25,8 @@ public class InstanceGoalEvent extends AbstractEvent {
 	private final UniqueId<SpecificationGoal> specificationGoalId;
 	private final Parameter parameter;
 
-	/**
-	 * Constructs a new instance of {@linkplain InstanceGoalEvent}.
-	 *
-	 * @param goal
-	 *            the {@linkplain InstanceGoal}.
-	 * @param category
-	 *            the category of the update.
-	 */
-	public InstanceGoalEvent(@NotNull final InstanceGoal goal, @NotNull final UpdateCategory category) {
+	@Inject
+	InstanceGoalEvent(@NotNull @Assisted final InstanceGoal goal, @NotNull @Assisted final EventCategory category) {
 		super(category);
 		checkNotNull(goal, "goal");
 		id = goal.getId();

@@ -2,12 +2,15 @@ package model.organization.event;
 
 import static model.organization.validation.Checks.checkNotNull;
 
+import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
 import model.organization.entity.Characteristic;
 import model.organization.entity.Role;
 import model.organization.id.UniqueId;
 import model.organization.relation.Contains;
+
+import com.google.inject.assistedinject.Assisted;
 
 /**
  * The {@linkplain ContainsEvent} class indicates that there is an update about a {@linkplain Contains} relation.
@@ -22,15 +25,8 @@ public class ContainsEvent extends AbstractEvent {
 	private final UniqueId<Characteristic> characteristicId;
 	private final double value;
 
-	/**
-	 * Constructs a new instance of {@linkplain ContainsEvent}.
-	 *
-	 * @param contains
-	 *            the {@linkplain Contains}.
-	 * @param category
-	 *            the category of the update.
-	 */
-	public ContainsEvent(@NotNull final Contains contains, @NotNull final UpdateCategory category) {
+	@Inject
+	ContainsEvent(@NotNull @Assisted final Contains contains, @NotNull @Assisted final EventCategory category) {
 		super(category);
 		checkNotNull(contains, "contains");
 		roleId = contains.getRole().getId();

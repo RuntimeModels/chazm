@@ -2,10 +2,13 @@ package model.organization.event;
 
 import static model.organization.validation.Checks.checkNotNull;
 
+import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
 import model.organization.entity.Characteristic;
 import model.organization.id.UniqueId;
+
+import com.google.inject.assistedinject.Assisted;
 
 /**
  * The {@linkplain CharacteristicEvent} class indicates that there is an update about a {@linkplain Characteristic} entity.
@@ -18,15 +21,8 @@ public class CharacteristicEvent extends AbstractEvent {
 	private static final long serialVersionUID = -7464874692386039815L;
 	private final UniqueId<Characteristic> id;
 
-	/**
-	 * Constructs a new instance of {@linkplain CharacteristicEvent}.
-	 *
-	 * @param characteristic
-	 *            the {@linkplain Characteristic}.
-	 * @param category
-	 *            the category of the update.
-	 */
-	public CharacteristicEvent(@NotNull final Characteristic characteristic, @NotNull final UpdateCategory category) {
+	@Inject
+	CharacteristicEvent(@NotNull @Assisted final Characteristic characteristic, @NotNull @Assisted final EventCategory category) {
 		super(category);
 		checkNotNull(characteristic, "characteristic");
 		id = characteristic.getId();

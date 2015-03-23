@@ -2,12 +2,15 @@ package model.organization.event;
 
 import static model.organization.validation.Checks.checkNotNull;
 
+import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
 import model.organization.entity.Role;
 import model.organization.entity.SpecificationGoal;
 import model.organization.id.UniqueId;
 import model.organization.relation.Achieves;
+
+import com.google.inject.assistedinject.Assisted;
 
 /**
  * The {@linkplain AchievesEvent} class indicates that there is an update about an {@linkplain Achieves} relation.
@@ -21,15 +24,8 @@ public class AchievesEvent extends AbstractEvent {
 	private final UniqueId<Role> roleId;
 	private final UniqueId<SpecificationGoal> goalId;
 
-	/**
-	 * Constructs a new instance of {@linkplain AchievesEvent}.
-	 *
-	 * @param achieves
-	 *            the {@linkplain Achieves}.
-	 * @param category
-	 *            the category of the update.
-	 */
-	public AchievesEvent(@NotNull final Achieves achieves, @NotNull final UpdateCategory category) {
+	@Inject
+	AchievesEvent(@NotNull @Assisted final Achieves achieves, @NotNull @Assisted final EventCategory category) {
 		super(category);
 		checkNotNull(achieves, "achieves");
 		roleId = achieves.getRole().getId();

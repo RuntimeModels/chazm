@@ -5,7 +5,7 @@ import model.organization.entity.Role;
 
 /**
  * The {@linkplain NeedsFactory} interface defines the API for constructing {@linkplain Needs} relations.
- * 
+ *
  * @author Christopher Zhong
  * @since 7.0.0
  */
