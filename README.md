@@ -2,7 +2,8 @@
 
 **Version**: 7.0.0
 
-**Continuous Integration**: [![Build Status](https://travis-ci.org/ChrisZhong/organization-model.svg?branch=master)](https://travis-ci.org/ChrisZhong/organization-model)
+**Badges**: [![Build Status](https://travis-ci.org/ChrisZhong/organization-model.svg?branch=master)](https://travis-ci.org/ChrisZhong/organization-model)
+[![Coverage Status](https://coveralls.io/repos/ChrisZhong/organization-model/badge.svg)](https://coveralls.io/r/ChrisZhong/organization-model)
 
 ##What is this repository for?
 
