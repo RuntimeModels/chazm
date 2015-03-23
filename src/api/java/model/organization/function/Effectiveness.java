@@ -21,17 +21,6 @@ public interface Effectiveness {
 	 *
 	 * @param organization
 	 *            the {@linkplain Organization}.
-	 * @return a <code>double</code>-valued score.
-	 */
-	default double compute(final Organization organization) {
-		return compute(organization, organization.getAssignments());
-	}
-
-	/**
-	 * Returns a <code>double</code>-valued score of an {@linkplain Organization}'s effectiveness.
-	 *
-	 * @param organization
-	 *            the {@linkplain Organization}.
 	 * @param assignments
 	 *            a set of {@linkplain Assignment}s.
 	 * @return a <code>double</code>-valued score.
