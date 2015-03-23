@@ -1,6 +1,18 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
+apply plugin: 'jacoco'
+apply plugin: 'com.github.kt3k.coveralls'
+
+buildscript {
+	repositories {
+		jcenter()
+	}
+
+	dependencies {
+		classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.3.1'
+	}
+}
 
 sourceCompatibility = '1.8'
 
@@ -65,5 +77,13 @@ publishing {
 			artifactId = artifactId + "-$sourceSets.api.name"
 			artifact apiJar
 		}
+	}
+}
+
+jacocoTestReport {
+	reports {
+		xml.enabled true
+		csv.enabled false
+		html.enabled true
 	}
 }
