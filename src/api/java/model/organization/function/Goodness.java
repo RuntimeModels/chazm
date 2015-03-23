@@ -33,22 +33,6 @@ public interface Goodness {
 	 *
 	 * @param organization
 	 *            the {@linkplain Organization}.
-	 * @param assignment
-	 *            the {@linkplain Assignment}.
-	 * @param assignments
-	 *            a set {@linkplain Assignment}s that may affect the score.
-	 * @return a score (<code>0.0</code> &le; score &le; <code>1.0</code>).
-	 */
-	default double compute(final Organization organization, final Assignment assignment, final Collection<Assignment> assignments) {
-		return compute(organization, assignment.getAgent(), assignment.getRole(), assignment.getGoal(), assignments);
-	}
-
-	/**
-	 * Returns a score (<code>0.0</code> &le; score &le; <code>1.0</code>) of how effective an {@linkplain Agent} is at playing a {@linkplain Role} to achieve
-	 * an {@linkplain InstanceGoal} in an {@linkplain Organization}.
-	 *
-	 * @param organization
-	 *            the {@linkplain Organization}.
 	 * @param agent
 	 *            the {@linkplain Agent}.
 	 * @param role

@@ -12,8 +12,11 @@ class DefaultEffectiveness implements Effectiveness {
 
 	@Override
 	public double compute(final Organization organization, final Collection<Assignment> assignments) {
-		return assignments.parallelStream()
-				.mapToDouble(m -> organization.getGoodness(m.getRole().getId()).compute(organization, m, organization.getAssignments())).sum();
+		return assignments
+				.parallelStream()
+				.mapToDouble(
+						m -> organization.getGoodness(m.getRole().getId()).compute(organization, m.getAgent(), m.getRole(), m.getGoal(),
+								organization.getAssignments())).sum();
 	}
 
 }

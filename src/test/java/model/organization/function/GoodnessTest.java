@@ -5,18 +5,17 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.util.HashSet;
-import java.util.Set;
 
 import model.organization.Organization;
 import model.organization.OrganizationModule;
 import model.organization.entity.Agent;
+import model.organization.entity.Attribute;
 import model.organization.entity.Capability;
 import model.organization.entity.EntityFactory;
 import model.organization.entity.InstanceGoal;
 import model.organization.entity.Role;
 import model.organization.entity.SpecificationGoal;
 import model.organization.id.IdFactory;
-import model.organization.relation.Assignment;
 import model.organization.relation.Possesses;
 
 import org.junit.Rule;
@@ -48,37 +47,41 @@ public class GoodnessTest {
 		final InstanceGoal ig = entityFactory.buildInstanceGoal(idFactory.buildId(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
 		final Capability c1 = entityFactory.buildCapability(idFactory.buildId(Capability.class, "c1"));
 		final Capability c2 = entityFactory.buildCapability(idFactory.buildId(Capability.class, "c2"));
-		final Set<Assignment> assignments = new HashSet<>();
+		final Attribute t = entityFactory.buildAttribute(idFactory.buildId(Attribute.class, "t"), Attribute.Type.NEGATIVE_QUALITY);
 
-		assertThat(goodness.compute(o, a, r, ig, assignments), is(equalTo(Goodness.MIN_SCORE)));
+		assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(Goodness.MIN_SCORE)));
 
 		o.addAgent(a);
 		o.addRole(r);
 		o.addSpecificationGoal(sg);
 		o.addInstanceGoal(ig);
 		o.addCapability(c1);
-
 		o.addAchieves(r.getId(), sg.getId());
 
-		assertThat(goodness.compute(o, a, r, ig, assignments), is(equalTo(Goodness.MAX_SCORE)));
+		assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(Goodness.MAX_SCORE)));
 
 		o.addRequires(r.getId(), c1.getId());
 
-		assertThat(goodness.compute(o, a, r, ig, assignments), is(equalTo(Goodness.MIN_SCORE)));
+		assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(Goodness.MIN_SCORE)));
 
 		o.addPossesses(a.getId(), c1.getId(), Possesses.MIN_SCORE);
 
-		assertThat(goodness.compute(o, a, r, ig, assignments), is(equalTo(Goodness.MIN_SCORE)));
+		assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(Goodness.MIN_SCORE)));
 
 		o.setPossessesScore(a.getId(), c1.getId(), Possesses.MAX_SCORE);
 
-		assertThat(goodness.compute(o, a, r, ig, assignments), is(equalTo(Goodness.MAX_SCORE)));
+		assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(Goodness.MAX_SCORE)));
 
 		o.addCapability(c2);
 		o.addRequires(r.getId(), c2.getId());
 		o.addPossesses(a.getId(), c2.getId(), Possesses.MAX_SCORE);
 
-		assertThat(goodness.compute(o, a, r, ig, assignments), is(equalTo(Goodness.MAX_SCORE)));
+		assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(Goodness.MAX_SCORE)));
+
+		o.addAttribute(t);
+		o.addNeeds(r.getId(), t.getId());
+
+		assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(Goodness.MIN_SCORE)));
 	}
 
 	@Test
