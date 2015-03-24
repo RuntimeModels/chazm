@@ -180,7 +180,7 @@ class AssignmentRelation implements Assignment {
 
 	@Override
 	public String toString() {
-		return getGoal().getParameter() == null ? String.format("<%s>", getId()) : String.format("<%s (%s)>", getId(), getGoal().getParameter());
+		return String.format("<%s, %s, %s>", getAgent(), getRole(), getGoal());
 	}
 
 }
