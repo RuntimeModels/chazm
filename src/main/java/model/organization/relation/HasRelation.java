@@ -49,7 +49,7 @@ class HasRelation implements Has {
 		case POSITIVE_QUALITY:
 		case NEGATIVE_QUALITY:
 			if (value < QUALITY_MIN_AMOUNT || value > QUALITY_MAX_AMOUNT) {
-				throw new IllegalArgumentException(String.format("For atttribute type (%s), score (%f) must be between (%f) and (%f)", type, value,
+				throw new IllegalArgumentException(String.format("For atttribute type (%s), score (%s) must be between (%s) and (%s)", type, value,
 						QUALITY_MIN_AMOUNT, QUALITY_MAX_AMOUNT));
 			}
 			break;
@@ -57,7 +57,7 @@ class HasRelation implements Has {
 		case NEGATIVE_QUANTITY:
 			if (value < QUANTITY_MIN_AMOUNT) {
 				throw new IllegalArgumentException(
-						String.format("For atttribute type (%s), score (%f) must be at least (%f)", type, value, QUANTITY_MIN_AMOUNT));
+						String.format("For atttribute type (%s), score (%s) must be at least (%s)", type, value, QUANTITY_MIN_AMOUNT));
 			}
 			break;
 		case NEGATIVE_UNBOUNDED:
@@ -86,7 +86,7 @@ class HasRelation implements Has {
 
 	@Override
 	public String toString() {
-		return String.format("%s <-> %s: %f", getAgent().getId(), getAttribute().getId(), getValue());
+		return String.format("%s <-> %s: %s", getAgent().getId(), getAttribute().getId(), getValue());
 	}
 
 }
