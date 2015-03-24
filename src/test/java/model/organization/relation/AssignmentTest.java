@@ -18,6 +18,7 @@ import model.organization.entity.RoleFactory;
 import model.organization.entity.SpecificationGoal;
 import model.organization.entity.SpecificationGoalFactory;
 import model.organization.id.IdFactory;
+import model.organization.id.UniqueId;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -113,6 +114,17 @@ public class AssignmentTest {
 	}
 
 	@Test
+	public void testGetId() {
+		final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
+		final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
+		final SpecificationGoal sg = specGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
+		final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
+		final Assignment as = assignmentFactory.buildAssignment(a, r, ig);
+
+		assertThat(as.getId(), is(not(nullValue())));
+	}
+
+	@Test
 	public void testGetAgent() {
 		final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
 		final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
@@ -190,6 +202,57 @@ public class AssignmentTest {
 
 		assertThat(a1.toString(), is(not(equalTo(a2.toString()))));
 		assertThat(a1.toString(), is(equalTo(a3.toString())));
+	}
+
+	@Test
+	public void testAssignmentId() {
+		final AssignmentRelation.Id i = new AssignmentRelation.Id(idFactory.build(Agent.class, "a"), idFactory.build(Role.class, "r"), idFactory.build(
+				InstanceGoal.class, "g"));
+
+		assertThat(i, is(not(nullValue())));
+	}
+
+	@Test
+	public void testAssignmentIdEquals() {
+		final UniqueId<Agent> x = idFactory.build(Agent.class, "a");
+		final UniqueId<Role> y1 = idFactory.build(Role.class, "r1");
+		final UniqueId<Role> y2 = idFactory.build(Role.class, "r2");
+		final UniqueId<InstanceGoal> z = idFactory.build(InstanceGoal.class, "g");
+		final AssignmentRelation.Id i1 = new AssignmentRelation.Id(x, y1, z);
+		final AssignmentRelation.Id i2 = new AssignmentRelation.Id(x, y2, z);
+		final AssignmentRelation.Id i3 = new AssignmentRelation.Id(x, y1, z);
+
+		assertThat(i1, is(not(equalTo(i2))));
+		assertThat(i1, is(equalTo(i3)));
+		assertThat(i1, is(not(equalTo(""))));
+	}
+
+	@Test
+	public void testAssignmentIdHashCode() {
+		final UniqueId<Agent> x = idFactory.build(Agent.class, "a");
+		final UniqueId<Role> y1 = idFactory.build(Role.class, "r1");
+		final UniqueId<Role> y2 = idFactory.build(Role.class, "r2");
+		final UniqueId<InstanceGoal> z = idFactory.build(InstanceGoal.class, "g");
+		final AssignmentRelation.Id i1 = new AssignmentRelation.Id(x, y1, z);
+		final AssignmentRelation.Id i2 = new AssignmentRelation.Id(x, y2, z);
+		final AssignmentRelation.Id i3 = new AssignmentRelation.Id(x, y1, z);
+
+		assertThat(i1.hashCode(), is(not(equalTo(i2.hashCode()))));
+		assertThat(i1.hashCode(), is(equalTo(i3.hashCode())));
+	}
+
+	@Test
+	public void testAssignmentIdToString() {
+		final UniqueId<Agent> x = idFactory.build(Agent.class, "a");
+		final UniqueId<Role> y1 = idFactory.build(Role.class, "r1");
+		final UniqueId<Role> y2 = idFactory.build(Role.class, "r2");
+		final UniqueId<InstanceGoal> z = idFactory.build(InstanceGoal.class, "g");
+		final AssignmentRelation.Id i1 = new AssignmentRelation.Id(x, y1, z);
+		final AssignmentRelation.Id i2 = new AssignmentRelation.Id(x, y2, z);
+		final AssignmentRelation.Id i3 = new AssignmentRelation.Id(x, y1, z);
+
+		assertThat(i1.toString(), is(not(equalTo(i2.toString()))));
+		assertThat(i1.toString(), is(equalTo(i3.toString())));
 	}
 
 }
