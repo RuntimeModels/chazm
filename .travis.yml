@@ -13,5 +13,9 @@ cache:
 before_install:
   - chmod +x gradlew # make script gradlew executable
 
-after_success:
+before_cache:
+  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
   - ./gradlew jacocoTestReport coveralls # send test report to coveralls
+  
+#after_success:
+#  - ./gradlew jacocoTestReport coveralls # send test report to coveralls
