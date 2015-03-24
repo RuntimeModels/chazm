@@ -9,8 +9,8 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
-import model.organization.entity.Attribute;
-import model.organization.entity.AttributeFactory;
+import model.organization.entity.Pmf;
+import model.organization.entity.PmfFactory;
 import model.organization.entity.Role;
 import model.organization.entity.RoleFactory;
 import model.organization.id.IdFactory;
@@ -24,120 +24,120 @@ import com.google.inject.Injector;
 import com.google.inject.ProvisionException;
 
 @SuppressWarnings("javadoc")
-public class NeedsTest {
+public class UsesTest {
 
 	private final Injector injector = Guice.createInjector(new RelationModule());
-	private final NeedsFactory needsFactory = injector.getInstance(NeedsFactory.class);
+	private final UsesFactory usesFactory = injector.getInstance(UsesFactory.class);
 	private final RoleFactory roleFactory = injector.getInstance(RoleFactory.class);
-	private final AttributeFactory attributeFactory = injector.getInstance(AttributeFactory.class);
+	private final PmfFactory pmfFactory = injector.getInstance(PmfFactory.class);
 	private final IdFactory idFactory = injector.getInstance(IdFactory.class);
 
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
 
 	@Test
-	public void testNeeds() {
+	public void testUses() {
 		final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
-		final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
-		final Needs nd1 = needsFactory.buildNeeds(r, a);
-		final Needs nd2 = needsFactory.buildNeeds(r, a);
+		final Pmf p = pmfFactory.buildPmf(idFactory.build(Pmf.class, "p"));
+		final Uses us1 = usesFactory.buildUses(r, p);
+		final Uses us2 = usesFactory.buildUses(r, p);
 
-		assertThat(nd1, is(not(nullValue())));
-		assertThat(nd1, is(not(sameInstance(nd2))));
+		assertThat(us1, is(not(nullValue())));
+		assertThat(us1, is(not(sameInstance(us2))));
 	}
 
 	@Test
-	public void testNeeds1() {
+	public void testUses1() {
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
 
-		needsFactory.buildNeeds(null, null);
+		usesFactory.buildUses(null, null);
 	}
 
 	@Test
-	public void testNeeds2() {
+	public void testUses2() {
 		exception.expect(instanceOf(IllegalArgumentException.class));
 		exception.expectMessage(equalTo("Parameter (role) cannot be null"));
 
-		new NeedsRelation(null, null);
+		new UsesRelation(null, null);
 	}
 
 	@Test
-	public void testNeeds3() {
+	public void testUses3() {
 		final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
 
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
 
-		needsFactory.buildNeeds(r, null);
+		usesFactory.buildUses(r, null);
 	}
 
 	@Test
-	public void testNeeds4() {
+	public void testUses4() {
 		final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
 
 		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (attribute) cannot be null"));
+		exception.expectMessage(equalTo("Parameter (pmf) cannot be null"));
 
-		new NeedsRelation(r, null);
+		new UsesRelation(r, null);
 	}
 
 	@Test
 	public void testGetRole() {
 		final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
-		final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
-		final Needs nd = needsFactory.buildNeeds(r, a);
+		final Pmf p = pmfFactory.buildPmf(idFactory.build(Pmf.class, "p"));
+		final Uses us = usesFactory.buildUses(r, p);
 
-		assertThat(nd.getRole(), is(sameInstance(r)));
+		assertThat(us.getRole(), is(sameInstance(r)));
 	}
 
 	@Test
-	public void testGetAttribute() {
+	public void testGetPmf() {
 		final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
-		final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
-		final Needs nd = needsFactory.buildNeeds(r, a);
+		final Pmf p = pmfFactory.buildPmf(idFactory.build(Pmf.class, "p"));
+		final Uses us = usesFactory.buildUses(r, p);
 
-		assertThat(nd.getAttribute(), is(sameInstance(a)));
+		assertThat(us.getPmf(), is(sameInstance(p)));
 	}
 
 	@Test
 	public void testEquals() {
 		final Role r1 = roleFactory.buildRole(idFactory.build(Role.class, "r1"));
 		final Role r2 = roleFactory.buildRole(idFactory.build(Role.class, "r2"));
-		final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
-		final Needs nd1 = needsFactory.buildNeeds(r1, a);
-		final Needs nd2 = needsFactory.buildNeeds(r2, a);
-		final Needs nd3 = needsFactory.buildNeeds(r1, a);
+		final Pmf p = pmfFactory.buildPmf(idFactory.build(Pmf.class, "p"));
+		final Uses us1 = usesFactory.buildUses(r1, p);
+		final Uses us2 = usesFactory.buildUses(r2, p);
+		final Uses us3 = usesFactory.buildUses(r1, p);
 
-		assertThat(nd1, is(not(equalTo(nd2))));
-		assertThat(nd1, is(equalTo(nd3)));
-		assertThat(nd1, is(not(equalTo(""))));
+		assertThat(us1, is(not(equalTo(us2))));
+		assertThat(us1, is(equalTo(us3)));
+		assertThat(us1, is(not(equalTo(""))));
 	}
 
 	@Test
 	public void testHashCode() {
 		final Role r1 = roleFactory.buildRole(idFactory.build(Role.class, "r1"));
 		final Role r2 = roleFactory.buildRole(idFactory.build(Role.class, "r2"));
-		final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
-		final Needs nd1 = needsFactory.buildNeeds(r1, a);
-		final Needs nd2 = needsFactory.buildNeeds(r2, a);
-		final Needs nd3 = needsFactory.buildNeeds(r1, a);
+		final Pmf p = pmfFactory.buildPmf(idFactory.build(Pmf.class, "p"));
+		final Uses us1 = usesFactory.buildUses(r1, p);
+		final Uses us2 = usesFactory.buildUses(r2, p);
+		final Uses us3 = usesFactory.buildUses(r1, p);
 
-		assertThat(nd1.hashCode(), is(not(equalTo(nd2.hashCode()))));
-		assertThat(nd1.hashCode(), is(equalTo(nd3.hashCode())));
+		assertThat(us1.hashCode(), is(not(equalTo(us2.hashCode()))));
+		assertThat(us1.hashCode(), is(equalTo(us3.hashCode())));
 	}
 
 	@Test
 	public void testToString() {
 		final Role r1 = roleFactory.buildRole(idFactory.build(Role.class, "r1"));
 		final Role r2 = roleFactory.buildRole(idFactory.build(Role.class, "r2"));
-		final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
-		final Needs nd1 = needsFactory.buildNeeds(r1, a);
-		final Needs nd2 = needsFactory.buildNeeds(r2, a);
-		final Needs nd3 = needsFactory.buildNeeds(r1, a);
+		final Pmf p = pmfFactory.buildPmf(idFactory.build(Pmf.class, "p"));
+		final Uses us1 = usesFactory.buildUses(r1, p);
+		final Uses us2 = usesFactory.buildUses(r2, p);
+		final Uses us3 = usesFactory.buildUses(r1, p);
 
-		assertThat(nd1.toString(), is(not(equalTo(nd2.toString()))));
-		assertThat(nd1.toString(), is(equalTo(nd3.toString())));
+		assertThat(us1.toString(), is(not(equalTo(us2.toString()))));
+		assertThat(us1.toString(), is(equalTo(us3.toString())));
 	}
 
 }
