@@ -1,11 +1,6 @@
-package event;
+package notification;
 
 import java.util.Collection;
-
-import notification.Mediator;
-import notification.NotificationModule;
-import notification.Subscribe;
-import notification.Subscriber;
 
 import org.junit.Test;
 
