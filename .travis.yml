@@ -6,7 +6,8 @@ jdk:
 
 cache:
   directories:
-    - '$HOME/.m2/repository'
+    - '$HOME/.m2/repository' # cache the maven artifacts
+    - '$HOME/.gradle/wrapper' # cache the gradle wrapper
 
 before_install:
   - chmod +x gradlew # make script gradlew executable
