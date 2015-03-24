@@ -10,7 +10,6 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 import model.organization.id.IdFactory;
-import model.organization.id.IdModule;
 import model.organization.id.UniqueId;
 
 import org.junit.Rule;
@@ -24,7 +23,7 @@ import com.google.inject.ProvisionException;
 @SuppressWarnings("javadoc")
 public class CharacteristicTest {
 
-	private final Injector injector = Guice.createInjector(new EntityModule(), new IdModule());
+	private final Injector injector = Guice.createInjector(new EntityModule());
 	private final CharacteristicFactory characteristicFactory = injector.getInstance(CharacteristicFactory.class);
 	private final IdFactory idFactory = injector.getInstance(IdFactory.class);
 
