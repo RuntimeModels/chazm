@@ -6,7 +6,7 @@ jdk:
 
 cache:
   directories:
-    - '$HOME/.gradle/cache' # cache the gradle cache directory
+    - '$HOME/.gradle/caches' # cache the gradle cache directory
     - '$HOME/.gradle/wrapper' # cache the gradle wrapper directory
     - '$HOME/.m2/repository' # cache the maven artifacts
 
