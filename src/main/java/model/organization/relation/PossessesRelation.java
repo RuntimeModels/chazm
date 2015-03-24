@@ -44,7 +44,7 @@ class PossessesRelation implements Possesses {
 	@Override
 	public final void setScore(final double score) {
 		if (score < MIN_SCORE || score > MAX_SCORE) {
-			throw new IllegalArgumentException(String.format("Score (%f) must be between (%f) and (%f)", score, MIN_SCORE, MAX_SCORE));
+			throw new IllegalArgumentException(String.format("Score (%s) must be between (%s) and (%s)", score, MIN_SCORE, MAX_SCORE));
 		}
 		this.score = score;
 	}
