@@ -18,10 +18,10 @@ install:
 
 script:
   - ./gradlew check
-  - ./gradlew jacocoTestReport coveralls # send test report to coveralls
+  - ./gradlew jacocoTestReport # compile jacoco test report
 
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
   
-#after_success:
-#  - ./gradlew jacocoTestReport coveralls # send test report to coveralls
+after_script:
+  - ./gradlew coveralls # send report to coveralls
