@@ -42,8 +42,8 @@ public abstract class AbstractEvent implements Serializable {
 	@Override
 	public boolean equals(final Object object) {
 		if (object instanceof AbstractEvent) {
-			final AbstractEvent abstractEvent = (AbstractEvent) object;
-			return getCategory().equals(abstractEvent.getCategory());
+			final AbstractEvent event = (AbstractEvent) object;
+			return getCategory().equals(event.getCategory());
 		}
 		return false;
 	}
@@ -59,7 +59,7 @@ public abstract class AbstractEvent implements Serializable {
 	@Override
 	public String toString() {
 		if (toString == null) {
-			toString = String.format("AbstractEvent(%s)", category);
+			toString = String.format("%s(%s)", getClass().getSimpleName(), category);
 		}
 		return toString;
 	}
