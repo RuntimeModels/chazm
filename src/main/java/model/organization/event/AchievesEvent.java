@@ -23,6 +23,8 @@ public class AchievesEvent extends AbstractEvent {
 	private static final long serialVersionUID = -6277684926586766989L;
 	private final UniqueId<Role> roleId;
 	private final UniqueId<SpecificationGoal> goalId;
+	private transient Integer hashCode = null;
+	private transient String toString = null;
 
 	@Inject
 	AchievesEvent(@NotNull @Assisted final Achieves achieves, @NotNull @Assisted final EventCategory category) {
@@ -48,6 +50,31 @@ public class AchievesEvent extends AbstractEvent {
 	 */
 	public UniqueId<SpecificationGoal> getGoalId() {
 		return goalId;
+	}
+
+	@Override
+	public boolean equals(final Object object) {
+		if (object instanceof AchievesEvent) {
+			final AchievesEvent achievesEvent = (AchievesEvent) object;
+			return super.equals(achievesEvent) && getRoleId().equals(achievesEvent.getRoleId()) && getGoalId().equals(achievesEvent.getGoalId());
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		if (hashCode == null) {
+			hashCode = super.hashCode() << 22 | getRoleId().hashCode() << 11 | getGoalId().hashCode();
+		}
+		return hashCode;
+	}
+
+	@Override
+	public String toString() {
+		if (toString == null) {
+			toString = String.format("AchievesEvent(%s, %s, %s)", getRoleId(), getGoalId(), getCategory());
+		}
+		return toString;
 	}
 
 }
