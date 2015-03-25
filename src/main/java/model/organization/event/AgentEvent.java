@@ -42,8 +42,8 @@ public class AgentEvent extends AbstractEvent {
 	@Override
 	public boolean equals(final Object object) {
 		if (object instanceof AgentEvent) {
-			final AgentEvent agentEvent = (AgentEvent) object;
-			return super.equals(agentEvent) && getId().equals(agentEvent.getId());
+			final AgentEvent event = (AgentEvent) object;
+			return super.equals(event) && getId().equals(event.getId());
 		}
 		return false;
 	}
@@ -59,7 +59,7 @@ public class AgentEvent extends AbstractEvent {
 	@Override
 	public String toString() {
 		if (toString == null) {
-			toString = String.format("AgentEvent(%s, %s)", getCategory(), getId());
+			toString = String.format("%s(%s, %s)", getClass().getSimpleName(), getCategory(), getId());
 		}
 		return toString;
 	}

@@ -13,6 +13,7 @@ public interface AgentEventFactory {
 
 	/**
 	 * Constructs an {@linkplain AgentEvent}.
+	 * 
 	 * @param category
 	 *            the {@linkplain EventCategory}.
 	 * @param agent

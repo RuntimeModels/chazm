@@ -55,8 +55,8 @@ public class AchievesEvent extends AbstractEvent {
 	@Override
 	public boolean equals(final Object object) {
 		if (object instanceof AchievesEvent) {
-			final AchievesEvent achievesEvent = (AchievesEvent) object;
-			return super.equals(achievesEvent) && getRoleId().equals(achievesEvent.getRoleId()) && getGoalId().equals(achievesEvent.getGoalId());
+			final AchievesEvent event = (AchievesEvent) object;
+			return super.equals(event) && getRoleId().equals(event.getRoleId()) && getGoalId().equals(event.getGoalId());
 		}
 		return false;
 	}
@@ -72,7 +72,7 @@ public class AchievesEvent extends AbstractEvent {
 	@Override
 	public String toString() {
 		if (toString == null) {
-			toString = String.format("AchievesEvent(%s, %s, %s)", getCategory(), getRoleId(), getGoalId());
+			toString = String.format("%s(%s, %s, %s)", getClass().getSimpleName(), getCategory(), getRoleId(), getGoalId());
 		}
 		return toString;
 	}
