@@ -15,7 +15,7 @@ import model.organization.id.UniqueId;
  *            the type of the {@linkplain UniqueId}.
  * @since 7.0.0
  */
-public class AbstractEntity<T> implements Identifiable<T> {
+public abstract class AbstractEntity<T> implements Identifiable<T> {
 
 	private final UniqueId<T> id;
 	private transient Integer hashCode = null;
