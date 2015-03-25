@@ -13,13 +13,13 @@ public interface AchievesEventFactory {
 
 	/**
 	 * Constructs an {@linkplain AchievesEvent}.
-	 *
-	 * @param achieves
-	 *            the {@linkplain Achieves}.
 	 * @param category
 	 *            the {@linkplain EventCategory}.
+	 * @param achieves
+	 *            the {@linkplain Achieves}.
+	 *
 	 * @return an {@linkplain AchievesEvent}.
 	 */
-	AchievesEvent build(Achieves achieves, EventCategory category);
+	AchievesEvent build(EventCategory category, Achieves achieves);
 
 }
