@@ -20,9 +20,11 @@ public class SpecificationGoalEvent extends AbstractEvent {
 
 	private static final long serialVersionUID = 602095857291387756L;
 	private final UniqueId<SpecificationGoal> id;
+	private transient Integer hashCode = null;
+	private transient String toString = null;
 
 	@Inject
-	SpecificationGoalEvent(@NotNull @Assisted final SpecificationGoal goal, @NotNull @Assisted final EventCategory category) {
+	SpecificationGoalEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final SpecificationGoal goal) {
 		super(category);
 		checkNotNull(goal, "goal");
 		id = goal.getId();
@@ -35,6 +37,31 @@ public class SpecificationGoalEvent extends AbstractEvent {
 	 */
 	public UniqueId<SpecificationGoal> getId() {
 		return id;
+	}
+
+	@Override
+	public boolean equals(final Object object) {
+		if (object instanceof SpecificationGoalEvent) {
+			final SpecificationGoalEvent event = (SpecificationGoalEvent) object;
+			return super.equals(event) && getId().equals(event.getId());
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		if (hashCode == null) {
+			hashCode = super.hashCode() << 16 | getId().hashCode();
+		}
+		return hashCode;
+	}
+
+	@Override
+	public String toString() {
+		if (toString == null) {
+			toString = String.format("%s(%s, %s)", getClass().getSimpleName(), getCategory(), getId());
+		}
+		return toString;
 	}
 
 }

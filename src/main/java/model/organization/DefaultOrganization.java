@@ -500,7 +500,7 @@ class DefaultOrganization implements Organization {
 		entities.specificationGoals.put(goal.getId(), goal);
 		entities.instanceGoalsBySpecificationGoal.put(goal.getId(), new ConcurrentHashMap<>());
 		relations.achievedBy.put(goal.getId(), new ConcurrentHashMap<>());
-		publisher.post(eventFactory.build(goal, ADDED));
+		publisher.post(eventFactory.build(ADDED, goal));
 	}
 
 	@Override
@@ -528,7 +528,7 @@ class DefaultOrganization implements Organization {
 			final SpecificationGoal goal = entities.specificationGoals.remove(id);
 			remove(id, entities.instanceGoalsBySpecificationGoal, "instanceGoalsBySpecificationGoal", c -> removeInstanceGoal(c), InstanceGoal.class);
 			remove(id, relations.achievedBy, "achievedBy", c -> removeAchieves(c, id), Role.class);
-			publisher.post(eventFactory.build(goal, REMOVED));
+			publisher.post(eventFactory.build(REMOVED, goal));
 		}
 	}
 
