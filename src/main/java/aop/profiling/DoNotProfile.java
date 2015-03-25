@@ -1,4 +1,4 @@
-package profiling;
+package aop.profiling;
 
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;
