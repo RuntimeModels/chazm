@@ -13,13 +13,14 @@ public interface InstanceGoalEventFactory {
 
 	/**
 	 * Constructs an {@linkplain InstanceGoalEvent}.
-	 *
-	 * @param goal
-	 *            the {@linkplain InstanceGoal}.
+	 * 
 	 * @param category
 	 *            the {@linkplain EventCategory}.
+	 * @param goal
+	 *            the {@linkplain InstanceGoal}.
+	 *
 	 * @return a {@linkplain InstanceGoalEvent}.
 	 */
-	InstanceGoalEvent build(InstanceGoal goal, EventCategory category);
+	InstanceGoalEvent build(EventCategory category, InstanceGoal goal);
 
 }

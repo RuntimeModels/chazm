@@ -285,7 +285,7 @@ class DefaultOrganization implements Organization {
 			entities.instanceGoalsBySpecificationGoal.put(goal.getGoal().getId(), map);
 		}
 		map.put(goal.getId(), goal);
-		publisher.post(eventFactory.build(goal, ADDED));
+		publisher.post(eventFactory.build(ADDED, goal));
 	}
 
 	@Override
@@ -322,7 +322,7 @@ class DefaultOrganization implements Organization {
 				logger.warn("instanceGoalsBySpecificationGoal is missing ({} -> InstanceGoal) entry", goal.getGoal().getId());
 				entities.instanceGoalsBySpecificationGoal.put(goal.getGoal().getId(), new ConcurrentHashMap<>());
 			}
-			publisher.post(eventFactory.build(goal, REMOVED));
+			publisher.post(eventFactory.build(REMOVED, goal));
 		}
 	}
 
