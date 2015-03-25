@@ -27,7 +27,7 @@ public class AchievesEvent extends AbstractEvent {
 	private transient String toString = null;
 
 	@Inject
-	AchievesEvent(@NotNull @Assisted final Achieves achieves, @NotNull @Assisted final EventCategory category) {
+	AchievesEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final Achieves achieves) {
 		super(category);
 		checkNotNull(achieves, "achieves");
 		roleId = achieves.getRole().getId();
@@ -72,7 +72,7 @@ public class AchievesEvent extends AbstractEvent {
 	@Override
 	public String toString() {
 		if (toString == null) {
-			toString = String.format("AchievesEvent(%s, %s, %s)", getRoleId(), getGoalId(), getCategory());
+			toString = String.format("AchievesEvent(%s, %s, %s)", getCategory(), getRoleId(), getGoalId());
 		}
 		return toString;
 	}

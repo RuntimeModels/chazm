@@ -558,7 +558,7 @@ class DefaultOrganization implements Organization {
 		final Achieves achieves = relationFactory.buildAchieves(role, goal);
 		map.put(goalId, achieves);
 		addBy(achieves, relations.achievedBy, "achievedBy", goalId, roleId);
-		publisher.post(eventFactory.build(achieves, ADDED));
+		publisher.post(eventFactory.build(ADDED, achieves));
 	}
 
 	@Override
@@ -580,7 +580,7 @@ class DefaultOrganization implements Organization {
 		if (relations.achieves.containsKey(roleId) && relations.achieves.get(roleId).containsKey(goalId)) {
 			final Achieves achieves = relations.achieves.get(roleId).remove(goalId);
 			removeBy(goalId, roleId, relations.achievedBy, "achievedBy");
-			publisher.post(eventFactory.build(achieves, REMOVED));
+			publisher.post(eventFactory.build(REMOVED, achieves));
 		}
 	}
 
