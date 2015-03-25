@@ -13,13 +13,14 @@ public interface CapabilityEventFactory {
 
 	/**
 	 * Constructs an {@linkplain CapabilityEvent}.
-	 *
-	 * @param capability
-	 *            the {@linkplain Capability}.
+	 * 
 	 * @param category
 	 *            the {@linkplain EventCategory}.
+	 * @param capability
+	 *            the {@linkplain Capability}.
+	 *
 	 * @return a {@linkplain CapabilityEvent}.
 	 */
-	CapabilityEvent build(Capability capability, EventCategory category);
+	CapabilityEvent build(EventCategory category, Capability capability);
 
 }
