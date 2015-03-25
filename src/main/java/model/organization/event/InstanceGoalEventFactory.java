@@ -13,7 +13,7 @@ public interface InstanceGoalEventFactory {
 
 	/**
 	 * Constructs an {@linkplain InstanceGoalEvent}.
-	 * 
+	 *
 	 * @param category
 	 *            the {@linkplain EventCategory}.
 	 * @param goal

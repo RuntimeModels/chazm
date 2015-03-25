@@ -799,7 +799,7 @@ class DefaultOrganization implements Organization {
 		final Moderates moderates = relationFactory.buildModerates(pmf, attribute);
 		relations.moderates.put(pmfId, moderates);
 		addBy(moderates, relations.moderatedBy, "moderatedBy", attributeId, pmfId);
-		publisher.post(eventFactory.build(moderates, ADDED));
+		publisher.post(eventFactory.build(ADDED, moderates));
 	}
 
 	@Override
@@ -824,7 +824,7 @@ class DefaultOrganization implements Organization {
 		if (relations.moderates.containsKey(pmfId)) {
 			final Moderates moderates = relations.moderates.remove(pmfId);
 			removeBy(attributeId, pmfId, relations.moderatedBy, "moderatedBy");
-			publisher.post(eventFactory.build(moderates, REMOVED));
+			publisher.post(eventFactory.build(REMOVED, moderates));
 		}
 	}
 

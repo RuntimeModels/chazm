@@ -14,12 +14,13 @@ public interface ModeratesEventFactory {
 	/**
 	 * Constructs an {@linkplain ModeratesEvent}.
 	 *
-	 * @param moderates
-	 *            the {@linkplain Moderates}.
 	 * @param category
 	 *            the {@linkplain EventCategory}.
+	 * @param moderates
+	 *            the {@linkplain Moderates}.
+	 *
 	 * @return a {@linkplain ModeratesEvent}.
 	 */
-	ModeratesEvent build(Moderates moderates, EventCategory category);
+	ModeratesEvent build(EventCategory category, Moderates moderates);
 
 }
