@@ -24,9 +24,11 @@ public class InstanceGoalEvent extends AbstractEvent {
 	private final UniqueId<InstanceGoal> id;
 	private final UniqueId<SpecificationGoal> specificationGoalId;
 	private final Parameter parameter;
+	private transient Integer hashCode = null;
+	private transient String toString = null;
 
 	@Inject
-	InstanceGoalEvent(@NotNull @Assisted final InstanceGoal goal, @NotNull @Assisted final EventCategory category) {
+	InstanceGoalEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final InstanceGoal goal) {
 		super(category);
 		checkNotNull(goal, "goal");
 		id = goal.getId();
@@ -59,6 +61,34 @@ public class InstanceGoalEvent extends AbstractEvent {
 	 */
 	public Parameter getParameter() {
 		return parameter;
+	}
+
+	@Override
+	public boolean equals(final Object object) {
+		if (object instanceof InstanceGoalEvent) {
+			final InstanceGoalEvent event = (InstanceGoalEvent) object;
+			return super.equals(event) && getId().equals(event.getId()) && getSpecificationGoalId().equals(event.getSpecificationGoalId());
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		if (hashCode == null) {
+			final int prime = 31;
+			hashCode = super.hashCode();
+			hashCode = prime * hashCode + getId().hashCode();
+			hashCode = prime * hashCode + getSpecificationGoalId().hashCode();
+		}
+		return hashCode;
+	}
+
+	@Override
+	public String toString() {
+		if (toString == null) {
+			toString = String.format("%s(%s, %s, %s, %s)", getClass().getSimpleName(), getCategory(), getId(), getSpecificationGoalId(), getParameter());
+		}
+		return toString;
 	}
 
 }
