@@ -895,7 +895,7 @@ class DefaultOrganization implements Organization {
 		final Possesses possesses = relationFactory.buildPossesses(agent, capability, score);
 		map.put(capabilityId, possesses);
 		addBy(possesses, relations.possessedBy, "possessedBy", capabilityId, agentId);
-		publisher.post(eventFactory.build(possesses, ADDED));
+		publisher.post(eventFactory.build(ADDED, possesses));
 	}
 
 	@Override
@@ -927,7 +927,7 @@ class DefaultOrganization implements Organization {
 		if (relations.possesses.containsKey(agentId) && relations.possesses.get(agentId).containsKey(capabilityId)) {
 			final Possesses possesses = relations.possesses.get(agentId).get(capabilityId);
 			possesses.setScore(score);
-			publisher.post(eventFactory.build(possesses, CHANGED));
+			publisher.post(eventFactory.build(CHANGED, possesses));
 		}
 	}
 
@@ -938,7 +938,7 @@ class DefaultOrganization implements Organization {
 		if (relations.possesses.containsKey(agentId) && relations.possesses.get(agentId).containsKey(capabilityId)) {
 			final Possesses possesses = relations.possesses.get(agentId).remove(capabilityId);
 			removeBy(capabilityId, agentId, relations.possessedBy, "possessedBy");
-			publisher.post(eventFactory.build(possesses, REMOVED));
+			publisher.post(eventFactory.build(REMOVED, possesses));
 		}
 	}
 

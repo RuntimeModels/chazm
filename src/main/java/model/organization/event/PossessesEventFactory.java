@@ -13,13 +13,14 @@ public interface PossessesEventFactory {
 
 	/**
 	 * Constructs an {@linkplain PossessesEvent}.
-	 *
-	 * @param possesses
-	 *            the {@linkplain Possesses}.
+	 * 
 	 * @param category
 	 *            the {@linkplain EventCategory}.
+	 * @param possesses
+	 *            the {@linkplain Possesses}.
+	 *
 	 * @return a {@linkplain PossessesEvent}.
 	 */
-	PossessesEvent build(Possesses possesses, EventCategory category);
+	PossessesEvent build(EventCategory category, Possesses possesses);
 
 }

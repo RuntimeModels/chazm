@@ -24,9 +24,11 @@ public class PossessesEvent extends AbstractEvent {
 	private final UniqueId<Agent> agentId;
 	private final UniqueId<Capability> capabilityId;
 	private final double score;
+	private transient Integer hashCode = null;
+	private transient String toString = null;
 
 	@Inject
-	PossessesEvent(@NotNull @Assisted final Possesses possesses, @NotNull @Assisted final EventCategory category) {
+	PossessesEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final Possesses possesses) {
 		super(category);
 		checkNotNull(possesses, "possesses");
 		agentId = possesses.getAgent().getId();
@@ -59,6 +61,34 @@ public class PossessesEvent extends AbstractEvent {
 	 */
 	public double getScore() {
 		return score;
+	}
+
+	@Override
+	public boolean equals(final Object object) {
+		if (object instanceof PossessesEvent) {
+			final PossessesEvent event = (PossessesEvent) object;
+			return super.equals(event) && getAgentId().equals(event.getAgentId()) && getCapabilityId().equals(event.getCapabilityId());
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		if (hashCode == null) {
+			final int prime = 31;
+			hashCode = super.hashCode();
+			hashCode = prime * hashCode + getAgentId().hashCode();
+			hashCode = prime * hashCode + getCapabilityId().hashCode();
+		}
+		return hashCode;
+	}
+
+	@Override
+	public String toString() {
+		if (toString == null) {
+			toString = String.format("%s(%s, %s, %s, %s)", getClass().getSimpleName(), getCategory(), getAgentId(), getCapabilityId(), getScore());
+		}
+		return toString;
 	}
 
 }

@@ -13,7 +13,7 @@ public interface NeedsEventFactory {
 
 	/**
 	 * Constructs an {@linkplain NeedsEvent}.
-	 * 
+	 *
 	 * @param category
 	 *            the {@linkplain EventCategory}.
 	 * @param needs
