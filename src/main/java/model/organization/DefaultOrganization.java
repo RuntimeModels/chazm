@@ -962,7 +962,7 @@ class DefaultOrganization implements Organization {
 		final Requires requires = relationFactory.buildRequires(role, capability);
 		map.put(capabilityId, requires);
 		addBy(requires, relations.requiredBy, "requiredBy", capabilityId, roleId);
-		publisher.post(eventFactory.build(requires, ADDED));
+		publisher.post(eventFactory.build(ADDED, requires));
 	}
 
 	@Override
@@ -984,7 +984,7 @@ class DefaultOrganization implements Organization {
 		if (relations.requires.containsKey(roleId) && relations.requires.get(roleId).containsKey(capabilityId)) {
 			final Requires requires = relations.requires.get(roleId).remove(capabilityId);
 			removeBy(capabilityId, roleId, relations.requiredBy, "requiredBy");
-			publisher.post(eventFactory.build(requires, REMOVED));
+			publisher.post(eventFactory.build(REMOVED, requires));
 		}
 	}
 

@@ -14,12 +14,13 @@ public interface RequiresEventFactory {
 	/**
 	 * Constructs an {@linkplain RequiresEvent}.
 	 *
-	 * @param requires
-	 *            the {@linkplain Requires}.
 	 * @param category
 	 *            the {@linkplain EventCategory}.
+	 * @param requires
+	 *            the {@linkplain Requires}.
+	 *
 	 * @return a {@linkplain RequiresEvent}.
 	 */
-	RequiresEvent build(Requires requires, EventCategory category);
+	RequiresEvent build(EventCategory category, Requires requires);
 
 }

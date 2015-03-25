@@ -23,9 +23,11 @@ public class RequiresEvent extends AbstractEvent {
 	private static final long serialVersionUID = -8416757195713372958L;
 	private final UniqueId<Role> roleId;
 	private final UniqueId<Capability> capabilityId;
+	private transient Integer hashCode = null;
+	private transient String toString = null;
 
 	@Inject
-	RequiresEvent(@NotNull @Assisted final Requires requires, @NotNull @Assisted final EventCategory category) {
+	RequiresEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final Requires requires) {
 		super(category);
 		checkNotNull(requires, "requires");
 		roleId = requires.getRole().getId();
@@ -48,6 +50,34 @@ public class RequiresEvent extends AbstractEvent {
 	 */
 	public UniqueId<Capability> getCapabilityId() {
 		return capabilityId;
+	}
+
+	@Override
+	public boolean equals(final Object object) {
+		if (object instanceof RequiresEvent) {
+			final RequiresEvent event = (RequiresEvent) object;
+			return super.equals(event) && getRoleId().equals(event.getRoleId()) && getCapabilityId().equals(event.getCapabilityId());
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		if (hashCode == null) {
+			final int prime = 31;
+			hashCode = super.hashCode();
+			hashCode = prime * hashCode + getRoleId().hashCode();
+			hashCode = prime * hashCode + getCapabilityId().hashCode();
+		}
+		return hashCode;
+	}
+
+	@Override
+	public String toString() {
+		if (toString == null) {
+			toString = String.format("%s(%s, %s, %s)", getClass().getSimpleName(), getCategory(), getRoleId(), getCapabilityId());
+		}
+		return toString;
 	}
 
 }
