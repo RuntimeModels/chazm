@@ -24,9 +24,11 @@ public class HasEvent extends AbstractEvent {
 	private final UniqueId<Agent> agentId;
 	private final UniqueId<Attribute> attributeId;
 	private final double value;
+	private transient Integer hashCode = null;
+	private transient String toString = null;
 
 	@Inject
-	HasEvent(@NotNull @Assisted final Has has, @NotNull @Assisted final EventCategory category) {
+	HasEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final Has has) {
 		super(category);
 		checkNotNull(has, "has");
 		agentId = has.getAgent().getId();
@@ -59,6 +61,34 @@ public class HasEvent extends AbstractEvent {
 	 */
 	public double getValue() {
 		return value;
+	}
+
+	@Override
+	public boolean equals(final Object object) {
+		if (object instanceof HasEvent) {
+			final HasEvent event = (HasEvent) object;
+			return super.equals(event) && getAgentId().equals(event.getAgentId()) && getAttributeId().equals(event.getAttributeId());
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		if (hashCode == null) {
+			final int prime = 31;
+			hashCode = super.hashCode();
+			hashCode = prime * hashCode + getAgentId().hashCode();
+			hashCode = prime * hashCode + getAttributeId().hashCode();
+		}
+		return hashCode;
+	}
+
+	@Override
+	public String toString() {
+		if (toString == null) {
+			toString = String.format("%s(%s, %s, %s, %s)", getClass().getSimpleName(), getCategory(), getAgentId(), getAttributeId(), getValue());
+		}
+		return toString;
 	}
 
 }

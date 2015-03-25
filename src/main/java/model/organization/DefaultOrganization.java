@@ -737,7 +737,7 @@ class DefaultOrganization implements Organization {
 		final Has has = relationFactory.buildHas(agent, attribute, value);
 		map.put(attributeId, has);
 		addBy(has, relations.hadBy, "hadBy", attributeId, agentId);
-		publisher.post(eventFactory.build(has, ADDED));
+		publisher.post(eventFactory.build(ADDED, has));
 	}
 
 	@Override
@@ -769,7 +769,7 @@ class DefaultOrganization implements Organization {
 		if (relations.has.containsKey(agentId) && relations.has.get(agentId).containsKey(attributeId)) {
 			final Has has = relations.has.get(agentId).get(attributeId);
 			has.setValue(value);
-			publisher.post(eventFactory.build(has, CHANGED));
+			publisher.post(eventFactory.build(CHANGED, has));
 		}
 	}
 
@@ -780,7 +780,7 @@ class DefaultOrganization implements Organization {
 		if (relations.has.containsKey(agentId) && relations.has.get(agentId).containsKey(attributeId)) {
 			final Has has = relations.has.get(agentId).remove(attributeId);
 			removeBy(attributeId, agentId, relations.hadBy, "hadBy");
-			publisher.post(eventFactory.build(has, REMOVED));
+			publisher.post(eventFactory.build(REMOVED, has));
 		}
 	}
 
