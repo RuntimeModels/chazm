@@ -78,7 +78,7 @@ class DefaultOrganization implements Organization {
 		relations.assignmentsByAgent.put(agent.getId(), new ConcurrentHashMap<>());
 		relations.possesses.put(agent.getId(), new ConcurrentHashMap<>());
 		relations.has.put(agent.getId(), new ConcurrentHashMap<>());
-		publisher.post(eventFactory.build(agent, ADDED));
+		publisher.post(eventFactory.build(ADDED, agent));
 	}
 
 	@Override
@@ -107,7 +107,7 @@ class DefaultOrganization implements Organization {
 			remove(id, relations.assignmentsByAgent, "assignmentsByAgent", c -> removeAssignment(c), Assignment.class);
 			remove(id, relations.possesses, "possesses", c -> removePossesses(id, c), Capability.class);
 			remove(id, relations.has, "possesses", c -> removeHas(id, c), Attribute.class);
-			publisher.post(eventFactory.build(agent, REMOVED));
+			publisher.post(eventFactory.build(REMOVED, agent));
 		}
 	}
 
