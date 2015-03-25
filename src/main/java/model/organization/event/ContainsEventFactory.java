@@ -14,12 +14,13 @@ public interface ContainsEventFactory {
 	/**
 	 * Constructs an {@linkplain ContainsEvent}.
 	 *
-	 * @param contains
-	 *            the {@linkplain Contains}.
 	 * @param category
 	 *            the {@linkplain EventCategory}.
+	 * @param contains
+	 *            the {@linkplain Contains}.
+	 *
 	 * @return a {@linkplain ContainsEvent}.
 	 */
-	ContainsEvent build(Contains contains, EventCategory category);
+	ContainsEvent build(EventCategory category, Contains contains);
 
 }
