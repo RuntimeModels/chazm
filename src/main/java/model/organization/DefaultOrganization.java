@@ -342,7 +342,7 @@ class DefaultOrganization implements Organization {
 		checkNotExists(pmf, "pmf", entities.pmfs::containsKey);
 		/* add the pmf */
 		entities.pmfs.put(pmf.getId(), pmf);
-		publisher.post(eventFactory.build(pmf, ADDED));
+		publisher.post(eventFactory.build(ADDED, pmf));
 	}
 
 	@Override
@@ -371,7 +371,7 @@ class DefaultOrganization implements Organization {
 			if (relations.moderates.containsKey(id)) {
 				removeModerates(id, relations.moderates.get(id).getAttribute().getId());
 			}
-			publisher.post(eventFactory.build(pmf, REMOVED));
+			publisher.post(eventFactory.build(REMOVED, pmf));
 		}
 	}
 
