@@ -16,6 +16,8 @@ public abstract class AbstractEvent implements Serializable {
 
 	private static final long serialVersionUID = 3392050291256215349L;
 	private final EventCategory category;
+	private transient Integer hashCode = null;
+	private transient String toString = null;
 
 	/**
 	 * Constructs a new instance of {@linkplain AbstractEvent}.
@@ -35,6 +37,31 @@ public abstract class AbstractEvent implements Serializable {
 	 */
 	public EventCategory getCategory() {
 		return category;
+	}
+
+	@Override
+	public boolean equals(final Object object) {
+		if (object instanceof AbstractEvent) {
+			final AbstractEvent abstractEvent = (AbstractEvent) object;
+			return getCategory().equals(abstractEvent.getCategory());
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		if (hashCode == null) {
+			hashCode = category.hashCode();
+		}
+		return hashCode;
+	}
+
+	@Override
+	public String toString() {
+		if (toString == null) {
+			toString = String.format("AbstractEvent(%s)", category);
+		}
+		return toString;
 	}
 
 }
