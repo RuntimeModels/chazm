@@ -1,4 +1,4 @@
-package profiling;
+package aop.profiling;
 
 import static com.google.inject.matcher.Matchers.annotatedWith;
 import static com.google.inject.matcher.Matchers.not;

@@ -1,4 +1,4 @@
-package profiling;
+package aop.profiling;
 
 import javax.interceptor.Interceptor;
 import javax.validation.constraints.NotNull;

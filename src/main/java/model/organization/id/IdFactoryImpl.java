@@ -2,7 +2,7 @@ package model.organization.id;
 
 import javax.validation.constraints.NotNull;
 
-import profiling.DoNotProfile;
+import aop.profiling.DoNotProfile;
 
 @DoNotProfile
 class IdFactoryImpl implements IdFactory {
