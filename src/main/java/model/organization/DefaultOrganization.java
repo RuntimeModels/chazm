@@ -391,7 +391,7 @@ class DefaultOrganization implements Organization {
 		checkNotExists(policy, "policy", entities.policies::containsKey);
 		/* add the policy */
 		entities.policies.put(policy.getId(), policy);
-		publisher.post(eventFactory.build(policy, ADDED));
+		publisher.post(eventFactory.build(ADDED, policy));
 	}
 
 	@Override
@@ -417,7 +417,7 @@ class DefaultOrganization implements Organization {
 		if (entities.policies.containsKey(id)) {
 			/* remove the policy */
 			final Policy policy = entities.policies.remove(id);
-			publisher.post(eventFactory.build(policy, REMOVED));
+			publisher.post(eventFactory.build(REMOVED, policy));
 		}
 	}
 
