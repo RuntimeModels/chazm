@@ -13,13 +13,14 @@ public interface CharacteristicEventFactory {
 
 	/**
 	 * Constructs an {@linkplain CharacteristicEvent}.
-	 *
-	 * @param characteristic
-	 *            the {@linkplain Characteristic}.
+	 * 
 	 * @param category
 	 *            the {@linkplain EventCategory}.
+	 * @param characteristic
+	 *            the {@linkplain Characteristic}.
+	 *
 	 * @return a {@linkplain CharacteristicEvent}.
 	 */
-	CharacteristicEvent build(Characteristic characteristic, EventCategory category);
+	CharacteristicEvent build(EventCategory category, Characteristic characteristic);
 
 }

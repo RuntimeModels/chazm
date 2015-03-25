@@ -230,7 +230,7 @@ class DefaultOrganization implements Organization {
 		/* add the characteristic, containedBy map */
 		entities.characteristics.put(characteristic.getId(), characteristic);
 		relations.containedBy.put(characteristic.getId(), new ConcurrentHashMap<>());
-		publisher.post(eventFactory.build(characteristic, ADDED));
+		publisher.post(eventFactory.build(ADDED, characteristic));
 	}
 
 	@Override
@@ -257,7 +257,7 @@ class DefaultOrganization implements Organization {
 			/* remove characteristics, all associated contains relations */
 			final Characteristic characteristic = entities.characteristics.remove(id);
 			remove(id, relations.containedBy, "containedBy", c -> removeContains(c, id), Role.class);
-			publisher.post(eventFactory.build(characteristic, REMOVED));
+			publisher.post(eventFactory.build(REMOVED, characteristic));
 		}
 	}
 
