@@ -1008,7 +1008,7 @@ class DefaultOrganization implements Organization {
 		final Uses uses = relationFactory.buildUses(role, pmf);
 		map.put(pmfId, uses);
 		addBy(uses, relations.usedBy, "usedBy", pmfId, roleId);
-		publisher.post(eventFactory.build(uses, ADDED));
+		publisher.post(eventFactory.build(ADDED, uses));
 	}
 
 	@Override
@@ -1030,7 +1030,7 @@ class DefaultOrganization implements Organization {
 		if (relations.uses.containsKey(roleId) && relations.uses.get(roleId).containsKey(pmfId)) {
 			final Uses uses = relations.uses.get(roleId).remove(pmfId);
 			removeBy(pmfId, roleId, relations.usedBy, "usedBy");
-			publisher.post(eventFactory.build(uses, REMOVED));
+			publisher.post(eventFactory.build(REMOVED, uses));
 		}
 	}
 

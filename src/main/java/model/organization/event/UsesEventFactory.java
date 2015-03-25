@@ -14,12 +14,13 @@ public interface UsesEventFactory {
 	/**
 	 * Constructs an {@linkplain UsesEvent}.
 	 *
-	 * @param uses
-	 *            the {@linkplain Uses}.
 	 * @param category
 	 *            the {@linkplain EventCategory}.
+	 * @param uses
+	 *            the {@linkplain Uses}.
+	 *
 	 * @return a {@linkplain UsesEvent}.
 	 */
-	UsesEvent build(Uses uses, EventCategory category);
+	UsesEvent build(EventCategory category, Uses uses);
 
 }
