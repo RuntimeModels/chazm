@@ -9,6 +9,8 @@ import com.google.inject.assistedinject.Assisted;
 
 class PolicyEntity extends AbstractEntity<Policy> implements Policy {
 
+	private transient String toString = null;
+
 	@Inject
 	PolicyEntity(@NotNull @Assisted final UniqueId<Policy> id) {
 		super(id);
@@ -18,19 +20,22 @@ class PolicyEntity extends AbstractEntity<Policy> implements Policy {
 	public boolean equals(final Object object) {
 		if (object instanceof Policy) {
 			final Policy policy = (Policy) object;
-			return getId().equals(policy.getId());
+			return super.equals(policy);
 		}
 		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		return getId().hashCode();
+		return super.hashCode();
 	}
 
 	@Override
 	public String toString() {
-		return getId().toString();
+		if (toString == null) {
+			toString = String.format("%s(%s)", getClass().getSimpleName(), getId());
+		}
+		return toString;
 	}
 
 }

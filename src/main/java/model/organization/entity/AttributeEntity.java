@@ -12,6 +12,7 @@ import com.google.inject.assistedinject.Assisted;
 class AttributeEntity extends AbstractEntity<Attribute> implements Attribute {
 
 	private final Attribute.Type type;
+	private transient String toString = null;
 
 	@Inject
 	AttributeEntity(@NotNull @Assisted final UniqueId<Attribute> id, @NotNull @Assisted final Attribute.Type type) {
@@ -29,19 +30,22 @@ class AttributeEntity extends AbstractEntity<Attribute> implements Attribute {
 	public boolean equals(final Object object) {
 		if (object instanceof Attribute) {
 			final Attribute attribute = (Attribute) object;
-			return getId().equals(attribute.getId());
+			return super.equals(attribute);
 		}
 		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		return getId().hashCode();
+		return super.hashCode();
 	}
 
 	@Override
 	public String toString() {
-		return String.format("%s [%s]", getId().toString(), getType());
+		if (toString == null) {
+			toString = String.format("%s(%s, %s)", getClass().getSimpleName(), getId(), getType());
+		}
+		return toString;
 	}
 
 }

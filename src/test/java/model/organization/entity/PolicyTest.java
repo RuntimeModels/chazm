@@ -34,7 +34,10 @@ public class PolicyTest {
 	public void testPolicy() {
 		final UniqueId<Policy> i1 = idFactory.build(Policy.class, 1L);
 		final Policy p1 = policyFactory.buildPolicy(i1);
+		final Policy p2 = policyFactory.buildPolicy(i1);
+
 		assertThat(p1, is(not(nullValue())));
+		assertThat(p1, is(not(sameInstance(p2))));
 	}
 
 	@Test
@@ -70,10 +73,7 @@ public class PolicyTest {
 		final Policy p2 = policyFactory.buildPolicy(i2);
 		final Policy p3 = policyFactory.buildPolicy(i1);
 
-		assertThat(p1, is(not(equalTo(i1))));
-		assertThat(p2, is(not(equalTo(i2))));
 		assertThat(p1, is(not(equalTo(p2))));
-		assertThat(p1, is(not(sameInstance(p3))));
 		assertThat(p1, is(equalTo(p3)));
 		assertThat(p1, is(not(equalTo(""))));
 	}
@@ -84,10 +84,10 @@ public class PolicyTest {
 		final UniqueId<Policy> i2 = idFactory.build(Policy.class, 2L);
 		final Policy p1 = policyFactory.buildPolicy(i1);
 		final Policy p2 = policyFactory.buildPolicy(i2);
+		final Policy p3 = policyFactory.buildPolicy(i1);
 
-		assertThat(p1.hashCode(), is(equalTo(i1.hashCode())));
-		assertThat(p2.hashCode(), is(equalTo(i2.hashCode())));
 		assertThat(p1.hashCode(), is(not(equalTo(p2.hashCode()))));
+		assertThat(p1.hashCode(), is(equalTo(p3.hashCode())));
 	}
 
 	@Test
@@ -96,10 +96,10 @@ public class PolicyTest {
 		final UniqueId<Policy> i2 = idFactory.build(Policy.class, 2L);
 		final Policy p1 = policyFactory.buildPolicy(i1);
 		final Policy p2 = policyFactory.buildPolicy(i2);
+		final Policy p3 = policyFactory.buildPolicy(i1);
 
-		assertThat(p1.toString(), is(equalTo(i1.toString())));
-		assertThat(p2.toString(), is(equalTo(i2.toString())));
 		assertThat(p1.toString(), is(not(equalTo(p2.toString()))));
+		assertThat(p1.toString(), is(equalTo(p3.toString())));
 	}
 
 }

@@ -13,7 +13,7 @@ public interface RoleEventFactory {
 
 	/**
 	 * Constructs an {@linkplain RoleEvent}.
-	 * 
+	 *
 	 * @param category
 	 *            the {@linkplain EventCategory}.
 	 * @param role

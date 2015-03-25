@@ -34,7 +34,9 @@ public class AttributeTest {
 	public void testAttribute() {
 		final UniqueId<Attribute> i1 = idFactory.build(Attribute.class, 1L);
 		final Attribute a1 = attributeFactory.buildAttribute(i1, Attribute.Type.NEGATIVE_QUALITY);
+		final Attribute a2 = attributeFactory.buildAttribute(i1, Attribute.Type.NEGATIVE_QUALITY);
 		assertThat(a1, is(not(nullValue())));
+		assertThat(a1, is(not(sameInstance(a2))));
 	}
 
 	@Test
@@ -60,6 +62,14 @@ public class AttributeTest {
 	}
 
 	@Test
+	public void testAttribute4() {
+		final UniqueId<Attribute> i1 = idFactory.build(Attribute.class, 1L);
+		exception.expect(instanceOf(IllegalArgumentException.class));
+		exception.expectMessage(equalTo("Parameter (type) cannot be null"));
+		new AttributeEntity(i1, null);
+	}
+
+	@Test
 	public void testGetType() {
 		final UniqueId<Attribute> i1 = idFactory.build(Attribute.class, 1L);
 		final Attribute a1 = attributeFactory.buildAttribute(i1, Attribute.Type.NEGATIVE_QUALITY);
@@ -74,14 +84,6 @@ public class AttributeTest {
 		assertThat(a4.getType(), is(equalTo(Attribute.Type.POSITIVE_QUALITY)));
 		assertThat(a5.getType(), is(equalTo(Attribute.Type.POSITIVE_QUANTITY)));
 		assertThat(a6.getType(), is(equalTo(Attribute.Type.POSITIVE_UNBOUNDED)));
-	}
-
-	@Test
-	public void testAttribute4() {
-		final UniqueId<Attribute> i1 = idFactory.build(Attribute.class, 1L);
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (type) cannot be null"));
-		new AttributeEntity(i1, null);
 	}
 
 	@Test
@@ -103,10 +105,7 @@ public class AttributeTest {
 		final Attribute c2 = attributeFactory.buildAttribute(i2, Attribute.Type.NEGATIVE_QUALITY);
 		final Attribute c3 = attributeFactory.buildAttribute(i1, Attribute.Type.NEGATIVE_QUALITY);
 
-		assertThat(c1, is(not(equalTo(i1))));
-		assertThat(c2, is(not(equalTo(i2))));
 		assertThat(c1, is(not(equalTo(c2))));
-		assertThat(c1, is(not(sameInstance(c3))));
 		assertThat(c1, is(equalTo(c3)));
 		assertThat(c1, is(not(equalTo(""))));
 	}
@@ -117,10 +116,10 @@ public class AttributeTest {
 		final UniqueId<Attribute> i2 = idFactory.build(Attribute.class, 2L);
 		final Attribute c1 = attributeFactory.buildAttribute(i1, Attribute.Type.NEGATIVE_QUALITY);
 		final Attribute c2 = attributeFactory.buildAttribute(i2, Attribute.Type.NEGATIVE_QUALITY);
+		final Attribute c3 = attributeFactory.buildAttribute(i1, Attribute.Type.NEGATIVE_QUALITY);
 
-		assertThat(c1.hashCode(), is(equalTo(i1.hashCode())));
-		assertThat(c2.hashCode(), is(equalTo(i2.hashCode())));
 		assertThat(c1.hashCode(), is(not(equalTo(c2.hashCode()))));
+		assertThat(c1.hashCode(), is(equalTo(c3.hashCode())));
 	}
 
 	@Test
@@ -129,10 +128,10 @@ public class AttributeTest {
 		final UniqueId<Attribute> i2 = idFactory.build(Attribute.class, 2L);
 		final Attribute c1 = attributeFactory.buildAttribute(i1, Attribute.Type.NEGATIVE_QUALITY);
 		final Attribute c2 = attributeFactory.buildAttribute(i2, Attribute.Type.NEGATIVE_QUALITY);
+		final Attribute c3 = attributeFactory.buildAttribute(i1, Attribute.Type.NEGATIVE_QUALITY);
 
-		assertThat(c1.toString(), is(equalTo(String.format("%s [%s]", i1.toString(), Attribute.Type.NEGATIVE_QUALITY))));
-		assertThat(c2.toString(), is(equalTo(String.format("%s [%s]", i2.toString(), Attribute.Type.NEGATIVE_QUALITY))));
 		assertThat(c1.toString(), is(not(equalTo(c2.toString()))));
+		assertThat(c1.toString(), is(equalTo(c3.toString())));
 	}
 
 }

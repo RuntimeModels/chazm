@@ -38,20 +38,19 @@ class InstanceGoalEntity extends AbstractEntity<InstanceGoal> implements Instanc
 	public boolean equals(final Object object) {
 		if (object instanceof InstanceGoal) {
 			final InstanceGoal goal = (InstanceGoal) object;
-			return getId().equals(goal.getId());
+			return super.equals(goal);
 		}
 		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		return getId().hashCode();
+		return super.hashCode();
 	}
 
 	@Override
 	public String toString() {
-		final Parameter parameter = getParameter();
-		return String.format("%s (%s)", getId().toString(), parameter.toString());
+		return String.format("%s(%s, %s, %s)", getClass().getSimpleName(), getId(), getGoal(), getParameter());
 	}
 
 }

@@ -34,7 +34,10 @@ public class SpecificationGoalTest {
 	public void testSpecificationGoal() {
 		final UniqueId<SpecificationGoal> i1 = idFactory.build(SpecificationGoal.class, 1L);
 		final SpecificationGoal g1 = goalFactory.buildSpecificationGoal(i1);
+		final SpecificationGoal g2 = goalFactory.buildSpecificationGoal(i1);
+
 		assertThat(g1, is(not(nullValue())));
+		assertThat(g1, is(not(sameInstance(g2))));
 	}
 
 	@Test
@@ -70,10 +73,7 @@ public class SpecificationGoalTest {
 		final SpecificationGoal g2 = goalFactory.buildSpecificationGoal(i2);
 		final SpecificationGoal g3 = goalFactory.buildSpecificationGoal(i1);
 
-		assertThat(g1, is(not(equalTo(i1))));
-		assertThat(g2, is(not(equalTo(i2))));
 		assertThat(g1, is(not(equalTo(g2))));
-		assertThat(g1, is(not(sameInstance(g3))));
 		assertThat(g1, is(equalTo(g3)));
 		assertThat(g1, is(not(equalTo(""))));
 	}
@@ -84,10 +84,10 @@ public class SpecificationGoalTest {
 		final UniqueId<SpecificationGoal> i2 = idFactory.build(SpecificationGoal.class, 2L);
 		final SpecificationGoal g1 = goalFactory.buildSpecificationGoal(i1);
 		final SpecificationGoal g2 = goalFactory.buildSpecificationGoal(i2);
+		final SpecificationGoal g3 = goalFactory.buildSpecificationGoal(i1);
 
-		assertThat(g1.hashCode(), is(equalTo(i1.hashCode())));
-		assertThat(g2.hashCode(), is(equalTo(i2.hashCode())));
 		assertThat(g1.hashCode(), is(not(equalTo(g2.hashCode()))));
+		assertThat(g1.hashCode(), is(equalTo(g3.hashCode())));
 	}
 
 	@Test
@@ -96,10 +96,10 @@ public class SpecificationGoalTest {
 		final UniqueId<SpecificationGoal> i2 = idFactory.build(SpecificationGoal.class, 2L);
 		final SpecificationGoal g1 = goalFactory.buildSpecificationGoal(i1);
 		final SpecificationGoal g2 = goalFactory.buildSpecificationGoal(i2);
+		final SpecificationGoal g3 = goalFactory.buildSpecificationGoal(i1);
 
-		assertThat(g1.toString(), is(equalTo(i1.toString())));
-		assertThat(g2.toString(), is(equalTo(i2.toString())));
 		assertThat(g1.toString(), is(not(equalTo(g2.toString()))));
+		assertThat(g1.toString(), is(equalTo(g3.toString())));
 	}
 
 }

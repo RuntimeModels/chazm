@@ -9,6 +9,8 @@ import com.google.inject.assistedinject.Assisted;
 
 class CapabilityEntity extends AbstractEntity<Capability> implements Capability {
 
+	private transient String toString = null;
+
 	@Inject
 	CapabilityEntity(@NotNull @Assisted final UniqueId<Capability> id) {
 		super(id);
@@ -18,19 +20,22 @@ class CapabilityEntity extends AbstractEntity<Capability> implements Capability 
 	public boolean equals(final Object object) {
 		if (object instanceof Capability) {
 			final Capability capability = (Capability) object;
-			return getId().equals(capability.getId());
+			return super.equals(capability);
 		}
 		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		return getId().hashCode();
+		return super.hashCode();
 	}
 
 	@Override
 	public String toString() {
-		return getId().toString();
+		if (toString == null) {
+			toString = String.format("%s(%s)", getClass().getSimpleName(), getId());
+		}
+		return toString;
 	}
 
 }
