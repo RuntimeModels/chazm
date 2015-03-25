@@ -670,7 +670,7 @@ class DefaultOrganization implements Organization {
 		final Contains contains = relationFactory.buildContains(role, characteristic, value);
 		map.put(characteristicId, contains);
 		addBy(contains, relations.containedBy, "containedBy", characteristicId, roleId);
-		publisher.post(eventFactory.build(contains, ADDED));
+		publisher.post(eventFactory.build(ADDED, contains));
 	}
 
 	@Override
@@ -702,7 +702,7 @@ class DefaultOrganization implements Organization {
 		if (relations.contains.containsKey(roleId) && relations.contains.get(roleId).containsKey(characteristicId)) {
 			final Contains contains = relations.contains.get(roleId).get(characteristicId);
 			contains.setValue(value);
-			publisher.post(eventFactory.build(contains, CHANGED));
+			publisher.post(eventFactory.build(CHANGED, contains));
 		}
 	}
 
@@ -713,7 +713,7 @@ class DefaultOrganization implements Organization {
 		if (relations.contains.containsKey(roleId) && relations.contains.get(roleId).containsKey(characteristicId)) {
 			final Contains contains = relations.contains.get(roleId).remove(characteristicId);
 			removeBy(characteristicId, roleId, relations.containedBy, "containedBy");
-			publisher.post(eventFactory.build(contains, REMOVED));
+			publisher.post(eventFactory.build(REMOVED, contains));
 		}
 	}
 

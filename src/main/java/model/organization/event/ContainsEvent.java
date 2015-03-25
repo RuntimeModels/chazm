@@ -24,9 +24,11 @@ public class ContainsEvent extends AbstractEvent {
 	private final UniqueId<Role> roleId;
 	private final UniqueId<Characteristic> characteristicId;
 	private final double value;
+	private transient Integer hashCode = null;
+	private transient String toString = null;
 
 	@Inject
-	ContainsEvent(@NotNull @Assisted final Contains contains, @NotNull @Assisted final EventCategory category) {
+	ContainsEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final Contains contains) {
 		super(category);
 		checkNotNull(contains, "contains");
 		roleId = contains.getRole().getId();
@@ -59,6 +61,31 @@ public class ContainsEvent extends AbstractEvent {
 	 */
 	public double getValue() {
 		return value;
+	}
+
+	@Override
+	public boolean equals(final Object object) {
+		if (object instanceof ContainsEvent) {
+			final ContainsEvent event = (ContainsEvent) object;
+			return super.equals(event) && getRoleId().equals(event.getRoleId()) && getCharacteristicId().equals(event.getCharacteristicId());
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		if (hashCode == null) {
+			hashCode = super.hashCode() << 22 | getRoleId().hashCode() << 11 | getCharacteristicId().hashCode();
+		}
+		return hashCode;
+	}
+
+	@Override
+	public String toString() {
+		if (toString == null) {
+			toString = String.format("%s(%s, %s, %s, %s)", getClass().getSimpleName(), getCategory(), getRoleId(), getCharacteristicId(), getValue());
+		}
+		return toString;
 	}
 
 }
