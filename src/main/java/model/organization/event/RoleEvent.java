@@ -21,9 +21,11 @@ public class RoleEvent extends AbstractEvent {
 
 	private static final long serialVersionUID = -5258695088891301883L;
 	private final UniqueId<Role> id;
+	private transient Integer hashCode = null;
+	private transient String toString = null;
 
 	@Inject
-	RoleEvent(@NotNull @Assisted final Role role, @NotNull @Assisted final EventCategory category) {
+	RoleEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final Role role) {
 		super(category);
 		checkNotNull(role, "role");
 		id = role.getId();
@@ -36,6 +38,31 @@ public class RoleEvent extends AbstractEvent {
 	 */
 	public UniqueId<Role> getId() {
 		return id;
+	}
+
+	@Override
+	public boolean equals(final Object object) {
+		if (object instanceof RoleEvent) {
+			final RoleEvent event = (RoleEvent) object;
+			return super.equals(event) && getId().equals(event.getId());
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		if (hashCode == null) {
+			hashCode = super.hashCode() << 16 | getId().hashCode();
+		}
+		return hashCode;
+	}
+
+	@Override
+	public String toString() {
+		if (toString == null) {
+			toString = String.format("%s(%s, %s)", getClass().getSimpleName(), getCategory(), getId());
+		}
+		return toString;
 	}
 
 }

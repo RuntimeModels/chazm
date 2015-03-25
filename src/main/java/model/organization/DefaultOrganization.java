@@ -443,7 +443,7 @@ class DefaultOrganization implements Organization {
 		relations.uses.put(role.getId(), new ConcurrentHashMap<>());
 		relations.contains.put(role.getId(), new ConcurrentHashMap<>());
 		functions.goodnesses.put(role.getId(), goodness);
-		publisher.post(eventFactory.build(role, ADDED));
+		publisher.post(eventFactory.build(ADDED, role));
 	}
 
 	@Override
@@ -478,7 +478,7 @@ class DefaultOrganization implements Organization {
 			remove(id, relations.uses, "uses", c -> removeUses(id, c), Pmf.class);
 			remove(id, relations.contains, "contains", c -> removeContains(id, c), Characteristic.class);
 			functions.goodnesses.remove(id);
-			publisher.post(eventFactory.build(role, REMOVED));
+			publisher.post(eventFactory.build(REMOVED, role));
 		}
 	}
 
