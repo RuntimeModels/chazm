@@ -25,9 +25,11 @@ public class AssignmentEvent extends AbstractEvent {
 	private final UniqueId<Agent> agentId;
 	private final UniqueId<Role> roleId;
 	private final UniqueId<InstanceGoal> goalId;
+	private transient Integer hashCode = null;
+	private transient String toString = null;
 
 	@Inject
-	AssignmentEvent(@NotNull @Assisted final Assignment assignment, @NotNull @Assisted final EventCategory category) {
+	AssignmentEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final Assignment assignment) {
 		super(category);
 		checkNotNull(assignment, "assignment");
 		agentId = assignment.getAgent().getId();
@@ -60,6 +62,32 @@ public class AssignmentEvent extends AbstractEvent {
 	 */
 	public UniqueId<InstanceGoal> getGoalId() {
 		return goalId;
+	}
+
+	@Override
+	public boolean equals(final Object object) {
+		if (object instanceof AssignmentEvent) {
+			final AssignmentEvent event = (AssignmentEvent) object;
+			return super.equals(event) && getAgentId().equals(event.getAgentId()) && getRoleId().equals(event.getRoleId())
+					&& getGoalId().equals(event.getGoalId());
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		if (hashCode == null) {
+			hashCode = super.hashCode() << 24 | getAgentId().hashCode() << 16 | getRoleId().hashCode() << 8 | getGoalId().hashCode();
+		}
+		return hashCode;
+	}
+
+	@Override
+	public String toString() {
+		if (toString == null) {
+			toString = String.format("%s(%s, %s, %s, %s)", getClass().getSimpleName(), getCategory(), getAgentId(), getRoleId(), getGoalId());
+		}
+		return toString;
 	}
 
 }

@@ -598,7 +598,7 @@ class DefaultOrganization implements Organization {
 		/* add the assignment */
 		relations.assignments.put(assignment.getId(), assignment);
 		relations.assignmentsByAgent.get(assignment.getAgent().getId()).put(assignment.getId(), assignment);
-		publisher.post(eventFactory.build(assignment, ADDED));
+		publisher.post(eventFactory.build(ADDED, assignment));
 	}
 
 	@Override
@@ -640,7 +640,7 @@ class DefaultOrganization implements Organization {
 				logger.warn("assignmentsByAgent is missing ({} -> assignment) entry", assignment.getAgent().getId());
 				relations.assignmentsByAgent.put(assignment.getAgent().getId(), new ConcurrentHashMap<>());
 			}
-			publisher.post(eventFactory.build(assignment, REMOVED));
+			publisher.post(eventFactory.build(REMOVED, assignment));
 		}
 	}
 
