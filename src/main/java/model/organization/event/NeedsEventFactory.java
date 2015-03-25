@@ -13,13 +13,14 @@ public interface NeedsEventFactory {
 
 	/**
 	 * Constructs an {@linkplain NeedsEvent}.
-	 *
-	 * @param needs
-	 *            the {@linkplain Needs}.
+	 * 
 	 * @param category
 	 *            the {@linkplain EventCategory}.
+	 * @param needs
+	 *            the {@linkplain Needs}.
+	 *
 	 * @return a {@linkplain NeedsEvent}.
 	 */
-	NeedsEvent build(Needs needs, EventCategory category);
+	NeedsEvent build(EventCategory category, Needs needs);
 
 }
