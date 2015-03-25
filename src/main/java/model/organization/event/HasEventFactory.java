@@ -13,13 +13,14 @@ public interface HasEventFactory {
 
 	/**
 	 * Constructs an {@linkplain HasEvent}.
-	 *
-	 * @param has
-	 *            the {@linkplain Has}.
+	 * 
 	 * @param category
 	 *            the {@linkplain EventCategory}.
+	 * @param has
+	 *            the {@linkplain Has}.
+	 *
 	 * @return a {@linkplain HasEvent}.
 	 */
-	HasEvent build(Has has, EventCategory category);
+	HasEvent build(EventCategory category, Has has);
 
 }
