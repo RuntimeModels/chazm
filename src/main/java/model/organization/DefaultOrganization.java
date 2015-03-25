@@ -130,7 +130,7 @@ class DefaultOrganization implements Organization {
 		relations.neededBy.put(attribute.getId(), new ConcurrentHashMap<>());
 		relations.hadBy.put(attribute.getId(), new ConcurrentHashMap<>());
 		relations.moderatedBy.put(attribute.getId(), new ConcurrentHashMap<>());
-		publisher.post(eventFactory.build(attribute, ADDED));
+		publisher.post(eventFactory.build(ADDED, attribute));
 	}
 
 	@Override
@@ -159,7 +159,7 @@ class DefaultOrganization implements Organization {
 			remove(id, relations.neededBy, "neededBy", c -> removeNeeds(c, id), Role.class);
 			remove(id, relations.hadBy, "hadBy", c -> removeHas(c, id), Agent.class);
 			remove(id, relations.moderatedBy, "moderatedBy", c -> removeModerates(c, id), Pmf.class);
-			publisher.post(eventFactory.build(attribute, REMOVED));
+			publisher.post(eventFactory.build(REMOVED, attribute));
 		}
 	}
 
@@ -181,7 +181,7 @@ class DefaultOrganization implements Organization {
 		entities.capabilities.put(capability.getId(), capability);
 		relations.requiredBy.put(capability.getId(), new ConcurrentHashMap<>());
 		relations.possessedBy.put(capability.getId(), new ConcurrentHashMap<>());
-		publisher.post(eventFactory.build(capability, ADDED));
+		publisher.post(eventFactory.build(ADDED, capability));
 	}
 
 	@Override
@@ -209,7 +209,7 @@ class DefaultOrganization implements Organization {
 			final Capability capability = entities.capabilities.remove(id);
 			remove(id, relations.requiredBy, "requiredBy", c -> removeRequires(c, id), Role.class);
 			remove(id, relations.possessedBy, "possessedBy", c -> removePossesses(c, id), Agent.class);
-			publisher.post(eventFactory.build(capability, REMOVED));
+			publisher.post(eventFactory.build(REMOVED, capability));
 		}
 	}
 

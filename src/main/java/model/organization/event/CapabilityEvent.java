@@ -20,9 +20,11 @@ public class CapabilityEvent extends AbstractEvent {
 
 	private static final long serialVersionUID = -8208865145150920878L;
 	private final UniqueId<Capability> id;
+	private transient Integer hashCode = null;
+	private transient String toString = null;
 
 	@Inject
-	CapabilityEvent(@NotNull @Assisted final Capability capability, @NotNull @Assisted final EventCategory category) {
+	CapabilityEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final Capability capability) {
 		super(category);
 		checkNotNull(capability, "capability");
 		id = capability.getId();
@@ -35,6 +37,31 @@ public class CapabilityEvent extends AbstractEvent {
 	 */
 	public UniqueId<Capability> getId() {
 		return id;
+	}
+
+	@Override
+	public boolean equals(final Object object) {
+		if (object instanceof CapabilityEvent) {
+			final CapabilityEvent event = (CapabilityEvent) object;
+			return super.equals(event) && getId().equals(event.getId());
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		if (hashCode == null) {
+			hashCode = super.hashCode() << 16 | getId().hashCode();
+		}
+		return hashCode;
+	}
+
+	@Override
+	public String toString() {
+		if (toString == null) {
+			toString = String.format("%s(%s, %s)", getClass().getSimpleName(), getCategory(), getId());
+		}
+		return toString;
 	}
 
 }
