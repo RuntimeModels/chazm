@@ -34,7 +34,9 @@ public class AgentTest {
 	public void testAgent() {
 		final UniqueId<Agent> i1 = idFactory.build(Agent.class, 1L);
 		final Agent a1 = agentFactory.buildAgent(i1, new Agent.ContactInfo() {});
+		final Agent a2 = agentFactory.buildAgent(i1, new Agent.ContactInfo() {});
 		assertThat(a1, is(not(nullValue())));
+		assertThat(a1, is(not(sameInstance(a2))));
 	}
 
 	@Test
@@ -94,10 +96,7 @@ public class AgentTest {
 		final Agent a2 = agentFactory.buildAgent(i2, new Agent.ContactInfo() {});
 		final Agent a3 = agentFactory.buildAgent(i1, new Agent.ContactInfo() {});
 
-		assertThat(a1, is(not(equalTo(i1))));
-		assertThat(a2, is(not(equalTo(i2))));
 		assertThat(a1, is(not(equalTo(a2))));
-		assertThat(a1, is(not(sameInstance(a3))));
 		assertThat(a1, is(equalTo(a3)));
 		assertThat(a1, is(not(equalTo(""))));
 	}
@@ -108,10 +107,10 @@ public class AgentTest {
 		final UniqueId<Agent> i2 = idFactory.build(Agent.class, 2L);
 		final Agent a1 = agentFactory.buildAgent(i1, new Agent.ContactInfo() {});
 		final Agent a2 = agentFactory.buildAgent(i2, new Agent.ContactInfo() {});
+		final Agent a3 = agentFactory.buildAgent(i1, new Agent.ContactInfo() {});
 
-		assertThat(a1.hashCode(), is(equalTo(i1.hashCode())));
-		assertThat(a2.hashCode(), is(equalTo(i2.hashCode())));
 		assertThat(a1.hashCode(), is(not(equalTo(a2.hashCode()))));
+		assertThat(a1.hashCode(), is(equalTo(a3.hashCode())));
 	}
 
 	@Test
@@ -120,10 +119,10 @@ public class AgentTest {
 		final UniqueId<Agent> i2 = idFactory.build(Agent.class, 2L);
 		final Agent a1 = agentFactory.buildAgent(i1, new Agent.ContactInfo() {});
 		final Agent a2 = agentFactory.buildAgent(i2, new Agent.ContactInfo() {});
+		final Agent a3 = agentFactory.buildAgent(i1, new Agent.ContactInfo() {});
 
-		assertThat(a1.toString(), is(equalTo(i1.toString())));
-		assertThat(a2.toString(), is(equalTo(i2.toString())));
 		assertThat(a1.toString(), is(not(equalTo(a2.toString()))));
+		assertThat(a1.toString(), is(equalTo(a3.toString())));
 	}
 
 }

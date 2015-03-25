@@ -13,7 +13,7 @@ public interface HasEventFactory {
 
 	/**
 	 * Constructs an {@linkplain HasEvent}.
-	 * 
+	 *
 	 * @param category
 	 *            the {@linkplain EventCategory}.
 	 * @param has

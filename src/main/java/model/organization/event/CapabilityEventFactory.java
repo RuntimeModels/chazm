@@ -13,7 +13,7 @@ public interface CapabilityEventFactory {
 
 	/**
 	 * Constructs an {@linkplain CapabilityEvent}.
-	 * 
+	 *
 	 * @param category
 	 *            the {@linkplain EventCategory}.
 	 * @param capability

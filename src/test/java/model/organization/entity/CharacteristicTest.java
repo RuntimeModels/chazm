@@ -34,7 +34,10 @@ public class CharacteristicTest {
 	public void testCharacteristic() {
 		final UniqueId<Characteristic> i1 = idFactory.build(Characteristic.class, 1L);
 		final Characteristic c1 = characteristicFactory.buildCharacteristic(i1);
+		final Characteristic c2 = characteristicFactory.buildCharacteristic(i1);
+
 		assertThat(c1, is(not(nullValue())));
+		assertThat(c1, is(not(sameInstance(c2))));
 	}
 
 	@Test
@@ -70,10 +73,7 @@ public class CharacteristicTest {
 		final Characteristic c2 = characteristicFactory.buildCharacteristic(i2);
 		final Characteristic c3 = characteristicFactory.buildCharacteristic(i1);
 
-		assertThat(c1, is(not(equalTo(i1))));
-		assertThat(c2, is(not(equalTo(i2))));
 		assertThat(c1, is(not(equalTo(c2))));
-		assertThat(c1, is(not(sameInstance(c3))));
 		assertThat(c1, is(equalTo(c3)));
 		assertThat(c1, is(not(equalTo(""))));
 	}
@@ -84,10 +84,10 @@ public class CharacteristicTest {
 		final UniqueId<Characteristic> i2 = idFactory.build(Characteristic.class, 2L);
 		final Characteristic c1 = characteristicFactory.buildCharacteristic(i1);
 		final Characteristic c2 = characteristicFactory.buildCharacteristic(i2);
+		final Characteristic c3 = characteristicFactory.buildCharacteristic(i1);
 
-		assertThat(c1.hashCode(), is(equalTo(i1.hashCode())));
-		assertThat(c2.hashCode(), is(equalTo(i2.hashCode())));
 		assertThat(c1.hashCode(), is(not(equalTo(c2.hashCode()))));
+		assertThat(c1.hashCode(), is(equalTo(c3.hashCode())));
 	}
 
 	@Test
@@ -96,10 +96,10 @@ public class CharacteristicTest {
 		final UniqueId<Characteristic> i2 = idFactory.build(Characteristic.class, 2L);
 		final Characteristic c1 = characteristicFactory.buildCharacteristic(i1);
 		final Characteristic c2 = characteristicFactory.buildCharacteristic(i2);
+		final Characteristic c3 = characteristicFactory.buildCharacteristic(i1);
 
-		assertThat(c1.toString(), is(equalTo(i1.toString())));
-		assertThat(c2.toString(), is(equalTo(i2.toString())));
 		assertThat(c1.toString(), is(not(equalTo(c2.toString()))));
+		assertThat(c1.toString(), is(equalTo(c3.toString())));
 	}
 
 }

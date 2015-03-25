@@ -52,7 +52,9 @@ public class RoleEvent extends AbstractEvent {
 	@Override
 	public int hashCode() {
 		if (hashCode == null) {
-			hashCode = super.hashCode() << 16 | getId().hashCode();
+			final int prime = 31;
+			hashCode = super.hashCode();
+			hashCode = prime * hashCode + getId().hashCode();
 		}
 		return hashCode;
 	}

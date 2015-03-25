@@ -34,7 +34,10 @@ public class RoleTest {
 	public void testRole() {
 		final UniqueId<Role> i1 = idFactory.build(Role.class, 1L);
 		final Role r1 = roleFactory.buildRole(i1);
+		final Role r2 = roleFactory.buildRole(i1);
+
 		assertThat(r1, is(not(nullValue())));
+		assertThat(r1, is(not(sameInstance(r2))));
 	}
 
 	@Test
@@ -70,10 +73,7 @@ public class RoleTest {
 		final Role r2 = roleFactory.buildRole(i2);
 		final Role r3 = roleFactory.buildRole(i1);
 
-		assertThat(r1, is(not(equalTo(i1))));
-		assertThat(r2, is(not(equalTo(i2))));
 		assertThat(r1, is(not(equalTo(r2))));
-		assertThat(r1, is(not(sameInstance(r3))));
 		assertThat(r1, is(equalTo(r3)));
 		assertThat(r1, is(not(equalTo(""))));
 	}
@@ -84,10 +84,10 @@ public class RoleTest {
 		final UniqueId<Role> i2 = idFactory.build(Role.class, 2L);
 		final Role r1 = roleFactory.buildRole(i1);
 		final Role r2 = roleFactory.buildRole(i2);
+		final Role r3 = roleFactory.buildRole(i1);
 
-		assertThat(r1.hashCode(), is(equalTo(i1.hashCode())));
-		assertThat(r2.hashCode(), is(equalTo(i2.hashCode())));
 		assertThat(r1.hashCode(), is(not(equalTo(r2.hashCode()))));
+		assertThat(r1.hashCode(), is(equalTo(r3.hashCode())));
 	}
 
 	@Test
@@ -96,10 +96,10 @@ public class RoleTest {
 		final UniqueId<Role> i2 = idFactory.build(Role.class, 2L);
 		final Role r1 = roleFactory.buildRole(i1);
 		final Role r2 = roleFactory.buildRole(i2);
+		final Role r3 = roleFactory.buildRole(i1);
 
-		assertThat(r1.toString(), is(equalTo(i1.toString())));
-		assertThat(r2.toString(), is(equalTo(i2.toString())));
 		assertThat(r1.toString(), is(not(equalTo(r2.toString()))));
+		assertThat(r1.toString(), is(equalTo(r3.toString())));
 	}
 
 }

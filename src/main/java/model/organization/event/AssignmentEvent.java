@@ -77,7 +77,11 @@ public class AssignmentEvent extends AbstractEvent {
 	@Override
 	public int hashCode() {
 		if (hashCode == null) {
-			hashCode = super.hashCode() << 24 | getAgentId().hashCode() << 16 | getRoleId().hashCode() << 8 | getGoalId().hashCode();
+			final int prime = 31;
+			hashCode = super.hashCode();
+			hashCode = prime * hashCode + getAgentId().hashCode();
+			hashCode = prime * hashCode + getRoleId().hashCode();
+			hashCode = prime * hashCode + getGoalId().hashCode();
 		}
 		return hashCode;
 	}

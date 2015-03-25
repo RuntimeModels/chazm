@@ -75,7 +75,10 @@ public class ContainsEvent extends AbstractEvent {
 	@Override
 	public int hashCode() {
 		if (hashCode == null) {
-			hashCode = super.hashCode() << 22 | getRoleId().hashCode() << 11 | getCharacteristicId().hashCode();
+			final int prime = 31;
+			hashCode = super.hashCode();
+			hashCode = prime * hashCode + getRoleId().hashCode();
+			hashCode = prime * hashCode + getCharacteristicId().hashCode();
 		}
 		return hashCode;
 	}

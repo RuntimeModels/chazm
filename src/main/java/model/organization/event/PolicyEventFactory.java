@@ -13,7 +13,7 @@ public interface PolicyEventFactory {
 
 	/**
 	 * Constructs an {@linkplain PolicyEvent}.
-	 * 
+	 *
 	 * @param category
 	 *            the {@linkplain EventCategory}.
 	 * @param policy

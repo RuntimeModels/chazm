@@ -33,13 +33,13 @@ public class InstanceGoalTest {
 
 	@Test
 	public void testInstanceGoal() {
-		final UniqueId<SpecificationGoal> x1 = idFactory.build(SpecificationGoal.class, 1L);
-		final SpecificationGoal y1 = specificationGoalFactory.buildSpecificationGoal(x1);
-
+		final SpecificationGoal sg1 = specificationGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, 1L));
 		final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
-		final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, y1, new InstanceGoal.Parameter() {});
+		final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new InstanceGoal.Parameter() {});
+		final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new InstanceGoal.Parameter() {});
 
 		assertThat(g1, is(not(nullValue())));
+		assertThat(g1, is(not(sameInstance(g2))));
 	}
 
 	@Test
@@ -151,69 +151,42 @@ public class InstanceGoalTest {
 
 	@Test
 	public void testEqualsObject() {
-		final UniqueId<SpecificationGoal> x1 = idFactory.build(SpecificationGoal.class, 1L);
-		final UniqueId<SpecificationGoal> x2 = idFactory.build(SpecificationGoal.class, 2L);
-		final SpecificationGoal y1 = specificationGoalFactory.buildSpecificationGoal(x1);
-		final SpecificationGoal y2 = specificationGoalFactory.buildSpecificationGoal(x2);
-		final SpecificationGoal y3 = specificationGoalFactory.buildSpecificationGoal(x1);
-
+		final SpecificationGoal sg1 = specificationGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, 1L));
 		final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
 		final UniqueId<InstanceGoal> i2 = idFactory.build(InstanceGoal.class, 2L);
-		final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, y1, new InstanceGoal.Parameter() {});
-		final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i2, y2, new InstanceGoal.Parameter() {});
-		final InstanceGoal g3 = instanceGoalFactory.buildInstanceGoal(i1, y3, new InstanceGoal.Parameter() {});
+		final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new InstanceGoal.Parameter() {});
+		final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i2, sg1, new InstanceGoal.Parameter() {});
+		final InstanceGoal g3 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new InstanceGoal.Parameter() {});
 
-		assertThat(g1, is(not(equalTo(i1))));
-		assertThat(g2, is(not(equalTo(i2))));
 		assertThat(g1, is(not(equalTo(g2))));
-		assertThat(g1, is(not(sameInstance(g3))));
 		assertThat(g1, is(equalTo(g3)));
 		assertThat(g1, is(not(equalTo(""))));
 	}
 
 	@Test
 	public void testHashCode() {
-		final UniqueId<SpecificationGoal> x1 = idFactory.build(SpecificationGoal.class, 1L);
-		final UniqueId<SpecificationGoal> x2 = idFactory.build(SpecificationGoal.class, 2L);
-		final SpecificationGoal y1 = specificationGoalFactory.buildSpecificationGoal(x1);
-		final SpecificationGoal y2 = specificationGoalFactory.buildSpecificationGoal(x2);
-
+		final SpecificationGoal sg1 = specificationGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, 1L));
 		final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
 		final UniqueId<InstanceGoal> i2 = idFactory.build(InstanceGoal.class, 2L);
-		final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, y1, new InstanceGoal.Parameter() {});
-		final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i2, y2, new InstanceGoal.Parameter() {});
+		final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new InstanceGoal.Parameter() {});
+		final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i2, sg1, new InstanceGoal.Parameter() {});
+		final InstanceGoal g3 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new InstanceGoal.Parameter() {});
 
-		assertThat(g1.hashCode(), is(equalTo(i1.hashCode())));
-		assertThat(g2.hashCode(), is(equalTo(i2.hashCode())));
 		assertThat(g1.hashCode(), is(not(equalTo(g2.hashCode()))));
+		assertThat(g1.hashCode(), is(equalTo(g3.hashCode())));
 	}
 
 	@Test
 	public void testToString() {
-		final UniqueId<SpecificationGoal> x1 = idFactory.build(SpecificationGoal.class, 1L);
-		final UniqueId<SpecificationGoal> x2 = idFactory.build(SpecificationGoal.class, 2L);
-		final SpecificationGoal y1 = specificationGoalFactory.buildSpecificationGoal(x1);
-		final SpecificationGoal y2 = specificationGoalFactory.buildSpecificationGoal(x2);
-
+		final SpecificationGoal sg1 = specificationGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, 1L));
 		final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
 		final UniqueId<InstanceGoal> i2 = idFactory.build(InstanceGoal.class, 2L);
-		final InstanceGoal.Parameter p1 = new InstanceGoal.Parameter() {
-			@Override
-			public String toString() {
-				return "1";
-			}
-		};
-		final InstanceGoal.Parameter p2 = new InstanceGoal.Parameter() {
-			@Override
-			public String toString() {
-				return "2";
-			}
-		};
-		final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, y1, p1);
-		final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i2, y2, p2);
+		final InstanceGoal.Parameter p1 = new InstanceGoal.Parameter() {};
+		final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, sg1, p1);
+		final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i2, sg1, p1);
+		final InstanceGoal g3 = instanceGoalFactory.buildInstanceGoal(i1, sg1, p1);
 
-		assertThat(g1.toString(), is(equalTo(String.format("%s (%s)", i1.toString(), p1.toString()))));
-		assertThat(g2.toString(), is(equalTo(String.format("%s (%s)", i2.toString(), p2.toString()))));
 		assertThat(g1.toString(), is(not(equalTo(g2.toString()))));
+		assertThat(g1.toString(), is(equalTo(g3.toString())));
 	}
 }

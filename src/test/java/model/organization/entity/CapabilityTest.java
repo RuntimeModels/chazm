@@ -34,7 +34,10 @@ public class CapabilityTest {
 	public void testCapability() {
 		final UniqueId<Capability> i1 = idFactory.build(Capability.class, 1L);
 		final Capability c1 = capabilityFactory.buildCapability(i1);
+		final Capability c2 = capabilityFactory.buildCapability(i1);
+
 		assertThat(c1, is(not(nullValue())));
+		assertThat(c1, is(not(sameInstance(c2))));
 	}
 
 	@Test
@@ -70,10 +73,7 @@ public class CapabilityTest {
 		final Capability c2 = capabilityFactory.buildCapability(i2);
 		final Capability c3 = capabilityFactory.buildCapability(i1);
 
-		assertThat(c1, is(not(equalTo(i1))));
-		assertThat(c2, is(not(equalTo(i2))));
 		assertThat(c1, is(not(equalTo(c2))));
-		assertThat(c1, is(not(sameInstance(c3))));
 		assertThat(c1, is(equalTo(c3)));
 		assertThat(c1, is(not(equalTo(""))));
 	}
@@ -84,10 +84,10 @@ public class CapabilityTest {
 		final UniqueId<Capability> i2 = idFactory.build(Capability.class, 2L);
 		final Capability c1 = capabilityFactory.buildCapability(i1);
 		final Capability c2 = capabilityFactory.buildCapability(i2);
+		final Capability c3 = capabilityFactory.buildCapability(i1);
 
-		assertThat(c1.hashCode(), is(equalTo(i1.hashCode())));
-		assertThat(c2.hashCode(), is(equalTo(i2.hashCode())));
 		assertThat(c1.hashCode(), is(not(equalTo(c2.hashCode()))));
+		assertThat(c1.hashCode(), is(equalTo(c3.hashCode())));
 	}
 
 	@Test
@@ -96,10 +96,10 @@ public class CapabilityTest {
 		final UniqueId<Capability> i2 = idFactory.build(Capability.class, 2L);
 		final Capability c1 = capabilityFactory.buildCapability(i1);
 		final Capability c2 = capabilityFactory.buildCapability(i2);
+		final Capability c3 = capabilityFactory.buildCapability(i1);
 
-		assertThat(c1.toString(), is(equalTo(i1.toString())));
-		assertThat(c2.toString(), is(equalTo(i2.toString())));
 		assertThat(c1.toString(), is(not(equalTo(c2.toString()))));
+		assertThat(c1.toString(), is(equalTo(c3.toString())));
 	}
 
 }

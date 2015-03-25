@@ -13,7 +13,7 @@ public interface AttributeEventFactory {
 
 	/**
 	 * Constructs an {@linkplain AttributeEvent}.
-	 * 
+	 *
 	 * @param category
 	 *            the {@linkplain EventCategory}.
 	 * @param attribute

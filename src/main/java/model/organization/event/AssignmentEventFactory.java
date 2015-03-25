@@ -13,7 +13,7 @@ public interface AssignmentEventFactory {
 
 	/**
 	 * Constructs an {@linkplain AssignmentEvent}.
-	 * 
+	 *
 	 * @param category
 	 *            the {@linkplain EventCategory}.
 	 * @param assignment
