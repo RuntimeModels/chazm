@@ -13,7 +13,7 @@ public interface PossessesEventFactory {
 
 	/**
 	 * Constructs an {@linkplain PossessesEvent}.
-	 * 
+	 *
 	 * @param category
 	 *            the {@linkplain EventCategory}.
 	 * @param possesses
