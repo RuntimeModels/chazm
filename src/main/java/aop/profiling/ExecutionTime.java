@@ -26,7 +26,7 @@ public class ExecutionTime implements MethodInterceptor {
 			return invocation.proceed();
 		} finally {
 			final long end = System.nanoTime();
-			logger.trace("{}: {} nanoseconds: {} {}.{}(): ", ExecutionTime.class.getSimpleName(), end - start, invocation.getMethod().getGenericReturnType()
+			logger.trace("{}: {} nanoseconds: {} {}.{}()", ExecutionTime.class.getSimpleName(), end - start, invocation.getMethod().getGenericReturnType()
 					.getTypeName().replaceAll("(\\w+\\.)*", ""), invocation.getMethod().getDeclaringClass().getSimpleName(), invocation.getMethod().getName());
 
 		}
