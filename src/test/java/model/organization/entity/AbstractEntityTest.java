@@ -64,6 +64,7 @@ public class AbstractEntityTest {
 
 		assertThat(e1, is(not(equalTo(e2))));
 		assertThat(e1, is(equalTo(e3)));
+		assertThat(e1, is(not(equalTo(""))));
 	}
 
 	@Test
