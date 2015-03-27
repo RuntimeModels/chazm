@@ -25,6 +25,15 @@ class DefaultMediator implements Mediator {
 
 	private final StampedLock lock = new StampedLock();
 
+	Set<Class<?>> getEvents() {
+		final long stamp = lock.readLock();
+		try {
+			return eventSubscribers.keySet();
+		} finally {
+			lock.unlockRead(stamp);
+		}
+	}
+
 	Set<Subscriber> getSubscribers() {
 		final long stamp = lock.readLock();
 		try {
@@ -109,10 +118,15 @@ class DefaultMediator implements Mediator {
 			logger.warn("Unable to invoke {}.{}({})", subscriber.getClass().getName(), method.getName(), event);
 			final long stamp = lock.writeLock();
 			try {
-				final Map<Subscriber, Method> map = eventSubscribers.get(event.getClass());
-				map.remove(subscriber);
-				if (map.isEmpty()) {
+				final Map<Subscriber, Method> m1 = eventSubscribers.get(event.getClass());
+				m1.remove(subscriber);
+				if (m1.isEmpty()) {
 					eventSubscribers.remove(event.getClass());
+				}
+				final Map<Class<?>, Method> m2 = subscriberEvents.get(subscriber);
+				m2.remove(event.getClass());
+				if (m2.isEmpty()) {
+					subscriberEvents.remove(subscriber);
 				}
 			} finally {
 				lock.unlockWrite(stamp);
