@@ -33,15 +33,18 @@ repositories {
 }
 
 sourceSets {
+	api {}
 	main {
 		java {
-			srcDir 'src/api/java'
+			srcDirs = ['src/api/java', 'src/main/java']
 		}
 	}
-	api {
-		java {
-			srcDir 'src/api/java'
-		}
+	ui {}
+}
+
+configurations {
+	uiCompile {
+		extendsFrom compile
 	}
 }
 
@@ -51,6 +54,7 @@ dependencies {
 	compile "javax:javaee-api:${javaee_version}"
 	compile "com.google.inject:guice:${guice_version}"
 	compile "com.google.inject.extensions:guice-assistedinject:${guice_version}"
+	uiCompile sourceSets.api.output
 	testCompile "junit:junit:${junit_version}"
 	testCompile "org.jmockit:jmockit:${jmockit_version}"
 }
@@ -69,14 +73,24 @@ jar {
 	from sourceSets.main.allJava
 }
 
+task uiJar(type: Jar) {
+	baseName = baseName + "-$sourceSets.ui.name"
+	from sourceSets.ui.output
+	from sourceSets.ui.allSource
+}
+
 publishing {
 	publications {
-		main(MavenPublication) {
-			from components.java
-		}
 		api(MavenPublication) {
 			artifactId = artifactId + "-$sourceSets.api.name"
 			artifact apiJar
+		}
+		main(MavenPublication) {
+			from components.java
+		}
+		ui(MavenPublication) {
+			artifactId = artifactId + "-$sourceSets.ui.name"
+			artifact uiJar
 		}
 	}
 }
