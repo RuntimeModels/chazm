@@ -3,6 +3,7 @@ package notification;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -10,15 +11,49 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.StampedLock;
 
+import javax.inject.Singleton;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Singleton
 class DefaultMediator implements Mediator {
 
 	private static final Logger logger = LoggerFactory.getLogger(DefaultMediator.class);
 	private final Map<Class<?>, Map<Subscriber, Method>> eventSubscribers = new ConcurrentHashMap<>();
-	private final Map<Subscriber, Set<Class<?>>> subscriberEvents = new ConcurrentHashMap<>();
+	private final Map<Subscriber, Map<Class<?>, Method>> subscriberEvents = new ConcurrentHashMap<>();
+
 	private final StampedLock lock = new StampedLock();
+
+	Set<Subscriber> getSubscribers() {
+		final long stamp = lock.readLock();
+		try {
+			return subscriberEvents.keySet();
+		} finally {
+			lock.unlockRead(stamp);
+		}
+	}
+
+	Map<Class<?>, Method> getSubscriberEvents(final Subscriber subscriber) {
+		final long stamp = lock.readLock();
+		try {
+			return new HashMap<>(subscriberEvents.get(subscriber));
+		} finally {
+			lock.unlockRead(stamp);
+		}
+	}
+
+	void register(final Subscriber... subscribers) {
+		for (final Subscriber subscriber : subscribers) {
+			register(subscriber);
+		}
+	}
+
+	void unregister(final Subscriber... subscribers) {
+		for (final Subscriber subscriber : subscribers) {
+			unregister(subscriber);
+		}
+	}
 
 	@Override
 	public <T> void post(final T event) {
@@ -41,11 +76,11 @@ class DefaultMediator implements Mediator {
 		final long stamp = lock.writeLock();
 		try {
 			if (subscriberEvents.containsKey(subscriber)) {
-				final Set<Class<?>> set = subscriberEvents.remove(subscriber);
-				set.parallelStream().forEach(c -> {
-					final Map<Subscriber, Method> map = eventSubscribers.get(c);
-					map.remove(subscriber);
-					if (map.isEmpty()) {
+				final Map<Class<?>, Method> map = subscriberEvents.remove(subscriber);
+				map.keySet().parallelStream().forEach(c -> {
+					final Map<Subscriber, Method> m = eventSubscribers.get(c);
+					m.remove(subscriber);
+					if (m.isEmpty()) {
 						eventSubscribers.remove(c);
 					}
 				});
@@ -95,7 +130,7 @@ class DefaultMediator implements Mediator {
 			} else {
 				logger.info("Registering ({}) for ({}) with ({})", subscriber, type, method);
 				map.put(subscriber, method);
-				subscriberEvents.computeIfAbsent(subscriber, f -> new HashSet<>()).add(type);
+				subscriberEvents.computeIfAbsent(subscriber, f -> new ConcurrentHashMap<>()).put(type, method);
 			}
 		} finally {
 			lock.unlockWrite(stamp);
