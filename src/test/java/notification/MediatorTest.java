@@ -30,7 +30,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Provider;
 
-@SuppressWarnings("javadoc")
+@SuppressWarnings({ "javadoc", "unchecked" })
 @RunWith(JMockit.class)
 public class MediatorTest {
 
@@ -119,12 +119,89 @@ public class MediatorTest {
 	}
 
 	@Test
+	public void testPost1() {
+		final DefaultMediator m1 = provider.get();
+		final Subscriber s1 = new Subscriber() {
+			@Subscribe
+			public void a(final String s) {
+				assertThat(s, is(equalTo("")));
+				throw new IllegalArgumentException();
+			}
+		};
+		m1.register(s1);
+
+		m1.post("");
+
+		assertThat(m1.getEvents().size(), is(equalTo(0)));
+		assertThat(m1.getSubscribers().size(), is(equalTo(0)));
+	}
+
+	@Test
+	public void testPost2() {
+		final DefaultMediator m1 = provider.get();
+		final Subscriber s1 = new Subscriber() {
+			@Subscribe
+			public void a(final String s) {
+				assertThat(s, is(equalTo("")));
+				throw new IllegalArgumentException();
+			}
+
+			@Subscribe
+			public void a(final Integer i) {
+				assertThat(i, is(equalTo(1)));
+			}
+		};
+		m1.register(s1);
+
+		m1.post("");
+		m1.post(1);
+
+		assertThat(m1.getEvents().size(), is(equalTo(1)));
+		assertThat(m1.getSubscribers().size(), is(equalTo(1)));
+	}
+
+	@Test
+	public void testPost3() {
+		final DefaultMediator m1 = provider.get();
+		final Subscriber s1 = new Subscriber() {
+			@Subscribe
+			public void a(final String s) {
+				assertThat(s, is(equalTo("")));
+				throw new IllegalArgumentException();
+			}
+		};
+		final Subscriber s2 = new Subscriber() {
+			@Subscribe
+			public void a(final String s) {
+				assertThat(s, is(equalTo("")));
+			}
+		};
+		m1.register(s1, s2);
+
+		m1.post("");
+
+		assertThat(m1.getSubscribers().size(), is(equalTo(1)));
+		assertThat(m1.getEvents().size(), is(equalTo(1)));
+	}
+
+	@Test
+	public void testPost4() {
+		final DefaultMediator m1 = provider.get();
+
+		m1.post("");
+
+	}
+
+	@Test
 	public void testRegister(@Capturing final Logger logger) {
 		final DefaultMediator m1 = provider.get();
 		final Subscriber s1 = new TestSubscriber();
 
 		m1.register(s1);
 
+		final Set<Class<?>> events = m1.getEvents();
+		assertThat(events.size(), is(equalTo(3)));
+		assertThat(events, hasItems(String.class, Integer.class, Collection.class));
 		final Set<Subscriber> subscribers = m1.getSubscribers();
 		assertThat(subscribers.size(), is(equalTo(1)));
 		assertThat(subscribers, hasItem(s1));
@@ -158,6 +235,9 @@ public class MediatorTest {
 
 		m1.register(s1, s2);
 
+		final Set<Class<?>> events = m1.getEvents();
+		assertThat(events.size(), is(equalTo(3)));
+		assertThat(events, hasItems(String.class, Integer.class, Collection.class));
 		final Set<Subscriber> subscribers = m1.getSubscribers();
 		assertThat(subscribers.size(), is(equalTo(2)));
 		assertThat(subscribers, hasItems(s1, s2));
@@ -206,6 +286,9 @@ public class MediatorTest {
 
 		m1.register(s1, s1);
 
+		final Set<Class<?>> events = m1.getEvents();
+		assertThat(events.size(), is(equalTo(3)));
+		assertThat(events, hasItems(String.class, Integer.class, Collection.class));
 		final Set<Subscriber> subscribers = m1.getSubscribers();
 		assertThat(subscribers.size(), is(equalTo(1)));
 		assertThat(subscribers, hasItem(s1));
@@ -243,8 +326,12 @@ public class MediatorTest {
 
 		m1.unregister(s1);
 
-		assertThat(m1.getSubscribers().size(), is(equalTo(0)));
-		assertThat(m1.getSubscribers(), not(hasItem(s1)));
+		final Set<Class<?>> events = m1.getEvents();
+		assertThat(events.size(), is(equalTo(0)));
+		assertThat(events, not(hasItems(String.class, Integer.class, Collection.class)));
+		final Set<Subscriber> subscribers = m1.getSubscribers();
+		assertThat(subscribers.size(), is(equalTo(0)));
+		assertThat(subscribers, not(hasItem(s1)));
 	}
 
 	@Test
@@ -256,8 +343,12 @@ public class MediatorTest {
 
 		m1.unregister(s1);
 
-		assertThat(m1.getSubscribers().size(), is(equalTo(1)));
-		assertThat(m1.getSubscribers(), allOf(not(hasItem(s1)), hasItem(s2)));
+		final Set<Class<?>> events = m1.getEvents();
+		assertThat(events.size(), is(equalTo(3)));
+		assertThat(events, hasItems(String.class, Integer.class, Collection.class));
+		final Set<Subscriber> subscribers = m1.getSubscribers();
+		assertThat(subscribers.size(), is(equalTo(1)));
+		assertThat(subscribers, allOf(not(hasItem(s1)), hasItem(s2)));
 	}
 
 	@Test
@@ -268,8 +359,12 @@ public class MediatorTest {
 
 		m1.unregister(s1, s1);
 
-		assertThat(m1.getSubscribers().size(), is(equalTo(0)));
-		assertThat(m1.getSubscribers(), not(hasItem(s1)));
+		final Set<Class<?>> events = m1.getEvents();
+		assertThat(events.size(), is(equalTo(0)));
+		assertThat(events, not(hasItems(String.class, Integer.class, Collection.class)));
+		final Set<Subscriber> subscribers = m1.getSubscribers();
+		assertThat(subscribers.size(), is(equalTo(0)));
+		assertThat(subscribers, not(hasItem(s1)));
 	}
 
 }
