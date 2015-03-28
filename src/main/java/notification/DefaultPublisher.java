@@ -2,6 +2,7 @@ package notification;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.validation.constraints.NotNull;
 
 @Singleton
 class DefaultPublisher implements Publisher {
@@ -9,7 +10,7 @@ class DefaultPublisher implements Publisher {
 	private final Mediator mediator;
 
 	@Inject
-	public DefaultPublisher(final Mediator mediator) {
+	DefaultPublisher(@NotNull final Mediator mediator) {
 		this.mediator = mediator;
 	}
 
