@@ -42,12 +42,6 @@ sourceSets {
 	ui {}
 }
 
-configurations {
-	uiCompile {
-		extendsFrom compile
-	}
-}
-
 dependencies {
 	compile fileTree(dir: 'src/main/resources', include: '*.jar')
 	compile "org.slf4j:slf4j-api:${slf4j_version}"
@@ -55,6 +49,7 @@ dependencies {
 	compile "com.google.inject:guice:${guice_version}"
 	compile "com.google.inject.extensions:guice-assistedinject:${guice_version}"
 	uiCompile sourceSets.api.output
+	uiCompile "${group}:${name}:${version}"
 	testCompile "junit:junit:${junit_version}"
 	testCompile "org.jmockit:jmockit:${jmockit_version}"
 }
@@ -64,33 +59,58 @@ task wrapper(type: Wrapper) {
 }
 
 task apiJar(type: Jar) {
-	baseName = baseName + "-$sourceSets.api.name"
+	appendix = sourceSets.api.name
 	from sourceSets.api.output
-	from sourceSets.api.allSource
 }
 
-jar {
+task apiSourceJar(type: Jar) {
+	appendix = sourceSets.api.name
+	classifier 'sources'
+	from sourceSets.api.allJava
+}
+
+task sourceJar(type: Jar) {
+	classifier 'sources'
+	from sourceSets.api.allJava
 	from sourceSets.main.allJava
 }
 
 task uiJar(type: Jar) {
-	baseName = baseName + "-$sourceSets.ui.name"
+	appendix = sourceSets.ui.name
 	from sourceSets.ui.output
-	from sourceSets.ui.allSource
+}
+
+task uiSourceJar(type: Jar) {
+	appendix = sourceSets.ui.name
+	classifier 'sources'
+	from sourceSets.ui.allJava
+}
+
+configurations {
+	uiCompile {
+		extendsFrom compile
+	}
+}
+
+artifacts {
+	apiRuntime apiJar
+	uiRuntime uiJar
 }
 
 publishing {
 	publications {
 		api(MavenPublication) {
 			artifactId = artifactId + "-$sourceSets.api.name"
-			artifact apiJar
+			artifacts = [apiJar, apiSourceJar]
 		}
 		main(MavenPublication) {
 			from components.java
+			artifact sourceJar
 		}
 		ui(MavenPublication) {
 			artifactId = artifactId + "-$sourceSets.ui.name"
-			artifact uiJar
+			// runtimeDependencies // need to find a way to populate it
+			artifacts = [uiJar, uiSourceJar]
 		}
 	}
 }
@@ -98,7 +118,6 @@ publishing {
 jacocoTestReport {
 	reports {
 		xml.enabled true
-		csv.enabled false
 		html.enabled true
 	}
 }
