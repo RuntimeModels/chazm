@@ -1,0 +1,13 @@
+dependencies {
+	compile project(':organization-model')
+	testCompile "junit:junit:${junit_version}"
+	testCompile "org.jmockit:jmockit:${jmockit_version}"
+}
+publishing {
+	publications {
+		main(MavenPublication) {
+			from components.java
+			artifact sourceJar
+		}
+	}
+}

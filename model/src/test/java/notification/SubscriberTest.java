@@ -103,7 +103,7 @@ public class SubscriberTest {
 				result = specGoalId;
 			}
 		};
-		final Mediator mockMediator = new MockUp<Mediator>() {
+		final Mediator mockMediator = new MockUp<DefaultMediator>() {
 
 			@Mock
 			<T> void post(final T event) {
@@ -140,7 +140,7 @@ public class SubscriberTest {
 				result = agentId;
 			}
 		};
-		final Mediator mockMediator = new MockUp<Mediator>() {
+		final Mediator mockMediator = new MockUp<DefaultMediator>() {
 
 			@Mock
 			<T> void post(final T event) {
@@ -181,7 +181,7 @@ public class SubscriberTest {
 				result = instGoalId;
 			}
 		};
-		final Mediator mockMediator = new MockUp<Mediator>() {
+		final Mediator mockMediator = new MockUp<DefaultMediator>() {
 
 			@Mock
 			<T> void post(final T event) {
@@ -221,7 +221,7 @@ public class SubscriberTest {
 				result = attributeId;
 			}
 		};
-		final Mediator mockMediator = new MockUp<Mediator>() {
+		final Mediator mockMediator = new MockUp<DefaultMediator>() {
 
 			@Mock
 			<T> void post(final T event) {
@@ -258,7 +258,7 @@ public class SubscriberTest {
 				result = capabilityId;
 			}
 		};
-		final Mediator mockMediator = new MockUp<Mediator>() {
+		final Mediator mockMediator = new MockUp<DefaultMediator>() {
 
 			@Mock
 			<T> void post(final T event) {
@@ -295,7 +295,7 @@ public class SubscriberTest {
 				result = characteristicId;
 			}
 		};
-		final Mediator mockMediator = new MockUp<Mediator>() {
+		final Mediator mockMediator = new MockUp<DefaultMediator>() {
 
 			@Mock
 			<T> void post(final T event) {
@@ -336,7 +336,7 @@ public class SubscriberTest {
 				result = 0.7;
 			}
 		};
-		final Mediator mockMediator = new MockUp<Mediator>() {
+		final Mediator mockMediator = new MockUp<DefaultMediator>() {
 
 			@Mock
 			<T> void post(final T event) {
@@ -376,7 +376,7 @@ public class SubscriberTest {
 				result = instGoalId;
 			}
 		};
-		final Mediator mockMediator = new MockUp<Mediator>() {
+		final Mediator mockMediator = new MockUp<DefaultMediator>() {
 
 			@Mock
 			<T> void post(final T event) {
@@ -415,7 +415,7 @@ public class SubscriberTest {
 				result = attributeId;
 			}
 		};
-		final Mediator mockMediator = new MockUp<Mediator>() {
+		final Mediator mockMediator = new MockUp<DefaultMediator>() {
 
 			@Mock
 			<T> void post(final T event) {
@@ -454,7 +454,7 @@ public class SubscriberTest {
 				result = attributeId;
 			}
 		};
-		final Mediator mockMediator = new MockUp<Mediator>() {
+		final Mediator mockMediator = new MockUp<DefaultMediator>() {
 
 			@Mock
 			<T> void post(final T event) {
@@ -491,7 +491,7 @@ public class SubscriberTest {
 				result = pmfId;
 			}
 		};
-		final Mediator mockMediator = new MockUp<Mediator>() {
+		final Mediator mockMediator = new MockUp<DefaultMediator>() {
 
 			@Mock
 			<T> void post(final T event) {
@@ -528,7 +528,7 @@ public class SubscriberTest {
 				result = policyId;
 			}
 		};
-		final Mediator mockMediator = new MockUp<Mediator>() {
+		final Mediator mockMediator = new MockUp<DefaultMediator>() {
 
 			@Mock
 			<T> void post(final T event) {
@@ -569,7 +569,7 @@ public class SubscriberTest {
 				result = 0.8;
 			}
 		};
-		final Mediator mockMediator = new MockUp<Mediator>() {
+		final Mediator mockMediator = new MockUp<DefaultMediator>() {
 
 			@Mock
 			<T> void post(final T event) {
@@ -611,7 +611,7 @@ public class SubscriberTest {
 				result = capabilityId;
 			}
 		};
-		final Mediator mockMediator = new MockUp<Mediator>() {
+		final Mediator mockMediator = new MockUp<DefaultMediator>() {
 
 			@Mock
 			<T> void post(final T event) {
@@ -648,7 +648,7 @@ public class SubscriberTest {
 				result = roleId;
 			}
 		};
-		final Mediator mockMediator = new MockUp<Mediator>() {
+		final Mediator mockMediator = new MockUp<DefaultMediator>() {
 
 			@Mock
 			<T> void post(final T event) {
@@ -685,7 +685,7 @@ public class SubscriberTest {
 				result = specGoalId;
 			}
 		};
-		final Mediator mockMediator = new MockUp<Mediator>() {
+		final Mediator mockMediator = new MockUp<DefaultMediator>() {
 
 			@Mock
 			<T> void post(final T event) {
@@ -724,7 +724,7 @@ public class SubscriberTest {
 				result = pmfId;
 			}
 		};
-		final Mediator mockMediator = new MockUp<Mediator>() {
+		final Mediator mockMediator = new MockUp<DefaultMediator>() {
 
 			@Mock
 			<T> void post(final T event) {
