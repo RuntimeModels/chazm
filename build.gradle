@@ -18,6 +18,7 @@ subprojects {
 	version '7.0.0'
 
 	jacocoTestReport {
+		dependsOn test
 		reports {
 			html.enabled true
 			xml.enabled true
@@ -35,6 +36,7 @@ subprojects {
 	}
 }
 
+apply plugin: 'base'
 apply plugin: 'com.github.kt3k.coveralls'
 
 buildscript {
@@ -49,13 +51,13 @@ buildscript {
 
 task jacocoRootReport(type: JacocoReport) {
 	dependsOn subprojects.test
-	sourceDirectories = files(subprojects.sourceSets.main.allSource.srcDirs)
-	classDirectories = files(subprojects.sourceSets.main.output)
+	sourceDirectories = files(subprojects.sourceSets.main.java.srcDirs)
+	classDirectories = files(subprojects.sourceSets.main.output.classesDir)
 	executionData project(':organization-model').jacocoTestReport.executionData
 	reports {
 		html {
 			enabled true
-			destination "${buildDir}/reports/jacoco/test/hmtl"
+			destination "${buildDir}/reports/jacoco/test/html"
 		}
 		xml {
 			enabled true
