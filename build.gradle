@@ -49,22 +49,27 @@ buildscript {
 	}
 }
 
+coveralls {
+	sourceDirs = subprojects.sourceSets.main.java.srcDirs.flatten()
+	jacocoReportPath = "${buildDir}/reports/jacoco/jacocoRootReport/jacocoRootReport.xml"
+}
+
 task jacocoRootReport(type: JacocoReport) {
 	dependsOn subprojects.test
+
 	sourceDirectories = files(subprojects.sourceSets.main.java.srcDirs)
 	classDirectories = files(subprojects.sourceSets.main.output.classesDir)
-	executionData project(':organization-model').jacocoTestReport.executionData
+	executionData = files(files(subprojects.jacocoTestReport.executionData).findAll { it.exists() })
+
 	reports {
-		html {
-			enabled true
-			destination "${buildDir}/reports/jacoco/test/html"
-		}
-		xml {
-			enabled true
-			destination "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
-		}
+		html.enabled true
+		xml.enabled true
 		csv.enabled false
 	}
+}
+
+tasks.coveralls {
+	dependsOn jacocoRootReport
 }
 
 ext {
