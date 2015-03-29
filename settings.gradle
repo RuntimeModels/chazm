@@ -1,0 +1,7 @@
+include 'organization-model-api', 'organization-model', 'organization-model-ui'
+
+rootProject.name='model'
+
+project(':organization-model-api').projectDir=file('api')
+project(':organization-model').projectDir=file('model')
+project(':organization-model-ui').projectDir=file('ui')

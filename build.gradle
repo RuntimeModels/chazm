@@ -1,7 +1,39 @@
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'maven-publish'
-apply plugin: 'jacoco'
+allprojects {
+	apply plugin: 'eclipse'
+	apply plugin: 'idea'
+}
+
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'maven-publish'
+	apply plugin: 'jacoco'
+
+	sourceCompatibility = '1.8'
+
+	group = 'model'
+	version = '7.0.0'
+
+	repositories {
+		jcenter()
+	}
+
+	jacocoTestReport {
+		reports {
+			xml.enabled true
+			html.enabled true
+		}
+	}
+
+	task sourceJar(type: Jar) {
+		classifier 'sources'
+		from sourceSets.main.allJava
+	}
+
+	artifacts {
+		runtime sourceJar
+	}
+}
+
 apply plugin: 'com.github.kt3k.coveralls'
 
 buildscript {
@@ -14,11 +46,6 @@ buildscript {
 	}
 }
 
-sourceCompatibility = '1.8'
-
-group = 'model'
-version = '7.0.0'
-
 ext {
 	slf4j_version = '1.7.10'
 	javaee_version = '7.0'
@@ -28,96 +55,6 @@ ext {
 	jmockit_version = '1.16'
 }
 
-repositories {
-	jcenter()
-}
-
-sourceSets {
-	api {}
-	main {
-		java {
-			srcDirs = ['src/api/java', 'src/main/java']
-		}
-	}
-	ui {}
-}
-
-dependencies {
-	compile fileTree(dir: 'src/main/resources', include: '*.jar')
-	compile "org.slf4j:slf4j-api:${slf4j_version}"
-	compile "javax:javaee-api:${javaee_version}"
-	compile "com.google.inject:guice:${guice_version}"
-	compile "com.google.inject.extensions:guice-assistedinject:${guice_version}"
-	uiCompile sourceSets.api.output
-	uiCompile "${group}:${name}:${version}"
-	testCompile "junit:junit:${junit_version}"
-	testCompile "org.jmockit:jmockit:${jmockit_version}"
-}
-
 task wrapper(type: Wrapper) {
 	gradleVersion = '2.3'
-}
-
-task apiJar(type: Jar) {
-	appendix = sourceSets.api.name
-	from sourceSets.api.output
-}
-
-task apiSourceJar(type: Jar) {
-	appendix = sourceSets.api.name
-	classifier 'sources'
-	from sourceSets.api.allJava
-}
-
-task sourceJar(type: Jar) {
-	classifier 'sources'
-	from sourceSets.api.allJava
-	from sourceSets.main.allJava
-}
-
-task uiJar(type: Jar) {
-	appendix = sourceSets.ui.name
-	from sourceSets.ui.output
-}
-
-task uiSourceJar(type: Jar) {
-	appendix = sourceSets.ui.name
-	classifier 'sources'
-	from sourceSets.ui.allJava
-}
-
-configurations {
-	uiCompile {
-		extendsFrom compile
-	}
-}
-
-artifacts {
-	apiRuntime apiJar
-	uiRuntime uiJar
-}
-
-publishing {
-	publications {
-		api(MavenPublication) {
-			artifactId = artifactId + "-$sourceSets.api.name"
-			artifacts = [apiJar, apiSourceJar]
-		}
-		main(MavenPublication) {
-			from components.java
-			artifact sourceJar
-		}
-		ui(MavenPublication) {
-			artifactId = artifactId + "-$sourceSets.ui.name"
-			// runtimeDependencies // need to find a way to populate it
-			artifacts = [uiJar, uiSourceJar]
-		}
-	}
-}
-
-jacocoTestReport {
-	reports {
-		xml.enabled true
-		html.enabled true
-	}
 }
