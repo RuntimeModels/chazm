@@ -1,4 +1,4 @@
-sudo: false # using container-based infrastructure
+sudo: false # use container-based infrastructure
 
 language: java
 jdk:
@@ -11,17 +11,16 @@ cache:
     - '$HOME/.m2/repository' # cache the maven artifacts
 
 before_install:
-  - chmod +x gradlew # make script gradlew executable
+  - chmod +x gradlew # make gradlew script executable
 
 install:
   - ./gradlew assemble
 
 script:
-  - ./gradlew check
-  - ./gradlew jacocoTestReport # compile jacoco test report
+  - ./gradlew check jacocoTestReport # perform tests and compile jacoco test reports
 
 before_cache:
-  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+  - find $HOME/.gradle -name "*.lock" -type f
   
 after_script:
-  - ./gradlew coveralls # send report to coveralls
+  - ./gradlew jacocoRootReport coveralls # collect jacoco test reports from subprojects send them to coveralls

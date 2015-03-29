@@ -53,15 +53,9 @@ task jacocoTestReport(type: JacocoReport) {
 	classDirectories = files(subprojects.sourceSets.main.output)
 	executionData project(':organization-model').jacocoTestReport.executionData
 	reports {
-        html {
-        	enabled true
-        	destination "${buildDir}/reports/jacoco/test/html"
-        }
-        xml {
-        	enabled true
-        	destination "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
-        }
-        csv.enabled = false
+		html.enabled true
+		xml.enabled true
+		csv.enabled false
 	}
 }
 
