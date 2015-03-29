@@ -20,7 +20,7 @@ script:
   - ./gradlew check jacocoTestReport # perform tests and compile jacoco test reports
 
 before_cache:
-  - find $HOME/.gradle/caches -name "*.lock" -type f -delete
+  - find $HOME/.gradle/caches -name "*.lock" -type f -print0 -delete
   
 after_script:
   - ./gradlew jacocoRootReport coveralls # collect jacoco test reports from subprojects send them to coveralls
