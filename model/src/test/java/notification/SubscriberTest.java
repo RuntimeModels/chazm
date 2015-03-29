@@ -27,6 +27,7 @@ import model.organization.event.AssignmentEvent;
 import model.organization.event.AttributeEvent;
 import model.organization.event.CapabilityEvent;
 import model.organization.event.CharacteristicEvent;
+import model.organization.event.ContainsEvent;
 import model.organization.event.EventCategory;
 import model.organization.event.HasEvent;
 import model.organization.event.InstanceGoalEvent;
@@ -316,6 +317,50 @@ public class SubscriberTest {
 				logger.debug("Received ({}, {}): id = {}", CharacteristicEvent.class.getSimpleName(), EventCategory.CHANGED, characteristicId);
 				times = 1;
 				logger.debug("Received ({}, {}): id = {}", CharacteristicEvent.class.getSimpleName(), EventCategory.REMOVED, characteristicId);
+				times = 1;
+			}
+		};
+	}
+
+	@Test
+	public void testEvent7(@Mocked final ContainsEvent event) {
+		final DefaultSubscriber s1 = provider.get();
+		new NonStrictExpectations() {
+			{
+				event.getCategory();
+				returns(EventCategory.ADDED, EventCategory.ADDED, EventCategory.CHANGED, EventCategory.REMOVED);
+				event.getRoleId();
+				result = roleId;
+				event.getCharacteristicId();
+				result = characteristicId;
+				event.getValue();
+				result = 0.25;
+			}
+		};
+		final Mediator mockMediator = new MockUp<DefaultMediator>() {
+
+			@Mock
+			<T> void post(final T event) {
+				s1.event((ContainsEvent) event);
+			}
+
+		}.getMockInstance();
+
+		mockMediator.post(event);
+		mockMediator.post(event);
+		mockMediator.post(event);
+		mockMediator.post(event);
+
+		new FullVerifications(Logger.class) {
+			{
+				logger.debug("Received ({}, {}): role = {}, characteristic = {}, value = {}", ContainsEvent.class.getSimpleName(), EventCategory.ADDED, roleId,
+						characteristicId, 0.25);
+				times = 2;
+				logger.debug("Received ({}, {}): role = {}, characteristic = {}, value = {}", ContainsEvent.class.getSimpleName(), EventCategory.CHANGED,
+						roleId, characteristicId, 0.25);
+				times = 1;
+				logger.debug("Received ({}, {}): role = {}, characteristic = {}, value = {}", ContainsEvent.class.getSimpleName(), EventCategory.REMOVED,
+						roleId, characteristicId, 0.25);
 				times = 1;
 			}
 		};
