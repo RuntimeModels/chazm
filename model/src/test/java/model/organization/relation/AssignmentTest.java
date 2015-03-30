@@ -65,14 +65,6 @@ public class AssignmentTest {
 
 	@Test
 	public void testAssignment2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (agent) cannot be null"));
-
-		new AssignmentRelation(null, null, null);
-	}
-
-	@Test
-	public void testAssignment3() {
 		final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
 
 		exception.expect(instanceOf(ProvisionException.class));
@@ -82,17 +74,7 @@ public class AssignmentTest {
 	}
 
 	@Test
-	public void testAssignment4() {
-		final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
-
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (role) cannot be null"));
-
-		new AssignmentRelation(a, null, null);
-	}
-
-	@Test
-	public void testAssignment5() {
+	public void testAssignment3() {
 		final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
 		final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
 
@@ -100,17 +82,6 @@ public class AssignmentTest {
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
 
 		assignmentFactory.buildAssignment(a, r, null);
-	}
-
-	@Test
-	public void testAssignment6() {
-		final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
-		final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
-
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (goal) cannot be null"));
-
-		new AssignmentRelation(a, r, null);
 	}
 
 	@Test

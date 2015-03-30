@@ -1,7 +1,5 @@
 package model.organization.relation;
 
-import static model.organization.validation.Checks.checkNotNull;
-
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
@@ -19,8 +17,6 @@ class ModeratesRelation implements Moderates {
 
 	@Inject
 	ModeratesRelation(@NotNull @Assisted final Pmf pmf, @NotNull @Assisted final Attribute attribute) {
-		checkNotNull(pmf, "pmf");
-		checkNotNull(attribute, "attribute");
 		this.pmf = pmf;
 		this.attribute = attribute;
 	}

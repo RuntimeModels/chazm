@@ -56,30 +56,12 @@ public class RequiresTest {
 
 	@Test
 	public void testRequires2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (role) cannot be null"));
-
-		new RequiresRelation(null, null);
-	}
-
-	@Test
-	public void testRequires3() {
 		final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
 
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
 
 		requiresFactory.buildRequires(r, null);
-	}
-
-	@Test
-	public void testRequires4() {
-		final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
-
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (capability) cannot be null"));
-
-		new RequiresRelation(r, null);
 	}
 
 	@Test

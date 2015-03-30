@@ -1,7 +1,5 @@
 package model.organization.relation;
 
-import static model.organization.validation.Checks.checkNotNull;
-
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
@@ -20,8 +18,6 @@ class HasRelation implements Has {
 
 	@Inject
 	HasRelation(@NotNull @Assisted final Agent agent, @NotNull @Assisted final Attribute attribute, @NotNull @Assisted final double value) {
-		checkNotNull(agent, "agent");
-		checkNotNull(attribute, "attribute");
 		this.agent = agent;
 		this.attribute = attribute;
 		setValue(value);

@@ -1,7 +1,5 @@
 package model.organization.entity;
 
-import static model.organization.validation.Checks.checkNotNull;
-
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
@@ -18,8 +16,6 @@ class InstanceGoalEntity extends AbstractEntity<InstanceGoal> implements Instanc
 	InstanceGoalEntity(@NotNull @Assisted final UniqueId<InstanceGoal> id, @NotNull @Assisted final SpecificationGoal goal,
 			@NotNull @Assisted final InstanceGoal.Parameter parameter) {
 		super(id);
-		checkNotNull(goal, "goal");
-		checkNotNull(parameter, "parameter");
 		this.goal = goal;
 		this.parameter = parameter;
 	}

@@ -1,7 +1,5 @@
 package model.organization.relation;
 
-import static model.organization.validation.Checks.checkNotNull;
-
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
@@ -19,8 +17,6 @@ class AchievesRelation implements Achieves {
 
 	@Inject
 	AchievesRelation(@NotNull @Assisted final Role role, @NotNull @Assisted final SpecificationGoal goal) {
-		checkNotNull(role, "role");
-		checkNotNull(goal, "goal");
 		this.role = role;
 		this.goal = goal;
 	}

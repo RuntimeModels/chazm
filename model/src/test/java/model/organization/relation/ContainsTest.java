@@ -56,30 +56,12 @@ public class ContainsTest {
 
 	@Test
 	public void testContains2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (role) cannot be null"));
-
-		new ContainsRelation(null, null, 1d);
-	}
-
-	@Test
-	public void testContains3() {
 		final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
 
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
 
 		containsFactory.buildContains(r, null, 1d);
-	}
-
-	@Test
-	public void testContains4() {
-		final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
-
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (characteristic) cannot be null"));
-
-		new ContainsRelation(r, null, 1d);
 	}
 
 	@Test

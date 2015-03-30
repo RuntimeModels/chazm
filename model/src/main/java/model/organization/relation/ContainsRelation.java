@@ -1,7 +1,5 @@
 package model.organization.relation;
 
-import static model.organization.validation.Checks.checkNotNull;
-
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
@@ -19,8 +17,6 @@ class ContainsRelation implements Contains {
 
 	@Inject
 	ContainsRelation(@NotNull @Assisted final Role role, @NotNull @Assisted final Characteristic characteristic, @NotNull @Assisted final double value) {
-		checkNotNull(role, "role");
-		checkNotNull(characteristic, "characteristic");
 		this.role = role;
 		this.characteristic = characteristic;
 		this.value = value;

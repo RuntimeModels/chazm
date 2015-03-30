@@ -56,30 +56,12 @@ public class UsesTest {
 
 	@Test
 	public void testUses2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (role) cannot be null"));
-
-		new UsesRelation(null, null);
-	}
-
-	@Test
-	public void testUses3() {
 		final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
 
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
 
 		usesFactory.buildUses(r, null);
-	}
-
-	@Test
-	public void testUses4() {
-		final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
-
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (pmf) cannot be null"));
-
-		new UsesRelation(r, null);
 	}
 
 	@Test
