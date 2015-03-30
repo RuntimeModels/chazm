@@ -1,7 +1,5 @@
 package model.organization.function;
 
-import static model.organization.validation.Checks.checkNotNull;
-
 import java.util.Collection;
 
 import javax.inject.Singleton;
@@ -20,11 +18,6 @@ class DefaultGoodness implements Goodness {
 	@Override
 	public double compute(@NotNull final Organization organization, @NotNull final Agent agent, @NotNull final Role role, @NotNull final InstanceGoal goal,
 			@NotNull final Collection<Assignment> assignments) {
-		checkNotNull(organization, "organization");
-		checkNotNull(agent, "agent");
-		checkNotNull(role, "role");
-		checkNotNull(goal, "goal");
-		checkNotNull(assignments, "assignments");
 		/*
 		 * first, check that the agent has all the necessary attributes. otherwise, return a null to indicate that the agent cannot play the role
 		 */
