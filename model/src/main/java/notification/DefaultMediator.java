@@ -12,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.StampedLock;
 
 import javax.inject.Singleton;
+import javax.validation.constraints.NotNull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,7 +66,7 @@ class DefaultMediator implements Mediator {
 	}
 
 	@Override
-	public <T> void post(final T event) {
+	public <T> void post(@NotNull final T event) {
 		/* prevents multiple post from occurring simultaneously because it is possible for a subscriber to be notified of two or more events at the same time */
 		final Set<Entry<Subscriber, Method>> set = get(event.getClass());
 		synchronized (this) {
@@ -75,13 +76,13 @@ class DefaultMediator implements Mediator {
 	}
 
 	@Override
-	public void register(final Subscriber subscriber) {
+	public void register(@NotNull final Subscriber subscriber) {
 		Arrays.stream(subscriber.getClass().getDeclaredMethods()).parallel().filter(p -> p.isAnnotationPresent(Subscribe.class) && p.getParameterCount() == 1)
 				.forEach(c -> add(c, subscriber));
 	}
 
 	@Override
-	public void unregister(final Subscriber subscriber) {
+	public void unregister(@NotNull final Subscriber subscriber) {
 		final long stamp = lock.writeLock();
 		try {
 			if (subscriberEvents.containsKey(subscriber)) {
