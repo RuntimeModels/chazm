@@ -4,6 +4,7 @@ import model.organization.event.EventModule;
 import model.organization.function.FunctionModule;
 import model.organization.relation.RelationModule;
 import notification.NotificationModule;
+import aop.validation.ValidationModule;
 
 import com.google.inject.AbstractModule;
 
@@ -22,6 +23,7 @@ public class OrganizationModule extends AbstractModule {
 		install(new FunctionModule());
 		install(new EventModule());
 		install(new NotificationModule());
+		install(new ValidationModule());
 	}
 
 }

@@ -73,7 +73,7 @@ public class ChecksTest {
 		final Role r1 = entityFactory.buildRole(i1);
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(equalTo("([Role]) entity (RoleEntity(1)) already exists"));
+		exception.expectMessage(equalTo("(Role) entity (1) already exists"));
 
 		checkNotExists(r1, "i1", p -> true);
 	}
