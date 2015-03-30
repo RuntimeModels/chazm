@@ -1,8 +1,10 @@
 package model.organization.id;
 
 import aop.profiling.DoNotProfile;
+import aop.validation.DoNotCheck;
 
 @DoNotProfile
+@DoNotCheck
 class IdFactoryImpl implements IdFactory {
 
 	@Override

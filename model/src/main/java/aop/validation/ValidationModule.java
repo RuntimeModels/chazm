@@ -1,6 +1,7 @@
 package aop.validation;
 
-import static com.google.inject.matcher.Matchers.any;
+import static com.google.inject.matcher.Matchers.annotatedWith;
+import static com.google.inject.matcher.Matchers.not;
 
 import com.google.inject.AbstractModule;
 
@@ -14,7 +15,7 @@ public class ValidationModule extends AbstractModule {
 
 	@Override
 	protected void configure() {
-		bindInterceptor(any(), any(), new CheckNotNull());
+		bindInterceptor(not(annotatedWith(DoNotCheck.class)), not(annotatedWith(DoNotCheck.class)), new CheckNotNull());
 	}
 
 }
