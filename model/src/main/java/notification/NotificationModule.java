@@ -1,5 +1,7 @@
 package notification;
 
+import aop.validation.ValidationModule;
+
 import com.google.inject.AbstractModule;
 
 /**
@@ -15,6 +17,7 @@ public class NotificationModule extends AbstractModule {
 		bind(Mediator.class).to(DefaultMediator.class);
 		bind(Publisher.class).to(DefaultPublisher.class);
 		bind(Subscriber.class).to(DefaultSubscriber.class);
+		install(new ValidationModule());
 	}
 
 }
