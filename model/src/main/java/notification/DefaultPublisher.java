@@ -15,7 +15,7 @@ class DefaultPublisher implements Publisher {
 	}
 
 	@Override
-	public <T> void post(final T event) {
+	public <T> void post(@NotNull final T event) {
 		mediator.post(event);
 	}
 

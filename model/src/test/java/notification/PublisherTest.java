@@ -5,6 +5,9 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
+
+import javax.inject.Provider;
+
 import mockit.Capturing;
 import mockit.FullVerifications;
 import mockit.integration.junit4.JMockit;
@@ -21,14 +24,16 @@ import com.google.inject.Injector;
 @RunWith(JMockit.class)
 public class PublisherTest {
 
+	private final Injector injector = Guice.createInjector(new NotificationModule());
+	private final Provider<Publisher> provider = injector.getProvider(Publisher.class);
+
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
 
 	@Test
 	public void testPublisher() {
-		final Injector injector = Guice.createInjector(new NotificationModule());
-		final Publisher p1 = injector.getInstance(Publisher.class);
-		final Publisher p2 = injector.getInstance(Publisher.class);
+		final Publisher p1 = provider.get();
+		final Publisher p2 = provider.get();
 
 		assertThat(p1, is(not(nullValue())));
 		assertThat(p1, is(sameInstance(p2)));
@@ -36,8 +41,7 @@ public class PublisherTest {
 
 	@Test
 	public void testPost(@Capturing final Mediator mediator) {
-		final Injector injector = Guice.createInjector(new NotificationModule());
-		final Publisher p1 = injector.getInstance(Publisher.class);
+		final Publisher p1 = provider.get();
 
 		p1.post("OK");
 		p1.post("OK");
@@ -57,6 +61,16 @@ public class PublisherTest {
 				times = 1;
 			}
 		};
+	}
+
+	@Test
+	public void testPost1() {
+		final Publisher p1 = provider.get();
+
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Parameter (arg0) cannot be null");
+
+		p1.post(null);
 	}
 
 }
