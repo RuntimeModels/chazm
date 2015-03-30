@@ -53,26 +53,10 @@ public class PolicyEventTest {
 
 	@Test
 	public void testPolicyEvent2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (category) cannot be null"));
-
-		new PolicyEvent(null, null);
-	}
-
-	@Test
-	public void testPolicyEvent3() {
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
 
 		pef.build(EventCategory.ADDED, null);
-	}
-
-	@Test
-	public void testPolicyEvent4() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (policy) cannot be null"));
-
-		new PolicyEvent(EventCategory.ADDED, null);
 	}
 
 	@Test

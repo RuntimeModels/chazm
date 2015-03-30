@@ -1,7 +1,5 @@
 package model.organization.event;
 
-import static model.organization.validation.Checks.checkNotNull;
-
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
@@ -27,7 +25,6 @@ public class RoleEvent extends AbstractEvent {
 	@Inject
 	RoleEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final Role role) {
 		super(category);
-		checkNotNull(role, "role");
 		id = role.getId();
 	}
 

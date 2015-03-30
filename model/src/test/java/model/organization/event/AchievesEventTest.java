@@ -61,26 +61,10 @@ public class AchievesEventTest {
 
 	@Test
 	public void testAchievesEvent2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (category) cannot be null"));
-
-		new AchievesEvent(null, null);
-	}
-
-	@Test
-	public void testAchievesEvent3() {
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
 
 		aef.build(EventCategory.ADDED, null);
-	}
-
-	@Test
-	public void testAchievesEvent4() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (achieves) cannot be null"));
-
-		new AchievesEvent(EventCategory.ADDED, null);
 	}
 
 	@Test

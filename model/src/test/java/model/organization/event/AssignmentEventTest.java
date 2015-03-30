@@ -69,26 +69,10 @@ public class AssignmentEventTest {
 
 	@Test
 	public void testAssignmentEvent2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (category) cannot be null"));
-
-		new AssignmentEvent(null, null);
-	}
-
-	@Test
-	public void testAssignmentEvent3() {
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
 
 		aef.build(EventCategory.ADDED, null);
-	}
-
-	@Test
-	public void testAssignmentEvent4() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (assignment) cannot be null"));
-
-		new AssignmentEvent(EventCategory.ADDED, null);
 	}
 
 	@Test

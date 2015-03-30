@@ -1,7 +1,5 @@
 package model.organization.event;
 
-import static model.organization.validation.Checks.checkNotNull;
-
 import java.io.Serializable;
 
 import javax.validation.constraints.NotNull;
@@ -26,7 +24,6 @@ public abstract class AbstractEvent implements Serializable {
 	 *            the category of the update.
 	 */
 	protected AbstractEvent(@NotNull final EventCategory category) {
-		checkNotNull(category, "category");
 		this.category = category;
 	}
 

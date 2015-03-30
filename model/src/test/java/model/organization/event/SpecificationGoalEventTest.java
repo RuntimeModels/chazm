@@ -53,26 +53,10 @@ public class SpecificationGoalEventTest {
 
 	@Test
 	public void testSpecificationGoalEvent2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (category) cannot be null"));
-
-		new SpecificationGoalEvent(null, null);
-	}
-
-	@Test
-	public void testSpecificationGoalEvent3() {
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
 
 		gef.build(EventCategory.ADDED, null);
-	}
-
-	@Test
-	public void testSpecificationGoalEvent4() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (goal) cannot be null"));
-
-		new SpecificationGoalEvent(EventCategory.ADDED, null);
 	}
 
 	@Test

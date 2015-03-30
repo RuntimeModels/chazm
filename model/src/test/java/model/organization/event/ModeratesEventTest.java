@@ -61,26 +61,10 @@ public class ModeratesEventTest {
 
 	@Test
 	public void testModeratesEvent2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (category) cannot be null"));
-
-		new ModeratesEvent(null, null);
-	}
-
-	@Test
-	public void testModeratesEvent3() {
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
 
 		mef.build(EventCategory.ADDED, null);
-	}
-
-	@Test
-	public void testModeratesEvent4() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (moderates) cannot be null"));
-
-		new ModeratesEvent(EventCategory.ADDED, null);
 	}
 
 	@Test

@@ -1,7 +1,5 @@
 package model.organization.event;
 
-import static model.organization.validation.Checks.checkNotNull;
-
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
@@ -30,7 +28,6 @@ public class ContainsEvent extends AbstractEvent {
 	@Inject
 	ContainsEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final Contains contains) {
 		super(category);
-		checkNotNull(contains, "contains");
 		roleId = contains.getRole().getId();
 		characteristicId = contains.getCharacteristic().getId();
 		value = contains.getValue();

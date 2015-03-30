@@ -61,26 +61,10 @@ public class UsesEventTest {
 
 	@Test
 	public void testUsesEvent2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (category) cannot be null"));
-
-		new UsesEvent(null, null);
-	}
-
-	@Test
-	public void testUsesEvent3() {
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
 
 		uef.build(EventCategory.ADDED, null);
-	}
-
-	@Test
-	public void testUsesEvent4() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (uses) cannot be null"));
-
-		new UsesEvent(EventCategory.ADDED, null);
 	}
 
 	@Test

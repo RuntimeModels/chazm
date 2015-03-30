@@ -61,26 +61,10 @@ public class HasEventTest {
 
 	@Test
 	public void testHasEvent2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (category) cannot be null"));
-
-		new HasEvent(null, null);
-	}
-
-	@Test
-	public void testHasEvent3() {
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
 
 		hef.build(EventCategory.ADDED, null);
-	}
-
-	@Test
-	public void testHasEvent4() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (has) cannot be null"));
-
-		new HasEvent(EventCategory.ADDED, null);
 	}
 
 	@Test

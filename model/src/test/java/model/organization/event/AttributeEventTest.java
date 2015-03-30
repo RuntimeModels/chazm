@@ -53,26 +53,10 @@ public class AttributeEventTest {
 
 	@Test
 	public void testAttributeEvent2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (category) cannot be null"));
-
-		new AttributeEvent(null, null);
-	}
-
-	@Test
-	public void testAttributeEvent3() {
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
 
 		aef.build(EventCategory.ADDED, null);
-	}
-
-	@Test
-	public void testAttributeEvent4() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (attribute) cannot be null"));
-
-		new AttributeEvent(EventCategory.ADDED, null);
 	}
 
 	@Test

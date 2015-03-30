@@ -53,26 +53,10 @@ public class AgentEventTest {
 
 	@Test
 	public void testAgentEvent2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (category) cannot be null"));
-
-		new AgentEvent(null, null);
-	}
-
-	@Test
-	public void testAgentEvent3() {
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
 
 		aef.build(EventCategory.ADDED, null);
-	}
-
-	@Test
-	public void testAgentEvent4() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (agent) cannot be null"));
-
-		new AgentEvent(EventCategory.ADDED, null);
 	}
 
 	@Test

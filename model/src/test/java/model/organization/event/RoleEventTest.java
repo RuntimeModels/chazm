@@ -53,26 +53,10 @@ public class RoleEventTest {
 
 	@Test
 	public void testRoleEvent2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (category) cannot be null"));
-
-		new RoleEvent(null, null);
-	}
-
-	@Test
-	public void testRoleEvent3() {
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
 
 		ref.build(EventCategory.ADDED, null);
-	}
-
-	@Test
-	public void testRoleEvent4() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (role) cannot be null"));
-
-		new RoleEvent(EventCategory.ADDED, null);
 	}
 
 	@Test
