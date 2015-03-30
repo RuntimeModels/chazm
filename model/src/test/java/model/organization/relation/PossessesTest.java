@@ -56,14 +56,6 @@ public class PossessesTest {
 
 	@Test
 	public void testPossesses2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (agent) cannot be null"));
-
-		new PossessesRelation(null, null, 1d);
-	}
-
-	@Test
-	public void testPossesses3() {
 		final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
 
 		exception.expect(instanceOf(ProvisionException.class));
@@ -73,17 +65,7 @@ public class PossessesTest {
 	}
 
 	@Test
-	public void testPossesses4() {
-		final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
-
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (capability) cannot be null"));
-
-		new PossessesRelation(a, null, 1d);
-	}
-
-	@Test
-	public void testPossesses5() {
+	public void testPossesses3() {
 		final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
 		final Capability c = capabilityFactory.buildCapability(idFactory.build(Capability.class, "c"));
 
@@ -94,7 +76,7 @@ public class PossessesTest {
 	}
 
 	@Test
-	public void testPossesses6() {
+	public void testPossesses4() {
 		final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
 		final Capability c = capabilityFactory.buildCapability(idFactory.build(Capability.class, "c"));
 

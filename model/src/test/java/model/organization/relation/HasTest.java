@@ -56,14 +56,6 @@ public class HasTest {
 
 	@Test
 	public void testHas2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (agent) cannot be null"));
-
-		new HasRelation(null, null, 1d);
-	}
-
-	@Test
-	public void testHas3() {
 		final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
 
 		exception.expect(instanceOf(ProvisionException.class));
@@ -73,17 +65,7 @@ public class HasTest {
 	}
 
 	@Test
-	public void testHas4() {
-		final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
-
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (attribute) cannot be null"));
-
-		new HasRelation(a, null, 1d);
-	}
-
-	@Test
-	public void testHas5() {
+	public void testHas3() {
 		final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
 		final Attribute c = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "c"), Attribute.Type.NEGATIVE_QUALITY);
 
@@ -94,7 +76,7 @@ public class HasTest {
 	}
 
 	@Test
-	public void testHas6() {
+	public void testHas4() {
 		final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
 		final Attribute c = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "c"), Attribute.Type.NEGATIVE_QUALITY);
 
@@ -105,7 +87,7 @@ public class HasTest {
 	}
 
 	@Test
-	public void testHas7() {
+	public void testHas5() {
 		final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
 		final Attribute c = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "c"), Attribute.Type.NEGATIVE_QUANTITY);
 
@@ -116,7 +98,7 @@ public class HasTest {
 	}
 
 	@Test
-	public void testHas8() {
+	public void testHas6() {
 		final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
 		final Attribute c = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "c"), Attribute.Type.NEGATIVE_UNBOUNDED);
 		final Has hs = hasFactory.buildHas(a, c, Double.NEGATIVE_INFINITY);
@@ -124,7 +106,7 @@ public class HasTest {
 		assertThat(hs.getValue(), is(equalTo(Double.NEGATIVE_INFINITY)));
 	}
 
-	public void testHas9() {
+	public void testHas7() {
 		final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
 		final Attribute c = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "c"), Attribute.Type.NEGATIVE_UNBOUNDED);
 		final Has hs = hasFactory.buildHas(a, c, Double.POSITIVE_INFINITY);
@@ -133,7 +115,7 @@ public class HasTest {
 	}
 
 	@Test
-	public void testHas10() {
+	public void testHas8() {
 		final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
 		final Attribute c = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "c"), Attribute.Type.POSITIVE_QUALITY);
 
@@ -144,7 +126,7 @@ public class HasTest {
 	}
 
 	@Test
-	public void testHas11() {
+	public void testHas9() {
 		final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
 		final Attribute c = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "c"), Attribute.Type.POSITIVE_QUALITY);
 
@@ -155,7 +137,7 @@ public class HasTest {
 	}
 
 	@Test
-	public void testHas12() {
+	public void testHas10() {
 		final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
 		final Attribute c = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "c"), Attribute.Type.POSITIVE_QUANTITY);
 
@@ -166,7 +148,7 @@ public class HasTest {
 	}
 
 	@Test
-	public void testHas13() {
+	public void testHas11() {
 		final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
 		final Attribute c = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "c"), Attribute.Type.POSITIVE_UNBOUNDED);
 		final Has hs = hasFactory.buildHas(a, c, Double.NEGATIVE_INFINITY);
@@ -175,7 +157,7 @@ public class HasTest {
 	}
 
 	@Test
-	public void testHas14() {
+	public void testHas12() {
 		final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
 		final Attribute c = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "c"), Attribute.Type.POSITIVE_UNBOUNDED);
 		final Has hs = hasFactory.buildHas(a, c, Double.POSITIVE_INFINITY);

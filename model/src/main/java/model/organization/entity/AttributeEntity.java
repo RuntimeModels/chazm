@@ -1,7 +1,5 @@
 package model.organization.entity;
 
-import static model.organization.validation.Checks.checkNotNull;
-
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
@@ -17,7 +15,6 @@ class AttributeEntity extends AbstractEntity<Attribute> implements Attribute {
 	@Inject
 	AttributeEntity(@NotNull @Assisted final UniqueId<Attribute> id, @NotNull @Assisted final Attribute.Type type) {
 		super(id);
-		checkNotNull(type, "type");
 		this.type = type;
 	}
 

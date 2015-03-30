@@ -1,7 +1,5 @@
 package model.organization.relation;
 
-import static model.organization.validation.Checks.checkNotNull;
-
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
@@ -19,8 +17,6 @@ class PossessesRelation implements Possesses {
 
 	@Inject
 	PossessesRelation(@NotNull @Assisted final Agent agent, @NotNull @Assisted final Capability capability, @NotNull @Assisted final double score) {
-		checkNotNull(agent, "agent");
-		checkNotNull(capability, "capability");
 		this.agent = agent;
 		this.capability = capability;
 		setScore(score);

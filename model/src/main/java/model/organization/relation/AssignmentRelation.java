@@ -1,7 +1,5 @@
 package model.organization.relation;
 
-import static model.organization.validation.Checks.checkNotNull;
-
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
@@ -135,9 +133,6 @@ class AssignmentRelation implements Assignment {
 
 	@Inject
 	AssignmentRelation(@NotNull @Assisted final Agent agent, @NotNull @Assisted final Role role, @NotNull @Assisted final InstanceGoal goal) {
-		checkNotNull(agent, "agent");
-		checkNotNull(role, "role");
-		checkNotNull(goal, "goal");
 		id = new Id(agent.getId(), role.getId(), goal.getId());
 		this.agent = agent;
 		this.role = role;

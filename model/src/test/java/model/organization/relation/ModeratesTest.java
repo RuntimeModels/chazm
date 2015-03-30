@@ -56,30 +56,12 @@ public class ModeratesTest {
 
 	@Test
 	public void testModerates2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (pmf) cannot be null"));
-
-		new ModeratesRelation(null, null);
-	}
-
-	@Test
-	public void testModerates3() {
 		final Pmf p = pmfFactory.buildPmf(idFactory.build(Pmf.class, "p"));
 
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
 
 		moderatesFactory.buildModerates(p, null);
-	}
-
-	@Test
-	public void testModerates4() {
-		final Pmf p = pmfFactory.buildPmf(idFactory.build(Pmf.class, "p"));
-
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (attribute) cannot be null"));
-
-		new ModeratesRelation(p, null);
 	}
 
 	@Test

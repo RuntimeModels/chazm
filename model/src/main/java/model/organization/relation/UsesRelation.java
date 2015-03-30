@@ -1,7 +1,5 @@
 package model.organization.relation;
 
-import static model.organization.validation.Checks.checkNotNull;
-
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
@@ -19,8 +17,6 @@ class UsesRelation implements Uses {
 
 	@Inject
 	UsesRelation(@NotNull @Assisted final Role role, @NotNull @Assisted final Pmf pmf) {
-		checkNotNull(role, "role");
-		checkNotNull(pmf, "pmf");
 		this.role = role;
 		this.pmf = pmf;
 	}
