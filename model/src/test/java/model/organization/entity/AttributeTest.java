@@ -43,30 +43,15 @@ public class AttributeTest {
 	public void testAttribute1() {
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
-		attributeFactory.buildAttribute(null, Attribute.Type.NEGATIVE_QUALITY);
+		attributeFactory.buildAttribute(null, null);
 	}
 
 	@Test
 	public void testAttribute2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (id) cannot be null"));
-		new AttributeEntity(null, Attribute.Type.NEGATIVE_QUALITY);
-	}
-
-	@Test
-	public void testAttribute3() {
 		final UniqueId<Attribute> i1 = idFactory.build(Attribute.class, 1L);
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
 		attributeFactory.buildAttribute(i1, null);
-	}
-
-	@Test
-	public void testAttribute4() {
-		final UniqueId<Attribute> i1 = idFactory.build(Attribute.class, 1L);
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (type) cannot be null"));
-		new AttributeEntity(i1, null);
 	}
 
 	@Test

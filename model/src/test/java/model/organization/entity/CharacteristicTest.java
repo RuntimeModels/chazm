@@ -48,13 +48,6 @@ public class CharacteristicTest {
 	}
 
 	@Test
-	public void testCharacteristic2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (id) cannot be null"));
-		new CharacteristicEntity(null);
-	}
-
-	@Test
 	public void testGetId() {
 		final UniqueId<Characteristic> i1 = idFactory.build(Characteristic.class, 1L);
 		final UniqueId<Characteristic> i2 = idFactory.build(Characteristic.class, 1L);

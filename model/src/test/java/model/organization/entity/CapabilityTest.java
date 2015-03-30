@@ -48,13 +48,6 @@ public class CapabilityTest {
 	}
 
 	@Test
-	public void testCapability2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (id) cannot be null"));
-		new CapabilityEntity(null);
-	}
-
-	@Test
 	public void testGetId() {
 		final UniqueId<Capability> i1 = idFactory.build(Capability.class, 1L);
 		final UniqueId<Capability> i2 = idFactory.build(Capability.class, 1L);

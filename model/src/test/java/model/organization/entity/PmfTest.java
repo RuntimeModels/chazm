@@ -48,13 +48,6 @@ public class PmfTest {
 	}
 
 	@Test
-	public void testPmf2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (id) cannot be null"));
-		new PmfEntity(null);
-	}
-
-	@Test
 	public void testGetId() {
 		final UniqueId<Pmf> i1 = idFactory.build(Pmf.class, 1L);
 		final UniqueId<Pmf> i2 = idFactory.build(Pmf.class, 1L);

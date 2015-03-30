@@ -48,13 +48,6 @@ public class PolicyTest {
 	}
 
 	@Test
-	public void testPolicy2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (id) cannot be null"));
-		new PolicyEntity(null);
-	}
-
-	@Test
 	public void testGetId() {
 		final UniqueId<Policy> i1 = idFactory.build(Policy.class, 1L);
 		final UniqueId<Policy> i2 = idFactory.build(Policy.class, 1L);

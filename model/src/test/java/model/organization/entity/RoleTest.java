@@ -48,13 +48,6 @@ public class RoleTest {
 	}
 
 	@Test
-	public void testRole2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (id) cannot be null"));
-		new RoleEntity(null);
-	}
-
-	@Test
 	public void testGetId() {
 		final UniqueId<Role> i1 = idFactory.build(Role.class, 1L);
 		final UniqueId<Role> i2 = idFactory.build(Role.class, 1L);
