@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SomeDiagram>
+</SomeDiagram>
+<RoleDiagram>
+	<Capability id="b28db440-e1cf-4a75-9d37-dad779323bc5" name="Capability 1">
+	</Capability>
+	<Capability id="5a27aa69-7454-43da-843e-1196755f5e28" name="Capability 2">
+	</Capability>
+	<Capability id="e4fa3ee0-a244-428c-bd12-3ed64b383fae" name="Capability 3">
+	</Capability>
+	<Capability id="29797117-9a64-41ed-8cce-27b8d96775b6" name="Capability 4">
+	</Capability>
+	<Goal id="7c57110b-d910-437a-b674-0817ce92a963" name="Goal 1">
+	</Goal>
+	<Goal id="f8e101b5-3344-4399-a129-37ae5b92bb59" name="Goal 2" >
+	</Goal>
+	<Goal id="3d0a8894-24e5-4508-83a0-bb47456aa317" name="Goal 3" >
+	</Goal>
+	<Goal id="cdd2e7bc-e15c-423c-b3e6-4fd497fbfb9c" name="Goal 4">
+	</Goal>
+	<Goal id="8ce9735a-689d-439a-9242-e365ad88637f" name="Goal 5">
+	</Goal>
+	<Goal id="59752f48-6919-4202-9cac-a4487bc2f8d6" name="Goal 6">
+	</Goal>
+	<Goal id="dc00314e-4c3e-4f8c-83cb-1d8b93137348" name="Goal 7">
+	</Goal>
+	<Goal id="73446698-b451-48d7-a775-eb2bfc9436a9" name="Goal 8">
+	</Goal>
+	<Goal id="b77beff3-410a-496d-af80-61e52d39cf48" name="Goal 9" >
+	</Goal>
+	<Goal id="37c4a3f7-b2d9-4912-add1-ee62ee338e23" name="Goal 10">
+	</Goal>
+	<Goal id="fbe10d04-c2df-4ecb-91e2-f378f8db99d5" name="Goal 11">
+	</Goal>
+	<Role id="d3a3aa33-88c7-41a6-91a0-423e84354e7c" name="Role 1">
+		<requires>
+			<child>b28db440-e1cf-4a75-9d37-dad779323bc5</child>
+		</requires>
+		<achieves>
+			<child>fbe10d04-c2df-4ecb-91e2-f378f8db99d5</child>
+		</achieves>
+	</Role>
+	<Role id="ea3184f4-96b9-4d5f-b52e-4cd8dc0e63a4" name="Role 2">
+		<achieves>
+			<child>7c57110b-d910-437a-b674-0817ce92a963</child>
+		</achieves>
+		<requires>
+			<child>e4fa3ee0-a244-428c-bd12-3ed64b383fae</child>
+		</requires>
+	</Role>
+	<Role id="c5c7a459-3e47-4255-8203-b1dfd32091e2" name="Role 3">
+		<achieves>
+			<child>59752f48-6919-4202-9cac-a4487bc2f8d6</child>
+		</achieves>
+		<requires>
+			<child>29797117-9a64-41ed-8cce-27b8d96775b6</child>
+		</requires>
+	</Role>
+	<Role id="cff449e2-881e-46b5-8c60-7cde8b1a2c01" name="Role 4">
+		<achieves>
+			<child>3d0a8894-24e5-4508-83a0-bb47456aa317</child>
+		</achieves>
+		<achieves>
+			<child>8ce9735a-689d-439a-9242-e365ad88637f</child>
+		</achieves>
+		<achieves>
+			<child>cdd2e7bc-e15c-423c-b3e6-4fd497fbfb9c</child>
+		</achieves>
+		<requires>
+			<child>5a27aa69-7454-43da-843e-1196755f5e28</child>
+		</requires>
+	</Role>
+	<Role id="57546426-7924-4fe2-8329-ca5330d83e75" name="Role 5">
+		<achieves>
+			<child>b77beff3-410a-496d-af80-61e52d39cf48</child>
+		</achieves>
+		<requires>
+			<child>e4fa3ee0-a244-428c-bd12-3ed64b383fae</child>
+		</requires>
+	</Role>
+	<Role id="2b7cc107-9bd2-46dc-88f3-5a5800486545" name="Role 6">
+		<achieves>
+			<child>dc00314e-4c3e-4f8c-83cb-1d8b93137348</child>
+		</achieves>
+		<requires>
+			<child>5a27aa69-7454-43da-843e-1196755f5e28</child>
+		</requires>
+		<achieves>
+			<child>37c4a3f7-b2d9-4912-add1-ee62ee338e23</child>
+		</achieves>
+	</Role>
+	<Role id="7701950e-a5d9-4bcf-82ec-81f6f0776af1" name="Role 7">
+		<achieves>
+			<child>73446698-b451-48d7-a775-eb2bfc9436a9</child>
+		</achieves>
+		<achieves>
+			<child>f8e101b5-3344-4399-a129-37ae5b92bb59</child>
+		</achieves>
+		<requires>
+			<child>e4fa3ee0-a244-428c-bd12-3ed64b383fae</child>
+		</requires>
+	</Role>
+	<Role id="8e691aad-3dfa-4ecd-bdc3-a7571ce1ae8b" name="Role 8">
+		<achieves>
+			<child>73446698-b451-48d7-a775-eb2bfc9436a9</child>
+		</achieves>
+		<achieves>
+			<child>f8e101b5-3344-4399-a129-37ae5b92bb59</child>
+		</achieves>
+		<requires>
+			<child>e4fa3ee0-a244-428c-bd12-3ed64b383fae</child>
+		</requires>
+	</Role>
+</RoleDiagram>
