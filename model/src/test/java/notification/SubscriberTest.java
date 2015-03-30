@@ -120,6 +120,8 @@ public class SubscriberTest {
 
 		new FullVerifications(Logger.class) {
 			{
+				logger.info(anyString, any, any);
+				times = 4;
 				logger.debug("Received ({}, {}): role = {}, goal = {}", AchievesEvent.class.getSimpleName(), EventCategory.ADDED, roleId, specGoalId);
 				times = 2;
 				logger.debug("Received ({}, {}): role = {}, goal = {}", AchievesEvent.class.getSimpleName(), EventCategory.CHANGED, roleId, specGoalId);
@@ -157,6 +159,8 @@ public class SubscriberTest {
 
 		new FullVerifications(Logger.class) {
 			{
+				logger.info(anyString, any, any);
+				times = 4;
 				logger.debug("Received ({}, {}): id = {}", AgentEvent.class.getSimpleName(), EventCategory.ADDED, agentId);
 				times = 2;
 				logger.debug("Received ({}, {}): id = {}", AgentEvent.class.getSimpleName(), EventCategory.CHANGED, agentId);
@@ -198,6 +202,8 @@ public class SubscriberTest {
 
 		new FullVerifications(Logger.class) {
 			{
+				logger.info(anyString, any, any);
+				times = 4;
 				logger.debug("Received ({}, {}): agent = {}, role = {}, goal = {}", AssignmentEvent.class.getSimpleName(), EventCategory.ADDED, agentId,
 						roleId, instGoalId);
 				times = 2;
@@ -238,6 +244,8 @@ public class SubscriberTest {
 
 		new FullVerifications(Logger.class) {
 			{
+				logger.info(anyString, any, any);
+				times = 4;
 				logger.debug("Received ({}, {}): id = {}", AttributeEvent.class.getSimpleName(), EventCategory.ADDED, attributeId);
 				times = 2;
 				logger.debug("Received ({}, {}): id = {}", AttributeEvent.class.getSimpleName(), EventCategory.CHANGED, attributeId);
@@ -275,6 +283,8 @@ public class SubscriberTest {
 
 		new FullVerifications(Logger.class) {
 			{
+				logger.info(anyString, any, any);
+				times = 4;
 				logger.debug("Received ({}, {}): id = {}", CapabilityEvent.class.getSimpleName(), EventCategory.ADDED, capabilityId);
 				times = 2;
 				logger.debug("Received ({}, {}): id = {}", CapabilityEvent.class.getSimpleName(), EventCategory.CHANGED, capabilityId);
@@ -312,6 +322,8 @@ public class SubscriberTest {
 
 		new FullVerifications(Logger.class) {
 			{
+				logger.info(anyString, any, any);
+				times = 4;
 				logger.debug("Received ({}, {}): id = {}", CharacteristicEvent.class.getSimpleName(), EventCategory.ADDED, characteristicId);
 				times = 2;
 				logger.debug("Received ({}, {}): id = {}", CharacteristicEvent.class.getSimpleName(), EventCategory.CHANGED, characteristicId);
@@ -353,6 +365,8 @@ public class SubscriberTest {
 
 		new FullVerifications(Logger.class) {
 			{
+				logger.info(anyString, any, any);
+				times = 4;
 				logger.debug("Received ({}, {}): role = {}, characteristic = {}, value = {}", ContainsEvent.class.getSimpleName(), EventCategory.ADDED, roleId,
 						characteristicId, 0.25);
 				times = 2;
@@ -397,6 +411,8 @@ public class SubscriberTest {
 
 		new FullVerifications(Logger.class) {
 			{
+				logger.info(anyString, any, any);
+				times = 4;
 				logger.debug("Received ({}, {}): agent = {}, attribute = {}, value = {}", HasEvent.class.getSimpleName(), EventCategory.ADDED, agentId,
 						attributeId, 0.7);
 				times = 2;
@@ -437,6 +453,8 @@ public class SubscriberTest {
 
 		new FullVerifications(Logger.class) {
 			{
+				logger.info(anyString, any, any);
+				times = 4;
 				logger.debug("Received ({}, {}): id = {}", InstanceGoalEvent.class.getSimpleName(), EventCategory.ADDED, instGoalId);
 				times = 2;
 				logger.debug("Received ({}, {}): id = {}", InstanceGoalEvent.class.getSimpleName(), EventCategory.CHANGED, instGoalId);
@@ -476,6 +494,8 @@ public class SubscriberTest {
 
 		new FullVerifications(Logger.class) {
 			{
+				logger.info(anyString, any, any);
+				times = 4;
 				logger.debug("Received ({}, {}): pmf = {}, attribute = {}", ModeratesEvent.class.getSimpleName(), EventCategory.ADDED, pmfId, attributeId);
 				times = 2;
 				logger.debug("Received ({}, {}): pmf = {}, attribute = {}", ModeratesEvent.class.getSimpleName(), EventCategory.CHANGED, pmfId, attributeId);
@@ -515,6 +535,8 @@ public class SubscriberTest {
 
 		new FullVerifications(Logger.class) {
 			{
+				logger.info(anyString, any, any);
+				times = 4;
 				logger.debug("Received ({}, {}): role = {}, attribute = {}", NeedsEvent.class.getSimpleName(), EventCategory.ADDED, roleId, attributeId);
 				times = 2;
 				logger.debug("Received ({}, {}): role = {}, attribute = {}", NeedsEvent.class.getSimpleName(), EventCategory.CHANGED, roleId, attributeId);
@@ -552,6 +574,8 @@ public class SubscriberTest {
 
 		new FullVerifications(Logger.class) {
 			{
+				logger.info(anyString, any, any);
+				times = 4;
 				logger.debug("Received ({}, {}): id = {}", PmfEvent.class.getSimpleName(), EventCategory.ADDED, pmfId);
 				times = 2;
 				logger.debug("Received ({}, {}): id = {}", PmfEvent.class.getSimpleName(), EventCategory.CHANGED, pmfId);
@@ -589,6 +613,8 @@ public class SubscriberTest {
 
 		new FullVerifications(Logger.class) {
 			{
+				logger.info(anyString, any, any);
+				times = 4;
 				logger.debug("Received ({}, {}): id = {}", PolicyEvent.class.getSimpleName(), EventCategory.ADDED, policyId);
 				times = 2;
 				logger.debug("Received ({}, {}): id = {}", PolicyEvent.class.getSimpleName(), EventCategory.CHANGED, policyId);
@@ -630,6 +656,8 @@ public class SubscriberTest {
 
 		new FullVerifications(Logger.class) {
 			{
+				logger.info(anyString, any, any);
+				times = 4;
 				logger.debug("Received ({}, {}): agent = {}, capability = {}, score = {}", PossessesEvent.class.getSimpleName(), EventCategory.ADDED, agentId,
 						capabilityId, 0.8);
 				times = 2;
@@ -672,6 +700,8 @@ public class SubscriberTest {
 
 		new FullVerifications(Logger.class) {
 			{
+				logger.info(anyString, any, any);
+				times = 4;
 				logger.debug("Received ({}, {}): role = {}, capability = {}", RequiresEvent.class.getSimpleName(), EventCategory.ADDED, roleId, capabilityId);
 				times = 2;
 				logger.debug("Received ({}, {}): role = {}, capability = {}", RequiresEvent.class.getSimpleName(), EventCategory.CHANGED, roleId, capabilityId);
@@ -709,6 +739,8 @@ public class SubscriberTest {
 
 		new FullVerifications(Logger.class) {
 			{
+				logger.info(anyString, any, any);
+				times = 4;
 				logger.debug("Received ({}, {}): id = {}", RoleEvent.class.getSimpleName(), EventCategory.ADDED, roleId);
 				times = 2;
 				logger.debug("Received ({}, {}): id = {}", RoleEvent.class.getSimpleName(), EventCategory.CHANGED, roleId);
@@ -746,6 +778,8 @@ public class SubscriberTest {
 
 		new FullVerifications(Logger.class) {
 			{
+				logger.info(anyString, any, any);
+				times = 4;
 				logger.debug("Received ({}, {}): id = {}", SpecificationGoalEvent.class.getSimpleName(), EventCategory.ADDED, specGoalId);
 				times = 2;
 				logger.debug("Received ({}, {}): id = {}", SpecificationGoalEvent.class.getSimpleName(), EventCategory.CHANGED, specGoalId);
@@ -785,6 +819,8 @@ public class SubscriberTest {
 
 		new FullVerifications(Logger.class) {
 			{
+				logger.info(anyString, any, any);
+				times = 4;
 				logger.debug("Received ({}, {}): role = {}, pmf = {}", UsesEvent.class.getSimpleName(), EventCategory.ADDED, roleId, pmfId);
 				times = 2;
 				logger.debug("Received ({}, {}): role = {}, pmf = {}", UsesEvent.class.getSimpleName(), EventCategory.CHANGED, roleId, pmfId);
@@ -793,6 +829,186 @@ public class SubscriberTest {
 				times = 1;
 			}
 		};
+	}
+
+	@Test
+	public void testEvent19() {
+		final DefaultSubscriber s1 = provider.get();
+
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Parameter (arg0) cannot be null");
+
+		s1.event((AchievesEvent) null);
+	}
+
+	@Test
+	public void testEvent20() {
+		final DefaultSubscriber s1 = provider.get();
+
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Parameter (arg0) cannot be null");
+
+		s1.event((AgentEvent) null);
+	}
+
+	@Test
+	public void testEvent21() {
+		final DefaultSubscriber s1 = provider.get();
+
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Parameter (arg0) cannot be null");
+
+		s1.event((AssignmentEvent) null);
+	}
+
+	@Test
+	public void testEvent22() {
+		final DefaultSubscriber s1 = provider.get();
+
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Parameter (arg0) cannot be null");
+
+		s1.event((AttributeEvent) null);
+	}
+
+	@Test
+	public void testEvent23() {
+		final DefaultSubscriber s1 = provider.get();
+
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Parameter (arg0) cannot be null");
+
+		s1.event((CapabilityEvent) null);
+	}
+
+	@Test
+	public void testEvent24() {
+		final DefaultSubscriber s1 = provider.get();
+
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Parameter (arg0) cannot be null");
+
+		s1.event((CharacteristicEvent) null);
+	}
+
+	@Test
+	public void testEvent25() {
+		final DefaultSubscriber s1 = provider.get();
+
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Parameter (arg0) cannot be null");
+
+		s1.event((ContainsEvent) null);
+	}
+
+	@Test
+	public void testEvent26() {
+		final DefaultSubscriber s1 = provider.get();
+
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Parameter (arg0) cannot be null");
+
+		s1.event((HasEvent) null);
+	}
+
+	@Test
+	public void testEvent27() {
+		final DefaultSubscriber s1 = provider.get();
+
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Parameter (arg0) cannot be null");
+
+		s1.event((InstanceGoalEvent) null);
+	}
+
+	@Test
+	public void testEvent28() {
+		final DefaultSubscriber s1 = provider.get();
+
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Parameter (arg0) cannot be null");
+
+		s1.event((ModeratesEvent) null);
+	}
+
+	@Test
+	public void testEvent29() {
+		final DefaultSubscriber s1 = provider.get();
+
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Parameter (arg0) cannot be null");
+
+		s1.event((NeedsEvent) null);
+	}
+
+	@Test
+	public void testEvent30() {
+		final DefaultSubscriber s1 = provider.get();
+
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Parameter (arg0) cannot be null");
+
+		s1.event((PmfEvent) null);
+	}
+
+	@Test
+	public void testEvent31() {
+		final DefaultSubscriber s1 = provider.get();
+
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Parameter (arg0) cannot be null");
+
+		s1.event((PolicyEvent) null);
+	}
+
+	@Test
+	public void testEvent32() {
+		final DefaultSubscriber s1 = provider.get();
+
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Parameter (arg0) cannot be null");
+
+		s1.event((PossessesEvent) null);
+	}
+
+	@Test
+	public void testEvent33() {
+		final DefaultSubscriber s1 = provider.get();
+
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Parameter (arg0) cannot be null");
+
+		s1.event((RequiresEvent) null);
+	}
+
+	@Test
+	public void testEvent34() {
+		final DefaultSubscriber s1 = provider.get();
+
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Parameter (arg0) cannot be null");
+
+		s1.event((RoleEvent) null);
+	}
+
+	@Test
+	public void testEvent35() {
+		final DefaultSubscriber s1 = provider.get();
+
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Parameter (arg0) cannot be null");
+
+		s1.event((SpecificationGoalEvent) null);
+	}
+
+	@Test
+	public void testEvent36() {
+		final DefaultSubscriber s1 = provider.get();
+
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Parameter (arg0) cannot be null");
+
+		s1.event((UsesEvent) null);
 	}
 
 }
