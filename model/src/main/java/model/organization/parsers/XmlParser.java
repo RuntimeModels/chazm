@@ -1,14 +1,25 @@
 package model.organization.parsers;
 
-import static model.organization.validation.Checks.checkNotNull;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
-import javax.xml.parsers.ParserConfigurationException;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import javax.validation.constraints.NotNull;
+import javax.xml.namespace.QName;
+import javax.xml.stream.XMLEventReader;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamConstants;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.events.EndElement;
+import javax.xml.stream.events.StartElement;
+import javax.xml.stream.events.XMLEvent;
 
 import model.organization.Organization;
 import model.organization.entity.Capability;
@@ -20,266 +31,146 @@ import model.organization.id.UniqueId;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.xml.sax.SAXException;
-
-import edu.ksu.cis.agenttool.core.model.Goal;
-import edu.ksu.cis.agenttool.core.model.ModelElement;
-import edu.ksu.cis.agenttool.core.model.ModelElement.ModelElementType;
-import edu.ksu.cis.agenttool.core.model.Relationship;
-import edu.ksu.cis.agenttool.core.model.Relationship.RelationshipType;
-import edu.ksu.cis.agenttool.core.model.Schema;
-import edu.ksu.cis.agenttool.core.model.Schema.DiagramType;
-import edu.ksu.cis.agenttool.core.xml.XMLParseException;
 
 /**
- * The <code>XMLParser</code> for populating an organization model.
+ * The {@linkplain XmlParser} class is able to parse XML files and populate an {@linkplain Organization}.
  *
  * @author Christopher Zhong
  * @since 4.0
  */
+@Singleton
 public class XmlParser {
 
 	private static final Logger logger = LoggerFactory.getLogger(XmlParser.class);
+	private static final String ROLE_DIAGRAM_ELEMENT = "RoleDiagram";
+	private static final String ROLE_ELEMENT = "Role";
+	private static final String GOAL_ELEMENT = "Goal";
+	private static final String CAPABILITY_ELEMENT = "Capability";
+	private static final String ACHIEVES_ELEMENT = "achieves";
+	private static final String REQUIRES_ELEMENT = "requires";
+	private static final String ID_ATTRIBUTE = "id";
+	private static final String NAME_ATTRIBUTE = "name";
+	private static final String CHILD_ELEMENT = "child";
+
+	private final IdFactory idFactory;
+	private final EntityFactory entityFactory;
+
+	@Inject
+	XmlParser(@NotNull final IdFactory idFactory, @NotNull final EntityFactory entityFactory) {
+		this.idFactory = idFactory;
+		this.entityFactory = entityFactory;
+	}
 
 	/**
-	 * Instantiates an <code>Organization</code> based on the given <code>Path</code>.
+	 * Parses an XML file and populates an {@linkplain Organization}.
 	 *
-	 * @param path
-	 *            the <code>Path</code> which contains the necessary information for construction an <code>Organization</code>.
-	 * @return an <code>Organization</code> based on the given <code>Path</code> .
-	 * @throws ParserConfigurationException
-	 *             if a <code>DocumentBuilder</code> cannot be created which satisfies the configuration requested.
-	 * @throws IOException
-	 *             if any IO errors occur.
-	 * @throws SAXException
-	 *             if any parse errors occur.
-	 */
-	// public static Organization parse(final Path path) throws SAXException, IOException, ParserConfigurationException {
-	// return parse(path, new DefaultGoalFactory(), new DefaultIdFactory(), new OrganizationImpl());
-	// }
-
-	/**
-	 * Instantiates an <code>Organization</code> based on the given <code>Path</code> and <code>SpecificationGoalProvider</code>.
-	 *
-	 * @param path
-	 *            the <code>Path</code> which contains the necessary information for construction an <code>Organization</code>.
-	 * @param specificationGoalProvider
-	 *            the <code>SpecificationGoalProvider</code> in which to retrieve the <code>SpecificationGoal</code>.
-	 * @return an <code>Organization</code> based on the given <code>Path</code> and <code>SpecificationGoalProvider</code>.
-	 * @throws ParserConfigurationException
-	 *             if a <code>DocumentBuilder</code> cannot be created which satisfies the configuration requested.
-	 * @throws IOException
-	 *             if any IO errors occur.
-	 * @throws SAXException
-	 *             if any parse errors occur.
-	 */
-	// public static Organization parse(final Path path, final GoalFactory specificationGoalProvider) throws SAXException, IOException,
-	// ParserConfigurationException {
-	// return parse(path, specificationGoalProvider, new DefaultIdFactory(), new OrganizationImpl());
-	// }
-
-	/**
-	 * Instantiates an <code>Organization</code> based on the given <code>Path</code> and <code>UniqueIdentifierProvider</code>.
-	 *
-	 * @param path
-	 *            the <code>Path</code> which contains the necessary information for construction an <code>Organization</code>.
-	 * @param uniqueIdFactory
-	 *            the <code>UniqueIdentifierProvider</code> that produces <code>UniqueIdentifier</code>.
-	 * @return an <code>Organization</code> based on the given <code>Path</code> and <code>UniqueIdentifierProvider</code>.
-	 * @throws ParserConfigurationException
-	 *             if a <code>DocumentBuilder</code> cannot be created which satisfies the configuration requested.
-	 * @throws IOException
-	 *             if any IO errors occur.
-	 * @throws SAXException
-	 *             if any parse errors occur.
-	 */
-	// public static Organization parse(final Path path, final UniqueIdFactory uniqueIdFactory) throws SAXException, IOException, ParserConfigurationException {
-	// return parse(path, new DefaultGoalFactory(), uniqueIdFactory, new OrganizationImpl());
-	// }
-
-	/**
-	 * Populates the given <code>Organization</code> based on the given <code>Path</code>.
-	 *
-	 * @param path
-	 *            the <code>Path</code> which contains the necessary information for construction an <code>Organization</code>.
 	 * @param organization
-	 *            an <code>Organization</code> with which to populate based on the given <code>Path</code>, <code>SpecificationGoalProvider</code>, and
-	 *            <code>UniqueIdentifierProvider</code>.
-	 * @return the populated <code>Organization</code> based on the given <code>Path</code>.
-	 * @throws ParserConfigurationException
-	 *             if a <code>DocumentBuilder</code> cannot be created which satisfies the configuration requested.
-	 * @throws IOException
-	 *             if any IO errors occur.
-	 * @throws SAXException
-	 *             if any parse errors occur.
+	 *            the {@linkplain Organization}.
+	 * @param inputStream
+	 *            the {@linkplain InputStream}.
+	 * @throws XMLStreamException
 	 */
-	// public static Organization parse(final Path path, final Organization organization) throws SAXException, IOException, ParserConfigurationException {
-	// return parse(path, new DefaultGoalFactory(), new DefaultIdFactory(), organization);
-	// }
-
-	/**
-	 * Instantiates an <code>Organization</code> based on the given <code>Path</code>, <code>SpecificationGoalProvider</code>, and
-	 * <code>UniqueIdentifierProvider</code>.
-	 *
-	 * @param path
-	 *            the <code>Path</code> which contains the necessary information for construction an <code>Organization</code>.
-	 * @param specificationGoalProvider
-	 *            the <code>SpecificationGoalProvider</code> in which to retrieve the <code>SpecificationGoal</code>.
-	 * @param uniqueIdFactory
-	 *            the <code>UniqueIdentifierProvider</code> that produces <code>UniqueIdentifier</code>.
-	 * @return an <code>Organization</code> based on the given <code>Path</code> , <code>SpecificationGoalProvider</code>, and
-	 *         <code>UniqueIdentifierProvider</code>.
-	 * @throws ParserConfigurationException
-	 *             if a <code>DocumentBuilder</code> cannot be created which satisfies the configuration requested.
-	 * @throws IOException
-	 *             if any IO errors occur.
-	 * @throws SAXException
-	 *             if any parse errors occur.
-	 */
-	// public static Organization parse(final Path path, final GoalFactory specificationGoalProvider, final UniqueIdFactory uniqueIdFactory) throws
-	// SAXException,
-	// IOException, ParserConfigurationException {
-	// return parse(path, specificationGoalProvider, uniqueIdFactory, new OrganizationImpl());
-	// }
-
-	/**
-	 * Populates the given <code>Organization</code> based on the given <code>Path</code> and <code>SpecificationGoalProvider</code>.
-	 *
-	 * @param path
-	 *            the <code>Path</code> which contains the necessary information for construction an <code>Organization</code>.
-	 * @param specificationGoalProvider
-	 *            the <code>SpecificationGoalProvider</code> in which to retrieve the <code>SpecificationGoal</code>.
-	 * @param organization
-	 *            the <code>Organization</code> with which to populate based on the given <code>Path</code> and <code>SpecificationGoalProvider</code>.
-	 * @return the populated <code>Organization</code> based on the given <code>File</code> and <code>SpecificationGoalProvider</code>.
-	 * @throws ParserConfigurationException
-	 *             if a <code>DocumentBuilder</code> cannot be created which satisfies the configuration requested.
-	 * @throws IOException
-	 *             if any IO errors occur.
-	 * @throws SAXException
-	 *             if any parse errors occur.
-	 */
-	// public static Organization parse(final Path path, final GoalFactory specificationGoalProvider, final Organization organization) throws SAXException,
-	// IOException, ParserConfigurationException {
-	// return parse(path, specificationGoalProvider, new DefaultIdFactory(), organization);
-	// }
-
-	/**
-	 * Populates the given <code>Organization</code> based on the given <code>Path</code> and <code>UniqueIdentifierProvider</code>.
-	 *
-	 * @param path
-	 *            the <code>Path</code> which contains the necessary information for construction an <code>Organization</code>.
-	 * @param uniqueIdFactory
-	 *            the <code>UniqueIdentifierProvider</code> that produces <code>UniqueIdentifier</code>.
-	 * @param organization
-	 *            the <code>Organization</code> with which to populate based on the given <code>Path</code> and <code>UniqueIdentifierProvider</code>.
-	 * @return the populated <code>Organization</code> based on the given <code>Path</code> and <code>UniqueIdentifierProvider</code>.
-	 * @throws ParserConfigurationException
-	 *             if a <code>DocumentBuilder</code> cannot be created which satisfies the configuration requested.
-	 * @throws IOException
-	 *             if any IO errors occur.
-	 * @throws SAXException
-	 *             if any parse errors occur.
-	 */
-	// public static Organization parse(final Path path, final UniqueIdFactory uniqueIdFactory, final Organization organization) throws SAXException,
-	// IOException,
-	// ParserConfigurationException {
-	// return parse(path, new DefaultGoalFactory(), uniqueIdFactory, organization);
-	// }
-
-	/**
-	 * Populates the given <code>Organization</code> based on the given <code>Path</code>, <code>SpecificationGoalProvider</code>, and
-	 * <code>UniqueIdentifierProvider</code>.
-	 *
-	 * @param path
-	 *            the <code>Path</code> which contains the necessary information for construction an <code>Organization</code>.
-	 * @param entityFactory
-	 *            the <code>SpecificationGoalProvider</code> in which to retrieve the <code>SpecificationGoal</code>.
-	 * @param idFactory
-	 *            the <code>UniqueIdentifierProvider</code> that produces <code>UniqueIdentifier</code>.
-	 * @param organization
-	 *            the <code>Organization</code> with which to populate based on the given <code>Path</code>, <code>SpecificationGoalProvider</code>, and
-	 *            <code>UniqueIdentifierProvider</code>.
-	 * @return the populated <code>Organization</code> based on the given <code>File</code>, <code>SpecificationGoalProvider</code>, and
-	 *         <code>UniqueIdentifierProvider</code>.
-	 * @throws ParserConfigurationException
-	 *             if a <code>DocumentBuilder</code> cannot be created which satisfies the configuration requested.
-	 * @throws IOException
-	 *             if any IO errors occur.
-	 * @throws SAXException
-	 *             if any parse errors occur.
-	 */
-	public static Organization parse(final Path path, final EntityFactory entityFactory, final IdFactory idFactory, final Organization organization)
-			throws SAXException, IOException, ParserConfigurationException {
-		checkNotNull(path, "path");
-		checkNotNull(entityFactory, "entityFactory");
-		checkNotNull(idFactory, "idFactory");
-		checkNotNull(organization, "organization");
-		if (Files.exists(path)) {
-			logger.debug("Loading file ({})", path);
-			final edu.ksu.cis.agenttool.core.xml.XMLParser parser = new edu.ksu.cis.agenttool.core.xml.XMLParser(path.toString());
-			try {
-				final Schema schema = parser.getSchema(DiagramType.ROLE);
-				/* parse all the goals */
-				for (final ModelElement element : schema.getChildren(ModelElementType.GOAL)) {
-					final Goal goal = (Goal) element;
-					final SpecificationGoal specificationGoal = entityFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, goal.getName()));
-					if (specificationGoal == null) {
-						throw new IllegalArgumentException(String.format("Cannot find the '%s' specification goal in the given provider", goal.getName()));
-					}
-					organization.addSpecificationGoal(specificationGoal);
+	public void parse(final Organization organization, final InputStream inputStream) throws XMLStreamException {
+		final XMLInputFactory factory = XMLInputFactory.newInstance();
+		final XMLEventReader reader = factory.createXMLEventReader(inputStream);
+		while (reader.hasNext()) {
+			final XMLEvent event = reader.nextEvent();
+			if (event.getEventType() == XMLStreamConstants.START_ELEMENT) {
+				final StartElement element = event.asStartElement();
+				logger.debug("{}", element);
+				final QName name = element.getName();
+				if (ROLE_DIAGRAM_ELEMENT.equals(name.getLocalPart())) {
+					parseDiagram(organization, reader, name);
 				}
-				/* parse all the capabilities */
-				for (final ModelElement element : schema.getChildren(ModelElementType.CAPABILITY)) {
-					final edu.ksu.cis.agenttool.core.model.Capability capability = (edu.ksu.cis.agenttool.core.model.Capability) element;
-					final UniqueId<Capability> id = idFactory.build(Capability.class, capability.getName());
-					final Capability c = entityFactory.buildCapability(id);
-					organization.addCapability(c);
-				}
-				/* parse all the roles */
-				for (final ModelElement element : schema.getChildren(ModelElementType.ROLE)) {
-					final edu.ksu.cis.agenttool.core.model.Role role = (edu.ksu.cis.agenttool.core.model.Role) element;
-					/* only roles that are not inherited are added */
-					if (role.getDestRelationships(RelationshipType.INHERITS).size() == 0) {
-						final UniqueId<Role> roleId = idFactory.build(Role.class, role.getName());
-						final Role r = entityFactory.buildRole(roleId);
-						organization.addRole(r);
-						/* set up the achieves relation */
-						for (final Relationship achieves : role.getSrcRelationships(RelationshipType.ACHIEVES)) {
-							final Goal goal = (Goal) achieves.getChild();
-							final UniqueId<SpecificationGoal> goalId = idFactory.build(SpecificationGoal.class, goal.getName());
-							organization.addAchieves(roleId, goalId);
-						}
-						/* set up the requires relation */
-						for (final Relationship requires : role.getSrcRelationships(RelationshipType.REQUIRES)) {
-							final edu.ksu.cis.agenttool.core.model.Capability capability = (edu.ksu.cis.agenttool.core.model.Capability) requires.getChild();
-							final UniqueId<Capability> capabilityId = idFactory.build(Capability.class, capability.getName());
-							organization.addRequires(roleId, capabilityId);
-						}
-						/* set up requires relation from inheritance */
-						for (final List<Relationship> inherits = role.getSrcRelationships(RelationshipType.INHERITS); !inherits.isEmpty();) {
-							final edu.ksu.cis.agenttool.core.model.Role parent = (edu.ksu.cis.agenttool.core.model.Role) inherits.remove(0).getChild();
-							for (final Relationship requires : parent.getSrcRelationships(RelationshipType.REQUIRES)) {
-								final edu.ksu.cis.agenttool.core.model.Capability capability = (edu.ksu.cis.agenttool.core.model.Capability) requires
-										.getChild();
-								final UniqueId<Capability> capabilityId = idFactory.build(Capability.class, capability.getName());
-								organization.addRequires(roleId, capabilityId);
-							}
-							inherits.addAll(parent.getSrcRelationships(RelationshipType.INHERITS));
-						}
-					}
-				}
-			} catch (final XMLParseException e) {
-				/*
-				 * replaces custom agent tool parse exception with java's parse exception
-				 */
-				throw new ParserConfigurationException(e.getMessage());
 			}
-		} else {
-			logger.info("File ({}) does not exists", path.toString());
-			throw new FileNotFoundException(String.format("File (%s) does not exists!", path.toString()));
 		}
-		return organization;
+	}
+
+	private void parseDiagram(final Organization organization, final XMLEventReader reader, final QName tagName) throws XMLStreamException {
+		final Map<String, UniqueId<Capability>> capabilities = new HashMap<>();
+		final Map<String, UniqueId<SpecificationGoal>> goals = new HashMap<>();
+		final Map<String, UniqueId<Role>> roles = new HashMap<>();
+		while (reader.hasNext()) {
+			final XMLEvent event = reader.nextEvent();
+			if (event.isStartElement()) {
+				final StartElement element = event.asStartElement();
+				final QName name = element.getName();
+				if (CAPABILITY_ELEMENT.equals(name.getLocalPart())) {
+					build(Capability.class, capabilities, f -> entityFactory.buildCapability(f), element, organization::addCapability);
+				} else if (GOAL_ELEMENT.equals(name.getLocalPart())) {
+					build(SpecificationGoal.class, goals, f -> entityFactory.buildSpecificationGoal(f), element, organization::addSpecificationGoal);
+				} else if (ROLE_ELEMENT.equals(name.getLocalPart())) {
+					final Role role = build(Role.class, roles, f -> entityFactory.buildRole(f), element, organization::addRole);
+					parseRole(organization, reader, name, role, capabilities, goals);
+				}
+				// TODO add the other entities
+			} else if (event.isEndElement()) {
+				final EndElement element = event.asEndElement();
+				if (element.getName().equals(tagName)) {
+					return;
+				}
+			}
+		}
+	}
+
+	private <T> T build(final Class<T> clazz, final Map<String, UniqueId<T>> map, final Function<UniqueId<T>, T> f, final StartElement element,
+			final Consumer<T> c) {
+		final UniqueId<T> id = idFactory.build(clazz, element.getAttributeByName(new QName(NAME_ATTRIBUTE)).getValue());
+		map.put(element.getAttributeByName(new QName(ID_ATTRIBUTE)).getValue(), id);
+		final T t = f.apply(id);
+		c.accept(t);
+		return t;
+	}
+
+	private void parseRole(final Organization organization, final XMLEventReader reader, final QName tagName, final Role role,
+			final Map<String, UniqueId<Capability>> capabilities, final Map<String, UniqueId<SpecificationGoal>> goals) throws XMLStreamException {
+		while (reader.hasNext()) {
+			final XMLEvent event = reader.nextEvent();
+			if (event.isStartElement()) {
+				final StartElement element = event.asStartElement();
+				final QName name = element.getName();
+				if (ACHIEVES_ELEMENT.equals(name.getLocalPart())) {
+					addRelation(reader, name, role.getId(), goals, organization::addAchieves);
+				} else if (REQUIRES_ELEMENT.equals(name.getLocalPart())) {
+					addRelation(reader, name, role.getId(), capabilities, organization::addRequires);
+				}
+				// TODO add the other relations
+			} else if (event.isEndElement()) {
+				final EndElement element = event.asEndElement();
+				if (element.getName().equals(tagName)) {
+					return;
+				}
+			}
+		}
+	}
+
+	private <T, U> void addRelation(final XMLEventReader reader, final QName tagName, final T t, final Map<String, U> map, final BiConsumer<T, U> c)
+			throws XMLStreamException {
+		final List<String> ids = collectChild(reader, tagName);
+		for (final String id : ids) {
+			final U u = map.get(id);
+			c.accept(t, u);
+		}
+	}
+
+	private List<String> collectChild(final XMLEventReader reader, final QName tagName) throws XMLStreamException {
+		final List<String> ids = new ArrayList<>();
+		while (reader.hasNext()) {
+			final XMLEvent event = reader.nextEvent();
+			if (event.isStartElement()) {
+				final StartElement element = event.asStartElement();
+				final QName name = element.getName();
+				if (CHILD_ELEMENT.equals(name.getLocalPart())) {
+					ids.add(reader.nextEvent().asCharacters().getData());
+				}
+			} else if (event.isEndElement()) {
+				final EndElement element = event.asEndElement();
+				if (element.getName().equals(tagName)) {
+					return ids;
+				}
+			}
+		}
+		return ids;
 	}
 
 }
