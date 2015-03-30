@@ -61,26 +61,10 @@ public class PossessesEventTest {
 
 	@Test
 	public void testPossessesEvent2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (category) cannot be null"));
-
-		new PossessesEvent(null, null);
-	}
-
-	@Test
-	public void testPossessesEvent3() {
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
 
 		pef.build(EventCategory.ADDED, null);
-	}
-
-	@Test
-	public void testPossessesEvent4() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (possesses) cannot be null"));
-
-		new PossessesEvent(EventCategory.ADDED, null);
 	}
 
 	@Test

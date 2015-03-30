@@ -53,26 +53,10 @@ public class PmfEventTest {
 
 	@Test
 	public void testPmfEvent2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (category) cannot be null"));
-
-		new PmfEvent(null, null);
-	}
-
-	@Test
-	public void testPmfEvent3() {
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
 
 		pef.build(EventCategory.ADDED, null);
-	}
-
-	@Test
-	public void testPmfEvent4() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (pmf) cannot be null"));
-
-		new PmfEvent(EventCategory.ADDED, null);
 	}
 
 	@Test

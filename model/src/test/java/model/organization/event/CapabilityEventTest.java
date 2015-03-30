@@ -53,26 +53,10 @@ public class CapabilityEventTest {
 
 	@Test
 	public void testCapabilityEvent2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (category) cannot be null"));
-
-		new CapabilityEvent(null, null);
-	}
-
-	@Test
-	public void testCapabilityEvent3() {
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
 
 		cef.build(EventCategory.ADDED, null);
-	}
-
-	@Test
-	public void testCapabilityEvent4() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (capability) cannot be null"));
-
-		new CapabilityEvent(EventCategory.ADDED, null);
 	}
 
 	@Test

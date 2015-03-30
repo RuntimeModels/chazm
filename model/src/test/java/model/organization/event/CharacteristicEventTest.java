@@ -53,26 +53,10 @@ public class CharacteristicEventTest {
 
 	@Test
 	public void testCharacteristicEvent2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (category) cannot be null"));
-
-		new CharacteristicEvent(null, null);
-	}
-
-	@Test
-	public void testCharacteristicEvent3() {
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
 
 		cef.build(EventCategory.ADDED, null);
-	}
-
-	@Test
-	public void testCharacteristicEvent4() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (characteristic) cannot be null"));
-
-		new CharacteristicEvent(EventCategory.ADDED, null);
 	}
 
 	@Test

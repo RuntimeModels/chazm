@@ -27,14 +27,6 @@ public class AbstractEventTest {
 	}
 
 	@Test
-	public void testAbstractEntity1() {
-		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(equalTo("Parameter (category) cannot be null"));
-
-		new AbstractEvent(null) {};
-	}
-
-	@Test
 	public void testGetCategory() {
 		final AbstractEvent e1 = new AbstractEvent(EventCategory.ADDED) {};
 		final AbstractEvent e2 = new AbstractEvent(EventCategory.ADDED) {};

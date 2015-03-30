@@ -1,7 +1,5 @@
 package model.organization.event;
 
-import static model.organization.validation.Checks.checkNotNull;
-
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
@@ -30,7 +28,6 @@ public class InstanceGoalEvent extends AbstractEvent {
 	@Inject
 	InstanceGoalEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final InstanceGoal goal) {
 		super(category);
-		checkNotNull(goal, "goal");
 		id = goal.getId();
 		specificationGoalId = goal.getGoal().getId();
 		parameter = goal.getParameter();
