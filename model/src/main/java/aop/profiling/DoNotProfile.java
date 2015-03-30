@@ -8,6 +8,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
+ * The {@linkplain DoNotProfile} annotation can be used to inform any profiling interceptors to ignore the annotated class or method.
+ *
  * @author Christopher Zhong
  * @since 7.0.0
  */
