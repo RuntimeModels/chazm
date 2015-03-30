@@ -86,7 +86,7 @@ public class EffectivenessTest {
 	@Test
 	public void testCompute1() {
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(equalTo("Parameter (organization) cannot be null"));
+		exception.expectMessage(equalTo("Parameter (arg0) cannot be null"));
 
 		effectiveness.compute(null, null);
 	}
@@ -96,7 +96,7 @@ public class EffectivenessTest {
 		final Organization o = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(equalTo("Parameter (assignments) cannot be null"));
+		exception.expectMessage(equalTo("Parameter (arg1) cannot be null"));
 
 		effectiveness.compute(o, null);
 	}

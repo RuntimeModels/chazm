@@ -52,7 +52,7 @@ public class SpecificationGoalManagerTest {
 	public void testAddSpecificationGoal1() {
 		final Organization o = provider.get();
 		exception.expect(is(instanceOf(IllegalArgumentException.class)));
-		exception.expectMessage(equalTo("Parameter (goal) cannot be null"));
+		exception.expectMessage(equalTo("Parameter (arg0) cannot be null"));
 		o.addSpecificationGoal(null);
 	}
 
@@ -63,7 +63,7 @@ public class SpecificationGoalManagerTest {
 		final SpecificationGoal g1 = entityFactory.buildSpecificationGoal(i1);
 		final SpecificationGoal g2 = entityFactory.buildSpecificationGoal(i1);
 		exception.expect(is(instanceOf(IllegalArgumentException.class)));
-		exception.expectMessage(equalTo("([SpecificationGoal]) entity (SpecificationGoalEntity(goal1)) already exists"));
+		exception.expectMessage(equalTo("(SpecificationGoal) entity (goal1) already exists"));
 		assertThat(g1, is(not(sameInstance(g2))));
 		o.addSpecificationGoal(g1);
 		o.addSpecificationGoal(g2);

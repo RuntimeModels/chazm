@@ -1,11 +1,7 @@
 package model.organization.validation;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotNull;
 
@@ -51,9 +47,7 @@ public final class Checks {
 		checkNotNull(t, name);
 		checkNotNull(p, "p");
 		if (p.test(t.getId())) {
-			final Collection<String> c = Arrays.asList(t.getClass().getInterfaces()).parallelStream().map(f -> f.getSimpleName())
-					.collect(Collectors.toCollection(HashSet::new));
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_ENTITY_EXISTS, c, t));
+			throw new IllegalArgumentException(String.format(M.EXCEPTION_ENTITY_EXISTS, t.getId().getType().getSimpleName(), t.getId()));
 		}
 	}
 

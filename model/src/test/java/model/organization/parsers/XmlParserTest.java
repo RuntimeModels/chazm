@@ -31,8 +31,8 @@ public class XmlParserTest {
 
 	@Test
 	public void testXmlParser() throws XMLStreamException {
-		XmlParser p1 = provider.get();
-		XmlParser p2 = provider.get();
+		final XmlParser p1 = provider.get();
+		final XmlParser p2 = provider.get();
 
 		assertThat(p1, is(not(nullValue())));
 		assertThat(p1, is(sameInstance(p2)));
@@ -40,9 +40,9 @@ public class XmlParserTest {
 
 	@Test
 	public void testParse() throws XMLStreamException {
-		XmlParser p1 = provider.get();
-		Organization o1 = injector.getInstance(Organization.class);
-		InputStream is = ClassLoader.getSystemResourceAsStream("RoleDiagram1.xml");
+		final XmlParser p1 = provider.get();
+		final Organization o1 = injector.getInstance(Organization.class);
+		final InputStream is = ClassLoader.getSystemResourceAsStream("RoleDiagram1.xml");
 
 		p1.parse(o1, is);
 
