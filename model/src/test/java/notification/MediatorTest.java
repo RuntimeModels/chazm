@@ -22,7 +22,9 @@ import mockit.Capturing;
 import mockit.FullVerifications;
 import mockit.integration.junit4.JMockit;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 
@@ -68,6 +70,9 @@ public class MediatorTest {
 
 	private final Injector injector = Guice.createInjector(new NotificationModule());
 	private final Provider<DefaultMediator> provider = injector.getProvider(DefaultMediator.class);
+
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
 
 	@Test
 	public void testMediator() {
@@ -190,6 +195,16 @@ public class MediatorTest {
 
 		m1.post("");
 
+	}
+
+	@Test
+	public void testPost5() {
+		final DefaultMediator m1 = provider.get();
+
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Parameter (arg0) cannot be null");
+
+		m1.post(null);
 	}
 
 	@Test
@@ -319,6 +334,16 @@ public class MediatorTest {
 	}
 
 	@Test
+	public void testRegister3() {
+		final DefaultMediator m1 = provider.get();
+
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Parameter (arg0) cannot be null");
+
+		m1.register((Subscriber) null);
+	}
+
+	@Test
 	public void testUnregister() {
 		final DefaultMediator m1 = provider.get();
 		final Subscriber s1 = new TestSubscriber();
@@ -365,6 +390,16 @@ public class MediatorTest {
 		final Set<Subscriber> subscribers = m1.getSubscribers();
 		assertThat(subscribers.size(), is(equalTo(0)));
 		assertThat(subscribers, not(hasItem(s1)));
+	}
+
+	@Test
+	public void testUnregister3() {
+		final DefaultMediator m1 = provider.get();
+
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Parameter (arg0) cannot be null");
+
+		m1.unregister((Subscriber) null);
 	}
 
 }
