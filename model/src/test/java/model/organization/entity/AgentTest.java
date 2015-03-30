@@ -43,30 +43,15 @@ public class AgentTest {
 	public void testAgent1() {
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
-		agentFactory.buildAgent(null, new Agent.ContactInfo() {});
+		agentFactory.buildAgent(null, null);
 	}
 
 	@Test
 	public void testAgent2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (id) cannot be null"));
-		new AgentEntity(null, new Agent.ContactInfo() {});
-	}
-
-	@Test
-	public void testAgent3() {
 		final UniqueId<Agent> i1 = idFactory.build(Agent.class, 1L);
 		exception.expect(instanceOf(ProvisionException.class));
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
 		agentFactory.buildAgent(i1, null);
-	}
-
-	@Test
-	public void testAgent4() {
-		final UniqueId<Agent> i1 = idFactory.build(Agent.class, 1L);
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (contactInfo) cannot be null"));
-		new AgentEntity(i1, null);
 	}
 
 	@Test

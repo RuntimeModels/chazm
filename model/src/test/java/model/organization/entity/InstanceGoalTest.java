@@ -52,14 +52,6 @@ public class InstanceGoalTest {
 
 	@Test
 	public void testInstanceGoal2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (id) cannot be null"));
-
-		new InstanceGoalEntity(null, null, null);
-	}
-
-	@Test
-	public void testInstanceGoal3() {
 		final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
 
 		exception.expect(instanceOf(ProvisionException.class));
@@ -69,17 +61,7 @@ public class InstanceGoalTest {
 	}
 
 	@Test
-	public void testInstanceGoal4() {
-		final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
-
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (goal) cannot be null"));
-
-		new InstanceGoalEntity(i1, null, null);
-	}
-
-	@Test
-	public void testInstanceGoal5() {
+	public void testInstanceGoal3() {
 		final UniqueId<SpecificationGoal> x1 = idFactory.build(SpecificationGoal.class, 1L);
 		final SpecificationGoal y1 = specificationGoalFactory.buildSpecificationGoal(x1);
 
@@ -89,19 +71,6 @@ public class InstanceGoalTest {
 		exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
 
 		instanceGoalFactory.buildInstanceGoal(i1, y1, null);
-	}
-
-	@Test
-	public void testInstanceGoal6() {
-		final UniqueId<SpecificationGoal> x1 = idFactory.build(SpecificationGoal.class, 1L);
-		final SpecificationGoal y1 = specificationGoalFactory.buildSpecificationGoal(x1);
-
-		final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
-
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (parameter) cannot be null"));
-
-		new InstanceGoalEntity(i1, y1, null);
 	}
 
 	@Test

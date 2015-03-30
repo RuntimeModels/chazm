@@ -37,14 +37,6 @@ public class AbstractEntityTest {
 	}
 
 	@Test
-	public void testAbstractEntity1() {
-		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(equalTo("Parameter (id) cannot be null"));
-
-		new AbstractEntity<Agent>(null) {};
-	}
-
-	@Test
 	public void testGetId() {
 		final UniqueId<Agent> i1 = idf.build(Agent.class, "i1");
 		final AbstractEntity<Agent> e1 = new AbstractEntity<Agent>(i1) {};

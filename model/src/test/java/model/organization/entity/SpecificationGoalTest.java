@@ -48,13 +48,6 @@ public class SpecificationGoalTest {
 	}
 
 	@Test
-	public void testSpecificationGoal2() {
-		exception.expect(instanceOf(IllegalArgumentException.class));
-		exception.expectMessage(equalTo("Parameter (id) cannot be null"));
-		new SpecificationGoalEntity(null);
-	}
-
-	@Test
 	public void testGetId() {
 		final UniqueId<SpecificationGoal> i1 = idFactory.build(SpecificationGoal.class, 1L);
 		final UniqueId<SpecificationGoal> i2 = idFactory.build(SpecificationGoal.class, 1L);
