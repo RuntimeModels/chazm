@@ -10,7 +10,6 @@ import com.google.inject.assistedinject.Assisted;
 class AgentEntity extends AbstractEntity<Agent> implements Agent {
 
 	private final ContactInfo contactInfo;
-	private transient String toString = null;
 
 	@Inject
 	AgentEntity(@NotNull @Assisted final UniqueId<Agent> id, @NotNull @Assisted final ContactInfo contactInfo) {
@@ -39,10 +38,7 @@ class AgentEntity extends AbstractEntity<Agent> implements Agent {
 
 	@Override
 	public String toString() {
-		if (toString == null) {
-			toString = String.format("%s(%s)", getClass().getSimpleName(), getId());
-		}
-		return toString;
+		return super.toString();
 	}
 
 }

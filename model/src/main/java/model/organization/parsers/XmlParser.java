@@ -21,6 +21,7 @@ import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
+import message.L;
 import model.organization.Organization;
 import model.organization.entity.Capability;
 import model.organization.entity.EntityFactory;
@@ -42,15 +43,15 @@ import org.slf4j.LoggerFactory;
 public class XmlParser {
 
 	private static final Logger logger = LoggerFactory.getLogger(XmlParser.class);
-	private static final String ROLE_DIAGRAM_ELEMENT = "RoleDiagram";
-	private static final String ROLE_ELEMENT = "Role";
-	private static final String GOAL_ELEMENT = "Goal";
-	private static final String CAPABILITY_ELEMENT = "Capability";
-	private static final String ACHIEVES_ELEMENT = "achieves";
-	private static final String REQUIRES_ELEMENT = "requires";
-	private static final String ID_ATTRIBUTE = "id";
-	private static final String NAME_ATTRIBUTE = "name";
-	private static final String CHILD_ELEMENT = "child";
+	private static final String ROLE_DIAGRAM_ELEMENT = "RoleDiagram"; //$NON-NLS-1$
+	private static final String ROLE_ELEMENT = "Role"; //$NON-NLS-1$
+	private static final String GOAL_ELEMENT = "Goal"; //$NON-NLS-1$
+	private static final String CAPABILITY_ELEMENT = "Capability"; //$NON-NLS-1$
+	private static final String ACHIEVES_ELEMENT = "achieves"; //$NON-NLS-1$
+	private static final String REQUIRES_ELEMENT = "requires"; //$NON-NLS-1$
+	private static final String ID_ATTRIBUTE = "id"; //$NON-NLS-1$
+	private static final String NAME_ATTRIBUTE = "name"; //$NON-NLS-1$
+	private static final String CHILD_ELEMENT = "child"; //$NON-NLS-1$
 
 	private final IdFactory idFactory;
 	private final EntityFactory entityFactory;
@@ -77,7 +78,7 @@ public class XmlParser {
 			final XMLEvent event = reader.nextEvent();
 			if (event.getEventType() == XMLStreamConstants.START_ELEMENT) {
 				final StartElement element = event.asStartElement();
-				logger.debug("{}", element);
+				logger.debug(L.START_TAG.get(), element);
 				final QName name = element.getName();
 				if (ROLE_DIAGRAM_ELEMENT.equals(name.getLocalPart())) {
 					parseDiagram(organization, reader, name);

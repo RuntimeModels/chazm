@@ -14,6 +14,8 @@ import java.util.concurrent.locks.StampedLock;
 import javax.inject.Singleton;
 import javax.validation.constraints.NotNull;
 
+import message.L;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -116,7 +118,7 @@ class DefaultMediator implements Mediator {
 		try {
 			method.invoke(subscriber, event);
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			logger.warn("Unable to invoke {}.{}({})", subscriber.getClass().getName(), method.getName(), event);
+			logger.warn(L.UNABLE_TO_INVOKE.get(), subscriber.getClass().getName(), method.getName(), event);
 			final long stamp = lock.writeLock();
 			try {
 				final Map<Subscriber, Method> m1 = eventSubscribers.get(event.getClass());
@@ -141,9 +143,9 @@ class DefaultMediator implements Mediator {
 		try {
 			final Map<Subscriber, Method> map = eventSubscribers.computeIfAbsent(type, f -> new ConcurrentHashMap<>());
 			if (map.containsKey(subscriber)) {
-				logger.warn("Subscriber ({}) is already registered to ({})", subscriber, type);
+				logger.warn(L.SUBSCRIBER_ALREADY_REGISTERED.get(), subscriber, type);
 			} else {
-				logger.info("Registering ({}) for ({}) with ({})", subscriber, type, method);
+				logger.info(L.SUBSCRIBER_REGISTERED.get(), subscriber, type, method);
 				map.put(subscriber, method);
 				subscriberEvents.computeIfAbsent(subscriber, f -> new ConcurrentHashMap<>()).put(type, method);
 			}

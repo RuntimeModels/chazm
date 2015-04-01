@@ -3,6 +3,8 @@ package model.organization.relation;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
+import message.E;
+import message.M;
 import model.organization.entity.Agent;
 import model.organization.entity.Attribute;
 import model.organization.entity.Attribute.Type;
@@ -45,15 +47,13 @@ class HasRelation implements Has {
 		case POSITIVE_QUALITY:
 		case NEGATIVE_QUALITY:
 			if (value < QUALITY_MIN_AMOUNT || value > QUALITY_MAX_AMOUNT) {
-				throw new IllegalArgumentException(String.format("For atttribute type (%s), score (%s) must be between (%s) and (%s)", type, value,
-						QUALITY_MIN_AMOUNT, QUALITY_MAX_AMOUNT));
+				throw new IllegalArgumentException(E.VALUE_BETWEEN.get(type, value, QUALITY_MIN_AMOUNT, QUALITY_MAX_AMOUNT));
 			}
 			break;
 		case POSITIVE_QUANTITY:
 		case NEGATIVE_QUANTITY:
 			if (value < QUANTITY_MIN_AMOUNT) {
-				throw new IllegalArgumentException(
-						String.format("For atttribute type (%s), score (%s) must be at least (%s)", type, value, QUANTITY_MIN_AMOUNT));
+				throw new IllegalArgumentException(E.VALUE_AT_LEAST.get(type, value, QUANTITY_MIN_AMOUNT));
 			}
 			break;
 		case NEGATIVE_UNBOUNDED:
@@ -82,7 +82,7 @@ class HasRelation implements Has {
 
 	@Override
 	public String toString() {
-		return String.format("%s <-> %s: %s", getAgent().getId(), getAttribute().getId(), getValue());
+		return M.RELATION_WITH_VALUE.get(getAgent().getId(), getAttribute().getId(), getValue());
 	}
 
 }

@@ -17,7 +17,7 @@ class ClassId<T> extends AbstractId<T> {
 	@Inject
 	ClassId(@NotNull @Assisted final Class<T> type, @NotNull @Assisted final Class<?> id) {
 		super(type);
-		checkNotNull(id, "id");
+		checkNotNull(id, "id"); //$NON-NLS-1$
 		this.id = id;
 	}
 

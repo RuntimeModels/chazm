@@ -3,6 +3,7 @@ package model.organization.relation;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
+import message.M;
 import model.organization.entity.Attribute;
 import model.organization.entity.Pmf;
 
@@ -51,7 +52,7 @@ class ModeratesRelation implements Moderates {
 	@Override
 	public String toString() {
 		if (toString == null) {
-			toString = String.format("%s <-> %s", getPmf().getId(), getAttribute().getId());
+			toString = M.RELATION.get(getPmf().getId(), getAttribute().getId());
 		}
 		return toString;
 	}

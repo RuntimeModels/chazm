@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import message.L;
 import mockit.Capturing;
 import mockit.FullVerifications;
 import mockit.integration.junit4.JMockit;
@@ -230,13 +231,13 @@ public class MediatorTest {
 		assertThat(s1Events.get(Collection.class).getName(), is(equalTo("c1")));
 		new FullVerifications(logger) {
 			{
-				logger.info("Registering ({}) for ({}) with ({})", s1, String.class, any);
+				logger.info(L.SUBSCRIBER_REGISTERED.get(), s1, String.class, any);
 				times = 1;
-				logger.info("Registering ({}) for ({}) with ({})", s1, Integer.class, any);
+				logger.info(L.SUBSCRIBER_REGISTERED.get(), s1, Integer.class, any);
 				times = 1;
-				logger.info("Registering ({}) for ({}) with ({})", s1, Collection.class, any);
+				logger.info(L.SUBSCRIBER_REGISTERED.get(), s1, Collection.class, any);
 				times = 1;
-				logger.warn("Subscriber ({}) is already registered to ({})", s1, String.class);
+				logger.warn(L.SUBSCRIBER_ALREADY_REGISTERED.get(), s1, String.class);
 				times = 3;
 			}
 		};
@@ -274,21 +275,21 @@ public class MediatorTest {
 		assertThat(s2Events.get(Collection.class).getName(), is(equalTo("c1")));
 		new FullVerifications(logger) {
 			{
-				logger.info("Registering ({}) for ({}) with ({})", s1, String.class, any);
+				logger.info(L.SUBSCRIBER_REGISTERED.get(), s1, String.class, any);
 				times = 1;
-				logger.info("Registering ({}) for ({}) with ({})", s1, Integer.class, any);
+				logger.info(L.SUBSCRIBER_REGISTERED.get(), s1, Integer.class, any);
 				times = 1;
-				logger.info("Registering ({}) for ({}) with ({})", s1, Collection.class, any);
+				logger.info(L.SUBSCRIBER_REGISTERED.get(), s1, Collection.class, any);
 				times = 1;
-				logger.info("Registering ({}) for ({}) with ({})", s2, String.class, any);
+				logger.info(L.SUBSCRIBER_REGISTERED.get(), s2, String.class, any);
 				times = 1;
-				logger.info("Registering ({}) for ({}) with ({})", s2, Integer.class, any);
+				logger.info(L.SUBSCRIBER_REGISTERED.get(), s2, Integer.class, any);
 				times = 1;
-				logger.info("Registering ({}) for ({}) with ({})", s2, Collection.class, any);
+				logger.info(L.SUBSCRIBER_REGISTERED.get(), s2, Collection.class, any);
 				times = 1;
-				logger.warn("Subscriber ({}) is already registered to ({})", s1, String.class);
+				logger.warn(L.SUBSCRIBER_ALREADY_REGISTERED.get(), s1, String.class);
 				times = 3;
-				logger.warn("Subscriber ({}) is already registered to ({})", s2, String.class);
+				logger.warn(L.SUBSCRIBER_ALREADY_REGISTERED.get(), s2, String.class);
 				times = 3;
 			}
 		};
@@ -317,17 +318,17 @@ public class MediatorTest {
 		assertThat(subscriberEvents.get(Collection.class).getName(), is(equalTo("c1")));
 		new FullVerifications(logger) {
 			{
-				logger.info("Registering ({}) for ({}) with ({})", s1, String.class, any);
+				logger.info(L.SUBSCRIBER_REGISTERED.get(), s1, String.class, any);
 				times = 1;
-				logger.info("Registering ({}) for ({}) with ({})", s1, Integer.class, any);
+				logger.info(L.SUBSCRIBER_REGISTERED.get(), s1, Integer.class, any);
 				times = 1;
-				logger.info("Registering ({}) for ({}) with ({})", s1, Collection.class, any);
+				logger.info(L.SUBSCRIBER_REGISTERED.get(), s1, Collection.class, any);
 				times = 1;
-				logger.warn("Subscriber ({}) is already registered to ({})", s1, Integer.class);
+				logger.warn(L.SUBSCRIBER_ALREADY_REGISTERED.get(), s1, Integer.class);
 				times = 1;
-				logger.warn("Subscriber ({}) is already registered to ({})", s1, Collection.class);
+				logger.warn(L.SUBSCRIBER_ALREADY_REGISTERED.get(), s1, Collection.class);
 				times = 1;
-				logger.warn("Subscriber ({}) is already registered to ({})", s1, String.class);
+				logger.warn(L.SUBSCRIBER_ALREADY_REGISTERED.get(), s1, String.class);
 				times = 7;
 			}
 		};

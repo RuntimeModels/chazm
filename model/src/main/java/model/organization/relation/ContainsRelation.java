@@ -3,6 +3,7 @@ package model.organization.relation;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
+import message.M;
 import model.organization.entity.Characteristic;
 import model.organization.entity.Role;
 
@@ -61,7 +62,7 @@ class ContainsRelation implements Contains {
 
 	@Override
 	public String toString() {
-		return String.format("%s <-> %s: %f", getRole().getId(), getCharacteristic().getId(), getValue());
+		return M.RELATION_WITH_VALUE.get(getRole().getId(), getCharacteristic().getId(), getValue());
 	}
 
 }

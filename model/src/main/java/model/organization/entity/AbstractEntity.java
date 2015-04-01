@@ -2,6 +2,7 @@ package model.organization.entity;
 
 import javax.validation.constraints.NotNull;
 
+import message.M;
 import model.organization.id.Identifiable;
 import model.organization.id.UniqueId;
 
@@ -48,7 +49,7 @@ public abstract class AbstractEntity<T> implements Identifiable<T> {
 	@Override
 	public String toString() {
 		if (toString == null) {
-			toString = String.format("%s(%s)", getClass().getSimpleName(), getId());
+			toString = M.ENTITY_0.get(getClass().getSimpleName(), getId());
 		}
 		return toString;
 	}

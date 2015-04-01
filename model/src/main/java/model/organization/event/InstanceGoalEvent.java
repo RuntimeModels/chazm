@@ -3,6 +3,7 @@ package model.organization.event;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
+import message.M;
 import model.organization.entity.InstanceGoal;
 import model.organization.entity.InstanceGoal.Parameter;
 import model.organization.entity.SpecificationGoal;
@@ -83,7 +84,7 @@ public class InstanceGoalEvent extends AbstractEvent {
 	@Override
 	public String toString() {
 		if (toString == null) {
-			toString = String.format("%s(%s, %s, %s, %s)", getClass().getSimpleName(), getCategory(), getId(), getSpecificationGoalId(), getParameter());
+			toString = M.EVENT_WITH_2_IDS_AND_VALUE.get(super.toString(), getId(), getSpecificationGoalId(), getParameter());
 		}
 		return toString;
 	}

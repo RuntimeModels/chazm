@@ -3,6 +3,7 @@ package model.organization.entity;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
+import message.M;
 import model.organization.id.UniqueId;
 
 import com.google.inject.assistedinject.Assisted;
@@ -46,7 +47,7 @@ class InstanceGoalEntity extends AbstractEntity<InstanceGoal> implements Instanc
 
 	@Override
 	public String toString() {
-		return String.format("%s(%s, %s, %s)", getClass().getSimpleName(), getId(), getGoal(), getParameter());
+		return M.ENTITY_2.get(super.toString(), getGoal(), getParameter());
 	}
 
 }

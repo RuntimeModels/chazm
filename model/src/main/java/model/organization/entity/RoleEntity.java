@@ -9,8 +9,6 @@ import com.google.inject.assistedinject.Assisted;
 
 class RoleEntity extends AbstractEntity<Role> implements Role {
 
-	private transient String toString = null;
-
 	@Inject
 	RoleEntity(@NotNull @Assisted final UniqueId<Role> id) {
 		super(id);
@@ -32,10 +30,7 @@ class RoleEntity extends AbstractEntity<Role> implements Role {
 
 	@Override
 	public String toString() {
-		if (toString == null) {
-			toString = String.format("%s(%s)", getClass().getSimpleName(), getId());
-		}
-		return toString;
+		return super.toString();
 	}
 
 }

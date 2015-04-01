@@ -3,6 +3,8 @@ package model.organization.relation;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
+import message.E;
+import message.M;
 import model.organization.entity.Agent;
 import model.organization.entity.Capability;
 
@@ -40,7 +42,7 @@ class PossessesRelation implements Possesses {
 	@Override
 	public final void setScore(final double score) {
 		if (score < MIN_SCORE || score > MAX_SCORE) {
-			throw new IllegalArgumentException(String.format("Score (%s) must be between (%s) and (%s)", score, MIN_SCORE, MAX_SCORE));
+			throw new IllegalArgumentException(E.SCORE_BETWEEN.get(score, MIN_SCORE, MAX_SCORE));
 		}
 		this.score = score;
 	}
@@ -64,7 +66,7 @@ class PossessesRelation implements Possesses {
 
 	@Override
 	public String toString() {
-		return String.format("%s <-> %s: %f", agent.getId(), capability.getId(), score);
+		return M.RELATION_WITH_VALUE.get(getAgent().getId(), getCapability().getId(), getScore());
 	}
 
 }

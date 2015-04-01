@@ -3,6 +3,7 @@ package model.organization.relation;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
+import message.M;
 import model.organization.entity.Agent;
 import model.organization.entity.InstanceGoal;
 import model.organization.entity.Role;
@@ -25,11 +26,6 @@ class AssignmentRelation implements Assignment {
 		 * Serial version ID.
 		 */
 		private static final long serialVersionUID = 7696865567559985410L;
-
-		/**
-		 * Internal <code>String</code> for the formatting of <code>Assignment</code> class.
-		 */
-		private static final String STRING_FORMAT = "%s, %s, %s";
 
 		/**
 		 * The {@linkplain Id} that represents an {@linkplain Agent}.
@@ -120,7 +116,7 @@ class AssignmentRelation implements Assignment {
 		@Override
 		public String toString() {
 			if (toString == null) {
-				toString = String.format(STRING_FORMAT, getAgentId(), getRoleId(), getGoalId());
+				toString = M.ASSIGNMENT_ID.get(getClass().getSimpleName(), getAgentId(), getRoleId(), getGoalId());
 			}
 			return toString;
 		}
@@ -130,6 +126,7 @@ class AssignmentRelation implements Assignment {
 	private final Agent agent;
 	private final Role role;
 	private final InstanceGoal goal;
+	private transient String toString = null;
 
 	@Inject
 	AssignmentRelation(@NotNull @Assisted final Agent agent, @NotNull @Assisted final Role role, @NotNull @Assisted final InstanceGoal goal) {
@@ -175,7 +172,10 @@ class AssignmentRelation implements Assignment {
 
 	@Override
 	public String toString() {
-		return String.format("<%s, %s, %s>", getAgent(), getRole(), getGoal());
+		if (toString == null) {
+			toString = M.ASSIGNMENT.get(getAgent().getId(), getRole().getId(), getGoal().getId());
+		}
+		return toString;
 	}
 
 }
