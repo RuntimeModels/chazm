@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.validation.constraints.NotNull;
 
+import message.M;
+
 /**
  * The {@linkplain AbstractEvent} class provides an easier way to implement events as they all have the category.
  *
@@ -56,7 +58,7 @@ public abstract class AbstractEvent implements Serializable {
 	@Override
 	public String toString() {
 		if (toString == null) {
-			toString = String.format("%s(%s)", getClass().getSimpleName(), category);
+			toString = M.EVENT.get(getClass().getSimpleName(), category);
 		}
 		return toString;
 	}

@@ -3,6 +3,7 @@ package model.organization.entity;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
+import message.M;
 import model.organization.id.UniqueId;
 
 import com.google.inject.assistedinject.Assisted;
@@ -40,7 +41,7 @@ class AttributeEntity extends AbstractEntity<Attribute> implements Attribute {
 	@Override
 	public String toString() {
 		if (toString == null) {
-			toString = String.format("%s(%s, %s)", getClass().getSimpleName(), getId(), getType());
+			toString = M.ENTITY_1.get(super.toString(), getType());
 		}
 		return toString;
 	}

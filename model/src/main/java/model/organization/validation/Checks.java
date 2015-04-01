@@ -2,7 +2,7 @@ package model.organization.validation;
 
 import javax.inject.Singleton;
 
-import message.M;
+import message.E;
 
 /**
  * The {@linkplain Checks} provides various methods for preconditions and postconditions checking.
@@ -25,7 +25,7 @@ public final class Checks {
 	 */
 	public static <T, U> void checkNotNull(final T variable, final U variableName) throws IllegalArgumentException {
 		if (variable == null) {
-			throw new IllegalArgumentException(String.format(M.EXCEPTION_PARAMETER_CANNOT_BE_NULL, variableName == null ? "<parameter>" : variableName));
+			throw new IllegalArgumentException(E.PARAMETER_CANNOT_BE_NULL.get(variableName == null ? "<parameter>" : variableName)); //$NON-NLS-1$
 		}
 	}
 

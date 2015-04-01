@@ -9,8 +9,6 @@ import com.google.inject.assistedinject.Assisted;
 
 class PmfEntity extends AbstractEntity<Pmf> implements Pmf {
 
-	private transient String toString = null;
-
 	@Inject
 	PmfEntity(@NotNull @Assisted final UniqueId<Pmf> id) {
 		super(id);
@@ -32,10 +30,7 @@ class PmfEntity extends AbstractEntity<Pmf> implements Pmf {
 
 	@Override
 	public String toString() {
-		if (toString == null) {
-			toString = String.format("%s(%s)", getClass().getSimpleName(), getId());
-		}
-		return toString;
+		return super.toString();
 	}
 
 }

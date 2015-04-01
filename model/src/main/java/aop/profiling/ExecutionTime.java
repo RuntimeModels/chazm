@@ -3,6 +3,8 @@ package aop.profiling;
 import javax.interceptor.Interceptor;
 import javax.validation.constraints.NotNull;
 
+import message.L;
+
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.slf4j.Logger;
@@ -26,8 +28,8 @@ public class ExecutionTime implements MethodInterceptor {
 			return invocation.proceed();
 		} finally {
 			final long end = System.nanoTime();
-			logger.trace("{}: {} nanoseconds: {} {}.{}()", ExecutionTime.class.getSimpleName(), end - start, invocation.getMethod().getGenericReturnType()
-					.getTypeName().replaceAll("(\\w+\\.)*", ""), invocation.getMethod().getDeclaringClass().getSimpleName(), invocation.getMethod().getName());
+			logger.trace(L.EXECUTION_TIME.get(), ExecutionTime.class.getSimpleName(), end - start, invocation.getMethod().getGenericReturnType().getTypeName()
+					.replaceAll("(\\w+\\.)*", ""), invocation.getMethod().getDeclaringClass().getSimpleName(), invocation.getMethod().getName()); //$NON-NLS-1$ //$NON-NLS-2$
 
 		}
 	}

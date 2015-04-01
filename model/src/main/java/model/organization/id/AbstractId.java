@@ -18,7 +18,7 @@ public abstract class AbstractId<T> implements UniqueId<T> {
 	private final Class<T> type;
 
 	protected AbstractId(@NotNull final Class<T> type) {
-		checkNotNull(type, "type");
+		checkNotNull(type, "type"); //$NON-NLS-1$
 		this.type = type;
 	}
 

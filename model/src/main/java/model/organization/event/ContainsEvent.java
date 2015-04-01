@@ -3,6 +3,7 @@ package model.organization.event;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
+import message.M;
 import model.organization.entity.Characteristic;
 import model.organization.entity.Role;
 import model.organization.id.UniqueId;
@@ -83,7 +84,7 @@ public class ContainsEvent extends AbstractEvent {
 	@Override
 	public String toString() {
 		if (toString == null) {
-			toString = String.format("%s(%s, %s, %s, %s)", getClass().getSimpleName(), getCategory(), getRoleId(), getCharacteristicId(), getValue());
+			toString = M.EVENT_WITH_2_IDS_AND_VALUE.get(super.toString(), getRoleId(), getCharacteristicId(), getValue());
 		}
 		return toString;
 	}

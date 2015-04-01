@@ -3,6 +3,7 @@ package model.organization.relation;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
+import message.M;
 import model.organization.entity.Attribute;
 import model.organization.entity.Role;
 
@@ -51,7 +52,7 @@ class NeedsRelation implements Needs {
 	@Override
 	public String toString() {
 		if (toString == null) {
-			toString = String.format("%s <-> %s", getRole().getId(), getAttribute().getId());
+			toString = M.RELATION.get(getRole().getId(), getAttribute().getId());
 		}
 		return toString;
 	}

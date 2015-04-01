@@ -2,6 +2,7 @@ package notification;
 
 import javax.validation.constraints.NotNull;
 
+import message.L;
 import model.organization.event.AchievesEvent;
 import model.organization.event.AgentEvent;
 import model.organization.event.AssignmentEvent;
@@ -30,99 +31,96 @@ class DefaultSubscriber implements Subscriber {
 
 	@Subscribe
 	public void event(@NotNull final AchievesEvent event) {
-		logger.debug("Received ({}, {}): role = {}, goal = {}", event.getClass().getSimpleName(), event.getCategory(), event.getRoleId(), event.getGoalId());
+		logger.debug(L.RECEIVED_ROLE_GOAL.get(), event.getClass().getSimpleName(), event.getCategory(), event.getRoleId(), event.getGoalId());
 	}
 
 	@Subscribe
 	public void event(@NotNull final AgentEvent event) {
-		logger.debug("Received ({}, {}): id = {}", event.getClass().getSimpleName(), event.getCategory(), event.getId());
+		logger.debug(L.RECEIVED_ID.get(), event.getClass().getSimpleName(), event.getCategory(), event.getId());
 	}
 
 	@Subscribe
 	public void event(@NotNull final AssignmentEvent event) {
-		logger.debug("Received ({}, {}): agent = {}, role = {}, goal = {}", event.getClass().getSimpleName(), event.getCategory(), event.getAgentId(),
-				event.getRoleId(), event.getGoalId());
+		logger.debug(L.RECEIVED_AGENT_ROLE_GOAL.get(), event.getClass().getSimpleName(), event.getCategory(), event.getAgentId(), event.getRoleId(),
+				event.getGoalId());
 	}
 
 	@Subscribe
 	public void event(@NotNull final AttributeEvent event) {
-		logger.debug("Received ({}, {}): id = {}", event.getClass().getSimpleName(), event.getCategory(), event.getId());
+		logger.debug(L.RECEIVED_ID.get(), event.getClass().getSimpleName(), event.getCategory(), event.getId());
 	}
 
 	@Subscribe
 	public void event(@NotNull final CapabilityEvent event) {
-		logger.debug("Received ({}, {}): id = {}", event.getClass().getSimpleName(), event.getCategory(), event.getId());
+		logger.debug(L.RECEIVED_ID.get(), event.getClass().getSimpleName(), event.getCategory(), event.getId());
 	}
 
 	@Subscribe
 	public void event(@NotNull final CharacteristicEvent event) {
-		logger.debug("Received ({}, {}): id = {}", event.getClass().getSimpleName(), event.getCategory(), event.getId());
+		logger.debug(L.RECEIVED_ID.get(), event.getClass().getSimpleName(), event.getCategory(), event.getId());
 	}
 
 	@Subscribe
 	public void event(@NotNull final ContainsEvent event) {
-		logger.debug("Received ({}, {}): role = {}, characteristic = {}, value = {}", event.getClass().getSimpleName(), event.getCategory(), event.getRoleId(),
+		logger.debug(L.RECEIVED_ROLE_CHARACTERISTIC_VALUE.get(), event.getClass().getSimpleName(), event.getCategory(), event.getRoleId(),
 				event.getCharacteristicId(), event.getValue());
 	}
 
 	@Subscribe
 	public void event(@NotNull final HasEvent event) {
-		logger.debug("Received ({}, {}): agent = {}, attribute = {}, value = {}", event.getClass().getSimpleName(), event.getCategory(), event.getAgentId(),
-				event.getAttributeId(), event.getValue());
+		logger.debug(L.RECEIVED_AGENT_ATTRIBUTE_VALUE.get(), event.getClass().getSimpleName(), event.getCategory(), event.getAgentId(), event.getAttributeId(),
+				event.getValue());
 	}
 
 	@Subscribe
 	public void event(@NotNull final InstanceGoalEvent event) {
-		logger.debug("Received ({}, {}): id = {}", event.getClass().getSimpleName(), event.getCategory(), event.getId());
+		logger.debug(L.RECEIVED_ID.get(), event.getClass().getSimpleName(), event.getCategory(), event.getId());
 	}
 
 	@Subscribe
 	public void event(@NotNull final ModeratesEvent event) {
-		logger.debug("Received ({}, {}): pmf = {}, attribute = {}", event.getClass().getSimpleName(), event.getCategory(), event.getPmfId(),
-				event.getAttributeId());
+		logger.debug(L.RECEIVED_PMF_ATTRIBUTE.get(), event.getClass().getSimpleName(), event.getCategory(), event.getPmfId(), event.getAttributeId());
 	}
 
 	@Subscribe
 	public void event(@NotNull final NeedsEvent event) {
-		logger.debug("Received ({}, {}): role = {}, attribute = {}", event.getClass().getSimpleName(), event.getCategory(), event.getRoleId(),
-				event.getAttributeId());
+		logger.debug(L.RECEIVED_ROLE_ATTRIBUTE.get(), event.getClass().getSimpleName(), event.getCategory(), event.getRoleId(), event.getAttributeId());
 	}
 
 	@Subscribe
 	public void event(@NotNull final PmfEvent event) {
-		logger.debug("Received ({}, {}): id = {}", event.getClass().getSimpleName(), event.getCategory(), event.getId());
+		logger.debug(L.RECEIVED_ID.get(), event.getClass().getSimpleName(), event.getCategory(), event.getId());
 	}
 
 	@Subscribe
 	public void event(@NotNull final PolicyEvent event) {
-		logger.debug("Received ({}, {}): id = {}", event.getClass().getSimpleName(), event.getCategory(), event.getId());
+		logger.debug(L.RECEIVED_ID.get(), event.getClass().getSimpleName(), event.getCategory(), event.getId());
 	}
 
 	@Subscribe
 	public void event(@NotNull final PossessesEvent event) {
-		logger.debug("Received ({}, {}): agent = {}, capability = {}, score = {}", event.getClass().getSimpleName(), event.getCategory(), event.getAgentId(),
+		logger.debug(L.RECEIVED_AGENT_CAPABILITY_SCORE.get(), event.getClass().getSimpleName(), event.getCategory(), event.getAgentId(),
 				event.getCapabilityId(), event.getScore());
 	}
 
 	@Subscribe
 	public void event(@NotNull final RequiresEvent event) {
-		logger.debug("Received ({}, {}): role = {}, capability = {}", event.getClass().getSimpleName(), event.getCategory(), event.getRoleId(),
-				event.getCapabilityId());
+		logger.debug(L.RECEIVED_ROLE_CAPABILITY.get(), event.getClass().getSimpleName(), event.getCategory(), event.getRoleId(), event.getCapabilityId());
 	}
 
 	@Subscribe
 	public void event(@NotNull final RoleEvent event) {
-		logger.debug("Received ({}, {}): id = {}", event.getClass().getSimpleName(), event.getCategory(), event.getId());
+		logger.debug(L.RECEIVED_ID.get(), event.getClass().getSimpleName(), event.getCategory(), event.getId());
 	}
 
 	@Subscribe
 	public void event(@NotNull final SpecificationGoalEvent event) {
-		logger.debug("Received ({}, {}): id = {}", event.getClass().getSimpleName(), event.getCategory(), event.getId());
+		logger.debug(L.RECEIVED_ID.get(), event.getClass().getSimpleName(), event.getCategory(), event.getId());
 	}
 
 	@Subscribe
 	public void event(@NotNull final UsesEvent event) {
-		logger.debug("Received ({}, {}): role = {}, pmf = {}", event.getClass().getSimpleName(), event.getCategory(), event.getRoleId(), event.getPmfId());
+		logger.debug(L.RECEIVED_ROLE_PMF.get(), event.getClass().getSimpleName(), event.getCategory(), event.getRoleId(), event.getPmfId());
 	}
 
 }

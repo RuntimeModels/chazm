@@ -9,8 +9,6 @@ import com.google.inject.assistedinject.Assisted;
 
 class CapabilityEntity extends AbstractEntity<Capability> implements Capability {
 
-	private transient String toString = null;
-
 	@Inject
 	CapabilityEntity(@NotNull @Assisted final UniqueId<Capability> id) {
 		super(id);
@@ -32,10 +30,7 @@ class CapabilityEntity extends AbstractEntity<Capability> implements Capability 
 
 	@Override
 	public String toString() {
-		if (toString == null) {
-			toString = String.format("%s(%s)", getClass().getSimpleName(), getId());
-		}
-		return toString;
+		return super.toString();
 	}
 
 }

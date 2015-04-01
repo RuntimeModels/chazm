@@ -1,10 +1,29 @@
 package message;
 
 @SuppressWarnings("javadoc")
-public final class M {
+public enum M { // everything else
 
-	public static final String EXCEPTION_PARAMETER_CANNOT_BE_NULL = "Parameter (%s) cannot be null";
-	public static final String EXCEPTION_ENTITY_DOES_NOT_EXISTS = "(%s) entity (%s) does not exists";
-	public static final String EXCEPTION_ENTITY_EXISTS = "(%s) entity (%s) already exists";
+	ASSIGNMENT("<%s, %s, %s>"), //
+	ASSIGNMENT_ID("%s(%s, %s, %s)"), //
+	ENTITY_0("%s(%s)"), //
+	ENTITY_1("%s: %s"), //
+	ENTITY_2("%s: %s, %s"), //
+	EVENT("%s(%s)"), //
+	EVENT_WITH_1_ID("%s: %s"), //
+	EVENT_WITH_2_IDS("%s: %s, %s"), //
+	EVENT_WITH_2_IDS_AND_VALUE("%s: %s, %s: %s"), //
+	EVENT_WITH_3_IDS("%s: %s, %s, %s"), //
+	RELATION("<%s, %s>"), //
+	RELATION_WITH_VALUE("<%s, %s>: %s");
+
+	private final String string;
+
+	private M(final String string) {
+		this.string = string;
+	}
+
+	public String get(final Object... args) {
+		return String.format(string, args);
+	}
 
 }

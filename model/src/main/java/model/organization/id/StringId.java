@@ -16,7 +16,7 @@ class StringId<T> extends AbstractId<T> {
 	@Inject
 	StringId(@NotNull @Assisted final Class<T> type, @NotNull @Assisted final String id) {
 		super(type);
-		checkNotNull(id, "id");
+		checkNotNull(id, "id"); //$NON-NLS-1$
 		this.id = id;
 	}
 

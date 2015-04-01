@@ -9,8 +9,6 @@ import com.google.inject.assistedinject.Assisted;
 
 class SpecificationGoalEntity extends AbstractEntity<SpecificationGoal> implements SpecificationGoal {
 
-	private transient String toString = null;
-
 	@Inject
 	SpecificationGoalEntity(@NotNull @Assisted final UniqueId<SpecificationGoal> id) {
 		super(id);
@@ -32,10 +30,7 @@ class SpecificationGoalEntity extends AbstractEntity<SpecificationGoal> implemen
 
 	@Override
 	public String toString() {
-		if (toString == null) {
-			toString = String.format("%s(%s)", getClass().getSimpleName(), getId());
-		}
-		return toString;
+		return super.toString();
 	}
 
 }

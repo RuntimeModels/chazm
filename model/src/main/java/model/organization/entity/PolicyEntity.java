@@ -9,8 +9,6 @@ import com.google.inject.assistedinject.Assisted;
 
 class PolicyEntity extends AbstractEntity<Policy> implements Policy {
 
-	private transient String toString = null;
-
 	@Inject
 	PolicyEntity(@NotNull @Assisted final UniqueId<Policy> id) {
 		super(id);
@@ -32,10 +30,7 @@ class PolicyEntity extends AbstractEntity<Policy> implements Policy {
 
 	@Override
 	public String toString() {
-		if (toString == null) {
-			toString = String.format("%s(%s)", getClass().getSimpleName(), getId());
-		}
-		return toString;
+		return super.toString();
 	}
 
 }

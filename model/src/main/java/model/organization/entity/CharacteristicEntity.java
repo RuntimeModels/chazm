@@ -9,8 +9,6 @@ import com.google.inject.assistedinject.Assisted;
 
 class CharacteristicEntity extends AbstractEntity<Characteristic> implements Characteristic {
 
-	private transient String toString = null;
-
 	@Inject
 	CharacteristicEntity(@NotNull @Assisted final UniqueId<Characteristic> id) {
 		super(id);
@@ -32,10 +30,7 @@ class CharacteristicEntity extends AbstractEntity<Characteristic> implements Cha
 
 	@Override
 	public String toString() {
-		if (toString == null) {
-			toString = String.format("%s(%s)", getClass().getSimpleName(), getId());
-		}
-		return toString;
+		return super.toString();
 	}
 
 }
