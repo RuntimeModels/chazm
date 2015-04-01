@@ -16,6 +16,11 @@ subprojects {
 
 	group 'model'
 	version '7.0.0'
+	
+	test {
+		maxParallelForks = 2
+		forkEvery = 150
+	}
 
 	jacocoTestReport {
 		dependsOn test
