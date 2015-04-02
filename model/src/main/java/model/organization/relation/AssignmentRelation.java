@@ -1,5 +1,7 @@
 package model.organization.relation;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
@@ -108,7 +110,7 @@ class AssignmentRelation implements Assignment {
 		@Override
 		public int hashCode() {
 			if (hashCode == null) {
-				hashCode = getAgentId().hashCode() << 22 | getRoleId().hashCode() << 11 | getGoalId().hashCode();
+				hashCode = Objects.hash(getAgentId(), getRoleId(), getGoalId());
 			}
 			return hashCode;
 		}

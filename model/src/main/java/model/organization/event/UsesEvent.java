@@ -1,5 +1,7 @@
 package model.organization.event;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
@@ -62,10 +64,7 @@ public class UsesEvent extends AbstractEvent {
 	@Override
 	public int hashCode() {
 		if (hashCode == null) {
-			final int prime = 31;
-			hashCode = super.hashCode();
-			hashCode = prime * hashCode + getRoleId().hashCode();
-			hashCode = prime * hashCode + getPmfId().hashCode();
+			hashCode = Objects.hash(getCategory(), getRoleId(), getPmfId());
 		}
 		return hashCode;
 	}

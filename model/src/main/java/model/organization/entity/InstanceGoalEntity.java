@@ -1,5 +1,7 @@
 package model.organization.entity;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
@@ -12,6 +14,7 @@ class InstanceGoalEntity extends AbstractEntity<InstanceGoal> implements Instanc
 
 	private final SpecificationGoal goal;
 	private final InstanceGoal.Parameter parameter;
+	private transient Integer hashCode = null;
 
 	@Inject
 	InstanceGoalEntity(@NotNull @Assisted final UniqueId<InstanceGoal> id, @NotNull @Assisted final SpecificationGoal goal,
@@ -35,14 +38,17 @@ class InstanceGoalEntity extends AbstractEntity<InstanceGoal> implements Instanc
 	public boolean equals(final Object object) {
 		if (object instanceof InstanceGoal) {
 			final InstanceGoal goal = (InstanceGoal) object;
-			return super.equals(goal);
+			return super.equals(goal) && getGoal().equals(goal.getGoal());
 		}
 		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		return super.hashCode();
+		if (hashCode == null) {
+			hashCode = Objects.hash(getId(), getGoal());
+		}
+		return hashCode;
 	}
 
 	@Override
