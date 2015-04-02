@@ -21,6 +21,7 @@ import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
+import message.E;
 import message.L;
 import model.organization.Organization;
 import model.organization.entity.Capability;
@@ -112,6 +113,7 @@ public class XmlParser {
 				}
 			}
 		}
+		throw new XMLStreamException(E.MISSING_END_TAG.get(tagName)); // should not happen as XMLEventReader will do it for us
 	}
 
 	private <T> T build(final Class<T> clazz, final Map<String, UniqueId<T>> map, final Function<UniqueId<T>, T> f, final StartElement element,
@@ -143,6 +145,7 @@ public class XmlParser {
 				}
 			}
 		}
+		throw new XMLStreamException(E.MISSING_END_TAG.get(tagName)); // should not happen as XMLEventReader will do it for us
 	}
 
 	private <T, U> void addRelation(final XMLEventReader reader, final QName tagName, final T t, final Map<String, U> map, final BiConsumer<T, U> c)
@@ -150,6 +153,7 @@ public class XmlParser {
 		final List<String> ids = collectChild(reader, tagName);
 		for (final String id : ids) {
 			final U u = map.get(id);
+			// TODO if u == null
 			c.accept(t, u);
 		}
 	}
@@ -171,7 +175,7 @@ public class XmlParser {
 				}
 			}
 		}
-		return ids;
+		throw new XMLStreamException(E.MISSING_END_TAG.get(tagName)); // should not happen as XMLEventReader will do it for us
 	}
 
 }
