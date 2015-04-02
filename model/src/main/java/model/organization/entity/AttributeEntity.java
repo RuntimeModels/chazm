@@ -1,5 +1,7 @@
 package model.organization.entity;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
@@ -11,6 +13,7 @@ import com.google.inject.assistedinject.Assisted;
 class AttributeEntity extends AbstractEntity<Attribute> implements Attribute {
 
 	private final Attribute.Type type;
+	private transient Integer hashCode = null;
 	private transient String toString = null;
 
 	@Inject
@@ -28,14 +31,17 @@ class AttributeEntity extends AbstractEntity<Attribute> implements Attribute {
 	public boolean equals(final Object object) {
 		if (object instanceof Attribute) {
 			final Attribute attribute = (Attribute) object;
-			return super.equals(attribute);
+			return super.equals(attribute) && getType().equals(attribute.getType());
 		}
 		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		return super.hashCode();
+		if (hashCode == null) {
+			hashCode = Objects.hash(getId(), getType());
+		}
+		return hashCode;
 	}
 
 	@Override

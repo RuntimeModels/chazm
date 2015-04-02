@@ -1,5 +1,7 @@
 package model.organization.relation;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
@@ -55,7 +57,7 @@ class ContainsRelation implements Contains {
 	@Override
 	public int hashCode() {
 		if (hashCode == null) {
-			hashCode = getRole().hashCode() << 16 | getCharacteristic().hashCode();
+			hashCode = Objects.hash(getRole(), getCharacteristic());
 		}
 		return hashCode;
 	}

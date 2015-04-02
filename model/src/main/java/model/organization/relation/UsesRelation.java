@@ -1,5 +1,7 @@
 package model.organization.relation;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
@@ -44,7 +46,7 @@ class UsesRelation implements Uses {
 	@Override
 	public int hashCode() {
 		if (hashCode == null) {
-			hashCode = getRole().hashCode() << 16 | getPmf().hashCode();
+			hashCode = Objects.hash(getRole(), getPmf());
 		}
 		return hashCode;
 	}

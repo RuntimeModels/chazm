@@ -1,5 +1,7 @@
 package model.organization.relation;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
@@ -45,7 +47,7 @@ class AchievesRelation implements Achieves {
 	@Override
 	public int hashCode() {
 		if (hashCode == null) {
-			hashCode = getRole().hashCode() << 16 | getGoal().hashCode();
+			hashCode = Objects.hash(getRole(), getGoal());
 		}
 		return hashCode;
 	}

@@ -1,5 +1,7 @@
 package model.organization.relation;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
@@ -44,7 +46,7 @@ class ModeratesRelation implements Moderates {
 	@Override
 	public int hashCode() {
 		if (hashCode == null) {
-			hashCode = getPmf().hashCode() << 16 | getAttribute().hashCode();
+			hashCode = Objects.hash(getPmf(), getAttribute());
 		}
 		return hashCode;
 	}

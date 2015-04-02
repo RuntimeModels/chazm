@@ -1,5 +1,7 @@
 package model.organization.relation;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
@@ -75,7 +77,7 @@ class HasRelation implements Has {
 	@Override
 	public int hashCode() {
 		if (hashCode == null) {
-			hashCode = getAgent().hashCode() << 16 | getAttribute().hashCode();
+			hashCode = Objects.hash(getAgent(), getAttribute());
 		}
 		return hashCode;
 	}
