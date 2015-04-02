@@ -25,7 +25,7 @@ class LongId<T> extends AbstractId<T> {
 	public boolean equals(final Object object) {
 		if (object instanceof LongId) {
 			final LongId<?> otherId = (LongId<?>) object;
-			return id == otherId.id;
+			return id.equals(otherId.id);
 		}
 		return false;
 	}
