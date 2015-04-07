@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import message.E;
 import message.L;
 import mockit.Capturing;
 import mockit.FullVerifications;
@@ -203,7 +204,7 @@ public class MediatorTest {
 		final DefaultMediator m1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage("Parameter (arg0) cannot be null");
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
 
 		m1.post(null);
 	}
@@ -339,7 +340,7 @@ public class MediatorTest {
 		final DefaultMediator m1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage("Parameter (arg0) cannot be null");
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
 
 		m1.register((Subscriber) null);
 	}
@@ -398,7 +399,7 @@ public class MediatorTest {
 		final DefaultMediator m1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage("Parameter (arg0) cannot be null");
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
 
 		m1.unregister((Subscriber) null);
 	}

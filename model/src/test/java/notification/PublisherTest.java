@@ -8,6 +8,7 @@ import static org.junit.Assert.assertThat;
 
 import javax.inject.Provider;
 
+import message.E;
 import mockit.Capturing;
 import mockit.FullVerifications;
 import mockit.integration.junit4.JMockit;
@@ -68,7 +69,7 @@ public class PublisherTest {
 		final Publisher p1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage("Parameter (arg0) cannot be null");
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
 
 		p1.post(null);
 	}

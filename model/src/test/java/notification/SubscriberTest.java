@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
+import message.E;
 import mockit.Capturing;
 import mockit.FullVerifications;
 import mockit.Mock;
@@ -836,7 +837,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage("Parameter (arg0) cannot be null");
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
 
 		s1.event((AchievesEvent) null);
 	}
@@ -846,7 +847,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage("Parameter (arg0) cannot be null");
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
 
 		s1.event((AgentEvent) null);
 	}
@@ -856,7 +857,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage("Parameter (arg0) cannot be null");
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
 
 		s1.event((AssignmentEvent) null);
 	}
@@ -866,7 +867,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage("Parameter (arg0) cannot be null");
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
 
 		s1.event((AttributeEvent) null);
 	}
@@ -876,7 +877,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage("Parameter (arg0) cannot be null");
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
 
 		s1.event((CapabilityEvent) null);
 	}
@@ -886,7 +887,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage("Parameter (arg0) cannot be null");
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
 
 		s1.event((CharacteristicEvent) null);
 	}
@@ -896,7 +897,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage("Parameter (arg0) cannot be null");
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
 
 		s1.event((ContainsEvent) null);
 	}
@@ -906,7 +907,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage("Parameter (arg0) cannot be null");
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
 
 		s1.event((HasEvent) null);
 	}
@@ -916,7 +917,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage("Parameter (arg0) cannot be null");
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
 
 		s1.event((InstanceGoalEvent) null);
 	}
@@ -926,7 +927,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage("Parameter (arg0) cannot be null");
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
 
 		s1.event((ModeratesEvent) null);
 	}
@@ -936,7 +937,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage("Parameter (arg0) cannot be null");
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
 
 		s1.event((NeedsEvent) null);
 	}
@@ -946,7 +947,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage("Parameter (arg0) cannot be null");
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
 
 		s1.event((PmfEvent) null);
 	}
@@ -956,7 +957,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage("Parameter (arg0) cannot be null");
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
 
 		s1.event((PolicyEvent) null);
 	}
@@ -966,7 +967,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage("Parameter (arg0) cannot be null");
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
 
 		s1.event((PossessesEvent) null);
 	}
@@ -976,7 +977,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage("Parameter (arg0) cannot be null");
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
 
 		s1.event((RequiresEvent) null);
 	}
@@ -986,7 +987,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage("Parameter (arg0) cannot be null");
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
 
 		s1.event((RoleEvent) null);
 	}
@@ -996,7 +997,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage("Parameter (arg0) cannot be null");
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
 
 		s1.event((SpecificationGoalEvent) null);
 	}
@@ -1006,7 +1007,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage("Parameter (arg0) cannot be null");
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
 
 		s1.event((UsesEvent) null);
 	}

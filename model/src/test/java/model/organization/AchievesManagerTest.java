@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import message.E;
 import model.organization.entity.EntityFactory;
 import model.organization.entity.Role;
 import model.organization.entity.SpecificationGoal;
@@ -47,7 +48,7 @@ public class AchievesManagerTest {
 	public void testAddAchieves1() {
 		final Organization o = provider.get();
 		exception.expect(is(instanceOf(IllegalArgumentException.class)));
-		exception.expectMessage(equalTo("Parameter (arg0) cannot be null"));
+		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg0")));
 		o.addAchieves(null, null);
 	}
 
@@ -58,7 +59,7 @@ public class AchievesManagerTest {
 		final Role r1 = entityFactory.buildRole(i1);
 		o.addRole(r1);
 		exception.expect(is(instanceOf(IllegalArgumentException.class)));
-		exception.expectMessage(equalTo("Parameter (arg1) cannot be null"));
+		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg1")));
 		o.addAchieves(i1, null);
 	}
 
@@ -70,7 +71,7 @@ public class AchievesManagerTest {
 		final SpecificationGoal g1 = entityFactory.buildSpecificationGoal(i2);
 		o.addSpecificationGoal(g1);
 		exception.expect(is(instanceOf(IllegalArgumentException.class)));
-		exception.expectMessage(equalTo("(Role) entity (role1) does not exists"));
+		exception.expectMessage(equalTo(E.ENTITY_DOES_NOT_EXISTS.get("Role", "role1")));
 		o.addAchieves(i1, i2);
 	}
 
@@ -82,7 +83,7 @@ public class AchievesManagerTest {
 		final Role r1 = entityFactory.buildRole(i1);
 		o.addRole(r1);
 		exception.expect(is(instanceOf(IllegalArgumentException.class)));
-		exception.expectMessage(equalTo("(SpecificationGoal) entity (goal1) does not exists"));
+		exception.expectMessage(equalTo(E.ENTITY_DOES_NOT_EXISTS.get("SpecificationGoal", "goal1")));
 		o.addAchieves(i1, i2);
 	}
 
