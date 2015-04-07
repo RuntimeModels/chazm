@@ -7,6 +7,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
+import message.E;
 import model.organization.entity.EntityFactory;
 import model.organization.entity.Role;
 import model.organization.id.IdFactory;
@@ -51,7 +52,7 @@ public class RoleManagerTest {
 	public void testAddRole1() {
 		final Organization o = provider.get();
 		exception.expect(is(instanceOf(IllegalArgumentException.class)));
-		exception.expectMessage(equalTo("Parameter (arg0) cannot be null"));
+		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg0")));
 		o.addRole(null);
 	}
 
@@ -62,7 +63,7 @@ public class RoleManagerTest {
 		final Role r1 = entityFactory.buildRole(i1);
 		final Role r2 = entityFactory.buildRole(i1);
 		exception.expect(is(instanceOf(IllegalArgumentException.class)));
-		exception.expectMessage(equalTo("(Role) entity (role1) already exists"));
+		exception.expectMessage(equalTo(E.ENTITY_ALREADY_EXISTS.get("Role", "role1")));
 		assertThat(r1, is(not(sameInstance(r2))));
 		o.addRole(r1);
 		o.addRole(r2);

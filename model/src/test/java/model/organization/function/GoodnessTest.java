@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThat;
 
 import java.util.HashSet;
 
+import message.E;
 import model.organization.Organization;
 import model.organization.OrganizationModule;
 import model.organization.entity.Agent;
@@ -87,7 +88,7 @@ public class GoodnessTest {
 	@Test
 	public void testCompute1() {
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(equalTo("Parameter (arg0) cannot be null"));
+		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg0")));
 
 		goodness.compute(null, null, null, null, null);
 	}
@@ -97,7 +98,7 @@ public class GoodnessTest {
 		final Organization o = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(equalTo("Parameter (arg1) cannot be null"));
+		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg1")));
 
 		goodness.compute(o, null, null, null, null);
 	}
@@ -108,7 +109,7 @@ public class GoodnessTest {
 		final Agent a = entityFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(equalTo("Parameter (arg2) cannot be null"));
+		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg2")));
 
 		goodness.compute(o, a, null, null, null);
 	}
@@ -120,7 +121,7 @@ public class GoodnessTest {
 		final Role r = entityFactory.buildRole(idFactory.build(Role.class, "r"));
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(equalTo("Parameter (arg3) cannot be null"));
+		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg3")));
 
 		goodness.compute(o, a, r, null, null);
 	}
@@ -134,7 +135,7 @@ public class GoodnessTest {
 		final InstanceGoal ig = entityFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(equalTo("Parameter (arg4) cannot be null"));
+		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg4")));
 
 		goodness.compute(o, a, r, ig, null);
 	}

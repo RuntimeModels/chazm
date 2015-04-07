@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
+import message.E;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -30,7 +31,7 @@ public class ChecksTest {
 	@Test
 	public void testCheckNotNull1() {
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(equalTo("Parameter () cannot be null"));
+		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("")));
 
 		checkNotNull(null, "");
 	}
@@ -38,7 +39,7 @@ public class ChecksTest {
 	@Test
 	public void testCheckNotNull2() {
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(equalTo("Parameter (<parameter>) cannot be null"));
+		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("<parameter>")));
 
 		checkNotNull(null, null);
 	}

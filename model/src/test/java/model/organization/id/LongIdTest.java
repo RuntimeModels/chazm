@@ -7,6 +7,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
+import message.E;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,7 +35,7 @@ public class LongIdTest {
 	@Test
 	public void testLongId1() {
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(is("Parameter (id) cannot be null"));
+		exception.expectMessage(is(E.PARAMETER_CANNOT_BE_NULL.get("id")));
 		idFactory.build(Object.class, (Long) null);
 	}
 

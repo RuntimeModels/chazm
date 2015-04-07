@@ -3,6 +3,7 @@ package model.organization.function;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import message.E;
 import model.organization.Organization;
 import model.organization.OrganizationModule;
 import model.organization.entity.Agent;
@@ -86,7 +87,7 @@ public class EffectivenessTest {
 	@Test
 	public void testCompute1() {
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(equalTo("Parameter (arg0) cannot be null"));
+		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg0")));
 
 		effectiveness.compute(null, null);
 	}
@@ -96,7 +97,7 @@ public class EffectivenessTest {
 		final Organization o = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(equalTo("Parameter (arg1) cannot be null"));
+		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg1")));
 
 		effectiveness.compute(o, null);
 	}

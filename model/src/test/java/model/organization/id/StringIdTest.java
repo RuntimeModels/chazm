@@ -7,6 +7,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
+import message.E;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,7 +35,7 @@ public class StringIdTest {
 	@Test
 	public void testStringId1() {
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(equalTo("Parameter (id) cannot be null"));
+		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("id")));
 		idFactory.build(Object.class, (String) null);
 	}
 

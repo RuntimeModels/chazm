@@ -7,6 +7,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
+import message.E;
 import model.organization.entity.EntityFactory;
 import model.organization.entity.SpecificationGoal;
 import model.organization.id.IdFactory;
@@ -52,7 +53,7 @@ public class SpecificationGoalManagerTest {
 	public void testAddSpecificationGoal1() {
 		final Organization o = provider.get();
 		exception.expect(is(instanceOf(IllegalArgumentException.class)));
-		exception.expectMessage(equalTo("Parameter (arg0) cannot be null"));
+		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg0")));
 		o.addSpecificationGoal(null);
 	}
 
@@ -63,7 +64,7 @@ public class SpecificationGoalManagerTest {
 		final SpecificationGoal g1 = entityFactory.buildSpecificationGoal(i1);
 		final SpecificationGoal g2 = entityFactory.buildSpecificationGoal(i1);
 		exception.expect(is(instanceOf(IllegalArgumentException.class)));
-		exception.expectMessage(equalTo("(SpecificationGoal) entity (goal1) already exists"));
+		exception.expectMessage(equalTo(E.ENTITY_ALREADY_EXISTS.get("SpecificationGoal", "goal1")));
 		assertThat(g1, is(not(sameInstance(g2))));
 		o.addSpecificationGoal(g1);
 		o.addSpecificationGoal(g2);

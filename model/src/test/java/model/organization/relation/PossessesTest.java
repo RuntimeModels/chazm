@@ -9,6 +9,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
+import message.E;
 import model.organization.entity.Agent;
 import model.organization.entity.AgentFactory;
 import model.organization.entity.Capability;
@@ -70,7 +71,7 @@ public class PossessesTest {
 		final Capability c = capabilityFactory.buildCapability(idFactory.build(Capability.class, "c"));
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(equalTo("Score (-0.01) must be between (0.0) and (1.0)"));
+		exception.expectMessage(equalTo(E.SCORE_BETWEEN.get(-0.01, Possesses.MIN_SCORE, Possesses.MAX_SCORE)));
 
 		possessesFactory.buildPossesses(a, c, -0.01);
 	}
@@ -81,7 +82,7 @@ public class PossessesTest {
 		final Capability c = capabilityFactory.buildCapability(idFactory.build(Capability.class, "c"));
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(equalTo("Score (1.01) must be between (0.0) and (1.0)"));
+		exception.expectMessage(equalTo(E.SCORE_BETWEEN.get(1.01, Possesses.MIN_SCORE, Possesses.MAX_SCORE)));
 
 		possessesFactory.buildPossesses(a, c, 1.01);
 	}
@@ -130,7 +131,7 @@ public class PossessesTest {
 		final Possesses ps = possessesFactory.buildPossesses(a, c, 1d);
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(equalTo("Score (-0.01) must be between (0.0) and (1.0)"));
+		exception.expectMessage(equalTo(E.SCORE_BETWEEN.get(-0.01, Possesses.MIN_SCORE, Possesses.MAX_SCORE)));
 
 		ps.setScore(-0.01);
 	}
@@ -142,7 +143,7 @@ public class PossessesTest {
 		final Possesses ps = possessesFactory.buildPossesses(a, c, 1d);
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(equalTo("Score (1.01) must be between (0.0) and (1.0)"));
+		exception.expectMessage(equalTo(E.SCORE_BETWEEN.get(1.01, Possesses.MIN_SCORE, Possesses.MAX_SCORE)));
 
 		ps.setScore(1.01);
 	}
