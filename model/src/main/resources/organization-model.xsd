@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="model:organization-model" elementFormDefault="unqualified" attributeFormDefault="unqualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="model:organization-model" version="1">
+	<element name="RoleDiagram" type="tns:DiagramType" />
+	<element name="Agent" type="tns:AgentType" />
+	<element name="Attribute" type="tns:AttributeType" />
+	<element name="Capability" type="tns:EntityType" />
+	<element name="Characteristic" type="tns:EntityType" />
+	<element name="InstanceGoal" type="tns:InstanceGoalType" />
+	<element name="Pmf" type="tns:EntityType" />
+	<element name="Policy" type="tns:EntityType" />
+	<element name="Role" type="tns:RoleType" />
+	<element name="Goal" type="tns:EntityType" />
+	<element name="achieves" type="tns:RelationType" />
+	<element name="requires" type="tns:RelationType" />
+	<element name="child" type="string" />
+
+	<attributeGroup name="Group1">
+		<attribute name="id" type="string"></attribute>
+		<attribute name="name" type="string"></attribute>
+	</attributeGroup>
+
+	<complexType name="DiagramType">
+		<all>
+			<element ref="tns:Agent" />
+			<element ref="tns:Attribute" />
+			<element ref="tns:Capability" />
+			<element ref="tns:Characteristic" />
+			<element ref="tns:InstanceGoal" />
+			<element ref="tns:Pmf" />
+			<element ref="tns:Policy" />
+			<element ref="tns:Role" />
+			<element ref="tns:Goal" />
+		</all>
+	</complexType>
+	<complexType name="EntityType">
+		<attributeGroup ref="tns:Group1" />
+	</complexType>
+	<complexType name="AgentType">
+		<attributeGroup ref="tns:Group1" />
+	</complexType>
+	<complexType name="AttributeType">
+		<attributeGroup ref="tns:Group1" />
+		<attribute name="type" type="tns:AttributeTypeEnums" />
+	</complexType>
+	<complexType name="InstanceGoalType">
+		<simpleContent>
+			<extension base="string">
+				<attributeGroup ref="tns:Group1" />
+			</extension>
+		</simpleContent>
+	</complexType>
+	<complexType name="RoleType">
+		<all>
+			<element ref="tns:achieves" />
+			<element ref="tns:requires" />
+		</all>
+		<attributeGroup ref="tns:Group1" />
+	</complexType>
+	<complexType name="RelationType">
+		<all>
+			<element ref="tns:child" />
+		</all>
+	</complexType>
+
+	<simpleType name="AttributeTypeEnums">
+		<restriction base="string">
+			<enumeration value="POSITIVE_QUANTITY"></enumeration>
+			<enumeration value="NEGATIVE_QUANTITY"></enumeration>
+			<enumeration value="POSITIVE_QUALITY"></enumeration>
+			<enumeration value="NEGATIVE_QUALITY"></enumeration>
+			<enumeration value="POSITIVE_UNBOUNDED"></enumeration>
+			<enumeration value="NEGATIVE_UNBOUNDED"></enumeration>
+		</restriction>
+	</simpleType>
+</schema>
