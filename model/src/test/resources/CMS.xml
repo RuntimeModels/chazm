@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- actual file, unmodified -->
+<!-- agenttool diagram (CMS), unmodified -->
 <RoleDiagram version="1.1" name="CMS_RoleDiagram" embedded="true">
 	<Actor id="aabed1c2-4680-40c4-a1a4-f4efd5c6f867" name="Author" x="663" y="345" width="-1" height="-1">
 		<protocol name="submitPaper">

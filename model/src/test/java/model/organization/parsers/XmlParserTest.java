@@ -16,8 +16,15 @@ import java.util.stream.Collectors;
 import javax.inject.Provider;
 import javax.xml.stream.XMLStreamException;
 
+import message.E;
 import model.organization.Organization;
+import model.organization.entity.Agent;
+import model.organization.entity.Attribute;
 import model.organization.entity.Capability;
+import model.organization.entity.Characteristic;
+import model.organization.entity.InstanceGoal;
+import model.organization.entity.Pmf;
+import model.organization.entity.Policy;
 import model.organization.entity.Role;
 import model.organization.entity.SpecificationGoal;
 import model.organization.id.IdFactory;
@@ -42,191 +49,168 @@ public class XmlParserTest {
 
 	@Test
 	public void testXmlParser() throws XMLStreamException {
-		final XmlParser p1 = provider.get();
-		final XmlParser p2 = provider.get();
+		final XmlParser parser1 = provider.get();
+		final XmlParser parser2 = provider.get();
 
-		assertThat(p1, is(not(nullValue())));
-		assertThat(p1, is(sameInstance(p2)));
+		assertThat(parser1, is(not(nullValue())));
+		assertThat(parser1, is(sameInstance(parser2)));
 	}
 
 	@Test
-	public void testParse1() throws XMLStreamException {
-		final XmlParser p1 = provider.get();
-		final Organization o1 = injector.getInstance(Organization.class);
-		final InputStream is = ClassLoader.getSystemResourceAsStream("RoleDiagram1.xml");
+	public void testParseCMS() throws XMLStreamException {
+		final XmlParser parser = provider.get();
+		final Organization organization = injector.getInstance(Organization.class);
+		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("CMS.xml");
 
-		p1.parse(o1, is);
+		parser.parse(organization, inputStream);
 
-		// TODO assert that o1 state is correct
+		// TODO assert that organization state inputStream correct
 	}
 
 	@Test
-	public void testParse2() throws XMLStreamException {
-		final XmlParser p1 = provider.get();
-		final Organization o1 = injector.getInstance(Organization.class);
-		final InputStream is = ClassLoader.getSystemResourceAsStream("RoleDiagram2.xml");
+	public void testParseSample1() throws XMLStreamException {
+		final XmlParser parser = provider.get();
+		final Organization organization = injector.getInstance(Organization.class);
+		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("Sample1.xml");
 
-		p1.parse(o1, is);
+		parser.parse(organization, inputStream);
+
+		final UniqueId<Agent> agent1 = idf.build(Agent.class, "Agent 1");
+		final UniqueId<Attribute> attribute1 = idf.build(Attribute.class, "Attribute 1");
+		final UniqueId<Capability> capability1 = idf.build(Capability.class, "Capability 1");
+		final UniqueId<Characteristic> characteristic1 = idf.build(Characteristic.class, "Characteristic 1");
+		final UniqueId<InstanceGoal> instanceGoal1 = idf.build(InstanceGoal.class, "Instance Goal 1");
+		final UniqueId<Pmf> pmf1 = idf.build(Pmf.class, "Pmf 1");
+		final UniqueId<Policy> policy1 = idf.build(Policy.class, "Policy 1");
+		final UniqueId<Role> role1 = idf.build(Role.class, "Role 1");
+		final UniqueId<SpecificationGoal> specificationGoal1 = idf.build(SpecificationGoal.class, "Goal 1");
+
+		assertThat(organization.getAgents().size(), is(equalTo(1)));
+		assertThat(organization.getAgent(agent1), is(not(nullValue())));
+
+		assertThat(organization.getAttributes().size(), is(equalTo(1)));
+		assertThat(organization.getAttribute(attribute1), is(not(nullValue())));
+
+		assertThat(organization.getCapabilities().size(), is(equalTo(1)));
+		assertThat(organization.getCapability(capability1), is(not(nullValue())));
+
+		assertThat(organization.getCharacteristics().size(), is(equalTo(1)));
+		assertThat(organization.getCharacteristic(characteristic1), is(not(nullValue())));
+
+		assertThat(organization.getInstanceGoals().size(), is(equalTo(1)));
+		assertThat(organization.getInstanceGoal(instanceGoal1), is(not(nullValue())));
+
+		assertThat(organization.getPmfs().size(), is(equalTo(1)));
+		assertThat(organization.getPmf(pmf1), is(not(nullValue())));
+
+		assertThat(organization.getPolicies().size(), is(equalTo(1)));
+		assertThat(organization.getPolicy(policy1), is(not(nullValue())));
+
+		assertThat(organization.getRoles().size(), is(equalTo(1)));
+		assertThat(organization.getRole(role1), is(not(nullValue())));
+
+		assertThat(organization.getSpecificationGoals().size(), is(equalTo(1)));
+		assertThat(organization.getSpecificationGoal(specificationGoal1), is(not(nullValue())));
+
+		assertThat(organization.getAchieves(role1).size(), is(equalTo(1)));
+		assertThat(organization.getAchieves(role1).stream().map(SpecificationGoal::getId).collect(Collectors.toCollection(HashSet::new)),
+				hasItem(specificationGoal1));
+
+		assertThat(organization.getRequires(role1).size(), is(equalTo(1)));
+		assertThat(organization.getRequires(role1).stream().map(Capability::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(capability1));
+	}
+
+	@Test
+	public void testParseSample2() throws XMLStreamException {
+		final XmlParser parser = provider.get();
+		final Organization organization = injector.getInstance(Organization.class);
+		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("Sample2.xml");
+
+		parser.parse(organization, inputStream);
 
 		final UniqueId<Capability> c1 = idf.build(Capability.class, "Capability 1");
-		final UniqueId<Capability> c2 = idf.build(Capability.class, "Capability 2");
-		final UniqueId<Capability> c3 = idf.build(Capability.class, "Capability 3");
-		final UniqueId<SpecificationGoal> g1 = idf.build(SpecificationGoal.class, "Goal 1");
-		final UniqueId<SpecificationGoal> g2 = idf.build(SpecificationGoal.class, "Goal 2");
-		final UniqueId<SpecificationGoal> g3 = idf.build(SpecificationGoal.class, "Goal 3");
 		final UniqueId<Role> r1 = idf.build(Role.class, "Role 1");
-		final UniqueId<Role> r2 = idf.build(Role.class, "Role 2");
-		final UniqueId<Role> r3 = idf.build(Role.class, "Role 3");
-
-		assertThat(o1.getCapabilities().size(), is(equalTo(3)));
-		assertThat(o1.getCapability(c1), is(not(nullValue())));
-		assertThat(o1.getCapability(c2), is(not(nullValue())));
-		assertThat(o1.getCapability(c3), is(not(nullValue())));
-
-		assertThat(o1.getSpecificationGoals().size(), is(equalTo(3)));
-		assertThat(o1.getSpecificationGoal(g1), is(not(nullValue())));
-		assertThat(o1.getSpecificationGoal(g2), is(not(nullValue())));
-		assertThat(o1.getSpecificationGoal(g3), is(not(nullValue())));
-
-		assertThat(o1.getRoles().size(), is(equalTo(3)));
-		assertThat(o1.getRole(r1), is(not(nullValue())));
-		assertThat(o1.getRole(r2), is(not(nullValue())));
-		assertThat(o1.getRole(r3), is(not(nullValue())));
-
-		assertThat(o1.getAchieves(r1).size(), is(equalTo(1)));
-		assertThat(o1.getAchieves(r1).stream().map(SpecificationGoal::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(g1));
-
-		assertThat(o1.getRequires(r1).size(), is(equalTo(1)));
-		assertThat(o1.getRequires(r1).stream().map(Capability::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(c1));
-
-		assertThat(o1.getAchieves(r2).size(), is(equalTo(1)));
-		assertThat(o1.getAchieves(r2).stream().map(SpecificationGoal::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(g2));
-
-		assertThat(o1.getRequires(r2).size(), is(equalTo(1)));
-		assertThat(o1.getRequires(r2).stream().map(Capability::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(c2));
-
-		assertThat(o1.getAchieves(r3).size(), is(equalTo(1)));
-		assertThat(o1.getAchieves(r3).stream().map(SpecificationGoal::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(g3));
-
-		assertThat(o1.getRequires(r3).size(), is(equalTo(1)));
-		assertThat(o1.getRequires(r3).stream().map(Capability::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(c3));
-	}
-
-	@Test
-	public void testParse3() throws XMLStreamException {
-		final XmlParser p1 = provider.get();
-		final Organization o1 = injector.getInstance(Organization.class);
-		final InputStream is = ClassLoader.getSystemResourceAsStream("RoleDiagram3.xml");
-
-		p1.parse(o1, is);
-
-		final UniqueId<Capability> c1 = idf.build(Capability.class, "Capability 1");
-		final UniqueId<Capability> c2 = idf.build(Capability.class, "Capability 2");
-		final UniqueId<Capability> c3 = idf.build(Capability.class, "Capability 3");
 		final UniqueId<SpecificationGoal> g1 = idf.build(SpecificationGoal.class, "Goal 1");
-		final UniqueId<SpecificationGoal> g2 = idf.build(SpecificationGoal.class, "Goal 2");
-		final UniqueId<SpecificationGoal> g3 = idf.build(SpecificationGoal.class, "Goal 3");
-		final UniqueId<Role> r1 = idf.build(Role.class, "Role 1");
-		final UniqueId<Role> r2 = idf.build(Role.class, "Role 2");
-		final UniqueId<Role> r3 = idf.build(Role.class, "Role 3");
 
-		assertThat(o1.getCapabilities().size(), is(equalTo(3)));
-		assertThat(o1.getCapability(c1), is(not(nullValue())));
-		assertThat(o1.getCapability(c2), is(not(nullValue())));
-		assertThat(o1.getCapability(c3), is(not(nullValue())));
+		assertThat(organization.getCapabilities().size(), is(equalTo(1)));
+		assertThat(organization.getCapability(c1), is(not(nullValue())));
 
-		assertThat(o1.getSpecificationGoals().size(), is(equalTo(3)));
-		assertThat(o1.getSpecificationGoal(g1), is(not(nullValue())));
-		assertThat(o1.getSpecificationGoal(g2), is(not(nullValue())));
-		assertThat(o1.getSpecificationGoal(g3), is(not(nullValue())));
+		assertThat(organization.getRoles().size(), is(equalTo(1)));
+		assertThat(organization.getRole(r1), is(not(nullValue())));
 
-		assertThat(o1.getRoles().size(), is(equalTo(3)));
-		assertThat(o1.getRole(r1), is(not(nullValue())));
-		assertThat(o1.getRole(r2), is(not(nullValue())));
-		assertThat(o1.getRole(r3), is(not(nullValue())));
+		assertThat(organization.getSpecificationGoals().size(), is(equalTo(1)));
+		assertThat(organization.getSpecificationGoal(g1), is(not(nullValue())));
 
-		assertThat(o1.getAchieves(r1).size(), is(equalTo(1)));
-		assertThat(o1.getAchieves(r1).stream().map(SpecificationGoal::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(g1));
+		assertThat(organization.getAchieves(r1).size(), is(equalTo(1)));
+		assertThat(organization.getAchieves(r1).stream().map(SpecificationGoal::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(g1));
 
-		assertThat(o1.getRequires(r1).size(), is(equalTo(1)));
-		assertThat(o1.getRequires(r1).stream().map(Capability::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(c1));
-
-		assertThat(o1.getAchieves(r2).size(), is(equalTo(1)));
-		assertThat(o1.getAchieves(r2).stream().map(SpecificationGoal::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(g2));
-
-		assertThat(o1.getRequires(r2).size(), is(equalTo(1)));
-		assertThat(o1.getRequires(r2).stream().map(Capability::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(c2));
-
-		assertThat(o1.getAchieves(r3).size(), is(equalTo(1)));
-		assertThat(o1.getAchieves(r3).stream().map(SpecificationGoal::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(g3));
-
-		assertThat(o1.getRequires(r3).size(), is(equalTo(1)));
-		assertThat(o1.getRequires(r3).stream().map(Capability::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(c3));
+		assertThat(organization.getRequires(r1).size(), is(equalTo(1)));
+		assertThat(organization.getRequires(r1).stream().map(Capability::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(c1));
 	}
 
 	@Test
 	public void testParse4() throws XMLStreamException {
-		final XmlParser p1 = provider.get();
-		final Organization o1 = injector.getInstance(Organization.class);
-		final InputStream is = ClassLoader.getSystemResourceAsStream("RoleDiagram4.xml");
+		final XmlParser parser = provider.get();
+		final Organization organization = injector.getInstance(Organization.class);
+		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("RoleDiagram4.xml");
 
-		p1.parse(o1, is);
+		parser.parse(organization, inputStream);
 
 		final UniqueId<Capability> c1 = idf.build(Capability.class, "Capability 1");
 		final UniqueId<SpecificationGoal> g1 = idf.build(SpecificationGoal.class, "Goal 1");
 		final UniqueId<Role> r1 = idf.build(Role.class, "Role 1");
 
-		assertThat(o1.getCapabilities().size(), is(equalTo(1)));
-		assertThat(o1.getCapability(c1), is(not(nullValue())));
+		assertThat(organization.getCapabilities().size(), is(equalTo(1)));
+		assertThat(organization.getCapability(c1), is(not(nullValue())));
 
-		assertThat(o1.getSpecificationGoals().size(), is(equalTo(1)));
-		assertThat(o1.getSpecificationGoal(g1), is(not(nullValue())));
+		assertThat(organization.getSpecificationGoals().size(), is(equalTo(1)));
+		assertThat(organization.getSpecificationGoal(g1), is(not(nullValue())));
 
-		assertThat(o1.getRoles().size(), is(equalTo(1)));
-		assertThat(o1.getRole(r1), is(not(nullValue())));
+		assertThat(organization.getRoles().size(), is(equalTo(1)));
+		assertThat(organization.getRole(r1), is(not(nullValue())));
 
-		assertThat(o1.getAchieves(r1).size(), is(equalTo(1)));
-		assertThat(o1.getAchieves(r1).stream().map(SpecificationGoal::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(g1));
+		assertThat(organization.getAchieves(r1).size(), is(equalTo(1)));
+		assertThat(organization.getAchieves(r1).stream().map(SpecificationGoal::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(g1));
 
-		assertThat(o1.getRequires(r1).size(), is(equalTo(1)));
-		assertThat(o1.getRequires(r1).stream().map(Capability::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(c1));
+		assertThat(organization.getRequires(r1).size(), is(equalTo(1)));
+		assertThat(organization.getRequires(r1).stream().map(Capability::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(c1));
 	}
 
 	@Test
 	public void testParse5() throws XMLStreamException {
-		final XmlParser p1 = provider.get();
-		final Organization o1 = injector.getInstance(Organization.class);
-		final InputStream is = ClassLoader.getSystemResourceAsStream("RoleDiagram5.xml");
+		final XmlParser parser = provider.get();
+		final Organization organization = injector.getInstance(Organization.class);
+		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("RoleDiagram5.xml");
 
-		p1.parse(o1, is);
+		parser.parse(organization, inputStream);
 
 		final UniqueId<Capability> c1 = idf.build(Capability.class, "Capability 1");
 		final UniqueId<SpecificationGoal> g1 = idf.build(SpecificationGoal.class, "Goal 1");
 		final UniqueId<Role> r1 = idf.build(Role.class, "Role 1");
 
-		assertThat(o1.getCapabilities().size(), is(equalTo(1)));
-		assertThat(o1.getCapability(c1), is(not(nullValue())));
+		assertThat(organization.getCapabilities().size(), is(equalTo(1)));
+		assertThat(organization.getCapability(c1), is(not(nullValue())));
 
-		assertThat(o1.getSpecificationGoals().size(), is(equalTo(1)));
-		assertThat(o1.getSpecificationGoal(g1), is(not(nullValue())));
+		assertThat(organization.getSpecificationGoals().size(), is(equalTo(1)));
+		assertThat(organization.getSpecificationGoal(g1), is(not(nullValue())));
 
-		assertThat(o1.getRoles().size(), is(equalTo(1)));
-		assertThat(o1.getRole(r1), is(not(nullValue())));
+		assertThat(organization.getRoles().size(), is(equalTo(1)));
+		assertThat(organization.getRole(r1), is(not(nullValue())));
 
-		assertThat(o1.getAchieves(r1).size(), is(equalTo(1)));
-		assertThat(o1.getAchieves(r1).stream().map(SpecificationGoal::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(g1));
+		assertThat(organization.getAchieves(r1).size(), is(equalTo(1)));
+		assertThat(organization.getAchieves(r1).stream().map(SpecificationGoal::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(g1));
 
-		assertThat(o1.getRequires(r1).size(), is(equalTo(1)));
-		assertThat(o1.getRequires(r1).stream().map(Capability::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(c1));
+		assertThat(organization.getRequires(r1).size(), is(equalTo(1)));
+		assertThat(organization.getRequires(r1).stream().map(Capability::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(c1));
 	}
 
 	@Test
 	public void testParse6() throws XMLStreamException {
-		final XmlParser p1 = provider.get();
-		final Organization o1 = injector.getInstance(Organization.class);
-		final InputStream is = ClassLoader.getSystemResourceAsStream("RoleDiagram6.xml");
+		final XmlParser parser = provider.get();
+		final Organization organization = injector.getInstance(Organization.class);
+		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("RoleDiagram6.xml");
 
-		p1.parse(o1, is);
+		parser.parse(organization, inputStream);
 
 		final UniqueId<Capability> c1 = idf.build(Capability.class, "Capability 1");
 		final UniqueId<Capability> c2 = idf.build(Capability.class, "Capability 2");
@@ -236,33 +220,33 @@ public class XmlParserTest {
 		final UniqueId<SpecificationGoal> g3 = idf.build(SpecificationGoal.class, "Goal 3");
 		final UniqueId<Role> r1 = idf.build(Role.class, "Role 1");
 
-		assertThat(o1.getCapabilities().size(), is(equalTo(3)));
-		assertThat(o1.getCapability(c1), is(not(nullValue())));
-		assertThat(o1.getCapability(c2), is(not(nullValue())));
-		assertThat(o1.getCapability(c3), is(not(nullValue())));
+		assertThat(organization.getCapabilities().size(), is(equalTo(3)));
+		assertThat(organization.getCapability(c1), is(not(nullValue())));
+		assertThat(organization.getCapability(c2), is(not(nullValue())));
+		assertThat(organization.getCapability(c3), is(not(nullValue())));
 
-		assertThat(o1.getSpecificationGoals().size(), is(equalTo(3)));
-		assertThat(o1.getSpecificationGoal(g1), is(not(nullValue())));
-		assertThat(o1.getSpecificationGoal(g2), is(not(nullValue())));
-		assertThat(o1.getSpecificationGoal(g3), is(not(nullValue())));
+		assertThat(organization.getSpecificationGoals().size(), is(equalTo(3)));
+		assertThat(organization.getSpecificationGoal(g1), is(not(nullValue())));
+		assertThat(organization.getSpecificationGoal(g2), is(not(nullValue())));
+		assertThat(organization.getSpecificationGoal(g3), is(not(nullValue())));
 
-		assertThat(o1.getRoles().size(), is(equalTo(1)));
-		assertThat(o1.getRole(r1), is(not(nullValue())));
+		assertThat(organization.getRoles().size(), is(equalTo(1)));
+		assertThat(organization.getRole(r1), is(not(nullValue())));
 
-		assertThat(o1.getAchieves(r1).size(), is(equalTo(3)));
-		assertThat(o1.getAchieves(r1).stream().map(SpecificationGoal::getId).collect(Collectors.toCollection(HashSet::new)), hasItems(g1, g2, g3));
+		assertThat(organization.getAchieves(r1).size(), is(equalTo(3)));
+		assertThat(organization.getAchieves(r1).stream().map(SpecificationGoal::getId).collect(Collectors.toCollection(HashSet::new)), hasItems(g1, g2, g3));
 
-		assertThat(o1.getRequires(r1).size(), is(equalTo(3)));
-		assertThat(o1.getRequires(r1).stream().map(Capability::getId).collect(Collectors.toCollection(HashSet::new)), hasItems(c1, c2, c3));
+		assertThat(organization.getRequires(r1).size(), is(equalTo(3)));
+		assertThat(organization.getRequires(r1).stream().map(Capability::getId).collect(Collectors.toCollection(HashSet::new)), hasItems(c1, c2, c3));
 	}
 
 	@Test
 	public void testParse7() throws XMLStreamException {
-		final XmlParser p1 = provider.get();
-		final Organization o1 = injector.getInstance(Organization.class);
-		final InputStream is = ClassLoader.getSystemResourceAsStream("RoleDiagram7.xml");
+		final XmlParser parser = provider.get();
+		final Organization organization = injector.getInstance(Organization.class);
+		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("RoleDiagram7.xml");
 
-		p1.parse(o1, is);
+		parser.parse(organization, inputStream);
 
 		final UniqueId<Capability> c1 = idf.build(Capability.class, "Capability 1");
 		final UniqueId<Capability> c2 = idf.build(Capability.class, "Capability 2");
@@ -272,42 +256,54 @@ public class XmlParserTest {
 		final UniqueId<SpecificationGoal> g3 = idf.build(SpecificationGoal.class, "Goal 3");
 		final UniqueId<Role> r1 = idf.build(Role.class, "Role 1");
 
-		assertThat(o1.getCapabilities().size(), is(equalTo(3)));
-		assertThat(o1.getCapability(c1), is(not(nullValue())));
-		assertThat(o1.getCapability(c2), is(not(nullValue())));
-		assertThat(o1.getCapability(c3), is(not(nullValue())));
+		assertThat(organization.getCapabilities().size(), is(equalTo(3)));
+		assertThat(organization.getCapability(c1), is(not(nullValue())));
+		assertThat(organization.getCapability(c2), is(not(nullValue())));
+		assertThat(organization.getCapability(c3), is(not(nullValue())));
 
-		assertThat(o1.getSpecificationGoals().size(), is(equalTo(3)));
-		assertThat(o1.getSpecificationGoal(g1), is(not(nullValue())));
-		assertThat(o1.getSpecificationGoal(g2), is(not(nullValue())));
-		assertThat(o1.getSpecificationGoal(g3), is(not(nullValue())));
+		assertThat(organization.getSpecificationGoals().size(), is(equalTo(3)));
+		assertThat(organization.getSpecificationGoal(g1), is(not(nullValue())));
+		assertThat(organization.getSpecificationGoal(g2), is(not(nullValue())));
+		assertThat(organization.getSpecificationGoal(g3), is(not(nullValue())));
 
-		assertThat(o1.getRoles().size(), is(equalTo(1)));
-		assertThat(o1.getRole(r1), is(not(nullValue())));
+		assertThat(organization.getRoles().size(), is(equalTo(1)));
+		assertThat(organization.getRole(r1), is(not(nullValue())));
 
-		assertThat(o1.getAchieves(r1).size(), is(equalTo(3)));
-		assertThat(o1.getAchieves(r1).stream().map(SpecificationGoal::getId).collect(Collectors.toCollection(HashSet::new)), hasItems(g1, g2, g3));
+		assertThat(organization.getAchieves(r1).size(), is(equalTo(3)));
+		assertThat(organization.getAchieves(r1).stream().map(SpecificationGoal::getId).collect(Collectors.toCollection(HashSet::new)), hasItems(g1, g2, g3));
 
-		assertThat(o1.getRequires(r1).size(), is(equalTo(3)));
-		assertThat(o1.getRequires(r1).stream().map(Capability::getId).collect(Collectors.toCollection(HashSet::new)), hasItems(c1, c2, c3));
+		assertThat(organization.getRequires(r1).size(), is(equalTo(3)));
+		assertThat(organization.getRequires(r1).stream().map(Capability::getId).collect(Collectors.toCollection(HashSet::new)), hasItems(c1, c2, c3));
 	}
 
 	@Test
 	public void testParse8() throws XMLStreamException {
-		final XmlParser p1 = provider.get();
-		final Organization o1 = injector.getInstance(Organization.class);
-		final InputStream is = ClassLoader.getSystemResourceAsStream("RoleDiagram8.xml");
+		final XmlParser parser = provider.get();
+		final Organization organization = injector.getInstance(Organization.class);
+		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("RoleDiagram8.xml");
 
-		p1.parse(o1, is);
+		parser.parse(organization, inputStream);
 
 		final UniqueId<Role> r1 = idf.build(Role.class, "Role 1");
 
-		assertThat(o1.getRoles().size(), is(equalTo(1)));
-		assertThat(o1.getRole(r1), is(not(nullValue())));
+		assertThat(organization.getRoles().size(), is(equalTo(1)));
+		assertThat(organization.getRole(r1), is(not(nullValue())));
 
-		assertThat(o1.getAchieves(r1).size(), is(equalTo(0)));
+		assertThat(organization.getAchieves(r1).size(), is(equalTo(0)));
 
-		assertThat(o1.getRequires(r1).size(), is(equalTo(0)));
+		assertThat(organization.getRequires(r1).size(), is(equalTo(0)));
+	}
+
+	@Test
+	public void testParse9() throws XMLStreamException {
+		final XmlParser parser = provider.get();
+		final Organization organization = injector.getInstance(Organization.class);
+		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("RoleDiagram9.xml");
+
+		exception.expect(XMLStreamException.class);
+		exception.expectMessage(is(equalTo(new IllegalArgumentException(E.ENTITY_ALREADY_EXISTS.get("Capability", "Capability 1")).toString())));
+
+		parser.parse(organization, inputStream);
 	}
 
 }
