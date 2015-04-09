@@ -7,22 +7,32 @@
 	<element name="Capability" type="tns:EntityType" />
 	<element name="Characteristic" type="tns:EntityType" />
 	<element name="InstanceGoal" type="tns:InstanceGoalType" />
-	<element name="Pmf" type="tns:EntityType" />
+	<element name="Pmf" type="tns:PmfType" />
 	<element name="Policy" type="tns:EntityType" />
 	<element name="Role" type="tns:RoleType" />
 	<element name="Goal" type="tns:EntityType" />
+
 	<element name="achieves" type="tns:RelationType" />
+	<element name="assignment" type="tns:AssignmentType" />
+	<element name="contains" type="tns:ContainsType" />
+	<element name="has" type="tns:HasType" />
+	<element name="moderates" type="tns:RelationType" />
+	<element name="needs" type="tns:RelationType" />
+	<element name="possesses" type="tns:PossessesType" />
 	<element name="requires" type="tns:RelationType" />
+	<element name="uses" type="tns:RelationType" />
+
 	<element name="child" type="string" />
 
-	<attributeGroup name="Group1">
-		<attribute name="id" type="string"></attribute>
-		<attribute name="name" type="string"></attribute>
+	<attributeGroup name="EntityAttributes">
+		<attribute name="id" type="string" use="required" />
+		<attribute name="name" type="string" use="required" />
 	</attributeGroup>
 
 	<complexType name="DiagramType">
-		<all>
+		<choice minOccurs="0" maxOccurs="unbounded">
 			<element ref="tns:Agent" />
+			<element ref="tns:assignment" />
 			<element ref="tns:Attribute" />
 			<element ref="tns:Capability" />
 			<element ref="tns:Characteristic" />
@@ -31,46 +41,97 @@
 			<element ref="tns:Policy" />
 			<element ref="tns:Role" />
 			<element ref="tns:Goal" />
-		</all>
+		</choice>
 	</complexType>
 	<complexType name="EntityType">
-		<attributeGroup ref="tns:Group1" />
+		<attributeGroup ref="tns:EntityAttributes" />
 	</complexType>
 	<complexType name="AgentType">
-		<attributeGroup ref="tns:Group1" />
+		<complexContent>
+			<extension base="tns:EntityType">
+				<choice minOccurs="0" maxOccurs="unbounded">
+					<element ref="tns:has" />
+					<element ref="tns:possesses" />
+				</choice>
+			</extension>
+		</complexContent>
 	</complexType>
 	<complexType name="AttributeType">
-		<attributeGroup ref="tns:Group1" />
-		<attribute name="type" type="tns:AttributeTypeEnums" />
+		<complexContent>
+			<extension base="tns:EntityType">
+				<attribute name="type" type="tns:AttributeTypeEnums" use="required" />
+			</extension>
+		</complexContent>
 	</complexType>
 	<complexType name="InstanceGoalType">
-		<simpleContent>
-			<extension base="string">
-				<attributeGroup ref="tns:Group1" />
+		<complexContent>
+			<extension base="tns:EntityType">
+				<attribute name="specification" type="string" use="required" />
 			</extension>
-		</simpleContent>
+		</complexContent>
+	</complexType>
+	<complexType name="PmfType">
+		<complexContent>
+			<extension base="tns:EntityType">
+				<choice minOccurs="0" maxOccurs="unbounded">
+					<element ref="tns:moderates" />
+				</choice>
+			</extension>
+		</complexContent>
 	</complexType>
 	<complexType name="RoleType">
-		<all>
-			<element ref="tns:achieves" />
-			<element ref="tns:requires" />
-		</all>
-		<attributeGroup ref="tns:Group1" />
+		<complexContent>
+			<extension base="tns:EntityType">
+				<choice minOccurs="0" maxOccurs="unbounded">
+					<element ref="tns:achieves" />
+					<element ref="tns:contains" />
+					<element ref="tns:needs" />
+					<element ref="tns:requires" />
+					<element ref="tns:uses" />
+				</choice>
+			</extension>
+		</complexContent>
 	</complexType>
 	<complexType name="RelationType">
-		<all>
+		<choice minOccurs="0" maxOccurs="unbounded">
 			<element ref="tns:child" />
-		</all>
+		</choice>
+	</complexType>
+	<complexType name="AssignmentType">
+		<attribute name="agent" type="string" use="required" />
+		<attribute name="role" type="string" use="required" />
+		<attribute name="goal" type="string" use="required" />
+	</complexType>
+	<complexType name="ContainsType">
+		<complexContent>
+			<extension base="tns:RelationType">
+				<attribute name="value" type="double" use="required" />
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="HasType">
+		<complexContent>
+			<extension base="tns:RelationType">
+				<attribute name="value" type="double" use="required" />
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="PossessesType">
+		<complexContent>
+			<extension base="tns:RelationType">
+				<attribute name="score" type="double" use="required" />
+			</extension>
+		</complexContent>
 	</complexType>
 
 	<simpleType name="AttributeTypeEnums">
 		<restriction base="string">
-			<enumeration value="POSITIVE_QUANTITY"></enumeration>
-			<enumeration value="NEGATIVE_QUANTITY"></enumeration>
-			<enumeration value="POSITIVE_QUALITY"></enumeration>
-			<enumeration value="NEGATIVE_QUALITY"></enumeration>
-			<enumeration value="POSITIVE_UNBOUNDED"></enumeration>
-			<enumeration value="NEGATIVE_UNBOUNDED"></enumeration>
+			<enumeration value="POSITIVE_QUANTITY" />
+			<enumeration value="NEGATIVE_QUANTITY" />
+			<enumeration value="POSITIVE_QUALITY" />
+			<enumeration value="NEGATIVE_QUALITY" />
+			<enumeration value="POSITIVE_UNBOUNDED" />
+			<enumeration value="NEGATIVE_UNBOUNDED" />
 		</restriction>
 	</simpleType>
 </schema>
