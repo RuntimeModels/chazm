@@ -29,6 +29,7 @@ import model.organization.entity.Role;
 import model.organization.entity.SpecificationGoal;
 import model.organization.id.IdFactory;
 import model.organization.id.UniqueId;
+import model.organization.relation.Assignment;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -85,37 +86,47 @@ public class XmlParserTest {
 		final UniqueId<Role> role1 = idf.build(Role.class, "Role 1");
 		final UniqueId<SpecificationGoal> specificationGoal1 = idf.build(SpecificationGoal.class, "Goal 1");
 
+		// check all 9 entities entities
 		assertThat(organization.getAgents().size(), is(equalTo(1)));
 		assertThat(organization.getAgent(agent1), is(not(nullValue())));
-
 		assertThat(organization.getAttributes().size(), is(equalTo(1)));
 		assertThat(organization.getAttribute(attribute1), is(not(nullValue())));
-
 		assertThat(organization.getCapabilities().size(), is(equalTo(1)));
 		assertThat(organization.getCapability(capability1), is(not(nullValue())));
-
 		assertThat(organization.getCharacteristics().size(), is(equalTo(1)));
 		assertThat(organization.getCharacteristic(characteristic1), is(not(nullValue())));
-
 		assertThat(organization.getInstanceGoals().size(), is(equalTo(1)));
 		assertThat(organization.getInstanceGoal(instanceGoal1), is(not(nullValue())));
-
 		assertThat(organization.getPmfs().size(), is(equalTo(1)));
 		assertThat(organization.getPmf(pmf1), is(not(nullValue())));
-
 		assertThat(organization.getPolicies().size(), is(equalTo(1)));
 		assertThat(organization.getPolicy(policy1), is(not(nullValue())));
-
 		assertThat(organization.getRoles().size(), is(equalTo(1)));
 		assertThat(organization.getRole(role1), is(not(nullValue())));
-
 		assertThat(organization.getSpecificationGoals().size(), is(equalTo(1)));
 		assertThat(organization.getSpecificationGoal(specificationGoal1), is(not(nullValue())));
 
+		// check all 8 relations
 		assertThat(organization.getAchieves(role1).size(), is(equalTo(1)));
 		assertThat(organization.getAchieves(role1).stream().map(SpecificationGoal::getId).collect(Collectors.toCollection(HashSet::new)),
 				hasItem(specificationGoal1));
-
+		assertThat(organization.getAssignments().size(), is(equalTo(1)));
+		assertThat(organization.getAssignments().stream().map(Assignment::getAgent).map(Agent::getId).collect(Collectors.toCollection(HashSet::new)),
+				hasItem(agent1));
+		assertThat(organization.getAssignments().stream().map(Assignment::getRole).map(Role::getId).collect(Collectors.toCollection(HashSet::new)),
+				hasItem(role1));
+		assertThat(organization.getAssignments().stream().map(Assignment::getGoal).map(InstanceGoal::getId).collect(Collectors.toCollection(HashSet::new)),
+				hasItem(instanceGoal1));
+		assertThat(organization.getContains(role1).size(), is(equalTo(1)));
+		assertThat(organization.getContains(role1).stream().map(Characteristic::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(characteristic1));
+		assertThat(organization.getHas(agent1).size(), is(equalTo(1)));
+		assertThat(organization.getHas(agent1).stream().map(Attribute::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(attribute1));
+		assertThat(organization.getModerates(pmf1), is(not(nullValue())));
+		assertThat(organization.getModerates(pmf1).getId(), is(equalTo(attribute1)));
+		assertThat(organization.getNeeds(role1).size(), is(equalTo(1)));
+		assertThat(organization.getNeeds(role1).stream().map(Attribute::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(attribute1));
+		assertThat(organization.getPossesses(agent1).size(), is(equalTo(1)));
+		assertThat(organization.getPossesses(agent1).stream().map(Capability::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(capability1));
 		assertThat(organization.getRequires(role1).size(), is(equalTo(1)));
 		assertThat(organization.getRequires(role1).stream().map(Capability::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(capability1));
 	}
