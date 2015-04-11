@@ -7,7 +7,7 @@ public enum E { // for exceptions
 	ENTITY_DOES_NOT_EXISTS("%s entity '%s' does not exists"), //
 	INCOMPLETE_XML_FILE("Incomplete XML file: %s entity with id='id' missing"), //
 	MISSING_ATTRIBUTE_IN_TAG("Tag <%s> is missing attribute '%s'"), //
-	MISSING_END_TAG("Tag (<%1$s>) is missing enclosing tag </ %1$s>"),//
+	MISSING_END_TAG("Tag (<%1$s>) is missing enclosing tag </ %1$s>"), //
 	PARAMETER_CANNOT_BE_NULL("Parameter '%s' cannot be null"), //
 	SCORE_BETWEEN("Score '%s' must be between '%s' and '%s'"), //
 	VALUE_AT_LEAST("For '%s' atttribute type, value='%s' must be at least '%s'"), //

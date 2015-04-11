@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- duplicate entity -->
+<RoleDiagram>
+	<Capability id="b28db440-e1cf-4a75-9d37-dad779323bc5" name="Capability 1" />
+	<Capability id="5a27aa69-7454-43da-843e-1196755f5e28" name="Capability 1" />
+</RoleDiagram>
