@@ -52,7 +52,7 @@ public class RoleManagerTest {
 	public void testAddRole1() {
 		final Organization o = provider.get();
 		exception.expect(is(instanceOf(IllegalArgumentException.class)));
-		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg0")));
+		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg0", "addRole")));
 		o.addRole(null);
 	}
 

@@ -1,5 +1,7 @@
 package message;
 
+import java.util.MissingFormatArgumentException;
+
 @SuppressWarnings("javadoc")
 public enum E { // for exceptions
 
@@ -8,7 +10,7 @@ public enum E { // for exceptions
 	INCOMPLETE_XML_FILE("Incomplete XML file: %s entity with id='id' missing"), //
 	MISSING_ATTRIBUTE_IN_TAG("Tag <%s> is missing attribute '%s'"), //
 	MISSING_END_TAG("Tag (<%1$s>) is missing enclosing tag </ %1$s>"), //
-	PARAMETER_CANNOT_BE_NULL("Parameter '%s' cannot be null"), //
+	PARAMETER_CANNOT_BE_NULL("'%s' of method '%s()' cannot be null"), //
 	SCORE_BETWEEN("Score '%s' must be between '%s' and '%s'"), //
 	VALUE_AT_LEAST("For '%s' atttribute type, value='%s' must be at least '%s'"), //
 	VALUE_BETWEEN("For '%s' atttribute type, value='%s' must be between '%s' and '%s'");
@@ -20,7 +22,10 @@ public enum E { // for exceptions
 	}
 
 	public String get(final Object... args) {
-		return String.format(string, args);
+		try {
+			return String.format(string, args);
+		} catch (final MissingFormatArgumentException e) {
+			return null;
+		}
 	}
-
 }

@@ -1,5 +1,7 @@
 package message;
 
+import java.util.MissingFormatArgumentException;
+
 @SuppressWarnings("javadoc")
 public enum M { // everything else
 
@@ -23,7 +25,11 @@ public enum M { // everything else
 	}
 
 	public String get(final Object... args) {
-		return String.format(string, args);
+		try {
+			return String.format(string, args);
+		} catch (final MissingFormatArgumentException e) {
+			return null;
+		}
 	}
 
 }

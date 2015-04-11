@@ -281,7 +281,7 @@ public class XmlParserTest {
 	public void testSample7() throws XMLStreamException {
 		final XmlParser parser = provider.get();
 		final Organization organization = injector.getInstance(Organization.class);
-		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("RoleDiagram9.xml");
+		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("Sample7.xml");
 
 		exception.expect(XMLStreamException.class);
 		exception.expectMessage(is(equalTo(new IllegalArgumentException(E.ENTITY_ALREADY_EXISTS.get("Capability", "Capability 1")).toString())));

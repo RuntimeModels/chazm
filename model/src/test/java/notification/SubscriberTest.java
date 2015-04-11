@@ -837,7 +837,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0", "event"));
 
 		s1.event((AchievesEvent) null);
 	}
@@ -847,7 +847,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0", "event"));
 
 		s1.event((AgentEvent) null);
 	}
@@ -857,7 +857,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0", "event"));
 
 		s1.event((AssignmentEvent) null);
 	}
@@ -867,7 +867,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0", "event"));
 
 		s1.event((AttributeEvent) null);
 	}
@@ -877,7 +877,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0", "event"));
 
 		s1.event((CapabilityEvent) null);
 	}
@@ -887,7 +887,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0", "event"));
 
 		s1.event((CharacteristicEvent) null);
 	}
@@ -897,7 +897,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0", "event"));
 
 		s1.event((ContainsEvent) null);
 	}
@@ -907,7 +907,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0", "event"));
 
 		s1.event((HasEvent) null);
 	}
@@ -917,7 +917,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0", "event"));
 
 		s1.event((InstanceGoalEvent) null);
 	}
@@ -927,7 +927,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0", "event"));
 
 		s1.event((ModeratesEvent) null);
 	}
@@ -937,7 +937,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0", "event"));
 
 		s1.event((NeedsEvent) null);
 	}
@@ -947,7 +947,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0", "event"));
 
 		s1.event((PmfEvent) null);
 	}
@@ -957,7 +957,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0", "event"));
 
 		s1.event((PolicyEvent) null);
 	}
@@ -967,7 +967,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0", "event"));
 
 		s1.event((PossessesEvent) null);
 	}
@@ -977,7 +977,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0", "event"));
 
 		s1.event((RequiresEvent) null);
 	}
@@ -987,7 +987,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0", "event"));
 
 		s1.event((RoleEvent) null);
 	}
@@ -997,7 +997,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0", "event"));
 
 		s1.event((SpecificationGoalEvent) null);
 	}
@@ -1007,7 +1007,7 @@ public class SubscriberTest {
 		final DefaultSubscriber s1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0", "event"));
 
 		s1.event((UsesEvent) null);
 	}
