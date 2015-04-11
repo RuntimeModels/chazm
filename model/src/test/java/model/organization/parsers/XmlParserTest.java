@@ -160,10 +160,10 @@ public class XmlParserTest {
 	}
 
 	@Test
-	public void testParse4() throws XMLStreamException {
+	public void testSample3() throws XMLStreamException {
 		final XmlParser parser = provider.get();
 		final Organization organization = injector.getInstance(Organization.class);
-		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("RoleDiagram4.xml");
+		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("Sample3.xml");
 
 		parser.parse(organization, inputStream);
 
@@ -188,38 +188,10 @@ public class XmlParserTest {
 	}
 
 	@Test
-	public void testParse5() throws XMLStreamException {
+	public void testSample4() throws XMLStreamException {
 		final XmlParser parser = provider.get();
 		final Organization organization = injector.getInstance(Organization.class);
-		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("RoleDiagram5.xml");
-
-		parser.parse(organization, inputStream);
-
-		final UniqueId<Capability> c1 = idf.build(Capability.class, "Capability 1");
-		final UniqueId<SpecificationGoal> g1 = idf.build(SpecificationGoal.class, "Goal 1");
-		final UniqueId<Role> r1 = idf.build(Role.class, "Role 1");
-
-		assertThat(organization.getCapabilities().size(), is(equalTo(1)));
-		assertThat(organization.getCapability(c1), is(not(nullValue())));
-
-		assertThat(organization.getSpecificationGoals().size(), is(equalTo(1)));
-		assertThat(organization.getSpecificationGoal(g1), is(not(nullValue())));
-
-		assertThat(organization.getRoles().size(), is(equalTo(1)));
-		assertThat(organization.getRole(r1), is(not(nullValue())));
-
-		assertThat(organization.getAchieves(r1).size(), is(equalTo(1)));
-		assertThat(organization.getAchieves(r1).stream().map(SpecificationGoal::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(g1));
-
-		assertThat(organization.getRequires(r1).size(), is(equalTo(1)));
-		assertThat(organization.getRequires(r1).stream().map(Capability::getId).collect(Collectors.toCollection(HashSet::new)), hasItem(c1));
-	}
-
-	@Test
-	public void testParse6() throws XMLStreamException {
-		final XmlParser parser = provider.get();
-		final Organization organization = injector.getInstance(Organization.class);
-		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("RoleDiagram6.xml");
+		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("Sample4.xml");
 
 		parser.parse(organization, inputStream);
 
@@ -252,10 +224,10 @@ public class XmlParserTest {
 	}
 
 	@Test
-	public void testParse7() throws XMLStreamException {
+	public void testSample5() throws XMLStreamException {
 		final XmlParser parser = provider.get();
 		final Organization organization = injector.getInstance(Organization.class);
-		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("RoleDiagram7.xml");
+		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("Sample5.xml");
 
 		parser.parse(organization, inputStream);
 
@@ -288,10 +260,10 @@ public class XmlParserTest {
 	}
 
 	@Test
-	public void testParse8() throws XMLStreamException {
+	public void testSample6() throws XMLStreamException {
 		final XmlParser parser = provider.get();
 		final Organization organization = injector.getInstance(Organization.class);
-		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("RoleDiagram8.xml");
+		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("Sample6.xml");
 
 		parser.parse(organization, inputStream);
 
@@ -306,7 +278,7 @@ public class XmlParserTest {
 	}
 
 	@Test
-	public void testParse9() throws XMLStreamException {
+	public void testSample7() throws XMLStreamException {
 		final XmlParser parser = provider.get();
 		final Organization organization = injector.getInstance(Organization.class);
 		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("RoleDiagram9.xml");
