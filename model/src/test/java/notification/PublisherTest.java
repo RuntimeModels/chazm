@@ -69,7 +69,7 @@ public class PublisherTest {
 		final Publisher p1 = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0"));
+		exception.expectMessage(E.PARAMETER_CANNOT_BE_NULL.get("arg0", "post"));
 
 		p1.post(null);
 	}

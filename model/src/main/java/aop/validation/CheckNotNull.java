@@ -32,7 +32,7 @@ public class CheckNotNull implements MethodInterceptor {
 		final Parameter[] parameters = method.getParameters();
 		for (int i = 0; i < parameters.length; i++) {
 			if (parameters[i].isAnnotationPresent(NotNull.class) && arguments[i] == null) {
-				throw new IllegalArgumentException(E.PARAMETER_CANNOT_BE_NULL.get(parameters[i].getName()));
+				throw new IllegalArgumentException(E.PARAMETER_CANNOT_BE_NULL.get(parameters[i].getName(), method.getName()));
 			}
 		}
 		return invocation.proceed();

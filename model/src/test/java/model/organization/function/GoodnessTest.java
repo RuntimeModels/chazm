@@ -88,7 +88,7 @@ public class GoodnessTest {
 	@Test
 	public void testCompute1() {
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg0")));
+		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg0", "compute")));
 
 		goodness.compute(null, null, null, null, null);
 	}
@@ -98,7 +98,7 @@ public class GoodnessTest {
 		final Organization o = provider.get();
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg1")));
+		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg1", "compute")));
 
 		goodness.compute(o, null, null, null, null);
 	}
@@ -109,7 +109,7 @@ public class GoodnessTest {
 		final Agent a = entityFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg2")));
+		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg2", "compute")));
 
 		goodness.compute(o, a, null, null, null);
 	}
@@ -121,7 +121,7 @@ public class GoodnessTest {
 		final Role r = entityFactory.buildRole(idFactory.build(Role.class, "r"));
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg3")));
+		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg3", "compute")));
 
 		goodness.compute(o, a, r, null, null);
 	}
@@ -135,7 +135,7 @@ public class GoodnessTest {
 		final InstanceGoal ig = entityFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
 
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg4")));
+		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg4", "compute")));
 
 		goodness.compute(o, a, r, ig, null);
 	}

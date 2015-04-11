@@ -48,7 +48,7 @@ public class AchievesManagerTest {
 	public void testAddAchieves1() {
 		final Organization o = provider.get();
 		exception.expect(is(instanceOf(IllegalArgumentException.class)));
-		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg0")));
+		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg0", "addAchieves")));
 		o.addAchieves(null, null);
 	}
 
@@ -59,7 +59,7 @@ public class AchievesManagerTest {
 		final Role r1 = entityFactory.buildRole(i1);
 		o.addRole(r1);
 		exception.expect(is(instanceOf(IllegalArgumentException.class)));
-		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg1")));
+		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg1", "addAchieves")));
 		o.addAchieves(i1, null);
 	}
 
