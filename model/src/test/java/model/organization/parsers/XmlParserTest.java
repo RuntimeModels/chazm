@@ -289,4 +289,16 @@ public class XmlParserTest {
 		parser.parse(organization, inputStream);
 	}
 
+	@Test
+	public void testSample8() throws XMLStreamException {
+		final XmlParser parser = provider.get();
+		final Organization organization = injector.getInstance(Organization.class);
+		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("Sample8.xml");
+
+		exception.expect(XMLStreamException.class);
+		exception.expectMessage(is(equalTo(E.INCOMPLETE_XML_FILE.get(SpecificationGoal.class.getSimpleName(), "7c57110b-d910-437a-b674-0817ce92a963"))));
+
+		parser.parse(organization, inputStream);
+	}
+
 }
