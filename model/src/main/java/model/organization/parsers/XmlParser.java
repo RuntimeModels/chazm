@@ -141,35 +141,42 @@ public class XmlParser {
 				final QName name = element.getName();
 				if (AGENT_ELEMENT.equals(name.getLocalPart())) {
 					// TODO parse contact info
+					final UniqueId<Agent> id = idFactory.build(Agent.class, getAttributeValue(element, NAME_ATTRIBUTE));
 					final Agent.ContactInfo contactInfo = new Agent.ContactInfo() {};
-					final UniqueId<Agent> id = build(Agent.class, agents, element, f -> entityFactory.buildAgent(f, contactInfo), organization::addAgent);
+					build(id, agents, element, f -> entityFactory.buildAgent(f, contactInfo), organization::addAgent);
 					parseAgent(organization, reader, name, id, attributes, capabilities, list1);
 				} else if (ASSIGNMENT_ELEMENT.equals(name.getLocalPart())) {
 					parseAssignment(organization, element, agents, instanceGoals, roles, list2);
 				} else if (ATTRIBUTE_ELEMENT.equals(name.getLocalPart())) {
+					final UniqueId<Attribute> id = idFactory.build(Attribute.class, getAttributeValue(element, NAME_ATTRIBUTE));
 					try {
 						final Attribute.Type type = Attribute.Type.valueOf(getAttributeValue(element, TYPE_ATTRIBUTE));
-						build(Attribute.class, attributes, element, f -> entityFactory.buildAttribute(f, type), organization::addAttribute);
+						build(id, attributes, element, f -> entityFactory.buildAttribute(f, type), organization::addAttribute);
 					} catch (final IllegalArgumentException e) {
 						throw new XMLStreamException(e);
 					}
 				} else if (CAPABILITY_ELEMENT.equals(name.getLocalPart())) {
-					build(Capability.class, capabilities, element, f -> entityFactory.buildCapability(f), organization::addCapability);
+					final UniqueId<Capability> id = idFactory.build(Capability.class, getAttributeValue(element, NAME_ATTRIBUTE));
+					build(id, capabilities, element, entityFactory::buildCapability, organization::addCapability);
 				} else if (CHARACTERISTIC_ELEMENT.equals(name.getLocalPart())) {
-					build(Characteristic.class, characteristics, element, f -> entityFactory.buildCharacteristic(f), organization::addCharacteristic);
+					final UniqueId<Characteristic> id = idFactory.build(Characteristic.class, getAttributeValue(element, NAME_ATTRIBUTE));
+					build(id, characteristics, element, entityFactory::buildCharacteristic, organization::addCharacteristic);
 				} else if (INSTANCEGOAL_ELEMENT.equals(name.getLocalPart())) {
 					parseInstanceGoal(organization, element, specificationGoals, instanceGoals, list1);
 				} else if (PMF_ELEMENT.equals(name.getLocalPart())) {
-					final UniqueId<Pmf> id = build(Pmf.class, pmfs, element, f -> entityFactory.buildPmf(f), organization::addPmf);
+					final UniqueId<Pmf> id = idFactory.build(Pmf.class, getAttributeValue(element, NAME_ATTRIBUTE));
+					build(id, pmfs, element, entityFactory::buildPmf, organization::addPmf);
 					parsePmf(organization, reader, name, id, attributes, list1);
 				} else if (POLICY_ELEMENT.equals(name.getLocalPart())) {
-					build(Policy.class, policies, element, f -> entityFactory.buildPolicy(f), organization::addPolicy);
+					final UniqueId<Policy> id = idFactory.build(Policy.class, getAttributeValue(element, NAME_ATTRIBUTE));
+					build(id, policies, element, entityFactory::buildPolicy, organization::addPolicy);
 				} else if (ROLE_ELEMENT.equals(name.getLocalPart())) {
-					final UniqueId<Role> id = build(Role.class, roles, element, f -> entityFactory.buildRole(f), organization::addRole);
+					final UniqueId<Role> id = idFactory.build(Role.class, getAttributeValue(element, NAME_ATTRIBUTE));
+					build(id, roles, element, entityFactory::buildRole, organization::addRole);
 					parseRole(organization, reader, name, id, attributes, capabilities, characteristics, specificationGoals, list1);
 				} else if (GOAL_ELEMENT.equals(name.getLocalPart())) {
-					build(SpecificationGoal.class, specificationGoals, element, f -> entityFactory.buildSpecificationGoal(f),
-							organization::addSpecificationGoal);
+					final UniqueId<SpecificationGoal> id = idFactory.build(SpecificationGoal.class, getAttributeValue(element, NAME_ATTRIBUTE));
+					build(id, specificationGoals, element, entityFactory::buildSpecificationGoal, organization::addSpecificationGoal);
 				}
 			} else if (event.isEndElement()) {
 				final EndElement element = event.asEndElement();
@@ -187,17 +194,15 @@ public class XmlParser {
 		throw new XMLStreamException(E.MISSING_END_TAG.get(tagName)); // should not happen as XMLEventReader will do it for us
 	}
 
-	private <T> UniqueId<T> build(final Class<T> clazz, final Map<String, UniqueId<T>> map, final StartElement element, final Function<UniqueId<T>, T> f,
-			final Consumer<T> c) throws XMLStreamException {
-		final UniqueId<T> id = idFactory.build(clazz, getAttributeValue(element, NAME_ATTRIBUTE));
+	private <T extends UniqueId<U>, U> void build(final T id, final Map<String, T> map, final StartElement element, final Function<T, U> f, final Consumer<U> c)
+			throws XMLStreamException {
 		map.put(getAttributeValue(element, ID_ATTRIBUTE), id);
-		final T t = f.apply(id);
+		final U t = f.apply(id);
 		try {
 			c.accept(t);
 		} catch (final IllegalArgumentException e) {
 			throw new XMLStreamException(e);
 		}
-		return id;
 	}
 
 	private String getAttributeValue(final StartElement element, final String localPart) throws XMLStreamException {
@@ -220,7 +225,7 @@ public class XmlParser {
 					final List<String> ids = collectChild(reader, name);
 					try {
 						final double value = Double.valueOf(getAttributeValue(element, VALUE_ATTRIBUTE));
-						list.add(() -> addRelation(id, ids, attributes, (c, d) -> organization.addHas(c, d, value)));
+						list.add(() -> addRelation(id, ids, attributes, (c, d) -> organization.addHas(c, d, value), Attribute.class));
 					} catch (final NumberFormatException e) {
 						throw new XMLStreamException(e);
 					}
@@ -228,7 +233,7 @@ public class XmlParser {
 					final List<String> ids = collectChild(reader, name);
 					try {
 						final double value = Double.valueOf(getAttributeValue(element, SCORE_ATTRIBUTE));
-						list.add(() -> addRelation(id, ids, capabilities, (c, d) -> organization.addPossesses(c, d, value)));
+						list.add(() -> addRelation(id, ids, capabilities, (c, d) -> organization.addPossesses(c, d, value), Capability.class));
 					} catch (final NumberFormatException e) {
 						throw new XMLStreamException(e);
 					}
@@ -272,14 +277,15 @@ public class XmlParser {
 			final List<RunLater> list) {
 		/* construction of an instance goal depends on the existence of the specification goal */
 		list.add(() -> {
-			final String id = getAttributeValue(element, SPECIFICATION_ATTRIBUTE);
-			final SpecificationGoal goal = organization.getSpecificationGoal(specificationGoals.get(id));
+			final String value = getAttributeValue(element, SPECIFICATION_ATTRIBUTE);
+			final SpecificationGoal goal = organization.getSpecificationGoal(specificationGoals.get(value));
 			if (goal == null) {
-				throw new XMLStreamException(E.INCOMPLETE_XML_FILE.get(SpecificationGoal.class.getSimpleName(), id));
+				throw new XMLStreamException(E.INCOMPLETE_XML_FILE.get(SpecificationGoal.class.getSimpleName(), value));
 			}
+			final UniqueId<InstanceGoal> id = idFactory.build(InstanceGoal.class, getAttributeValue(element, NAME_ATTRIBUTE));
 			// TODO parse parameter
 			final InstanceGoal.Parameter parameter = new InstanceGoal.Parameter() {};
-			build(InstanceGoal.class, instanceGoals, element, f -> entityFactory.buildInstanceGoal(f, goal, parameter), organization::addInstanceGoal);
+			build(id, instanceGoals, element, f -> entityFactory.buildInstanceGoal(f, goal, parameter), organization::addInstanceGoal);
 		});
 	}
 
@@ -292,7 +298,7 @@ public class XmlParser {
 				final QName name = element.getName();
 				if (MODERATES_ELEMENT.equals(name.getLocalPart())) {
 					final List<String> ids = collectChild(reader, name);
-					list.add(() -> addRelation(id, ids, attributes, organization::addModerates));
+					list.add(() -> addRelation(id, ids, attributes, organization::addModerates, Attribute.class));
 				}
 			} else if (event.isEndElement()) {
 				final EndElement element = event.asEndElement();
@@ -315,21 +321,21 @@ public class XmlParser {
 				final QName name = element.getName();
 				if (ACHIEVES_ELEMENT.equals(name.getLocalPart())) {
 					final List<String> ids = collectChild(reader, name);
-					list.add(() -> addRelation(id, ids, goals, organization::addAchieves));
+					list.add(() -> addRelation(id, ids, goals, organization::addAchieves, SpecificationGoal.class));
 				} else if (CONTAINS_ELEMENT.equals(name.getLocalPart())) {
 					final List<String> ids = collectChild(reader, name);
 					try {
 						final double value = Double.valueOf(getAttributeValue(element, VALUE_ATTRIBUTE));
-						list.add(() -> addRelation(id, ids, characteristics, (c, d) -> organization.addContains(c, d, value)));
+						list.add(() -> addRelation(id, ids, characteristics, (c, d) -> organization.addContains(c, d, value), Characteristic.class));
 					} catch (final NumberFormatException e) {
 						throw new XMLStreamException(e);
 					}
 				} else if (NEEDS_ELEMENT.equals(name.getLocalPart())) {
 					final List<String> ids = collectChild(reader, name);
-					list.add(() -> addRelation(id, ids, attributes, organization::addNeeds));
+					list.add(() -> addRelation(id, ids, attributes, organization::addNeeds, Attribute.class));
 				} else if (REQUIRES_ELEMENT.equals(name.getLocalPart())) {
 					final List<String> ids = collectChild(reader, name);
-					list.add(() -> addRelation(id, ids, capabilities, organization::addRequires));
+					list.add(() -> addRelation(id, ids, capabilities, organization::addRequires, Capability.class));
 				}
 			} else if (event.isEndElement()) {
 				final EndElement element = event.asEndElement();
@@ -341,13 +347,14 @@ public class XmlParser {
 		throw new XMLStreamException(E.MISSING_END_TAG.get(tagName)); // should not happen as XMLEventReader will do it for us
 	}
 
-	private <T, U> void addRelation(final T t, final List<String> ids, final Map<String, U> map, final BiConsumer<T, U> c) throws XMLStreamException {
+	private <T extends UniqueId<V>, U extends UniqueId<W>, V, W> void addRelation(final T entity1, final List<String> ids, final Map<String, U> map,
+			final BiConsumer<T, U> c, final Class<W> clazz) throws XMLStreamException {
 		for (final String id : ids) {
-			final U u = map.get(id);
-			if (u == null) {
-				throw new XMLStreamException(E.INCOMPLETE_XML_FILE.get(t.getClass().getSimpleName(), id));
+			final U entity2 = map.get(id);
+			if (entity2 == null) {
+				throw new XMLStreamException(E.INCOMPLETE_XML_FILE.get(clazz.getSimpleName(), id));
 			}
-			c.accept(t, u);
+			c.accept(entity1, entity2);
 		}
 	}
 
