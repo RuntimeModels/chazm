@@ -1,8 +1,10 @@
 package model.organization.parsers;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -297,6 +299,70 @@ public class XmlParserTest {
 
 		exception.expect(XMLStreamException.class);
 		exception.expectMessage(is(equalTo(E.INCOMPLETE_XML_FILE.get(SpecificationGoal.class.getSimpleName(), "7c57110b-d910-437a-b674-0817ce92a963"))));
+
+		parser.parse(organization, inputStream);
+	}
+
+	@Test
+	public void testSample9() throws XMLStreamException {
+		final XmlParser parser = provider.get();
+		final Organization organization = injector.getInstance(Organization.class);
+		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("Sample9.xml");
+
+		exception.expect(XMLStreamException.class);
+		exception.expectCause(is(instanceOf(IllegalArgumentException.class)));
+		exception.expectMessage(containsString("No enum constant"));
+
+		parser.parse(organization, inputStream);
+	}
+
+	@Test
+	public void testSample10() throws XMLStreamException {
+		final XmlParser parser = provider.get();
+		final Organization organization = injector.getInstance(Organization.class);
+		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("Sample10.xml");
+
+		exception.expect(XMLStreamException.class);
+		exception.expectMessage(is(equalTo(E.MISSING_ATTRIBUTE_IN_TAG.get("Attribute", "type"))));
+
+		parser.parse(organization, inputStream);
+	}
+
+	@Test
+	public void testSample11() throws XMLStreamException {
+		final XmlParser parser = provider.get();
+		final Organization organization = injector.getInstance(Organization.class);
+		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("Sample11.xml");
+
+		exception.expect(XMLStreamException.class);
+		exception.expectCause(is(instanceOf(NumberFormatException.class)));
+		exception.expectMessage(containsString("For input string: \"a\""));
+
+		parser.parse(organization, inputStream);
+	}
+
+	@Test
+	public void testSample12() throws XMLStreamException {
+		final XmlParser parser = provider.get();
+		final Organization organization = injector.getInstance(Organization.class);
+		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("Sample12.xml");
+
+		exception.expect(XMLStreamException.class);
+		exception.expectCause(is(instanceOf(NumberFormatException.class)));
+		exception.expectMessage(containsString("For input string: \"a\""));
+
+		parser.parse(organization, inputStream);
+	}
+
+	@Test
+	public void testSample13() throws XMLStreamException {
+		final XmlParser parser = provider.get();
+		final Organization organization = injector.getInstance(Organization.class);
+		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("Sample13.xml");
+
+		exception.expect(XMLStreamException.class);
+		exception.expectCause(is(instanceOf(NumberFormatException.class)));
+		exception.expectMessage(containsString("For input string: \"a\""));
 
 		parser.parse(organization, inputStream);
 	}
