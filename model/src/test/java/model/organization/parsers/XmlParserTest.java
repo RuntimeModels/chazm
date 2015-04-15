@@ -367,4 +367,67 @@ public class XmlParserTest {
 		parser.parse(organization, inputStream);
 	}
 
+	@Test
+	public void testSample14() throws XMLStreamException {
+		final XmlParser parser = provider.get();
+		final Organization organization = injector.getInstance(Organization.class);
+		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("Sample14.xml");
+
+		exception.expect(XMLStreamException.class);
+		exception.expectMessage(is(equalTo(E.INCOMPLETE_XML_FILE.get(Agent.class.getSimpleName(), "15cf816f-fcde-4e5e-8758-e004f48e4ee3"))));
+
+		parser.parse(organization, inputStream);
+	}
+
+	@Test
+	public void testSample15() throws XMLStreamException {
+		final XmlParser parser = provider.get();
+		final Organization organization = injector.getInstance(Organization.class);
+		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("Sample15.xml");
+
+		exception.expect(XMLStreamException.class);
+		exception.expectMessage(is(equalTo(E.INCOMPLETE_XML_FILE.get(Role.class.getSimpleName(), "d3a3aa33-88c7-41a6-91a0-423e84354e7c"))));
+
+		parser.parse(organization, inputStream);
+	}
+
+	@Test
+	public void testSample16() throws XMLStreamException {
+		final XmlParser parser = provider.get();
+		final Organization organization = injector.getInstance(Organization.class);
+		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("Sample16.xml");
+
+		exception.expect(XMLStreamException.class);
+		exception.expectMessage(is(equalTo(E.INCOMPLETE_XML_FILE.get(InstanceGoal.class.getSimpleName(), "5a95c6f2-ee0a-48c4-be2d-9e4ad29a25b8"))));
+
+		parser.parse(organization, inputStream);
+	}
+
+	@Test
+	public void testSample17() throws XMLStreamException {
+		final XmlParser parser = provider.get();
+		final Organization organization = injector.getInstance(Organization.class);
+		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("Sample17.xml");
+
+		exception.expect(XMLStreamException.class);
+		exception.expectMessage(is(equalTo(E.INCOMPLETE_XML_FILE.get(SpecificationGoal.class.getSimpleName(), "7c57110b-d910-437a-b674-0817ce92a963"))));
+
+		parser.parse(organization, inputStream);
+	}
+
+	@Test
+	public void testMock1() {
+
+	}
+
+	@Test
+	public void testMock2() {
+
+	}
+
+	@Test
+	public void testMock3() {
+
+	}
+
 }
