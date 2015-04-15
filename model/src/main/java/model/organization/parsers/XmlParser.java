@@ -252,21 +252,24 @@ public class XmlParser {
 			final Map<String, UniqueId<InstanceGoal>> instanceGoals, final Map<String, UniqueId<Role>> roles, final List<RunLater> list) {
 		/* construction of an assignment depends on the existence of the instance goal */
 		list.add(() -> {
-			final String agentId = getAttributeValue(element, AGENT_ATTRIBUTE);
-			final String roleId = getAttributeValue(element, ROLE_ATTRIBUTE);
-			final String goalId = getAttributeValue(element, GOAL_ATTRIBUTE);
-			final Agent agent = organization.getAgent(agents.get(agentId));
-			if (agent == null) {
-				throw new XMLStreamException(E.INCOMPLETE_XML_FILE.get(Agent.class.getSimpleName(), agentId));
+			final String aId = getAttributeValue(element, AGENT_ATTRIBUTE);
+			final UniqueId<Agent> agentId = agents.get(aId);
+			if (agentId == null) {
+				throw new XMLStreamException(E.INCOMPLETE_XML_FILE.get(Agent.class.getSimpleName(), aId));
 			}
-			final Role role = organization.getRole(roles.get(roleId));
-			if (role == null) {
-				throw new XMLStreamException(E.INCOMPLETE_XML_FILE.get(Role.class.getSimpleName(), roleId));
+			final Agent agent = organization.getAgent(agentId);
+			final String rId = getAttributeValue(element, ROLE_ATTRIBUTE);
+			final UniqueId<Role> roleId = roles.get(rId);
+			if (roleId == null) {
+				throw new XMLStreamException(E.INCOMPLETE_XML_FILE.get(Role.class.getSimpleName(), rId));
 			}
-			final InstanceGoal goal = organization.getInstanceGoal(instanceGoals.get(goalId));
-			if (goal == null) {
-				throw new XMLStreamException(E.INCOMPLETE_XML_FILE.get(InstanceGoal.class.getSimpleName(), goalId));
+			final Role role = organization.getRole(roleId);
+			final String gId = getAttributeValue(element, GOAL_ATTRIBUTE);
+			final UniqueId<InstanceGoal> goalId = instanceGoals.get(gId);
+			if (goalId == null) {
+				throw new XMLStreamException(E.INCOMPLETE_XML_FILE.get(InstanceGoal.class.getSimpleName(), gId));
 			}
+			final InstanceGoal goal = organization.getInstanceGoal(goalId);
 			final Assignment assignment = assignmentFactory.buildAssignment(agent, role, goal);
 			organization.addAssignment(assignment);
 		});
@@ -278,10 +281,11 @@ public class XmlParser {
 		/* construction of an instance goal depends on the existence of the specification goal */
 		list.add(() -> {
 			final String value = getAttributeValue(element, SPECIFICATION_ATTRIBUTE);
-			final SpecificationGoal goal = organization.getSpecificationGoal(specificationGoals.get(value));
-			if (goal == null) {
+			final UniqueId<SpecificationGoal> goalId = specificationGoals.get(value);
+			if (goalId == null) {
 				throw new XMLStreamException(E.INCOMPLETE_XML_FILE.get(SpecificationGoal.class.getSimpleName(), value));
 			}
+			final SpecificationGoal goal = organization.getSpecificationGoal(goalId);
 			final UniqueId<InstanceGoal> id = idFactory.build(InstanceGoal.class, getAttributeValue(element, NAME_ATTRIBUTE));
 			// TODO parse parameter
 			final InstanceGoal.Parameter parameter = new InstanceGoal.Parameter() {};
