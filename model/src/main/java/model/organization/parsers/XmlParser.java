@@ -15,7 +15,6 @@ import javax.validation.constraints.NotNull;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
@@ -111,7 +110,7 @@ public class XmlParser {
 		final XMLEventReader reader = factory.createXMLEventReader(inputStream);
 		while (reader.hasNext()) {
 			final XMLEvent event = reader.nextEvent();
-			if (event.getEventType() == XMLStreamConstants.START_ELEMENT) {
+			if (event.isStartElement()) {
 				final StartElement element = event.asStartElement();
 				logger.debug(L.START_TAG.get(), element);
 				final QName name = element.getName();

@@ -16,9 +16,16 @@ import java.util.HashSet;
 import java.util.stream.Collectors;
 
 import javax.inject.Provider;
+import javax.xml.namespace.QName;
+import javax.xml.stream.XMLEventReader;
+import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.events.XMLEvent;
 
 import message.E;
+import mockit.Expectations;
+import mockit.Mocked;
+import mockit.integration.junit4.JMockit;
 import model.organization.Organization;
 import model.organization.entity.Agent;
 import model.organization.entity.Attribute;
@@ -36,11 +43,13 @@ import model.organization.relation.Assignment;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 @SuppressWarnings({ "javadoc", "unchecked" })
+@RunWith(JMockit.class)
 public class XmlParserTest {
 
 	private final Injector injector = Guice.createInjector(new ParsersModule());
@@ -416,18 +425,191 @@ public class XmlParserTest {
 	}
 
 	@Test
-	public void testMock1() {
+	public void testSample18() throws XMLStreamException {
+		final XmlParser parser = provider.get();
+		final Organization organization = injector.getInstance(Organization.class);
+		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("Sample18.xml");
 
+		parser.parse(organization, inputStream);
+
+		assertThat(organization.getAgents().size(), is(equalTo(1)));
 	}
 
 	@Test
-	public void testMock2() {
+	public void testSample19() throws XMLStreamException {
+		final XmlParser parser = provider.get();
+		final Organization organization = injector.getInstance(Organization.class);
+		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("Sample19.xml");
 
+		parser.parse(organization, inputStream);
+
+		assertThat(organization.getPmfs().size(), is(equalTo(1)));
 	}
 
 	@Test
-	public void testMock3() {
+	public void testSample20() throws XMLStreamException {
+		final XmlParser parser = provider.get();
+		final Organization organization = injector.getInstance(Organization.class);
+		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("Sample20.xml");
 
+		parser.parse(organization, inputStream);
+
+		assertThat(organization.getRoles().size(), is(equalTo(1)));
+	}
+
+	@Test
+	public void testSample21() throws XMLStreamException {
+		final XmlParser parser = provider.get();
+		final Organization organization = injector.getInstance(Organization.class);
+		final InputStream inputStream = ClassLoader.getSystemResourceAsStream("Sample21.xml");
+
+		parser.parse(organization, inputStream);
+
+		assertThat(organization.getAgents().size(), is(equalTo(1)));
+	}
+
+	
+	@Test
+	public void testMock1(@Mocked final InputStream inputStream, @Mocked final XMLInputFactory factory, @Mocked final XMLEventReader reader,
+			@Mocked final XMLEvent event, @Mocked final QName name) throws XMLStreamException {
+		/* mock missing </RoleDiagram> end tag */
+		new Expectations() {
+			{
+				reader.hasNext();
+				returns(true, false);
+				reader.nextEvent();
+				result = event;
+				event.isStartElement();
+				result = true;
+				name.getLocalPart();
+				result = "RoleDiagram";
+				name.toString();
+				result = "RoleDiagram";
+			}
+		};
+		final XmlParser parser = provider.get();
+		final Organization organization = injector.getInstance(Organization.class);
+
+		exception.expect(XMLStreamException.class);
+		exception.expectMessage(is(equalTo(E.MISSING_END_TAG.get("RoleDiagram"))));
+
+		parser.parse(organization, inputStream);
+	}
+
+	@Test
+	public void testMock2(@Mocked final InputStream inputStream, @Mocked final XMLInputFactory factory, @Mocked final XMLEventReader reader,
+			@Mocked final XMLEvent event, @Mocked final QName name, @Mocked final javax.xml.stream.events.Attribute attribute) throws XMLStreamException {
+		/* mock missing </Agent> end tag */
+		new Expectations() {
+			{
+				reader.hasNext();
+				returns(true, true, false);
+				reader.nextEvent();
+				result = event;
+				event.isStartElement();
+				result = true;
+				name.getLocalPart();
+				returns("RoleDiagram", "Agent");
+				attribute.getValue();
+				result = "Agent 1";
+				name.toString();
+				result = "Agent";
+			}
+		};
+		final XmlParser parser = provider.get();
+		final Organization organization = injector.getInstance(Organization.class);
+
+		exception.expect(XMLStreamException.class);
+		exception.expectMessage(is(equalTo(E.MISSING_END_TAG.get("Agent"))));
+
+		parser.parse(organization, inputStream);
+	}
+
+	@Test
+	public void testMock3(@Mocked final InputStream inputStream, @Mocked final XMLInputFactory factory, @Mocked final XMLEventReader reader,
+			@Mocked final XMLEvent event, @Mocked final QName name, @Mocked final javax.xml.stream.events.Attribute attribute) throws XMLStreamException {
+		/* mock missing </Pmf> end tag */
+		new Expectations() {
+			{
+				reader.hasNext();
+				returns(true, true, false);
+				reader.nextEvent();
+				result = event;
+				event.isStartElement();
+				result = true;
+				name.getLocalPart();
+				returns("RoleDiagram", "Pmf");
+				attribute.getValue();
+				result = "Pmf 1";
+				name.toString();
+				result = "Pmf";
+			}
+		};
+		final XmlParser parser = provider.get();
+		final Organization organization = injector.getInstance(Organization.class);
+
+		exception.expect(XMLStreamException.class);
+		exception.expectMessage(is(equalTo(E.MISSING_END_TAG.get("Pmf"))));
+
+		parser.parse(organization, inputStream);
+	}
+
+	@Test
+	public void testMock4(@Mocked final InputStream inputStream, @Mocked final XMLInputFactory factory, @Mocked final XMLEventReader reader,
+			@Mocked final XMLEvent event, @Mocked final QName name, @Mocked final javax.xml.stream.events.Attribute attribute) throws XMLStreamException {
+		/* mock missing </Role> end tag */
+		new Expectations() {
+			{
+				reader.hasNext();
+				returns(true, true, false);
+				reader.nextEvent();
+				result = event;
+				event.isStartElement();
+				result = true;
+				name.getLocalPart();
+				returns("RoleDiagram", "Role");
+				attribute.getValue();
+				result = "Role 1";
+				name.toString();
+				result = "Role";
+			}
+		};
+		final XmlParser parser = provider.get();
+		final Organization organization = injector.getInstance(Organization.class);
+
+		exception.expect(XMLStreamException.class);
+		exception.expectMessage(is(equalTo(E.MISSING_END_TAG.get("Role"))));
+
+		parser.parse(organization, inputStream);
+	}
+
+	@Test
+	public void testMock5(@Mocked final InputStream inputStream, @Mocked final XMLInputFactory factory, @Mocked final XMLEventReader reader,
+			@Mocked final XMLEvent event, @Mocked final QName name, @Mocked final javax.xml.stream.events.Attribute attribute) throws XMLStreamException {
+		/* mock missing relations end tags: </has>, </possesses>, </moderates>, </achieves>, </contains>, </needs>, </requires> */
+		new Expectations() {
+			{
+				reader.hasNext();
+				returns(true, true, true, false);
+				reader.nextEvent();
+				result = event;
+				event.isStartElement();
+				result = true;
+				name.getLocalPart();
+				returns("RoleDiagram", "Agent", "has");
+				attribute.getValue();
+				result = "Agent 1";
+				name.toString();
+				result = "has";
+			}
+		};
+		final XmlParser parser = provider.get();
+		final Organization organization = injector.getInstance(Organization.class);
+
+		exception.expect(XMLStreamException.class);
+		exception.expectMessage(is(equalTo(E.MISSING_END_TAG.get("has"))));
+
+		parser.parse(organization, inputStream);
 	}
 
 }
