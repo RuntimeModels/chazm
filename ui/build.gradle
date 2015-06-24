@@ -1,5 +1,5 @@
 dependencies {
-	compile project(':organization-model')
+	compile project(':organization-model-model')
 	testCompile "junit:junit:${junit_version}"
 	testCompile "org.jmockit:jmockit:${jmockit_version}"
 }
