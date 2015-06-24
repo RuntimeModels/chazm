@@ -6,6 +6,20 @@ allprojects {
 	repositories {
 		jcenter()
 	}
+
+	jacoco {
+		toolVersion = '0.7.5.201505241946'
+	}
+
+	jacocoTestReport {
+		dependsOn test
+		reports {
+			html.enabled true
+			xml.enabled true
+			csv.enabled false
+		}
+	}
+
 }
 
 subprojects {
@@ -16,19 +30,10 @@ subprojects {
 
 	group 'model'
 	version '7.0.0'
-	
+
 	test {
 		maxParallelForks = 2
 		forkEvery = 150
-	}
-
-	jacocoTestReport {
-		dependsOn test
-		reports {
-			html.enabled true
-			xml.enabled true
-			csv.enabled false
-		}
 	}
 
 	task sourceJar(type: Jar) {
