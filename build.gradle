@@ -1,27 +1,27 @@
 allprojects {
 	apply plugin: 'eclipse'
 	apply plugin: 'idea'
+	apply plugin: 'jacoco'
 
 	repositories {
 		jcenter()
+	}
+
+	jacoco {
+		toolVersion = '0.7.5.201505241946'
 	}
 
 }
 
 subprojects {
 	apply plugin: 'java'
-	apply plugin: 'jacoco'
 	apply plugin: 'maven-publish'
-	
+
 	sourceCompatibility = '1.8'
 
 	group 'model'
 	version '7.0.0'
 
-	jacoco {
-		toolVersion = '0.7.5.201505241946'
-	}
-	
 	jacocoTestReport {
 		dependsOn test
 		reports {
@@ -61,12 +61,12 @@ buildscript {
 
 coveralls {
 	sourceDirs = subprojects.sourceSets.main.java.srcDirs.flatten()
-	jacocoReportPath = "${buildDir}/reports/jacoco/jacocoRootReport/jacocoRootReport.xml"
+	jacocoReportPath = "${buildDir}/reports/jacoco/jacocoReports/jacocoReports.xml"
 }
 
 
 task jacocoReports(type: JacocoReport) {
-	dependsOn subprojects.test
+	dependsOn subprojects.jacocoTestReport
 
 	sourceDirectories = files(subprojects.sourceSets.main.java.srcDirs)
 	classDirectories = files(subprojects.sourceSets.main.output.classesDir)
