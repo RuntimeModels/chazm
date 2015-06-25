@@ -1,16 +1,27 @@
 allprojects {
 	apply plugin: 'eclipse'
 	apply plugin: 'idea'
-	apply plugin: 'jacoco'
 
 	repositories {
 		jcenter()
 	}
 
+}
+
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'jacoco'
+	apply plugin: 'maven-publish'
+	
+	sourceCompatibility = '1.8'
+
+	group 'model'
+	version '7.0.0'
+
 	jacoco {
 		toolVersion = '0.7.5.201505241946'
 	}
-
+	
 	jacocoTestReport {
 		dependsOn test
 		reports {
@@ -19,17 +30,6 @@ allprojects {
 			csv.enabled false
 		}
 	}
-
-}
-
-subprojects {
-	apply plugin: 'java'
-	apply plugin: 'maven-publish'
-
-	sourceCompatibility = '1.8'
-
-	group 'model'
-	version '7.0.0'
 
 	test {
 		maxParallelForks = 2
@@ -64,7 +64,8 @@ coveralls {
 	jacocoReportPath = "${buildDir}/reports/jacoco/jacocoRootReport/jacocoRootReport.xml"
 }
 
-task jacocoRootReport(type: JacocoReport) {
+
+task jacocoReports(type: JacocoReport) {
 	dependsOn subprojects.test
 
 	sourceDirectories = files(subprojects.sourceSets.main.java.srcDirs)
@@ -79,16 +80,15 @@ task jacocoRootReport(type: JacocoReport) {
 }
 
 tasks.coveralls {
-	dependsOn jacocoRootReport
+	dependsOn jacocoReports
 }
 
 ext {
-	slf4j_version = '1.7.10'
+	slf4j_version = '1.7.12'
 	javaee_version = '7.0'
-	guice_version = '4.0-beta5'
+	guice_version = '4.0'
 	junit_version = '4.12'
-	mockito_version = '2.0.5-beta'
-	jmockit_version = '1.16'
+	jmockit_version = '1.18'
 }
 
 task wrapper(type: Wrapper) {

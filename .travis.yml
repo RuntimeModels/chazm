@@ -23,4 +23,4 @@ before_cache:
   - find $HOME/.gradle/caches -name "*.lock" -type f -print0 -delete
   
 after_script:
-  - ./gradlew jacocoRootReport coveralls # collect jacoco test reports from subprojects send them to coveralls
+  - ./gradlew coveralls # collect jacoco reports from subprojects send them to coveralls
