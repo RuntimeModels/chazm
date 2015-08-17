@@ -21,7 +21,7 @@ addons:
     project:
       name: "ChrisZhong/organization-model"
       description: "Build submitted via Travis CI"
-    notification_email: chriszhong+coverity@gmail.com
+    notification_email: ChrisZhong+Coverity@GMail.com
     build_command_prepend: "gradlew clean"
     build_command:   "gradlew assemble"
     branch_pattern: coverity_scan
