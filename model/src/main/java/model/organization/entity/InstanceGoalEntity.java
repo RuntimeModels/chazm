@@ -46,7 +46,7 @@ class InstanceGoalEntity extends AbstractEntity<InstanceGoal> implements Instanc
 	@Override
 	public int hashCode() {
 		if (hashCode == null) {
-			hashCode = Objects.hash(getId(), getGoal());
+			hashCode = Objects.hash(super.hashCode(), getGoal());
 		}
 		return hashCode;
 	}
