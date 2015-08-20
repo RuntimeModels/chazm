@@ -39,7 +39,7 @@ class AttributeEntity extends AbstractEntity<Attribute> implements Attribute {
 	@Override
 	public int hashCode() {
 		if (hashCode == null) {
-			hashCode = Objects.hash(getId(), getType());
+			hashCode = Objects.hash(super.hashCode(), getType());
 		}
 		return hashCode;
 	}
