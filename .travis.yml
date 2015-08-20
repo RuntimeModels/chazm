@@ -10,6 +10,22 @@ cache:
     - '$HOME/.gradle/wrapper' # cache the gradle wrapper directory
     - '$HOME/.m2/repository' # cache the maven artifacts
 
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "L+Hrmxz1NNgMsm8pPRPGbH7ColS6HfgLZEW8eFdfZhAQznxjQU/9Fhk1kv67SZlh9I/WghxcD5S/dQJPw0e9A/zQF4me5AWtTeKKInyCnuonrkU/nZDN08YyZkY1wpTGN8SYeYwCWD2pu2N+l935kXItzRYYIY8pwRCxofa16yo="
+
+addons:
+  coverity_scan:
+    project:
+      name: "ChrisZhong/organization-model"
+      description: "Build submitted via Travis CI"
+    notification_email: chriszhong+coverity@gmail.com
+    build_command_prepend: "gradlew clean"
+    build_command:   "gradlew assemble"
+    branch_pattern: coverity_scan
+
 before_install:
   - chmod +x gradlew # make gradlew script executable
 
