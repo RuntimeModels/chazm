@@ -7,6 +7,10 @@
  */
 package model.organization.ui;
 
+import io.github.chriszhong.model.organization.Organization;
+import io.github.chriszhong.model.organization.entity.InstanceGoal;
+import io.github.chriszhong.model.organization.entity.SpecificationGoal;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
@@ -19,10 +23,6 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
-
-import model.organization.Organization;
-import model.organization.entity.InstanceGoal;
-import model.organization.entity.SpecificationGoal;
 
 /**
  * The <code>GoalVisualizationPanel</code> class is a Swing component to visualize the <code>SpecificationGoal</code> and <code>InstanceGoal</code> currently in

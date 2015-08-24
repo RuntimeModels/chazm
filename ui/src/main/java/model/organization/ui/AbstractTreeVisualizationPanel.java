@@ -7,13 +7,13 @@
  */
 package model.organization.ui;
 
+import io.github.chriszhong.model.organization.Organization;
+
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
-
-import model.organization.Organization;
 
 /**
  * The <code>AbstractListVisualizationPanel</code> provides tree type <code>JPanel</code> for display information about the <code>Organization</code>.

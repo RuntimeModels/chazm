@@ -7,6 +7,9 @@
  */
 package model.organization.ui;
 
+import io.github.chriszhong.model.organization.Organization;
+import io.github.chriszhong.model.organization.entity.Characteristic;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -17,9 +20,6 @@ import javax.swing.JSplitPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ListSelectionEvent;
-
-import model.organization.Organization;
-import model.organization.entity.Characteristic;
 
 /**
  * The <code>CharacteristicVisualizationPanel</code> class is a Swing component to visualize the {@linkplain Characteristic} currently in the
