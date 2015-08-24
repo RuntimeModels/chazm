@@ -4,6 +4,7 @@
 
 **Badges**: [![Build Status][ci-img]][ci-lnk]
 [![Coverage Status][co-img]][co-lnk]
+[![Coverity Status][cv-img]][cv-lnk]
 
 ##What is this repository for?
 
@@ -33,3 +34,5 @@ This project is based on my PhD work at Kansas State University. It is a runtime
 [ci-lnk]: https://travis-ci.org/ChrisZhong/organization-model
 [co-img]: https://coveralls.io/repos/ChrisZhong/organization-model/badge.svg
 [co-lnk]: https://coveralls.io/r/ChrisZhong/organization-model
+[cv-img]: https://scan.coverity.com/projects/6071/badge.svg
+[cv-lnk]: https://scan.coverity.com/projects/chriszhong-organization-model
