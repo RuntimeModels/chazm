@@ -7,6 +7,9 @@
  */
 package model.organization.ui;
 
+import io.github.chriszhong.model.organization.Organization;
+import io.github.chriszhong.model.organization.entity.Capability;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -17,9 +20,6 @@ import javax.swing.JSplitPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ListSelectionEvent;
-
-import model.organization.Organization;
-import model.organization.entity.Capability;
 
 /**
  * The <code>CapabilityVisualizationPanel</code> class is a Swing component to visualize the <code>Capability</code> currently in the <code>Organization</code>.

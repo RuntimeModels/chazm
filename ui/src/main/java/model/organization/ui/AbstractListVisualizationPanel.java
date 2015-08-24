@@ -7,6 +7,8 @@
  */
 package model.organization.ui;
 
+import io.github.chriszhong.model.organization.Organization;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +16,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionListener;
-
-import model.organization.Organization;
 
 /**
  * The <code>AbstractListVisualizationPanel</code> provides list type <code>JPanel</code> for display information about the <code>Organization</code>.

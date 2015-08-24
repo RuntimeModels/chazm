@@ -7,6 +7,8 @@
  */
 package model.organization.ui;
 
+import io.github.chriszhong.model.organization.Organization;
+
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -18,8 +20,6 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
-
-import model.organization.Organization;
 
 /**
  * The <code>DefaultVisualizationFrame</code> provides a primitive <code>JFrame</code> for visualizing the <code>Organization</code>.

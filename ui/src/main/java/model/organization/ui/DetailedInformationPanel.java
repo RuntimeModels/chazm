@@ -7,6 +7,16 @@
  */
 package model.organization.ui;
 
+import io.github.chriszhong.model.organization.entity.Agent;
+import io.github.chriszhong.model.organization.entity.Attribute;
+import io.github.chriszhong.model.organization.entity.Capability;
+import io.github.chriszhong.model.organization.entity.Characteristic;
+import io.github.chriszhong.model.organization.entity.InstanceGoal;
+import io.github.chriszhong.model.organization.entity.Pmf;
+import io.github.chriszhong.model.organization.entity.Role;
+import io.github.chriszhong.model.organization.entity.SpecificationGoal;
+import io.github.chriszhong.model.organization.relation.Assignment;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 
@@ -19,16 +29,6 @@ import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
-
-import model.organization.entity.Agent;
-import model.organization.entity.Attribute;
-import model.organization.entity.Capability;
-import model.organization.entity.Characteristic;
-import model.organization.entity.InstanceGoal;
-import model.organization.entity.Pmf;
-import model.organization.entity.Role;
-import model.organization.entity.SpecificationGoal;
-import model.organization.relation.Assignment;
 
 /**
  * The <code>DetailedInformationPanel</code> class is a Swing component that is used by the other visualization <code>JPanel</code> to present additional

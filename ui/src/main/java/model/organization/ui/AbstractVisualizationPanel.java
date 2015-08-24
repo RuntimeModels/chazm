@@ -7,6 +7,8 @@
  */
 package model.organization.ui;
 
+import io.github.chriszhong.model.organization.Organization;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Graphics;
@@ -16,8 +18,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-
-import model.organization.Organization;
 
 /**
  * The <code>AbstractVisualizationPanel</code> provides the base framework <code>JPanel</code> for display information about the <code>Organization</code>.
