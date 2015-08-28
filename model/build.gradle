@@ -1,5 +1,5 @@
 dependencies {
-	compile project(':organization-model-api')
+	compile project(":${rootProject.name}-api")
 	compile "org.slf4j:slf4j-api:${slf4j_version}"
 	compile "javax:javaee-api:${javaee_version}"
 	compile "com.google.inject:guice:${guice_version}"
