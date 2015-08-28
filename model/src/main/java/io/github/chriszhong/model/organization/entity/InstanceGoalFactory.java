@@ -1,6 +1,8 @@
 package io.github.chriszhong.model.organization.entity;
 
-import io.github.chriszhong.model.organization.id.UniqueId;
+import io.github.runtimemodels.chazm.entity.InstanceGoal;
+import io.github.runtimemodels.chazm.entity.SpecificationGoal;
+import io.github.runtimemodels.chazm.id.UniqueId;
 
 /**
  * The {@linkplain InstanceGoalFactory} interface defines the APIs for constructing {@linkplain InstanceGoal}s.

@@ -1,7 +1,8 @@
 package io.github.chriszhong.model.organization.relation;
 
-import io.github.chriszhong.model.organization.entity.Characteristic;
-import io.github.chriszhong.model.organization.entity.Role;
+import io.github.runtimemodels.chazm.entity.Characteristic;
+import io.github.runtimemodels.chazm.entity.Role;
+import io.github.runtimemodels.chazm.relation.Contains;
 
 /**
  * The {@linkplain ContainsFactory} interface defines the API for constructing {@linkplain Contains} relations.

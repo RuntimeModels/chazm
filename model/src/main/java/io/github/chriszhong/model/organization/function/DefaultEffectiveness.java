@@ -1,7 +1,8 @@
 package io.github.chriszhong.model.organization.function;
 
-import io.github.chriszhong.model.organization.Organization;
-import io.github.chriszhong.model.organization.relation.Assignment;
+import io.github.runtimemodels.chazm.Organization;
+import io.github.runtimemodels.chazm.function.Effectiveness;
+import io.github.runtimemodels.chazm.relation.Assignment;
 
 import java.util.Collection;
 

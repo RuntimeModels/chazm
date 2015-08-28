@@ -1,6 +1,6 @@
 package io.github.chriszhong.model.organization.event;
 
-import io.github.chriszhong.model.organization.relation.Uses;
+import io.github.runtimemodels.chazm.relation.Uses;
 
 /**
  * The {@linkplain UsesEventFactory} interface defines the API for constructing {@linkplain UsesEvent}s.

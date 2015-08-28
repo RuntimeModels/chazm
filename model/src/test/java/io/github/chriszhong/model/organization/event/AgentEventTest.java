@@ -9,10 +9,10 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
-import io.github.chriszhong.model.organization.entity.Agent;
 import io.github.chriszhong.model.organization.entity.AgentFactory;
 import io.github.chriszhong.model.organization.id.IdFactory;
 import io.github.chriszhong.model.organization.relation.RelationModule;
+import io.github.runtimemodels.chazm.entity.Agent;
 
 import org.junit.Rule;
 import org.junit.Test;

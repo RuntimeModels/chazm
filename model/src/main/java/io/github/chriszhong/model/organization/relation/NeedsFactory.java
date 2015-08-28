@@ -1,7 +1,8 @@
 package io.github.chriszhong.model.organization.relation;
 
-import io.github.chriszhong.model.organization.entity.Attribute;
-import io.github.chriszhong.model.organization.entity.Role;
+import io.github.runtimemodels.chazm.entity.Attribute;
+import io.github.runtimemodels.chazm.entity.Role;
+import io.github.runtimemodels.chazm.relation.Needs;
 
 /**
  * The {@linkplain NeedsFactory} interface defines the API for constructing {@linkplain Needs} relations.

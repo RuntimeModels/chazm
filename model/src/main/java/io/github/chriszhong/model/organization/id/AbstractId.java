@@ -1,6 +1,7 @@
 package io.github.chriszhong.model.organization.id;
 
 import static io.github.chriszhong.model.organization.validation.Checks.checkNotNull;
+import io.github.runtimemodels.chazm.id.UniqueId;
 
 import javax.validation.constraints.NotNull;
 

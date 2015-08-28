@@ -7,7 +7,7 @@
  */
 package model.organization.ui;
 
-import io.github.chriszhong.model.organization.Organization;
+import io.github.runtimemodels.chazm.Organization;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,5 +1,7 @@
 package io.github.chriszhong.model.organization.id;
 
+import io.github.runtimemodels.chazm.id.UniqueId;
+
 /**
  * The {@linkplain IdFactory} interface defines the APIs for constructing {@linkplain UniqueId}s.
  *

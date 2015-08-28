@@ -8,6 +8,7 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 import io.github.chriszhong.message.E;
+import io.github.runtimemodels.chazm.id.UniqueId;
 
 import org.junit.Rule;
 import org.junit.Test;

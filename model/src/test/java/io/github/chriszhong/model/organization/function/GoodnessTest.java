@@ -4,17 +4,18 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import io.github.chriszhong.message.E;
-import io.github.chriszhong.model.organization.Organization;
 import io.github.chriszhong.model.organization.OrganizationModule;
-import io.github.chriszhong.model.organization.entity.Agent;
-import io.github.chriszhong.model.organization.entity.Attribute;
-import io.github.chriszhong.model.organization.entity.Capability;
 import io.github.chriszhong.model.organization.entity.EntityFactory;
-import io.github.chriszhong.model.organization.entity.InstanceGoal;
-import io.github.chriszhong.model.organization.entity.Role;
-import io.github.chriszhong.model.organization.entity.SpecificationGoal;
 import io.github.chriszhong.model.organization.id.IdFactory;
-import io.github.chriszhong.model.organization.relation.Possesses;
+import io.github.runtimemodels.chazm.Organization;
+import io.github.runtimemodels.chazm.entity.Agent;
+import io.github.runtimemodels.chazm.entity.Attribute;
+import io.github.runtimemodels.chazm.entity.Capability;
+import io.github.runtimemodels.chazm.entity.InstanceGoal;
+import io.github.runtimemodels.chazm.entity.Role;
+import io.github.runtimemodels.chazm.entity.SpecificationGoal;
+import io.github.runtimemodels.chazm.function.Goodness;
+import io.github.runtimemodels.chazm.relation.Possesses;
 
 import java.util.HashSet;
 

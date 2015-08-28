@@ -7,9 +7,9 @@
  */
 package model.organization.ui;
 
-import io.github.chriszhong.model.organization.Organization;
-import io.github.chriszhong.model.organization.entity.InstanceGoal;
-import io.github.chriszhong.model.organization.entity.SpecificationGoal;
+import io.github.runtimemodels.chazm.Organization;
+import io.github.runtimemodels.chazm.entity.InstanceGoal;
+import io.github.runtimemodels.chazm.entity.SpecificationGoal;
 
 import java.util.ArrayList;
 import java.util.Collection;

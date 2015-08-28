@@ -1,8 +1,8 @@
 package io.github.chriszhong.model.organization;
 
-import io.github.chriszhong.model.organization.entity.Role;
-import io.github.chriszhong.model.organization.function.Goodness;
-import io.github.chriszhong.model.organization.id.UniqueId;
+import io.github.runtimemodels.chazm.entity.Role;
+import io.github.runtimemodels.chazm.function.Goodness;
+import io.github.runtimemodels.chazm.id.UniqueId;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

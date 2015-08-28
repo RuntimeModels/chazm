@@ -6,10 +6,11 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import io.github.chriszhong.message.E;
 import io.github.chriszhong.model.organization.entity.EntityFactory;
-import io.github.chriszhong.model.organization.entity.Role;
-import io.github.chriszhong.model.organization.entity.SpecificationGoal;
 import io.github.chriszhong.model.organization.id.IdFactory;
-import io.github.chriszhong.model.organization.id.UniqueId;
+import io.github.runtimemodels.chazm.Organization;
+import io.github.runtimemodels.chazm.entity.Role;
+import io.github.runtimemodels.chazm.entity.SpecificationGoal;
+import io.github.runtimemodels.chazm.id.UniqueId;
 
 import org.junit.Rule;
 import org.junit.Test;

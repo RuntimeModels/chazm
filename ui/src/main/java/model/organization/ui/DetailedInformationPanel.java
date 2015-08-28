@@ -7,15 +7,15 @@
  */
 package model.organization.ui;
 
-import io.github.chriszhong.model.organization.entity.Agent;
-import io.github.chriszhong.model.organization.entity.Attribute;
-import io.github.chriszhong.model.organization.entity.Capability;
-import io.github.chriszhong.model.organization.entity.Characteristic;
-import io.github.chriszhong.model.organization.entity.InstanceGoal;
-import io.github.chriszhong.model.organization.entity.Pmf;
-import io.github.chriszhong.model.organization.entity.Role;
-import io.github.chriszhong.model.organization.entity.SpecificationGoal;
-import io.github.chriszhong.model.organization.relation.Assignment;
+import io.github.runtimemodels.chazm.entity.Agent;
+import io.github.runtimemodels.chazm.entity.Attribute;
+import io.github.runtimemodels.chazm.entity.Capability;
+import io.github.runtimemodels.chazm.entity.Characteristic;
+import io.github.runtimemodels.chazm.entity.InstanceGoal;
+import io.github.runtimemodels.chazm.entity.Pmf;
+import io.github.runtimemodels.chazm.entity.Role;
+import io.github.runtimemodels.chazm.entity.SpecificationGoal;
+import io.github.runtimemodels.chazm.relation.Assignment;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

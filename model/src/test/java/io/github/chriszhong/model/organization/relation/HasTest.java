@@ -10,11 +10,12 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 import io.github.chriszhong.message.E;
-import io.github.chriszhong.model.organization.entity.Agent;
 import io.github.chriszhong.model.organization.entity.AgentFactory;
-import io.github.chriszhong.model.organization.entity.Attribute;
 import io.github.chriszhong.model.organization.entity.AttributeFactory;
 import io.github.chriszhong.model.organization.id.IdFactory;
+import io.github.runtimemodels.chazm.entity.Agent;
+import io.github.runtimemodels.chazm.entity.Attribute;
+import io.github.runtimemodels.chazm.relation.Has;
 
 import org.junit.Rule;
 import org.junit.Test;

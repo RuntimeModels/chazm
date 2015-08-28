@@ -1,5 +1,8 @@
 package io.github.chriszhong.model.organization.function;
 
+import io.github.runtimemodels.chazm.function.Effectiveness;
+import io.github.runtimemodels.chazm.function.Goodness;
+
 import com.google.inject.AbstractModule;
 
 /**

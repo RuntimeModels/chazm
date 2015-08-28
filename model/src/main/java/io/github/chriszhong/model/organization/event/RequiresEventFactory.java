@@ -1,6 +1,6 @@
 package io.github.chriszhong.model.organization.event;
 
-import io.github.chriszhong.model.organization.relation.Requires;
+import io.github.runtimemodels.chazm.relation.Requires;
 
 /**
  * The {@linkplain RequiresEventFactory} interface defines the API for constructing {@linkplain RequiresEvent}s.

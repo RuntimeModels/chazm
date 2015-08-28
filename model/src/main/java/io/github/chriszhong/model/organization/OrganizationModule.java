@@ -5,6 +5,7 @@ import io.github.chriszhong.model.organization.event.EventModule;
 import io.github.chriszhong.model.organization.function.FunctionModule;
 import io.github.chriszhong.model.organization.relation.RelationModule;
 import io.github.chriszhong.notification.NotificationModule;
+import io.github.runtimemodels.chazm.Organization;
 
 import com.google.inject.AbstractModule;
 

@@ -1,6 +1,6 @@
 package io.github.chriszhong.model.organization.event;
 
-import io.github.chriszhong.model.organization.entity.Pmf;
+import io.github.runtimemodels.chazm.entity.Pmf;
 
 /**
  * The {@linkplain PmfEventFactory} interface defines the API for constructing {@linkplain PmfEvent}s.

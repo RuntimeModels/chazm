@@ -2,6 +2,7 @@ package io.github.chriszhong.model.organization.id;
 
 import io.github.chriszhong.aop.profiling.DoNotProfile;
 import io.github.chriszhong.aop.validation.DoNotCheck;
+import io.github.runtimemodels.chazm.id.UniqueId;
 
 @DoNotProfile
 @DoNotCheck

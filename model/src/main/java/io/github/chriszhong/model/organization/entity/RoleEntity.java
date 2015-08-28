@@ -1,6 +1,7 @@
 package io.github.chriszhong.model.organization.entity;
 
-import io.github.chriszhong.model.organization.id.UniqueId;
+import io.github.runtimemodels.chazm.entity.Role;
+import io.github.runtimemodels.chazm.id.UniqueId;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;

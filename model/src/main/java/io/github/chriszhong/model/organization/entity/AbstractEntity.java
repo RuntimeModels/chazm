@@ -1,8 +1,8 @@
 package io.github.chriszhong.model.organization.entity;
 
 import io.github.chriszhong.message.M;
-import io.github.chriszhong.model.organization.id.Identifiable;
-import io.github.chriszhong.model.organization.id.UniqueId;
+import io.github.runtimemodels.chazm.id.Identifiable;
+import io.github.runtimemodels.chazm.id.UniqueId;
 
 import javax.validation.constraints.NotNull;
 

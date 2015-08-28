@@ -9,11 +9,12 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
-import io.github.chriszhong.model.organization.entity.Characteristic;
 import io.github.chriszhong.model.organization.entity.CharacteristicFactory;
-import io.github.chriszhong.model.organization.entity.Role;
 import io.github.chriszhong.model.organization.entity.RoleFactory;
 import io.github.chriszhong.model.organization.id.IdFactory;
+import io.github.runtimemodels.chazm.entity.Characteristic;
+import io.github.runtimemodels.chazm.entity.Role;
+import io.github.runtimemodels.chazm.relation.Contains;
 
 import org.junit.Rule;
 import org.junit.Test;

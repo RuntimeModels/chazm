@@ -7,7 +7,7 @@
  */
 package model.organization.ui;
 
-import io.github.chriszhong.model.organization.Organization;
+import io.github.runtimemodels.chazm.Organization;
 
 import java.awt.BorderLayout;
 import java.awt.Container;

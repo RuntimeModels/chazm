@@ -1,6 +1,6 @@
 package io.github.chriszhong.model.organization.event;
 
-import io.github.chriszhong.model.organization.relation.Achieves;
+import io.github.runtimemodels.chazm.relation.Achieves;
 
 /**
  * The {@linkplain AchievesEventFactory} interface defines the API for constructing {@linkplain AchievesEvent}s.
