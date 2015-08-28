@@ -1,7 +1,6 @@
 package io.github.runtimemodels.chazm.function;
 
 import io.github.runtimemodels.chazm.Organization;
-import io.github.runtimemodels.chazm.function.Effectiveness;
 import io.github.runtimemodels.chazm.relation.Assignment;
 
 import java.util.Collection;

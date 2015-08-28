@@ -1,7 +1,6 @@
 package io.github.runtimemodels.chazm;
 
 import io.github.runtimemodels.aop.validation.ValidationModule;
-import io.github.runtimemodels.chazm.Organization;
 import io.github.runtimemodels.chazm.event.EventModule;
 import io.github.runtimemodels.chazm.function.FunctionModule;
 import io.github.runtimemodels.chazm.relation.RelationModule;

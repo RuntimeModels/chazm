@@ -6,7 +6,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
-import io.github.runtimemodels.chazm.validation.Checks;
 import io.github.runtimemodels.message.E;
 
 import org.junit.Rule;

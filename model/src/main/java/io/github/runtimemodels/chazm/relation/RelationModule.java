@@ -1,15 +1,6 @@
 package io.github.runtimemodels.chazm.relation;
 
 import io.github.runtimemodels.chazm.entity.EntityModule;
-import io.github.runtimemodels.chazm.relation.Achieves;
-import io.github.runtimemodels.chazm.relation.Assignment;
-import io.github.runtimemodels.chazm.relation.Contains;
-import io.github.runtimemodels.chazm.relation.Has;
-import io.github.runtimemodels.chazm.relation.Moderates;
-import io.github.runtimemodels.chazm.relation.Needs;
-import io.github.runtimemodels.chazm.relation.Possesses;
-import io.github.runtimemodels.chazm.relation.Requires;
-import io.github.runtimemodels.chazm.relation.Uses;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;

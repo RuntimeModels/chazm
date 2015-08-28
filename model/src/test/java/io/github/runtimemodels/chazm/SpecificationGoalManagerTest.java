@@ -7,8 +7,6 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
-import io.github.runtimemodels.chazm.Organization;
-import io.github.runtimemodels.chazm.OrganizationModule;
 import io.github.runtimemodels.chazm.entity.EntityFactory;
 import io.github.runtimemodels.chazm.entity.SpecificationGoal;
 import io.github.runtimemodels.chazm.id.IdFactory;

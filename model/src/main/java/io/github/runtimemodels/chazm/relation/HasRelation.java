@@ -3,7 +3,6 @@ package io.github.runtimemodels.chazm.relation;
 import io.github.runtimemodels.chazm.entity.Agent;
 import io.github.runtimemodels.chazm.entity.Attribute;
 import io.github.runtimemodels.chazm.entity.Attribute.Type;
-import io.github.runtimemodels.chazm.relation.Has;
 import io.github.runtimemodels.message.E;
 import io.github.runtimemodels.message.M;
 

@@ -1,7 +1,5 @@
 package io.github.runtimemodels.chazm.entity;
 
-import io.github.runtimemodels.chazm.entity.Agent;
-import io.github.runtimemodels.chazm.entity.Policy;
 import io.github.runtimemodels.chazm.id.UniqueId;
 
 /**

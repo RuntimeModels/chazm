@@ -6,8 +6,6 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
-import io.github.runtimemodels.chazm.event.AbstractEvent;
-import io.github.runtimemodels.chazm.event.EventCategory;
 
 import org.junit.Rule;
 import org.junit.Test;

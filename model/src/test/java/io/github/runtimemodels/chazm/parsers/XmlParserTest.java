@@ -22,8 +22,6 @@ import io.github.runtimemodels.chazm.entity.Role;
 import io.github.runtimemodels.chazm.entity.SpecificationGoal;
 import io.github.runtimemodels.chazm.id.IdFactory;
 import io.github.runtimemodels.chazm.id.UniqueId;
-import io.github.runtimemodels.chazm.parsers.ParsersModule;
-import io.github.runtimemodels.chazm.parsers.XmlParser;
 import io.github.runtimemodels.chazm.relation.Assignment;
 import io.github.runtimemodels.message.E;
 

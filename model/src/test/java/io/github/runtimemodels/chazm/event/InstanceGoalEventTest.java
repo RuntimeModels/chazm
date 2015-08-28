@@ -13,10 +13,6 @@ import io.github.runtimemodels.chazm.entity.InstanceGoal;
 import io.github.runtimemodels.chazm.entity.InstanceGoalFactory;
 import io.github.runtimemodels.chazm.entity.SpecificationGoal;
 import io.github.runtimemodels.chazm.entity.SpecificationGoalFactory;
-import io.github.runtimemodels.chazm.event.EventCategory;
-import io.github.runtimemodels.chazm.event.EventModule;
-import io.github.runtimemodels.chazm.event.InstanceGoalEvent;
-import io.github.runtimemodels.chazm.event.InstanceGoalEventFactory;
 import io.github.runtimemodels.chazm.id.IdFactory;
 import io.github.runtimemodels.chazm.relation.RelationModule;
 

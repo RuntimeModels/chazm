@@ -3,7 +3,6 @@ package io.github.runtimemodels.chazm;
 import static io.github.runtimemodels.chazm.event.EventCategory.ADDED;
 import static io.github.runtimemodels.chazm.event.EventCategory.CHANGED;
 import static io.github.runtimemodels.chazm.event.EventCategory.REMOVED;
-import io.github.runtimemodels.chazm.Organization;
 import io.github.runtimemodels.chazm.entity.Agent;
 import io.github.runtimemodels.chazm.entity.Attribute;
 import io.github.runtimemodels.chazm.entity.Capability;

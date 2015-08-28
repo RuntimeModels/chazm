@@ -11,8 +11,6 @@ import io.github.runtimemodels.chazm.entity.EntityFactory;
 import io.github.runtimemodels.chazm.entity.InstanceGoal;
 import io.github.runtimemodels.chazm.entity.Role;
 import io.github.runtimemodels.chazm.entity.SpecificationGoal;
-import io.github.runtimemodels.chazm.function.Effectiveness;
-import io.github.runtimemodels.chazm.function.FunctionModule;
 import io.github.runtimemodels.chazm.id.IdFactory;
 import io.github.runtimemodels.chazm.relation.Assignment;
 import io.github.runtimemodels.chazm.relation.Possesses;
