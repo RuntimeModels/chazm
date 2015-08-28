@@ -1,11 +1,11 @@
 package io.github.runtimemodels.chazm.relation;
 
-import io.github.chriszhong.message.E;
-import io.github.chriszhong.message.M;
 import io.github.runtimemodels.chazm.entity.Agent;
 import io.github.runtimemodels.chazm.entity.Attribute;
 import io.github.runtimemodels.chazm.entity.Attribute.Type;
 import io.github.runtimemodels.chazm.relation.Has;
+import io.github.runtimemodels.message.E;
+import io.github.runtimemodels.message.M;
 
 import java.util.Objects;
 

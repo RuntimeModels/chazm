@@ -1,6 +1,6 @@
 package io.github.runtimemodels.chazm.validation;
 
-import io.github.chriszhong.message.E;
+import io.github.runtimemodels.message.E;
 
 import javax.inject.Singleton;
 

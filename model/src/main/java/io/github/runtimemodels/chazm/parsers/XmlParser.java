@@ -1,7 +1,5 @@
 package io.github.runtimemodels.chazm.parsers;
 
-import io.github.chriszhong.message.E;
-import io.github.chriszhong.message.L;
 import io.github.runtimemodels.chazm.Organization;
 import io.github.runtimemodels.chazm.entity.Agent;
 import io.github.runtimemodels.chazm.entity.Attribute;
@@ -17,6 +15,8 @@ import io.github.runtimemodels.chazm.id.IdFactory;
 import io.github.runtimemodels.chazm.id.UniqueId;
 import io.github.runtimemodels.chazm.relation.Assignment;
 import io.github.runtimemodels.chazm.relation.AssignmentFactory;
+import io.github.runtimemodels.message.E;
+import io.github.runtimemodels.message.L;
 
 import java.io.InputStream;
 import java.util.ArrayList;

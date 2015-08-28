@@ -1,6 +1,6 @@
 package io.github.runtimemodels.chazm.event;
 
-import io.github.chriszhong.message.M;
+import io.github.runtimemodels.message.M;
 
 import java.io.Serializable;
 

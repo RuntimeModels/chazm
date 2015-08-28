@@ -10,7 +10,6 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
-import io.github.chriszhong.message.E;
 import io.github.runtimemodels.chazm.Organization;
 import io.github.runtimemodels.chazm.entity.Agent;
 import io.github.runtimemodels.chazm.entity.Attribute;
@@ -26,6 +25,7 @@ import io.github.runtimemodels.chazm.id.UniqueId;
 import io.github.runtimemodels.chazm.parsers.ParsersModule;
 import io.github.runtimemodels.chazm.parsers.XmlParser;
 import io.github.runtimemodels.chazm.relation.Assignment;
+import io.github.runtimemodels.message.E;
 
 import java.io.InputStream;
 import java.util.HashSet;

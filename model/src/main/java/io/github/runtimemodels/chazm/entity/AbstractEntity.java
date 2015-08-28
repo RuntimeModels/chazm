@@ -1,8 +1,8 @@
 package io.github.runtimemodels.chazm.entity;
 
-import io.github.chriszhong.message.M;
 import io.github.runtimemodels.chazm.id.Identifiable;
 import io.github.runtimemodels.chazm.id.UniqueId;
+import io.github.runtimemodels.message.M;
 
 import javax.validation.constraints.NotNull;
 
