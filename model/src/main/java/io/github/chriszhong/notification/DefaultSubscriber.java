@@ -1,24 +1,24 @@
 package io.github.chriszhong.notification;
 
 import io.github.chriszhong.message.L;
-import io.github.chriszhong.model.organization.event.AchievesEvent;
-import io.github.chriszhong.model.organization.event.AgentEvent;
-import io.github.chriszhong.model.organization.event.AssignmentEvent;
-import io.github.chriszhong.model.organization.event.AttributeEvent;
-import io.github.chriszhong.model.organization.event.CapabilityEvent;
-import io.github.chriszhong.model.organization.event.CharacteristicEvent;
-import io.github.chriszhong.model.organization.event.ContainsEvent;
-import io.github.chriszhong.model.organization.event.HasEvent;
-import io.github.chriszhong.model.organization.event.InstanceGoalEvent;
-import io.github.chriszhong.model.organization.event.ModeratesEvent;
-import io.github.chriszhong.model.organization.event.NeedsEvent;
-import io.github.chriszhong.model.organization.event.PmfEvent;
-import io.github.chriszhong.model.organization.event.PolicyEvent;
-import io.github.chriszhong.model.organization.event.PossessesEvent;
-import io.github.chriszhong.model.organization.event.RequiresEvent;
-import io.github.chriszhong.model.organization.event.RoleEvent;
-import io.github.chriszhong.model.organization.event.SpecificationGoalEvent;
-import io.github.chriszhong.model.organization.event.UsesEvent;
+import io.github.runtimemodels.chazm.event.AchievesEvent;
+import io.github.runtimemodels.chazm.event.AgentEvent;
+import io.github.runtimemodels.chazm.event.AssignmentEvent;
+import io.github.runtimemodels.chazm.event.AttributeEvent;
+import io.github.runtimemodels.chazm.event.CapabilityEvent;
+import io.github.runtimemodels.chazm.event.CharacteristicEvent;
+import io.github.runtimemodels.chazm.event.ContainsEvent;
+import io.github.runtimemodels.chazm.event.HasEvent;
+import io.github.runtimemodels.chazm.event.InstanceGoalEvent;
+import io.github.runtimemodels.chazm.event.ModeratesEvent;
+import io.github.runtimemodels.chazm.event.NeedsEvent;
+import io.github.runtimemodels.chazm.event.PmfEvent;
+import io.github.runtimemodels.chazm.event.PolicyEvent;
+import io.github.runtimemodels.chazm.event.PossessesEvent;
+import io.github.runtimemodels.chazm.event.RequiresEvent;
+import io.github.runtimemodels.chazm.event.RoleEvent;
+import io.github.runtimemodels.chazm.event.SpecificationGoalEvent;
+import io.github.runtimemodels.chazm.event.UsesEvent;
 
 import javax.validation.constraints.NotNull;
 
