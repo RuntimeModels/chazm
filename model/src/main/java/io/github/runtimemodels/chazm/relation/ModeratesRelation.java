@@ -1,9 +1,9 @@
 package io.github.runtimemodels.chazm.relation;
 
-import io.github.chriszhong.message.M;
 import io.github.runtimemodels.chazm.entity.Attribute;
 import io.github.runtimemodels.chazm.entity.Pmf;
 import io.github.runtimemodels.chazm.relation.Moderates;
+import io.github.runtimemodels.message.M;
 
 import java.util.Objects;
 

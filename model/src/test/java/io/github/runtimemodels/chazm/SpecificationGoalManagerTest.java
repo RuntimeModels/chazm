@@ -7,13 +7,13 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
-import io.github.chriszhong.message.E;
 import io.github.runtimemodels.chazm.Organization;
 import io.github.runtimemodels.chazm.OrganizationModule;
 import io.github.runtimemodels.chazm.entity.EntityFactory;
 import io.github.runtimemodels.chazm.entity.SpecificationGoal;
 import io.github.runtimemodels.chazm.id.IdFactory;
 import io.github.runtimemodels.chazm.id.UniqueId;
+import io.github.runtimemodels.message.E;
 
 import org.junit.Rule;
 import org.junit.Test;

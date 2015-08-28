@@ -9,7 +9,6 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
-import io.github.chriszhong.message.E;
 import io.github.runtimemodels.chazm.entity.Agent;
 import io.github.runtimemodels.chazm.entity.AgentFactory;
 import io.github.runtimemodels.chazm.entity.Attribute;
@@ -18,6 +17,7 @@ import io.github.runtimemodels.chazm.id.IdFactory;
 import io.github.runtimemodels.chazm.relation.Has;
 import io.github.runtimemodels.chazm.relation.HasFactory;
 import io.github.runtimemodels.chazm.relation.RelationModule;
+import io.github.runtimemodels.message.E;
 
 import org.junit.Rule;
 import org.junit.Test;
