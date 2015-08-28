@@ -6,9 +6,6 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 import io.github.runtimemodels.message.E;
-import io.github.runtimemodels.notification.Mediator;
-import io.github.runtimemodels.notification.NotificationModule;
-import io.github.runtimemodels.notification.Publisher;
 
 import javax.inject.Provider;
 

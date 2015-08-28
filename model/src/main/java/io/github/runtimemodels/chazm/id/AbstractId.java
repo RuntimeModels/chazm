@@ -1,7 +1,6 @@
 package io.github.runtimemodels.chazm.id;
 
 import static io.github.runtimemodels.chazm.validation.Checks.checkNotNull;
-import io.github.runtimemodels.chazm.id.UniqueId;
 
 import javax.validation.constraints.NotNull;
 

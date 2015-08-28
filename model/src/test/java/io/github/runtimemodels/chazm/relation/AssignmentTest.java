@@ -19,10 +19,6 @@ import io.github.runtimemodels.chazm.entity.SpecificationGoal;
 import io.github.runtimemodels.chazm.entity.SpecificationGoalFactory;
 import io.github.runtimemodels.chazm.id.IdFactory;
 import io.github.runtimemodels.chazm.id.UniqueId;
-import io.github.runtimemodels.chazm.relation.Assignment;
-import io.github.runtimemodels.chazm.relation.AssignmentFactory;
-import io.github.runtimemodels.chazm.relation.AssignmentRelation;
-import io.github.runtimemodels.chazm.relation.RelationModule;
 
 import org.junit.Rule;
 import org.junit.Test;

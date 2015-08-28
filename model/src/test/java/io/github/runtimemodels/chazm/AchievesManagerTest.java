@@ -4,8 +4,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import io.github.runtimemodels.chazm.Organization;
-import io.github.runtimemodels.chazm.OrganizationModule;
 import io.github.runtimemodels.chazm.entity.EntityFactory;
 import io.github.runtimemodels.chazm.entity.Role;
 import io.github.runtimemodels.chazm.entity.SpecificationGoal;

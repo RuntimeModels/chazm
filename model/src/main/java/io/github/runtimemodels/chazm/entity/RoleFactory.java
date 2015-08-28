@@ -1,6 +1,5 @@
 package io.github.runtimemodels.chazm.entity;
 
-import io.github.runtimemodels.chazm.entity.Role;
 import io.github.runtimemodels.chazm.id.UniqueId;
 
 /**

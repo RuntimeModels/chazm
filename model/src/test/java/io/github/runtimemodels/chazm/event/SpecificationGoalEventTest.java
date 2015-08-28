@@ -11,10 +11,6 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 import io.github.runtimemodels.chazm.entity.SpecificationGoal;
 import io.github.runtimemodels.chazm.entity.SpecificationGoalFactory;
-import io.github.runtimemodels.chazm.event.EventCategory;
-import io.github.runtimemodels.chazm.event.EventModule;
-import io.github.runtimemodels.chazm.event.SpecificationGoalEvent;
-import io.github.runtimemodels.chazm.event.SpecificationGoalEventFactory;
 import io.github.runtimemodels.chazm.id.IdFactory;
 import io.github.runtimemodels.chazm.relation.RelationModule;
 

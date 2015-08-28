@@ -14,9 +14,6 @@ import io.github.runtimemodels.chazm.entity.AgentFactory;
 import io.github.runtimemodels.chazm.entity.Capability;
 import io.github.runtimemodels.chazm.entity.CapabilityFactory;
 import io.github.runtimemodels.chazm.id.IdFactory;
-import io.github.runtimemodels.chazm.relation.Possesses;
-import io.github.runtimemodels.chazm.relation.PossessesFactory;
-import io.github.runtimemodels.chazm.relation.RelationModule;
 import io.github.runtimemodels.message.E;
 
 import org.junit.Rule;

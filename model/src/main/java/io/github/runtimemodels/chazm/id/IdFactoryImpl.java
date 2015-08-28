@@ -2,7 +2,6 @@ package io.github.runtimemodels.chazm.id;
 
 import io.github.runtimemodels.aop.profiling.DoNotProfile;
 import io.github.runtimemodels.aop.validation.DoNotCheck;
-import io.github.runtimemodels.chazm.id.UniqueId;
 
 @DoNotProfile
 @DoNotCheck

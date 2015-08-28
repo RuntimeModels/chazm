@@ -11,10 +11,6 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 import io.github.runtimemodels.chazm.entity.Pmf;
 import io.github.runtimemodels.chazm.entity.PmfFactory;
-import io.github.runtimemodels.chazm.event.EventCategory;
-import io.github.runtimemodels.chazm.event.EventModule;
-import io.github.runtimemodels.chazm.event.PmfEvent;
-import io.github.runtimemodels.chazm.event.PmfEventFactory;
 import io.github.runtimemodels.chazm.id.IdFactory;
 import io.github.runtimemodels.chazm.relation.RelationModule;
 

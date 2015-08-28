@@ -1,6 +1,5 @@
 package io.github.runtimemodels.chazm.entity;
 
-import io.github.runtimemodels.chazm.entity.Capability;
 import io.github.runtimemodels.chazm.id.UniqueId;
 
 import javax.inject.Inject;
