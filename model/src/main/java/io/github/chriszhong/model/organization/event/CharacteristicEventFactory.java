@@ -1,6 +1,6 @@
 package io.github.chriszhong.model.organization.event;
 
-import io.github.chriszhong.model.organization.entity.Characteristic;
+import io.github.runtimemodels.chazm.entity.Characteristic;
 
 /**
  * The {@linkplain CharacteristicEventFactory} interface defines the API for constructing {@linkplain CharacteristicEvent}s.

@@ -1,6 +1,7 @@
 package io.github.chriszhong.model.organization.entity;
 
-import io.github.chriszhong.model.organization.id.UniqueId;
+import io.github.runtimemodels.chazm.entity.Agent;
+import io.github.runtimemodels.chazm.id.UniqueId;
 
 /**
  * The {@linkplain AgentFactory} interface defines the APIs for constructing {@linkplain Agent}s.

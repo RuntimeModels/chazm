@@ -1,6 +1,6 @@
 package io.github.chriszhong.model.organization.event;
 
-import io.github.chriszhong.model.organization.relation.Has;
+import io.github.runtimemodels.chazm.relation.Has;
 
 /**
  * The {@linkplain HasEventFactory} interface defines the API for constructing {@linkplain HasEvent}s.

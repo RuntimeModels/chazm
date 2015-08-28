@@ -1,7 +1,8 @@
 package io.github.chriszhong.model.organization.relation;
 
-import io.github.chriszhong.model.organization.entity.Agent;
-import io.github.chriszhong.model.organization.entity.Capability;
+import io.github.runtimemodels.chazm.entity.Agent;
+import io.github.runtimemodels.chazm.entity.Capability;
+import io.github.runtimemodels.chazm.relation.Possesses;
 
 /**
  * The {@linkplain PossessesFactory} interface defines the API for constructing {@linkplain Possesses} relations.

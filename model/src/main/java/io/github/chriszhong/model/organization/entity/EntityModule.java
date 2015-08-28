@@ -1,6 +1,15 @@
 package io.github.chriszhong.model.organization.entity;
 
 import io.github.chriszhong.model.organization.id.IdModule;
+import io.github.runtimemodels.chazm.entity.Agent;
+import io.github.runtimemodels.chazm.entity.Attribute;
+import io.github.runtimemodels.chazm.entity.Capability;
+import io.github.runtimemodels.chazm.entity.Characteristic;
+import io.github.runtimemodels.chazm.entity.InstanceGoal;
+import io.github.runtimemodels.chazm.entity.Pmf;
+import io.github.runtimemodels.chazm.entity.Policy;
+import io.github.runtimemodels.chazm.entity.Role;
+import io.github.runtimemodels.chazm.entity.SpecificationGoal;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;

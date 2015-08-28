@@ -1,8 +1,9 @@
 package io.github.chriszhong.model.organization.relation;
 
-import io.github.chriszhong.model.organization.entity.Agent;
-import io.github.chriszhong.model.organization.entity.InstanceGoal;
-import io.github.chriszhong.model.organization.entity.Role;
+import io.github.runtimemodels.chazm.entity.Agent;
+import io.github.runtimemodels.chazm.entity.InstanceGoal;
+import io.github.runtimemodels.chazm.entity.Role;
+import io.github.runtimemodels.chazm.relation.Assignment;
 
 /**
  * The {@linkplain AssignmentFactory} interface defines the API for constructing {@linkplain Assignment}s.

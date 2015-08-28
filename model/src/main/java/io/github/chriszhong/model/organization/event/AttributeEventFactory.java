@@ -1,6 +1,6 @@
 package io.github.chriszhong.model.organization.event;
 
-import io.github.chriszhong.model.organization.entity.Attribute;
+import io.github.runtimemodels.chazm.entity.Attribute;
 
 /**
  * The {@linkplain AttributeEventFactory} interface defines the API for constructing {@linkplain AttributeEvent}s.

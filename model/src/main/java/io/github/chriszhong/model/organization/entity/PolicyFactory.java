@@ -1,6 +1,8 @@
 package io.github.chriszhong.model.organization.entity;
 
-import io.github.chriszhong.model.organization.id.UniqueId;
+import io.github.runtimemodels.chazm.entity.Agent;
+import io.github.runtimemodels.chazm.entity.Policy;
+import io.github.runtimemodels.chazm.id.UniqueId;
 
 /**
  * The {@linkplain PolicyFactory} interface defines the APIs for constructing {@linkplain Policy}s.

@@ -1,10 +1,10 @@
 package io.github.chriszhong.model.organization.event;
 
 import io.github.chriszhong.message.M;
-import io.github.chriszhong.model.organization.entity.Characteristic;
-import io.github.chriszhong.model.organization.entity.Role;
-import io.github.chriszhong.model.organization.id.UniqueId;
-import io.github.chriszhong.model.organization.relation.Contains;
+import io.github.runtimemodels.chazm.entity.Characteristic;
+import io.github.runtimemodels.chazm.entity.Role;
+import io.github.runtimemodels.chazm.id.UniqueId;
+import io.github.runtimemodels.chazm.relation.Contains;
 
 import java.util.Objects;
 

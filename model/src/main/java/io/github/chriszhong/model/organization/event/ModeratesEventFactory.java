@@ -1,6 +1,6 @@
 package io.github.chriszhong.model.organization.event;
 
-import io.github.chriszhong.model.organization.relation.Moderates;
+import io.github.runtimemodels.chazm.relation.Moderates;
 
 /**
  * The {@linkplain ModeratesEventFactory} interface defines the API for constructing {@linkplain ModeratesEvent}s.

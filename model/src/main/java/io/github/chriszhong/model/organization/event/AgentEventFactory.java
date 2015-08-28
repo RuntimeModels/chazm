@@ -1,6 +1,6 @@
 package io.github.chriszhong.model.organization.event;
 
-import io.github.chriszhong.model.organization.entity.Agent;
+import io.github.runtimemodels.chazm.entity.Agent;
 
 /**
  * The {@linkplain AgentEventFactory} interface defines the API for constructing {@linkplain AgentEvent}s.

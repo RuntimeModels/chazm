@@ -1,6 +1,6 @@
 package io.github.chriszhong.model.organization.event;
 
-import io.github.chriszhong.model.organization.relation.Assignment;
+import io.github.runtimemodels.chazm.relation.Assignment;
 
 /**
  * The {@linkplain AssignmentEventFactory} interface defines the API for constructing {@linkplain AssignmentEvent}s.

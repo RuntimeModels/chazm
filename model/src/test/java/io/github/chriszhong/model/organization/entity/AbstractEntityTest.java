@@ -8,7 +8,8 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 import io.github.chriszhong.model.organization.id.IdFactory;
 import io.github.chriszhong.model.organization.id.IdModule;
-import io.github.chriszhong.model.organization.id.UniqueId;
+import io.github.runtimemodels.chazm.entity.Agent;
+import io.github.runtimemodels.chazm.id.UniqueId;
 
 import org.junit.Rule;
 import org.junit.Test;

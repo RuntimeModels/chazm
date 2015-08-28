@@ -1,11 +1,12 @@
 package io.github.chriszhong.model.organization.relation;
 
 import io.github.chriszhong.message.M;
-import io.github.chriszhong.model.organization.entity.Agent;
-import io.github.chriszhong.model.organization.entity.InstanceGoal;
-import io.github.chriszhong.model.organization.entity.Role;
 import io.github.chriszhong.model.organization.id.AbstractId;
-import io.github.chriszhong.model.organization.id.UniqueId;
+import io.github.runtimemodels.chazm.entity.Agent;
+import io.github.runtimemodels.chazm.entity.InstanceGoal;
+import io.github.runtimemodels.chazm.entity.Role;
+import io.github.runtimemodels.chazm.id.UniqueId;
+import io.github.runtimemodels.chazm.relation.Assignment;
 
 import java.util.Objects;
 

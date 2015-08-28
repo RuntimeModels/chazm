@@ -9,14 +9,14 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
-import io.github.chriszhong.model.organization.entity.Pmf;
 import io.github.chriszhong.model.organization.entity.PmfFactory;
-import io.github.chriszhong.model.organization.entity.Role;
 import io.github.chriszhong.model.organization.entity.RoleFactory;
 import io.github.chriszhong.model.organization.id.IdFactory;
 import io.github.chriszhong.model.organization.relation.RelationModule;
-import io.github.chriszhong.model.organization.relation.Uses;
 import io.github.chriszhong.model.organization.relation.UsesFactory;
+import io.github.runtimemodels.chazm.entity.Pmf;
+import io.github.runtimemodels.chazm.entity.Role;
+import io.github.runtimemodels.chazm.relation.Uses;
 
 import org.junit.Rule;
 import org.junit.Test;

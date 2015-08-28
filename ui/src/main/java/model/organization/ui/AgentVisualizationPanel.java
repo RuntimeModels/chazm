@@ -7,8 +7,8 @@
  */
 package model.organization.ui;
 
-import io.github.chriszhong.model.organization.Organization;
-import io.github.chriszhong.model.organization.entity.Agent;
+import io.github.runtimemodels.chazm.Organization;
+import io.github.runtimemodels.chazm.entity.Agent;
 
 import java.util.ArrayList;
 import java.util.Collections;

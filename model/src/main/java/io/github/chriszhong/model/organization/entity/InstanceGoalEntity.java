@@ -1,7 +1,9 @@
 package io.github.chriszhong.model.organization.entity;
 
 import io.github.chriszhong.message.M;
-import io.github.chriszhong.model.organization.id.UniqueId;
+import io.github.runtimemodels.chazm.entity.InstanceGoal;
+import io.github.runtimemodels.chazm.entity.SpecificationGoal;
+import io.github.runtimemodels.chazm.id.UniqueId;
 
 import java.util.Objects;
 

@@ -1,7 +1,0 @@
-include 'organization-model-api', 'organization-model-model', 'organization-model-ui'
-
-rootProject.name='organization-model'
-
-project(':organization-model-api').projectDir=file('api')
-project(':organization-model-model').projectDir=file('model')
-project(':organization-model-ui').projectDir=file('ui')

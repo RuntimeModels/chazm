@@ -1,8 +1,9 @@
 package io.github.chriszhong.model.organization.relation;
 
 import io.github.chriszhong.message.M;
-import io.github.chriszhong.model.organization.entity.Capability;
-import io.github.chriszhong.model.organization.entity.Role;
+import io.github.runtimemodels.chazm.entity.Capability;
+import io.github.runtimemodels.chazm.entity.Role;
+import io.github.runtimemodels.chazm.relation.Requires;
 
 import java.util.Objects;
 

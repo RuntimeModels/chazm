@@ -1,6 +1,6 @@
 package io.github.chriszhong.model.organization.event;
 
-import io.github.chriszhong.model.organization.entity.SpecificationGoal;
+import io.github.runtimemodels.chazm.entity.SpecificationGoal;
 
 /**
  * The {@linkplain SpecificationGoalEventFactory} interface defines the API for constructing {@linkplain SpecificationGoalEvent}s.

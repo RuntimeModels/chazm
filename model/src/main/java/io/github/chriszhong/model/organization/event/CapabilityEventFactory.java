@@ -1,6 +1,6 @@
 package io.github.chriszhong.model.organization.event;
 
-import io.github.chriszhong.model.organization.entity.Capability;
+import io.github.runtimemodels.chazm.entity.Capability;
 
 /**
  * The {@linkplain CapabilityEventFactory} interface defines the API for constructing {@linkplain CapabilityEvent}s.

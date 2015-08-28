@@ -2,8 +2,9 @@ package io.github.chriszhong.model.organization.relation;
 
 import io.github.chriszhong.message.E;
 import io.github.chriszhong.message.M;
-import io.github.chriszhong.model.organization.entity.Agent;
-import io.github.chriszhong.model.organization.entity.Capability;
+import io.github.runtimemodels.chazm.entity.Agent;
+import io.github.runtimemodels.chazm.entity.Capability;
+import io.github.runtimemodels.chazm.relation.Possesses;
 
 import java.util.Objects;
 

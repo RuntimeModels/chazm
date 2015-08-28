@@ -1,6 +1,6 @@
 package io.github.chriszhong.model.organization.event;
 
-import io.github.chriszhong.model.organization.relation.Possesses;
+import io.github.runtimemodels.chazm.relation.Possesses;
 
 /**
  * The {@linkplain PossessesEventFactory} interface defines the API for constructing {@linkplain PossessesEvent}s.
