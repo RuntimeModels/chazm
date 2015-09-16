@@ -10,6 +10,10 @@ cache:
     - '$HOME/.gradle/wrapper' # cache the gradle wrapper directory
     - '$HOME/.m2/repository' # cache the maven artifacts
 
+notifications:
+  slack:
+    secure: UITKekk5L3PSJCkakLT1uVhDfJnJ1bY0NG07lEcAWa4OaMAt8G2bjRYrZZFa7eXFerOe3tamowTznWcZ1LYjSPGoBHO1Yd6wBBFfvpAtVA653jG9gPpGVSD8WmCwgzsR6ohrd8pTMI2cq8qohl3itmcSXwquupE1NCx/eG/66tg=
+
 env:
   global:
    # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
