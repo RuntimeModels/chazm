@@ -30,8 +30,8 @@ This project is based on my PhD work at Kansas State University. It is a runtime
 * Repo owner or admin
 * Other community or team contact
 
-[ci-img]: https://travis-ci.org/ChrisZhong/organization-model.svg?branch=master
-[ci-lnk]: https://travis-ci.org/ChrisZhong/organization-model
+[ci-img]: https://travis-ci.org/RuntimeModels/chazm.svg?branch=master
+[ci-lnk]: https://travis-ci.org/RuntimeModels/chazm
 [co-img]: https://coveralls.io/repos/ChrisZhong/organization-model/badge.svg
 [co-lnk]: https://coveralls.io/r/ChrisZhong/organization-model
 [cv-img]: https://scan.coverity.com/projects/6071/badge.svg
