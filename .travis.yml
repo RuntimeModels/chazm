@@ -19,12 +19,12 @@ env:
 addons:
   coverity_scan:
     project:
-      name: "ChrisZhong/organization-model"
+      name: "RuntimeModels/chazm"
       description: "Build submitted via Travis CI"
     notification_email:
       secure: G1Nt+8sR0VZQmtX6hHtzr0B+gp6u8Mfxmgql4Vj6EbF/CiYH+0aD1c0bD6mAAf0Q/5kVOSnOSoRLhXi0/yPH7uj7fyzVW9CZm1AlrGFDQXP7GmXvQGpHjvQNjGON41xHRyeY5k2ja4AuWHOGHvi345ygmzk5FNIL9ZFpazXKQng=
     build_command_prepend: "./gradlew clean"
-    build_command:   "./gradlew assemble"
+    build_command: "./gradlew assemble"
     branch_pattern: coverity_scan
 
 before_install:
