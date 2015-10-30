@@ -1,0 +1,7 @@
+engines:
+  fixme:
+    enabled: true
+ratings:
+  paths:
+  - "api/src/main/java/**/*.java
+exclude_paths: []
