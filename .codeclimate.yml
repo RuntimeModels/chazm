@@ -8,5 +8,8 @@ ratings:
 exclude_paths:
 - "**/*.gradle"
 - "*.md"
-- "api/src/test/java/**/*"
-- "model/src/test/java/**/*"
+- "circle.yml"
+- "gradle/wrapper/*"
+- "api/src/test/**/*"
+- "model/src/test/**/*"
+- "ui/src/test/**/*"
