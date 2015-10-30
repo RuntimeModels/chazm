@@ -6,4 +6,7 @@ ratings:
   - "api/src/main/java/**/*.java"
   - "model/src/main/java/**/*.java"
 exclude_paths:
-  - "build.gradle"
+- "**/*.gradle"
+- "*.md"
+- "api/src/test/java/**/*"
+- "model/src/test/java/**/*"
