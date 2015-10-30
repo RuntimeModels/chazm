@@ -14,5 +14,6 @@ exclude_paths:
 - "gradlew.bat"
 - "gradle/wrapper/*"
 - "api/src/test/**/*"
+- "model/src/main/resources/*"
 - "model/src/test/**/*"
 - "ui/src/test/**/*"
