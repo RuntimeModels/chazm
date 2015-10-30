@@ -4,4 +4,6 @@ engines:
 ratings:
   paths:
   - "api/src/main/java/**/*.java"
-exclude_paths: []
+  - "model/src/main/java/**/*.java"
+exclude_paths:
+  - "build.gradle"
