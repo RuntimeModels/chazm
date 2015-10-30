@@ -5,10 +5,13 @@ ratings:
   paths:
   - "api/src/main/java/**/*.java"
   - "model/src/main/java/**/*.java"
+  - "ui/src/main/java/**/*.java"
 exclude_paths:
 - "**/*.gradle"
 - "*.md"
 - "circle.yml"
+- "gradlew"
+- "gradlew.bat"
 - "gradle/wrapper/*"
 - "api/src/test/**/*"
 - "model/src/test/**/*"
