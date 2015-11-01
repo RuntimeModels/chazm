@@ -50,13 +50,7 @@ public class AssignmentEventTest {
 		final Agent aa = agf.buildAgent(idf.build(Agent.class, "aa"), new Agent.ContactInfo() {});
 		final Role r = rf.buildRole(idf.build(Role.class, "r"));
 		final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
-		final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = 4555321588208570740L;
-		});
+		final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
 		final Assignment a = af.buildAssignment(aa, r, ig);
 		final AssignmentEvent ae1 = aef.build(EventCategory.ADDED, a);
 		final AssignmentEvent ae2 = aef.build(EventCategory.ADDED, a);
@@ -86,13 +80,7 @@ public class AssignmentEventTest {
 		final Agent aa = agf.buildAgent(idf.build(Agent.class, "aa"), new Agent.ContactInfo() {});
 		final Role r = rf.buildRole(idf.build(Role.class, "r"));
 		final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
-		final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = -2655425177027076252L;
-		});
+		final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
 		final Assignment a = af.buildAssignment(aa, r, ig);
 		final AssignmentEvent ae = aef.build(EventCategory.ADDED, a);
 
@@ -104,13 +92,7 @@ public class AssignmentEventTest {
 		final Agent aa = agf.buildAgent(idf.build(Agent.class, "aa"), new Agent.ContactInfo() {});
 		final Role r = rf.buildRole(idf.build(Role.class, "r"));
 		final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
-		final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = -4843772475208669038L;
-		});
+		final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
 		final Assignment a = af.buildAssignment(aa, r, ig);
 		final AssignmentEvent ae = aef.build(EventCategory.ADDED, a);
 
@@ -122,13 +104,7 @@ public class AssignmentEventTest {
 		final Agent aa = agf.buildAgent(idf.build(Agent.class, "aa"), new Agent.ContactInfo() {});
 		final Role r = rf.buildRole(idf.build(Role.class, "r"));
 		final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
-		final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = 1441325266785662702L;
-		});
+		final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
 		final Assignment a = af.buildAssignment(aa, r, ig);
 		final AssignmentEvent ae = aef.build(EventCategory.ADDED, a);
 
@@ -141,13 +117,7 @@ public class AssignmentEventTest {
 		final Role r1 = rf.buildRole(idf.build(Role.class, "r1"));
 		final Role r2 = rf.buildRole(idf.build(Role.class, "r2"));
 		final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
-		final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = -3978773697809254587L;
-		});
+		final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
 		final Assignment a1 = af.buildAssignment(aa, r1, ig);
 		final Assignment a2 = af.buildAssignment(aa, r2, ig);
 		final Assignment a3 = af.buildAssignment(aa, r1, ig);
@@ -166,13 +136,7 @@ public class AssignmentEventTest {
 		final Role r1 = rf.buildRole(idf.build(Role.class, "r1"));
 		final Role r2 = rf.buildRole(idf.build(Role.class, "r2"));
 		final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
-		final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = -3073103630440762487L;
-		});
+		final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
 		final Assignment a1 = af.buildAssignment(aa, r1, ig);
 		final Assignment a2 = af.buildAssignment(aa, r2, ig);
 		final Assignment a3 = af.buildAssignment(aa, r1, ig);
@@ -190,13 +154,7 @@ public class AssignmentEventTest {
 		final Role r1 = rf.buildRole(idf.build(Role.class, "r1"));
 		final Role r2 = rf.buildRole(idf.build(Role.class, "r2"));
 		final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
-		final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = -6135101209843296571L;
-		});
+		final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
 		final Assignment a1 = af.buildAssignment(aa, r1, ig);
 		final Assignment a2 = af.buildAssignment(aa, r2, ig);
 		final Assignment a3 = af.buildAssignment(aa, r1, ig);

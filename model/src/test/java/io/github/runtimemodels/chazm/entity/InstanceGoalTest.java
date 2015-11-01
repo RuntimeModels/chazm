@@ -35,20 +35,8 @@ public class InstanceGoalTest {
 	public void testInstanceGoal() {
 		final SpecificationGoal sg1 = specificationGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, 1L));
 		final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
-		final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = -4197703138761537728L;
-		});
-		final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = 3595688030432069686L;
-		});
+		final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new InstanceGoal.Parameter() {});
+		final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new InstanceGoal.Parameter() {});
 
 		assertThat(g1, is(not(nullValue())));
 		assertThat(g1, is(not(sameInstance(g2))));
@@ -94,20 +82,8 @@ public class InstanceGoalTest {
 
 		final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
 		final UniqueId<InstanceGoal> i2 = idFactory.build(InstanceGoal.class, 2L);
-		final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, y1, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = -6032175871959910195L;
-		});
-		final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i2, y2, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = -7554679818010734466L;
-		});
+		final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, y1, new InstanceGoal.Parameter() {});
+		final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i2, y2, new InstanceGoal.Parameter() {});
 
 		assertThat(g1.getGoal(), is(sameInstance(y1)));
 		assertThat(g1.getGoal(), is(not(sameInstance(y2))));
@@ -120,13 +96,7 @@ public class InstanceGoalTest {
 		final SpecificationGoal y1 = specificationGoalFactory.buildSpecificationGoal(x1);
 
 		final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
-		final InstanceGoal.Parameter p1 = new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = -8141795325718379990L;
-		};
+		final InstanceGoal.Parameter p1 = new InstanceGoal.Parameter() {};
 		final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, y1, p1);
 
 		assertThat(g1.getParameter(), is(sameInstance(p1)));
@@ -141,20 +111,8 @@ public class InstanceGoalTest {
 
 		final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
 		final UniqueId<InstanceGoal> i2 = idFactory.build(InstanceGoal.class, 1L);
-		final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, y1, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = 3993998020497509870L;
-		});
-		final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i2, y2, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = 6961400047324866158L;
-		});
+		final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, y1, new InstanceGoal.Parameter() {});
+		final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i2, y2, new InstanceGoal.Parameter() {});
 
 		assertThat(g1.getId(), is(sameInstance(i1)));
 		assertThat(g1.getId(), is(not(sameInstance(g2.getId()))));
@@ -165,27 +123,9 @@ public class InstanceGoalTest {
 		final SpecificationGoal sg1 = specificationGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, 1L));
 		final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
 		final UniqueId<InstanceGoal> i2 = idFactory.build(InstanceGoal.class, 2L);
-		final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = -3177675816624392348L;
-		});
-		final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i2, sg1, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = 3147404650408810902L;
-		});
-		final InstanceGoal g3 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = 7169808283452391772L;
-		});
+		final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new InstanceGoal.Parameter() {});
+		final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i2, sg1, new InstanceGoal.Parameter() {});
+		final InstanceGoal g3 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new InstanceGoal.Parameter() {});
 
 		assertThat(g1, is(not(equalTo(g2))));
 		assertThat(g1, is(equalTo(g3)));
@@ -197,27 +137,9 @@ public class InstanceGoalTest {
 		final SpecificationGoal sg1 = specificationGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, 1L));
 		final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
 		final UniqueId<InstanceGoal> i2 = idFactory.build(InstanceGoal.class, 2L);
-		final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = 9133728184497490995L;
-		});
-		final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i2, sg1, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = 2025383779917974507L;
-		});
-		final InstanceGoal g3 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = 4236923982632963238L;
-		});
+		final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new InstanceGoal.Parameter() {});
+		final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i2, sg1, new InstanceGoal.Parameter() {});
+		final InstanceGoal g3 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new InstanceGoal.Parameter() {});
 
 		assertThat(g1.hashCode(), is(not(equalTo(g2.hashCode()))));
 		assertThat(g1.hashCode(), is(equalTo(g3.hashCode())));
@@ -228,13 +150,7 @@ public class InstanceGoalTest {
 		final SpecificationGoal sg1 = specificationGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, 1L));
 		final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
 		final UniqueId<InstanceGoal> i2 = idFactory.build(InstanceGoal.class, 2L);
-		final InstanceGoal.Parameter p1 = new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = 994958743934580075L;
-		};
+		final InstanceGoal.Parameter p1 = new InstanceGoal.Parameter() {};
 		final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, sg1, p1);
 		final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i2, sg1, p1);
 		final InstanceGoal g3 = instanceGoalFactory.buildInstanceGoal(i1, sg1, p1);
