@@ -45,20 +45,8 @@ public class EffectivenessTest {
 		final Agent a2 = entityFactory.buildAgent(idFactory.build(Agent.class, "a2"), new Agent.ContactInfo() {});
 		final Role r = entityFactory.buildRole(idFactory.build(Role.class, "r"));
 		final SpecificationGoal sg = entityFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
-		final InstanceGoal ig1 = entityFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig1"), sg, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = 8621881241737923070L;
-		});
-		final InstanceGoal ig2 = entityFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig2"), sg, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = -8752674294887950891L;
-		});
+		final InstanceGoal ig1 = entityFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig1"), sg, new InstanceGoal.Parameter() {});
+		final InstanceGoal ig2 = entityFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig2"), sg, new InstanceGoal.Parameter() {});
 		final Capability c1 = entityFactory.buildCapability(idFactory.build(Capability.class, "c1"));
 		final Capability c2 = entityFactory.buildCapability(idFactory.build(Capability.class, "c2"));
 		final Assignment as1 = relationFactory.buildAssignment(a1, r, ig1);

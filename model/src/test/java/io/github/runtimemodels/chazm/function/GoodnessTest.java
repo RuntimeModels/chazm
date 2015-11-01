@@ -44,13 +44,7 @@ public class GoodnessTest {
 		final Agent a = entityFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
 		final Role r = entityFactory.buildRole(idFactory.build(Role.class, "r"));
 		final SpecificationGoal sg = entityFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
-		final InstanceGoal ig = entityFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = -7033655330102541503L;
-		});
+		final InstanceGoal ig = entityFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
 		final Capability c1 = entityFactory.buildCapability(idFactory.build(Capability.class, "c1"));
 		final Capability c2 = entityFactory.buildCapability(idFactory.build(Capability.class, "c2"));
 		final Attribute t = entityFactory.buildAttribute(idFactory.build(Attribute.class, "t"), Attribute.Type.NEGATIVE_QUALITY);
@@ -137,13 +131,7 @@ public class GoodnessTest {
 		final Agent a = entityFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
 		final Role r = entityFactory.buildRole(idFactory.build(Role.class, "r"));
 		final SpecificationGoal sg = entityFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
-		final InstanceGoal ig = entityFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = 7707264399965671930L;
-		});
+		final InstanceGoal ig = entityFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
 
 		exception.expect(IllegalArgumentException.class);
 		exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg4", "compute")));

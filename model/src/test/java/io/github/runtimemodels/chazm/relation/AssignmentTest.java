@@ -47,13 +47,7 @@ public class AssignmentTest {
 		final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
 		final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
 		final SpecificationGoal sg = specGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
-		final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = 2258665680559310607L;
-		});
+		final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
 		final Assignment a1 = assignmentFactory.buildAssignment(a, r, ig);
 		final Assignment a2 = assignmentFactory.buildAssignment(a, r, ig);
 
@@ -95,13 +89,7 @@ public class AssignmentTest {
 		final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
 		final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
 		final SpecificationGoal sg = specGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
-		final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = 2402225605177079546L;
-		});
+		final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
 		final Assignment as = assignmentFactory.buildAssignment(a, r, ig);
 
 		assertThat(as.getId(), is(not(nullValue())));
@@ -112,13 +100,7 @@ public class AssignmentTest {
 		final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
 		final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
 		final SpecificationGoal sg = specGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
-		final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = 2797717143623840677L;
-		});
+		final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
 		final Assignment as = assignmentFactory.buildAssignment(a, r, ig);
 
 		assertThat(as.getAgent(), is(sameInstance(a)));
@@ -130,13 +112,7 @@ public class AssignmentTest {
 		final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
 		final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
 		final SpecificationGoal sg = specGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
-		final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = -6195575726387233588L;
-		});
+		final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
 		final Assignment as = assignmentFactory.buildAssignment(a, r, ig);
 
 		assertThat(as.getRole(), is(sameInstance(r)));
@@ -147,13 +123,7 @@ public class AssignmentTest {
 		final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
 		final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
 		final SpecificationGoal sg = specGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
-		final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = -6525144507554869052L;
-		});
+		final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
 		final Assignment as = assignmentFactory.buildAssignment(a, r, ig);
 
 		assertThat(as.getGoal(), is(sameInstance(ig)));
@@ -165,13 +135,7 @@ public class AssignmentTest {
 		final Role r1 = roleFactory.buildRole(idFactory.build(Role.class, "r1"));
 		final Role r2 = roleFactory.buildRole(idFactory.build(Role.class, "r2"));
 		final SpecificationGoal sg = specGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
-		final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = 4350304843927759871L;
-		});
+		final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
 		final Assignment a1 = assignmentFactory.buildAssignment(a, r1, ig);
 		final Assignment a2 = assignmentFactory.buildAssignment(a, r2, ig);
 		final Assignment a3 = assignmentFactory.buildAssignment(a, r1, ig);
@@ -187,13 +151,7 @@ public class AssignmentTest {
 		final Role r1 = roleFactory.buildRole(idFactory.build(Role.class, "r1"));
 		final Role r2 = roleFactory.buildRole(idFactory.build(Role.class, "r2"));
 		final SpecificationGoal sg = specGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
-		final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = 1887845516175233316L;
-		});
+		final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
 		final Assignment a1 = assignmentFactory.buildAssignment(a, r1, ig);
 		final Assignment a2 = assignmentFactory.buildAssignment(a, r2, ig);
 		final Assignment a3 = assignmentFactory.buildAssignment(a, r1, ig);
@@ -208,13 +166,7 @@ public class AssignmentTest {
 		final Role r1 = roleFactory.buildRole(idFactory.build(Role.class, "r1"));
 		final Role r2 = roleFactory.buildRole(idFactory.build(Role.class, "r2"));
 		final SpecificationGoal sg = specGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
-		final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
-
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = 5422764931294061873L;
-		});
+		final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
 		final Assignment a1 = assignmentFactory.buildAssignment(a, r1, ig);
 		final Assignment a2 = assignmentFactory.buildAssignment(a, r2, ig);
 		final Assignment a3 = assignmentFactory.buildAssignment(a, r1, ig);
