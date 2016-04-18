@@ -40,6 +40,9 @@ install:
 script:
   - ./gradlew check jacocoTestReport # perform tests and compile jacoco test reports
 
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
 before_cache:
   - find $HOME/.gradle/caches -name "*.lock" -type f -print0 -delete
   
