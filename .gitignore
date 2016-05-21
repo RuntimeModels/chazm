@@ -1,11 +1,21 @@
-.DS_Store
-.refactorings
-.settings
-bin
-target
-xtend-gen
-.gradle
+# Java artifacts
+*.class
 
-build
+# Gradle artifacts
+build/
+.gradle/
+
+# Eclipse artifacts
+bin/
 .classpath
 .project
+.refactorings/
+.settings/
+
+# Idea artifacts
+.idea/
+*.iml
+
+# OSX artifacts
+.DS_Store/
+
