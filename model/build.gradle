@@ -1,17 +1,10 @@
 dependencies {
 	compile project(":${rootProject.name}-api")
-	compile "org.slf4j:slf4j-api:${slf4j_version}"
-	compile "javax:javaee-api:${javaee_version}"
-	compile "com.google.inject:guice:${guice_version}"
-	compile "com.google.inject.extensions:guice-assistedinject:${guice_version}"
-	testCompile "junit:junit:${junit_version}"
-	testCompile "org.jmockit:jmockit:${jmockit_version}"
-}
-publishing {
-	publications {
-		main(MavenPublication) {
-			from components.java
-			artifact sourceJar
-		}
-	}
+	compile 'org.slf4j:slf4j-api'
+	compile 'javax:javaee-api'
+	compile 'com.google.inject:guice'
+	compile 'com.google.inject.extensions:guice-assistedinject'
+
+	testCompile 'junit:junit'
+	testCompile 'org.jmockit:jmockit'
 }
