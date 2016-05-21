@@ -1,96 +1,93 @@
+plugins {
+    id 'eclipse'
+    id 'idea'
+    id 'com.github.kt3k.coveralls' version '2.6.3'
+}
+repositories {
+    jcenter()
+}
 allprojects {
-	apply plugin: 'eclipse'
-	apply plugin: 'idea'
-	apply plugin: 'jacoco'
+    apply plugin: 'eclipse'
+    apply plugin: 'idea'
+    apply plugin: 'jacoco'
 
-	repositories {
-		jcenter()
-	}
 
-	jacoco {
-		toolVersion = '0.7.5.201505241946'
-	}
+    jacoco {
+        toolVersion = '0.7.5.201505241946'
+    }
 
 }
 
 subprojects {
-	apply plugin: 'java'
-	apply plugin: 'maven-publish'
+    apply plugin: 'java'
+    apply plugin: 'maven-publish'
 
-	sourceCompatibility = '1.8'
+    sourceCompatibility = '1.8'
 
-	group 'model'
-	version '7.0.0'
+    group 'model'
+    version '7.0.0'
 
-	jacocoTestReport {
-		dependsOn test
-		reports {
-			html.enabled true
-			xml.enabled true
-			csv.enabled false
-		}
-	}
+    jacocoTestReport {
+        dependsOn test
+        reports {
+            html.enabled true
+            xml.enabled true
+            csv.enabled false
+        }
+    }
 
-	test {
-		maxParallelForks = 2
-		forkEvery = 150
-	}
+    test {
+        maxParallelForks = 2
+        forkEvery = 150
+    }
 
-	task sourceJar(type: Jar) {
-		classifier 'sources'
-		from sourceSets.main.allJava
-	}
+    task sourceJar(type: Jar) {
+        classifier 'sources'
+        from sourceSets.main.allJava
+    }
 
-	artifacts {
-		runtime sourceJar
-	}
+    artifacts {
+        runtime sourceJar
+    }
 }
 
 apply plugin: 'base'
 apply plugin: 'com.github.kt3k.coveralls'
 
-buildscript {
-	repositories {
-		jcenter()
-	}
-
-	dependencies {
-		classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.3.1'
-	}
-}
 
 coveralls {
-	sourceDirs = subprojects.sourceSets.main.java.srcDirs.flatten()
-	jacocoReportPath = "${buildDir}/reports/jacoco/jacocoReports/jacocoReports.xml"
+    sourceDirs = subprojects.sourceSets.main.java.srcDirs.flatten()
+    jacocoReportPath = "${buildDir}/reports/jacoco/jacocoReports/jacocoReports.xml"
 }
 
 
 task jacocoReports(type: JacocoReport) {
-	dependsOn subprojects.jacocoTestReport
+    dependsOn subprojects.jacocoTestReport
 
-	sourceDirectories = files(subprojects.sourceSets.main.java.srcDirs)
-	classDirectories = files(subprojects.sourceSets.main.output.classesDir)
-	executionData = files(files(subprojects.jacocoTestReport.executionData).findAll { it.exists() })
+    sourceDirectories = files(subprojects.sourceSets.main.java.srcDirs)
+    classDirectories = files(subprojects.sourceSets.main.output.classesDir)
+    executionData = files(files(subprojects.jacocoTestReport.executionData).findAll { it.exists() })
 
-	reports {
-		html.enabled true
-		xml.enabled true
-		csv.enabled false
-	}
+    reports {
+        html.enabled true
+        xml.enabled true
+        csv.enabled false
+    }
 }
 
 tasks.coveralls {
-	dependsOn jacocoReports
+    dependsOn jacocoReports
 }
 
 ext {
-	slf4j_version = '1.7.12'
-	javaee_version = '7.0'
-	guice_version = '4.0'
-	junit_version = '4.12'
-	jmockit_version = '1.18'
+    slf4j_version = '1.7.12'
+    javaee_version = '7.0'
+    guice_version = '4.0'
+    junit_version = '4.12'
+    jmockit_version = '1.18'
 }
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '2.7'
+    gradleVersion = '2.13'
+    distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
 }
