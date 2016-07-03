@@ -12,15 +12,13 @@ import io.github.runtimemodels.chazm.entity.Pmf;
 @FunctionalInterface
 public interface ModeratesFactory {
 
-	/**
-	 * Constructs a {@linkplain Moderates}.
-	 *
-	 * @param pmf
-	 *            the {@linkplain Pmf} of the {@linkplain Moderates}.
-	 * @param attribute
-	 *            the {@linkplain Attribute} of the {@linkplain Moderates}.
-	 * @return a {@linkplain Moderates}.
-	 */
-	Moderates buildModerates(Pmf pmf, Attribute attribute);
+    /**
+     * Constructs a {@linkplain Moderates}.
+     *
+     * @param pmf       the {@linkplain Pmf} of the {@linkplain Moderates}.
+     * @param attribute the {@linkplain Attribute} of the {@linkplain Moderates}.
+     * @return a {@linkplain Moderates}.
+     */
+    Moderates buildModerates(Pmf pmf, Attribute attribute);
 
 }

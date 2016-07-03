@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- invalid value in the 'score' attribute of the 'possesses' element -->
 <RoleDiagram>
-	<Agent id="15cf816f-fcde-4e5e-8758-e004f48e4ee3" name="Agent 1">
-		<possesses score="a">
-			<child>b28db440-e1cf-4a75-9d37-dad779323bc5</child>
-		</possesses>
-	</Agent>
-	<Capability id="b28db440-e1cf-4a75-9d37-dad779323bc5" name="Capability 1" />
+    <Agent id="15cf816f-fcde-4e5e-8758-e004f48e4ee3" name="Agent 1">
+        <possesses score="a">
+            <child>b28db440-e1cf-4a75-9d37-dad779323bc5</child>
+        </possesses>
+    </Agent>
+    <Capability id="b28db440-e1cf-4a75-9d37-dad779323bc5" name="Capability 1"/>
 </RoleDiagram>

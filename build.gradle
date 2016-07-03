@@ -1,5 +1,7 @@
 buildscript {
-    repositories { jcenter() }
+    repositories {
+        jcenter()
+    }
 
     dependencies {
         classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.6.3'
@@ -13,10 +15,8 @@ allprojects {
     apply plugin: 'jacoco'
     apply plugin: 'com.github.kt3k.coveralls'
 
-    repositories { jcenter() }
-
-    jacoco {
-        toolVersion = '0.7.5.201505241946'
+    repositories {
+        jcenter()
     }
 }
 
@@ -43,11 +43,17 @@ subprojects {
     }
 
     jacocoTestReport {
-        dependsOn test
+        dependsOn check
         reports {
-            html.enabled true
-            xml.enabled true
-            csv.enabled false
+            html {
+                enabled true
+            }
+            xml {
+                enabled true
+            }
+            csv {
+                enabled false
+            }
         }
     }
 
@@ -56,7 +62,9 @@ subprojects {
         from sourceSets.main.allJava
     }
 
-    artifacts { runtime sourceJar }
+    artifacts {
+        runtime sourceJar
+    }
 
     publishing {
         publications {
@@ -66,7 +74,6 @@ subprojects {
             }
         }
     }
-
 }
 
 coveralls {
@@ -74,7 +81,7 @@ coveralls {
     jacocoReportPath = "${buildDir}/reports/jacoco/jacocoReports/jacocoReports.xml"
 }
 
-task jacocoReports(type: JacocoReport) {
+task jacocoTestReports(type: JacocoReport) {
     dependsOn subprojects.jacocoTestReport
 
     sourceDirectories = files(subprojects.sourceSets.main.java.srcDirs)
@@ -82,15 +89,23 @@ task jacocoReports(type: JacocoReport) {
     executionData = files(files(subprojects.jacocoTestReport.executionData).findAll { it.exists() })
 
     reports {
-        html.enabled true
-        xml.enabled true
-        csv.enabled false
+        html {
+            enabled true
+        }
+        xml {
+            enabled true
+        }
+        csv {
+            enabled false
+        }
     }
 }
 
-tasks.coveralls { dependsOn jacocoReports }
+tasks.coveralls {
+    dependsOn jacocoTestReports
+}
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.13'
+    gradleVersion = '2.14'
     distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
 }

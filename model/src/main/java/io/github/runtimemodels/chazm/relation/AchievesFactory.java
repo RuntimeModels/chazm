@@ -12,15 +12,13 @@ import io.github.runtimemodels.chazm.entity.SpecificationGoal;
 @FunctionalInterface
 public interface AchievesFactory {
 
-	/**
-	 * Constructs an {@linkplain Achieves}.
-	 *
-	 * @param role
-	 *            the {@linkplain Role} of the {@linkplain Achieves}.
-	 * @param goal
-	 *            the {@linkplain Achieves} of the {@linkplain Achieves}.
-	 * @return an {@linkplain Achieves}.
-	 */
-	Achieves buildAchieves(Role role, SpecificationGoal goal);
+    /**
+     * Constructs an {@linkplain Achieves}.
+     *
+     * @param role the {@linkplain Role} of the {@linkplain Achieves}.
+     * @param goal the {@linkplain Achieves} of the {@linkplain Achieves}.
+     * @return an {@linkplain Achieves}.
+     */
+    Achieves buildAchieves(Role role, SpecificationGoal goal);
 
 }

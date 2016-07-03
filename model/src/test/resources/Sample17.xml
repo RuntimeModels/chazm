@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- missing instance goal for 'assignment' element -->
 <RoleDiagram>
-	<InstanceGoal id="5a95c6f2-ee0a-48c4-be2d-9e4ad29a25b8" name="Instance Goal 1" specification="7c57110b-d910-437a-b674-0817ce92a963" />
+    <InstanceGoal id="5a95c6f2-ee0a-48c4-be2d-9e4ad29a25b8" name="Instance Goal 1"
+                  specification="7c57110b-d910-437a-b674-0817ce92a963"/>
 </RoleDiagram>

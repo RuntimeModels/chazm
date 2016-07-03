@@ -11,16 +11,13 @@ import io.github.runtimemodels.chazm.entity.Role;
 @FunctionalInterface
 public interface RoleEventFactory {
 
-	/**
-	 * Constructs an {@linkplain RoleEvent}.
-	 *
-	 * @param category
-	 *            the {@linkplain EventCategory}.
-	 * @param role
-	 *            the {@linkplain Role}.
-	 *
-	 * @return a {@linkplain RoleEvent}.
-	 */
-	RoleEvent build(EventCategory category, Role role);
+    /**
+     * Constructs an {@linkplain RoleEvent}.
+     *
+     * @param category the {@linkplain EventCategory}.
+     * @param role     the {@linkplain Role}.
+     * @return a {@linkplain RoleEvent}.
+     */
+    RoleEvent build(EventCategory category, Role role);
 
 }

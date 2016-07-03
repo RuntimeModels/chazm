@@ -11,15 +11,13 @@ import io.github.runtimemodels.chazm.id.UniqueId;
 @FunctionalInterface
 public interface AttributeFactory {
 
-	/**
-	 * Constructs an {@linkplain Attribute}.
-	 *
-	 * @param id
-	 *            the {@linkplain UniqueId} that represents the {@linkplain Attribute}.
-	 * @param type
-	 *            the {@linkplain Attribute.Type} of the {@linkplain Attribute}.
-	 * @return an {@linkplain Attribute}.
-	 */
-	Attribute buildAttribute(UniqueId<Attribute> id, Attribute.Type type);
+    /**
+     * Constructs an {@linkplain Attribute}.
+     *
+     * @param id   the {@linkplain UniqueId} that represents the {@linkplain Attribute}.
+     * @param type the {@linkplain Attribute.Type} of the {@linkplain Attribute}.
+     * @return an {@linkplain Attribute}.
+     */
+    Attribute buildAttribute(UniqueId<Attribute> id, Attribute.Type type);
 
 }

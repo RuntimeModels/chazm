@@ -1,15 +1,13 @@
 package io.github.runtimemodels.chazm.event;
 
+import com.google.inject.assistedinject.Assisted;
 import io.github.runtimemodels.chazm.entity.Pmf;
 import io.github.runtimemodels.chazm.id.UniqueId;
 import io.github.runtimemodels.message.M;
 
-import java.util.Objects;
-
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
-
-import com.google.inject.assistedinject.Assisted;
+import java.util.Objects;
 
 /**
  * The {@linkplain PmfEvent} class indicates that there is an update about a {@linkplain Pmf} entity.
@@ -19,49 +17,49 @@ import com.google.inject.assistedinject.Assisted;
  */
 public class PmfEvent extends AbstractEvent {
 
-	private static final long serialVersionUID = 4714992287654266663L;
-	private final UniqueId<Pmf> id;
-	private transient Integer hashCode = null;
-	private transient String toString = null;
+    private static final long serialVersionUID = 4714992287654266663L;
+    private final UniqueId<Pmf> id;
+    private transient Integer hashCode = null;
+    private transient String toString = null;
 
-	@Inject
-	PmfEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final Pmf pmf) {
-		super(category);
-		id = pmf.getId();
-	}
+    @Inject
+    PmfEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final Pmf pmf) {
+        super(category);
+        id = pmf.getId();
+    }
 
-	/**
-	 * Returns a {@linkplain UniqueId} that represents a {@linkplain Pmf}.
-	 *
-	 * @return a {@linkplain UniqueId}.
-	 */
-	public UniqueId<Pmf> getId() {
-		return id;
-	}
+    /**
+     * Returns a {@linkplain UniqueId} that represents a {@linkplain Pmf}.
+     *
+     * @return a {@linkplain UniqueId}.
+     */
+    public UniqueId<Pmf> getId() {
+        return id;
+    }
 
-	@Override
-	public boolean equals(final Object object) {
-		if (object instanceof PmfEvent) {
-			final PmfEvent event = (PmfEvent) object;
-			return super.equals(event) && getId().equals(event.getId());
-		}
-		return false;
-	}
+    @Override
+    public boolean equals(final Object object) {
+        if (object instanceof PmfEvent) {
+            final PmfEvent event = (PmfEvent) object;
+            return super.equals(event) && getId().equals(event.getId());
+        }
+        return false;
+    }
 
-	@Override
-	public int hashCode() {
-		if (hashCode == null) {
-			hashCode = Objects.hash(getCategory(), getId());
-		}
-		return hashCode;
-	}
+    @Override
+    public int hashCode() {
+        if (hashCode == null) {
+            hashCode = Objects.hash(getCategory(), getId());
+        }
+        return hashCode;
+    }
 
-	@Override
-	public String toString() {
-		if (toString == null) {
-			toString = M.EVENT_WITH_1_ID.get(super.toString(), getId());
-		}
-		return toString;
-	}
+    @Override
+    public String toString() {
+        if (toString == null) {
+            toString = M.EVENT_WITH_1_ID.get(super.toString(), getId());
+        }
+        return toString;
+    }
 
 }

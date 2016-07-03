@@ -11,16 +11,13 @@ import io.github.runtimemodels.chazm.relation.Assignment;
 @FunctionalInterface
 public interface AssignmentEventFactory {
 
-	/**
-	 * Constructs an {@linkplain AssignmentEvent}.
-	 *
-	 * @param category
-	 *            the {@linkplain EventCategory}.
-	 * @param assignment
-	 *            the {@linkplain Assignment}.
-	 *
-	 * @return a {@linkplain AssignmentEvent}.
-	 */
-	AssignmentEvent build(EventCategory category, Assignment assignment);
+    /**
+     * Constructs an {@linkplain AssignmentEvent}.
+     *
+     * @param category   the {@linkplain EventCategory}.
+     * @param assignment the {@linkplain Assignment}.
+     * @return a {@linkplain AssignmentEvent}.
+     */
+    AssignmentEvent build(EventCategory category, Assignment assignment);
 
 }

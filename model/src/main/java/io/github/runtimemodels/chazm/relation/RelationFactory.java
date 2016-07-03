@@ -16,4 +16,4 @@ package io.github.runtimemodels.chazm.relation;
  * @since 7.0.0
  */
 public interface RelationFactory extends AchievesFactory, AssignmentFactory, ContainsFactory, HasFactory, ModeratesFactory, NeedsFactory, PossessesFactory,
-		RequiresFactory, UsesFactory {}
+        RequiresFactory, UsesFactory {}

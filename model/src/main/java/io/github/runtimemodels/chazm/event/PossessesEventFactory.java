@@ -11,16 +11,13 @@ import io.github.runtimemodels.chazm.relation.Possesses;
 @FunctionalInterface
 public interface PossessesEventFactory {
 
-	/**
-	 * Constructs an {@linkplain PossessesEvent}.
-	 *
-	 * @param category
-	 *            the {@linkplain EventCategory}.
-	 * @param possesses
-	 *            the {@linkplain Possesses}.
-	 *
-	 * @return a {@linkplain PossessesEvent}.
-	 */
-	PossessesEvent build(EventCategory category, Possesses possesses);
+    /**
+     * Constructs an {@linkplain PossessesEvent}.
+     *
+     * @param category  the {@linkplain EventCategory}.
+     * @param possesses the {@linkplain Possesses}.
+     * @return a {@linkplain PossessesEvent}.
+     */
+    PossessesEvent build(EventCategory category, Possesses possesses);
 
 }

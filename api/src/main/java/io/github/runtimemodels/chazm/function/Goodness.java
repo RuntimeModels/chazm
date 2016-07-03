@@ -18,32 +18,26 @@ import java.util.Collection;
 @FunctionalInterface
 public interface Goodness {
 
-	/**
-	 * <code>MIN_SCORE</code> is the minimum possible value for a score, which is {@value} .
-	 */
-	public static final double MIN_SCORE = 0.0;
-	/**
-	 * <code>MAX_SCORE</code> is the maximum possible value for a score, which is {@value} .
-	 */
-	public static final double MAX_SCORE = 1.0;
+    /**
+     * <code>MIN_SCORE</code> is the minimum possible value for a score, which is {@value} .
+     */
+    double MIN_SCORE = 0.0;
+    /**
+     * <code>MAX_SCORE</code> is the maximum possible value for a score, which is {@value} .
+     */
+    double MAX_SCORE = 1.0;
 
-	/**
-	 * Returns a score (<code>0.0</code> &le; score &le; <code>1.0</code>) of how effective an {@linkplain Agent} is at playing a {@linkplain Role} to achieve
-	 * an {@linkplain InstanceGoal} in an {@linkplain Organization}.
-	 *
-	 * @param organization
-	 *            the {@linkplain Organization}.
-	 * @param agent
-	 *            the {@linkplain Agent}.
-	 * @param role
-	 *            the {@linkplain Role}.
-	 * @param goal
-	 *            the {@linkplain InstanceGoal}.
-	 * @param assignments
-	 *            a set {@linkplain Assignment}s that may affect the score.
-	 *
-	 * @return a score (<code>0.0</code> &le; score &le; <code>1.0</code>).
-	 */
-	double compute(Organization organization, Agent agent, Role role, InstanceGoal goal, Collection<Assignment> assignments);
+    /**
+     * Returns a score (<code>0.0</code> &le; score &le; <code>1.0</code>) of how effective an {@linkplain Agent} is at playing a {@linkplain Role} to achieve
+     * an {@linkplain InstanceGoal} in an {@linkplain Organization}.
+     *
+     * @param organization the {@linkplain Organization}.
+     * @param agent        the {@linkplain Agent}.
+     * @param role         the {@linkplain Role}.
+     * @param goal         the {@linkplain InstanceGoal}.
+     * @param assignments  a set {@linkplain Assignment}s that may affect the score.
+     * @return a score (<code>0.0</code> &le; score &le; <code>1.0</code>).
+     */
+    double compute(Organization organization, Agent agent, Role role, InstanceGoal goal, Collection<Assignment> assignments);
 
 }

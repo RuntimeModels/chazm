@@ -11,13 +11,12 @@ import io.github.runtimemodels.chazm.id.UniqueId;
 @FunctionalInterface
 public interface CapabilityFactory {
 
-	/**
-	 * Constructs a {@linkplain Capability}.
-	 *
-	 * @param id
-	 *            the {@linkplain UniqueId} that represents the {@linkplain Capability}.
-	 * @return a {@linkplain Capability}.
-	 */
-	Capability buildCapability(UniqueId<Capability> id);
+    /**
+     * Constructs a {@linkplain Capability}.
+     *
+     * @param id the {@linkplain UniqueId} that represents the {@linkplain Capability}.
+     * @return a {@linkplain Capability}.
+     */
+    Capability buildCapability(UniqueId<Capability> id);
 
 }

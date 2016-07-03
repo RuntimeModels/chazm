@@ -11,16 +11,13 @@ import io.github.runtimemodels.chazm.entity.Agent;
 @FunctionalInterface
 public interface AgentEventFactory {
 
-	/**
-	 * Constructs an {@linkplain AgentEvent}.
-	 *
-	 * @param category
-	 *            the {@linkplain EventCategory}.
-	 * @param agent
-	 *            the {@linkplain Agent}.
-	 *
-	 * @return a {@linkplain AgentEvent}.
-	 */
-	AgentEvent build(EventCategory category, Agent agent);
+    /**
+     * Constructs an {@linkplain AgentEvent}.
+     *
+     * @param category the {@linkplain EventCategory}.
+     * @param agent    the {@linkplain Agent}.
+     * @return a {@linkplain AgentEvent}.
+     */
+    AgentEvent build(EventCategory category, Agent agent);
 
 }

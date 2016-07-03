@@ -11,13 +11,12 @@ import io.github.runtimemodels.chazm.id.UniqueId;
 @FunctionalInterface
 public interface PolicyFactory {
 
-	/**
-	 * Constructs a {@linkplain Policy}.
-	 *
-	 * @param id
-	 *            the {@linkplain UniqueId} that represents the {@linkplain Policy}.
-	 * @return a {@linkplain Agent}.
-	 */
-	Policy buildPolicy(UniqueId<Policy> id);
+    /**
+     * Constructs a {@linkplain Policy}.
+     *
+     * @param id the {@linkplain UniqueId} that represents the {@linkplain Policy}.
+     * @return a {@linkplain Agent}.
+     */
+    Policy buildPolicy(UniqueId<Policy> id);
 
 }

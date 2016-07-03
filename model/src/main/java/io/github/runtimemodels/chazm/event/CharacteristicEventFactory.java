@@ -11,16 +11,13 @@ import io.github.runtimemodels.chazm.entity.Characteristic;
 @FunctionalInterface
 public interface CharacteristicEventFactory {
 
-	/**
-	 * Constructs an {@linkplain CharacteristicEvent}.
-	 *
-	 * @param category
-	 *            the {@linkplain EventCategory}.
-	 * @param characteristic
-	 *            the {@linkplain Characteristic}.
-	 *
-	 * @return a {@linkplain CharacteristicEvent}.
-	 */
-	CharacteristicEvent build(EventCategory category, Characteristic characteristic);
+    /**
+     * Constructs an {@linkplain CharacteristicEvent}.
+     *
+     * @param category       the {@linkplain EventCategory}.
+     * @param characteristic the {@linkplain Characteristic}.
+     * @return a {@linkplain CharacteristicEvent}.
+     */
+    CharacteristicEvent build(EventCategory category, Characteristic characteristic);
 
 }

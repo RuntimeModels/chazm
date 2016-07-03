@@ -11,16 +11,13 @@ import io.github.runtimemodels.chazm.entity.InstanceGoal;
 @FunctionalInterface
 public interface InstanceGoalEventFactory {
 
-	/**
-	 * Constructs an {@linkplain InstanceGoalEvent}.
-	 *
-	 * @param category
-	 *            the {@linkplain EventCategory}.
-	 * @param goal
-	 *            the {@linkplain InstanceGoal}.
-	 *
-	 * @return a {@linkplain InstanceGoalEvent}.
-	 */
-	InstanceGoalEvent build(EventCategory category, InstanceGoal goal);
+    /**
+     * Constructs an {@linkplain InstanceGoalEvent}.
+     *
+     * @param category the {@linkplain EventCategory}.
+     * @param goal     the {@linkplain InstanceGoal}.
+     * @return a {@linkplain InstanceGoalEvent}.
+     */
+    InstanceGoalEvent build(EventCategory category, InstanceGoal goal);
 
 }

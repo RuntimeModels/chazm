@@ -1,187 +1,200 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- agenttool diagram (CMS), unmodified -->
 <RoleDiagram version="1.1" name="CMS_RoleDiagram" embedded="true">
-	<Actor id="aabed1c2-4680-40c4-a1a4-f4efd5c6f867" name="Author" x="663" y="345" width="-1" height="-1">
-		<protocol name="submitPaper">
-			<child>cff449e2-881e-46b5-8c60-7cde8b1a2c01</child>
-		</protocol>
-		<protocol name="submitFinal">
-			<child>cff449e2-881e-46b5-8c60-7cde8b1a2c01</child>
-			<bendpoint x="664" y="422" />
-			<bendpoint x="577" y="444" />
-		</protocol>
-	</Actor>
-	<Actor id="3bf0cf3a-0ce7-4900-beba-6b1ba3557d0a" name="Printer" x="27" y="171" width="-1" height="-1">
-	</Actor>
-	<Actor id="1496335c-d10a-419d-ba14-60ea0ee7d39a" name="PC chair" x="15" y="39" width="-1" height="-1">
-		<protocol name="selectPapers">
-			<child>57546426-7924-4fe2-8329-ca5330d83e75</child>
-		</protocol>
-		<protocol name="partitionPapers">
-			<child>c5c7a459-3e47-4255-8203-b1dfd32091e2</child>
-			<bendpoint x="102" y="118" />
-		</protocol>
-	</Actor>
-	<Actor id="9f948dde-9117-4700-a863-b576ef6a5b39" name="Reviewer " x="570" y="275" width="-1" height="-1">
-		<protocol name="writeReview">
-			<child>d3a3aa33-88c7-41a6-91a0-423e84354e7c</child>
-			<bendpoint x="519" y="253" />
-		</protocol>
-	</Actor>
-	<Capability id="b28db440-e1cf-4a75-9d37-dad779323bc5" name="ReviewerInterface" x="829" y="338" width="-1" height="-1">
-	</Capability>
-	<Capability id="5a27aa69-7454-43da-843e-1196755f5e28" name="DatabaseAccess" x="856" y="455" width="-1" height="-1">
-	</Capability>
-	<Capability id="e4fa3ee0-a244-428c-bd12-3ed64b383fae" name="PCchairInterface" x="845" y="268" width="-1" height="-1">
-	</Capability>
-	<Capability id="29797117-9a64-41ed-8cce-27b8d96775b6" name="PCmemInterface" x="9" y="127" width="-1" height="-1">
-	</Capability>
-	<Goal id="7c57110b-d910-437a-b674-0817ce92a963" name="Collect reviews" number="0" preference="1.0" x="679" y="223" width="104" height="50" definition=""
-		description="" color="No">
-	</Goal>
-	<Goal id="f8e101b5-3344-4399-a129-37ae5b92bb59" name="Inform declined" number="0" preference="1.0" x="806" y="165" width="129" height="46" definition=""
-		description="" color="No">
-	</Goal>
-	<Goal id="3d0a8894-24e5-4508-83a0-bb47456aa317" name="Collect papers" number="0" preference="1.0" x="473" y="520" width="96" height="44" definition=""
-		description="" color="No">
-	</Goal>
-	<Goal id="cdd2e7bc-e15c-423c-b3e6-4fd497fbfb9c" name="Distribute papers" number="0" preference="1.0" x="296" y="517" width="120" height="48" definition=""
-		description="" color="No">
-	</Goal>
-	<Goal id="8ce9735a-689d-439a-9242-e365ad88637f" name="Collect finals" number="0" preference="1.0" x="705" y="514" width="90" height="47" definition=""
-		description="" color="No">
-	</Goal>
-	<Goal id="59752f48-6919-4202-9cac-a4487bc2f8d6" name="Partition papers" number="0" preference="1.0" x="203" y="163" width="116" height="47" definition=""
-		description="" color="No">
-	</Goal>
-	<Goal id="dc00314e-4c3e-4f8c-83cb-1d8b93137348" name="Print Proceedings" number="0" preference="1.0" x="9" y="521" width="93" height="50" definition=""
-		description="" color="No">
-	</Goal>
-	<Goal id="73446698-b451-48d7-a775-eb2bfc9436a9" name="Inform accepted" number="0" preference="1.0" x="805" y="102" width="-1" height="-1" definition=""
-		description="" color="No">
-	</Goal>
-	<Goal id="b77beff3-410a-496d-af80-61e52d39cf48" name="Make decision" number="0" preference="1.0" x="664" y="107" width="112" height="43" definition=""
-		description="" color="No">
-	</Goal>
-	<Goal id="37c4a3f7-b2d9-4912-add1-ee62ee338e23" name="Master CD" number="1" preference="1.0" x="170" y="547" width="-1" height="-1" definition=""
-		description="" color="No">
-	</Goal>
-	<Goal id="fbe10d04-c2df-4ecb-91e2-f378f8db99d5" name="Review Papers" number="3" preference="1.0" x="646" y="386" width="-1" height="-1" definition=""
-		description="" color="No">
-	</Goal>
-	<Role id="d3a3aa33-88c7-41a6-91a0-423e84354e7c" name="Reviewer" x="323" y="284" width="-1" height="-1">
-		<protocol name="submitReviews">
-			<child>ea3184f4-96b9-4d5f-b52e-4cd8dc0e63a4</child>
-		</protocol>
-		<protocol name="retrievePaper">
-			<child>cff449e2-881e-46b5-8c60-7cde8b1a2c01</child>
-		</protocol>
-		<protocol name="getOK">
-			<child>9f948dde-9117-4700-a863-b576ef6a5b39</child>
-		</protocol>
-		<requires>
-			<child>b28db440-e1cf-4a75-9d37-dad779323bc5</child>
-		</requires>
-		<achieves name="achieves" score="1.0">
-			<child>fbe10d04-c2df-4ecb-91e2-f378f8db99d5</child>
-		</achieves>
-	</Role>
-	<Role id="ea3184f4-96b9-4d5f-b52e-4cd8dc0e63a4" name="ReviewCollector" x="376" y="153" width="-1" height="-1">
-		<achieves name="achieves" score="1.0">
-			<child>7c57110b-d910-437a-b674-0817ce92a963</child>
-		</achieves>
-		<requires>
-			<child>e4fa3ee0-a244-428c-bd12-3ed64b383fae</child>
-		</requires>
-	</Role>
-	<Role id="c5c7a459-3e47-4255-8203-b1dfd32091e2" name="Partitioner" x="142" y="154" width="-1" height="-1">
-		<achieves name="achieves" score="1.0">
-			<child>59752f48-6919-4202-9cac-a4487bc2f8d6</child>
-		</achieves>
-		<protocol name="getAbstracts">
-			<child>cff449e2-881e-46b5-8c60-7cde8b1a2c01</child>
-		</protocol>
-		<requires>
-			<child>29797117-9a64-41ed-8cce-27b8d96775b6</child>
-		</requires>
-		<protocol name="reviewPapers">
-			<child>d3a3aa33-88c7-41a6-91a0-423e84354e7c</child>
-		</protocol>
-	</Role>
-	<Role id="cff449e2-881e-46b5-8c60-7cde8b1a2c01" name="PaperDB" x="242" y="406" width="-1" height="-1">
-		<achieves name="achieves" score="1.0">
-			<child>3d0a8894-24e5-4508-83a0-bb47456aa317</child>
-		</achieves>
-		<achieves name="achieves" score="1.0">
-			<child>8ce9735a-689d-439a-9242-e365ad88637f</child>
-		</achieves>
-		<achieves name="achieves" score="1.0">
-			<child>cdd2e7bc-e15c-423c-b3e6-4fd497fbfb9c</child>
-		</achieves>
-		<requires>
-			<child>5a27aa69-7454-43da-843e-1196755f5e28</child>
-		</requires>
-	</Role>
-	<Role id="57546426-7924-4fe2-8329-ca5330d83e75" name="DecisionMaker" x="197" y="40" width="-1" height="-1">
-		<achieves name="achieves" score="1.0">
-			<child>b77beff3-410a-496d-af80-61e52d39cf48</child>
-		</achieves>
-		<protocol name="getReviews">
-			<child>ea3184f4-96b9-4d5f-b52e-4cd8dc0e63a4</child>
-		</protocol>
-		<requires>
-			<child>e4fa3ee0-a244-428c-bd12-3ed64b383fae</child>
-		</requires>
-		<protocol name="Inform">
-			<child>7701950e-a5d9-4bcf-82ec-81f6f0776af1</child>
-		</protocol>
-		<protocol name="Inform">
-			<child>8e691aad-3dfa-4ecd-bdc3-a7571ce1ae8b</child>
-		</protocol>
-	</Role>
-	<Role id="2b7cc107-9bd2-46dc-88f3-5a5800486545" name="FinalsCollector" x="46" y="292" width="-1" height="-1">
-		<achieves name="achieves" score="1.0">
-			<child>dc00314e-4c3e-4f8c-83cb-1d8b93137348</child>
-		</achieves>
-		<protocol name="retrieveFinals">
-			<child>cff449e2-881e-46b5-8c60-7cde8b1a2c01</child>
-		</protocol>
-		<protocol name="printProceedings">
-			<child>3bf0cf3a-0ce7-4900-beba-6b1ba3557d0a</child>
-		</protocol>
-		<requires>
-			<child>5a27aa69-7454-43da-843e-1196755f5e28</child>
-		</requires>
-		<achieves name="achieves" score="1.0">
-			<child>37c4a3f7-b2d9-4912-add1-ee62ee338e23</child>
-		</achieves>
-	</Role>
-	<Role id="7701950e-a5d9-4bcf-82ec-81f6f0776af1" name="EmailInformer" x="561" y="130" width="-1" height="-1">
-		<achieves name="achieves" score="1.0">
-			<child>73446698-b451-48d7-a775-eb2bfc9436a9</child>
-		</achieves>
-		<achieves name="achieves" score="1.0">
-			<child>f8e101b5-3344-4399-a129-37ae5b92bb59</child>
-		</achieves>
-		<requires>
-			<child>e4fa3ee0-a244-428c-bd12-3ed64b383fae</child>
-		</requires>
-		<protocol name="informAuthors">
-			<child>aabed1c2-4680-40c4-a1a4-f4efd5c6f867</child>
-		</protocol>
-	</Role>
-	<Role id="8e691aad-3dfa-4ecd-bdc3-a7571ce1ae8b" name="PhoneInformer" x="614" y="37" width="-1" height="-1">
-		<achieves name="achieves" score="1.0">
-			<child>73446698-b451-48d7-a775-eb2bfc9436a9</child>
-		</achieves>
-		<achieves name="achieves" score="1.0">
-			<child>f8e101b5-3344-4399-a129-37ae5b92bb59</child>
-		</achieves>
-		<requires>
-			<child>e4fa3ee0-a244-428c-bd12-3ed64b383fae</child>
-		</requires>
-		<protocol name="informAuthors">
-			<child>aabed1c2-4680-40c4-a1a4-f4efd5c6f867</child>
-		</protocol>
-	</Role>
+    <Actor id="aabed1c2-4680-40c4-a1a4-f4efd5c6f867" name="Author" x="663" y="345" width="-1" height="-1">
+        <protocol name="submitPaper">
+            <child>cff449e2-881e-46b5-8c60-7cde8b1a2c01</child>
+        </protocol>
+        <protocol name="submitFinal">
+            <child>cff449e2-881e-46b5-8c60-7cde8b1a2c01</child>
+            <bendpoint x="664" y="422"/>
+            <bendpoint x="577" y="444"/>
+        </protocol>
+    </Actor>
+    <Actor id="3bf0cf3a-0ce7-4900-beba-6b1ba3557d0a" name="Printer" x="27" y="171" width="-1" height="-1">
+    </Actor>
+    <Actor id="1496335c-d10a-419d-ba14-60ea0ee7d39a" name="PC chair" x="15" y="39" width="-1" height="-1">
+        <protocol name="selectPapers">
+            <child>57546426-7924-4fe2-8329-ca5330d83e75</child>
+        </protocol>
+        <protocol name="partitionPapers">
+            <child>c5c7a459-3e47-4255-8203-b1dfd32091e2</child>
+            <bendpoint x="102" y="118"/>
+        </protocol>
+    </Actor>
+    <Actor id="9f948dde-9117-4700-a863-b576ef6a5b39" name="Reviewer " x="570" y="275" width="-1" height="-1">
+        <protocol name="writeReview">
+            <child>d3a3aa33-88c7-41a6-91a0-423e84354e7c</child>
+            <bendpoint x="519" y="253"/>
+        </protocol>
+    </Actor>
+    <Capability id="b28db440-e1cf-4a75-9d37-dad779323bc5" name="ReviewerInterface" x="829" y="338" width="-1"
+                height="-1">
+    </Capability>
+    <Capability id="5a27aa69-7454-43da-843e-1196755f5e28" name="DatabaseAccess" x="856" y="455" width="-1" height="-1">
+    </Capability>
+    <Capability id="e4fa3ee0-a244-428c-bd12-3ed64b383fae" name="PCchairInterface" x="845" y="268" width="-1"
+                height="-1">
+    </Capability>
+    <Capability id="29797117-9a64-41ed-8cce-27b8d96775b6" name="PCmemInterface" x="9" y="127" width="-1" height="-1">
+    </Capability>
+    <Goal id="7c57110b-d910-437a-b674-0817ce92a963" name="Collect reviews" number="0" preference="1.0" x="679" y="223"
+          width="104" height="50" definition=""
+          description="" color="No">
+    </Goal>
+    <Goal id="f8e101b5-3344-4399-a129-37ae5b92bb59" name="Inform declined" number="0" preference="1.0" x="806" y="165"
+          width="129" height="46" definition=""
+          description="" color="No">
+    </Goal>
+    <Goal id="3d0a8894-24e5-4508-83a0-bb47456aa317" name="Collect papers" number="0" preference="1.0" x="473" y="520"
+          width="96" height="44" definition=""
+          description="" color="No">
+    </Goal>
+    <Goal id="cdd2e7bc-e15c-423c-b3e6-4fd497fbfb9c" name="Distribute papers" number="0" preference="1.0" x="296" y="517"
+          width="120" height="48" definition=""
+          description="" color="No">
+    </Goal>
+    <Goal id="8ce9735a-689d-439a-9242-e365ad88637f" name="Collect finals" number="0" preference="1.0" x="705" y="514"
+          width="90" height="47" definition=""
+          description="" color="No">
+    </Goal>
+    <Goal id="59752f48-6919-4202-9cac-a4487bc2f8d6" name="Partition papers" number="0" preference="1.0" x="203" y="163"
+          width="116" height="47" definition=""
+          description="" color="No">
+    </Goal>
+    <Goal id="dc00314e-4c3e-4f8c-83cb-1d8b93137348" name="Print Proceedings" number="0" preference="1.0" x="9" y="521"
+          width="93" height="50" definition=""
+          description="" color="No">
+    </Goal>
+    <Goal id="73446698-b451-48d7-a775-eb2bfc9436a9" name="Inform accepted" number="0" preference="1.0" x="805" y="102"
+          width="-1" height="-1" definition=""
+          description="" color="No">
+    </Goal>
+    <Goal id="b77beff3-410a-496d-af80-61e52d39cf48" name="Make decision" number="0" preference="1.0" x="664" y="107"
+          width="112" height="43" definition=""
+          description="" color="No">
+    </Goal>
+    <Goal id="37c4a3f7-b2d9-4912-add1-ee62ee338e23" name="Master CD" number="1" preference="1.0" x="170" y="547"
+          width="-1" height="-1" definition=""
+          description="" color="No">
+    </Goal>
+    <Goal id="fbe10d04-c2df-4ecb-91e2-f378f8db99d5" name="Review Papers" number="3" preference="1.0" x="646" y="386"
+          width="-1" height="-1" definition=""
+          description="" color="No">
+    </Goal>
+    <Role id="d3a3aa33-88c7-41a6-91a0-423e84354e7c" name="Reviewer" x="323" y="284" width="-1" height="-1">
+        <protocol name="submitReviews">
+            <child>ea3184f4-96b9-4d5f-b52e-4cd8dc0e63a4</child>
+        </protocol>
+        <protocol name="retrievePaper">
+            <child>cff449e2-881e-46b5-8c60-7cde8b1a2c01</child>
+        </protocol>
+        <protocol name="getOK">
+            <child>9f948dde-9117-4700-a863-b576ef6a5b39</child>
+        </protocol>
+        <requires>
+            <child>b28db440-e1cf-4a75-9d37-dad779323bc5</child>
+        </requires>
+        <achieves name="achieves" score="1.0">
+            <child>fbe10d04-c2df-4ecb-91e2-f378f8db99d5</child>
+        </achieves>
+    </Role>
+    <Role id="ea3184f4-96b9-4d5f-b52e-4cd8dc0e63a4" name="ReviewCollector" x="376" y="153" width="-1" height="-1">
+        <achieves name="achieves" score="1.0">
+            <child>7c57110b-d910-437a-b674-0817ce92a963</child>
+        </achieves>
+        <requires>
+            <child>e4fa3ee0-a244-428c-bd12-3ed64b383fae</child>
+        </requires>
+    </Role>
+    <Role id="c5c7a459-3e47-4255-8203-b1dfd32091e2" name="Partitioner" x="142" y="154" width="-1" height="-1">
+        <achieves name="achieves" score="1.0">
+            <child>59752f48-6919-4202-9cac-a4487bc2f8d6</child>
+        </achieves>
+        <protocol name="getAbstracts">
+            <child>cff449e2-881e-46b5-8c60-7cde8b1a2c01</child>
+        </protocol>
+        <requires>
+            <child>29797117-9a64-41ed-8cce-27b8d96775b6</child>
+        </requires>
+        <protocol name="reviewPapers">
+            <child>d3a3aa33-88c7-41a6-91a0-423e84354e7c</child>
+        </protocol>
+    </Role>
+    <Role id="cff449e2-881e-46b5-8c60-7cde8b1a2c01" name="PaperDB" x="242" y="406" width="-1" height="-1">
+        <achieves name="achieves" score="1.0">
+            <child>3d0a8894-24e5-4508-83a0-bb47456aa317</child>
+        </achieves>
+        <achieves name="achieves" score="1.0">
+            <child>8ce9735a-689d-439a-9242-e365ad88637f</child>
+        </achieves>
+        <achieves name="achieves" score="1.0">
+            <child>cdd2e7bc-e15c-423c-b3e6-4fd497fbfb9c</child>
+        </achieves>
+        <requires>
+            <child>5a27aa69-7454-43da-843e-1196755f5e28</child>
+        </requires>
+    </Role>
+    <Role id="57546426-7924-4fe2-8329-ca5330d83e75" name="DecisionMaker" x="197" y="40" width="-1" height="-1">
+        <achieves name="achieves" score="1.0">
+            <child>b77beff3-410a-496d-af80-61e52d39cf48</child>
+        </achieves>
+        <protocol name="getReviews">
+            <child>ea3184f4-96b9-4d5f-b52e-4cd8dc0e63a4</child>
+        </protocol>
+        <requires>
+            <child>e4fa3ee0-a244-428c-bd12-3ed64b383fae</child>
+        </requires>
+        <protocol name="Inform">
+            <child>7701950e-a5d9-4bcf-82ec-81f6f0776af1</child>
+        </protocol>
+        <protocol name="Inform">
+            <child>8e691aad-3dfa-4ecd-bdc3-a7571ce1ae8b</child>
+        </protocol>
+    </Role>
+    <Role id="2b7cc107-9bd2-46dc-88f3-5a5800486545" name="FinalsCollector" x="46" y="292" width="-1" height="-1">
+        <achieves name="achieves" score="1.0">
+            <child>dc00314e-4c3e-4f8c-83cb-1d8b93137348</child>
+        </achieves>
+        <protocol name="retrieveFinals">
+            <child>cff449e2-881e-46b5-8c60-7cde8b1a2c01</child>
+        </protocol>
+        <protocol name="printProceedings">
+            <child>3bf0cf3a-0ce7-4900-beba-6b1ba3557d0a</child>
+        </protocol>
+        <requires>
+            <child>5a27aa69-7454-43da-843e-1196755f5e28</child>
+        </requires>
+        <achieves name="achieves" score="1.0">
+            <child>37c4a3f7-b2d9-4912-add1-ee62ee338e23</child>
+        </achieves>
+    </Role>
+    <Role id="7701950e-a5d9-4bcf-82ec-81f6f0776af1" name="EmailInformer" x="561" y="130" width="-1" height="-1">
+        <achieves name="achieves" score="1.0">
+            <child>73446698-b451-48d7-a775-eb2bfc9436a9</child>
+        </achieves>
+        <achieves name="achieves" score="1.0">
+            <child>f8e101b5-3344-4399-a129-37ae5b92bb59</child>
+        </achieves>
+        <requires>
+            <child>e4fa3ee0-a244-428c-bd12-3ed64b383fae</child>
+        </requires>
+        <protocol name="informAuthors">
+            <child>aabed1c2-4680-40c4-a1a4-f4efd5c6f867</child>
+        </protocol>
+    </Role>
+    <Role id="8e691aad-3dfa-4ecd-bdc3-a7571ce1ae8b" name="PhoneInformer" x="614" y="37" width="-1" height="-1">
+        <achieves name="achieves" score="1.0">
+            <child>73446698-b451-48d7-a775-eb2bfc9436a9</child>
+        </achieves>
+        <achieves name="achieves" score="1.0">
+            <child>f8e101b5-3344-4399-a129-37ae5b92bb59</child>
+        </achieves>
+        <requires>
+            <child>e4fa3ee0-a244-428c-bd12-3ed64b383fae</child>
+        </requires>
+        <protocol name="informAuthors">
+            <child>aabed1c2-4680-40c4-a1a4-f4efd5c6f867</child>
+        </protocol>
+    </Role>
 </RoleDiagram>

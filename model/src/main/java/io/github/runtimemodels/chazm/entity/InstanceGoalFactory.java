@@ -11,17 +11,14 @@ import io.github.runtimemodels.chazm.id.UniqueId;
 @FunctionalInterface
 public interface InstanceGoalFactory {
 
-	/**
-	 * Constructs an {@linkplain InstanceGoal}.
-	 *
-	 * @param id
-	 *            the {@linkplain UniqueId} that represents the {@linkplain InstanceGoal}.
-	 * @param goal
-	 *            the {@linkplain SpecificationGoal} of the {@linkplain InstanceGoal}.
-	 * @param parameter
-	 *            the {@linkplain InstanceGoal.Parameter} of the {@linkplain InstanceGoal}.
-	 * @return an {@linkplain InstanceGoal}.
-	 */
-	InstanceGoal buildInstanceGoal(UniqueId<InstanceGoal> id, SpecificationGoal goal, InstanceGoal.Parameter parameter);
+    /**
+     * Constructs an {@linkplain InstanceGoal}.
+     *
+     * @param id        the {@linkplain UniqueId} that represents the {@linkplain InstanceGoal}.
+     * @param goal      the {@linkplain SpecificationGoal} of the {@linkplain InstanceGoal}.
+     * @param parameter the {@linkplain InstanceGoal.Parameter} of the {@linkplain InstanceGoal}.
+     * @return an {@linkplain InstanceGoal}.
+     */
+    InstanceGoal buildInstanceGoal(UniqueId<InstanceGoal> id, SpecificationGoal goal, InstanceGoal.Parameter parameter);
 
 }

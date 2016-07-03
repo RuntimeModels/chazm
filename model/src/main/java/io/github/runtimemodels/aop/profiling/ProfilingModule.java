@@ -1,9 +1,9 @@
 package io.github.runtimemodels.aop.profiling;
 
+import com.google.inject.AbstractModule;
+
 import static com.google.inject.matcher.Matchers.annotatedWith;
 import static com.google.inject.matcher.Matchers.not;
-
-import com.google.inject.AbstractModule;
 
 /**
  * The {@linkplain ProfilingModule} class adds AOP interceptors to profile various aspects of an application.
@@ -11,11 +11,11 @@ import com.google.inject.AbstractModule;
  * @author Christopher Zhong
  * @since 7.0.0
  */
-public class ProfilingModule extends AbstractModule {
+class ProfilingModule extends AbstractModule {
 
-	@Override
-	protected void configure() {
-		bindInterceptor(not(annotatedWith(DoNotProfile.class)), not(annotatedWith(DoNotProfile.class)), new ExecutionTime());
-	}
+    @Override
+    protected void configure() {
+        bindInterceptor(not(annotatedWith(DoNotProfile.class)), not(annotatedWith(DoNotProfile.class)), new ExecutionTime());
+    }
 
 }

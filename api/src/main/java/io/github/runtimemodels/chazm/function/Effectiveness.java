@@ -16,15 +16,13 @@ import java.util.Collection;
 @FunctionalInterface
 public interface Effectiveness {
 
-	/**
-	 * Returns a <code>double</code>-valued score of an {@linkplain Organization}'s effectiveness.
-	 *
-	 * @param organization
-	 *            the {@linkplain Organization}.
-	 * @param assignments
-	 *            a set of {@linkplain Assignment}s.
-	 * @return a <code>double</code>-valued score.
-	 */
-	double compute(Organization organization, Collection<Assignment> assignments);
+    /**
+     * Returns a <code>double</code>-valued score of an {@linkplain Organization}'s effectiveness.
+     *
+     * @param organization the {@linkplain Organization}.
+     * @param assignments  a set of {@linkplain Assignment}s.
+     * @return a <code>double</code>-valued score.
+     */
+    double compute(Organization organization, Collection<Assignment> assignments);
 
 }

@@ -12,15 +12,13 @@ import io.github.runtimemodels.chazm.entity.Role;
 @FunctionalInterface
 public interface UsesFactory {
 
-	/**
-	 * Constructs an {@linkplain Uses}.
-	 *
-	 * @param role
-	 *            the {@linkplain Role} of the {@linkplain Uses}.
-	 * @param pmf
-	 *            the {@linkplain Pmf} of the {@linkplain Uses}.
-	 * @return an {@linkplain Uses}.
-	 */
-	Uses buildUses(Role role, Pmf pmf);
+    /**
+     * Constructs an {@linkplain Uses}.
+     *
+     * @param role the {@linkplain Role} of the {@linkplain Uses}.
+     * @param pmf  the {@linkplain Pmf} of the {@linkplain Uses}.
+     * @return an {@linkplain Uses}.
+     */
+    Uses buildUses(Role role, Pmf pmf);
 
 }

@@ -10,9 +10,9 @@ import com.google.inject.AbstractModule;
  */
 public class IdModule extends AbstractModule {
 
-	@Override
-	protected void configure() {
-		bind(IdFactory.class).to(IdFactoryImpl.class);
-	}
+    @Override
+    protected void configure() {
+        bind(IdFactory.class).to(IdFactoryImpl.class);
+    }
 
 }

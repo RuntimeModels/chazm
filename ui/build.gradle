@@ -1,5 +1,5 @@
 dependencies {
-    compile project(":${rootProject.name}-model")
+    compile project(':chazm-model')
 
     testCompile 'junit:junit'
     testCompile 'org.jmockit:jmockit'

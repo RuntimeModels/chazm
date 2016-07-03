@@ -8,17 +8,17 @@ package io.github.runtimemodels.chazm.event;
  */
 public enum EventCategory {
 
-	/**
-	 * Indicates that something was added.
-	 */
-	ADDED,
-	/**
-	 * Indicates that something was removed.
-	 */
-	REMOVED,
-	/**
-	 * Indicates that something was changed.
-	 */
-	CHANGED
+    /**
+     * Indicates that something was added.
+     */
+    ADDED,
+    /**
+     * Indicates that something was removed.
+     */
+    REMOVED,
+    /**
+     * Indicates that something was changed.
+     */
+    CHANGED
 
 }

@@ -10,10 +10,10 @@ import com.google.inject.AbstractModule;
  */
 public class FunctionModule extends AbstractModule {
 
-	@Override
-	protected void configure() {
-		bind(Effectiveness.class).to(DefaultEffectiveness.class);
-		bind(Goodness.class).to(DefaultGoodness.class);
-	}
+    @Override
+    protected void configure() {
+        bind(Effectiveness.class).to(DefaultEffectiveness.class);
+        bind(Goodness.class).to(DefaultGoodness.class);
+    }
 
 }

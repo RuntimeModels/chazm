@@ -12,17 +12,14 @@ import io.github.runtimemodels.chazm.entity.Role;
 @FunctionalInterface
 public interface ContainsFactory {
 
-	/**
-	 * Constructs a {@linkplain Contains}.
-	 *
-	 * @param role
-	 *            the {@linkplain Role} of the {@linkplain Contains}.
-	 * @param characteristic
-	 *            the {@linkplain Characteristic} of the {@linkplain Contains}.
-	 * @param value
-	 *            the <code>double</code> value of the {@linkplain Contains}.
-	 * @return a {@linkplain Contains}.
-	 */
-	Contains buildContains(Role role, Characteristic characteristic, double value);
+    /**
+     * Constructs a {@linkplain Contains}.
+     *
+     * @param role           the {@linkplain Role} of the {@linkplain Contains}.
+     * @param characteristic the {@linkplain Characteristic} of the {@linkplain Contains}.
+     * @param value          the <code>double</code> value of the {@linkplain Contains}.
+     * @return a {@linkplain Contains}.
+     */
+    Contains buildContains(Role role, Characteristic characteristic, double value);
 
 }

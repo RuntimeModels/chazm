@@ -16,4 +16,4 @@ package io.github.runtimemodels.chazm.entity;
  * @since 7.0.0
  */
 public interface EntityFactory extends AgentFactory, AttributeFactory, CapabilityFactory, CharacteristicFactory, InstanceGoalFactory, PmfFactory,
-		PolicyFactory, RoleFactory, SpecificationGoalFactory {}
+        PolicyFactory, RoleFactory, SpecificationGoalFactory {}

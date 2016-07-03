@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- missing attribute -->
 <RoleDiagram>
-	<Attribute id="48ece1db-516b-4120-a608-5589001a79d0" name="Attribute 1" />
+    <Attribute id="48ece1db-516b-4120-a608-5589001a79d0" name="Attribute 1"/>
 </RoleDiagram>
