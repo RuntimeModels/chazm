@@ -8,11 +8,10 @@ cache:
   directories:
     - '$HOME/.gradle/caches' # cache the gradle cache directory
     - '$HOME/.gradle/wrapper' # cache the gradle wrapper directory
-    - '$HOME/.m2/repository' # cache the maven artifacts
 
 notifications:
   slack:
-    secure: UITKekk5L3PSJCkakLT1uVhDfJnJ1bY0NG07lEcAWa4OaMAt8G2bjRYrZZFa7eXFerOe3tamowTznWcZ1LYjSPGoBHO1Yd6wBBFfvpAtVA653jG9gPpGVSD8WmCwgzsR6ohrd8pTMI2cq8qohl3itmcSXwquupE1NCx/eG/66tg=
+    secure: "UITKekk5L3PSJCkakLT1uVhDfJnJ1bY0NG07lEcAWa4OaMAt8G2bjRYrZZFa7eXFerOe3tamowTznWcZ1LYjSPGoBHO1Yd6wBBFfvpAtVA653jG9gPpGVSD8WmCwgzsR6ohrd8pTMI2cq8qohl3itmcSXwquupE1NCx/eG/66tg="
 
 env:
   global:
@@ -26,7 +25,7 @@ addons:
       name: "RuntimeModels/chazm"
       description: "Build submitted via Travis CI"
     notification_email:
-      secure: G1Nt+8sR0VZQmtX6hHtzr0B+gp6u8Mfxmgql4Vj6EbF/CiYH+0aD1c0bD6mAAf0Q/5kVOSnOSoRLhXi0/yPH7uj7fyzVW9CZm1AlrGFDQXP7GmXvQGpHjvQNjGON41xHRyeY5k2ja4AuWHOGHvi345ygmzk5FNIL9ZFpazXKQng=
+      secure: "G1Nt+8sR0VZQmtX6hHtzr0B+gp6u8Mfxmgql4Vj6EbF/CiYH+0aD1c0bD6mAAf0Q/5kVOSnOSoRLhXi0/yPH7uj7fyzVW9CZm1AlrGFDQXP7GmXvQGpHjvQNjGON41xHRyeY5k2ja4AuWHOGHvi345ygmzk5FNIL9ZFpazXKQng="
     build_command_prepend: "./gradlew clean"
     build_command: "./gradlew assemble"
     branch_pattern: coverity_scan
@@ -44,7 +43,8 @@ after_success:
   - bash <(curl -s https://codecov.io/bash)
 
 before_cache:
-  - find $HOME/.gradle/caches -name "*.lock" -type f -print0 -delete
-  
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
 after_script:
   - ./gradlew coveralls # collect jacoco reports from subprojects send them to coveralls
