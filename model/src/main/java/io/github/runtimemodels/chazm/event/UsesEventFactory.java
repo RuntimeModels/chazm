@@ -11,16 +11,13 @@ import io.github.runtimemodels.chazm.relation.Uses;
 @FunctionalInterface
 public interface UsesEventFactory {
 
-	/**
-	 * Constructs an {@linkplain UsesEvent}.
-	 *
-	 * @param category
-	 *            the {@linkplain EventCategory}.
-	 * @param uses
-	 *            the {@linkplain Uses}.
-	 *
-	 * @return a {@linkplain UsesEvent}.
-	 */
-	UsesEvent build(EventCategory category, Uses uses);
+    /**
+     * Constructs an {@linkplain UsesEvent}.
+     *
+     * @param category the {@linkplain EventCategory}.
+     * @param uses     the {@linkplain Uses}.
+     * @return a {@linkplain UsesEvent}.
+     */
+    UsesEvent build(EventCategory category, Uses uses);
 
 }

@@ -11,16 +11,13 @@ import io.github.runtimemodels.chazm.entity.Pmf;
 @FunctionalInterface
 public interface PmfEventFactory {
 
-	/**
-	 * Constructs an {@linkplain PmfEvent}.
-	 *
-	 * @param category
-	 *            the {@linkplain EventCategory}.
-	 * @param pmf
-	 *            the {@linkplain Pmf}.
-	 *
-	 * @return a {@linkplain PmfEvent}.
-	 */
-	PmfEvent build(EventCategory category, Pmf pmf);
+    /**
+     * Constructs an {@linkplain PmfEvent}.
+     *
+     * @param category the {@linkplain EventCategory}.
+     * @param pmf      the {@linkplain Pmf}.
+     * @return a {@linkplain PmfEvent}.
+     */
+    PmfEvent build(EventCategory category, Pmf pmf);
 
 }

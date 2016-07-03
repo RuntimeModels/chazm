@@ -12,17 +12,14 @@ import io.github.runtimemodels.chazm.entity.Capability;
 @FunctionalInterface
 public interface PossessesFactory {
 
-	/**
-	 * Constructs a {@linkplain Possesses}.
-	 *
-	 * @param agent
-	 *            the {@linkplain Agent} of the {@linkplain Possesses}.
-	 * @param capability
-	 *            the {@linkplain Capability} of the {@linkplain Possesses}.
-	 * @param score
-	 *            the <code>double</code> score of the {@linkplain Possesses}.
-	 * @return a {@linkplain Possesses}.
-	 */
-	Possesses buildPossesses(Agent agent, Capability capability, double score);
+    /**
+     * Constructs a {@linkplain Possesses}.
+     *
+     * @param agent      the {@linkplain Agent} of the {@linkplain Possesses}.
+     * @param capability the {@linkplain Capability} of the {@linkplain Possesses}.
+     * @param score      the <code>double</code> score of the {@linkplain Possesses}.
+     * @return a {@linkplain Possesses}.
+     */
+    Possesses buildPossesses(Agent agent, Capability capability, double score);
 
 }

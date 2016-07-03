@@ -18,26 +18,25 @@ import java.io.Serializable;
  * implementation can be used correctly across multiple JVMs because {@linkplain UniqueId} is {@linkplain Serializable}, so {@linkplain UniqueId} should
  * de-serialize properly.
  *
+ * @param <T> the type of the {@linkplain UniqueId}.
  * @author Christopher Zhong
- * @param <T>
- *            the type of the {@linkplain UniqueId}.
  * @since 4.0
  */
 @FunctionalInterface
 public interface UniqueId<T> extends Serializable {
-	/**
-	 * Returns the type of this {@linkplain UniqueId}.
-	 *
-	 * @return the type.
-	 */
-	Class<T> getType();
+    /**
+     * Returns the type of this {@linkplain UniqueId}.
+     *
+     * @return the type.
+     */
+    Class<T> getType();
 
-	@Override
-	boolean equals(Object object);
+    @Override
+    boolean equals(Object object);
 
-	@Override
-	int hashCode();
+    @Override
+    int hashCode();
 
-	@Override
-	String toString();
+    @Override
+    String toString();
 }

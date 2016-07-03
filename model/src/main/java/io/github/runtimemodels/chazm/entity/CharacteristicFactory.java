@@ -11,13 +11,12 @@ import io.github.runtimemodels.chazm.id.UniqueId;
 @FunctionalInterface
 public interface CharacteristicFactory {
 
-	/**
-	 * Constructs a {@linkplain Characteristic}.
-	 *
-	 * @param id
-	 *            the {@linkplain UniqueId} that represents the {@linkplain Characteristic}.
-	 * @return a {@linkplain Characteristic}.
-	 */
-	Characteristic buildCharacteristic(UniqueId<Characteristic> id);
+    /**
+     * Constructs a {@linkplain Characteristic}.
+     *
+     * @param id the {@linkplain UniqueId} that represents the {@linkplain Characteristic}.
+     * @return a {@linkplain Characteristic}.
+     */
+    Characteristic buildCharacteristic(UniqueId<Characteristic> id);
 
 }

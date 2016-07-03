@@ -1,10 +1,10 @@
 dependencies {
-	compile project(":${rootProject.name}-api")
-	compile 'org.slf4j:slf4j-api'
-	compile 'javax:javaee-api'
-	compile 'com.google.inject:guice'
-	compile 'com.google.inject.extensions:guice-assistedinject'
+    compile project(':chazm-api')
+    compile 'org.slf4j:slf4j-api'
+    compile 'javax:javaee-api'
+    compile 'com.google.inject:guice'
+    compile 'com.google.inject.extensions:guice-assistedinject'
 
-	testCompile 'junit:junit'
-	testCompile 'org.jmockit:jmockit'
+    testCompile 'junit:junit'
+    testCompile 'org.jmockit:jmockit'
 }

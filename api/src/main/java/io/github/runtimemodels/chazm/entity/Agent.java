@@ -10,18 +10,18 @@ import io.github.runtimemodels.chazm.id.Identifiable;
  * @since 3.4
  */
 public interface Agent extends Identifiable<Agent> {
-	/**
-	 * The {@linkplain ContactInfo} defines the interface on how {@linkplain Agent}s can be contacted.
-	 *
-	 * @author Christopher Zhong
-	 * @since 7.0.0
-	 */
-	interface ContactInfo {}
+    /**
+     * The {@linkplain ContactInfo} defines the interface on how {@linkplain Agent}s can be contacted.
+     *
+     * @author Christopher Zhong
+     * @since 7.0.0
+     */
+    interface ContactInfo {}
 
-	/**
-	 * Returns the {@linkplain ContactInfo} for this {@linkplain Agent}.
-	 *
-	 * @return the {@linkplain ContactInfo} of this {@linkplain Agent}.
-	 */
-	ContactInfo getContactInfo();
+    /**
+     * Returns the {@linkplain ContactInfo} for this {@linkplain Agent}.
+     *
+     * @return the {@linkplain ContactInfo} of this {@linkplain Agent}.
+     */
+    ContactInfo getContactInfo();
 }

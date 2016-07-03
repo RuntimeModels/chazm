@@ -1,137 +1,138 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema targetNamespace="model:organization-model" elementFormDefault="unqualified" attributeFormDefault="unqualified" xmlns="http://www.w3.org/2001/XMLSchema"
-	xmlns:tns="model:organization-model" version="1">
-	<element name="RoleDiagram" type="tns:DiagramType" />
-	<element name="Agent" type="tns:AgentType" />
-	<element name="Attribute" type="tns:AttributeType" />
-	<element name="Capability" type="tns:EntityType" />
-	<element name="Characteristic" type="tns:EntityType" />
-	<element name="InstanceGoal" type="tns:InstanceGoalType" />
-	<element name="Pmf" type="tns:PmfType" />
-	<element name="Policy" type="tns:EntityType" />
-	<element name="Role" type="tns:RoleType" />
-	<element name="Goal" type="tns:EntityType" />
+<schema targetNamespace="model:organization-model" elementFormDefault="unqualified" attributeFormDefault="unqualified"
+        xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:tns="model:organization-model" version="1">
+    <element name="RoleDiagram" type="tns:DiagramType"/>
+    <element name="Agent" type="tns:AgentType"/>
+    <element name="Attribute" type="tns:AttributeType"/>
+    <element name="Capability" type="tns:EntityType"/>
+    <element name="Characteristic" type="tns:EntityType"/>
+    <element name="InstanceGoal" type="tns:InstanceGoalType"/>
+    <element name="Pmf" type="tns:PmfType"/>
+    <element name="Policy" type="tns:EntityType"/>
+    <element name="Role" type="tns:RoleType"/>
+    <element name="Goal" type="tns:EntityType"/>
 
-	<element name="achieves" type="tns:RelationType" />
-	<element name="assignment" type="tns:AssignmentType" />
-	<element name="contains" type="tns:ContainsType" />
-	<element name="has" type="tns:HasType" />
-	<element name="moderates" type="tns:RelationType" />
-	<element name="needs" type="tns:RelationType" />
-	<element name="possesses" type="tns:PossessesType" />
-	<element name="requires" type="tns:RelationType" />
-	<element name="uses" type="tns:RelationType" />
+    <element name="achieves" type="tns:RelationType"/>
+    <element name="assignment" type="tns:AssignmentType"/>
+    <element name="contains" type="tns:ContainsType"/>
+    <element name="has" type="tns:HasType"/>
+    <element name="moderates" type="tns:RelationType"/>
+    <element name="needs" type="tns:RelationType"/>
+    <element name="possesses" type="tns:PossessesType"/>
+    <element name="requires" type="tns:RelationType"/>
+    <element name="uses" type="tns:RelationType"/>
 
-	<element name="child" type="string" />
+    <element name="child" type="string"/>
 
-	<attributeGroup name="EntityAttributes">
-		<attribute name="id" type="string" use="required" />
-		<attribute name="name" type="string" use="required" />
-	</attributeGroup>
+    <attributeGroup name="EntityAttributes">
+        <attribute name="id" type="string" use="required"/>
+        <attribute name="name" type="string" use="required"/>
+    </attributeGroup>
 
-	<complexType name="DiagramType">
-		<choice minOccurs="0" maxOccurs="unbounded">
-			<element ref="tns:Agent" />
-			<element ref="tns:assignment" />
-			<element ref="tns:Attribute" />
-			<element ref="tns:Capability" />
-			<element ref="tns:Characteristic" />
-			<element ref="tns:InstanceGoal" />
-			<element ref="tns:Pmf" />
-			<element ref="tns:Policy" />
-			<element ref="tns:Role" />
-			<element ref="tns:Goal" />
-		</choice>
-	</complexType>
-	<complexType name="EntityType">
-		<attributeGroup ref="tns:EntityAttributes" />
-	</complexType>
-	<complexType name="AgentType">
-		<complexContent>
-			<extension base="tns:EntityType">
-				<choice minOccurs="0" maxOccurs="unbounded">
-					<element ref="tns:has" />
-					<element ref="tns:possesses" />
-				</choice>
-			</extension>
-		</complexContent>
-	</complexType>
-	<complexType name="AttributeType">
-		<complexContent>
-			<extension base="tns:EntityType">
-				<attribute name="type" type="tns:AttributeTypeEnums" use="required" />
-			</extension>
-		</complexContent>
-	</complexType>
-	<complexType name="InstanceGoalType">
-		<complexContent>
-			<extension base="tns:EntityType">
-				<attribute name="specification" type="string" use="required" />
-			</extension>
-		</complexContent>
-	</complexType>
-	<complexType name="PmfType">
-		<complexContent>
-			<extension base="tns:EntityType">
-				<choice minOccurs="0" maxOccurs="unbounded">
-					<element ref="tns:moderates" />
-				</choice>
-			</extension>
-		</complexContent>
-	</complexType>
-	<complexType name="RoleType">
-		<complexContent>
-			<extension base="tns:EntityType">
-				<choice minOccurs="0" maxOccurs="unbounded">
-					<element ref="tns:achieves" />
-					<element ref="tns:contains" />
-					<element ref="tns:needs" />
-					<element ref="tns:requires" />
-					<element ref="tns:uses" />
-				</choice>
-			</extension>
-		</complexContent>
-	</complexType>
-	<complexType name="RelationType">
-		<choice minOccurs="0" maxOccurs="unbounded">
-			<element ref="tns:child" />
-		</choice>
-	</complexType>
-	<complexType name="AssignmentType">
-		<attribute name="agent" type="string" use="required" />
-		<attribute name="role" type="string" use="required" />
-		<attribute name="goal" type="string" use="required" />
-	</complexType>
-	<complexType name="ContainsType">
-		<complexContent>
-			<extension base="tns:RelationType">
-				<attribute name="value" type="double" use="required" />
-			</extension>
-		</complexContent>
-	</complexType>
-	<complexType name="HasType">
-		<complexContent>
-			<extension base="tns:RelationType">
-				<attribute name="value" type="double" use="required" />
-			</extension>
-		</complexContent>
-	</complexType>
-	<complexType name="PossessesType">
-		<complexContent>
-			<extension base="tns:RelationType">
-				<attribute name="score" type="double" use="required" />
-			</extension>
-		</complexContent>
-	</complexType>
+    <complexType name="DiagramType">
+        <choice minOccurs="0" maxOccurs="unbounded">
+            <element ref="tns:Agent"/>
+            <element ref="tns:assignment"/>
+            <element ref="tns:Attribute"/>
+            <element ref="tns:Capability"/>
+            <element ref="tns:Characteristic"/>
+            <element ref="tns:InstanceGoal"/>
+            <element ref="tns:Pmf"/>
+            <element ref="tns:Policy"/>
+            <element ref="tns:Role"/>
+            <element ref="tns:Goal"/>
+        </choice>
+    </complexType>
+    <complexType name="EntityType">
+        <attributeGroup ref="tns:EntityAttributes"/>
+    </complexType>
+    <complexType name="AgentType">
+        <complexContent>
+            <extension base="tns:EntityType">
+                <choice minOccurs="0" maxOccurs="unbounded">
+                    <element ref="tns:has"/>
+                    <element ref="tns:possesses"/>
+                </choice>
+            </extension>
+        </complexContent>
+    </complexType>
+    <complexType name="AttributeType">
+        <complexContent>
+            <extension base="tns:EntityType">
+                <attribute name="type" type="tns:AttributeTypeEnums" use="required"/>
+            </extension>
+        </complexContent>
+    </complexType>
+    <complexType name="InstanceGoalType">
+        <complexContent>
+            <extension base="tns:EntityType">
+                <attribute name="specification" type="string" use="required"/>
+            </extension>
+        </complexContent>
+    </complexType>
+    <complexType name="PmfType">
+        <complexContent>
+            <extension base="tns:EntityType">
+                <choice minOccurs="0" maxOccurs="unbounded">
+                    <element ref="tns:moderates"/>
+                </choice>
+            </extension>
+        </complexContent>
+    </complexType>
+    <complexType name="RoleType">
+        <complexContent>
+            <extension base="tns:EntityType">
+                <choice minOccurs="0" maxOccurs="unbounded">
+                    <element ref="tns:achieves"/>
+                    <element ref="tns:contains"/>
+                    <element ref="tns:needs"/>
+                    <element ref="tns:requires"/>
+                    <element ref="tns:uses"/>
+                </choice>
+            </extension>
+        </complexContent>
+    </complexType>
+    <complexType name="RelationType">
+        <choice minOccurs="0" maxOccurs="unbounded">
+            <element ref="tns:child"/>
+        </choice>
+    </complexType>
+    <complexType name="AssignmentType">
+        <attribute name="agent" type="string" use="required"/>
+        <attribute name="role" type="string" use="required"/>
+        <attribute name="goal" type="string" use="required"/>
+    </complexType>
+    <complexType name="ContainsType">
+        <complexContent>
+            <extension base="tns:RelationType">
+                <attribute name="value" type="double" use="required"/>
+            </extension>
+        </complexContent>
+    </complexType>
+    <complexType name="HasType">
+        <complexContent>
+            <extension base="tns:RelationType">
+                <attribute name="value" type="double" use="required"/>
+            </extension>
+        </complexContent>
+    </complexType>
+    <complexType name="PossessesType">
+        <complexContent>
+            <extension base="tns:RelationType">
+                <attribute name="score" type="double" use="required"/>
+            </extension>
+        </complexContent>
+    </complexType>
 
-	<simpleType name="AttributeTypeEnums">
-		<restriction base="string">
-			<enumeration value="POSITIVE_QUANTITY" />
-			<enumeration value="NEGATIVE_QUANTITY" />
-			<enumeration value="POSITIVE_QUALITY" />
-			<enumeration value="NEGATIVE_QUALITY" />
-			<enumeration value="POSITIVE_UNBOUNDED" />
-			<enumeration value="NEGATIVE_UNBOUNDED" />
-		</restriction>
-	</simpleType>
+    <simpleType name="AttributeTypeEnums">
+        <restriction base="string">
+            <enumeration value="POSITIVE_QUANTITY"/>
+            <enumeration value="NEGATIVE_QUANTITY"/>
+            <enumeration value="POSITIVE_QUALITY"/>
+            <enumeration value="NEGATIVE_QUALITY"/>
+            <enumeration value="POSITIVE_UNBOUNDED"/>
+            <enumeration value="NEGATIVE_UNBOUNDED"/>
+        </restriction>
+    </simpleType>
 </schema>

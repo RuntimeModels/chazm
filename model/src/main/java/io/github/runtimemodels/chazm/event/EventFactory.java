@@ -25,5 +25,5 @@ package io.github.runtimemodels.chazm.event;
  * @since 7.0.0
  */
 public interface EventFactory extends AchievesEventFactory, AgentEventFactory, AssignmentEventFactory, AttributeEventFactory, CapabilityEventFactory,
-		CharacteristicEventFactory, ContainsEventFactory, HasEventFactory, InstanceGoalEventFactory, ModeratesEventFactory, NeedsEventFactory, PmfEventFactory,
-		PolicyEventFactory, PossessesEventFactory, RequiresEventFactory, RoleEventFactory, SpecificationGoalEventFactory, UsesEventFactory {}
+        CharacteristicEventFactory, ContainsEventFactory, HasEventFactory, InstanceGoalEventFactory, ModeratesEventFactory, NeedsEventFactory, PmfEventFactory,
+        PolicyEventFactory, PossessesEventFactory, RequiresEventFactory, RoleEventFactory, SpecificationGoalEventFactory, UsesEventFactory {}

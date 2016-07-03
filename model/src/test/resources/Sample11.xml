@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- invalid value in the 'value' attribute of the 'has' element -->
 <RoleDiagram>
-	<Agent id="15cf816f-fcde-4e5e-8758-e004f48e4ee3" name="Agent 1">
-		<has value="a">
-			<child>48ece1db-516b-4120-a608-5589001a79d0</child>
-		</has>
-	</Agent>
-	<Attribute id="48ece1db-516b-4120-a608-5589001a79d0" name="Attribute 1" type="POSITIVE_QUANTITY" />
+    <Agent id="15cf816f-fcde-4e5e-8758-e004f48e4ee3" name="Agent 1">
+        <has value="a">
+            <child>48ece1db-516b-4120-a608-5589001a79d0</child>
+        </has>
+    </Agent>
+    <Attribute id="48ece1db-516b-4120-a608-5589001a79d0" name="Attribute 1" type="POSITIVE_QUANTITY"/>
 </RoleDiagram>

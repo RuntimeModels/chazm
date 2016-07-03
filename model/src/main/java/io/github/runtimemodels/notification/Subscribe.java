@@ -10,12 +10,12 @@ import java.lang.annotation.Target;
  * <p>
  * Any methods that have the {@linkplain Subscribe} annotation must have exactly one parameter. The example below show a {@linkplain Subscriber} that subscribes
  * to two different types of event.
- *
+ * <p>
  * <pre>
  * &#064;Subscribe
  * public void onEvent(String event);
  * </pre>
- *
+ * <p>
  * <pre>
  * &#064;Subscribe
  * public void someOtherEvent(Integer event);

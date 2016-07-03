@@ -12,17 +12,17 @@ import io.github.runtimemodels.chazm.entity.Pmf;
  * @since 7.0.0
  */
 public interface Moderates {
-	/**
-	 * Returns the {@linkplain Pmf} of this {@linkplain Moderates}.
-	 *
-	 * @return the {@linkplain Pmf} of this {@linkplain Moderates}.
-	 */
-	Pmf getPmf();
+    /**
+     * Returns the {@linkplain Pmf} of this {@linkplain Moderates}.
+     *
+     * @return the {@linkplain Pmf} of this {@linkplain Moderates}.
+     */
+    Pmf getPmf();
 
-	/**
-	 * Returns the {@linkplain Attribute} of this {@linkplain Moderates}.
-	 *
-	 * @return the {@linkplain Attribute} of this {@linkplain Moderates}.
-	 */
-	Attribute getAttribute();
+    /**
+     * Returns the {@linkplain Attribute} of this {@linkplain Moderates}.
+     *
+     * @return the {@linkplain Attribute} of this {@linkplain Moderates}.
+     */
+    Attribute getAttribute();
 }

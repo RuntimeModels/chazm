@@ -11,16 +11,13 @@ import io.github.runtimemodels.chazm.relation.Has;
 @FunctionalInterface
 public interface HasEventFactory {
 
-	/**
-	 * Constructs an {@linkplain HasEvent}.
-	 *
-	 * @param category
-	 *            the {@linkplain EventCategory}.
-	 * @param has
-	 *            the {@linkplain Has}.
-	 *
-	 * @return a {@linkplain HasEvent}.
-	 */
-	HasEvent build(EventCategory category, Has has);
+    /**
+     * Constructs an {@linkplain HasEvent}.
+     *
+     * @param category the {@linkplain EventCategory}.
+     * @param has      the {@linkplain Has}.
+     * @return a {@linkplain HasEvent}.
+     */
+    HasEvent build(EventCategory category, Has has);
 
 }

@@ -10,16 +10,12 @@ package io.github.runtimemodels.chazm.ui;
 import io.github.runtimemodels.chazm.Organization;
 import io.github.runtimemodels.chazm.entity.Role;
 
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import javax.swing.JList;
-import javax.swing.JSplitPane;
-import javax.swing.ListSelectionModel;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.event.ListSelectionEvent;
 
 /**
  * The <code>RoleVisualizationPanel</code> class is a Swing component to visualize the <code>Role</code> currently in the <code>Organization</code>.
@@ -29,36 +25,35 @@ import javax.swing.event.ListSelectionEvent;
  */
 public class RoleVisualizationPanel extends AbstractListVisualizationPanel<Role> {
 
-	/**
-	 * Default serial version ID
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * Default serial version ID
+     */
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * Constructs a new instance of <code>RoleVisualizationPanel</code>.
-	 *
-	 * @param organization
-	 *            the <code>Organization</code> that is used to visualize the <code>Role</code>.
-	 */
-	public RoleVisualizationPanel(final Organization organization) {
-		super(organization, "Roles", ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED,
-				JSplitPane.VERTICAL_SPLIT, true, ListSelectionModel.SINGLE_SELECTION, JList.VERTICAL, 10);
-	}
+    /**
+     * Constructs a new instance of <code>RoleVisualizationPanel</code>.
+     *
+     * @param organization the <code>Organization</code> that is used to visualize the <code>Role</code>.
+     */
+    public RoleVisualizationPanel(final Organization organization) {
+        super(organization, "Roles", ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED,
+                JSplitPane.VERTICAL_SPLIT, true, ListSelectionModel.SINGLE_SELECTION, JList.VERTICAL, 10);
+    }
 
-	@Override
-	public void valueChanged(final ListSelectionEvent e) {
-		final Role role = getList().getSelectedValue();
-		if (role != null) {
-			getDetailedInformationPanel().showDetailedInformation(role);
-		}
-	}
+    @Override
+    public void valueChanged(final ListSelectionEvent e) {
+        final Role role = getList().getSelectedValue();
+        if (role != null) {
+            getDetailedInformationPanel().showDetailedInformation(role);
+        }
+    }
 
-	@Override
-	List<Role> getCollection() {
-		final List<Role> roles = new ArrayList<>(getOrganization().getRoles());
-		final Comparator<Role> comparator = (role1, role2) -> role1.toString().compareTo(role2.toString());
-		Collections.sort(roles, comparator);
-		return roles;
-	}
+    @Override
+    List<Role> getCollection() {
+        final List<Role> roles = new ArrayList<>(getOrganization().getRoles());
+        final Comparator<Role> comparator = (role1, role2) -> role1.toString().compareTo(role2.toString());
+        Collections.sort(roles, comparator);
+        return roles;
+    }
 
 }

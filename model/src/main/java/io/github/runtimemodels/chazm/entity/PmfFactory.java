@@ -11,13 +11,12 @@ import io.github.runtimemodels.chazm.id.UniqueId;
 @FunctionalInterface
 public interface PmfFactory {
 
-	/**
-	 * Constructs a {@linkplain Pmf}.
-	 *
-	 * @param id
-	 *            the {@linkplain UniqueId} that represents the {@linkplain Pmf}.
-	 * @return a {@linkplain Pmf}.
-	 */
-	Pmf buildPmf(UniqueId<Pmf> id);
+    /**
+     * Constructs a {@linkplain Pmf}.
+     *
+     * @param id the {@linkplain UniqueId} that represents the {@linkplain Pmf}.
+     * @return a {@linkplain Pmf}.
+     */
+    Pmf buildPmf(UniqueId<Pmf> id);
 
 }

@@ -11,16 +11,13 @@ import io.github.runtimemodels.chazm.relation.Achieves;
 @FunctionalInterface
 public interface AchievesEventFactory {
 
-	/**
-	 * Constructs an {@linkplain AchievesEvent}.
-	 *
-	 * @param category
-	 *            the {@linkplain EventCategory}.
-	 * @param achieves
-	 *            the {@linkplain Achieves}.
-	 *
-	 * @return an {@linkplain AchievesEvent}.
-	 */
-	AchievesEvent build(EventCategory category, Achieves achieves);
+    /**
+     * Constructs an {@linkplain AchievesEvent}.
+     *
+     * @param category the {@linkplain EventCategory}.
+     * @param achieves the {@linkplain Achieves}.
+     * @return an {@linkplain AchievesEvent}.
+     */
+    AchievesEvent build(EventCategory category, Achieves achieves);
 
 }

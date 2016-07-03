@@ -1,8 +1,7 @@
 package io.github.runtimemodels.notification;
 
-import io.github.runtimemodels.aop.validation.ValidationModule;
-
 import com.google.inject.AbstractModule;
+import io.github.runtimemodels.aop.validation.ValidationModule;
 
 /**
  * The {@linkplain NotificationModule} class provides a Guice binding module for events (such as pub/sub event notifications).
@@ -12,12 +11,12 @@ import com.google.inject.AbstractModule;
  */
 public class NotificationModule extends AbstractModule {
 
-	@Override
-	protected void configure() {
-		bind(Mediator.class).to(DefaultMediator.class);
-		bind(Publisher.class).to(DefaultPublisher.class);
-		bind(Subscriber.class).to(DefaultSubscriber.class);
-		install(new ValidationModule());
-	}
+    @Override
+    protected void configure() {
+        bind(Mediator.class).to(DefaultMediator.class);
+        bind(Publisher.class).to(DefaultPublisher.class);
+        bind(Subscriber.class).to(DefaultSubscriber.class);
+        install(new ValidationModule());
+    }
 
 }

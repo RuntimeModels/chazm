@@ -14,17 +14,17 @@ import io.github.runtimemodels.chazm.entity.SpecificationGoal;
  * @since 7.0.0
  */
 public interface Achieves {
-	/**
-	 * Returns the {@linkplain Role} of this {@linkplain Achieves}.
-	 *
-	 * @return the {@linkplain Role} of this {@linkplain Achieves}.
-	 */
-	Role getRole();
+    /**
+     * Returns the {@linkplain Role} of this {@linkplain Achieves}.
+     *
+     * @return the {@linkplain Role} of this {@linkplain Achieves}.
+     */
+    Role getRole();
 
-	/**
-	 * Returns the {@linkplain SpecificationGoal} of this {@linkplain Achieves}.
-	 *
-	 * @return the {@linkplain SpecificationGoal} of this {@linkplain Achieves}.
-	 */
-	SpecificationGoal getGoal();
+    /**
+     * Returns the {@linkplain SpecificationGoal} of this {@linkplain Achieves}.
+     *
+     * @return the {@linkplain SpecificationGoal} of this {@linkplain Achieves}.
+     */
+    SpecificationGoal getGoal();
 }

@@ -1,7 +1,7 @@
 rootProject.name = 'chazm'
 
-include "${rootProject.name}-api", "${rootProject.name}-model", "${rootProject.name}-ui"
+include 'chazm-api', 'chazm-model', 'chazm-ui'
 
-project(":${rootProject.name}-api").projectDir = file('api')
-project(":${rootProject.name}-model").projectDir = file('model')
-project(":${rootProject.name}-ui").projectDir = file('ui')
+project(':chazm-api').projectDir = file('api')
+project(':chazm-model').projectDir = file('model')
+project(':chazm-ui').projectDir = file('ui')

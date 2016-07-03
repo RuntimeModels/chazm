@@ -17,24 +17,24 @@ import io.github.runtimemodels.chazm.id.Identifiable;
  * @since 7.0.0
  */
 public interface Assignment extends Identifiable<Assignment> {
-	/**
-	 * Returns the {@linkplain Agent} of this {@linkplain Assignment}.
-	 *
-	 * @return the {@linkplain Agent} of this {@linkplain Assignment}.
-	 */
-	Agent getAgent();
+    /**
+     * Returns the {@linkplain Agent} of this {@linkplain Assignment}.
+     *
+     * @return the {@linkplain Agent} of this {@linkplain Assignment}.
+     */
+    Agent getAgent();
 
-	/**
-	 * Returns the {@linkplain Role} of this {@linkplain Assignment}.
-	 *
-	 * @return the {@linkplain Role} of this {@linkplain Assignment}.
-	 */
-	Role getRole();
+    /**
+     * Returns the {@linkplain Role} of this {@linkplain Assignment}.
+     *
+     * @return the {@linkplain Role} of this {@linkplain Assignment}.
+     */
+    Role getRole();
 
-	/**
-	 * Returns the {@linkplain InstanceGoal} of this {@linkplain Assignment}.
-	 *
-	 * @return the {@linkplain InstanceGoal} of this {@linkplain Assignment}.
-	 */
-	InstanceGoal getGoal();
+    /**
+     * Returns the {@linkplain InstanceGoal} of this {@linkplain Assignment}.
+     *
+     * @return the {@linkplain InstanceGoal} of this {@linkplain Assignment}.
+     */
+    InstanceGoal getGoal();
 }

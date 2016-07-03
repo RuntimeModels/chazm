@@ -12,17 +12,14 @@ import io.github.runtimemodels.chazm.entity.Attribute;
 @FunctionalInterface
 public interface HasFactory {
 
-	/**
-	 * Constructs a {@linkplain Has}.
-	 *
-	 * @param agent
-	 *            the {@linkplain Agent} of the {@linkplain Has}.
-	 * @param attribute
-	 *            the {@linkplain Attribute} of the {@linkplain Has}.
-	 * @param value
-	 *            the <code>double</code> value of the {@linkplain Has}.
-	 * @return a {@linkplain Has}.
-	 */
-	Has buildHas(Agent agent, Attribute attribute, double value);
+    /**
+     * Constructs a {@linkplain Has}.
+     *
+     * @param agent     the {@linkplain Agent} of the {@linkplain Has}.
+     * @param attribute the {@linkplain Attribute} of the {@linkplain Has}.
+     * @param value     the <code>double</code> value of the {@linkplain Has}.
+     * @return a {@linkplain Has}.
+     */
+    Has buildHas(Agent agent, Attribute attribute, double value);
 
 }

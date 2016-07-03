@@ -8,28 +8,25 @@ package io.github.runtimemodels.notification;
  */
 public interface Mediator {
 
-	/**
-	 * Pushes an event to interested {@linkplain Subscriber}s.
-	 *
-	 * @param event
-	 *            the event.
-	 */
-	<T> void post(T event);
+    /**
+     * Pushes an event to interested {@linkplain Subscriber}s.
+     *
+     * @param event the event.
+     */
+    <T> void post(T event);
 
-	/**
-	 * Registers a {@linkplain Subscriber} with this {@linkplain Mediator}.
-	 *
-	 * @param subscriber
-	 *            the {@linkplain Subscriber}.
-	 */
-	void register(Subscriber subscriber);
+    /**
+     * Registers a {@linkplain Subscriber} with this {@linkplain Mediator}.
+     *
+     * @param subscriber the {@linkplain Subscriber}.
+     */
+    void register(Subscriber subscriber);
 
-	/**
-	 * Unregisters a {@linkplain Subscriber} from this {@linkplain Mediator}.
-	 *
-	 * @param subscriber
-	 *            the {@linkplain Subscriber}.
-	 */
-	void unregister(Subscriber subscriber);
+    /**
+     * Unregisters a {@linkplain Subscriber} from this {@linkplain Mediator}.
+     *
+     * @param subscriber the {@linkplain Subscriber}.
+     */
+    void unregister(Subscriber subscriber);
 
 }

@@ -9,12 +9,11 @@ package io.github.runtimemodels.notification;
  */
 public interface Publisher {
 
-	/**
-	 * Post an event.
-	 *
-	 * @param event
-	 *            the event.
-	 */
-	<T> void post(final T event);
+    /**
+     * Post an event.
+     *
+     * @param event the event.
+     */
+    <T> void post(final T event);
 
 }

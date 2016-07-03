@@ -11,17 +11,17 @@ import io.github.runtimemodels.chazm.entity.Role;
  * @since 7.0.0
  */
 public interface Needs {
-	/**
-	 * Returns the {@linkplain Role} of this {@linkplain Needs}.
-	 *
-	 * @return the {@linkplain Role} of this {@linkplain Needs}.
-	 */
-	Role getRole();
+    /**
+     * Returns the {@linkplain Role} of this {@linkplain Needs}.
+     *
+     * @return the {@linkplain Role} of this {@linkplain Needs}.
+     */
+    Role getRole();
 
-	/**
-	 * Returns the {@linkplain Attribute} of this {@linkplain Needs}.
-	 *
-	 * @return the {@linkplain Attribute} of this {@linkplain Needs}.
-	 */
-	Attribute getAttribute();
+    /**
+     * Returns the {@linkplain Attribute} of this {@linkplain Needs}.
+     *
+     * @return the {@linkplain Attribute} of this {@linkplain Needs}.
+     */
+    Attribute getAttribute();
 }

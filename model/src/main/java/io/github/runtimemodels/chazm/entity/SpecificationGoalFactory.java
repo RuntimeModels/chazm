@@ -11,13 +11,12 @@ import io.github.runtimemodels.chazm.id.UniqueId;
 @FunctionalInterface
 public interface SpecificationGoalFactory {
 
-	/**
-	 * Constructs a {@linkplain SpecificationGoal}.
-	 *
-	 * @param id
-	 *            the {@linkplain UniqueId} that represents the {@linkplain SpecificationGoal}.
-	 * @return a {@linkplain SpecificationGoal}.
-	 */
-	SpecificationGoal buildSpecificationGoal(UniqueId<SpecificationGoal> id);
+    /**
+     * Constructs a {@linkplain SpecificationGoal}.
+     *
+     * @param id the {@linkplain UniqueId} that represents the {@linkplain SpecificationGoal}.
+     * @return a {@linkplain SpecificationGoal}.
+     */
+    SpecificationGoal buildSpecificationGoal(UniqueId<SpecificationGoal> id);
 
 }

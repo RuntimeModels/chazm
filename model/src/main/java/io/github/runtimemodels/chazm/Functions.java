@@ -9,6 +9,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 class Functions {
 
-	final Map<UniqueId<Role>, Goodness> goodnesses = new ConcurrentHashMap<>();
+    final Map<UniqueId<Role>, Goodness> goodnesses = new ConcurrentHashMap<>();
 
 }

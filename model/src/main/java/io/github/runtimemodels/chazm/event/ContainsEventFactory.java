@@ -11,16 +11,13 @@ import io.github.runtimemodels.chazm.relation.Contains;
 @FunctionalInterface
 public interface ContainsEventFactory {
 
-	/**
-	 * Constructs an {@linkplain ContainsEvent}.
-	 *
-	 * @param category
-	 *            the {@linkplain EventCategory}.
-	 * @param contains
-	 *            the {@linkplain Contains}.
-	 *
-	 * @return a {@linkplain ContainsEvent}.
-	 */
-	ContainsEvent build(EventCategory category, Contains contains);
+    /**
+     * Constructs an {@linkplain ContainsEvent}.
+     *
+     * @param category the {@linkplain EventCategory}.
+     * @param contains the {@linkplain Contains}.
+     * @return a {@linkplain ContainsEvent}.
+     */
+    ContainsEvent build(EventCategory category, Contains contains);
 
 }
