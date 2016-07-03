@@ -80,6 +80,7 @@ public class ExecutionTimeTest {
                 result = ExecutionTimeTest.class;
 
                 method.getName();
+                minTimes = 0;
                 result = "name";
 
                 type.getTypeName();
@@ -92,9 +93,6 @@ public class ExecutionTimeTest {
         assertThat(result, is(equalTo(true)));
         new Verifications() {
             {
-                invocation.proceed();
-                times = 1;
-
                 logger.trace("{}: {} nanoseconds: {} {}.{}()", ExecutionTime.class.getSimpleName(), any, "type name", ExecutionTimeTest.class.getSimpleName(),
                         "name");
                 times = 1;
