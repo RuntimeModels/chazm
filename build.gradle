@@ -81,7 +81,7 @@ coveralls {
     jacocoReportPath = "${buildDir}/reports/jacoco/jacocoReports/jacocoReports.xml"
 }
 
-task jacocoTestReports(type: JacocoReport) {
+task jacocoTestReport(type: JacocoReport) {
     dependsOn subprojects.jacocoTestReport
 
     sourceDirectories = files(subprojects.sourceSets.main.java.srcDirs)
