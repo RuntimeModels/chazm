@@ -34,7 +34,7 @@ subprojects {
     dependencyManagement {
         dependencies {
             dependency 'javax:javaee-api:7.0'
-            dependency 'org.jmockit:jmockit:1.23'
+            dependency 'org.jmockit:jmockit:1.25'
         }
         imports {
             mavenBom 'io.spring.platform:platform-bom:2.0.5.RELEASE'
@@ -102,7 +102,7 @@ task jacocoTestReport(type: JacocoReport) {
 }
 
 tasks.coveralls {
-    dependsOn jacocoTestReports
+    dependsOn jacocoTestReport
 }
 
 task wrapper(type: Wrapper) {
