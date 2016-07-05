@@ -4,6 +4,7 @@ import com.google.inject.assistedinject.Assisted;
 import io.github.runtimemodels.chazm.entity.Pmf;
 import io.github.runtimemodels.chazm.entity.Role;
 import io.github.runtimemodels.message.M;
+import lombok.Getter;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -11,7 +12,9 @@ import java.util.Objects;
 
 class UsesRelation implements Uses {
 
+    @Getter
     private final Role role;
+    @Getter
     private final Pmf pmf;
     private transient Integer hashCode = null;
     private transient String toString = null;
@@ -20,16 +23,6 @@ class UsesRelation implements Uses {
     UsesRelation(@NotNull @Assisted final Role role, @NotNull @Assisted final Pmf pmf) {
         this.role = role;
         this.pmf = pmf;
-    }
-
-    @Override
-    public Role getRole() {
-        return role;
-    }
-
-    @Override
-    public Pmf getPmf() {
-        return pmf;
     }
 
     @Override

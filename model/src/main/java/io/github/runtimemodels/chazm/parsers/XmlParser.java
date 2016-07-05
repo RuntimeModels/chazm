@@ -17,8 +17,7 @@ import io.github.runtimemodels.chazm.relation.Assignment;
 import io.github.runtimemodels.chazm.relation.AssignmentFactory;
 import io.github.runtimemodels.message.E;
 import io.github.runtimemodels.message.L;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -46,6 +45,7 @@ import java.util.function.Function;
  * @since 4.0
  */
 @Singleton
+@Slf4j
 class XmlParser {
 
     @FunctionalInterface
@@ -53,7 +53,6 @@ class XmlParser {
         void run() throws XMLStreamException;
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(XmlParser.class);
     private static final String ROLE_DIAGRAM_ELEMENT = "RoleDiagram"; //$NON-NLS-1$
     private static final String AGENT_ELEMENT = "Agent"; //$NON-NLS-1$
     private static final String ATTRIBUTE_ELEMENT = "Attribute"; //$NON-NLS-1$
@@ -108,7 +107,7 @@ class XmlParser {
             final XMLEvent event = reader.nextEvent();
             if (event.isStartElement()) {
                 final StartElement element = event.asStartElement();
-                logger.debug(L.START_TAG.get(), element);
+                log.debug(L.START_TAG.get(), element);
                 final QName name = element.getName();
                 if (ROLE_DIAGRAM_ELEMENT.equals(name.getLocalPart())) {
                     parseDiagram(organization, reader, name);

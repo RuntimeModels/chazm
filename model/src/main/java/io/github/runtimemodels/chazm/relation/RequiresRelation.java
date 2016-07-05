@@ -4,6 +4,7 @@ import com.google.inject.assistedinject.Assisted;
 import io.github.runtimemodels.chazm.entity.Capability;
 import io.github.runtimemodels.chazm.entity.Role;
 import io.github.runtimemodels.message.M;
+import lombok.Getter;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -11,7 +12,9 @@ import java.util.Objects;
 
 class RequiresRelation implements Requires {
 
+    @Getter
     private final Role role;
+    @Getter
     private final Capability capability;
     private transient Integer hashCode = null;
     private transient String toString = null;
@@ -20,16 +23,6 @@ class RequiresRelation implements Requires {
     RequiresRelation(@NotNull @Assisted final Role role, @NotNull @Assisted final Capability capability) {
         this.role = role;
         this.capability = capability;
-    }
-
-    @Override
-    public Role getRole() {
-        return role;
-    }
-
-    @Override
-    public Capability getCapability() {
-        return capability;
     }
 
     @Override

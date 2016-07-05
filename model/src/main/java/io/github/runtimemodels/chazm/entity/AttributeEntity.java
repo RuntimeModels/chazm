@@ -3,6 +3,7 @@ package io.github.runtimemodels.chazm.entity;
 import com.google.inject.assistedinject.Assisted;
 import io.github.runtimemodels.chazm.id.UniqueId;
 import io.github.runtimemodels.message.M;
+import lombok.Getter;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -10,19 +11,15 @@ import java.util.Objects;
 
 class AttributeEntity extends AbstractEntity<Attribute> implements Attribute {
 
-    private final Attribute.Type type;
+    @Getter
+    private final Type type;
     private transient Integer hashCode = null;
     private transient String toString = null;
 
     @Inject
-    AttributeEntity(@NotNull @Assisted final UniqueId<Attribute> id, @NotNull @Assisted final Attribute.Type type) {
+    AttributeEntity(@NotNull @Assisted final UniqueId<Attribute> id, @NotNull @Assisted final Type type) {
         super(id);
         this.type = type;
-    }
-
-    @Override
-    public final Attribute.Type getType() {
-        return type;
     }
 
     @Override

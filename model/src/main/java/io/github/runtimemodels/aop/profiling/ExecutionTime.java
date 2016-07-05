@@ -1,12 +1,10 @@
 package io.github.runtimemodels.aop.profiling;
 
 import io.github.runtimemodels.message.L;
+import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import javax.interceptor.Interceptor;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -15,9 +13,8 @@ import javax.validation.constraints.NotNull;
  * @author Christopher Zhong
  * @since 7.0.0
  */
+@Slf4j
 class ExecutionTime implements MethodInterceptor {
-
-    private static final Logger logger = LoggerFactory.getLogger(ExecutionTime.class);
 
     @Override
     public Object invoke(@NotNull final MethodInvocation invocation) throws Throwable {
@@ -26,7 +23,7 @@ class ExecutionTime implements MethodInterceptor {
             return invocation.proceed();
         } finally {
             final long end = System.nanoTime();
-            logger.trace(L.EXECUTION_TIME.get(), ExecutionTime.class.getSimpleName(), end - start, invocation.getMethod().getGenericReturnType().getTypeName()
+            log.trace(L.EXECUTION_TIME.get(), ExecutionTime.class.getSimpleName(), end - start, invocation.getMethod().getGenericReturnType().getTypeName()
                     .replaceAll("(\\w+\\.)*", ""), invocation.getMethod().getDeclaringClass().getSimpleName(), invocation.getMethod().getName()); //$NON-NLS-1$ //$NON-NLS-2$
 
         }

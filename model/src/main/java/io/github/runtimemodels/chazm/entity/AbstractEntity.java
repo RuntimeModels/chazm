@@ -3,8 +3,9 @@ package io.github.runtimemodels.chazm.entity;
 import io.github.runtimemodels.chazm.id.Identifiable;
 import io.github.runtimemodels.chazm.id.UniqueId;
 import io.github.runtimemodels.message.M;
-
-import javax.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 /**
  * The {@linkplain AbstractEntity} provides an abstract class for entities.
@@ -13,25 +14,18 @@ import javax.validation.constraints.NotNull;
  * @author Christopher Zhong
  * @since 7.0.0
  */
+@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractEntity<T> implements Identifiable<T> {
 
+    @Getter
     private final UniqueId<T> id;
     private transient Integer hashCode = null;
     private transient String toString = null;
 
-    protected AbstractEntity(@NotNull final UniqueId<T> id) {
-        this.id = id;
-    }
-
-    @Override
-    public UniqueId<T> getId() {
-        return id;
-    }
-
     @Override
     public boolean equals(final Object object) {
-        if (object instanceof AbstractEntity) {
-            final AbstractEntity<?> entity = (AbstractEntity<?>) object;
+        if (object instanceof Identifiable) {
+            final Identifiable<?> entity = (Identifiable<?>) object;
             return getId().equals(entity.getId());
         }
         return false;

@@ -1,8 +1,7 @@
 package io.github.runtimemodels.notification;
 
 import io.github.runtimemodels.message.L;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.inject.Singleton;
 import javax.validation.constraints.NotNull;
@@ -18,9 +17,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.StampedLock;
 
 @Singleton
+@Slf4j
 class DefaultMediator implements Mediator {
 
-    private static final Logger logger = LoggerFactory.getLogger(DefaultMediator.class);
     private final Map<Class<?>, Map<Subscriber, Method>> eventSubscribers = new ConcurrentHashMap<>();
     private final Map<Subscriber, Map<Class<?>, Method>> subscriberEvents = new ConcurrentHashMap<>();
 
@@ -116,7 +115,7 @@ class DefaultMediator implements Mediator {
         try {
             method.invoke(subscriber, event);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            logger.warn(L.UNABLE_TO_INVOKE.get(), subscriber.getClass().getName(), method.getName(), event);
+            log.warn(L.UNABLE_TO_INVOKE.get(), subscriber.getClass().getName(), method.getName(), event);
             final long stamp = lock.writeLock();
             try {
                 final Map<Subscriber, Method> m1 = eventSubscribers.get(event.getClass());
@@ -141,9 +140,9 @@ class DefaultMediator implements Mediator {
         try {
             final Map<Subscriber, Method> map = eventSubscribers.computeIfAbsent(type, f -> new ConcurrentHashMap<>());
             if (map.containsKey(subscriber)) {
-                logger.warn(L.SUBSCRIBER_ALREADY_REGISTERED.get(), subscriber, type);
+                log.warn(L.SUBSCRIBER_ALREADY_REGISTERED.get(), subscriber, type);
             } else {
-                logger.info(L.SUBSCRIBER_REGISTERED.get(), subscriber, type, method);
+                log.info(L.SUBSCRIBER_REGISTERED.get(), subscriber, type, method);
                 map.put(subscriber, method);
                 subscriberEvents.computeIfAbsent(subscriber, f -> new ConcurrentHashMap<>()).put(type, method);
             }

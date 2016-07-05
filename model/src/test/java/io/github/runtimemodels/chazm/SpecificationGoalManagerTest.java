@@ -18,7 +18,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("javadoc")
 public class SpecificationGoalManagerTest {
@@ -63,7 +63,7 @@ public class SpecificationGoalManagerTest {
         final SpecificationGoal g1 = entityFactory.buildSpecificationGoal(i1);
         final SpecificationGoal g2 = entityFactory.buildSpecificationGoal(i1);
         exception.expect(is(instanceOf(IllegalArgumentException.class)));
-        exception.expectMessage(equalTo(E.ENTITY_ALREADY_EXISTS.get("SpecificationGoal", "goal1")));
+        exception.expectMessage(equalTo(E.ENTITY_ALREADY_EXISTS.get("SpecificationGoal", SpecificationGoal.class.getName() + ":goal1")));
         assertThat(g1, is(not(sameInstance(g2))));
         o.addSpecificationGoal(g1);
         o.addSpecificationGoal(g2);

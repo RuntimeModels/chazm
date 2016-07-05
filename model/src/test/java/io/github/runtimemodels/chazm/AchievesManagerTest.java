@@ -16,7 +16,7 @@ import org.junit.rules.ExpectedException;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("javadoc")
 public class AchievesManagerTest {
@@ -70,7 +70,7 @@ public class AchievesManagerTest {
         final SpecificationGoal g1 = entityFactory.buildSpecificationGoal(i2);
         o.addSpecificationGoal(g1);
         exception.expect(is(instanceOf(IllegalArgumentException.class)));
-        exception.expectMessage(equalTo(E.ENTITY_DOES_NOT_EXISTS.get("Role", "role1")));
+        exception.expectMessage(equalTo(E.ENTITY_DOES_NOT_EXISTS.get("Role", Role.class.getName() + ":" + "role1")));
         o.addAchieves(i1, i2);
     }
 
@@ -82,7 +82,7 @@ public class AchievesManagerTest {
         final Role r1 = entityFactory.buildRole(i1);
         o.addRole(r1);
         exception.expect(is(instanceOf(IllegalArgumentException.class)));
-        exception.expectMessage(equalTo(E.ENTITY_DOES_NOT_EXISTS.get("SpecificationGoal", "goal1")));
+        exception.expectMessage(equalTo(E.ENTITY_DOES_NOT_EXISTS.get("SpecificationGoal", SpecificationGoal.class.getName() + ":" + "goal1")));
         o.addAchieves(i1, i2);
     }
 
