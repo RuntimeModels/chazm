@@ -43,7 +43,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 @SuppressWarnings({"javadoc", "unchecked"})
 @RunWith(JMockit.class)
@@ -292,7 +292,7 @@ public class XmlParserTest {
         final InputStream inputStream = ClassLoader.getSystemResourceAsStream("Sample7.xml");
 
         exception.expect(XMLStreamException.class);
-        exception.expectMessage(is(equalTo(new IllegalArgumentException(E.ENTITY_ALREADY_EXISTS.get("Capability", "Capability 1")).toString())));
+        exception.expectMessage(is(equalTo(new IllegalArgumentException(E.ENTITY_ALREADY_EXISTS.get("Capability", Capability.class.getName() + ":Capability 1")).toString())));
 
         parser.parse(organization, inputStream);
     }

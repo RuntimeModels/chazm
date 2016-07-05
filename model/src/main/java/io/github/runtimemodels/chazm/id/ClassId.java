@@ -1,15 +1,18 @@
 package io.github.runtimemodels.chazm.id;
 
 import com.google.inject.assistedinject.Assisted;
+import lombok.Getter;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 import static io.github.runtimemodels.chazm.validation.Checks.checkNotNull;
 
 class ClassId<T> extends AbstractId<T> {
 
     private static final long serialVersionUID = 5751013993559212419L;
+    @Getter
     private final Class<?> id;
     private transient Integer hashCode = null;
     private transient String toString = null;
@@ -24,8 +27,8 @@ class ClassId<T> extends AbstractId<T> {
     @Override
     public boolean equals(final Object object) {
         if (object instanceof ClassId) {
-            final ClassId<?> classId = (ClassId<?>) object;
-            return id.equals(classId.id);
+            final ClassId<?> other = (ClassId<?>) object;
+            return super.equals(other) && getId().equals(other.getId());
         }
         return false;
     }
@@ -33,7 +36,7 @@ class ClassId<T> extends AbstractId<T> {
     @Override
     public int hashCode() {
         if (hashCode == null) {
-            hashCode = id.hashCode();
+            hashCode = Objects.hash(super.hashCode(), getId());
         }
         return hashCode;
     }
@@ -41,7 +44,7 @@ class ClassId<T> extends AbstractId<T> {
     @Override
     public String toString() {
         if (toString == null) {
-            toString = id.getName();
+            toString = super.toString() + ":" + getId();
         }
         return toString;
     }

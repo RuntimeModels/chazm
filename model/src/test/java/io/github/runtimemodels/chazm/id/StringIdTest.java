@@ -13,7 +13,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("javadoc")
 public class StringIdTest {
@@ -53,43 +53,67 @@ public class StringIdTest {
     public void testHashCode() {
         final UniqueId<Object> i1 = idFactory.build(Object.class, "r1");
         final UniqueId<Object> i2 = idFactory.build(Object.class, "r1");
-        final UniqueId<Object> i3 = idFactory.build(Object.class, "r3");
+        final UniqueId<Object> i3 = idFactory.build(Object.class, "r2");
+        final UniqueId<Integer> i4 = idFactory.build(Integer.class, "r2");
 
         assertThat(i1, is(not(sameInstance(i2))));
         assertThat(i1, is(not(sameInstance(i3))));
+        assertThat(i1, is(not(sameInstance(i4))));
         assertThat(i2, is(not(sameInstance(i3))));
+        assertThat(i2, is(not(sameInstance(i4))));
+        assertThat(i3, is(not(sameInstance(i4))));
 
         assertThat(i1.hashCode(), is(equalTo(i2.hashCode())));
         assertThat(i1.hashCode(), is(not(equalTo(i3.hashCode()))));
+        assertThat(i1.hashCode(), is(not(equalTo(i4.hashCode()))));
+        assertThat(i2.hashCode(), is(not(equalTo(i3.hashCode()))));
+        assertThat(i2.hashCode(), is(not(equalTo(i4.hashCode()))));
+        assertThat(i3.hashCode(), is(not(equalTo(i4.hashCode()))));
     }
 
     @Test
     public void testEqualsObject() {
         final UniqueId<Object> i1 = idFactory.build(Object.class, "r1");
         final UniqueId<Object> i2 = idFactory.build(Object.class, "r1");
-        final UniqueId<Object> i3 = idFactory.build(Object.class, "r3");
+        final UniqueId<Object> i3 = idFactory.build(Object.class, "r2");
+        final UniqueId<Integer> i4 = idFactory.build(Integer.class, "r2");
 
         assertThat(i1, is(not(sameInstance(i2))));
         assertThat(i1, is(not(sameInstance(i3))));
+        assertThat(i1, is(not(sameInstance(i4))));
         assertThat(i2, is(not(sameInstance(i3))));
+        assertThat(i2, is(not(sameInstance(i4))));
+        assertThat(i3, is(not(sameInstance(i4))));
 
         assertThat(i1, is(equalTo(i2)));
         assertThat(i1, is(not(equalTo(i3))));
+        assertThat(i1, is(not(equalTo(i4))));
         assertThat(i1, is(not(equalTo(""))));
+        assertThat(i2, is(not(equalTo(i3))));
+        assertThat(i2, is(not(equalTo(i4))));
+        assertThat(i3, is(not(equalTo(i4))));
     }
 
     @Test
     public void testToString() {
         final UniqueId<Object> i1 = idFactory.build(Object.class, "r1");
         final UniqueId<Object> i2 = idFactory.build(Object.class, "r1");
-        final UniqueId<Object> i3 = idFactory.build(Object.class, "r3");
+        final UniqueId<Object> i3 = idFactory.build(Object.class, "r2");
+        final UniqueId<Integer> i4 = idFactory.build(Integer.class, "r2");
 
         assertThat(i1, is(not(sameInstance(i2))));
         assertThat(i1, is(not(sameInstance(i3))));
+        assertThat(i1, is(not(sameInstance(i4))));
         assertThat(i2, is(not(sameInstance(i3))));
+        assertThat(i2, is(not(sameInstance(i4))));
+        assertThat(i3, is(not(sameInstance(i4))));
 
         assertThat(i1.toString(), is(equalTo(i2.toString())));
         assertThat(i1.toString(), is(not(equalTo(i3.toString()))));
+        assertThat(i1.toString(), is(not(equalTo(i4.toString()))));
+        assertThat(i2.toString(), is(not(equalTo(i3.toString()))));
+        assertThat(i2.toString(), is(not(equalTo(i4.toString()))));
+        assertThat(i3.toString(), is(not(equalTo(i4.toString()))));
     }
 
 }

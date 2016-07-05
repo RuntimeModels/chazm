@@ -4,6 +4,7 @@ import com.google.inject.assistedinject.Assisted;
 import io.github.runtimemodels.chazm.entity.Attribute;
 import io.github.runtimemodels.chazm.entity.Pmf;
 import io.github.runtimemodels.message.M;
+import lombok.Getter;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -11,7 +12,9 @@ import java.util.Objects;
 
 class ModeratesRelation implements Moderates {
 
+    @Getter
     private final Pmf pmf;
+    @Getter
     private final Attribute attribute;
     private transient Integer hashCode = null;
     private transient String toString = null;
@@ -20,16 +23,6 @@ class ModeratesRelation implements Moderates {
     ModeratesRelation(@NotNull @Assisted final Pmf pmf, @NotNull @Assisted final Attribute attribute) {
         this.pmf = pmf;
         this.attribute = attribute;
-    }
-
-    @Override
-    public Pmf getPmf() {
-        return pmf;
-    }
-
-    @Override
-    public Attribute getAttribute() {
-        return attribute;
     }
 
     @Override

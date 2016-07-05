@@ -32,9 +32,7 @@ import java.util.function.Predicate;
  * @author Christopher Zhong
  * @since 4.0
  */
-public interface Organization extends SpecificationGoalManager, RoleManager, AgentManager, CapabilityManager, PolicyManager, InstanceGoalManager,
-        AttributeManager, PmfManager, CharacteristicManager, AssignmentManager, AchievesManager, RequiresManager, PossessesManager, NeedsManager, HasManager,
-        UsesManager, ModeratesManager, ContainsManager {
+public interface Organization extends AgentManager, AttributeManager, CapabilityManager, CharacteristicManager, InstanceGoalManager, PmfManager, PolicyManager, RoleManager, SpecificationGoalManager, AchievesManager, AssignmentManager, ContainsManager, HasManager, ModeratesManager, NeedsManager, PossessesManager, RequiresManager, UsesManager {
 
     /**
      * Checks if this {@linkplain Organization} is valid. Validity rules differ from one organization to another, so there is no general algorithm to determine

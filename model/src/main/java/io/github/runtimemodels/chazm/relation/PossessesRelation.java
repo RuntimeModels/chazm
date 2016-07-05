@@ -5,6 +5,7 @@ import io.github.runtimemodels.chazm.entity.Agent;
 import io.github.runtimemodels.chazm.entity.Capability;
 import io.github.runtimemodels.message.E;
 import io.github.runtimemodels.message.M;
+import lombok.Getter;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -12,8 +13,11 @@ import java.util.Objects;
 
 class PossessesRelation implements Possesses {
 
+    @Getter
     private final Agent agent;
+    @Getter
     private final Capability capability;
+    @Getter
     private double score;
     private transient Integer hashCode = null;
 
@@ -22,21 +26,6 @@ class PossessesRelation implements Possesses {
         this.agent = agent;
         this.capability = capability;
         setScore(score);
-    }
-
-    @Override
-    public final Agent getAgent() {
-        return agent;
-    }
-
-    @Override
-    public final Capability getCapability() {
-        return capability;
-    }
-
-    @Override
-    public final double getScore() {
-        return score;
     }
 
     @Override

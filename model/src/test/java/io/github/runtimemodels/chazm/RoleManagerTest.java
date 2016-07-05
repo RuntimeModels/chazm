@@ -18,7 +18,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("javadoc")
 public class RoleManagerTest {
@@ -62,7 +62,7 @@ public class RoleManagerTest {
         final Role r1 = entityFactory.buildRole(i1);
         final Role r2 = entityFactory.buildRole(i1);
         exception.expect(is(instanceOf(IllegalArgumentException.class)));
-        exception.expectMessage(equalTo(E.ENTITY_ALREADY_EXISTS.get("Role", "role1")));
+        exception.expectMessage(equalTo(E.ENTITY_ALREADY_EXISTS.get("Role", Role.class.getName() + ":role1")));
         assertThat(r1, is(not(sameInstance(r2))));
         o.addRole(r1);
         o.addRole(r2);

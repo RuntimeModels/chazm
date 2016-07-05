@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * The {@linkplain Subscribe} annotation allow {@linkplain Subscriber}s to indicate one or more methods that subscribe to some particular eventss.
+ * The {@linkplain Subscribe} annotation allow {@linkplain Subscriber}s to indicate one or more methods that subscribe to some particular events.
  * <p>
  * Any methods that have the {@linkplain Subscribe} annotation must have exactly one parameter. The example below show a {@linkplain Subscriber} that subscribes
  * to two different types of event.

@@ -1,5 +1,7 @@
 package io.github.runtimemodels.chazm.id;
 
+import lombok.Getter;
+
 import javax.validation.constraints.NotNull;
 
 import static io.github.runtimemodels.chazm.validation.Checks.checkNotNull;
@@ -14,7 +16,10 @@ import static io.github.runtimemodels.chazm.validation.Checks.checkNotNull;
 public abstract class AbstractId<T> implements UniqueId<T> {
 
     private static final long serialVersionUID = 2812867343219462118L;
+    @Getter
     private final Class<T> type;
+    private transient Integer hashCode = null;
+    private transient String toString = null;
 
     protected AbstractId(@NotNull final Class<T> type) {
         checkNotNull(type, "type"); //$NON-NLS-1$
@@ -22,17 +27,28 @@ public abstract class AbstractId<T> implements UniqueId<T> {
     }
 
     @Override
-    public Class<T> getType() {
-        return type;
+    public boolean equals(final Object object) {
+        if (object instanceof UniqueId) {
+            final UniqueId<?> other = (UniqueId<?>) object;
+            return getType().equals(other.getType());
+        }
+        return false;
     }
 
     @Override
-    public abstract boolean equals(Object object);
+    public int hashCode() {
+        if (hashCode == null) {
+            hashCode = getType().hashCode();
+        }
+        return hashCode;
+    }
 
     @Override
-    public abstract int hashCode();
-
-    @Override
-    public abstract String toString();
+    public String toString() {
+        if (toString == null) {
+            toString = getType().getName();
+        }
+        return toString;
+    }
 
 }

@@ -6,6 +6,7 @@ import io.github.runtimemodels.chazm.entity.Attribute;
 import io.github.runtimemodels.chazm.entity.Attribute.Type;
 import io.github.runtimemodels.message.E;
 import io.github.runtimemodels.message.M;
+import lombok.Getter;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -13,8 +14,11 @@ import java.util.Objects;
 
 class HasRelation implements Has {
 
+    @Getter
     private final Agent agent;
+    @Getter
     private final Attribute attribute;
+    @Getter
     private double value;
     private transient Integer hashCode = null;
 
@@ -23,21 +27,6 @@ class HasRelation implements Has {
         this.agent = agent;
         this.attribute = attribute;
         setValue(value);
-    }
-
-    @Override
-    public final Agent getAgent() {
-        return agent;
-    }
-
-    @Override
-    public final Attribute getAttribute() {
-        return attribute;
-    }
-
-    @Override
-    public final double getValue() {
-        return value;
     }
 
     @Override

@@ -27,8 +27,7 @@ import io.github.runtimemodels.chazm.relation.Uses;
 import io.github.runtimemodels.message.E;
 import io.github.runtimemodels.message.L;
 import io.github.runtimemodels.notification.Publisher;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -47,9 +46,9 @@ import static io.github.runtimemodels.chazm.event.EventCategory.ADDED;
 import static io.github.runtimemodels.chazm.event.EventCategory.CHANGED;
 import static io.github.runtimemodels.chazm.event.EventCategory.REMOVED;
 
+@Slf4j
 class DefaultOrganization implements Organization {
 
-    private static final Logger logger = LoggerFactory.getLogger(Organization.class);
     private final Entities entities = new Entities();
     private final Relations relations = new Relations();
     private final Functions functions = new Functions();
@@ -292,10 +291,10 @@ class DefaultOrganization implements Organization {
                 if (map.containsKey(goal.getId())) {
                     map.remove(goal.getId());
                 } else {
-                    logger.warn(L.MAP_IS_MISSING_ENTRY.get(), "instanceGoalsBySpecificationGoal", goal.getGoal().getId(), goal.getId()); //$NON-NLS-1$
+                    log.warn(L.MAP_IS_MISSING_ENTRY.get(), "instanceGoalsBySpecificationGoal", goal.getGoal().getId(), goal.getId()); //$NON-NLS-1$
                 }
             } else {
-                logger.warn(L.MAP_IS_MISSING_KEY.get(), "instanceGoalsBySpecificationGoal", goal.getGoal().getId()); //$NON-NLS-1$
+                log.warn(L.MAP_IS_MISSING_KEY.get(), "instanceGoalsBySpecificationGoal", goal.getGoal().getId()); //$NON-NLS-1$
                 entities.instanceGoalsBySpecificationGoal.put(goal.getGoal().getId(), new ConcurrentHashMap<>());
             }
             publisher.post(eventFactory.build(REMOVED, goal));
@@ -409,7 +408,7 @@ class DefaultOrganization implements Organization {
         relations.needs.put(role.getId(), new ConcurrentHashMap<>());
         relations.uses.put(role.getId(), new ConcurrentHashMap<>());
         relations.contains.put(role.getId(), new ConcurrentHashMap<>());
-        functions.goodnesses.put(role.getId(), goodness);
+        functions.goodness.put(role.getId(), goodness);
         publisher.post(eventFactory.build(ADDED, role));
     }
 
@@ -441,7 +440,7 @@ class DefaultOrganization implements Organization {
             remove(id, relations.needs, "needs", c -> removeNeeds(id, c)); //$NON-NLS-1$
             remove(id, relations.uses, "uses", c -> removeUses(id, c)); //$NON-NLS-1$
             remove(id, relations.contains, "contains", c -> removeContains(id, c)); //$NON-NLS-1$
-            functions.goodnesses.remove(id);
+            functions.goodness.remove(id);
             publisher.post(eventFactory.build(REMOVED, role));
         }
     }
@@ -582,10 +581,10 @@ class DefaultOrganization implements Organization {
             final Assignment assignment = relations.assignments.remove(id);
             if (relations.assignmentsByAgent.containsKey(assignment.getAgent().getId())) {
                 if (relations.assignmentsByAgent.get(assignment.getAgent().getId()).remove(id) == null) {
-                    logger.warn(L.MAP_IS_MISSING_ENTRY.get(), "assignmentsByAgent", assignment.getAgent().getId(), id); //$NON-NLS-1$
+                    log.warn(L.MAP_IS_MISSING_ENTRY.get(), "assignmentsByAgent", assignment.getAgent().getId(), id); //$NON-NLS-1$
                 }
             } else {
-                logger.warn(L.MAP_IS_MISSING_KEY.get(), "assignmentsByAgent", assignment.getAgent().getId()); //$NON-NLS-1$
+                log.warn(L.MAP_IS_MISSING_KEY.get(), "assignmentsByAgent", assignment.getAgent().getId()); //$NON-NLS-1$
                 relations.assignmentsByAgent.put(assignment.getAgent().getId(), new ConcurrentHashMap<>());
             }
             publisher.post(eventFactory.build(REMOVED, assignment));
@@ -935,19 +934,19 @@ class DefaultOrganization implements Organization {
 
     @Override
     public Goodness getGoodness(@NotNull final UniqueId<Role> id) {
-        return functions.goodnesses.get(id);
+        return functions.goodness.get(id);
     }
 
     @Override
     public void setGoodness(@NotNull final UniqueId<Role> id, @NotNull final Goodness goodness) {
         checkExists(id, this::getRole);
-        functions.goodnesses.put(id, goodness);
+        functions.goodness.put(id, goodness);
     }
 
     private static <T, U, V> void addBy(final T value, final Map<UniqueId<U>, Map<UniqueId<V>, T>> map, final String mapName, final UniqueId<U> id1,
                                         final UniqueId<V> id2) {
         map.computeIfAbsent(id1, m -> {
-            logger.warn(L.MAP_IS_MISSING_KEY.get(), mapName, id1);
+            log.warn(L.MAP_IS_MISSING_KEY.get(), mapName, id1);
             return new ConcurrentHashMap<>();
         });
         map.get(id1).put(id2, value);
@@ -955,7 +954,7 @@ class DefaultOrganization implements Organization {
 
     private static <T, U, V> Map<UniqueId<U>, V> get(final UniqueId<T> roleId, final Map<UniqueId<T>, Map<UniqueId<U>, V>> map, final String mapName) {
         return map.computeIfAbsent(roleId, m -> {
-            logger.warn(L.MAP_IS_MISSING_KEY.get(), mapName, roleId);
+            log.warn(L.MAP_IS_MISSING_KEY.get(), mapName, roleId);
             return new ConcurrentHashMap<>();
         });
     }
@@ -974,7 +973,7 @@ class DefaultOrganization implements Organization {
             ids.parallelStream().forEach(consumer);
             map.remove(id);
         } else {
-            logger.warn(L.MAP_IS_MISSING_KEY.get(), mapName, id);
+            log.warn(L.MAP_IS_MISSING_KEY.get(), mapName, id);
         }
     }
 
@@ -983,10 +982,10 @@ class DefaultOrganization implements Organization {
             if (map.get(id1).containsKey(id2)) {
                 map.get(id1).remove(id2);
             } else {
-                logger.warn(L.MAP_IS_MISSING_ENTRY.get(), mapName, id1, id2);
+                log.warn(L.MAP_IS_MISSING_ENTRY.get(), mapName, id1, id2);
             }
         } else {
-            logger.warn(L.MAP_IS_MISSING_KEY.get(), mapName, id1);
+            log.warn(L.MAP_IS_MISSING_KEY.get(), mapName, id1);
             map.put(id1, new ConcurrentHashMap<>());
         }
     }

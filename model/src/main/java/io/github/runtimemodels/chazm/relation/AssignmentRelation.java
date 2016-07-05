@@ -7,6 +7,7 @@ import io.github.runtimemodels.chazm.entity.Role;
 import io.github.runtimemodels.chazm.id.AbstractId;
 import io.github.runtimemodels.chazm.id.UniqueId;
 import io.github.runtimemodels.message.M;
+import lombok.Getter;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -105,7 +106,7 @@ class AssignmentRelation implements Assignment {
         @Override
         public int hashCode() {
             if (hashCode == null) {
-                hashCode = Objects.hash(getAgentId(), getRoleId(), getGoalId());
+                hashCode = Objects.hash(super.hashCode(), getAgentId(), getRoleId(), getGoalId());
             }
             return hashCode;
         }
@@ -119,9 +120,13 @@ class AssignmentRelation implements Assignment {
         }
     }
 
+    @Getter
     private final UniqueId<Assignment> id;
+    @Getter
     private final Agent agent;
+    @Getter
     private final Role role;
+    @Getter
     private final InstanceGoal goal;
     private transient String toString = null;
 
@@ -131,26 +136,6 @@ class AssignmentRelation implements Assignment {
         this.agent = agent;
         this.role = role;
         this.goal = goal;
-    }
-
-    @Override
-    public final UniqueId<Assignment> getId() {
-        return id;
-    }
-
-    @Override
-    public Agent getAgent() {
-        return agent;
-    }
-
-    @Override
-    public Role getRole() {
-        return role;
-    }
-
-    @Override
-    public InstanceGoal getGoal() {
-        return goal;
     }
 
     @Override

@@ -4,6 +4,7 @@ dependencies {
     compile 'javax:javaee-api'
     compile 'com.google.inject:guice'
     compile 'com.google.inject.extensions:guice-assistedinject'
+    compile 'org.projectlombok:lombok'
 
     testCompile 'junit:junit'
     testCompile 'org.jmockit:jmockit'

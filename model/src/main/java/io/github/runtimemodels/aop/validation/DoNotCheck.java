@@ -1,5 +1,6 @@
 package io.github.runtimemodels.aop.validation;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
@@ -13,6 +14,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * @author Christopher Zhong
  * @since 7.0.0
  */
+@Documented
 @Retention(RUNTIME)
 @Target({TYPE, METHOD})
 public @interface DoNotCheck {}

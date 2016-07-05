@@ -15,8 +15,7 @@ import java.util.Collection;
 class DefaultGoodness implements Goodness {
 
     @Override
-    public double compute(@NotNull final Organization organization, @NotNull final Agent agent, @NotNull final Role role, @NotNull final InstanceGoal goal,
-                          @NotNull final Collection<Assignment> assignments) {
+    public double compute(@NotNull final Organization organization, @NotNull final Agent agent, @NotNull final Role role, @NotNull final InstanceGoal goal, @NotNull final Collection<Assignment> assignments) {
         /*
          * first, check that the agent has all the necessary attributes. otherwise, return a null to indicate that the agent cannot play the role
 		 */

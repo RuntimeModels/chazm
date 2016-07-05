@@ -11,7 +11,7 @@ import java.io.Serializable;
  * an {@linkplain Organization}.
  * <p>
  * In the typical case, uniqueness is ensured by the parameter that is passed to the constructor of a subclass of {@linkplain UniqueId}. For example, if
- * <code>x = y</code>, then <code>UniqueId(x).equals(UniqueId(y))</code> should return <code>true</code>. But that does not mean that
+ * <code>x = y</code> and <code>UniqueId(x).equals(UniqueId(y))</code> should return <code>true</code>. But that does not mean that
  * <code>UniqueId(x) = UniqueId(y)</code>.
  * <p>
  * Should a developer wish to ensure that if <code>x = y</code> then <code>UniqueId(x) = UniqueId(y)</code>, the developer should ensure that such an
