@@ -4,6 +4,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.ProvisionException;
 import io.github.runtimemodels.chazm.entity.InstanceGoal;
+import io.github.runtimemodels.chazm.entity.InstanceGoal.Parameter;
 import io.github.runtimemodels.chazm.entity.InstanceGoalFactory;
 import io.github.runtimemodels.chazm.entity.SpecificationGoal;
 import io.github.runtimemodels.chazm.entity.SpecificationGoalFactory;
@@ -38,7 +39,7 @@ public class InstanceGoalEventTest {
     @Test
     public void testInstanceGoalEvent() {
         final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
+        final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
         final InstanceGoalEvent ige1 = igef.build(EventCategory.ADDED, ig);
         final InstanceGoalEvent ige2 = igef.build(EventCategory.ADDED, ig);
 
@@ -65,7 +66,7 @@ public class InstanceGoalEventTest {
     @Test
     public void testGetId() {
         final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
+        final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
         final InstanceGoalEvent ige = igef.build(EventCategory.ADDED, ig);
 
         assertThat(ige.getId(), is(sameInstance(ig.getId())));
@@ -74,7 +75,7 @@ public class InstanceGoalEventTest {
     @Test
     public void testGetSpecificationGoalId() {
         final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
+        final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
         final InstanceGoalEvent ige = igef.build(EventCategory.ADDED, ig);
 
         assertThat(ige.getSpecificationGoalId(), is(sameInstance(ig.getGoal().getId())));
@@ -83,7 +84,7 @@ public class InstanceGoalEventTest {
     @Test
     public void testGetParameter() {
         final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
+        final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
         final InstanceGoalEvent ige = igef.build(EventCategory.ADDED, ig);
 
         assertThat(ige.getParameter(), is(sameInstance(ig.getParameter())));
@@ -92,9 +93,9 @@ public class InstanceGoalEventTest {
     @Test
     public void testEquals() {
         final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig1 = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig1"), sg, new InstanceGoal.Parameter() {});
-        final InstanceGoal ig2 = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig2"), sg, new InstanceGoal.Parameter() {});
-        final InstanceGoal ig3 = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig1"), sg, new InstanceGoal.Parameter() {});
+        final InstanceGoal ig1 = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig1"), sg, new Parameter() {});
+        final InstanceGoal ig2 = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig2"), sg, new Parameter() {});
+        final InstanceGoal ig3 = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig1"), sg, new Parameter() {});
         final InstanceGoalEvent ige1 = igef.build(EventCategory.ADDED, ig1);
         final InstanceGoalEvent ige2 = igef.build(EventCategory.ADDED, ig2);
         final InstanceGoalEvent ige3 = igef.build(EventCategory.ADDED, ig3);
@@ -107,9 +108,9 @@ public class InstanceGoalEventTest {
     @Test
     public void testInstanceGoalhCode() {
         final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig1 = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig1"), sg, new InstanceGoal.Parameter() {});
-        final InstanceGoal ig2 = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig2"), sg, new InstanceGoal.Parameter() {});
-        final InstanceGoal ig3 = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig1"), sg, new InstanceGoal.Parameter() {});
+        final InstanceGoal ig1 = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig1"), sg, new Parameter() {});
+        final InstanceGoal ig2 = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig2"), sg, new Parameter() {});
+        final InstanceGoal ig3 = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig1"), sg, new Parameter() {});
         final InstanceGoalEvent ige1 = igef.build(EventCategory.ADDED, ig1);
         final InstanceGoalEvent ige2 = igef.build(EventCategory.ADDED, ig2);
         final InstanceGoalEvent ige3 = igef.build(EventCategory.ADDED, ig3);
@@ -121,7 +122,7 @@ public class InstanceGoalEventTest {
     @Test
     public void testToString() {
         final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal.Parameter p1 = new InstanceGoal.Parameter() {};
+        final Parameter p1 = new Parameter() {};
         final InstanceGoal ig1 = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig1"), sg, p1);
         final InstanceGoal ig2 = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig2"), sg, p1);
         final InstanceGoal ig3 = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig1"), sg, p1);

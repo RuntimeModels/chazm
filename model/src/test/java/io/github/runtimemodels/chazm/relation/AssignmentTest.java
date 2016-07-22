@@ -4,8 +4,10 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.ProvisionException;
 import io.github.runtimemodels.chazm.entity.Agent;
+import io.github.runtimemodels.chazm.entity.Agent.ContactInfo;
 import io.github.runtimemodels.chazm.entity.AgentFactory;
 import io.github.runtimemodels.chazm.entity.InstanceGoal;
+import io.github.runtimemodels.chazm.entity.InstanceGoal.Parameter;
 import io.github.runtimemodels.chazm.entity.InstanceGoalFactory;
 import io.github.runtimemodels.chazm.entity.Role;
 import io.github.runtimemodels.chazm.entity.RoleFactory;
@@ -13,6 +15,7 @@ import io.github.runtimemodels.chazm.entity.SpecificationGoal;
 import io.github.runtimemodels.chazm.entity.SpecificationGoalFactory;
 import io.github.runtimemodels.chazm.id.IdFactory;
 import io.github.runtimemodels.chazm.id.UniqueId;
+import io.github.runtimemodels.chazm.relation.AssignmentRelation.Id;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -43,10 +46,10 @@ public class AssignmentTest {
 
     @Test
     public void testAssignment() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
         final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
         final SpecificationGoal sg = specGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
+        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
         final Assignment a1 = assignmentFactory.buildAssignment(a, r, ig);
         final Assignment a2 = assignmentFactory.buildAssignment(a, r, ig);
 
@@ -64,7 +67,7 @@ public class AssignmentTest {
 
     @Test
     public void testAssignment2() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
 
         exception.expect(instanceOf(ProvisionException.class));
         exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
@@ -74,7 +77,7 @@ public class AssignmentTest {
 
     @Test
     public void testAssignment3() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
         final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
 
         exception.expect(instanceOf(ProvisionException.class));
@@ -85,10 +88,10 @@ public class AssignmentTest {
 
     @Test
     public void testGetId() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
         final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
         final SpecificationGoal sg = specGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
+        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
         final Assignment as = assignmentFactory.buildAssignment(a, r, ig);
 
         assertThat(as.getId(), is(not(nullValue())));
@@ -96,10 +99,10 @@ public class AssignmentTest {
 
     @Test
     public void testGetAgent() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
         final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
         final SpecificationGoal sg = specGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
+        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
         final Assignment as = assignmentFactory.buildAssignment(a, r, ig);
 
         assertThat(as.getAgent(), is(sameInstance(a)));
@@ -108,10 +111,10 @@ public class AssignmentTest {
 
     @Test
     public void testGetRole() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
         final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
         final SpecificationGoal sg = specGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
+        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
         final Assignment as = assignmentFactory.buildAssignment(a, r, ig);
 
         assertThat(as.getRole(), is(sameInstance(r)));
@@ -119,10 +122,10 @@ public class AssignmentTest {
 
     @Test
     public void testGetGoal() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
         final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
         final SpecificationGoal sg = specGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
+        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
         final Assignment as = assignmentFactory.buildAssignment(a, r, ig);
 
         assertThat(as.getGoal(), is(sameInstance(ig)));
@@ -130,11 +133,11 @@ public class AssignmentTest {
 
     @Test
     public void testEquals() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
         final Role r1 = roleFactory.buildRole(idFactory.build(Role.class, "r1"));
         final Role r2 = roleFactory.buildRole(idFactory.build(Role.class, "r2"));
         final SpecificationGoal sg = specGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
+        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
         final Assignment a1 = assignmentFactory.buildAssignment(a, r1, ig);
         final Assignment a2 = assignmentFactory.buildAssignment(a, r2, ig);
         final Assignment a3 = assignmentFactory.buildAssignment(a, r1, ig);
@@ -146,11 +149,11 @@ public class AssignmentTest {
 
     @Test
     public void testHashCode() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
         final Role r1 = roleFactory.buildRole(idFactory.build(Role.class, "r1"));
         final Role r2 = roleFactory.buildRole(idFactory.build(Role.class, "r2"));
         final SpecificationGoal sg = specGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
+        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
         final Assignment a1 = assignmentFactory.buildAssignment(a, r1, ig);
         final Assignment a2 = assignmentFactory.buildAssignment(a, r2, ig);
         final Assignment a3 = assignmentFactory.buildAssignment(a, r1, ig);
@@ -161,11 +164,11 @@ public class AssignmentTest {
 
     @Test
     public void testToString() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
         final Role r1 = roleFactory.buildRole(idFactory.build(Role.class, "r1"));
         final Role r2 = roleFactory.buildRole(idFactory.build(Role.class, "r2"));
         final SpecificationGoal sg = specGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
+        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
         final Assignment a1 = assignmentFactory.buildAssignment(a, r1, ig);
         final Assignment a2 = assignmentFactory.buildAssignment(a, r2, ig);
         final Assignment a3 = assignmentFactory.buildAssignment(a, r1, ig);
@@ -176,7 +179,7 @@ public class AssignmentTest {
 
     @Test
     public void testAssignmentId() {
-        final AssignmentRelation.Id i = new AssignmentRelation.Id(idFactory.build(Agent.class, "a"), idFactory.build(Role.class, "r"), idFactory.build(
+        final Id i = new Id(idFactory.build(Agent.class, "a"), idFactory.build(Role.class, "r"), idFactory.build(
                 InstanceGoal.class, "g"));
 
         assertThat(i, is(not(nullValue())));
@@ -188,9 +191,9 @@ public class AssignmentTest {
         final UniqueId<Role> y1 = idFactory.build(Role.class, "r1");
         final UniqueId<Role> y2 = idFactory.build(Role.class, "r2");
         final UniqueId<InstanceGoal> z = idFactory.build(InstanceGoal.class, "g");
-        final AssignmentRelation.Id i1 = new AssignmentRelation.Id(x, y1, z);
-        final AssignmentRelation.Id i2 = new AssignmentRelation.Id(x, y2, z);
-        final AssignmentRelation.Id i3 = new AssignmentRelation.Id(x, y1, z);
+        final Id i1 = new Id(x, y1, z);
+        final Id i2 = new Id(x, y2, z);
+        final Id i3 = new Id(x, y1, z);
 
         assertThat(i1, is(not(equalTo(i2))));
         assertThat(i1, is(equalTo(i3)));
@@ -203,9 +206,9 @@ public class AssignmentTest {
         final UniqueId<Role> y1 = idFactory.build(Role.class, "r1");
         final UniqueId<Role> y2 = idFactory.build(Role.class, "r2");
         final UniqueId<InstanceGoal> z = idFactory.build(InstanceGoal.class, "g");
-        final AssignmentRelation.Id i1 = new AssignmentRelation.Id(x, y1, z);
-        final AssignmentRelation.Id i2 = new AssignmentRelation.Id(x, y2, z);
-        final AssignmentRelation.Id i3 = new AssignmentRelation.Id(x, y1, z);
+        final Id i1 = new Id(x, y1, z);
+        final Id i2 = new Id(x, y2, z);
+        final Id i3 = new Id(x, y1, z);
 
         assertThat(i1.hashCode(), is(not(equalTo(i2.hashCode()))));
         assertThat(i1.hashCode(), is(equalTo(i3.hashCode())));
@@ -217,9 +220,9 @@ public class AssignmentTest {
         final UniqueId<Role> y1 = idFactory.build(Role.class, "r1");
         final UniqueId<Role> y2 = idFactory.build(Role.class, "r2");
         final UniqueId<InstanceGoal> z = idFactory.build(InstanceGoal.class, "g");
-        final AssignmentRelation.Id i1 = new AssignmentRelation.Id(x, y1, z);
-        final AssignmentRelation.Id i2 = new AssignmentRelation.Id(x, y2, z);
-        final AssignmentRelation.Id i3 = new AssignmentRelation.Id(x, y1, z);
+        final Id i1 = new Id(x, y1, z);
+        final Id i2 = new Id(x, y2, z);
+        final Id i3 = new Id(x, y1, z);
 
         assertThat(i1.toString(), is(not(equalTo(i2.toString()))));
         assertThat(i1.toString(), is(equalTo(i3.toString())));

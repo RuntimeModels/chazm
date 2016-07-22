@@ -4,6 +4,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.ProvisionException;
 import io.github.runtimemodels.chazm.entity.Agent;
+import io.github.runtimemodels.chazm.entity.Agent.ContactInfo;
 import io.github.runtimemodels.chazm.entity.AgentFactory;
 import io.github.runtimemodels.chazm.entity.Capability;
 import io.github.runtimemodels.chazm.entity.CapabilityFactory;
@@ -37,7 +38,7 @@ public class PossessesTest {
 
     @Test
     public void testPossesses() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
         final Capability c = capabilityFactory.buildCapability(idFactory.build(Capability.class, "c"));
         final Possesses ps1 = possessesFactory.buildPossesses(a, c, 1d);
         final Possesses ps2 = possessesFactory.buildPossesses(a, c, 1d);
@@ -56,7 +57,7 @@ public class PossessesTest {
 
     @Test
     public void testPossesses2() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
 
         exception.expect(instanceOf(ProvisionException.class));
         exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
@@ -66,7 +67,7 @@ public class PossessesTest {
 
     @Test
     public void testPossesses3() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
         final Capability c = capabilityFactory.buildCapability(idFactory.build(Capability.class, "c"));
 
         exception.expect(IllegalArgumentException.class);
@@ -77,7 +78,7 @@ public class PossessesTest {
 
     @Test
     public void testPossesses4() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
         final Capability c = capabilityFactory.buildCapability(idFactory.build(Capability.class, "c"));
 
         exception.expect(IllegalArgumentException.class);
@@ -88,7 +89,7 @@ public class PossessesTest {
 
     @Test
     public void testGetAgent() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
         final Capability c = capabilityFactory.buildCapability(idFactory.build(Capability.class, "c"));
         final Possesses ps = possessesFactory.buildPossesses(a, c, 1d);
 
@@ -97,7 +98,7 @@ public class PossessesTest {
 
     @Test
     public void testGetCapability() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
         final Capability c = capabilityFactory.buildCapability(idFactory.build(Capability.class, "c"));
         final Possesses ps = possessesFactory.buildPossesses(a, c, 1d);
 
@@ -106,7 +107,7 @@ public class PossessesTest {
 
     @Test
     public void testGetScore() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
         final Capability c = capabilityFactory.buildCapability(idFactory.build(Capability.class, "c"));
         final Possesses ps = possessesFactory.buildPossesses(a, c, 1d);
 
@@ -115,7 +116,7 @@ public class PossessesTest {
 
     @Test
     public void testSetScore() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
         final Capability c = capabilityFactory.buildCapability(idFactory.build(Capability.class, "c"));
         final Possesses ps = possessesFactory.buildPossesses(a, c, 1d);
         ps.setScore(0.5);
@@ -125,7 +126,7 @@ public class PossessesTest {
 
     @Test
     public void testSetScore1() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
         final Capability c = capabilityFactory.buildCapability(idFactory.build(Capability.class, "c"));
         final Possesses ps = possessesFactory.buildPossesses(a, c, 1d);
 
@@ -137,7 +138,7 @@ public class PossessesTest {
 
     @Test
     public void testSetScore2() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
         final Capability c = capabilityFactory.buildCapability(idFactory.build(Capability.class, "c"));
         final Possesses ps = possessesFactory.buildPossesses(a, c, 1d);
 
@@ -149,8 +150,8 @@ public class PossessesTest {
 
     @Test
     public void testEquals() {
-        final Agent a1 = agentFactory.buildAgent(idFactory.build(Agent.class, "a1"), new Agent.ContactInfo() {});
-        final Agent a2 = agentFactory.buildAgent(idFactory.build(Agent.class, "a2"), new Agent.ContactInfo() {});
+        final Agent a1 = agentFactory.buildAgent(idFactory.build(Agent.class, "a1"), new ContactInfo() {});
+        final Agent a2 = agentFactory.buildAgent(idFactory.build(Agent.class, "a2"), new ContactInfo() {});
         final Capability c = capabilityFactory.buildCapability(idFactory.build(Capability.class, "c"));
         final Possesses ps1 = possessesFactory.buildPossesses(a1, c, 1d);
         final Possesses ps2 = possessesFactory.buildPossesses(a2, c, 1d);
@@ -163,8 +164,8 @@ public class PossessesTest {
 
     @Test
     public void testHashCode() {
-        final Agent a1 = agentFactory.buildAgent(idFactory.build(Agent.class, "a1"), new Agent.ContactInfo() {});
-        final Agent a2 = agentFactory.buildAgent(idFactory.build(Agent.class, "a2"), new Agent.ContactInfo() {});
+        final Agent a1 = agentFactory.buildAgent(idFactory.build(Agent.class, "a1"), new ContactInfo() {});
+        final Agent a2 = agentFactory.buildAgent(idFactory.build(Agent.class, "a2"), new ContactInfo() {});
         final Capability c = capabilityFactory.buildCapability(idFactory.build(Capability.class, "c"));
         final Possesses ps1 = possessesFactory.buildPossesses(a1, c, 1d);
         final Possesses ps2 = possessesFactory.buildPossesses(a2, c, 1d);
@@ -176,8 +177,8 @@ public class PossessesTest {
 
     @Test
     public void testToString() {
-        final Agent a1 = agentFactory.buildAgent(idFactory.build(Agent.class, "a1"), new Agent.ContactInfo() {});
-        final Agent a2 = agentFactory.buildAgent(idFactory.build(Agent.class, "a2"), new Agent.ContactInfo() {});
+        final Agent a1 = agentFactory.buildAgent(idFactory.build(Agent.class, "a1"), new ContactInfo() {});
+        final Agent a2 = agentFactory.buildAgent(idFactory.build(Agent.class, "a2"), new ContactInfo() {});
         final Capability c = capabilityFactory.buildCapability(idFactory.build(Capability.class, "c"));
         final Possesses ps1 = possessesFactory.buildPossesses(a1, c, 1d);
         final Possesses ps2 = possessesFactory.buildPossesses(a2, c, 1d);

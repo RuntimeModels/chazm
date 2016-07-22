@@ -30,9 +30,9 @@ public interface InstanceGoal extends Identifiable<InstanceGoal> {
     SpecificationGoal getGoal();
 
     /**
-     * Returns the {@linkplain InstanceGoal.Parameter} of this {@linkplain InstanceGoal}.
+     * Returns the {@linkplain Parameter} of this {@linkplain InstanceGoal}.
      *
-     * @return the {@linkplain InstanceGoal.Parameter} of this {@linkplain InstanceGoal}.
+     * @return the {@linkplain Parameter} of this {@linkplain InstanceGoal}.
      */
     Parameter getParameter();
 

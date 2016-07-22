@@ -46,9 +46,9 @@ public interface Attribute extends Identifiable<Attribute> {
     }
 
     /**
-     * Returns the {@linkplain Attribute.Type} of this {@linkplain Attribute}.
+     * Returns the {@linkplain Type} of this {@linkplain Attribute}.
      *
-     * @return the {@linkplain Attribute.Type} of this {@linkplain Attribute}.
+     * @return the {@linkplain Type} of this {@linkplain Attribute}.
      */
     Type getType();
 }

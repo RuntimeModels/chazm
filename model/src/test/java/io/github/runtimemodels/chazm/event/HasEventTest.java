@@ -4,8 +4,10 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.ProvisionException;
 import io.github.runtimemodels.chazm.entity.Agent;
+import io.github.runtimemodels.chazm.entity.Agent.ContactInfo;
 import io.github.runtimemodels.chazm.entity.AgentFactory;
 import io.github.runtimemodels.chazm.entity.Attribute;
+import io.github.runtimemodels.chazm.entity.Attribute.Type;
 import io.github.runtimemodels.chazm.entity.AttributeFactory;
 import io.github.runtimemodels.chazm.id.IdFactory;
 import io.github.runtimemodels.chazm.relation.Has;
@@ -40,8 +42,8 @@ public class HasEventTest {
 
     @Test
     public void testHasEvent() {
-        final Agent a = af.buildAgent(idf.build(Agent.class, "a"), new Agent.ContactInfo() {});
-        final Attribute aa = aaf.buildAttribute(idf.build(Attribute.class, "aa"), Attribute.Type.NEGATIVE_QUALITY);
+        final Agent a = af.buildAgent(idf.build(Agent.class, "a"), new ContactInfo() {});
+        final Attribute aa = aaf.buildAttribute(idf.build(Attribute.class, "aa"), Type.NEGATIVE_QUALITY);
         final Has h = hf.buildHas(a, aa, 1d);
         final HasEvent he1 = hef.build(EventCategory.ADDED, h);
         final HasEvent he2 = hef.build(EventCategory.ADDED, h);
@@ -68,8 +70,8 @@ public class HasEventTest {
 
     @Test
     public void testGetAgentId() {
-        final Agent a = af.buildAgent(idf.build(Agent.class, "a"), new Agent.ContactInfo() {});
-        final Attribute aa = aaf.buildAttribute(idf.build(Attribute.class, "aa"), Attribute.Type.NEGATIVE_QUALITY);
+        final Agent a = af.buildAgent(idf.build(Agent.class, "a"), new ContactInfo() {});
+        final Attribute aa = aaf.buildAttribute(idf.build(Attribute.class, "aa"), Type.NEGATIVE_QUALITY);
         final Has h = hf.buildHas(a, aa, 1d);
         final HasEvent he = hef.build(EventCategory.ADDED, h);
 
@@ -78,8 +80,8 @@ public class HasEventTest {
 
     @Test
     public void testGetAttributeId() {
-        final Agent a = af.buildAgent(idf.build(Agent.class, "a"), new Agent.ContactInfo() {});
-        final Attribute aa = aaf.buildAttribute(idf.build(Attribute.class, "aa"), Attribute.Type.NEGATIVE_QUALITY);
+        final Agent a = af.buildAgent(idf.build(Agent.class, "a"), new ContactInfo() {});
+        final Attribute aa = aaf.buildAttribute(idf.build(Attribute.class, "aa"), Type.NEGATIVE_QUALITY);
         final Has h = hf.buildHas(a, aa, 1d);
         final HasEvent he = hef.build(EventCategory.ADDED, h);
 
@@ -88,8 +90,8 @@ public class HasEventTest {
 
     @Test
     public void testGetValue() {
-        final Agent a = af.buildAgent(idf.build(Agent.class, "a"), new Agent.ContactInfo() {});
-        final Attribute aa = aaf.buildAttribute(idf.build(Attribute.class, "aa"), Attribute.Type.NEGATIVE_QUALITY);
+        final Agent a = af.buildAgent(idf.build(Agent.class, "a"), new ContactInfo() {});
+        final Attribute aa = aaf.buildAttribute(idf.build(Attribute.class, "aa"), Type.NEGATIVE_QUALITY);
         final Has h = hf.buildHas(a, aa, 1d);
         final HasEvent he = hef.build(EventCategory.ADDED, h);
 
@@ -98,9 +100,9 @@ public class HasEventTest {
 
     @Test
     public void testEquals() {
-        final Agent a1 = af.buildAgent(idf.build(Agent.class, "a1"), new Agent.ContactInfo() {});
-        final Agent a2 = af.buildAgent(idf.build(Agent.class, "a2"), new Agent.ContactInfo() {});
-        final Attribute aa = aaf.buildAttribute(idf.build(Attribute.class, "aa"), Attribute.Type.NEGATIVE_QUALITY);
+        final Agent a1 = af.buildAgent(idf.build(Agent.class, "a1"), new ContactInfo() {});
+        final Agent a2 = af.buildAgent(idf.build(Agent.class, "a2"), new ContactInfo() {});
+        final Attribute aa = aaf.buildAttribute(idf.build(Attribute.class, "aa"), Type.NEGATIVE_QUALITY);
         final Has h1 = hf.buildHas(a1, aa, 1d);
         final Has h2 = hf.buildHas(a2, aa, 1d);
         final Has h3 = hf.buildHas(a1, aa, 1d);
@@ -115,9 +117,9 @@ public class HasEventTest {
 
     @Test
     public void testHashCode() {
-        final Agent a1 = af.buildAgent(idf.build(Agent.class, "a1"), new Agent.ContactInfo() {});
-        final Agent a2 = af.buildAgent(idf.build(Agent.class, "a2"), new Agent.ContactInfo() {});
-        final Attribute aa = aaf.buildAttribute(idf.build(Attribute.class, "aa"), Attribute.Type.NEGATIVE_QUALITY);
+        final Agent a1 = af.buildAgent(idf.build(Agent.class, "a1"), new ContactInfo() {});
+        final Agent a2 = af.buildAgent(idf.build(Agent.class, "a2"), new ContactInfo() {});
+        final Attribute aa = aaf.buildAttribute(idf.build(Attribute.class, "aa"), Type.NEGATIVE_QUALITY);
         final Has h1 = hf.buildHas(a1, aa, 1d);
         final Has h2 = hf.buildHas(a2, aa, 1d);
         final Has h3 = hf.buildHas(a1, aa, 1d);
@@ -131,9 +133,9 @@ public class HasEventTest {
 
     @Test
     public void testToString() {
-        final Agent a1 = af.buildAgent(idf.build(Agent.class, "a1"), new Agent.ContactInfo() {});
-        final Agent a2 = af.buildAgent(idf.build(Agent.class, "a2"), new Agent.ContactInfo() {});
-        final Attribute aa = aaf.buildAttribute(idf.build(Attribute.class, "aa"), Attribute.Type.NEGATIVE_QUALITY);
+        final Agent a1 = af.buildAgent(idf.build(Agent.class, "a1"), new ContactInfo() {});
+        final Agent a2 = af.buildAgent(idf.build(Agent.class, "a2"), new ContactInfo() {});
+        final Attribute aa = aaf.buildAttribute(idf.build(Attribute.class, "aa"), Type.NEGATIVE_QUALITY);
         final Has h1 = hf.buildHas(a1, aa, 1d);
         final Has h2 = hf.buildHas(a2, aa, 1d);
         final Has h3 = hf.buildHas(a1, aa, 1d);

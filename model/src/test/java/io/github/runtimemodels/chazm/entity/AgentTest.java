@@ -3,6 +3,7 @@ package io.github.runtimemodels.chazm.entity;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.ProvisionException;
+import io.github.runtimemodels.chazm.entity.Agent.ContactInfo;
 import io.github.runtimemodels.chazm.id.IdFactory;
 import io.github.runtimemodels.chazm.id.UniqueId;
 import org.junit.Rule;
@@ -32,8 +33,8 @@ public class AgentTest {
     @Test
     public void testAgent() {
         final UniqueId<Agent> i1 = idFactory.build(Agent.class, 1L);
-        final Agent a1 = agentFactory.buildAgent(i1, new Agent.ContactInfo() {});
-        final Agent a2 = agentFactory.buildAgent(i1, new Agent.ContactInfo() {});
+        final Agent a1 = agentFactory.buildAgent(i1, new ContactInfo() {});
+        final Agent a2 = agentFactory.buildAgent(i1, new ContactInfo() {});
         assertThat(a1, is(not(nullValue())));
         assertThat(a1, is(not(sameInstance(a2))));
     }
@@ -56,7 +57,7 @@ public class AgentTest {
     @Test
     public void testGetContactInfo() {
         final UniqueId<Agent> i1 = idFactory.build(Agent.class, 1L);
-        final Agent.ContactInfo contactInfo = new Agent.ContactInfo() {};
+        final ContactInfo contactInfo = new ContactInfo() {};
         final Agent a1 = agentFactory.buildAgent(i1, contactInfo);
         assertThat(a1.getContactInfo(), is(sameInstance(contactInfo)));
     }
@@ -65,8 +66,8 @@ public class AgentTest {
     public void testGetId() {
         final UniqueId<Agent> i1 = idFactory.build(Agent.class, 1L);
         final UniqueId<Agent> i2 = idFactory.build(Agent.class, 1L);
-        final Agent a1 = agentFactory.buildAgent(i1, new Agent.ContactInfo() {});
-        final Agent a2 = agentFactory.buildAgent(i2, new Agent.ContactInfo() {});
+        final Agent a1 = agentFactory.buildAgent(i1, new ContactInfo() {});
+        final Agent a2 = agentFactory.buildAgent(i2, new ContactInfo() {});
 
         assertThat(a1.getId(), is(sameInstance(i1)));
         assertThat(a1.getId(), is(not(sameInstance(a2.getId()))));
@@ -76,9 +77,9 @@ public class AgentTest {
     public void testEqualsObject() {
         final UniqueId<Agent> i1 = idFactory.build(Agent.class, 1L);
         final UniqueId<Agent> i2 = idFactory.build(Agent.class, 2L);
-        final Agent a1 = agentFactory.buildAgent(i1, new Agent.ContactInfo() {});
-        final Agent a2 = agentFactory.buildAgent(i2, new Agent.ContactInfo() {});
-        final Agent a3 = agentFactory.buildAgent(i1, new Agent.ContactInfo() {});
+        final Agent a1 = agentFactory.buildAgent(i1, new ContactInfo() {});
+        final Agent a2 = agentFactory.buildAgent(i2, new ContactInfo() {});
+        final Agent a3 = agentFactory.buildAgent(i1, new ContactInfo() {});
 
         assertThat(a1, is(not(equalTo(a2))));
         assertThat(a1, is(equalTo(a3)));
@@ -89,9 +90,9 @@ public class AgentTest {
     public void testHashCode() {
         final UniqueId<Agent> i1 = idFactory.build(Agent.class, 1L);
         final UniqueId<Agent> i2 = idFactory.build(Agent.class, 2L);
-        final Agent a1 = agentFactory.buildAgent(i1, new Agent.ContactInfo() {});
-        final Agent a2 = agentFactory.buildAgent(i2, new Agent.ContactInfo() {});
-        final Agent a3 = agentFactory.buildAgent(i1, new Agent.ContactInfo() {});
+        final Agent a1 = agentFactory.buildAgent(i1, new ContactInfo() {});
+        final Agent a2 = agentFactory.buildAgent(i2, new ContactInfo() {});
+        final Agent a3 = agentFactory.buildAgent(i1, new ContactInfo() {});
 
         assertThat(a1.hashCode(), is(not(equalTo(a2.hashCode()))));
         assertThat(a1.hashCode(), is(equalTo(a3.hashCode())));
@@ -101,9 +102,9 @@ public class AgentTest {
     public void testToString() {
         final UniqueId<Agent> i1 = idFactory.build(Agent.class, 1L);
         final UniqueId<Agent> i2 = idFactory.build(Agent.class, 2L);
-        final Agent a1 = agentFactory.buildAgent(i1, new Agent.ContactInfo() {});
-        final Agent a2 = agentFactory.buildAgent(i2, new Agent.ContactInfo() {});
-        final Agent a3 = agentFactory.buildAgent(i1, new Agent.ContactInfo() {});
+        final Agent a1 = agentFactory.buildAgent(i1, new ContactInfo() {});
+        final Agent a2 = agentFactory.buildAgent(i2, new ContactInfo() {});
+        final Agent a3 = agentFactory.buildAgent(i1, new ContactInfo() {});
 
         assertThat(a1.toString(), is(not(equalTo(a2.toString()))));
         assertThat(a1.toString(), is(equalTo(a3.toString())));

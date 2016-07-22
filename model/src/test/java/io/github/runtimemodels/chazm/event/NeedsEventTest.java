@@ -4,6 +4,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.ProvisionException;
 import io.github.runtimemodels.chazm.entity.Attribute;
+import io.github.runtimemodels.chazm.entity.Attribute.Type;
 import io.github.runtimemodels.chazm.entity.AttributeFactory;
 import io.github.runtimemodels.chazm.entity.Role;
 import io.github.runtimemodels.chazm.entity.RoleFactory;
@@ -41,7 +42,7 @@ public class NeedsEventTest {
     @Test
     public void testNeedsEvent() {
         final Role r = rf.buildRole(idf.build(Role.class, "r"));
-        final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
+        final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
         final Needs n = nf.buildNeeds(r, a);
         final NeedsEvent ne1 = nef.build(EventCategory.ADDED, n);
         final NeedsEvent ne2 = nef.build(EventCategory.ADDED, n);
@@ -69,7 +70,7 @@ public class NeedsEventTest {
     @Test
     public void testGetRoleId() {
         final Role r = rf.buildRole(idf.build(Role.class, "r"));
-        final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
+        final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
         final Needs n = nf.buildNeeds(r, a);
         final NeedsEvent ne = nef.build(EventCategory.ADDED, n);
 
@@ -79,7 +80,7 @@ public class NeedsEventTest {
     @Test
     public void testGetAttributeId() {
         final Role r = rf.buildRole(idf.build(Role.class, "r"));
-        final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
+        final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
         final Needs n = nf.buildNeeds(r, a);
         final NeedsEvent ne = nef.build(EventCategory.ADDED, n);
 
@@ -90,7 +91,7 @@ public class NeedsEventTest {
     public void testEquals() {
         final Role r1 = rf.buildRole(idf.build(Role.class, "r1"));
         final Role r2 = rf.buildRole(idf.build(Role.class, "r2"));
-        final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
+        final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
         final Needs n1 = nf.buildNeeds(r1, a);
         final Needs n2 = nf.buildNeeds(r2, a);
         final Needs n3 = nf.buildNeeds(r1, a);
@@ -107,7 +108,7 @@ public class NeedsEventTest {
     public void testNeedshCode() {
         final Role r1 = rf.buildRole(idf.build(Role.class, "r1"));
         final Role r2 = rf.buildRole(idf.build(Role.class, "r2"));
-        final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
+        final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
         final Needs n1 = nf.buildNeeds(r1, a);
         final Needs n2 = nf.buildNeeds(r2, a);
         final Needs n3 = nf.buildNeeds(r1, a);
@@ -123,7 +124,7 @@ public class NeedsEventTest {
     public void testToString() {
         final Role r1 = rf.buildRole(idf.build(Role.class, "r1"));
         final Role r2 = rf.buildRole(idf.build(Role.class, "r2"));
-        final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
+        final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
         final Needs n1 = nf.buildNeeds(r1, a);
         final Needs n2 = nf.buildNeeds(r2, a);
         final Needs n3 = nf.buildNeeds(r1, a);

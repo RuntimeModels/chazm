@@ -6,10 +6,13 @@ import com.google.inject.Provider;
 import io.github.runtimemodels.chazm.Organization;
 import io.github.runtimemodels.chazm.OrganizationModule;
 import io.github.runtimemodels.chazm.entity.Agent;
+import io.github.runtimemodels.chazm.entity.Agent.ContactInfo;
 import io.github.runtimemodels.chazm.entity.Attribute;
+import io.github.runtimemodels.chazm.entity.Attribute.Type;
 import io.github.runtimemodels.chazm.entity.Capability;
 import io.github.runtimemodels.chazm.entity.EntityFactory;
 import io.github.runtimemodels.chazm.entity.InstanceGoal;
+import io.github.runtimemodels.chazm.entity.InstanceGoal.Parameter;
 import io.github.runtimemodels.chazm.entity.Role;
 import io.github.runtimemodels.chazm.entity.SpecificationGoal;
 import io.github.runtimemodels.chazm.id.IdFactory;
@@ -40,13 +43,13 @@ public class GoodnessTest {
     @Test
     public void testCompute() {
         final Organization o = provider.get();
-        final Agent a = entityFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
+        final Agent a = entityFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
         final Role r = entityFactory.buildRole(idFactory.build(Role.class, "r"));
         final SpecificationGoal sg = entityFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig = entityFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
+        final InstanceGoal ig = entityFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
         final Capability c1 = entityFactory.buildCapability(idFactory.build(Capability.class, "c1"));
         final Capability c2 = entityFactory.buildCapability(idFactory.build(Capability.class, "c2"));
-        final Attribute t = entityFactory.buildAttribute(idFactory.build(Attribute.class, "t"), Attribute.Type.NEGATIVE_QUALITY);
+        final Attribute t = entityFactory.buildAttribute(idFactory.build(Attribute.class, "t"), Type.NEGATIVE_QUALITY);
 
         assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(Goodness.MIN_SCORE)));
 
@@ -104,7 +107,7 @@ public class GoodnessTest {
     @Test
     public void testCompute3() {
         final Organization o = provider.get();
-        final Agent a = entityFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
+        final Agent a = entityFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
 
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg2", "compute")));
@@ -115,7 +118,7 @@ public class GoodnessTest {
     @Test
     public void testCompute4() {
         final Organization o = provider.get();
-        final Agent a = entityFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
+        final Agent a = entityFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
         final Role r = entityFactory.buildRole(idFactory.build(Role.class, "r"));
 
         exception.expect(IllegalArgumentException.class);
@@ -127,10 +130,10 @@ public class GoodnessTest {
     @Test
     public void testCompute5() {
         final Organization o = provider.get();
-        final Agent a = entityFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {});
+        final Agent a = entityFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
         final Role r = entityFactory.buildRole(idFactory.build(Role.class, "r"));
         final SpecificationGoal sg = entityFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig = entityFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {});
+        final InstanceGoal ig = entityFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
 
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg4", "compute")));
