@@ -44,7 +44,7 @@ class LongId<T> extends AbstractId<T> {
     @Override
     public String toString() {
         if (toString == null) {
-            toString = super.toString() + ":" + String.valueOf(getId());
+            toString = super.toString() + ":" + getId();
         }
         return toString;
     }

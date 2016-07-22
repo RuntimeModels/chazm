@@ -3,6 +3,7 @@ package io.github.runtimemodels.chazm.entity;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.ProvisionException;
+import io.github.runtimemodels.chazm.entity.InstanceGoal.Parameter;
 import io.github.runtimemodels.chazm.id.IdFactory;
 import io.github.runtimemodels.chazm.id.UniqueId;
 import org.junit.Rule;
@@ -34,8 +35,8 @@ public class InstanceGoalTest {
     public void testInstanceGoal() {
         final SpecificationGoal sg1 = specificationGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, 1L));
         final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
-        final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new InstanceGoal.Parameter() {});
-        final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new InstanceGoal.Parameter() {});
+        final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new Parameter() {});
+        final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new Parameter() {});
 
         assertThat(g1, is(not(nullValue())));
         assertThat(g1, is(not(sameInstance(g2))));
@@ -81,8 +82,8 @@ public class InstanceGoalTest {
 
         final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
         final UniqueId<InstanceGoal> i2 = idFactory.build(InstanceGoal.class, 2L);
-        final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, y1, new InstanceGoal.Parameter() {});
-        final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i2, y2, new InstanceGoal.Parameter() {});
+        final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, y1, new Parameter() {});
+        final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i2, y2, new Parameter() {});
 
         assertThat(g1.getGoal(), is(sameInstance(y1)));
         assertThat(g1.getGoal(), is(not(sameInstance(y2))));
@@ -95,7 +96,7 @@ public class InstanceGoalTest {
         final SpecificationGoal y1 = specificationGoalFactory.buildSpecificationGoal(x1);
 
         final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
-        final InstanceGoal.Parameter p1 = new InstanceGoal.Parameter() {};
+        final Parameter p1 = new Parameter() {};
         final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, y1, p1);
 
         assertThat(g1.getParameter(), is(sameInstance(p1)));
@@ -110,8 +111,8 @@ public class InstanceGoalTest {
 
         final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
         final UniqueId<InstanceGoal> i2 = idFactory.build(InstanceGoal.class, 1L);
-        final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, y1, new InstanceGoal.Parameter() {});
-        final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i2, y2, new InstanceGoal.Parameter() {});
+        final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, y1, new Parameter() {});
+        final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i2, y2, new Parameter() {});
 
         assertThat(g1.getId(), is(sameInstance(i1)));
         assertThat(g1.getId(), is(not(sameInstance(g2.getId()))));
@@ -122,9 +123,9 @@ public class InstanceGoalTest {
         final SpecificationGoal sg1 = specificationGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, 1L));
         final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
         final UniqueId<InstanceGoal> i2 = idFactory.build(InstanceGoal.class, 2L);
-        final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new InstanceGoal.Parameter() {});
-        final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i2, sg1, new InstanceGoal.Parameter() {});
-        final InstanceGoal g3 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new InstanceGoal.Parameter() {});
+        final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new Parameter() {});
+        final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i2, sg1, new Parameter() {});
+        final InstanceGoal g3 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new Parameter() {});
 
         assertThat(g1, is(not(equalTo(g2))));
         assertThat(g1, is(equalTo(g3)));
@@ -136,9 +137,9 @@ public class InstanceGoalTest {
         final SpecificationGoal sg1 = specificationGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, 1L));
         final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
         final UniqueId<InstanceGoal> i2 = idFactory.build(InstanceGoal.class, 2L);
-        final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new InstanceGoal.Parameter() {});
-        final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i2, sg1, new InstanceGoal.Parameter() {});
-        final InstanceGoal g3 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new InstanceGoal.Parameter() {});
+        final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new Parameter() {});
+        final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i2, sg1, new Parameter() {});
+        final InstanceGoal g3 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new Parameter() {});
 
         assertThat(g1.hashCode(), is(not(equalTo(g2.hashCode()))));
         assertThat(g1.hashCode(), is(equalTo(g3.hashCode())));
@@ -149,7 +150,7 @@ public class InstanceGoalTest {
         final SpecificationGoal sg1 = specificationGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, 1L));
         final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
         final UniqueId<InstanceGoal> i2 = idFactory.build(InstanceGoal.class, 2L);
-        final InstanceGoal.Parameter p1 = new InstanceGoal.Parameter() {};
+        final Parameter p1 = new Parameter() {};
         final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, sg1, p1);
         final InstanceGoal g2 = instanceGoalFactory.buildInstanceGoal(i2, sg1, p1);
         final InstanceGoal g3 = instanceGoalFactory.buildInstanceGoal(i1, sg1, p1);
