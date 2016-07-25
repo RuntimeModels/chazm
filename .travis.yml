@@ -36,13 +36,7 @@ addons:
 
 before_install:
   - chmod +x gradlew # ensure that the gradlew script is executable
-
-before_script:
   - ./gradlew clean # just in case, ensures a clean build environment
-
-script:
-  - ./gradlew assemble
-  - ./gradlew check jacocoTestReport # perform tests and compile jacoco test reports
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
