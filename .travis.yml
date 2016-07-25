@@ -34,10 +34,6 @@ addons:
     build_command: "./gradlew assemble"
     branch_pattern: coverity_scan
 
-before_install:
-
-install:
-
 before_script:
   - chmod +x gradlew # ensure that the gradlew script is executable
   - ./gradlew clean # just in case, ensures a clean build environment
