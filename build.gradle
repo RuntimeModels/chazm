@@ -1,28 +1,19 @@
 buildscript {
-    repositories {
-        jcenter()
-    }
-
     dependencies {
         classpath 'io.spring.gradle:dependency-management-plugin:0.6.0.RELEASE'
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.6.3'
     }
+}
+plugins {
+    id 'eclipse'
+    id 'idea'
+    id 'com.github.kt3k.coveralls' version '2.6.3'
+    id 'org.sonarqube' version '2.0.1'
 }
 
 allprojects {
-    apply plugin: 'eclipse'
-    apply plugin: 'idea'
-    apply plugin: 'jacoco'
-    apply plugin: 'com.github.kt3k.coveralls'
-
-    repositories {
-        jcenter()
-    }
-}
-
-subprojects {
     apply plugin: 'java'
     apply plugin: 'maven-publish'
+    apply plugin: 'jacoco'
     apply plugin: 'io.spring.dependency-management'
 
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -31,14 +22,19 @@ subprojects {
     group 'io.github.runtimemodels'
     version '7.0.0'
 
+    repositories {
+        jcenter()
+    }
+
     dependencyManagement {
         dependencies {
             dependency 'javax:javaee-api:7.0'
             dependency 'org.jmockit:jmockit:1.25'
             dependency 'org.projectlombok:lombok:1.16.8'
         }
+
         imports {
-            mavenBom 'io.spring.platform:platform-bom:2.0.5.RELEASE'
+            mavenBom 'io.spring.platform:platform-bom:2.0.6.RELEASE'
             mavenBom 'com.google.inject:guice-bom:4.0'
         }
     }
@@ -46,14 +42,8 @@ subprojects {
     jacocoTestReport {
         dependsOn check
         reports {
-            html {
-                enabled true
-            }
             xml {
                 enabled true
-            }
-            csv {
-                enabled false
             }
         }
     }
@@ -79,31 +69,14 @@ subprojects {
 
 coveralls {
     sourceDirs = subprojects.sourceSets.main.java.srcDirs.flatten()
-    jacocoReportPath = "${buildDir}/reports/jacoco/jacocoReports/jacocoReports.xml"
 }
 
-task jacocoTestReport(type: JacocoReport) {
+jacocoTestReport {
     dependsOn subprojects.jacocoTestReport
 
     sourceDirectories = files(subprojects.sourceSets.main.java.srcDirs)
     classDirectories = files(subprojects.sourceSets.main.output.classesDir)
     executionData = files(files(subprojects.jacocoTestReport.executionData).findAll { it.exists() })
-
-    reports {
-        html {
-            enabled true
-        }
-        xml {
-            enabled true
-        }
-        csv {
-            enabled false
-        }
-    }
-}
-
-tasks.coveralls {
-    dependsOn jacocoTestReport
 }
 
 task wrapper(type: Wrapper) {
