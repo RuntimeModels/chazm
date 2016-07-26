@@ -17,36 +17,15 @@ notifications:
   slack:
     secure: "UITKekk5L3PSJCkakLT1uVhDfJnJ1bY0NG07lEcAWa4OaMAt8G2bjRYrZZFa7eXFerOe3tamowTznWcZ1LYjSPGoBHO1Yd6wBBFfvpAtVA653jG9gPpGVSD8WmCwgzsR6ohrd8pTMI2cq8qohl3itmcSXwquupE1NCx/eG/66tg="
 
-env:
-  global:
-   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
-   #   via the "travis encrypt" command using the project repo's public key
-   - secure: "L+Hrmxz1NNgMsm8pPRPGbH7ColS6HfgLZEW8eFdfZhAQznxjQU/9Fhk1kv67SZlh9I/WghxcD5S/dQJPw0e9A/zQF4me5AWtTeKKInyCnuonrkU/nZDN08YyZkY1wpTGN8SYeYwCWD2pu2N+l935kXItzRYYIY8pwRCxofa16yo="
-
-addons:
-  coverity_scan:
-    project:
-      name: "RuntimeModels/chazm"
-      description: "Build submitted via Travis CI"
-    notification_email:
-      secure: "G1Nt+8sR0VZQmtX6hHtzr0B+gp6u8Mfxmgql4Vj6EbF/CiYH+0aD1c0bD6mAAf0Q/5kVOSnOSoRLhXi0/yPH7uj7fyzVW9CZm1AlrGFDQXP7GmXvQGpHjvQNjGON41xHRyeY5k2ja4AuWHOGHvi345ygmzk5FNIL9ZFpazXKQng="
-    build_command_prepend: "./gradlew clean"
-    build_command: "./gradlew assemble"
-    branch_pattern: coverity_scan
-
 before_install:
   - chmod +x gradlew # ensure that the gradlew script is executable
   - ./gradlew clean # just in case, ensures a clean build environment
-  - chmod +x gradlew # make gradlew script executable
 
 install:
   - ./gradlew assemble
 
 script:
-  - ./gradlew --continue check jacocoTestReport # perform tests and compile jacoco test reports
-
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - ./gradlew --continue check jacocoTestReport sonarqube # perform tests and compile jacoco test reports
 
 after_script:
-  - ./gradlew coveralls # collect jacoco reports from subprojects send them to coveralls
+  - ./gradlew coveralls # send coverage to coveralls
