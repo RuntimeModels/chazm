@@ -71,6 +71,7 @@ sonarqube {
     properties {
         property 'sonar.host.url', 'https://sonarqube.com'
         property 'sonar.login', System.getenv('SONAR_TOKEN')
+        property 'sonar.projectKey', 'chazm'
     }
 }
 
