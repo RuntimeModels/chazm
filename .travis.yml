@@ -4,6 +4,10 @@ language: java
 jdk:
   - oraclejdk8 # test against version 1.8
 
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
 cache:
   directories:
     - '$HOME/.gradle/caches' # cache the gradle cache directory
@@ -31,6 +35,8 @@ addons:
     branch_pattern: coverity_scan
 
 before_install:
+  - chmod +x gradlew # ensure that the gradlew script is executable
+  - ./gradlew clean # just in case, ensures a clean build environment
   - chmod +x gradlew # make gradlew script executable
 
 install:
@@ -41,10 +47,6 @@ script:
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-
-before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 
 after_script:
   - ./gradlew coveralls # collect jacoco reports from subprojects send them to coveralls
