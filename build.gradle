@@ -67,6 +67,13 @@ allprojects {
     }
 }
 
+sonarqube {
+    properties {
+        property 'sonar.host.url', 'https://sonarqube.com'
+        property 'sonar.login', System.getenv('SONAR_TOKEN')
+    }
+}
+
 coveralls {
     sourceDirs = subprojects.sourceSets.main.java.srcDirs.flatten()
 }
