@@ -25,7 +25,9 @@ install:
   - ./gradlew assemble
 
 script:
-  - ./gradlew --continue check jacocoTestReport sonarqube # perform tests and compile jacoco test reports
+  - ./gradlew --continue check # perform tests and compile jacoco test reports
 
 after_script:
+  - ./gradlew jacocoTestReport # collect jacoco test reports
   - ./gradlew coveralls # send coverage to coveralls
+  - ./gradlew sonarqube # sonarqube
