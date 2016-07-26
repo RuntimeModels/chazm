@@ -37,7 +37,7 @@ install:
   - ./gradlew assemble
 
 script:
-  - ./gradlew check jacocoTestReport # perform tests and compile jacoco test reports
+  - ./gradlew --continue check jacocoTestReport # perform tests and compile jacoco test reports
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
