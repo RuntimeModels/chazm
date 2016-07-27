@@ -30,7 +30,7 @@ allprojects {
         dependencies {
             dependency 'javax:javaee-api:7.0'
             dependency 'org.jmockit:jmockit:1.25'
-            dependency 'org.projectlombok:lombok:1.16.8'
+            dependency 'org.projectlombok:lombok:1.16.10'
         }
 
         imports {
@@ -40,7 +40,6 @@ allprojects {
     }
 
     jacocoTestReport {
-        dependsOn check
         reports {
             xml {
                 enabled true
@@ -64,6 +63,14 @@ allprojects {
                 artifact sourceJar
             }
         }
+    }
+}
+
+sonarqube {
+    properties {
+        property 'sonar.host.url', 'https://sonarqube.com'
+        property 'sonar.login', System.getenv('SONAR_TOKEN')
+        property 'sonar.projectKey', 'chazm'
     }
 }
 
