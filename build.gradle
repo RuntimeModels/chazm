@@ -40,7 +40,6 @@ allprojects {
     }
 
     jacocoTestReport {
-        dependsOn check
         reports {
             xml {
                 enabled true
