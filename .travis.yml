@@ -26,4 +26,4 @@ script:
   - ./gradlew --continue build # 
 
 after_script:
-  - ./gradlew jacocoTestReport coveralls sonarqube
+  - ./gradlew --stacktrace jacocoTestReport coveralls sonarqube
