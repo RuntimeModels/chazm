@@ -19,15 +19,11 @@ notifications:
 
 before_install:
   - chmod +x gradlew # ensure that the gradlew script is executable
-  - ./gradlew clean # just in case, ensures a clean build environment
 
-install:
-  - ./gradlew assemble
+install: true
 
 script:
-  - ./gradlew --continue check # perform tests and compile jacoco test reports
+  - ./gradlew --continue build # 
 
 after_script:
-  - ./gradlew jacocoTestReport # collect jacoco test reports
-  - ./gradlew coveralls # send coverage to coveralls
-  - ./gradlew sonarqube # sonarqube
+  - ./gradlew jacocoTestReport coveralls sonarqube # reporting
