@@ -23,7 +23,4 @@ before_install:
 install: true
 
 script:
-  - ./gradlew --continue build # 
-
-after_script:
-  - ./gradlew --stacktrace jacocoTestReport coveralls sonarqube
+  - ./gradlew --continue --stacktrace build sonarqube jacocoTestReport coveralls #
