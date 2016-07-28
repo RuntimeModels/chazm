@@ -2,9 +2,9 @@
 
 **Version**: 7.0.0
 
-**Badges**: [![Build Status][ci-img]][ci-lnk]
-[![Coverage Status][co-img]][co-lnk]
-[![Coverity Status][cv-img]][cv-lnk]
+**Badges**: [![Build Status][bs-img]][bs-lnk]
+[![Coverage Status][cs-img]][cs-lnk]
+[![Quality Gate][qg-img]][qg-lnk]
 
 ##What is this repository for?
 
@@ -30,9 +30,9 @@ This project is based on my PhD work at Kansas State University. It is a runtime
 * Repo owner or admin
 * Other community or team contact
 
-[ci-img]: https://travis-ci.org/RuntimeModels/chazm.svg?branch=master
-[ci-lnk]: https://travis-ci.org/RuntimeModels/chazm
-[co-img]: https://coveralls.io/repos/RuntimeModels/chazm/badge.svg?branch=master&service=github
-[co-lnk]: https://coveralls.io/github/RuntimeModels/chazm?branch=master
-[cv-img]: https://scan.coverity.com/projects/6071/badge.svg
-[cv-lnk]: https://scan.coverity.com/projects/chriszhong-organization-model
+[bs-img]: https://travis-ci.org/RuntimeModels/chazm.svg?branch=master
+[bs-lnk]: https://travis-ci.org/RuntimeModels/chazm
+[cs-img]: https://coveralls.io/repos/RuntimeModels/chazm/badge.svg?branch=master&service=github
+[cs-lnk]: https://coveralls.io/github/RuntimeModels/chazm?branch=master
+[qg-img]: https://sonarqube.com/api/badges/gate?key=chazm
+[qg-lnk]: https://sonarqube.com/dashboard/index/chazm
