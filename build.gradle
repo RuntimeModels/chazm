@@ -20,7 +20,7 @@ allprojects {
     targetCompatibility = JavaVersion.VERSION_1_8
 
     group 'io.github.runtimemodels'
-    version '7.0.0'
+    version '7.0.0' + ${System.getenv.TRAVIS_BUILD_NUMBER:SNAPSHOT}
 
     repositories {
         jcenter()
