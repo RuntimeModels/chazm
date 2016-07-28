@@ -71,6 +71,9 @@ sonarqube {
         property 'sonar.host.url', 'https://sonarqube.com'
         property 'sonar.login', System.getenv('SONAR_TOKEN')
         property 'sonar.projectKey', 'chazm'
+        property 'sonar.github.pullRequest', System.getenv('TRAVIS_PULL_REQUEST')
+        property 'sonar.github.repository', System.getenv('TRAVIS_REPO_SLUG')
+        property 'sonar.github.oauth', System.getenv('GITHUB_TOKEN')
     }
 }
 
