@@ -22,7 +22,7 @@ allprojects {
     group 'io.github.runtimemodels'
     def build = {
         def number = System.getenv('TRAVIS_BUILD_NUMBER')
-        return number == null ? 'SNAPSHOT' : 'b' + number
+        return number == null ? '-SNAPSHOT' : '-b' + number
     }
     version '7.0.0' + build
 
