@@ -10,7 +10,7 @@ plugins {
     id 'org.sonarqube' version '2.0.1'
 }
 
-allprojects {
+subprojects {
     apply plugin: 'java'
     apply plugin: 'maven-publish'
     apply plugin: 'jacoco'
@@ -20,11 +20,7 @@ allprojects {
     targetCompatibility = JavaVersion.VERSION_1_8
 
     group 'io.github.runtimemodels'
-    def build = {
-        def number = System.getenv('TRAVIS_BUILD_NUMBER')
-        return number == null ? '-SNAPSHOT' : '-b' + number
-    }
-    version '7.0.0' + build
+    version '7.0.0' + (System.getenv('TRAVIS_BUILD_NUMBER') == null ? '-SNAPSHOT' : '-b' + System.getenv('TRAVIS_BUILD_NUMBER'))
 
     repositories {
         jcenter()
@@ -57,7 +53,7 @@ allprojects {
     }
 
     artifacts {
-        runtime sourceJar
+        archives sourceJar
     }
 
     publishing {
@@ -68,6 +64,18 @@ allprojects {
             }
         }
     }
+}
+
+coveralls {
+    sourceDirs = subprojects.sourceSets.main.java.srcDirs.flatten()
+}
+
+task jacocoTestReport(type: JacocoReport) {
+    dependsOn subprojects.jacocoTestReport
+
+    sourceDirectories = files(subprojects.sourceSets.main.java.srcDirs)
+    classDirectories = files(subprojects.sourceSets.main.output.classesDir)
+    executionData = files(files(subprojects.jacocoTestReport.executionData).findAll { it.exists() })
 }
 
 sonarqube {
@@ -84,19 +92,18 @@ sonarqube {
     }
 }
 
-coveralls {
-    sourceDirs = subprojects.sourceSets.main.java.srcDirs.flatten()
-}
-
-jacocoTestReport {
-    dependsOn subprojects.jacocoTestReport
-
-    sourceDirectories = files(subprojects.sourceSets.main.java.srcDirs)
-    classDirectories = files(subprojects.sourceSets.main.output.classesDir)
-    executionData = files(files(subprojects.jacocoTestReport.executionData).findAll { it.exists() })
+task printInfo << {
+    println "  - Modules: ${subprojects.size()}"
+    subprojects.each {
+        println "  - ${it.name}'s archive artifacts: ${it.configurations.archives.allArtifacts.size()}"
+        it.configurations.archives.artifacts.files.each {
+            println "    - ${it.name}"
+        }
+    }
 }
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.14'
     distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
 }
+
