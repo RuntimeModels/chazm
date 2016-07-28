@@ -89,8 +89,10 @@ coveralls {
 sonarqube {
     properties {
         property 'sonar.host.url', 'https://sonarqube.com'
-        property 'sonar.login', System.getenv('SONAR_TOKEN')
         property 'sonar.projectKey', 'chazm'
+        property 'sonar.projectName', 'Chazm'
+        property 'sonar.projectVersion', subprojects.version
+        property 'sonar.login', System.getenv('SONAR_TOKEN')
         if (System.getenv('TRAVIS_PULL_REQUEST') != null && System.getenv('TRAVIS_PULL_REQUEST') != 'false') {
             property 'sonar.analysis.mode', 'preview'
             property 'sonar.github.pullRequest', System.getenv('TRAVIS_PULL_REQUEST')
