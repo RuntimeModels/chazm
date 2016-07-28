@@ -4,13 +4,14 @@ buildscript {
     }
 }
 plugins {
+    id 'base'
     id 'eclipse'
     id 'idea'
     id 'com.github.kt3k.coveralls' version '2.6.3'
     id 'org.sonarqube' version '2.0.1'
 }
 
-allprojects {
+subprojects {
     apply plugin: 'java'
     apply plugin: 'maven-publish'
     apply plugin: 'jacoco'
@@ -20,11 +21,7 @@ allprojects {
     targetCompatibility = JavaVersion.VERSION_1_8
 
     group 'io.github.runtimemodels'
-    def build = {
-        def number = System.getenv('TRAVIS_BUILD_NUMBER')
-        return number == null ? '-SNAPSHOT' : '-b' + number
-    }
-    version '7.0.0' + build
+    version '7.0.0' + (System.getenv('TRAVIS_BUILD_NUMBER') == null ? '-SNAPSHOT' : '-b' + System.getenv('TRAVIS_BUILD_NUMBER'))
 
     repositories {
         jcenter()
@@ -57,7 +54,7 @@ allprojects {
     }
 
     artifacts {
-        runtime sourceJar
+        archives sourceJar
     }
 
     publishing {
@@ -70,16 +67,17 @@ allprojects {
     }
 }
 
-sonarqube {
-    properties {
-        property 'sonar.host.url', 'https://sonarqube.com'
-        property 'sonar.login', System.getenv('SONAR_TOKEN')
-        property 'sonar.projectKey', 'chazm'
-        if (System.getenv('TRAVIS_PULL_REQUEST') != null) {
-            property 'sonar.analysis.mode', 'preview'
-            property 'sonar.github.pullRequest', System.getenv('TRAVIS_PULL_REQUEST')
-            property 'sonar.github.repository', System.getenv('TRAVIS_REPO_SLUG')
-            property 'sonar.github.oauth', System.getenv('GITHUB_TOKEN')
+
+task jacocoTestReport(type: JacocoReport) {
+    dependsOn subprojects.jacocoTestReport
+    jacocoClasspath = files(subprojects.configurations.jacocoAnt)
+    sourceDirectories = files(subprojects.sourceSets.main.java.srcDirs)
+    classDirectories = files(subprojects.sourceSets.main.output.classesDir)
+    executionData = files(subprojects.jacocoTestReport.executionData).filter { it.exists() }
+    reports {
+        xml {
+            enabled true
+            destination "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
         }
     }
 }
@@ -88,15 +86,32 @@ coveralls {
     sourceDirs = subprojects.sourceSets.main.java.srcDirs.flatten()
 }
 
-jacocoTestReport {
-    dependsOn subprojects.jacocoTestReport
+sonarqube {
+    properties {
+        property 'sonar.host.url', 'https://sonarqube.com'
+        property 'sonar.login', System.getenv('SONAR_TOKEN')
+        property 'sonar.projectKey', 'chazm'
+        if (System.getenv('TRAVIS_PULL_REQUEST') != null && System.getenv('TRAVIS_PULL_REQUEST') != 'false') {
+            property 'sonar.analysis.mode', 'preview'
+            property 'sonar.github.pullRequest', System.getenv('TRAVIS_PULL_REQUEST')
+            property 'sonar.github.repository', System.getenv('TRAVIS_REPO_SLUG')
+            property 'sonar.github.oauth', System.getenv('GITHUB_TOKEN')
+        }
+    }
+}
 
-    sourceDirectories = files(subprojects.sourceSets.main.java.srcDirs)
-    classDirectories = files(subprojects.sourceSets.main.output.classesDir)
-    executionData = files(files(subprojects.jacocoTestReport.executionData).findAll { it.exists() })
+task printInfo << {
+    println "  - Modules: ${subprojects.size()}"
+    subprojects.each {
+        println "  - ${it.name}'s archive artifacts: ${it.configurations.archives.allArtifacts.size()}"
+        it.configurations.archives.artifacts.files.each {
+            println "    - ${it.name}"
+        }
+    }
 }
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.14'
     distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
 }
+
