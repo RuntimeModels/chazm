@@ -26,5 +26,4 @@ script:
   - ./gradlew --continue build # 
 
 after_script:
-   - 'if [ "$TRAVIS_PULL_REQUEST" = "true" ]; then bash ./gradlew jacocoTestReport coveralls sonarqube -Dsonar.analysis.mode=preview -Dsonar.github.pullRequest=$TRAVIS_PULL_REQUEST -Dsonar.github.repository=$TRAVIS_REPO_SLUG -Dsonar.github.oauth=$GITHUB_TOKEN; fi'
-   - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash ./gradlew jacocoTestReport coveralls sonarqube; fi'
+  - ./gradlew jacocoTestReport coveralls sonarqube
