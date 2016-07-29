@@ -21,7 +21,7 @@ subprojects {
     targetCompatibility = JavaVersion.VERSION_1_8
 
     group 'io.github.runtimemodels'
-    version '7.0.0' + (System.getenv('TRAVIS_BUILD_NUMBER') == null ? '-SNAPSHOT' : '-b' + System.getenv('TRAVIS_BUILD_NUMBER'))
+    version "${rootProject.version}.0-${System.getenv('TRAVIS_BUILD_NUMBER') == null ? 'SNAPSHOT' : 'b' + System.getenv('TRAVIS_BUILD_NUMBER')}"
 
     repositories {
         jcenter()
@@ -67,8 +67,6 @@ subprojects {
     }
 }
 
-version '7.0'
-
 task jacocoTestReport(type: JacocoReport) {
     dependsOn subprojects.jacocoTestReport
     jacocoClasspath = files(subprojects.configurations.jacocoAnt)
@@ -92,12 +90,10 @@ sonarqube {
 //        if (System.getenv('TRAVIS_BRANCH') == 'master') {
             property 'sonar.host.url', 'https://sonarqube.com'
             property 'sonar.projectKey', 'chazm'
-            property 'sonar.projectName', 'Chazm: An Organizational Multiagent Runtime Model'
             property 'sonar.login', System.getenv('SONAR_TOKEN')
             if (System.getenv('TRAVIS_PULL_REQUEST') == 'false') {
-//                property 'sonar.projectVersion', subprojects.each {
-//                    return "${it.name}-${it.version}"
-//                }
+                property 'sonar.projectName', 'Chazm: An Organizational Multiagent Runtime Model'
+                property 'sonar.projectVersion', "${version}"
             } else {
                 property 'sonar.analysis.mode', 'preview'
                 property 'sonar.github.pullRequest', System.getenv('TRAVIS_PULL_REQUEST')
