@@ -87,7 +87,7 @@ coveralls {
 
 sonarqube {
     properties {
-//        if (System.getenv('TRAVIS_BRANCH') == 'master') {
+        if (System.getenv('TRAVIS_BRANCH') == 'master') {
             property 'sonar.host.url', 'https://sonarqube.com'
             property 'sonar.projectKey', 'chazm'
             property 'sonar.login', System.getenv('SONAR_TOKEN')
@@ -101,7 +101,7 @@ sonarqube {
                 property 'sonar.github.oauth', System.getenv('GITHUB_TOKEN')
             }
         }
-//    }
+    }
 }
 
 task printInfo << {
