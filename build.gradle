@@ -67,6 +67,7 @@ subprojects {
     }
 }
 
+version '7.0'
 
 task jacocoTestReport(type: JacocoReport) {
     dependsOn subprojects.jacocoTestReport
@@ -94,9 +95,9 @@ sonarqube {
             property 'sonar.projectName', 'Chazm: An Organizational Multiagent Runtime Model'
             property 'sonar.login', System.getenv('SONAR_TOKEN')
             if (System.getenv('TRAVIS_PULL_REQUEST') == 'false') {
-                property 'sonar.projectVersion', subprojects.each {
-                    return "${it.name}-${it.version}"
-                }
+//                property 'sonar.projectVersion', subprojects.each {
+//                    return "${it.name}-${it.version}"
+//                }
             } else {
                 property 'sonar.analysis.mode', 'preview'
                 property 'sonar.github.pullRequest', System.getenv('TRAVIS_PULL_REQUEST')
