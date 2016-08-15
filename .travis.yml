@@ -26,4 +26,4 @@ script:
   - ./gradlew --continue --stacktrace --profile build sonarqube jacocoTestReport coveralls #
 
 after_success:
-  - if [[ "$TRAVIS_BRANCH" == "master" -a "" == "" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]]; then echo ./gradlew bintrayUpload; else echo "nope" fi
+  - if [[ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]]; then echo ./gradlew bintrayUpload; else echo "nope" fi
