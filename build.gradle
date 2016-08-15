@@ -1,6 +1,7 @@
 buildscript {
     dependencies {
         classpath 'io.spring.gradle:dependency-management-plugin:0.6.0.RELEASE'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.1'
     }
 }
 plugins {
@@ -20,6 +21,7 @@ subprojects {
     apply plugin: 'maven-publish'
     apply plugin: 'jacoco'
     apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'com.jfrog.bintray'
 
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
@@ -68,6 +70,20 @@ subprojects {
                 from components.java
                 artifact sourceJar
             }
+        }
+    }
+
+    bintray {
+        user = System.getenv('BINTRAY_USER')
+        key = System.getenv('BINTRAY_KEY')
+        publications = ['maven']
+        pkg {
+            repo = 'maven'
+            name = 'chazm'
+            userOrg = 'runtimemodels'
+            desc = 'An organizational runtime model'
+            vcsUrl = 'https://github.com/RuntimeModels/chazm.git'
+            licenses = ['Apache-2.0']
         }
     }
 }
