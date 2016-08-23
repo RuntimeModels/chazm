@@ -14,7 +14,7 @@ plugins {
 
 group 'io.github.runtimemodels'
 
-version '7.0.0'
+version '7.0'
 
 subprojects {
     apply plugin: 'java'
@@ -28,7 +28,7 @@ subprojects {
 
     group rootProject.group
 
-    version "${rootProject.version}-${System.getenv('TRAVIS_BUILD_NUMBER') == null ? 'SNAPSHOT' : 'b' + System.getenv('TRAVIS_BUILD_NUMBER')}"
+    version "${rootProject.version}.${System.getenv('TRAVIS_COMMIT') ?: 'SNAPSHOT'}"
 
     repositories {
         jcenter()
@@ -82,8 +82,18 @@ subprojects {
             name = 'chazm'
             userOrg = 'runtimemodels'
             desc = 'An organizational runtime model'
+            websiteUrl = 'https://github.com/RuntimeModels/chazm'
+            issueTrackerUrl = 'https://github.com/RuntimeModels/chazm/issues'
             vcsUrl = 'https://github.com/RuntimeModels/chazm.git'
             licenses = ['Apache-2.0']
+
+            githubRepo = 'RuntimeModels/chazm'
+            githubReleaseNotesFile = 'README.md'
+
+            version {
+                name = "${project.version}"
+                released = new Date()
+            }
         }
     }
 }
