@@ -88,7 +88,7 @@ subprojects {
             licenses = ['Apache-2.0']
 
             githubRepo = 'RuntimeModels/chazm'
-            githubReleaseNotesFile = 'README.md'
+            githubReleaseNotesFile = 'CHANGES.md'
 
             version {
                 name = "${project.version}"
