@@ -14,7 +14,7 @@ plugins {
 
 group 'io.github.runtimemodels'
 
-version '7.0'
+version '7'
 
 subprojects {
     apply plugin: 'java'
@@ -28,7 +28,7 @@ subprojects {
 
     group rootProject.group
 
-    version "${rootProject.version}.${System.getenv('TRAVIS_COMMIT') ?: 'SNAPSHOT'}"
+    version "${rootProject.version}-${System.getenv('TRAVIS_COMMIT') ?: 'SNAPSHOT'}"
 
     repositories {
         jcenter()
@@ -77,6 +77,7 @@ subprojects {
         user = System.getenv('BINTRAY_USER')
         key = System.getenv('BINTRAY_KEY')
         publications = ['maven']
+        publish = true
         pkg {
             repo = 'maven'
             name = 'chazm'
@@ -88,7 +89,7 @@ subprojects {
             licenses = ['Apache-2.0']
 
             githubRepo = 'RuntimeModels/chazm'
-            githubReleaseNotesFile = 'README.md'
+            githubReleaseNotesFile = 'CHANGES.md'
 
             version {
                 name = "${project.version}"
