@@ -1,8 +1,7 @@
 #organization-model
 
-**Version**: 7.0.0
-
-**Badges**: [![Build Status][bs-img]][bs-lnk]
+[ ![Download][bt-img]][bt-lnk]
+[![Build Status][bs-img]][bs-lnk]
 [![Coverage Status][cs-img]][cs-lnk]
 [![Quality Gate][qg-img]][qg-lnk]
 
@@ -30,6 +29,8 @@ This project is based on my PhD work at Kansas State University. It is a runtime
 * Repo owner or admin
 * Other community or team contact
 
+[bt-img]: https://api.bintray.com/packages/runtimemodels/maven/chazm/images/download.svg
+[bt-lnk]: https://bintray.com/runtimemodels/maven/chazm/_latestVersion
 [bs-img]: https://travis-ci.org/RuntimeModels/chazm.svg?branch=master
 [bs-lnk]: https://travis-ci.org/RuntimeModels/chazm
 [cs-img]: https://coveralls.io/repos/RuntimeModels/chazm/badge.svg?branch=master&service=github
