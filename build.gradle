@@ -5,6 +5,7 @@ buildscript {
     }
 }
 plugins {
+    id 'com.gradle.build-scan' version '1.0'
     id 'base'
     id 'eclipse'
     id 'idea'
@@ -137,6 +138,11 @@ sonarqube {
             property 'sonar.analysis.mode', 'issues'
         }
     }
+}
+
+buildScan {
+    licenseAgreementUrl = 'https://gradle.com/terms-of-service'
+    licenseAgree = 'yes'
 }
 
 task printInfo << {
