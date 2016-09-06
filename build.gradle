@@ -108,9 +108,17 @@ task jacocoTestReport(type: JacocoReport) {
     classDirectories = files(subprojects.sourceSets.main.output.classesDir)
     executionData = files(subprojects.jacocoTestReport.executionData).filter { it.exists() }
     reports {
+        csv {
+            enabled false
+            destination "${buildDir}/reports/jacoco/test/${task.name}.csv"
+        }
+        html {
+            enabled false
+            destination "${buildDir}/reports/jacoco/test/html/"
+        }
         xml {
             enabled true
-            destination "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
+            destination "${buildDir}/reports/jacoco/test/${task.name}.xml"
         }
     }
 }
