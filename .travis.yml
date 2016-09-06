@@ -20,7 +20,8 @@ notifications:
 before_install:
   - chmod +x gradlew # ensure that the gradlew script is executable
 
-install: true
+install:
+  - ./gradlew --stacktrace printInfo
 
 script:
   - ./gradlew --continue --stacktrace --profile -Dscan build
