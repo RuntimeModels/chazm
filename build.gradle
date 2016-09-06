@@ -124,6 +124,10 @@ task jacocoTestReport(type: JacocoReport) {
     }
 }
 
+task bintrayUpload {
+    subprojects.each { printf("%s : %s%n", it.name, it.version) }
+}
+
 coveralls {
     sourceDirs = subprojects.sourceSets.main.java.srcDirs.flatten()
 }
