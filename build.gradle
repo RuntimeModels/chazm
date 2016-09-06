@@ -10,7 +10,7 @@ plugins {
 }
 
 ext {
-    hash = System.getenv('TRAVIS_COMMIT') == null ? 'SNAPSHOT' : "git rev-parse --short ${System.getenv('TRAVIS_COMMIT')}".execute().text
+    hash = System.getenv('TRAVIS_COMMIT') == null ? 'SNAPSHOT' : "git rev-parse --short ${System.getenv('TRAVIS_COMMIT')}".execute().text.trim()
 }
 
 group 'io.github.runtimemodels'
@@ -122,10 +122,6 @@ task jacocoTestReport(type: JacocoReport) {
             destination "${buildDir}/reports/jacoco/test/${task.name}.xml"
         }
     }
-}
-
-task bintrayUpload {
-    subprojects.each { printf("%s : %s%n", it.name, it.version) }
 }
 
 coveralls {
