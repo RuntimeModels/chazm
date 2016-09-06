@@ -24,7 +24,7 @@ install: true
 
 script:
   - ./gradlew --continue --stacktrace --profile -Dscan build
-  - ./gradlew sonarqube jacocoTestReport coveralls
+  - ./gradlew --stacktrace sonarqube jacocoTestReport coveralls
 
 after_success:
   - if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then ./gradlew bintrayUpload; fi;

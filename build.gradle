@@ -10,7 +10,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'com.github.kt3k.coveralls' version '2.6.3'
-    id 'org.sonarqube' version '2.0.1'
+    id 'org.sonarqube' version '2.1-rc2'
 }
 
 group 'io.github.runtimemodels'
@@ -108,9 +108,17 @@ task jacocoTestReport(type: JacocoReport) {
     classDirectories = files(subprojects.sourceSets.main.output.classesDir)
     executionData = files(subprojects.jacocoTestReport.executionData).filter { it.exists() }
     reports {
+        csv {
+            enabled false
+            destination "${buildDir}/reports/jacoco/test/${task.name}.csv"
+        }
+        html {
+            enabled false
+            destination "${buildDir}/reports/jacoco/test/html/"
+        }
         xml {
             enabled true
-            destination "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
+            destination "${buildDir}/reports/jacoco/test/${task.name}.xml"
         }
     }
 }
@@ -162,6 +170,6 @@ task printInfo << {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.14.1'
+    gradleVersion = '3.0'
     distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
 }
