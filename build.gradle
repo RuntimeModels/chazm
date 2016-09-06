@@ -10,7 +10,7 @@ plugins {
 }
 
 ext {
-    hash = System.getenv('TRAVIS_COMMIT') == null ? 'SNAPSHOT' : "git rev-parse --short ${System.getenv('TRAVIS_COMMIT')}".execute()
+    hash = System.getenv('TRAVIS_COMMIT') == null ? 'SNAPSHOT' : "git rev-parse --short ${System.getenv('TRAVIS_COMMIT')}".execute().text
 }
 
 group 'io.github.runtimemodels'
