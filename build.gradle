@@ -9,6 +9,10 @@ plugins {
     id 'com.jfrog.bintray' version '1.7.1' apply false
 }
 
+ext {
+    hash = System.getenv('TRAVIS_COMMIT') == null ? 'SNAPSHOT' : "git rev-parse --short ${System.getenv('TRAVIS_COMMIT')}".execute()
+}
+
 group 'io.github.runtimemodels'
 
 version '7'
@@ -25,7 +29,7 @@ subprojects {
 
     group rootProject.group
 
-    version "${rootProject.version}-${System.getenv('TRAVIS_COMMIT') ?: 'SNAPSHOT'}"
+    version "${rootProject.version}-${hash}"
 
     repositories {
         jcenter()
