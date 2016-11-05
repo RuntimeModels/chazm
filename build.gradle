@@ -44,7 +44,7 @@ subprojects {
         }
 
         imports {
-            mavenBom 'io.spring.platform:platform-bom:2.0.6.RELEASE'
+            mavenBom 'io.spring.platform:platform-bom:2.0.8.RELEASE'
             mavenBom 'com.google.inject:guice-bom:4.1.0'
         }
     }
