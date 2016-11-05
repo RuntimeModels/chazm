@@ -1,12 +1,13 @@
 plugins {
-    id 'com.gradle.build-scan' version '1.0'
+    id 'com.gradle.build-scan' version '1.2'
     id 'base'
     id 'eclipse'
     id 'idea'
     id 'com.github.kt3k.coveralls' version '2.6.3'
-    id 'org.sonarqube' version '2.1-rc3'
-    id 'io.spring.dependency-management' version '0.6.0.RELEASE' apply false
-    id 'com.jfrog.bintray' version '1.7.1' apply false
+    id 'org.sonarqube' version '2.2'
+    id 'io.spring.dependency-management' version '0.6.1.RELEASE' apply false
+    id 'com.jfrog.bintray' version '1.7.2' apply false
+    id 'org.standardout.versioneye' version '1.4.0'
 }
 
 ext {
@@ -40,10 +41,11 @@ subprojects {
             dependency 'javax:javaee-api:7.0'
             dependency 'org.jmockit:jmockit:1.25'
             dependency 'org.projectlombok:lombok:1.16.10'
+            dependency 'junit:junit:4.12'
         }
 
         imports {
-            mavenBom 'io.spring.platform:platform-bom:2.0.6.RELEASE'
+            mavenBom 'io.spring.platform:platform-bom:2.0.8.RELEASE'
             mavenBom 'com.google.inject:guice-bom:4.0'
         }
     }
@@ -152,6 +154,10 @@ sonarqube {
 buildScan {
     licenseAgreementUrl = 'https://gradle.com/terms-of-service'
     licenseAgree = 'yes'
+}
+
+versioneye {
+    includeSubProjects = true
 }
 
 task printInfo << {
