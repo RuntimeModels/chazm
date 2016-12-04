@@ -30,3 +30,5 @@ script:
 after_success:
 #  - if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then ./gradlew bintrayUpload; fi;
   - ./gradlew --stacktrace bintrayUpload
+# only if branch is 'master' and is not a pull request
+  - if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then ./gradlew --stacktrace versionEyeUpdate; fi;
