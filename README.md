@@ -38,5 +38,5 @@ This project is based on my PhD work at Kansas State University. It is a runtime
 [cs-lnk]: https://coveralls.io/github/RuntimeModels/chazm?branch=master
 [qg-img]: https://sonarqube.com/api/badges/gate?key=chazm
 [qg-lnk]: https://sonarqube.com/dashboard/index/chazm
-[ds-img]: https://www.versioneye.com/user/projects/581da01989f0a91d99ae3d4c/badge.svg?style=flat-square
-[ds-lnk]: https://www.versioneye.com/user/projects/581da01989f0a91d99ae3d4c
+[ds-img]: https://www.versioneye.com/user/projects/58437f341f3a6d020e15729f/badge.svg?style=flat-square
+[ds-lnk]: https://www.versioneye.com/user/projects/58437f341f3a6d020e15729f
