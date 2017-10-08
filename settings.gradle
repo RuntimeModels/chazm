@@ -1,5 +1,3 @@
 rootProject.name = 'chazm'
 
 include 'chazm-api', 'chazm-model', 'chazm-ui'
-
-project(':chazm-ui').projectDir = file('ui')
