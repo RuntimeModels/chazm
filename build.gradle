@@ -66,7 +66,7 @@ subprojects {
 
     dependencyManagement {
         dependencies {
-            dependency 'javax:javaee-api:7.0'
+            dependency "javax:javaee-api:${javaeeVersion}"
             dependency "org.jmockit:jmockit:${jmockitVersion}"
             dependency "junit:junit:${junitVersion}"
             dependency "org.projectlombok:lombok:${lombokVersion}"
