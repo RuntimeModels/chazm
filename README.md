@@ -5,6 +5,7 @@
 [![Coverage Status][cs-img]][cs-lnk]
 [![Quality Gate][qg-img]][qg-lnk]
 [![Dependency Status][ds-img]][ds-lnk]
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FRuntimeModels%2Fchazm.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FRuntimeModels%2Fchazm?ref=badge_shield)
 
 ##What is this repository for?
 
@@ -40,3 +41,7 @@ This project is based on my PhD work at Kansas State University. It is a runtime
 [qg-lnk]: https://sonarqube.com/dashboard/index/chazm
 [ds-img]: https://www.versioneye.com/user/projects/58437f341f3a6d020e15729f/badge.svg?style=flat-square
 [ds-lnk]: https://www.versioneye.com/user/projects/58437f341f3a6d020e15729f
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FRuntimeModels%2Fchazm.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FRuntimeModels%2Fchazm?ref=badge_large)
