@@ -24,7 +24,7 @@ install:
   - ./gradlew --stacktrace printInfo
 
 script:
-  - ./gradlew --continue --stacktrace --profile -Dscan build
+  - ./gradlew --continue --stacktrace --profile --scan build
   - ./gradlew --stacktrace sonarqube jacocoTestReport coveralls
 
 after_success:
