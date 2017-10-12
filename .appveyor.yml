@@ -1,13 +1,13 @@
 cache:
 
 install:
-  - ps: gradlew.bat -version
+  - dir
+  - gradlew.bat -version
 
 build: off
 
 build_script:
-  - dir
-  - ps: gradlew.bat --continue --stacktrace --profile --scan build
+  - gradlew.bat --continue --stacktrace --profile --scan build
 
 test: off
 
