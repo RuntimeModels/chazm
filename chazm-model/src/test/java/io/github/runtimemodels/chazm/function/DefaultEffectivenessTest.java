@@ -5,17 +5,11 @@ import com.google.inject.Injector;
 import com.google.inject.Provider;
 import io.github.runtimemodels.chazm.Organization;
 import io.github.runtimemodels.chazm.OrganizationModule;
-import io.github.runtimemodels.chazm.entity.Agent;
+import io.github.runtimemodels.chazm.entity.*;
 import io.github.runtimemodels.chazm.entity.Agent.ContactInfo;
-import io.github.runtimemodels.chazm.entity.Capability;
-import io.github.runtimemodels.chazm.entity.EntityFactory;
-import io.github.runtimemodels.chazm.entity.InstanceGoal;
 import io.github.runtimemodels.chazm.entity.InstanceGoal.Parameter;
-import io.github.runtimemodels.chazm.entity.Role;
-import io.github.runtimemodels.chazm.entity.SpecificationGoal;
 import io.github.runtimemodels.chazm.id.IdFactory;
 import io.github.runtimemodels.chazm.relation.Assignment;
-import io.github.runtimemodels.chazm.relation.Possesses;
 import io.github.runtimemodels.chazm.relation.RelationFactory;
 import io.github.runtimemodels.message.E;
 import org.junit.Rule;
@@ -27,7 +21,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings({"javadoc", "serial"})
-public class EffectivenessTest {
+public class DefaultEffectivenessTest {
 
     private final Injector injector = Guice.createInjector(new OrganizationModule(), new FunctionModule());
     private final Provider<Organization> provider = injector.getProvider(Organization.class);
@@ -67,7 +61,7 @@ public class EffectivenessTest {
         o.addCapability(c2);
         o.addAchieves(r.getId(), sg.getId());
         o.addRequires(r.getId(), c1.getId());
-        o.addPossesses(a1.getId(), c1.getId(), Possesses.MAX_SCORE);
+        o.addPossesses(a1.getId(), c1.getId(), 1.0);
         o.addAssignment(as1);
 
         assertThat(effectiveness.compute(o, o.getAssignments()), is(equalTo(1.0)));

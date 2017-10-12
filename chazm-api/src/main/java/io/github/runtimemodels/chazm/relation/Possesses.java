@@ -12,14 +12,6 @@ import io.github.runtimemodels.chazm.entity.Capability;
  * @since 7.0.0
  */
 public interface Possesses {
-    /**
-     * <code>MIN_SCORE</code> is the minimum possible value for a score, which is {@value} .
-     */
-    double MIN_SCORE = 0.0;
-    /**
-     * <code>MAX_SCORE</code> is the maximum possible value for a score, which is {@value} .
-     */
-    double MAX_SCORE = 1.0;
 
     /**
      * Returns the {@linkplain Agent} of this {@linkplain Possesses}.
