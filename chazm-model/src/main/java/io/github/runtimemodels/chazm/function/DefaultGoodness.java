@@ -14,6 +14,15 @@ import java.util.Collection;
 @Singleton
 class DefaultGoodness implements Goodness {
 
+    /**
+     * <code>MIN_SCORE</code> is the minimum possible value for a score, which is {@value} .
+     */
+    static final double MIN_SCORE = 0.0;
+    /**
+     * <code>MAX_SCORE</code> is the maximum possible value for a score, which is {@value} .
+     */
+    static final double MAX_SCORE = 1.0;
+
     @Override
     public double compute(@NotNull final Organization organization, @NotNull final Agent agent, @NotNull final Role role, @NotNull final InstanceGoal goal, @NotNull final Collection<Assignment> assignments) {
         /*

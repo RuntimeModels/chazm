@@ -51,7 +51,7 @@ public class GoodnessTest {
         final Capability c2 = entityFactory.buildCapability(idFactory.build(Capability.class, "c2"));
         final Attribute t = entityFactory.buildAttribute(idFactory.build(Attribute.class, "t"), Type.NEGATIVE_QUALITY);
 
-        assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(Goodness.MIN_SCORE)));
+        assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(DefaultGoodness.MIN_SCORE)));
 
         o.addAgent(a);
         o.addRole(r);
@@ -60,30 +60,30 @@ public class GoodnessTest {
         o.addCapability(c1);
         o.addAchieves(r.getId(), sg.getId());
 
-        assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(Goodness.MAX_SCORE)));
+        assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(DefaultGoodness.MAX_SCORE)));
 
         o.addRequires(r.getId(), c1.getId());
 
-        assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(Goodness.MIN_SCORE)));
+        assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(DefaultGoodness.MIN_SCORE)));
 
         o.addPossesses(a.getId(), c1.getId(), Possesses.MIN_SCORE);
 
-        assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(Goodness.MIN_SCORE)));
+        assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(DefaultGoodness.MIN_SCORE)));
 
         o.setPossessesScore(a.getId(), c1.getId(), Possesses.MAX_SCORE);
 
-        assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(Goodness.MAX_SCORE)));
+        assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(DefaultGoodness.MAX_SCORE)));
 
         o.addCapability(c2);
         o.addRequires(r.getId(), c2.getId());
         o.addPossesses(a.getId(), c2.getId(), Possesses.MAX_SCORE);
 
-        assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(Goodness.MAX_SCORE)));
+        assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(DefaultGoodness.MAX_SCORE)));
 
         o.addAttribute(t);
         o.addNeeds(r.getId(), t.getId());
 
-        assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(Goodness.MIN_SCORE)));
+        assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(DefaultGoodness.MIN_SCORE)));
     }
 
     @Test
