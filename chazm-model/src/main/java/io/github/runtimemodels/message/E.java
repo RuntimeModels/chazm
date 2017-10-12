@@ -1,5 +1,8 @@
 package io.github.runtimemodels.message;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.MissingFormatArgumentException;
 
 @SuppressWarnings("javadoc")
@@ -15,6 +18,8 @@ public enum E { // for exceptions
     VALUE_AT_LEAST("For '%s' attribute type, value='%s' must be at least '%s'"), //
     VALUE_BETWEEN("For '%s' attribute type, value='%s' must be between '%s' and '%s'");
 
+    private static final Logger log = LoggerFactory.getLogger(E.class);
+
     private final String string;
 
     E(final String string) {
@@ -25,6 +30,7 @@ public enum E { // for exceptions
         try {
             return String.format(string, args);
         } catch (final MissingFormatArgumentException e) {
+            log.warn("{}", e);
             return null;
         }
     }
