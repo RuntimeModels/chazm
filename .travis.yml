@@ -21,7 +21,7 @@ before_install:
   - chmod +x gradlew # ensure that the gradlew script is executable
 
 install:
-  - ./gradlew --stacktrace printInfo
+  - ./gradlew -version # replaces the default of ./gradlew assemble
 
 script:
   - ./gradlew --continue --stacktrace --profile --scan build
