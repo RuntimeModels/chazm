@@ -11,18 +11,6 @@ import io.github.runtimemodels.chazm.entity.Attribute;
  * @since 7.0.0
  */
 public interface Has {
-    /**
-     * <code>QUALITY_MIN_AMOUNT</code> is the minimum possible value for a quality-type score, which is {@value} .
-     */
-    double QUALITY_MIN_AMOUNT = 0.0;
-    /**
-     * <code>QUALITY_MAX_AMOUNT</code> is the maximum possible value for a quality-type score, which is {@value} .
-     */
-    double QUALITY_MAX_AMOUNT = 1.0;
-    /**
-     * <code>QUANTITY_MIN_AMOUNT</code> is the minimum possible value for a quantity-type score, which is {@value} .
-     */
-    double QUANTITY_MIN_AMOUNT = 0.0;
 
     /**
      * Returns the {@linkplain Agent} of this {@linkplain Has}.
@@ -51,4 +39,5 @@ public interface Has {
      * @param value the <code>double</code> value to set.
      */
     void setValue(double value);
+
 }

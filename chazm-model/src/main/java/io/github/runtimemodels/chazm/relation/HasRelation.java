@@ -14,6 +14,19 @@ import java.util.Objects;
 
 class HasRelation implements Has {
 
+    /**
+     * <code>QUALITY_MIN_AMOUNT</code> is the minimum possible value for a quality-type score, which is {@value} .
+     */
+    static final double QUALITY_MIN_AMOUNT = 0.0;
+    /**
+     * <code>QUALITY_MAX_AMOUNT</code> is the maximum possible value for a quality-type score, which is {@value} .
+     */
+    static final double QUALITY_MAX_AMOUNT = 1.0;
+    /**
+     * <code>QUANTITY_MIN_AMOUNT</code> is the minimum possible value for a quantity-type score, which is {@value} .
+     */
+    private static final double QUANTITY_MIN_AMOUNT = 0.0;
+
     @Getter
     private final Agent agent;
     @Getter
