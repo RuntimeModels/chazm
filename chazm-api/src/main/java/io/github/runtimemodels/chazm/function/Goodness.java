@@ -19,15 +19,6 @@ import java.util.Collection;
 public interface Goodness {
 
     /**
-     * <code>MIN_SCORE</code> is the minimum possible value for a score, which is {@value} .
-     */
-    double MIN_SCORE = 0.0;
-    /**
-     * <code>MAX_SCORE</code> is the maximum possible value for a score, which is {@value} .
-     */
-    double MAX_SCORE = 1.0;
-
-    /**
      * Returns a score (<code>0.0</code> &le; score &le; <code>1.0</code>) of how effective an {@linkplain Agent} is at playing a {@linkplain Role} to achieve
      * an {@linkplain InstanceGoal} in an {@linkplain Organization}.
      *
