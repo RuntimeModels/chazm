@@ -16,7 +16,6 @@ import io.github.runtimemodels.chazm.entity.InstanceGoal.Parameter;
 import io.github.runtimemodels.chazm.entity.Role;
 import io.github.runtimemodels.chazm.entity.SpecificationGoal;
 import io.github.runtimemodels.chazm.id.IdFactory;
-import io.github.runtimemodels.chazm.relation.Possesses;
 import io.github.runtimemodels.message.E;
 import org.junit.Rule;
 import org.junit.Test;
@@ -29,7 +28,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings({"javadoc", "serial"})
-public class GoodnessTest {
+public class DefaultGoodnessTest {
 
     private final Injector injector = Guice.createInjector(new OrganizationModule(), new FunctionModule());
     private final Provider<Organization> provider = injector.getProvider(Organization.class);
@@ -66,17 +65,17 @@ public class GoodnessTest {
 
         assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(DefaultGoodness.MIN_SCORE)));
 
-        o.addPossesses(a.getId(), c1.getId(), Possesses.MIN_SCORE);
+        o.addPossesses(a.getId(), c1.getId(), 0.0);
 
         assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(DefaultGoodness.MIN_SCORE)));
 
-        o.setPossessesScore(a.getId(), c1.getId(), Possesses.MAX_SCORE);
+        o.setPossessesScore(a.getId(), c1.getId(), 1.0);
 
         assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(DefaultGoodness.MAX_SCORE)));
 
         o.addCapability(c2);
         o.addRequires(r.getId(), c2.getId());
-        o.addPossesses(a.getId(), c2.getId(), Possesses.MAX_SCORE);
+        o.addPossesses(a.getId(), c2.getId(), 1.0);
 
         assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(DefaultGoodness.MAX_SCORE)));
 

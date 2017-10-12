@@ -71,7 +71,7 @@ public class PossessesTest {
         final Capability c = capabilityFactory.buildCapability(idFactory.build(Capability.class, "c"));
 
         exception.expect(IllegalArgumentException.class);
-        exception.expectMessage(equalTo(E.SCORE_BETWEEN.get(-0.01, Possesses.MIN_SCORE, Possesses.MAX_SCORE)));
+        exception.expectMessage(equalTo(E.SCORE_BETWEEN.get(-0.01, PossessesRelation.MIN_SCORE, PossessesRelation.MAX_SCORE)));
 
         possessesFactory.buildPossesses(a, c, -0.01);
     }
@@ -82,7 +82,7 @@ public class PossessesTest {
         final Capability c = capabilityFactory.buildCapability(idFactory.build(Capability.class, "c"));
 
         exception.expect(IllegalArgumentException.class);
-        exception.expectMessage(equalTo(E.SCORE_BETWEEN.get(1.01, Possesses.MIN_SCORE, Possesses.MAX_SCORE)));
+        exception.expectMessage(equalTo(E.SCORE_BETWEEN.get(1.01, PossessesRelation.MIN_SCORE, PossessesRelation.MAX_SCORE)));
 
         possessesFactory.buildPossesses(a, c, 1.01);
     }
@@ -131,7 +131,7 @@ public class PossessesTest {
         final Possesses ps = possessesFactory.buildPossesses(a, c, 1d);
 
         exception.expect(IllegalArgumentException.class);
-        exception.expectMessage(equalTo(E.SCORE_BETWEEN.get(-0.01, Possesses.MIN_SCORE, Possesses.MAX_SCORE)));
+        exception.expectMessage(equalTo(E.SCORE_BETWEEN.get(-0.01, PossessesRelation.MIN_SCORE, PossessesRelation.MAX_SCORE)));
 
         ps.setScore(-0.01);
     }
@@ -143,7 +143,7 @@ public class PossessesTest {
         final Possesses ps = possessesFactory.buildPossesses(a, c, 1d);
 
         exception.expect(IllegalArgumentException.class);
-        exception.expectMessage(equalTo(E.SCORE_BETWEEN.get(1.01, Possesses.MIN_SCORE, Possesses.MAX_SCORE)));
+        exception.expectMessage(equalTo(E.SCORE_BETWEEN.get(1.01, PossessesRelation.MIN_SCORE, PossessesRelation.MAX_SCORE)));
 
         ps.setScore(1.01);
     }

@@ -14,16 +14,7 @@ import io.github.runtimemodels.chazm.function.Effectiveness;
 import io.github.runtimemodels.chazm.function.Goodness;
 import io.github.runtimemodels.chazm.id.Identifiable;
 import io.github.runtimemodels.chazm.id.UniqueId;
-import io.github.runtimemodels.chazm.relation.Achieves;
-import io.github.runtimemodels.chazm.relation.Assignment;
-import io.github.runtimemodels.chazm.relation.Contains;
-import io.github.runtimemodels.chazm.relation.Has;
-import io.github.runtimemodels.chazm.relation.Moderates;
-import io.github.runtimemodels.chazm.relation.Needs;
-import io.github.runtimemodels.chazm.relation.Possesses;
-import io.github.runtimemodels.chazm.relation.RelationFactory;
-import io.github.runtimemodels.chazm.relation.Requires;
-import io.github.runtimemodels.chazm.relation.Uses;
+import io.github.runtimemodels.chazm.relation.*;
 import io.github.runtimemodels.message.E;
 import io.github.runtimemodels.message.L;
 import io.github.runtimemodels.notification.Publisher;
@@ -823,7 +814,7 @@ class DefaultOrganization implements Organization {
         if (relations.possesses.containsKey(agentId) && relations.possesses.get(agentId).containsKey(capabilityId)) {
             return relations.possesses.get(agentId).get(capabilityId).getScore();
         }
-        return Possesses.MIN_SCORE;
+        return 0.0;
     }
 
     @Override
