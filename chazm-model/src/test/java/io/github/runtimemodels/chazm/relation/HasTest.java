@@ -72,7 +72,7 @@ public class HasTest {
         final Attribute c = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "c"), Type.NEGATIVE_QUALITY);
 
         exception.expect(IllegalArgumentException.class);
-        exception.expectMessage(equalTo(E.VALUE_BETWEEN.get(Type.NEGATIVE_QUALITY, -0.01, Has.QUALITY_MIN_AMOUNT, Has.QUALITY_MAX_AMOUNT)));
+        exception.expectMessage(equalTo(E.VALUE_BETWEEN.get(Type.NEGATIVE_QUALITY, -0.01, HasRelation.QUALITY_MIN_AMOUNT, HasRelation.QUALITY_MAX_AMOUNT)));
 
         hasFactory.buildHas(a, c, -0.01);
     }
@@ -83,7 +83,7 @@ public class HasTest {
         final Attribute c = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "c"), Type.NEGATIVE_QUALITY);
 
         exception.expect(IllegalArgumentException.class);
-        exception.expectMessage(equalTo(E.VALUE_BETWEEN.get(Type.NEGATIVE_QUALITY, 1.01, Has.QUALITY_MIN_AMOUNT, Has.QUALITY_MAX_AMOUNT)));
+        exception.expectMessage(equalTo(E.VALUE_BETWEEN.get(Type.NEGATIVE_QUALITY, 1.01, HasRelation.QUALITY_MIN_AMOUNT, HasRelation.QUALITY_MAX_AMOUNT)));
 
         hasFactory.buildHas(a, c, 1.01);
     }
@@ -94,7 +94,7 @@ public class HasTest {
         final Attribute c = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "c"), Type.NEGATIVE_QUANTITY);
 
         exception.expect(IllegalArgumentException.class);
-        exception.expectMessage(equalTo(E.VALUE_AT_LEAST.get(Type.NEGATIVE_QUANTITY, -0.01, Has.QUALITY_MIN_AMOUNT)));
+        exception.expectMessage(equalTo(E.VALUE_AT_LEAST.get(Type.NEGATIVE_QUANTITY, -0.01, HasRelation.QUALITY_MIN_AMOUNT)));
 
         hasFactory.buildHas(a, c, -0.01);
     }
@@ -122,7 +122,7 @@ public class HasTest {
         final Attribute c = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "c"), Type.POSITIVE_QUALITY);
 
         exception.expect(IllegalArgumentException.class);
-        exception.expectMessage(equalTo(E.VALUE_BETWEEN.get(Type.POSITIVE_QUALITY, -0.01, Has.QUALITY_MIN_AMOUNT, Has.QUALITY_MAX_AMOUNT)));
+        exception.expectMessage(equalTo(E.VALUE_BETWEEN.get(Type.POSITIVE_QUALITY, -0.01, HasRelation.QUALITY_MIN_AMOUNT, HasRelation.QUALITY_MAX_AMOUNT)));
 
         hasFactory.buildHas(a, c, -0.01);
     }
@@ -133,7 +133,7 @@ public class HasTest {
         final Attribute c = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "c"), Type.POSITIVE_QUALITY);
 
         exception.expect(IllegalArgumentException.class);
-        exception.expectMessage(equalTo(E.VALUE_BETWEEN.get(Type.POSITIVE_QUALITY, 1.01, Has.QUALITY_MIN_AMOUNT, Has.QUALITY_MAX_AMOUNT)));
+        exception.expectMessage(equalTo(E.VALUE_BETWEEN.get(Type.POSITIVE_QUALITY, 1.01, HasRelation.QUALITY_MIN_AMOUNT, HasRelation.QUALITY_MAX_AMOUNT)));
 
         hasFactory.buildHas(a, c, 1.01);
     }
@@ -144,7 +144,7 @@ public class HasTest {
         final Attribute c = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "c"), Type.POSITIVE_QUANTITY);
 
         exception.expect(IllegalArgumentException.class);
-        exception.expectMessage(equalTo(E.VALUE_AT_LEAST.get(Type.POSITIVE_QUANTITY, -0.01, Has.QUALITY_MIN_AMOUNT)));
+        exception.expectMessage(equalTo(E.VALUE_AT_LEAST.get(Type.POSITIVE_QUANTITY, -0.01, HasRelation.QUALITY_MIN_AMOUNT)));
 
         hasFactory.buildHas(a, c, -0.01);
     }
@@ -211,7 +211,7 @@ public class HasTest {
         final Has hs = hasFactory.buildHas(a, c, 1d);
 
         exception.expect(IllegalArgumentException.class);
-        exception.expectMessage(equalTo(E.VALUE_BETWEEN.get(Type.NEGATIVE_QUALITY, -0.01, Has.QUALITY_MIN_AMOUNT, Has.QUALITY_MAX_AMOUNT)));
+        exception.expectMessage(equalTo(E.VALUE_BETWEEN.get(Type.NEGATIVE_QUALITY, -0.01, HasRelation.QUALITY_MIN_AMOUNT, HasRelation.QUALITY_MAX_AMOUNT)));
 
         hs.setValue(-0.01);
     }
@@ -223,7 +223,7 @@ public class HasTest {
         final Has hs = hasFactory.buildHas(a, c, 1d);
 
         exception.expect(IllegalArgumentException.class);
-        exception.expectMessage(equalTo(E.VALUE_BETWEEN.get(Type.NEGATIVE_QUALITY, 1.01, Has.QUALITY_MIN_AMOUNT, Has.QUALITY_MAX_AMOUNT)));
+        exception.expectMessage(equalTo(E.VALUE_BETWEEN.get(Type.NEGATIVE_QUALITY, 1.01, HasRelation.QUALITY_MIN_AMOUNT, HasRelation.QUALITY_MAX_AMOUNT)));
 
         hs.setValue(1.01);
     }
@@ -235,7 +235,7 @@ public class HasTest {
         final Has hs = hasFactory.buildHas(a, c, 1d);
 
         exception.expect(IllegalArgumentException.class);
-        exception.expectMessage(equalTo(E.VALUE_AT_LEAST.get(Type.NEGATIVE_QUANTITY, -0.01, Has.QUALITY_MIN_AMOUNT)));
+        exception.expectMessage(equalTo(E.VALUE_AT_LEAST.get(Type.NEGATIVE_QUANTITY, -0.01, HasRelation.QUALITY_MIN_AMOUNT)));
 
         hs.setValue(-0.01);
     }
@@ -267,7 +267,7 @@ public class HasTest {
         final Has hs = hasFactory.buildHas(a, c, 1d);
 
         exception.expect(IllegalArgumentException.class);
-        exception.expectMessage(equalTo(E.VALUE_BETWEEN.get(Type.POSITIVE_QUALITY, -0.01, Has.QUALITY_MIN_AMOUNT, Has.QUALITY_MAX_AMOUNT)));
+        exception.expectMessage(equalTo(E.VALUE_BETWEEN.get(Type.POSITIVE_QUALITY, -0.01, HasRelation.QUALITY_MIN_AMOUNT, HasRelation.QUALITY_MAX_AMOUNT)));
 
         hs.setValue(-0.01);
     }
@@ -279,7 +279,7 @@ public class HasTest {
         final Has hs = hasFactory.buildHas(a, c, 1d);
 
         exception.expect(IllegalArgumentException.class);
-        exception.expectMessage(equalTo(E.VALUE_BETWEEN.get(Type.POSITIVE_QUALITY, 1.01, Has.QUALITY_MIN_AMOUNT, Has.QUALITY_MAX_AMOUNT)));
+        exception.expectMessage(equalTo(E.VALUE_BETWEEN.get(Type.POSITIVE_QUALITY, 1.01, HasRelation.QUALITY_MIN_AMOUNT, HasRelation.QUALITY_MAX_AMOUNT)));
 
         hs.setValue(1.01);
     }
@@ -291,7 +291,7 @@ public class HasTest {
         final Has hs = hasFactory.buildHas(a, c, 1d);
 
         exception.expect(IllegalArgumentException.class);
-        exception.expectMessage(equalTo(E.VALUE_AT_LEAST.get(Type.POSITIVE_QUANTITY, -0.01, Has.QUALITY_MIN_AMOUNT)));
+        exception.expectMessage(equalTo(E.VALUE_AT_LEAST.get(Type.POSITIVE_QUANTITY, -0.01, HasRelation.QUALITY_MIN_AMOUNT)));
 
         hs.setValue(-0.01);
     }
