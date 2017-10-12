@@ -1,7 +1,6 @@
 cache:
 
 install:
-  - dir
   - gradlew.bat -version
 
 build: off
@@ -12,4 +11,4 @@ build_script:
 test: off
 
 test_script:
-  - ps: gradlew.bat --stacktrace sonarqube jacocoTestReport coveralls
+  - gradlew.bat --stacktrace sonarqube jacocoTestReport coveralls
