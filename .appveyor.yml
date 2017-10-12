@@ -1,18 +1,14 @@
-branches:
-  except:   # blacklist
-    - gh-pages
-
 cache:
 
 install:
-  - ps: gradlew -version
+  - ps: gradlew.bat -version
 
 build: off
 
 build_script:
-  - ps: gradlew --continue --stacktrace --profile --scan build
+  - ps: gradlew.bat --continue --stacktrace --profile --scan build
 
 test: off
 
 test_script:
-  - ps: gradlew --stacktrace sonarqube jacocoTestReport coveralls
+  - ps: gradlew.bat --stacktrace sonarqube jacocoTestReport coveralls
