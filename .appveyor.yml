@@ -1,4 +1,6 @@
 cache:
+  - %UserProfile%\.gradle\caches
+  - %UserProfile%\.gradle\wrapper
 
 install:
   - gradlew.bat -version
