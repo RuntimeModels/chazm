@@ -13,4 +13,4 @@ build_script:
 test: off
 
 test_script:
-  - gradlew.bat --stacktrace sonarqube jacocoTestReport coveralls
+#  - gradlew.bat --stacktrace sonarqube jacocoTestReport coveralls
