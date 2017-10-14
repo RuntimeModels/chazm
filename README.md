@@ -31,8 +31,8 @@ The Chazm project is broken up into 3 sub-projects.
 [bt-lnk]: https://bintray.com/runtimemodels/maven/chazm/_latestVersion
 [bs1-img]: https://travis-ci.org/RuntimeModels/chazm.svg?branch=master
 [bs1-lnk]: https://travis-ci.org/RuntimeModels/chazm
-[bs2-img]: https://ci.appveyor.com/api/projects/status/5gdqhdayyqcf628n?svg=true
-[bs2-lnk]: https://ci.appveyor.com/project/ChristopherZhong/chazm
+[bs2-img]: https://ci.appveyor.com/api/projects/status/uvme2qd0jlr7y23d?svg=true
+[bs2-lnk]: https://ci.appveyor.com/project/RuntimeModels/chazm
 [cs-img]: https://coveralls.io/repos/RuntimeModels/chazm/badge.svg?branch=master&service=github
 [cs-lnk]: https://coveralls.io/github/RuntimeModels/chazm?branch=master
 [qg-img]: https://sonarqube.com/api/badges/gate?key=chazm
