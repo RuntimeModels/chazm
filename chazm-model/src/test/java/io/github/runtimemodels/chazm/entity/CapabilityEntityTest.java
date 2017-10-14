@@ -20,7 +20,7 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("javadoc")
-public class CapabilityTest {
+public class CapabilityEntityTest {
 
     private final Injector injector = Guice.createInjector(new EntityModule());
     private final CapabilityFactory capabilityFactory = injector.getInstance(CapabilityFactory.class);
@@ -30,7 +30,7 @@ public class CapabilityTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testCapability() {
+    public void testCapabilityFactory() {
         final UniqueId<Capability> i1 = idFactory.build(Capability.class, 1L);
         final Capability c1 = capabilityFactory.buildCapability(i1);
         final Capability c2 = capabilityFactory.buildCapability(i1);
@@ -40,9 +40,9 @@ public class CapabilityTest {
     }
 
     @Test
-    public void testCapability1() {
+    public void testCapabilityFactoryWithNullId() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(containsString("1st parameter of io.github.runtimemodels.chazm.entity.CapabilityEntity.<init>(CapabilityEntity.java:13) is not @Nullable"));
         capabilityFactory.buildCapability(null);
     }
 

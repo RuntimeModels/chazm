@@ -21,7 +21,7 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("javadoc")
-public class AgentTest {
+public class AgentEntityTest {
 
     private final Injector injector = Guice.createInjector(new EntityModule());
     private final AgentFactory agentFactory = injector.getInstance(AgentFactory.class);
@@ -31,7 +31,7 @@ public class AgentTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testAgent() {
+    public void testAgentFactory() {
         final UniqueId<Agent> i1 = idFactory.build(Agent.class, 1L);
         final Agent a1 = agentFactory.buildAgent(i1, new ContactInfo() {});
         final Agent a2 = agentFactory.buildAgent(i1, new ContactInfo() {});
@@ -40,17 +40,20 @@ public class AgentTest {
     }
 
     @Test
-    public void testAgent1() {
+    public void testAgentFactoryWithNullIdAndNullContactInfo() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(allOf(
+                containsString("1st parameter of io.github.runtimemodels.chazm.entity.AgentEntity.<init>(AgentEntity.java:17) is not @Nullable"),
+                containsString("2nd parameter of io.github.runtimemodels.chazm.entity.AgentEntity.<init>(AgentEntity.java:17) is not @Nullable")
+        ));
         agentFactory.buildAgent(null, null);
     }
 
     @Test
-    public void testAgent2() {
+    public void testAgentFactoryWithNullContactInfo() {
         final UniqueId<Agent> i1 = idFactory.build(Agent.class, 1L);
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(containsString("2nd parameter of io.github.runtimemodels.chazm.entity.AgentEntity.<init>(AgentEntity.java:17) is not @Nullable"));
         agentFactory.buildAgent(i1, null);
     }
 
