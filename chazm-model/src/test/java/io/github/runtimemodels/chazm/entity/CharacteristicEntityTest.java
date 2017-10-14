@@ -20,7 +20,7 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("javadoc")
-public class CharacteristicTest {
+public class CharacteristicEntityTest {
 
     private final Injector injector = Guice.createInjector(new EntityModule());
     private final CharacteristicFactory characteristicFactory = injector.getInstance(CharacteristicFactory.class);
@@ -30,7 +30,7 @@ public class CharacteristicTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testCharacteristic() {
+    public void testCharacteristicFactory() {
         final UniqueId<Characteristic> i1 = idFactory.build(Characteristic.class, 1L);
         final Characteristic c1 = characteristicFactory.buildCharacteristic(i1);
         final Characteristic c2 = characteristicFactory.buildCharacteristic(i1);
@@ -40,9 +40,9 @@ public class CharacteristicTest {
     }
 
     @Test
-    public void testCharacteristic1() {
+    public void testCharacteristicFactoryWithNullId() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(containsString("1st parameter of io.github.runtimemodels.chazm.entity.CharacteristicEntity.<init>(CharacteristicEntity.java:13) is not @Nullable"));
         characteristicFactory.buildCharacteristic(null);
     }
 

@@ -20,7 +20,7 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("javadoc")
-public class PmfTest {
+public class PmfEntityTest {
 
     private final Injector injector = Guice.createInjector(new EntityModule());
     private final PmfFactory pmfFactory = injector.getInstance(PmfFactory.class);
@@ -30,7 +30,7 @@ public class PmfTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testPmf() {
+    public void testPmfFactory() {
         final UniqueId<Pmf> i1 = idFactory.build(Pmf.class, 1L);
         final Pmf p1 = pmfFactory.buildPmf(i1);
         final Pmf p2 = pmfFactory.buildPmf(i1);
@@ -40,9 +40,9 @@ public class PmfTest {
     }
 
     @Test
-    public void testPmf1() {
+    public void testPmfFactoryWithNullId() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage((containsString("1st parameter of io.github.runtimemodels.chazm.entity.PmfEntity.<init>(PmfEntity.java:13) is not @Nullable")));
         pmfFactory.buildPmf(null);
     }
 
