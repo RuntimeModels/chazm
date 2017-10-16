@@ -37,7 +37,7 @@ public class InstanceGoalEventTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testInstanceGoalEvent() {
+    public void testInstanceGoalEventFactory() {
         final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
         final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
         final InstanceGoalEvent ige1 = igef.build(EventCategory.ADDED, ig);
@@ -48,17 +48,20 @@ public class InstanceGoalEventTest {
     }
 
     @Test
-    public void testInstanceGoalEvent1() {
+    public void testInstanceGoalEventFactoryWithNullCategoryAndNullGoal() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(allOf(
+                containsString("1st parameter of io.github.runtimemodels.chazm.event.InstanceGoalEvent.<init>(InstanceGoalEvent.java:31) is not @Nullable"),
+                containsString("2nd parameter of io.github.runtimemodels.chazm.event.InstanceGoalEvent.<init>(InstanceGoalEvent.java:31) is not @Nullable")
+        ));
 
         igef.build(null, null);
     }
 
     @Test
-    public void testInstanceGoalEvent2() {
+    public void testInstanceGoalEventFactoryWithNullGoal() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(containsString("2nd parameter of io.github.runtimemodels.chazm.event.InstanceGoalEvent.<init>(InstanceGoalEvent.java:31) is not @Nullable"));
 
         igef.build(EventCategory.ADDED, null);
     }

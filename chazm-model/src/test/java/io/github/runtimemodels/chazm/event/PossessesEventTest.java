@@ -40,7 +40,7 @@ public class PossessesEventTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testPossessesEvent() {
+    public void testPossessesEventFactory() {
         final Agent a = af.buildAgent(idf.build(Agent.class, "a"), new ContactInfo() {});
         final Capability c = cf.buildCapability(idf.build(Capability.class, "c"));
         final Possesses p = pf.buildPossesses(a, c, 1d);
@@ -52,17 +52,20 @@ public class PossessesEventTest {
     }
 
     @Test
-    public void testPossessesEvent1() {
+    public void testPossessesEventFactoryWithNullCategoryAndNullPossesses() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(allOf(
+                containsString("1st parameter of io.github.runtimemodels.chazm.event.PossessesEvent.<init>(PossessesEvent.java:31) is not @Nullable"),
+                containsString("2nd parameter of io.github.runtimemodels.chazm.event.PossessesEvent.<init>(PossessesEvent.java:31) is not @Nullable")
+        ));
 
         pef.build(null, null);
     }
 
     @Test
-    public void testPossessesEvent2() {
+    public void testPossessesEventFactoryWithNullPossesses() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(containsString("2nd parameter of io.github.runtimemodels.chazm.event.PossessesEvent.<init>(PossessesEvent.java:31) is not @Nullable"));
 
         pef.build(EventCategory.ADDED, null);
     }

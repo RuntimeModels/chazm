@@ -33,7 +33,7 @@ public class CapabilityEventTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testCapabilityEvent() {
+    public void testCapabilityEventFactory() {
         final Capability c = cf.buildCapability(idf.build(Capability.class, "c"));
         final CapabilityEvent ce1 = cef.build(EventCategory.ADDED, c);
         final CapabilityEvent ce2 = cef.build(EventCategory.ADDED, c);
@@ -43,17 +43,20 @@ public class CapabilityEventTest {
     }
 
     @Test
-    public void testCapabilityEvent1() {
+    public void testCapabilityEventFactoryWithNullCategoryAndNullCapability() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(allOf(
+                containsString("1st parameter of io.github.runtimemodels.chazm.event.CapabilityEvent.<init>(CapabilityEvent.java:27) is not @Nullable"),
+                containsString("2nd parameter of io.github.runtimemodels.chazm.event.CapabilityEvent.<init>(CapabilityEvent.java:27) is not @Nullable")
+        ));
 
         cef.build(null, null);
     }
 
     @Test
-    public void testCapabilityEvent2() {
+    public void testCapabilityEventFactoryWithNullCapability() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(containsString("2nd parameter of io.github.runtimemodels.chazm.event.CapabilityEvent.<init>(CapabilityEvent.java:27) is not @Nullable"));
 
         cef.build(EventCategory.ADDED, null);
     }

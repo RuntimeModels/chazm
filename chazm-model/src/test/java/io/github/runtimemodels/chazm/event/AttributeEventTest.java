@@ -34,7 +34,7 @@ public class AttributeEventTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testAttributeEvent() {
+    public void testAttributeEventFactory() {
         final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
         final AttributeEvent ae1 = aef.build(EventCategory.ADDED, a);
         final AttributeEvent ae2 = aef.build(EventCategory.ADDED, a);
@@ -44,17 +44,20 @@ public class AttributeEventTest {
     }
 
     @Test
-    public void testAttributeEvent1() {
+    public void testAttributeEventFactoryWithNullCategoryAndNullAttribute() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(allOf(
+                containsString("1st parameter of io.github.runtimemodels.chazm.event.AttributeEvent.<init>(AttributeEvent.java:27) is not @Nullable"),
+                containsString("2nd parameter of io.github.runtimemodels.chazm.event.AttributeEvent.<init>(AttributeEvent.java:27) is not @Nullable")
+        ));
 
         aef.build(null, null);
     }
 
     @Test
-    public void testAttributeEvent2() {
+    public void testAttributeEventFactoryWithNullAttribute() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(containsString("2nd parameter of io.github.runtimemodels.chazm.event.AttributeEvent.<init>(AttributeEvent.java:27) is not @Nullable"));
 
         aef.build(EventCategory.ADDED, null);
     }

@@ -40,7 +40,7 @@ public class NeedsEventTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testNeedsEvent() {
+    public void testNeedsEventFactory() {
         final Role r = rf.buildRole(idf.build(Role.class, "r"));
         final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
         final Needs n = nf.buildNeeds(r, a);
@@ -52,9 +52,12 @@ public class NeedsEventTest {
     }
 
     @Test
-    public void testNeedsEvent1() {
+    public void testNeedsEventFactoryWithNullCategoryAndNullNeeds() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(allOf(
+                containsString("1st parameter of io.github.runtimemodels.chazm.event.NeedsEvent.<init>(NeedsEvent.java:30) is not @Nullable"),
+                containsString("2nd parameter of io.github.runtimemodels.chazm.event.NeedsEvent.<init>(NeedsEvent.java:30) is not @Nullable")
+        ));
 
         nef.build(null, null);
     }
@@ -62,7 +65,7 @@ public class NeedsEventTest {
     @Test
     public void testNeedsEvent2() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(containsString("2nd parameter of io.github.runtimemodels.chazm.event.NeedsEvent.<init>(NeedsEvent.java:30) is not @Nullable"));
 
         nef.build(EventCategory.ADDED, null);
     }
