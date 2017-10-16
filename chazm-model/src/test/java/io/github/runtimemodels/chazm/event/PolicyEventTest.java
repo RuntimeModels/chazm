@@ -33,7 +33,7 @@ public class PolicyEventTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testPolicyEvent() {
+    public void testPolicyEventFactory() {
         final Policy p = pf.buildPolicy(idf.build(Policy.class, "p"));
         final PolicyEvent pe1 = pef.build(EventCategory.ADDED, p);
         final PolicyEvent pe2 = pef.build(EventCategory.ADDED, p);
@@ -43,17 +43,20 @@ public class PolicyEventTest {
     }
 
     @Test
-    public void testPolicyEvent1() {
+    public void testPolicyEventFactoryWithNullCategoryAndNullPolicy() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(allOf(
+                containsString("1st parameter of io.github.runtimemodels.chazm.event.PolicyEvent.<init>(PolicyEvent.java:27) is not @Nullable"),
+                containsString("2nd parameter of io.github.runtimemodels.chazm.event.PolicyEvent.<init>(PolicyEvent.java:27) is not @Nullable")
+        ));
 
         pef.build(null, null);
     }
 
     @Test
-    public void testPolicyEvent2() {
+    public void testPolicyEventFactoryWithNullPolicy() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(containsString("2nd parameter of io.github.runtimemodels.chazm.event.PolicyEvent.<init>(PolicyEvent.java:27) is not @Nullable"));
 
         pef.build(EventCategory.ADDED, null);
     }

@@ -33,7 +33,7 @@ public class RoleEventTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testRoleEvent() {
+    public void testRoleEventFactory() {
         final Role r = rf.buildRole(idf.build(Role.class, "r"));
         final RoleEvent re1 = ref.build(EventCategory.ADDED, r);
         final RoleEvent re2 = ref.build(EventCategory.ADDED, r);
@@ -43,17 +43,19 @@ public class RoleEventTest {
     }
 
     @Test
-    public void testRoleEvent1() {
+    public void testRoleEventFactoryWithNullCategoryAndNullRole() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(allOf(
+                containsString("1st parameter of io.github.runtimemodels.chazm.event.RoleEvent.<init>(RoleEvent.java:28) is not @Nullable"),
+                containsString("2nd parameter of io.github.runtimemodels.chazm.event.RoleEvent.<init>(RoleEvent.java:28) is not @Nullable")));
 
         ref.build(null, null);
     }
 
     @Test
-    public void testRoleEvent2() {
+    public void testRoleEventFactoryWithNullRole() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(containsString("2nd parameter of io.github.runtimemodels.chazm.event.RoleEvent.<init>(RoleEvent.java:28) is not @Nullable"));
 
         ref.build(EventCategory.ADDED, null);
     }

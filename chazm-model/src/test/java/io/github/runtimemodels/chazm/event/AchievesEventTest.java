@@ -39,7 +39,7 @@ public class AchievesEventTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testAchievesEvent() {
+    public void testAchievesEventFactory() {
         final Role r = rf.buildRole(idf.build(Role.class, "r"));
         final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
         final Achieves a = af.buildAchieves(r, sg);
@@ -51,17 +51,20 @@ public class AchievesEventTest {
     }
 
     @Test
-    public void testAchievesEvent1() {
+    public void testAchievesEventFactoryWithNullCategoryAndNullAchieves() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(allOf(
+                containsString("1st parameter of io.github.runtimemodels.chazm.event.AchievesEvent.<init>(AchievesEvent.java:30) is not @Nullable"),
+                containsString("2nd parameter of io.github.runtimemodels.chazm.event.AchievesEvent.<init>(AchievesEvent.java:30) is not @Nullable")
+        ));
 
         aef.build(null, null);
     }
 
     @Test
-    public void testAchievesEvent2() {
+    public void testAchievesEventFactoryWithNullAchieves() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage((containsString("2nd parameter of io.github.runtimemodels.chazm.event.AchievesEvent.<init>(AchievesEvent.java:30) is not @Nullable")));
 
         aef.build(EventCategory.ADDED, null);
     }

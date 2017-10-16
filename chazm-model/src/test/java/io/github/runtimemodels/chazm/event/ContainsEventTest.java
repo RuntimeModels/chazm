@@ -39,7 +39,7 @@ public class ContainsEventTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testContainsEvent() {
+    public void testContainsEventFactory() {
         final Role r = rf.buildRole(idf.build(Role.class, "r"));
         final Characteristic cc = ccf.buildCharacteristic(idf.build(Characteristic.class, "cc"));
         final Contains c = cf.buildContains(r, cc, 1d);
@@ -51,17 +51,20 @@ public class ContainsEventTest {
     }
 
     @Test
-    public void testContainsEvent1() {
+    public void testContainsEventFactoryWithNullCategoryAndNullContains() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(allOf(
+                containsString("1st parameter of io.github.runtimemodels.chazm.event.ContainsEvent.<init>(ContainsEvent.java:31) is not @Nullable"),
+                containsString("2nd parameter of io.github.runtimemodels.chazm.event.ContainsEvent.<init>(ContainsEvent.java:31) is not @Nullable")
+        ));
 
         cef.build(null, null);
     }
 
     @Test
-    public void testContainsEvent2() {
+    public void testContainsEventFactoryWithNullContains() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage((containsString("2nd parameter of io.github.runtimemodels.chazm.event.ContainsEvent.<init>(ContainsEvent.java:31) is not @Nullable")));
 
         cef.build(EventCategory.ADDED, null);
     }

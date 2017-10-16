@@ -39,7 +39,7 @@ public class UsesEventTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testUsesEvent() {
+    public void testUsesEventFactory() {
         final Role r = rf.buildRole(idf.build(Role.class, "r"));
         final Pmf p = pf.buildPmf(idf.build(Pmf.class, "p"));
         final Uses u = uf.buildUses(r, p);
@@ -51,9 +51,12 @@ public class UsesEventTest {
     }
 
     @Test
-    public void testUsesEvent1() {
+    public void testUsesEventFactoryWithNullCategoryAndNullUses() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(allOf(
+                containsString("1st parameter of io.github.runtimemodels.chazm.event.UsesEvent.<init>(UsesEvent.java:30) is not @Nullable"),
+                containsString("2nd parameter of io.github.runtimemodels.chazm.event.UsesEvent.<init>(UsesEvent.java:30) is not @Nullable")
+        ));
 
         uef.build(null, null);
     }
@@ -61,7 +64,7 @@ public class UsesEventTest {
     @Test
     public void testUsesEvent2() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(containsString("2nd parameter of io.github.runtimemodels.chazm.event.UsesEvent.<init>(UsesEvent.java:30) is not @Nullable"));
 
         uef.build(EventCategory.ADDED, null);
     }

@@ -34,7 +34,7 @@ public class AgentEventTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testAgentEvent() {
+    public void testAgentEventFactory() {
         final Agent a = af.buildAgent(idf.build(Agent.class, "a"), new ContactInfo() {});
         final AgentEvent ae1 = aef.build(EventCategory.ADDED, a);
         final AgentEvent ae2 = aef.build(EventCategory.ADDED, a);
@@ -44,17 +44,20 @@ public class AgentEventTest {
     }
 
     @Test
-    public void testAgentEvent1() {
+    public void testAgentEventFactoryWithNullCategoryAndNullAgent() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(allOf(
+                containsString("1st parameter of io.github.runtimemodels.chazm.event.AgentEvent.<init>(AgentEvent.java:27) is not @Nullable"),
+                containsString("2nd parameter of io.github.runtimemodels.chazm.event.AgentEvent.<init>(AgentEvent.java:27) is not @Nullable")
+        ));
 
         aef.build(null, null);
     }
 
     @Test
-    public void testAgentEvent2() {
+    public void testAgentEventFactoryWithNullAgent() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(containsString("2nd parameter of io.github.runtimemodels.chazm.event.AgentEvent.<init>(AgentEvent.java:27) is not @Nullable"));
 
         aef.build(EventCategory.ADDED, null);
     }

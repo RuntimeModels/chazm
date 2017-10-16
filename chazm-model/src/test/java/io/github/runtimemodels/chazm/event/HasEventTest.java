@@ -41,7 +41,7 @@ public class HasEventTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testHasEvent() {
+    public void testHasEventFactory() {
         final Agent a = af.buildAgent(idf.build(Agent.class, "a"), new ContactInfo() {});
         final Attribute aa = aaf.buildAttribute(idf.build(Attribute.class, "aa"), Type.NEGATIVE_QUALITY);
         final Has h = hf.buildHas(a, aa, 1d);
@@ -53,17 +53,20 @@ public class HasEventTest {
     }
 
     @Test
-    public void testHasEvent1() {
+    public void testHasEventFactoryWithNullCategoryAndNullHas() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(allOf(
+                containsString("1st parameter of io.github.runtimemodels.chazm.event.HasEvent.<init>(HasEvent.java:31) is not @Nullable"),
+                containsString("2nd parameter of io.github.runtimemodels.chazm.event.HasEvent.<init>(HasEvent.java:31) is not @Nullable")
+        ));
 
         hef.build(null, null);
     }
 
     @Test
-    public void testHasEvent2() {
+    public void testHasEventFactoryWithNullHas() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(containsString("2nd parameter of io.github.runtimemodels.chazm.event.HasEvent.<init>(HasEvent.java:31) is not @Nullable"));
 
         hef.build(EventCategory.ADDED, null);
     }

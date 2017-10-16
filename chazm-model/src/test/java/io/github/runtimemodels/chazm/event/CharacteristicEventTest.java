@@ -33,7 +33,7 @@ public class CharacteristicEventTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testCharacteristicEvent() {
+    public void testCharacteristicEventFactory() {
         final Characteristic c = cf.buildCharacteristic(idf.build(Characteristic.class, "c"));
         final CharacteristicEvent ce1 = cef.build(EventCategory.ADDED, c);
         final CharacteristicEvent ce2 = cef.build(EventCategory.ADDED, c);
@@ -43,17 +43,20 @@ public class CharacteristicEventTest {
     }
 
     @Test
-    public void testCharacteristicEvent1() {
+    public void testCharacteristicEventFactoryWithNullCategoryAndNullCharacteristic() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(allOf(
+                containsString("1st parameter of io.github.runtimemodels.chazm.event.CharacteristicEvent.<init>(CharacteristicEvent.java:27) is not @Nullable"),
+                containsString("2nd parameter of io.github.runtimemodels.chazm.event.CharacteristicEvent.<init>(CharacteristicEvent.java:27) is not @Nullable")
+        ));
 
         cef.build(null, null);
     }
 
     @Test
-    public void testCharacteristicEvent2() {
+    public void testCharacteristicEventWithNullCharacteristic() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(containsString("2nd parameter of io.github.runtimemodels.chazm.event.CharacteristicEvent.<init>(CharacteristicEvent.java:27) is not @Nullable"));
 
         cef.build(EventCategory.ADDED, null);
     }

@@ -40,7 +40,7 @@ public class ModeratesEventTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testModeratesEvent() {
+    public void testModeratesEventFactory() {
         final Pmf p = pf.buildPmf(idf.build(Pmf.class, "p"));
         final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
         final Moderates m = mf.buildModerates(p, a);
@@ -52,17 +52,20 @@ public class ModeratesEventTest {
     }
 
     @Test
-    public void testModeratesEvent1() {
+    public void testModeratesEventFactoryWithNullCategoryAndNullModerates() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(allOf(
+                containsString("1st parameter of io.github.runtimemodels.chazm.event.ModeratesEvent.<init>(ModeratesEvent.java:30) is not @Nullable"),
+                containsString("2nd parameter of io.github.runtimemodels.chazm.event.ModeratesEvent.<init>(ModeratesEvent.java:30) is not @Nullable")
+        ));
 
         mef.build(null, null);
     }
 
     @Test
-    public void testModeratesEvent2() {
+    public void testModeratesEventWithNullModerates() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(containsString("2nd parameter of io.github.runtimemodels.chazm.event.ModeratesEvent.<init>(ModeratesEvent.java:30) is not @Nullable"));
 
         mef.build(EventCategory.ADDED, null);
     }

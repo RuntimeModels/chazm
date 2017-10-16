@@ -47,7 +47,7 @@ public class AssignmentEventTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testAssignmentEvent() {
+    public void testAssignmentEventFactory() {
         final Agent aa = agf.buildAgent(idf.build(Agent.class, "aa"), new ContactInfo() {});
         final Role r = rf.buildRole(idf.build(Role.class, "r"));
         final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
@@ -61,17 +61,20 @@ public class AssignmentEventTest {
     }
 
     @Test
-    public void testAssignmentEvent1() {
+    public void testAssignmentEventFactoryWithNullCategoryAndNullAssignment() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(allOf(
+                containsString("1st parameter of io.github.runtimemodels.chazm.event.AssignmentEvent.<init>(AssignmentEvent.java:32) is not @Nullable"),
+                containsString("2nd parameter of io.github.runtimemodels.chazm.event.AssignmentEvent.<init>(AssignmentEvent.java:32) is not @Nullable")
+        ));
 
         aef.build(null, null);
     }
 
     @Test
-    public void testAssignmentEvent2() {
+    public void testAssignmentEventFactoryWithNullAssignment() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage((containsString("2nd parameter of io.github.runtimemodels.chazm.event.AssignmentEvent.<init>(AssignmentEvent.java:32) is not @Nullable")));
 
         aef.build(EventCategory.ADDED, null);
     }
