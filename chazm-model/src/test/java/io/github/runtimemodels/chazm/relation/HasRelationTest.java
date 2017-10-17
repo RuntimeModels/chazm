@@ -26,7 +26,7 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("javadoc")
-public class HasTest {
+public class HasRelationTest {
 
     private final Injector injector = Guice.createInjector(new RelationModule());
     private final HasFactory hasFactory = injector.getInstance(HasFactory.class);
@@ -38,7 +38,7 @@ public class HasTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testHas() {
+    public void testHasRelationFactory() {
         final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
         final Attribute c = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "c"), Type.NEGATIVE_QUALITY);
         final Has hs1 = hasFactory.buildHas(a, c, 1d);
@@ -49,19 +49,21 @@ public class HasTest {
     }
 
     @Test
-    public void testHas1() {
+    public void testHasRelationFactoryWithNullAgentAndNullAttribute() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(allOf(
+                containsString("1st parameter of io.github.runtimemodels.chazm.relation.HasRelation.<init>(HasRelation.java:39) is not @Nullable"),
+                containsString("2nd parameter of io.github.runtimemodels.chazm.relation.HasRelation.<init>(HasRelation.java:39) is not @Nullable")));
 
         hasFactory.buildHas(null, null, 1d);
     }
 
     @Test
-    public void testHas2() {
+    public void testHasRelationFactoryWithNullAttribute() {
         final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
 
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(containsString("2nd parameter of io.github.runtimemodels.chazm.relation.HasRelation.<init>(HasRelation.java:39) is not @Nullable"));
 
         hasFactory.buildHas(a, null, 1d);
     }

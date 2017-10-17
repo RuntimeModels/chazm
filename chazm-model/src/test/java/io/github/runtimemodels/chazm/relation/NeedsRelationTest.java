@@ -24,7 +24,7 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("javadoc")
-public class NeedsTest {
+public class NeedsRelationTest {
 
     private final Injector injector = Guice.createInjector(new RelationModule());
     private final NeedsFactory needsFactory = injector.getInstance(NeedsFactory.class);
@@ -36,7 +36,7 @@ public class NeedsTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testNeeds() {
+    public void testNeedsRelationFactory() {
         final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
         final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
         final Needs nd1 = needsFactory.buildNeeds(r, a);
@@ -47,19 +47,22 @@ public class NeedsTest {
     }
 
     @Test
-    public void testNeeds1() {
+    public void testNeedsRelationFactoryWithNullRoleAndNullAttribute() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(allOf(
+                containsString("1st parameter of io.github.runtimemodels.chazm.relation.NeedsRelation.<init>(NeedsRelation.java:23) is not @Nullable"),
+                containsString("2nd parameter of io.github.runtimemodels.chazm.relation.NeedsRelation.<init>(NeedsRelation.java:23) is not @Nullable")
+        ));
 
         needsFactory.buildNeeds(null, null);
     }
 
     @Test
-    public void testNeeds2() {
+    public void testNeedsRelationFactoryWithNullAttribute() {
         final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
 
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(containsString("2nd parameter of io.github.runtimemodels.chazm.relation.NeedsRelation.<init>(NeedsRelation.java:23) is not @Nullable"));
 
         needsFactory.buildNeeds(r, null);
     }
