@@ -25,7 +25,7 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("javadoc")
-public class PossessesTest {
+public class PossessesRelationTest {
 
     private final Injector injector = Guice.createInjector(new RelationModule());
     private final PossessesFactory possessesFactory = injector.getInstance(PossessesFactory.class);
@@ -37,7 +37,7 @@ public class PossessesTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testPossesses() {
+    public void testPossessesRelationFactory() {
         final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
         final Capability c = capabilityFactory.buildCapability(idFactory.build(Capability.class, "c"));
         final Possesses ps1 = possessesFactory.buildPossesses(a, c, 1d);
@@ -48,19 +48,22 @@ public class PossessesTest {
     }
 
     @Test
-    public void testPossesses1() {
+    public void testPossessesRelationFactoryWithNullAgentAndNullCapability() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(allOf(
+                containsString("1st parameter of io.github.runtimemodels.chazm.relation.PossessesRelation.<init>(PossessesRelation.java:34) is not @Nullable"),
+                containsString("2nd parameter of io.github.runtimemodels.chazm.relation.PossessesRelation.<init>(PossessesRelation.java:34) is not @Nullable")
+        ));
 
         possessesFactory.buildPossesses(null, null, 1d);
     }
 
     @Test
-    public void testPossesses2() {
+    public void testPossessesRelationFactoryWithNullCapability() {
         final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
 
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(containsString("2nd parameter of io.github.runtimemodels.chazm.relation.PossessesRelation.<init>(PossessesRelation.java:34) is not @Nullable"));
 
         possessesFactory.buildPossesses(a, null, 1d);
     }

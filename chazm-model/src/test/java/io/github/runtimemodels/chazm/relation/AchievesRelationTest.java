@@ -23,7 +23,7 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("javadoc")
-public class AchievesTest {
+public class AchievesRelationTest {
 
     private final Injector injector = Guice.createInjector(new RelationModule());
     private final AchievesFactory achievesFactory = injector.getInstance(AchievesFactory.class);
@@ -35,7 +35,7 @@ public class AchievesTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testAchieves() {
+    public void testAchievesRelationFactory() {
         final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
         final SpecificationGoal g = goalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "g"));
         final Achieves a1 = achievesFactory.buildAchieves(r, g);
@@ -46,19 +46,22 @@ public class AchievesTest {
     }
 
     @Test
-    public void testAchieves1() {
+    public void testAchievesRelationFactoryWithNullRoleAndNullGoal() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(allOf(
+                containsString("1st parameter of io.github.runtimemodels.chazm.relation.AchievesRelation.<init>(AchievesRelation.java:23) is not @Nullable"),
+                containsString("2nd parameter of io.github.runtimemodels.chazm.relation.AchievesRelation.<init>(AchievesRelation.java:23) is not @Nullable")
+        ));
 
         achievesFactory.buildAchieves(null, null);
     }
 
     @Test
-    public void testAchieves2() {
+    public void testAchievesRelationFactoryWithNullGoal() {
         final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
 
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(containsString("2nd parameter of io.github.runtimemodels.chazm.relation.AchievesRelation.<init>(AchievesRelation.java:23) is not @Nullable"));
 
         achievesFactory.buildAchieves(r, null);
     }

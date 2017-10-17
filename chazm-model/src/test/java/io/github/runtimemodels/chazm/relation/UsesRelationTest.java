@@ -23,7 +23,7 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("javadoc")
-public class UsesTest {
+public class UsesRelationTest {
 
     private final Injector injector = Guice.createInjector(new RelationModule());
     private final UsesFactory usesFactory = injector.getInstance(UsesFactory.class);
@@ -35,7 +35,7 @@ public class UsesTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testUses() {
+    public void testUsesRelationFactory() {
         final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
         final Pmf p = pmfFactory.buildPmf(idFactory.build(Pmf.class, "p"));
         final Uses us1 = usesFactory.buildUses(r, p);
@@ -46,19 +46,22 @@ public class UsesTest {
     }
 
     @Test
-    public void testUses1() {
+    public void testUsesRelationFactoryWithNullRoleAndNullPmf() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(allOf(
+                containsString("1st parameter of io.github.runtimemodels.chazm.relation.UsesRelation.<init>(UsesRelation.java:23) is not @Nullable"),
+                containsString("2nd parameter of io.github.runtimemodels.chazm.relation.UsesRelation.<init>(UsesRelation.java:23) is not @Nullable")
+        ));
 
         usesFactory.buildUses(null, null);
     }
 
     @Test
-    public void testUses2() {
+    public void testUsesRelationFactoryWithNullPmf() {
         final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
 
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(containsString("2nd parameter of io.github.runtimemodels.chazm.relation.UsesRelation.<init>(UsesRelation.java:23) is not @Nullable"));
 
         usesFactory.buildUses(r, null);
     }

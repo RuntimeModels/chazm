@@ -31,7 +31,7 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings({"javadoc", "serial"})
-public class AssignmentTest {
+public class AssignmentRelationTest {
 
     private final Injector injector = Guice.createInjector(new RelationModule());
     private final AssignmentFactory assignmentFactory = injector.getInstance(AssignmentFactory.class);
@@ -45,7 +45,7 @@ public class AssignmentTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testAssignment() {
+    public void testAssignmentRelationFactory() {
         final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
         final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
         final SpecificationGoal sg = specGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
@@ -58,30 +58,37 @@ public class AssignmentTest {
     }
 
     @Test
-    public void testAssignment1() {
+    public void testAssignmentRelationFactoryWithNullAgentAndNullRoleAndNullGoal() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(allOf(
+                containsString("1st parameter of io.github.runtimemodels.chazm.relation.AssignmentRelation.<init>(AssignmentRelation.java:134) is not @Nullable"),
+                containsString("2nd parameter of io.github.runtimemodels.chazm.relation.AssignmentRelation.<init>(AssignmentRelation.java:134) is not @Nullable"),
+                containsString("3rd parameter of io.github.runtimemodels.chazm.relation.AssignmentRelation.<init>(AssignmentRelation.java:134) is not @Nullable")
+        ));
 
         assignmentFactory.buildAssignment(null, null, null);
     }
 
     @Test
-    public void testAssignment2() {
+    public void testAssignmentRelationFactoryWithNullRoleAndNullGoal() {
         final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
 
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(allOf(
+                containsString("2nd parameter of io.github.runtimemodels.chazm.relation.AssignmentRelation.<init>(AssignmentRelation.java:134) is not @Nullable"),
+                containsString("3rd parameter of io.github.runtimemodels.chazm.relation.AssignmentRelation.<init>(AssignmentRelation.java:134) is not @Nullable")
+        ));
 
         assignmentFactory.buildAssignment(a, null, null);
     }
 
     @Test
-    public void testAssignment3() {
+    public void testAssignmentRelationFactoryWithNullGoal() {
         final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
         final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
 
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(containsString("3rd parameter of io.github.runtimemodels.chazm.relation.AssignmentRelation.<init>(AssignmentRelation.java:134) is not @Nullable"));
 
         assignmentFactory.buildAssignment(a, r, null);
     }
