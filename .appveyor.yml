@@ -1,0 +1,16 @@
+cache:
+  - '%UserProfile%\.gradle\caches'
+  - '%UserProfile%\.gradle\wrapper'
+
+install:
+  - gradlew.bat -version
+
+build: off
+
+build_script:
+  - gradlew.bat --continue --stacktrace --profile --scan build
+
+test: off
+
+test_script:
+#  - gradlew.bat --stacktrace sonarqube jacocoTestReport coveralls

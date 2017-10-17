@@ -20,7 +20,7 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("javadoc")
-public class PolicyTest {
+public class PolicyEntityTest {
 
     private final Injector injector = Guice.createInjector(new EntityModule());
     private final PolicyFactory policyFactory = injector.getInstance(PolicyFactory.class);
@@ -30,7 +30,7 @@ public class PolicyTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testPolicy() {
+    public void testPolicyFactory() {
         final UniqueId<Policy> i1 = idFactory.build(Policy.class, 1L);
         final Policy p1 = policyFactory.buildPolicy(i1);
         final Policy p2 = policyFactory.buildPolicy(i1);
@@ -40,9 +40,9 @@ public class PolicyTest {
     }
 
     @Test
-    public void testPolicy1() {
+    public void testPolicyFactoryWithNullId() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage((containsString("1st parameter of io.github.runtimemodels.chazm.entity.PolicyEntity.<init>(PolicyEntity.java:13) is not @Nullable")));
         policyFactory.buildPolicy(null);
     }
 

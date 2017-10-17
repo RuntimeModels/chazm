@@ -20,7 +20,7 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("javadoc")
-public class RoleTest {
+public class RoleEntityTest {
 
     private final Injector injector = Guice.createInjector(new EntityModule());
     private final RoleFactory roleFactory = injector.getInstance(RoleFactory.class);
@@ -30,7 +30,7 @@ public class RoleTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testRole() {
+    public void testRoleFactory() {
         final UniqueId<Role> i1 = idFactory.build(Role.class, 1L);
         final Role r1 = roleFactory.buildRole(i1);
         final Role r2 = roleFactory.buildRole(i1);
@@ -40,9 +40,9 @@ public class RoleTest {
     }
 
     @Test
-    public void testRole1() {
+    public void testRoleFactoryWithNullId() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(containsString("1st parameter of io.github.runtimemodels.chazm.entity.RoleEntity.<init>(RoleEntity.java:13) is not @Nullable"));
         roleFactory.buildRole(null);
     }
 

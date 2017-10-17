@@ -23,7 +23,7 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("javadoc")
-public class ContainsTest {
+public class ContainsRelationTest {
 
     private final Injector injector = Guice.createInjector(new RelationModule());
     private final ContainsFactory containsFactory = injector.getInstance(ContainsFactory.class);
@@ -35,7 +35,7 @@ public class ContainsTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testContains() {
+    public void testContainsRelationFactory() {
         final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
         final Characteristic c = characteristicFactory.buildCharacteristic(idFactory.build(Characteristic.class, "c"));
         final Contains ct1 = containsFactory.buildContains(r, c, 1d);
@@ -46,19 +46,21 @@ public class ContainsTest {
     }
 
     @Test
-    public void testContains1() {
+    public void testContainsRelationFactoryWithNullRoleNullCharacteristic() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(allOf(
+                containsString("1st parameter of io.github.runtimemodels.chazm.relation.ContainsRelation.<init>(ContainsRelation.java:26) is not @Nullable"),
+                containsString("2nd parameter of io.github.runtimemodels.chazm.relation.ContainsRelation.<init>(ContainsRelation.java:26) is not @Nullable")));
 
         containsFactory.buildContains(null, null, 1d);
     }
 
     @Test
-    public void testContains2() {
+    public void testContainsRelationFactoryWithNullCharacteristic() {
         final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
 
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(containsString("2nd parameter of io.github.runtimemodels.chazm.relation.ContainsRelation.<init>(ContainsRelation.java:26) is not @Nullable"));
 
         containsFactory.buildContains(r, null, 1d);
     }

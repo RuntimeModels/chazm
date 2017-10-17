@@ -21,7 +21,7 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("javadoc")
-public class AttributeTest {
+public class AttributeEntityTest {
 
     private final Injector injector = Guice.createInjector(new EntityModule());
     private final AttributeFactory attributeFactory = injector.getInstance(AttributeFactory.class);
@@ -31,7 +31,7 @@ public class AttributeTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testAttribute() {
+    public void testAttributeFactory() {
         final UniqueId<Attribute> i1 = idFactory.build(Attribute.class, 1L);
         final Attribute a1 = attributeFactory.buildAttribute(i1, Type.NEGATIVE_QUALITY);
         final Attribute a2 = attributeFactory.buildAttribute(i1, Type.NEGATIVE_QUALITY);
@@ -40,17 +40,20 @@ public class AttributeTest {
     }
 
     @Test
-    public void testAttribute1() {
+    public void testAttributeFactoryWithNullIdAndNullType() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(allOf(
+                containsString("1st parameter of io.github.runtimemodels.chazm.entity.AttributeEntity.<init>(AttributeEntity.java:21) is not @Nullable"),
+                containsString("2nd parameter of io.github.runtimemodels.chazm.entity.AttributeEntity.<init>(AttributeEntity.java:21) is not @Nullable")
+        ));
         attributeFactory.buildAttribute(null, null);
     }
 
     @Test
-    public void testAttribute2() {
+    public void testAttributeFactoryWithNullType() {
         final UniqueId<Attribute> i1 = idFactory.build(Attribute.class, 1L);
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(containsString("2nd parameter of io.github.runtimemodels.chazm.entity.AttributeEntity.<init>(AttributeEntity.java:21) is not @Nullable"));
         attributeFactory.buildAttribute(i1, null);
     }
 

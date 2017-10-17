@@ -33,7 +33,7 @@ public class PmfEventTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testPmfEvent() {
+    public void testPmfEventFactory() {
         final Pmf p = pf.buildPmf(idf.build(Pmf.class, "p"));
         final PmfEvent pe1 = pef.build(EventCategory.ADDED, p);
         final PmfEvent pe2 = pef.build(EventCategory.ADDED, p);
@@ -43,17 +43,20 @@ public class PmfEventTest {
     }
 
     @Test
-    public void testPmfEvent1() {
+    public void testPmfEventFactoryWithNullCategoryAndNullPmf() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(allOf(
+                containsString("1st parameter of io.github.runtimemodels.chazm.event.PmfEvent.<init>(PmfEvent.java:27) is not @Nullable"),
+                containsString("2nd parameter of io.github.runtimemodels.chazm.event.PmfEvent.<init>(PmfEvent.java:27) is not @Nullable")
+        ));
 
         pef.build(null, null);
     }
 
     @Test
-    public void testPmfEvent2() {
+    public void testPmfEventWithNullPmf() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(containsString("2nd parameter of io.github.runtimemodels.chazm.event.PmfEvent.<init>(PmfEvent.java:27) is not @Nullable"));
 
         pef.build(EventCategory.ADDED, null);
     }

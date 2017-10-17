@@ -24,7 +24,7 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("javadoc")
-public class ModeratesTest {
+public class ModeratesRelationTest {
 
     private final Injector injector = Guice.createInjector(new RelationModule());
     private final ModeratesFactory moderatesFactory = injector.getInstance(ModeratesFactory.class);
@@ -36,7 +36,7 @@ public class ModeratesTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testModerates() {
+    public void testModeratesRelationsFactory() {
         final Pmf p = pmfFactory.buildPmf(idFactory.build(Pmf.class, "p"));
         final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
         final Moderates md1 = moderatesFactory.buildModerates(p, a);
@@ -47,19 +47,22 @@ public class ModeratesTest {
     }
 
     @Test
-    public void testModerates1() {
+    public void testModeratesRelationFactoryWithNullPmfAndNullAttribute() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(allOf(
+                containsString("1st parameter of io.github.runtimemodels.chazm.relation.ModeratesRelation.<init>(ModeratesRelation.java:23) is not @Nullable"),
+                containsString("2nd parameter of io.github.runtimemodels.chazm.relation.ModeratesRelation.<init>(ModeratesRelation.java:23) is not @Nullable")
+        ));
 
         moderatesFactory.buildModerates(null, null);
     }
 
     @Test
-    public void testModerates2() {
+    public void testModeratesRelatonFactoryWithNullAttribute() {
         final Pmf p = pmfFactory.buildPmf(idFactory.build(Pmf.class, "p"));
 
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(containsString("2nd parameter of io.github.runtimemodels.chazm.relation.ModeratesRelation.<init>(ModeratesRelation.java:23) is not @Nullable"));
 
         moderatesFactory.buildModerates(p, null);
     }

@@ -21,7 +21,7 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings({"javadoc", "serial"})
-public class InstanceGoalTest {
+public class InstanceGoalEntityTest {
 
     private final Injector injector = Guice.createInjector(new EntityModule());
     private final SpecificationGoalFactory specificationGoalFactory = injector.getInstance(SpecificationGoalFactory.class);
@@ -32,7 +32,7 @@ public class InstanceGoalTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testInstanceGoal() {
+    public void testInstanceGoalFactory() {
         final SpecificationGoal sg1 = specificationGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, 1L));
         final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
         final InstanceGoal g1 = instanceGoalFactory.buildInstanceGoal(i1, sg1, new Parameter() {});
@@ -43,32 +43,39 @@ public class InstanceGoalTest {
     }
 
     @Test
-    public void testInstanceGoal1() {
+    public void testInstanceGoalFactoryWithNullIdAndNullGoalAndNullParameter() {
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(allOf(
+                containsString("1st parameter of io.github.runtimemodels.chazm.entity.InstanceGoalEntity.<init>(InstanceGoalEntity.java:23) is not @Nullable"),
+                containsString("2nd parameter of io.github.runtimemodels.chazm.entity.InstanceGoalEntity.<init>(InstanceGoalEntity.java:23) is not @Nullable"),
+                containsString("3rd parameter of io.github.runtimemodels.chazm.entity.InstanceGoalEntity.<init>(InstanceGoalEntity.java:23) is not @Nullable")
+        ));
 
         instanceGoalFactory.buildInstanceGoal(null, null, null);
     }
 
     @Test
-    public void testInstanceGoal2() {
+    public void testInstanceGoalFactoryWithNullGoalAndNullParameter() {
         final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
 
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(allOf(
+                containsString("2nd parameter of io.github.runtimemodels.chazm.entity.InstanceGoalEntity.<init>(InstanceGoalEntity.java:23) is not @Nullable"),
+                containsString("3rd parameter of io.github.runtimemodels.chazm.entity.InstanceGoalEntity.<init>(InstanceGoalEntity.java:23) is not @Nullable")
+        ));
 
         instanceGoalFactory.buildInstanceGoal(i1, null, null);
     }
 
     @Test
-    public void testInstanceGoal3() {
+    public void testInstanceGoalFactoryWithNullParameter() {
         final UniqueId<SpecificationGoal> x1 = idFactory.build(SpecificationGoal.class, 1L);
         final SpecificationGoal y1 = specificationGoalFactory.buildSpecificationGoal(x1);
 
         final UniqueId<InstanceGoal> i1 = idFactory.build(InstanceGoal.class, 1L);
 
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(allOf(containsString("parameter"), containsString(".<init>()"), containsString("is not @Nullable")));
+        exception.expectMessage(containsString("3rd parameter of io.github.runtimemodels.chazm.entity.InstanceGoalEntity.<init>(InstanceGoalEntity.java:23) is not @Nullable"));
 
         instanceGoalFactory.buildInstanceGoal(i1, y1, null);
     }
