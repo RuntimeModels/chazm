@@ -1,3 +1,6 @@
-rootProject.name = 'chazm'
+enableFeaturePreview("IMPROVED_POM_SUPPORT")
+rootProject.name = "chazm"
 
-include 'chazm-api', 'chazm-model', 'chazm-ui'
+include("chazm-api")
+include("chazm-model")
+include("chazm-ui")

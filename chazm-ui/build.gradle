@@ -1,6 +1,23 @@
-dependencies {
-    compile project(':chazm-model')
+plugins {
+    id("java")
+}
 
-    testCompile 'junit:junit'
-    testCompile 'org.jmockit:jmockit'
+group = rootProject.group
+version = "${rootProject.version}.0.0"
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    implementation(project(":chazm-model"))
+
+    testImplementation("junit:junit:${junitVersion}")
+    testImplementation("org.jmockit:jmockit:${jmockitVersion}")
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_10
+    targetCompatibility = JavaVersion.VERSION_1_10
 }
