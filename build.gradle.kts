@@ -1,8 +1,8 @@
 plugins {
-    id("com.gradle.build-scan") version "1.16"
-    id("base")
-    id("eclipse")
-    id("idea")
+    `build-scan`
+    base
+    eclipse
+    idea
 
 //    id "com.github.kt3k.coveralls" version "2.8.1"
 //    id "org.sonarqube" version "2.5"
@@ -177,7 +177,7 @@ buildScan {
 //}
 //
 
-wrapper {
-    distributionType = Wrapper.DistributionType.ALL
-    gradleVersion = "4.10"
-}
+//wrapper {
+//    distributionType = Wrapper.DistributionType.ALL
+//    gradleVersion = "4.10"
+//}
