@@ -11,6 +11,7 @@ repositories {
 }
 
 dependencies {
+    implementation(project(":chazm-api"))
     implementation(project(":chazm-model"))
 
     testImplementation("junit:junit:${junitVersion}")
