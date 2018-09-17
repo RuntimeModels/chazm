@@ -177,7 +177,9 @@ buildScan {
 //}
 //
 
-//wrapper {
-//    distributionType = Wrapper.DistributionType.ALL
-//    gradleVersion = "4.10"
-//}
+tasks {
+    withType(Wrapper::class) {
+        distributionType = Wrapper.DistributionType.ALL
+        gradleVersion = "4.10.1"
+    }
+}
