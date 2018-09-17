@@ -28,6 +28,7 @@ script:
 #  - ./gradlew --stacktrace sonarqube jacocoTestReport coveralls
 #  - ./gradlew --stacktrace jacocoTestReport coveralls
 #  - ./gradlew --stacktrace coveralls
+  - bash <(curl -s https://codecov.io/bash)
 
 after_success:
 #  - if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then ./gradlew bintrayUpload; fi;
