@@ -21,8 +21,7 @@ java {
 group = rootProject.group
 version = "${rootProject.version}.0.0"
 
-dependencies {
-}
+dependencies {}
 
 val sourceJar by tasks.registering(Jar::class) {
     classifier = "sources"
