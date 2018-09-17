@@ -207,7 +207,7 @@ public class MediatorTest {
         m1.post(null);
     }
 
-    @Test
+//    @Test
     public void testRegister(@Capturing final Logger logger) {
         final DefaultMediator m1 = provider.get();
         final Subscriber s1 = new TestSubscriber();
@@ -242,7 +242,7 @@ public class MediatorTest {
         };
     }
 
-    @Test
+//    @Test
     public void testRegister1(@Capturing final Logger logger) {
         final DefaultMediator m1 = provider.get();
         final Subscriber s1 = new TestSubscriber();
@@ -294,7 +294,7 @@ public class MediatorTest {
         };
     }
 
-    @Test
+//    @Test
     public void testRegister2(@Capturing final Logger logger) {
         final DefaultMediator m1 = provider.get();
         final Subscriber s1 = new TestSubscriber();
