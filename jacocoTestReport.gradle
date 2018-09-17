@@ -1,21 +1,40 @@
-task jacocoTestReport(type: JacocoReport) {
-    dependsOn subprojects.jacocoTestReport
-    jacocoClasspath = files(subprojects.configurations.jacocoAnt)
-    sourceDirectories = files(subprojects.sourceSets.main.java.srcDirs)
-    classDirectories = files(subprojects.sourceSets.main.output.classesDirs)
-    executionData = files(subprojects.jacocoTestReport.executionData).filter { it.exists() }
-    reports {
-        csv {
-            enabled false
-            destination file("${buildDir}/reports/jacoco/test/${task.name}.csv")
-        }
-        html {
-            enabled false
-            destination file("${buildDir}/reports/jacoco/test/html/")
-        }
-        xml {
-            enabled true
-            destination file("${buildDir}/reports/jacoco/test/${task.name}.xml")
-        }
+//task jacocoTestReport(type: JacocoReport) {
+//    dependsOn subprojects.jacocoTestReport
+//    jacocoClasspath = files(subprojects.configurations.jacocoAnt)
+//    sourceDirectories = files(subprojects.sourceSets.main.java.srcDirs)
+//    classDirectories = files(subprojects.sourceSets.main.output.classesDirs)
+//    executionData = files(subprojects.jacocoTestReport.executionData).filter { it.exists() }
+//    reports {
+//        csv {
+//            enabled false
+//            destination file("${buildDir}/reports/jacoco/test/${task.name}.csv")
+//        }
+//        html {
+//            enabled false
+//            destination file("${buildDir}/reports/jacoco/test/html/")
+//        }
+//        xml {
+//            enabled true
+//            destination file("${buildDir}/reports/jacoco/test/${task.name}.xml")
+//        }
+//    }
+//}
+
+task codeCoverageReport(type: JacocoReport) {
+    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+    subprojects.each {
+        sourceSets it.sourceSets.main
     }
+
+    reports {
+        xml.enabled true
+        xml.destination "${buildDir}/reports/jacoco/report.xml"
+        html.enabled false
+        csv.enabled false
+    }
+}
+
+codeCoverageReport.dependsOn {
+    subprojects*.test
 }

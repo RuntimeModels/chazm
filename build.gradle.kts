@@ -29,7 +29,7 @@ apply(from = "subprojects.gradle")
 
 apply(from = "coveralls.gradle")
 
-//apply(from = "jacocoTestReport.gradle")
+apply(from = "jacocoTestReport.gradle")
 
 apply (from = "printInfo.gradle")
 
