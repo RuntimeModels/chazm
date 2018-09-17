@@ -27,7 +27,7 @@ script:
   - ./gradlew --continue --stacktrace --profile --scan build
 #  - ./gradlew --stacktrace sonarqube jacocoTestReport coveralls
 #  - ./gradlew --stacktrace jacocoTestReport coveralls
-  - ./gradlew --stacktrace coveralls
+#  - ./gradlew --stacktrace coveralls
 
 after_success:
 #  - if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then ./gradlew bintrayUpload; fi;
