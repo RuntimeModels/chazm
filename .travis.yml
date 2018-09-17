@@ -2,7 +2,7 @@ sudo: false # use container-based infrastructure
 
 language: java
 jdk:
-  - oraclejdk8 # test against version 1.8
+  - oraclejdk10 # test against version 1.10
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
