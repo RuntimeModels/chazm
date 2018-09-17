@@ -1,5 +1,7 @@
 plugins {
     java
+    jacoco
+    `maven-publish`
 }
 
 group = rootProject.group
@@ -16,4 +18,12 @@ repositories {
 }
 
 dependencies {
+}
+
+tasks {
+    withType(JacocoReport::class) {
+        reports {
+            xml.isEnabled = true
+        }
+    }
 }

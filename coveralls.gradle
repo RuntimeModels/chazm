@@ -1,0 +1,3 @@
+coveralls {
+    sourceDirs = subprojects.sourceSets.main.java.srcDirs.flatten()
+}

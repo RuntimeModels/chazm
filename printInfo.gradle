@@ -1,0 +1,17 @@
+task printInfo {
+    doLast {
+        println "  - project: ${project.name}"
+        println "  - ${subprojects.size()} subprojects:"
+        subprojects.each {
+            println "    - ${it.name}:"
+            println "      - archive artifacts: ${it.configurations.archives.allArtifacts.size()}"
+            it.configurations.archives.artifacts.files.each {
+                println "        - ${it.name}"
+            }
+            println "      - group: ${it.group}"
+            println "      - version: ${it.version}"
+        }
+        println "  - group: ${project.group}"
+        println "  - version: ${project.version}"
+    }
+}

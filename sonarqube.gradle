@@ -1,0 +1,20 @@
+sonarqube {
+    properties {
+        property "sonar.host.url", "https://sonarqube.com"
+        property "sonar.projectKey", "chazm"
+        property "sonar.projectName", "Chazm: An Organizational Multiagent Runtime Model"
+        property "sonar.projectVersion", "${project.version}"
+        property "sonar.login", System.getenv("SONAR_TOKEN")
+        if (System.getenv("TRAVIS_BRANCH") == "master") {
+            if (System.getenv("TRAVIS_PULL_REQUEST") == "false") {
+            } else {
+                property "sonar.analysis.mode", "preview"
+                property "sonar.github.pullRequest", System.getenv("TRAVIS_PULL_REQUEST")
+                property "sonar.github.repository", System.getenv("TRAVIS_REPO_SLUG")
+                property "sonar.github.oauth", System.getenv("GITHUB_TOKEN")
+            }
+        } else {
+            property "sonar.analysis.mode", "issues"
+        }
+    }
+}

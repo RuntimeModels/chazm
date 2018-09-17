@@ -1,9 +1,16 @@
 plugins {
     id("java")
+    id("jacoco")
+    id("maven-publish")
 }
 
 group = rootProject.group
 version = "${rootProject.version}.0.0"
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
 
 repositories {
     jcenter()
@@ -28,9 +35,12 @@ dependencies {
     testImplementation("org.jmockit:jmockit:${jmockitVersion}")
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+jacocoTestReport {
+    reports {
+        xml {
+            enabled true
+        }
+    }
 }
 
 test {
