@@ -27,7 +27,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("javadoc")
-@RunWith(JMockit.class)
+//@RunWith(JMockit.class)
 public class ExecutionTimeTest {
 
     static class MockExecutionTime extends MockUp<ExecutionTime> {
@@ -62,7 +62,7 @@ public class ExecutionTimeTest {
     @Tested
     private ExecutionTime executionTime;
 
-    @Test
+//    @Test
     public void testLogic(@Injectable final MethodInvocation invocation, @Injectable final Method method, @Injectable final Type type,
                           @Capturing final Logger logger) throws Throwable {
         new Expectations() {
@@ -100,7 +100,7 @@ public class ExecutionTimeTest {
         };
     }
 
-    @Test
+//    @Test
     public void testInterception() throws Throwable {
         final Module module = new AbstractModule() {
 
