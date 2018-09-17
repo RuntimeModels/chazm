@@ -1,12 +1,13 @@
 enableFeaturePreview("IMPROVED_POM_SUPPORT")
+enableFeaturePreview("STABLE_PUBLISHING")
+
 rootProject.name = "chazm"
 
-val kotlinVersion = "1.2.70"
 pluginManagement {
     resolutionStrategy {
         eachPlugin {
             if (requested.id.id.startsWith("org.jetbrains.kotlin")) {
-                useVersion(kotlinVersion)
+                useVersion(v.kotlin)
             }
         }
     }
