@@ -28,7 +28,7 @@ script:
 #  - ./gradlew --stacktrace sonarqube jacocoTestReport coveralls
 #  - ./gradlew --stacktrace jacocoTestReport coveralls
 #  - ./gradlew --stacktrace coveralls
-  - ./gradlew --stacktrace codeCoverageReport
+#  - ./gradlew --stacktrace codeCoverageReport
   - bash <(curl -s https://codecov.io/bash)
 
 after_success:
