@@ -1,0 +1,67 @@
+subprojects {
+    apply plugin: "java"
+    apply plugin: "maven-publish"
+    apply plugin: "jacoco"
+    apply plugin: "io.spring.dependency-management"
+    apply plugin: "com.jfrog.bintray"
+
+    dependencyManagement {
+        dependencies {
+            dependency "javax:javaee-api:${javaeeVersion}"
+            dependency "org.jmockit:jmockit:${jmockitVersion}"
+            dependency "junit:junit:${junitVersion}"
+            dependency "org.projectlombok:lombok:${lombokVersion}"
+        }
+
+        imports {
+            mavenBom "io.spring.platform:platform-bom:2.0.8.RELEASE"
+            mavenBom "com.google.inject:guice-bom:4.1.0"
+        }
+    }
+
+
+    task sourceJar(type: Jar) {
+        classifier "sources"
+        from sourceSets.main.allJava
+    }
+
+    artifacts {
+        archives sourceJar
+    }
+
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                from components.java
+                artifact sourceJar
+            }
+        }
+    }
+
+    bintray {
+        user = System.getenv("BINTRAY_USER")
+        key = System.getenv("BINTRAY_KEY")
+        publications = ["maven"]
+        dryRun = System.getenv("TRAVIS_BRANCH") != "master" || System.getenv("TRAVIS_PULL_REQUEST") != "false"
+        publish = System.getenv("TRAVIS_BRANCH") == "master" && System.getenv("TRAVIS_PULL_REQUEST") == "false"
+        pkg {
+            repo = "maven"
+            name = "chazm"
+            userOrg = "runtimemodels"
+            desc = "An organizational runtime model"
+            websiteUrl = "https://runtimemodels.github.io/chazm/"
+            issueTrackerUrl = "https://github.com/runtimemodels/chazm/issues"
+            vcsUrl = "https://github.com/RuntimeModels/chazm.git"
+            licenses = ["Apache-2.0"]
+
+            githubRepo = "RuntimeModels/chazm"
+            githubReleaseNotesFile = "CHANGES.md"
+
+            version {
+                name = "${project.version}"
+                desc = "Chazm "
+                released = new Date()
+            }
+        }
+    }
+}
