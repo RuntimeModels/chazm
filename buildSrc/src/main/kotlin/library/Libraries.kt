@@ -15,6 +15,8 @@ object springBoot {
 
 object guice {
     val bom = "com.google.inject:guice-bom:$guice"
+    val core = "com.google.inject:guice"
+    val `assisted-inject` = "com.google.inject.extensions:guice-assistedinject"
 }
 
 val lombok = "org.projectlombok:lombok:${v.lombok}"
