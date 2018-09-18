@@ -1,9 +1,9 @@
-module chazm.api {
-    exports io.github.runtimemodels.chazm;
-    exports io.github.runtimemodels.chazm.entity;
-    exports io.github.runtimemodels.chazm.entity.manager;
-    exports io.github.runtimemodels.chazm.function;
-    exports io.github.runtimemodels.chazm.id;
-    exports io.github.runtimemodels.chazm.relation;
-    exports io.github.runtimemodels.chazm.relation.manager;
+module runtimemodels.chazm.api {
+    exports runtimemodels.chazm.api;
+    exports runtimemodels.chazm.api.entity;
+    exports runtimemodels.chazm.api.entity.manager;
+    exports runtimemodels.chazm.api.function;
+    exports runtimemodels.chazm.api.id;
+    exports runtimemodels.chazm.api.relation;
+    exports runtimemodels.chazm.api.relation.manager;
 }
