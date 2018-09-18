@@ -2,7 +2,6 @@ package io.github.runtimemodels.chazm.relation;
 
 import com.google.inject.assistedinject.Assisted;
 import io.github.runtimemodels.message.M;
-import lombok.Getter;
 import runtimemodels.chazm.api.entity.Attribute;
 import runtimemodels.chazm.api.entity.Role;
 import runtimemodels.chazm.api.relation.Needs;
@@ -13,9 +12,7 @@ import java.util.Objects;
 
 class NeedsRelation implements Needs {
 
-    @Getter
     private final Role role;
-    @Getter
     private final Attribute attribute;
     private transient Integer hashCode = null;
     private transient String toString = null;
@@ -51,4 +48,11 @@ class NeedsRelation implements Needs {
         return toString;
     }
 
+    public Role getRole() {
+        return this.role;
+    }
+
+    public Attribute getAttribute() {
+        return this.attribute;
+    }
 }

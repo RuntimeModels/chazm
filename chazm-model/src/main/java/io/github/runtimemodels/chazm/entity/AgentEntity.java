@@ -1,7 +1,6 @@
 package io.github.runtimemodels.chazm.entity;
 
 import com.google.inject.assistedinject.Assisted;
-import lombok.Getter;
 import runtimemodels.chazm.api.entity.Agent;
 import runtimemodels.chazm.api.id.UniqueId;
 
@@ -10,7 +9,6 @@ import javax.validation.constraints.NotNull;
 
 class AgentEntity extends AbstractEntity<Agent> implements Agent {
 
-    @Getter
     private final ContactInfo contactInfo;
 
     @Inject
@@ -38,4 +36,7 @@ class AgentEntity extends AbstractEntity<Agent> implements Agent {
         return super.toString();
     }
 
+    public ContactInfo getContactInfo() {
+        return this.contactInfo;
+    }
 }

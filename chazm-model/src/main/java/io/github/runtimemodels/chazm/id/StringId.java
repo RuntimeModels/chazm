@@ -1,7 +1,6 @@
 package io.github.runtimemodels.chazm.id;
 
 import com.google.inject.assistedinject.Assisted;
-import lombok.Getter;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -12,7 +11,6 @@ import static io.github.runtimemodels.chazm.validation.Checks.checkNotNull;
 class StringId<T> extends AbstractId<T> {
 
     private static final long serialVersionUID = 522905742372399827L;
-    @Getter
     private final String id;
     private transient Integer hashCode = null;
     private transient String toString = null;
@@ -49,4 +47,7 @@ class StringId<T> extends AbstractId<T> {
         return toString;
     }
 
+    public String getId() {
+        return this.id;
+    }
 }

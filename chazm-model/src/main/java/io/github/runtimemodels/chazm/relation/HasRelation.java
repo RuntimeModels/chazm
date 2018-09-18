@@ -3,7 +3,6 @@ package io.github.runtimemodels.chazm.relation;
 import com.google.inject.assistedinject.Assisted;
 import io.github.runtimemodels.message.E;
 import io.github.runtimemodels.message.M;
-import lombok.Getter;
 import runtimemodels.chazm.api.entity.Agent;
 import runtimemodels.chazm.api.entity.Attribute;
 import runtimemodels.chazm.api.relation.Has;
@@ -27,11 +26,8 @@ class HasRelation implements Has {
      */
     private static final double QUANTITY_MIN_AMOUNT = 0.0;
 
-    @Getter
     private final Agent agent;
-    @Getter
     private final Attribute attribute;
-    @Getter
     private double value;
     private transient Integer hashCode = null;
 
@@ -87,4 +83,15 @@ class HasRelation implements Has {
         return M.RELATION_WITH_VALUE.get(getAgent().getId(), getAttribute().getId(), getValue());
     }
 
+    public Agent getAgent() {
+        return this.agent;
+    }
+
+    public Attribute getAttribute() {
+        return this.attribute;
+    }
+
+    public double getValue() {
+        return this.value;
+    }
 }

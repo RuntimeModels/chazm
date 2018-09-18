@@ -1,9 +1,6 @@
 package io.github.runtimemodels.chazm.entity;
 
 import io.github.runtimemodels.message.M;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import runtimemodels.chazm.api.id.Identifiable;
 import runtimemodels.chazm.api.id.UniqueId;
 
@@ -14,13 +11,16 @@ import runtimemodels.chazm.api.id.UniqueId;
  * @author Christopher Zhong
  * @since 7.0.0
  */
-@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractEntity<T> implements Identifiable<T> {
 
-    @Getter
     private final UniqueId<T> id;
     private transient Integer hashCode = null;
     private transient String toString = null;
+
+    @java.beans.ConstructorProperties({"id"})
+    public AbstractEntity(UniqueId<T> id) {
+        this.id = id;
+    }
 
     @Override
     public boolean equals(final Object object) {
@@ -47,4 +47,7 @@ public abstract class AbstractEntity<T> implements Identifiable<T> {
         return toString;
     }
 
+    public UniqueId<T> getId() {
+        return this.id;
+    }
 }

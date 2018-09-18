@@ -1,6 +1,5 @@
 package io.github.runtimemodels.chazm.id;
 
-import lombok.Getter;
 import runtimemodels.chazm.api.id.UniqueId;
 
 import javax.validation.constraints.NotNull;
@@ -17,7 +16,6 @@ import static io.github.runtimemodels.chazm.validation.Checks.checkNotNull;
 public abstract class AbstractId<T> implements UniqueId<T> {
 
     private static final long serialVersionUID = 2812867343219462118L;
-    @Getter
     private final Class<T> type;
     private transient Integer hashCode = null;
     private transient String toString = null;
@@ -52,4 +50,7 @@ public abstract class AbstractId<T> implements UniqueId<T> {
         return toString;
     }
 
+    public Class<T> getType() {
+        return this.type;
+    }
 }

@@ -2,9 +2,9 @@ package io.github.runtimemodels.aop.validation;
 
 import io.github.runtimemodels.message.E;
 import io.github.runtimemodels.message.L;
-import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
+import org.slf4j.Logger;
 
 import javax.validation.constraints.NotNull;
 import java.lang.reflect.Method;
@@ -17,8 +17,9 @@ import java.util.Arrays;
  * @author Christopher Zhong
  * @since 7.0.0
  */
-@Slf4j
 class CheckNotNull implements MethodInterceptor {
+
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(CheckNotNull.class);
 
     @Override
     public Object invoke(@NotNull final MethodInvocation invocation) throws Throwable {

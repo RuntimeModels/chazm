@@ -2,12 +2,13 @@ package io.github.runtimemodels.notification;
 
 import io.github.runtimemodels.chazm.event.*;
 import io.github.runtimemodels.message.L;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
 import javax.validation.constraints.NotNull;
 
-@Slf4j
 class DefaultSubscriber implements Subscriber {
+
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(DefaultSubscriber.class);
 
     @Subscribe
     public void event(@NotNull final AchievesEvent event) {

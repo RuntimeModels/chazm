@@ -3,7 +3,6 @@ package io.github.runtimemodels.chazm.relation;
 import com.google.inject.assistedinject.Assisted;
 import io.github.runtimemodels.message.E;
 import io.github.runtimemodels.message.M;
-import lombok.Getter;
 import runtimemodels.chazm.api.entity.Agent;
 import runtimemodels.chazm.api.entity.Capability;
 import runtimemodels.chazm.api.relation.Possesses;
@@ -23,11 +22,8 @@ class PossessesRelation implements Possesses {
      */
     static final double MAX_SCORE = 1.0;
 
-    @Getter
     private final Agent agent;
-    @Getter
     private final Capability capability;
-    @Getter
     private double score;
     private transient Integer hashCode = null;
 
@@ -68,4 +64,15 @@ class PossessesRelation implements Possesses {
         return M.RELATION_WITH_VALUE.get(getAgent().getId(), getCapability().getId(), getScore());
     }
 
+    public Agent getAgent() {
+        return this.agent;
+    }
+
+    public Capability getCapability() {
+        return this.capability;
+    }
+
+    public double getScore() {
+        return this.score;
+    }
 }

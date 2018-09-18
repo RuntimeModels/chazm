@@ -3,7 +3,6 @@ package io.github.runtimemodels.chazm.relation;
 import com.google.inject.assistedinject.Assisted;
 import io.github.runtimemodels.chazm.id.AbstractId;
 import io.github.runtimemodels.message.M;
-import lombok.Getter;
 import runtimemodels.chazm.api.entity.Agent;
 import runtimemodels.chazm.api.entity.InstanceGoal;
 import runtimemodels.chazm.api.entity.Role;
@@ -15,6 +14,22 @@ import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 class AssignmentRelation implements Assignment {
+    public UniqueId<Assignment> getId() {
+        return this.id;
+    }
+
+    public Agent getAgent() {
+        return this.agent;
+    }
+
+    public Role getRole() {
+        return this.role;
+    }
+
+    public InstanceGoal getGoal() {
+        return this.goal;
+    }
+
     /**
      * The {@linkplain Id} extends the {@linkplain AbstractId} by using three {@linkplain UniqueId}s; the {@linkplain UniqueId} of an {@linkplain Agent}, the
      * {@linkplain UniqueId} of a {@linkplain Role}, and the {@linkplain UniqueId} of an {@linkplain InstanceGoal}.
@@ -121,13 +136,9 @@ class AssignmentRelation implements Assignment {
         }
     }
 
-    @Getter
     private final UniqueId<Assignment> id;
-    @Getter
     private final Agent agent;
-    @Getter
     private final Role role;
-    @Getter
     private final InstanceGoal goal;
     private transient String toString = null;
 

@@ -5,7 +5,7 @@ import io.github.runtimemodels.chazm.id.IdFactory;
 import io.github.runtimemodels.chazm.relation.AssignmentFactory;
 import io.github.runtimemodels.message.E;
 import io.github.runtimemodels.message.L;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import runtimemodels.chazm.api.Organization;
 import runtimemodels.chazm.api.entity.*;
 import runtimemodels.chazm.api.id.UniqueId;
@@ -37,8 +37,9 @@ import java.util.function.Function;
  * @since 4.0
  */
 @Singleton
-@Slf4j
 class XmlParser {
+
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(XmlParser.class);
 
     @FunctionalInterface
     private interface RunLater {

@@ -2,8 +2,6 @@ package io.github.runtimemodels.chazm.relation;
 
 import com.google.inject.assistedinject.Assisted;
 import io.github.runtimemodels.message.M;
-import lombok.Getter;
-import lombok.Setter;
 import runtimemodels.chazm.api.entity.Characteristic;
 import runtimemodels.chazm.api.entity.Role;
 import runtimemodels.chazm.api.relation.Contains;
@@ -14,12 +12,8 @@ import java.util.Objects;
 
 class ContainsRelation implements Contains {
 
-    @Getter
     private final Role role;
-    @Getter
     private final Characteristic characteristic;
-    @Getter
-    @Setter
     private double value;
     private transient Integer hashCode = null;
 
@@ -52,4 +46,19 @@ class ContainsRelation implements Contains {
         return M.RELATION_WITH_VALUE.get(getRole().getId(), getCharacteristic().getId(), getValue());
     }
 
+    public Role getRole() {
+        return this.role;
+    }
+
+    public Characteristic getCharacteristic() {
+        return this.characteristic;
+    }
+
+    public double getValue() {
+        return this.value;
+    }
+
+    public void setValue(double value) {
+        this.value = value;
+    }
 }

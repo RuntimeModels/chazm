@@ -2,7 +2,6 @@ package io.github.runtimemodels.chazm.relation;
 
 import com.google.inject.assistedinject.Assisted;
 import io.github.runtimemodels.message.M;
-import lombok.Getter;
 import runtimemodels.chazm.api.entity.Role;
 import runtimemodels.chazm.api.entity.SpecificationGoal;
 import runtimemodels.chazm.api.relation.Achieves;
@@ -13,9 +12,7 @@ import java.util.Objects;
 
 class AchievesRelation implements Achieves {
 
-    @Getter
     private final Role role;
-    @Getter
     private final SpecificationGoal goal;
     private transient Integer hashCode = null;
     private transient String toString = null;
@@ -52,4 +49,11 @@ class AchievesRelation implements Achieves {
         return toString;
     }
 
+    public Role getRole() {
+        return this.role;
+    }
+
+    public SpecificationGoal getGoal() {
+        return this.goal;
+    }
 }

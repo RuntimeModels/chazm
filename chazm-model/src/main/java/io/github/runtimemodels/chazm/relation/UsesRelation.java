@@ -2,7 +2,6 @@ package io.github.runtimemodels.chazm.relation;
 
 import com.google.inject.assistedinject.Assisted;
 import io.github.runtimemodels.message.M;
-import lombok.Getter;
 import runtimemodels.chazm.api.entity.Pmf;
 import runtimemodels.chazm.api.entity.Role;
 import runtimemodels.chazm.api.relation.Uses;
@@ -13,9 +12,7 @@ import java.util.Objects;
 
 class UsesRelation implements Uses {
 
-    @Getter
     private final Role role;
-    @Getter
     private final Pmf pmf;
     private transient Integer hashCode = null;
     private transient String toString = null;
@@ -51,4 +48,11 @@ class UsesRelation implements Uses {
         return toString;
     }
 
+    public Role getRole() {
+        return this.role;
+    }
+
+    public Pmf getPmf() {
+        return this.pmf;
+    }
 }

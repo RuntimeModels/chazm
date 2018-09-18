@@ -5,7 +5,7 @@ import io.github.runtimemodels.chazm.relation.RelationFactory;
 import io.github.runtimemodels.message.E;
 import io.github.runtimemodels.message.L;
 import io.github.runtimemodels.notification.Publisher;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import runtimemodels.chazm.api.Organization;
 import runtimemodels.chazm.api.entity.*;
 import runtimemodels.chazm.api.function.Effectiveness;
@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
 
 import static io.github.runtimemodels.chazm.event.EventCategory.*;
 
-@Slf4j
 class DefaultOrganization implements Organization {
 
     private static final String POSSESSES = "possesses";
@@ -49,6 +48,7 @@ class DefaultOrganization implements Organization {
     private static final String CONTAINS = "contains";
     private static final String ACHIEVED_BY = "achievedBy";
     private static final String USED_BY = "usedBy";
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(DefaultOrganization.class);
 
     private final Entities entities = new Entities();
     private final Relations relations = new Relations();

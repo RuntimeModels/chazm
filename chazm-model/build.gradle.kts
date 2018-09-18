@@ -1,6 +1,6 @@
 import java.time.Instant
 
-val moduleName = "runtimemodels.chazm.model"
+val moduleName = "io.github.runtimemodels"
 
 plugins {
     `java-library`
@@ -24,10 +24,8 @@ group = rootProject.group
 version = "${rootProject.version}.0.0"
 
 dependencies {
-    annotationProcessor(library.lombok)
-    implementation(library.lombok)
-    implementation(library.springBoot.bom) // BOM
-    implementation(library.guice.bom) // BOM
+    implementation(library.springBoot.bom)
+    implementation(library.guice.bom)
     implementation(project(":chazm-api"))
     implementation("org.slf4j:slf4j-api")
     implementation("javax.inject:javax.inject:1")
@@ -35,12 +33,11 @@ dependencies {
     implementation("com.google.inject:guice")
     implementation("com.google.inject.extensions:guice-assistedinject")
 
-    testAnnotationProcessor(library.lombok)
     testImplementation("junit:junit:4.12")
 //    testImplementation(library.junit.bom) // BOM
 //    testImplementation(library.junit.jupiter.api)
 //    testImplementation(library.junit.jupiter.params)
-    testImplementation("org.jmockit:jmockit:1.38")
+    testImplementation("org.jmockit:jmockit:1.42")
 //    testRuntimeOnly(library.junit.jupiter.engine)
 }
 

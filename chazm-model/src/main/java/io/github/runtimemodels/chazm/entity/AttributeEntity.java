@@ -2,7 +2,6 @@ package io.github.runtimemodels.chazm.entity;
 
 import com.google.inject.assistedinject.Assisted;
 import io.github.runtimemodels.message.M;
-import lombok.Getter;
 import runtimemodels.chazm.api.entity.Attribute;
 import runtimemodels.chazm.api.id.UniqueId;
 
@@ -12,7 +11,6 @@ import java.util.Objects;
 
 class AttributeEntity extends AbstractEntity<Attribute> implements Attribute {
 
-    @Getter
     private final Type type;
     private transient Integer hashCode = null;
     private transient String toString = null;
@@ -48,4 +46,7 @@ class AttributeEntity extends AbstractEntity<Attribute> implements Attribute {
         return toString;
     }
 
+    public Type getType() {
+        return this.type;
+    }
 }

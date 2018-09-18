@@ -1,7 +1,7 @@
 package io.github.runtimemodels.notification;
 
 import io.github.runtimemodels.message.L;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
 import javax.inject.Singleton;
 import javax.validation.constraints.NotNull;
@@ -13,9 +13,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.StampedLock;
 
 @Singleton
-@Slf4j
 class DefaultMediator implements Mediator {
 
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(DefaultMediator.class);
     private final Map<Class<?>, Map<Subscriber, Method>> eventSubscribers = new ConcurrentHashMap<>();
     private final Map<Subscriber, Map<Class<?>, Method>> subscriberEvents = new ConcurrentHashMap<>();
 

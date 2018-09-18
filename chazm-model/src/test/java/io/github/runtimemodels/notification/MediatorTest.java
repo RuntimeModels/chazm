@@ -7,11 +7,9 @@ import io.github.runtimemodels.message.E;
 import io.github.runtimemodels.message.L;
 import mockit.Capturing;
 import mockit.FullVerifications;
-import mockit.integration.junit4.JMockit;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 
 import java.lang.reflect.Method;
@@ -21,7 +19,7 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings({"javadoc", "unchecked"})
-@RunWith(JMockit.class)
+//@RunWith(JMockit.class)
 public class MediatorTest {
 
     private static class TestSubscriber implements Subscriber {

@@ -5,11 +5,9 @@ import com.google.inject.Injector;
 import io.github.runtimemodels.message.E;
 import mockit.Capturing;
 import mockit.FullVerifications;
-import mockit.integration.junit4.JMockit;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
 
 import javax.inject.Provider;
 
@@ -17,7 +15,7 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("javadoc")
-@RunWith(JMockit.class)
+//@RunWith(JMockit.class)
 public class PublisherTest {
 
     private final Injector injector = Guice.createInjector(new NotificationModule());
