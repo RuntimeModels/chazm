@@ -24,10 +24,9 @@ group = rootProject.group
 version = "${rootProject.version}.0.0"
 
 dependencies {
-    implementation(library.springBoot.bom)
-    implementation(library.guice.bom)
+    implementation(d.guice.bom)
     implementation(project(":chazm-api"))
-    implementation("org.slf4j:slf4j-api")
+    implementation("org.slf4j:slf4j-api:+")
     implementation("javax.inject:javax.inject:1")
     implementation("javax.validation:validation-api:2.0.1.Final")
     implementation("com.google.inject:guice")
