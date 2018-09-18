@@ -1,5 +1,7 @@
 import java.time.Instant
 
+val moduleName = "chazm.api"
+
 plugins {
     `java-library`
     jacoco
@@ -60,6 +62,37 @@ bintray {
 }
 
 tasks {
+    named("compileJava", JavaCompile::class) {
+        inputs.property("moduleName", moduleName)
+        doFirst {
+            options.compilerArgs = listOf("--module-path", classpath.asPath)
+            classpath = files()
+        }
+    }
+    named("compileTestJava", JavaCompile::class) {
+        inputs.property("moduleName", moduleName)
+        doFirst {
+            options.compilerArgs = listOf(
+                    "--module-path", classpath.asPath,
+                    "--add-modules", "junit",
+                    "--add-reads", "$moduleName=junit",
+                    "--patch-module", "$moduleName=" + files(sourceSets["test"].java.srcDirs).asPath
+            )
+            classpath = files()
+        }
+    }
+    named("test", Test::class) {
+        inputs.property("moduleName", moduleName)
+        doFirst {
+            jvmArgs = listOf(
+                    "--module-path", classpath.asPath,
+                    "--add-modules", "ALL-MODULE-PATH",
+                    "--add-reads", "$moduleName=junit",
+                    "--patch-module", "$moduleName=" + files(sourceSets["test"].java.outputDir).asPath
+            )
+            classpath = files()
+        }
+    }
     withType(JacocoReport::class) {
         reports {
             csv.isEnabled = false
