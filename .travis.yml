@@ -2,7 +2,7 @@ sudo: false # use container-based infrastructure
 
 language: java
 jdk:
-  - oraclejdk8 # test against version 1.8
+  - oraclejdk10 # test against version 1.10
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -25,7 +25,11 @@ install:
 
 script:
   - ./gradlew --continue --stacktrace --profile --scan build
-  - ./gradlew --stacktrace sonarqube jacocoTestReport coveralls
+#  - ./gradlew --stacktrace sonarqube jacocoTestReport coveralls
+#  - ./gradlew --stacktrace jacocoTestReport coveralls
+#  - ./gradlew --stacktrace coveralls
+#  - ./gradlew --stacktrace codeCoverageReport
+  - bash <(curl -s https://codecov.io/bash)
 
 after_success:
 #  - if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then ./gradlew bintrayUpload; fi;

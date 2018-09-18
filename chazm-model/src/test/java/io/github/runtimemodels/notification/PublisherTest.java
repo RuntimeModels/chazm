@@ -38,7 +38,7 @@ public class PublisherTest {
         assertThat(p1, is(sameInstance(p2)));
     }
 
-    @Test
+//    @Test
     public void testPost(@Capturing final Mediator mediator) {
         final Publisher p1 = provider.get();
 

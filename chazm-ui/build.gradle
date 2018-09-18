@@ -1,6 +1,34 @@
-dependencies {
-    compile project(':chazm-model')
+plugins {
+    id("java")
+    id("jacoco")
+    id("maven-publish")
+}
 
-    testCompile 'junit:junit'
-    testCompile 'org.jmockit:jmockit'
+group = rootProject.group
+version = "${rootProject.version}.0.0"
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_10
+    targetCompatibility = JavaVersion.VERSION_1_10
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    implementation(project(":chazm-api"))
+    implementation(project(":chazm-model"))
+
+    testImplementation("junit:junit:${junitVersion}")
+    testImplementation("org.jmockit:jmockit:${jmockitVersion}")
+}
+
+jacocoTestReport {
+    reports {
+        xml {
+            enabled true
+        }
+    }
 }

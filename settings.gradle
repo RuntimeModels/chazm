@@ -1,3 +1,0 @@
-rootProject.name = 'chazm'
-
-include 'chazm-api', 'chazm-model', 'chazm-ui'
