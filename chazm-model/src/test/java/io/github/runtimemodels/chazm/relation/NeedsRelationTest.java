@@ -3,24 +3,17 @@ package io.github.runtimemodels.chazm.relation;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.ProvisionException;
-import io.github.runtimemodels.chazm.entity.Attribute;
-import io.github.runtimemodels.chazm.entity.Attribute.Type;
 import io.github.runtimemodels.chazm.entity.AttributeFactory;
-import io.github.runtimemodels.chazm.entity.Role;
 import io.github.runtimemodels.chazm.entity.RoleFactory;
 import io.github.runtimemodels.chazm.id.IdFactory;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import runtimemodels.chazm.api.entity.Attribute;
+import runtimemodels.chazm.api.entity.Role;
+import runtimemodels.chazm.api.relation.Needs;
 
-import static org.hamcrest.CoreMatchers.allOf;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("javadoc")
@@ -38,7 +31,7 @@ public class NeedsRelationTest {
     @Test
     public void testNeedsRelationFactory() {
         final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
-        final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
+        final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
         final Needs nd1 = needsFactory.buildNeeds(r, a);
         final Needs nd2 = needsFactory.buildNeeds(r, a);
 
@@ -70,7 +63,7 @@ public class NeedsRelationTest {
     @Test
     public void testGetRole() {
         final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
-        final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
+        final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
         final Needs nd = needsFactory.buildNeeds(r, a);
 
         assertThat(nd.getRole(), is(sameInstance(r)));
@@ -79,7 +72,7 @@ public class NeedsRelationTest {
     @Test
     public void testGetAttribute() {
         final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
-        final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
+        final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
         final Needs nd = needsFactory.buildNeeds(r, a);
 
         assertThat(nd.getAttribute(), is(sameInstance(a)));
@@ -89,7 +82,7 @@ public class NeedsRelationTest {
     public void testEquals() {
         final Role r1 = roleFactory.buildRole(idFactory.build(Role.class, "r1"));
         final Role r2 = roleFactory.buildRole(idFactory.build(Role.class, "r2"));
-        final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
+        final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
         final Needs nd1 = needsFactory.buildNeeds(r1, a);
         final Needs nd2 = needsFactory.buildNeeds(r2, a);
         final Needs nd3 = needsFactory.buildNeeds(r1, a);
@@ -103,7 +96,7 @@ public class NeedsRelationTest {
     public void testHashCode() {
         final Role r1 = roleFactory.buildRole(idFactory.build(Role.class, "r1"));
         final Role r2 = roleFactory.buildRole(idFactory.build(Role.class, "r2"));
-        final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
+        final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
         final Needs nd1 = needsFactory.buildNeeds(r1, a);
         final Needs nd2 = needsFactory.buildNeeds(r2, a);
         final Needs nd3 = needsFactory.buildNeeds(r1, a);
@@ -116,7 +109,7 @@ public class NeedsRelationTest {
     public void testToString() {
         final Role r1 = roleFactory.buildRole(idFactory.build(Role.class, "r1"));
         final Role r2 = roleFactory.buildRole(idFactory.build(Role.class, "r2"));
-        final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
+        final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
         final Needs nd1 = needsFactory.buildNeeds(r1, a);
         final Needs nd2 = needsFactory.buildNeeds(r2, a);
         final Needs nd3 = needsFactory.buildNeeds(r1, a);

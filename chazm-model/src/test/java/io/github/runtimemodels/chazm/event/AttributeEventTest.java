@@ -3,23 +3,15 @@ package io.github.runtimemodels.chazm.event;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.ProvisionException;
-import io.github.runtimemodels.chazm.entity.Attribute;
-import io.github.runtimemodels.chazm.entity.Attribute.Type;
 import io.github.runtimemodels.chazm.entity.AttributeFactory;
 import io.github.runtimemodels.chazm.id.IdFactory;
 import io.github.runtimemodels.chazm.relation.RelationModule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import runtimemodels.chazm.api.entity.Attribute;
 
-import static org.hamcrest.CoreMatchers.allOf;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("javadoc")
@@ -35,7 +27,7 @@ public class AttributeEventTest {
 
     @Test
     public void testAttributeEventFactory() {
-        final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
+        final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
         final AttributeEvent ae1 = aef.build(EventCategory.ADDED, a);
         final AttributeEvent ae2 = aef.build(EventCategory.ADDED, a);
 
@@ -64,7 +56,7 @@ public class AttributeEventTest {
 
     @Test
     public void testGetId() {
-        final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
+        final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
         final AttributeEvent ae = aef.build(EventCategory.ADDED, a);
 
         assertThat(ae.getId(), is(sameInstance(a.getId())));
@@ -72,9 +64,9 @@ public class AttributeEventTest {
 
     @Test
     public void testEquals() {
-        final Attribute a1 = af.buildAttribute(idf.build(Attribute.class, "a1"), Type.NEGATIVE_QUALITY);
-        final Attribute a2 = af.buildAttribute(idf.build(Attribute.class, "a2"), Type.NEGATIVE_QUALITY);
-        final Attribute a3 = af.buildAttribute(idf.build(Attribute.class, "a1"), Type.NEGATIVE_QUALITY);
+        final Attribute a1 = af.buildAttribute(idf.build(Attribute.class, "a1"), Attribute.Type.NEGATIVE_QUALITY);
+        final Attribute a2 = af.buildAttribute(idf.build(Attribute.class, "a2"), Attribute.Type.NEGATIVE_QUALITY);
+        final Attribute a3 = af.buildAttribute(idf.build(Attribute.class, "a1"), Attribute.Type.NEGATIVE_QUALITY);
         final AttributeEvent ae1 = aef.build(EventCategory.ADDED, a1);
         final AttributeEvent ae2 = aef.build(EventCategory.ADDED, a2);
         final AttributeEvent ae3 = aef.build(EventCategory.ADDED, a3);
@@ -86,9 +78,9 @@ public class AttributeEventTest {
 
     @Test
     public void testHashCode() {
-        final Attribute a1 = af.buildAttribute(idf.build(Attribute.class, "a1"), Type.NEGATIVE_QUALITY);
-        final Attribute a2 = af.buildAttribute(idf.build(Attribute.class, "a2"), Type.NEGATIVE_QUALITY);
-        final Attribute a3 = af.buildAttribute(idf.build(Attribute.class, "a1"), Type.NEGATIVE_QUALITY);
+        final Attribute a1 = af.buildAttribute(idf.build(Attribute.class, "a1"), Attribute.Type.NEGATIVE_QUALITY);
+        final Attribute a2 = af.buildAttribute(idf.build(Attribute.class, "a2"), Attribute.Type.NEGATIVE_QUALITY);
+        final Attribute a3 = af.buildAttribute(idf.build(Attribute.class, "a1"), Attribute.Type.NEGATIVE_QUALITY);
         final AttributeEvent ae1 = aef.build(EventCategory.ADDED, a1);
         final AttributeEvent ae2 = aef.build(EventCategory.ADDED, a2);
         final AttributeEvent ae3 = aef.build(EventCategory.ADDED, a3);
@@ -99,9 +91,9 @@ public class AttributeEventTest {
 
     @Test
     public void testToString() {
-        final Attribute a1 = af.buildAttribute(idf.build(Attribute.class, "a1"), Type.NEGATIVE_QUALITY);
-        final Attribute a2 = af.buildAttribute(idf.build(Attribute.class, "a2"), Type.NEGATIVE_QUALITY);
-        final Attribute a3 = af.buildAttribute(idf.build(Attribute.class, "a1"), Type.NEGATIVE_QUALITY);
+        final Attribute a1 = af.buildAttribute(idf.build(Attribute.class, "a1"), Attribute.Type.NEGATIVE_QUALITY);
+        final Attribute a2 = af.buildAttribute(idf.build(Attribute.class, "a2"), Attribute.Type.NEGATIVE_QUALITY);
+        final Attribute a3 = af.buildAttribute(idf.build(Attribute.class, "a1"), Attribute.Type.NEGATIVE_QUALITY);
         final AttributeEvent ae1 = aef.build(EventCategory.ADDED, a1);
         final AttributeEvent ae2 = aef.build(EventCategory.ADDED, a2);
         final AttributeEvent ae3 = aef.build(EventCategory.ADDED, a3);

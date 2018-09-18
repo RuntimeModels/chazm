@@ -4,17 +4,8 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
-import mockit.Capturing;
-import mockit.Expectations;
-import mockit.Injectable;
-import mockit.Mock;
-import mockit.MockUp;
-import mockit.Tested;
-import mockit.Verifications;
-import mockit.integration.junit4.JMockit;
+import mockit.*;
 import org.aopalliance.intercept.MethodInvocation;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 
 import java.lang.reflect.Method;
@@ -39,7 +30,7 @@ public class ExecutionTimeTest {
         }
 
         @Mock
-        public Object invoke(final MethodInvocation invocation) throws Throwable {
+        public Object invoke(final MethodInvocation invocation) {
             methodNames.add(invocation.getMethod().getName());
             return true;
         }
@@ -47,22 +38,26 @@ public class ExecutionTimeTest {
 
     static class TestClass {
 
-        public void methodA() {}
+        public void methodA() {
+        }
 
         @DoNotProfile
-        public void methodB() {}
+        public void methodB() {
+        }
 
-        public void methodC() {}
+        public void methodC() {
+        }
 
         @DoNotProfile
-        public void methodD() {}
+        public void methodD() {
+        }
 
     }
 
     @Tested
     private ExecutionTime executionTime;
 
-//    @Test
+    //    @Test
     public void testLogic(@Injectable final MethodInvocation invocation, @Injectable final Method method, @Injectable final Type type,
                           @Capturing final Logger logger) throws Throwable {
         new Expectations() {
@@ -100,8 +95,8 @@ public class ExecutionTimeTest {
         };
     }
 
-//    @Test
-    public void testInterception() throws Throwable {
+    //    @Test
+    public void testInterception() {
         final Module module = new AbstractModule() {
 
             @Override

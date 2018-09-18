@@ -3,32 +3,23 @@ package io.github.runtimemodels.chazm.event;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.ProvisionException;
-import io.github.runtimemodels.chazm.entity.Agent;
-import io.github.runtimemodels.chazm.entity.Agent.ContactInfo;
 import io.github.runtimemodels.chazm.entity.AgentFactory;
-import io.github.runtimemodels.chazm.entity.InstanceGoal;
-import io.github.runtimemodels.chazm.entity.InstanceGoal.Parameter;
 import io.github.runtimemodels.chazm.entity.InstanceGoalFactory;
-import io.github.runtimemodels.chazm.entity.Role;
 import io.github.runtimemodels.chazm.entity.RoleFactory;
-import io.github.runtimemodels.chazm.entity.SpecificationGoal;
 import io.github.runtimemodels.chazm.entity.SpecificationGoalFactory;
 import io.github.runtimemodels.chazm.id.IdFactory;
-import io.github.runtimemodels.chazm.relation.Assignment;
 import io.github.runtimemodels.chazm.relation.AssignmentFactory;
 import io.github.runtimemodels.chazm.relation.RelationModule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import runtimemodels.chazm.api.entity.Agent;
+import runtimemodels.chazm.api.entity.InstanceGoal;
+import runtimemodels.chazm.api.entity.Role;
+import runtimemodels.chazm.api.entity.SpecificationGoal;
+import runtimemodels.chazm.api.relation.Assignment;
 
-import static org.hamcrest.CoreMatchers.allOf;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings({"javadoc", "serial"})
@@ -48,10 +39,12 @@ public class AssignmentEventTest {
 
     @Test
     public void testAssignmentEventFactory() {
-        final Agent aa = agf.buildAgent(idf.build(Agent.class, "aa"), new ContactInfo() {});
+        final Agent aa = agf.buildAgent(idf.build(Agent.class, "aa"), new Agent.ContactInfo() {
+        });
         final Role r = rf.buildRole(idf.build(Role.class, "r"));
         final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
+        final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
+        });
         final Assignment a = af.buildAssignment(aa, r, ig);
         final AssignmentEvent ae1 = aef.build(EventCategory.ADDED, a);
         final AssignmentEvent ae2 = aef.build(EventCategory.ADDED, a);
@@ -81,10 +74,12 @@ public class AssignmentEventTest {
 
     @Test
     public void testGetAgentId() {
-        final Agent aa = agf.buildAgent(idf.build(Agent.class, "aa"), new ContactInfo() {});
+        final Agent aa = agf.buildAgent(idf.build(Agent.class, "aa"), new Agent.ContactInfo() {
+        });
         final Role r = rf.buildRole(idf.build(Role.class, "r"));
         final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
+        final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
+        });
         final Assignment a = af.buildAssignment(aa, r, ig);
         final AssignmentEvent ae = aef.build(EventCategory.ADDED, a);
 
@@ -93,10 +88,12 @@ public class AssignmentEventTest {
 
     @Test
     public void testGetRoleId() {
-        final Agent aa = agf.buildAgent(idf.build(Agent.class, "aa"), new ContactInfo() {});
+        final Agent aa = agf.buildAgent(idf.build(Agent.class, "aa"), new Agent.ContactInfo() {
+        });
         final Role r = rf.buildRole(idf.build(Role.class, "r"));
         final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
+        final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
+        });
         final Assignment a = af.buildAssignment(aa, r, ig);
         final AssignmentEvent ae = aef.build(EventCategory.ADDED, a);
 
@@ -105,10 +102,12 @@ public class AssignmentEventTest {
 
     @Test
     public void testGetGoalId() {
-        final Agent aa = agf.buildAgent(idf.build(Agent.class, "aa"), new ContactInfo() {});
+        final Agent aa = agf.buildAgent(idf.build(Agent.class, "aa"), new Agent.ContactInfo() {
+        });
         final Role r = rf.buildRole(idf.build(Role.class, "r"));
         final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
+        final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
+        });
         final Assignment a = af.buildAssignment(aa, r, ig);
         final AssignmentEvent ae = aef.build(EventCategory.ADDED, a);
 
@@ -117,11 +116,13 @@ public class AssignmentEventTest {
 
     @Test
     public void testEquals() {
-        final Agent aa = agf.buildAgent(idf.build(Agent.class, "aa"), new ContactInfo() {});
+        final Agent aa = agf.buildAgent(idf.build(Agent.class, "aa"), new Agent.ContactInfo() {
+        });
         final Role r1 = rf.buildRole(idf.build(Role.class, "r1"));
         final Role r2 = rf.buildRole(idf.build(Role.class, "r2"));
         final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
+        final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
+        });
         final Assignment a1 = af.buildAssignment(aa, r1, ig);
         final Assignment a2 = af.buildAssignment(aa, r2, ig);
         final Assignment a3 = af.buildAssignment(aa, r1, ig);
@@ -136,11 +137,13 @@ public class AssignmentEventTest {
 
     @Test
     public void testHashCode() {
-        final Agent aa = agf.buildAgent(idf.build(Agent.class, "aa"), new ContactInfo() {});
+        final Agent aa = agf.buildAgent(idf.build(Agent.class, "aa"), new Agent.ContactInfo() {
+        });
         final Role r1 = rf.buildRole(idf.build(Role.class, "r1"));
         final Role r2 = rf.buildRole(idf.build(Role.class, "r2"));
         final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
+        final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
+        });
         final Assignment a1 = af.buildAssignment(aa, r1, ig);
         final Assignment a2 = af.buildAssignment(aa, r2, ig);
         final Assignment a3 = af.buildAssignment(aa, r1, ig);
@@ -154,11 +157,13 @@ public class AssignmentEventTest {
 
     @Test
     public void testToString() {
-        final Agent aa = agf.buildAgent(idf.build(Agent.class, "aa"), new ContactInfo() {});
+        final Agent aa = agf.buildAgent(idf.build(Agent.class, "aa"), new Agent.ContactInfo() {
+        });
         final Role r1 = rf.buildRole(idf.build(Role.class, "r1"));
         final Role r2 = rf.buildRole(idf.build(Role.class, "r2"));
         final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
+        final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
+        });
         final Assignment a1 = af.buildAssignment(aa, r1, ig);
         final Assignment a2 = af.buildAssignment(aa, r2, ig);
         final Assignment a3 = af.buildAssignment(aa, r1, ig);

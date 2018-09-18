@@ -25,22 +25,23 @@ version = "${rootProject.version}.0.0"
 
 dependencies {
     annotationProcessor(library.lombok)
-    compileOnly(library.lombok)
+    implementation(library.lombok)
     implementation(library.springBoot.bom) // BOM
     implementation(library.guice.bom) // BOM
     implementation(project(":chazm-api"))
     implementation("org.slf4j:slf4j-api")
-    implementation("javax:javaee-api:+")
+    implementation("javax.inject:javax.inject:1")
+    implementation("javax.validation:validation-api:2.0.1.Final")
     implementation("com.google.inject:guice")
     implementation("com.google.inject.extensions:guice-assistedinject")
 
-    testImplementation(library.junit.bom) // BOM
-    testImplementation(library.junit.jupiter.api)
-    testImplementation(library.junit.jupiter.params)
-
-    testRuntimeOnly(library.junit.jupiter.engine)
-
-    testImplementation("org.jmockit:jmockit:+")
+    testAnnotationProcessor(library.lombok)
+    testImplementation("junit:junit:4.12")
+//    testImplementation(library.junit.bom) // BOM
+//    testImplementation(library.junit.jupiter.api)
+//    testImplementation(library.junit.jupiter.params)
+    testImplementation("org.jmockit:jmockit:1.38")
+//    testRuntimeOnly(library.junit.jupiter.engine)
 }
 
 val sourceJar by tasks.registering(Jar::class) {

@@ -13,10 +13,7 @@ import org.junit.runner.RunWith;
 
 import javax.inject.Provider;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("javadoc")
@@ -38,7 +35,7 @@ public class PublisherTest {
         assertThat(p1, is(sameInstance(p2)));
     }
 
-//    @Test
+    //    @Test
     public void testPost(@Capturing final Mediator mediator) {
         final Publisher p1 = provider.get();
 

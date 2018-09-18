@@ -3,27 +3,19 @@ package io.github.runtimemodels.chazm.event;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.ProvisionException;
-import io.github.runtimemodels.chazm.entity.Agent;
-import io.github.runtimemodels.chazm.entity.Agent.ContactInfo;
 import io.github.runtimemodels.chazm.entity.AgentFactory;
-import io.github.runtimemodels.chazm.entity.Capability;
 import io.github.runtimemodels.chazm.entity.CapabilityFactory;
 import io.github.runtimemodels.chazm.id.IdFactory;
-import io.github.runtimemodels.chazm.relation.Possesses;
 import io.github.runtimemodels.chazm.relation.PossessesFactory;
 import io.github.runtimemodels.chazm.relation.RelationModule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import runtimemodels.chazm.api.entity.Agent;
+import runtimemodels.chazm.api.entity.Capability;
+import runtimemodels.chazm.api.relation.Possesses;
 
-import static org.hamcrest.CoreMatchers.allOf;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("javadoc")
@@ -41,7 +33,8 @@ public class PossessesEventTest {
 
     @Test
     public void testPossessesEventFactory() {
-        final Agent a = af.buildAgent(idf.build(Agent.class, "a"), new ContactInfo() {});
+        final Agent a = af.buildAgent(idf.build(Agent.class, "a"), new Agent.ContactInfo() {
+        });
         final Capability c = cf.buildCapability(idf.build(Capability.class, "c"));
         final Possesses p = pf.buildPossesses(a, c, 1d);
         final PossessesEvent pe1 = pef.build(EventCategory.ADDED, p);
@@ -72,7 +65,8 @@ public class PossessesEventTest {
 
     @Test
     public void testGetAgentId() {
-        final Agent a = af.buildAgent(idf.build(Agent.class, "a"), new ContactInfo() {});
+        final Agent a = af.buildAgent(idf.build(Agent.class, "a"), new Agent.ContactInfo() {
+        });
         final Capability c = cf.buildCapability(idf.build(Capability.class, "c"));
         final Possesses p = pf.buildPossesses(a, c, 1d);
         final PossessesEvent pe = pef.build(EventCategory.ADDED, p);
@@ -82,7 +76,8 @@ public class PossessesEventTest {
 
     @Test
     public void testGetCapabilityId() {
-        final Agent a = af.buildAgent(idf.build(Agent.class, "a"), new ContactInfo() {});
+        final Agent a = af.buildAgent(idf.build(Agent.class, "a"), new Agent.ContactInfo() {
+        });
         final Capability c = cf.buildCapability(idf.build(Capability.class, "c"));
         final Possesses p = pf.buildPossesses(a, c, 1d);
         final PossessesEvent pe = pef.build(EventCategory.ADDED, p);
@@ -92,7 +87,8 @@ public class PossessesEventTest {
 
     @Test
     public void testGetScore() {
-        final Agent a = af.buildAgent(idf.build(Agent.class, "a"), new ContactInfo() {});
+        final Agent a = af.buildAgent(idf.build(Agent.class, "a"), new Agent.ContactInfo() {
+        });
         final Capability c = cf.buildCapability(idf.build(Capability.class, "c"));
         final Possesses p = pf.buildPossesses(a, c, 1d);
         final PossessesEvent pe = pef.build(EventCategory.ADDED, p);
@@ -102,8 +98,10 @@ public class PossessesEventTest {
 
     @Test
     public void testEquals() {
-        final Agent a1 = af.buildAgent(idf.build(Agent.class, "a1"), new ContactInfo() {});
-        final Agent a2 = af.buildAgent(idf.build(Agent.class, "a2"), new ContactInfo() {});
+        final Agent a1 = af.buildAgent(idf.build(Agent.class, "a1"), new Agent.ContactInfo() {
+        });
+        final Agent a2 = af.buildAgent(idf.build(Agent.class, "a2"), new Agent.ContactInfo() {
+        });
         final Capability c = cf.buildCapability(idf.build(Capability.class, "c"));
         final Possesses p1 = pf.buildPossesses(a1, c, 1d);
         final Possesses p2 = pf.buildPossesses(a2, c, 1d);
@@ -119,8 +117,10 @@ public class PossessesEventTest {
 
     @Test
     public void testPossesseshCode() {
-        final Agent a1 = af.buildAgent(idf.build(Agent.class, "a1"), new ContactInfo() {});
-        final Agent a2 = af.buildAgent(idf.build(Agent.class, "a2"), new ContactInfo() {});
+        final Agent a1 = af.buildAgent(idf.build(Agent.class, "a1"), new Agent.ContactInfo() {
+        });
+        final Agent a2 = af.buildAgent(idf.build(Agent.class, "a2"), new Agent.ContactInfo() {
+        });
         final Capability c = cf.buildCapability(idf.build(Capability.class, "c"));
         final Possesses p1 = pf.buildPossesses(a1, c, 1d);
         final Possesses p2 = pf.buildPossesses(a2, c, 1d);
@@ -135,8 +135,10 @@ public class PossessesEventTest {
 
     @Test
     public void testToString() {
-        final Agent a1 = af.buildAgent(idf.build(Agent.class, "a1"), new ContactInfo() {});
-        final Agent a2 = af.buildAgent(idf.build(Agent.class, "a2"), new ContactInfo() {});
+        final Agent a1 = af.buildAgent(idf.build(Agent.class, "a1"), new Agent.ContactInfo() {
+        });
+        final Agent a2 = af.buildAgent(idf.build(Agent.class, "a2"), new Agent.ContactInfo() {
+        });
         final Capability c = cf.buildCapability(idf.build(Capability.class, "c"));
         final Possesses p1 = pf.buildPossesses(a1, c, 1d);
         final Possesses p2 = pf.buildPossesses(a2, c, 1d);

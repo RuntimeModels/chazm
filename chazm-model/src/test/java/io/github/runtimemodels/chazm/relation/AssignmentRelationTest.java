@@ -3,31 +3,23 @@ package io.github.runtimemodels.chazm.relation;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.ProvisionException;
-import io.github.runtimemodels.chazm.entity.Agent;
-import io.github.runtimemodels.chazm.entity.Agent.ContactInfo;
 import io.github.runtimemodels.chazm.entity.AgentFactory;
-import io.github.runtimemodels.chazm.entity.InstanceGoal;
-import io.github.runtimemodels.chazm.entity.InstanceGoal.Parameter;
 import io.github.runtimemodels.chazm.entity.InstanceGoalFactory;
-import io.github.runtimemodels.chazm.entity.Role;
 import io.github.runtimemodels.chazm.entity.RoleFactory;
-import io.github.runtimemodels.chazm.entity.SpecificationGoal;
 import io.github.runtimemodels.chazm.entity.SpecificationGoalFactory;
 import io.github.runtimemodels.chazm.id.IdFactory;
-import io.github.runtimemodels.chazm.id.UniqueId;
 import io.github.runtimemodels.chazm.relation.AssignmentRelation.Id;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import runtimemodels.chazm.api.entity.Agent;
+import runtimemodels.chazm.api.entity.InstanceGoal;
+import runtimemodels.chazm.api.entity.Role;
+import runtimemodels.chazm.api.entity.SpecificationGoal;
+import runtimemodels.chazm.api.id.UniqueId;
+import runtimemodels.chazm.api.relation.Assignment;
 
-import static org.hamcrest.CoreMatchers.allOf;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings({"javadoc", "serial"})
@@ -46,10 +38,12 @@ public class AssignmentRelationTest {
 
     @Test
     public void testAssignmentRelationFactory() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {
+        });
         final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
         final SpecificationGoal sg = specGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
+        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
+        });
         final Assignment a1 = assignmentFactory.buildAssignment(a, r, ig);
         final Assignment a2 = assignmentFactory.buildAssignment(a, r, ig);
 
@@ -61,9 +55,9 @@ public class AssignmentRelationTest {
     public void testAssignmentRelationFactoryWithNullAgentAndNullRoleAndNullGoal() {
         exception.expect(instanceOf(ProvisionException.class));
 //        exception.expectMessage(allOf(
-//                containsString("1st parameter of io.github.runtimemodels.chazm.relation.AssignmentRelation.<init>(AssignmentRelation.java:134) is not @Nullable"),
-//                containsString("2nd parameter of io.github.runtimemodels.chazm.relation.AssignmentRelation.<init>(AssignmentRelation.java:134) is not @Nullable"),
-//                containsString("3rd parameter of io.github.runtimemodels.chazm.relation.AssignmentRelation.<init>(AssignmentRelation.java:134) is not @Nullable")
+//                containsString("1st InstanceGoal.Parameter of io.github.runtimemodels.chazm.relation.AssignmentRelation.<init>(AssignmentRelation.java:134) is not @Nullable"),
+//                containsString("2nd InstanceGoal.Parameter of io.github.runtimemodels.chazm.relation.AssignmentRelation.<init>(AssignmentRelation.java:134) is not @Nullable"),
+//                containsString("3rd InstanceGoal.Parameter of io.github.runtimemodels.chazm.relation.AssignmentRelation.<init>(AssignmentRelation.java:134) is not @Nullable")
 //        ));
 
         assignmentFactory.buildAssignment(null, null, null);
@@ -71,12 +65,13 @@ public class AssignmentRelationTest {
 
     @Test
     public void testAssignmentRelationFactoryWithNullRoleAndNullGoal() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {
+        });
 
         exception.expect(instanceOf(ProvisionException.class));
 //        exception.expectMessage(allOf(
-//                containsString("2nd parameter of io.github.runtimemodels.chazm.relation.AssignmentRelation.<init>(AssignmentRelation.java:134) is not @Nullable"),
-//                containsString("3rd parameter of io.github.runtimemodels.chazm.relation.AssignmentRelation.<init>(AssignmentRelation.java:134) is not @Nullable")
+//                containsString("2nd InstanceGoal.Parameter of io.github.runtimemodels.chazm.relation.AssignmentRelation.<init>(AssignmentRelation.java:134) is not @Nullable"),
+//                containsString("3rd InstanceGoal.Parameter of io.github.runtimemodels.chazm.relation.AssignmentRelation.<init>(AssignmentRelation.java:134) is not @Nullable")
 //        ));
 
         assignmentFactory.buildAssignment(a, null, null);
@@ -84,21 +79,24 @@ public class AssignmentRelationTest {
 
     @Test
     public void testAssignmentRelationFactoryWithNullGoal() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {
+        });
         final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
 
         exception.expect(instanceOf(ProvisionException.class));
-        exception.expectMessage(containsString("3rd parameter of io.github.runtimemodels.chazm.relation.AssignmentRelation.<init>(AssignmentRelation.java:134) is not @Nullable"));
+        exception.expectMessage(containsString("3rd InstanceGoal.Parameter of io.github.runtimemodels.chazm.relation.AssignmentRelation.<init>(AssignmentRelation.java:134) is not @Nullable"));
 
         assignmentFactory.buildAssignment(a, r, null);
     }
 
     @Test
     public void testGetId() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {
+        });
         final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
         final SpecificationGoal sg = specGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
+        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
+        });
         final Assignment as = assignmentFactory.buildAssignment(a, r, ig);
 
         assertThat(as.getId(), is(not(nullValue())));
@@ -106,10 +104,12 @@ public class AssignmentRelationTest {
 
     @Test
     public void testGetAgent() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {
+        });
         final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
         final SpecificationGoal sg = specGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
+        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
+        });
         final Assignment as = assignmentFactory.buildAssignment(a, r, ig);
 
         assertThat(as.getAgent(), is(sameInstance(a)));
@@ -118,10 +118,12 @@ public class AssignmentRelationTest {
 
     @Test
     public void testGetRole() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {
+        });
         final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
         final SpecificationGoal sg = specGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
+        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
+        });
         final Assignment as = assignmentFactory.buildAssignment(a, r, ig);
 
         assertThat(as.getRole(), is(sameInstance(r)));
@@ -129,10 +131,12 @@ public class AssignmentRelationTest {
 
     @Test
     public void testGetGoal() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {
+        });
         final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
         final SpecificationGoal sg = specGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
+        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
+        });
         final Assignment as = assignmentFactory.buildAssignment(a, r, ig);
 
         assertThat(as.getGoal(), is(sameInstance(ig)));
@@ -140,11 +144,13 @@ public class AssignmentRelationTest {
 
     @Test
     public void testEquals() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {
+        });
         final Role r1 = roleFactory.buildRole(idFactory.build(Role.class, "r1"));
         final Role r2 = roleFactory.buildRole(idFactory.build(Role.class, "r2"));
         final SpecificationGoal sg = specGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
+        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
+        });
         final Assignment a1 = assignmentFactory.buildAssignment(a, r1, ig);
         final Assignment a2 = assignmentFactory.buildAssignment(a, r2, ig);
         final Assignment a3 = assignmentFactory.buildAssignment(a, r1, ig);
@@ -156,11 +162,13 @@ public class AssignmentRelationTest {
 
     @Test
     public void testHashCode() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {
+        });
         final Role r1 = roleFactory.buildRole(idFactory.build(Role.class, "r1"));
         final Role r2 = roleFactory.buildRole(idFactory.build(Role.class, "r2"));
         final SpecificationGoal sg = specGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
+        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
+        });
         final Assignment a1 = assignmentFactory.buildAssignment(a, r1, ig);
         final Assignment a2 = assignmentFactory.buildAssignment(a, r2, ig);
         final Assignment a3 = assignmentFactory.buildAssignment(a, r1, ig);
@@ -171,11 +179,13 @@ public class AssignmentRelationTest {
 
     @Test
     public void testToString() {
-        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new ContactInfo() {});
+        final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {
+        });
         final Role r1 = roleFactory.buildRole(idFactory.build(Role.class, "r1"));
         final Role r2 = roleFactory.buildRole(idFactory.build(Role.class, "r2"));
         final SpecificationGoal sg = specGoalFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal.class, "sg"));
-        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new Parameter() {});
+        final InstanceGoal ig = instGoalFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
+        });
         final Assignment a1 = assignmentFactory.buildAssignment(a, r1, ig);
         final Assignment a2 = assignmentFactory.buildAssignment(a, r2, ig);
         final Assignment a3 = assignmentFactory.buildAssignment(a, r1, ig);

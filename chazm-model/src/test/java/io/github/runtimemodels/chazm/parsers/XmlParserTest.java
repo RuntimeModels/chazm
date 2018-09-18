@@ -2,28 +2,18 @@ package io.github.runtimemodels.chazm.parsers;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import io.github.runtimemodels.chazm.Organization;
-import io.github.runtimemodels.chazm.entity.Agent;
-import io.github.runtimemodels.chazm.entity.Attribute;
-import io.github.runtimemodels.chazm.entity.Capability;
-import io.github.runtimemodels.chazm.entity.Characteristic;
-import io.github.runtimemodels.chazm.entity.InstanceGoal;
-import io.github.runtimemodels.chazm.entity.Pmf;
-import io.github.runtimemodels.chazm.entity.Policy;
-import io.github.runtimemodels.chazm.entity.Role;
-import io.github.runtimemodels.chazm.entity.SpecificationGoal;
 import io.github.runtimemodels.chazm.id.IdFactory;
-import io.github.runtimemodels.chazm.id.UniqueId;
-import io.github.runtimemodels.chazm.relation.Assignment;
 import io.github.runtimemodels.message.E;
 import mockit.Expectations;
 import mockit.Mocked;
-import mockit.integration.junit4.JMockit;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
+import runtimemodels.chazm.api.Organization;
+import runtimemodels.chazm.api.entity.*;
+import runtimemodels.chazm.api.id.UniqueId;
+import runtimemodels.chazm.api.relation.Assignment;
 
 import javax.inject.Provider;
 import javax.xml.namespace.QName;
@@ -35,15 +25,7 @@ import java.io.InputStream;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.hasItems;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings({"javadoc", "unchecked"})
@@ -58,7 +40,7 @@ public class XmlParserTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testXmlParser() throws XMLStreamException {
+    public void testXmlParser() {
         final XmlParser parser1 = provider.get();
         final XmlParser parser2 = provider.get();
 
@@ -466,7 +448,7 @@ public class XmlParserTest {
         assertThat(organization.getAgents().size(), is(equalTo(1)));
     }
 
-//    @Test
+    //    @Test
     @Ignore
     public void testMock1(@Mocked final InputStream inputStream, @Mocked final XMLInputFactory factory, @Mocked final XMLEventReader reader,
                           @Mocked final XMLEvent event, @Mocked final QName name) throws XMLStreamException {
@@ -494,7 +476,7 @@ public class XmlParserTest {
         parser.parse(organization, inputStream);
     }
 
-//    @Test
+    //    @Test
     @Ignore
     public void testMock2(@Mocked final InputStream inputStream, @Mocked final XMLInputFactory factory, @Mocked final XMLEventReader reader,
                           @Mocked final XMLEvent event, @Mocked final QName name, @Mocked final javax.xml.stream.events.Attribute attribute) throws XMLStreamException {
@@ -524,7 +506,7 @@ public class XmlParserTest {
         parser.parse(organization, inputStream);
     }
 
-//    @Test
+    //    @Test
     @Ignore
     public void testMock3(@Mocked final InputStream inputStream, @Mocked final XMLInputFactory factory, @Mocked final XMLEventReader reader,
                           @Mocked final XMLEvent event, @Mocked final QName name, @Mocked final javax.xml.stream.events.Attribute attribute) throws XMLStreamException {
@@ -554,7 +536,7 @@ public class XmlParserTest {
         parser.parse(organization, inputStream);
     }
 
-//    @Test
+    //    @Test
     @Ignore
     public void testMock4(@Mocked final InputStream inputStream, @Mocked final XMLInputFactory factory, @Mocked final XMLEventReader reader,
                           @Mocked final XMLEvent event, @Mocked final QName name, @Mocked final javax.xml.stream.events.Attribute attribute) throws XMLStreamException {
@@ -584,7 +566,7 @@ public class XmlParserTest {
         parser.parse(organization, inputStream);
     }
 
-//    @Test
+    //    @Test
     @Ignore
     public void testMock5(@Mocked final InputStream inputStream, @Mocked final XMLInputFactory factory, @Mocked final XMLEventReader reader,
                           @Mocked final XMLEvent event, @Mocked final QName name, @Mocked final javax.xml.stream.events.Attribute attribute) throws XMLStreamException {

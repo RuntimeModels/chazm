@@ -3,27 +3,19 @@ package io.github.runtimemodels.chazm.event;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.ProvisionException;
-import io.github.runtimemodels.chazm.entity.Attribute;
-import io.github.runtimemodels.chazm.entity.Attribute.Type;
 import io.github.runtimemodels.chazm.entity.AttributeFactory;
-import io.github.runtimemodels.chazm.entity.Pmf;
 import io.github.runtimemodels.chazm.entity.PmfFactory;
 import io.github.runtimemodels.chazm.id.IdFactory;
-import io.github.runtimemodels.chazm.relation.Moderates;
 import io.github.runtimemodels.chazm.relation.ModeratesFactory;
 import io.github.runtimemodels.chazm.relation.RelationModule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import runtimemodels.chazm.api.entity.Attribute;
+import runtimemodels.chazm.api.entity.Pmf;
+import runtimemodels.chazm.api.relation.Moderates;
 
-import static org.hamcrest.CoreMatchers.allOf;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("javadoc")
@@ -42,7 +34,7 @@ public class ModeratesEventTest {
     @Test
     public void testModeratesEventFactory() {
         final Pmf p = pf.buildPmf(idf.build(Pmf.class, "p"));
-        final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
+        final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
         final Moderates m = mf.buildModerates(p, a);
         final ModeratesEvent me1 = mef.build(EventCategory.ADDED, m);
         final ModeratesEvent me2 = mef.build(EventCategory.ADDED, m);
@@ -73,7 +65,7 @@ public class ModeratesEventTest {
     @Test
     public void testGetPmfId() {
         final Pmf p = pf.buildPmf(idf.build(Pmf.class, "p"));
-        final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
+        final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
         final Moderates m = mf.buildModerates(p, a);
         final ModeratesEvent me = mef.build(EventCategory.ADDED, m);
 
@@ -83,7 +75,7 @@ public class ModeratesEventTest {
     @Test
     public void testGetAttributeId() {
         final Pmf p = pf.buildPmf(idf.build(Pmf.class, "p"));
-        final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
+        final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
         final Moderates m = mf.buildModerates(p, a);
         final ModeratesEvent me = mef.build(EventCategory.ADDED, m);
 
@@ -94,7 +86,7 @@ public class ModeratesEventTest {
     public void testEquals() {
         final Pmf p1 = pf.buildPmf(idf.build(Pmf.class, "p1"));
         final Pmf p2 = pf.buildPmf(idf.build(Pmf.class, "p2"));
-        final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
+        final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
         final Moderates m1 = mf.buildModerates(p1, a);
         final Moderates m2 = mf.buildModerates(p2, a);
         final Moderates m3 = mf.buildModerates(p1, a);
@@ -111,7 +103,7 @@ public class ModeratesEventTest {
     public void testModerateshCode() {
         final Pmf p1 = pf.buildPmf(idf.build(Pmf.class, "p1"));
         final Pmf p2 = pf.buildPmf(idf.build(Pmf.class, "p2"));
-        final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
+        final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
         final Moderates m1 = mf.buildModerates(p1, a);
         final Moderates m2 = mf.buildModerates(p2, a);
         final Moderates m3 = mf.buildModerates(p1, a);
@@ -127,7 +119,7 @@ public class ModeratesEventTest {
     public void testToString() {
         final Pmf p1 = pf.buildPmf(idf.build(Pmf.class, "p1"));
         final Pmf p2 = pf.buildPmf(idf.build(Pmf.class, "p2"));
-        final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
+        final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
         final Moderates m1 = mf.buildModerates(p1, a);
         final Moderates m2 = mf.buildModerates(p2, a);
         final Moderates m3 = mf.buildModerates(p1, a);

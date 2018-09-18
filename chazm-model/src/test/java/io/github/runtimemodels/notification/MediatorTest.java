@@ -15,21 +15,9 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-import static org.hamcrest.CoreMatchers.allOf;
-import static org.hamcrest.CoreMatchers.anyOf;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.hasItems;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings({"javadoc", "unchecked"})
@@ -39,33 +27,43 @@ public class MediatorTest {
     private static class TestSubscriber implements Subscriber {
         /* (a1, a2, a3, a4), b1, and c1 is detected as correct */
         @Subscribe
-        public void a1(final String s) {} // valid but same as a2, a3, and a4
+        public void a1(final String s) {
+        } // valid but same as a2, a3, and a4
 
         @Subscribe
-        public void a2(final String s) {} // valid but same as a1, a3, and a4
+        public void a2(final String s) {
+        } // valid but same as a1, a3, and a4
 
         @Subscribe
-        public void a3(final String s) {} // valid but same as a1, a2, and a4
+        public void a3(final String s) {
+        } // valid but same as a1, a2, and a4
 
         @Subscribe
-        public void a4(final String s) {} // valid but same as a1, a2, and a3
+        public void a4(final String s) {
+        } // valid but same as a1, a2, and a3
 
         @Subscribe
-        void b1(final Integer i) {} // valid
+        void b1(final Integer i) {
+        } // valid
 
         @Subscribe
-        void c1(final Collection<Integer> c) {} // valid
+        void c1(final Collection<Integer> c) {
+        } // valid
 
         @Subscribe
-        void d1() {} // invalid, no parameter
+        void d1() {
+        } // invalid, no parameter
 
         @Subscribe
-        void d2(final String s, final Integer i) {} // invalid, more than one parameter
+        void d2(final String s, final Integer i) {
+        } // invalid, more than one parameter
 
         @Subscribe
-        void d3(final String s, final Integer i, final Double d) {} // invalid, more than one parameter
+        void d3(final String s, final Integer i, final Double d) {
+        } // invalid, more than one parameter
 
-        void e1(final Double s) {} // invalid, not annotated with @Subscribe
+        void e1(final Double s) {
+        } // invalid, not annotated with @Subscribe
     }
 
     private final Injector injector = Guice.createInjector(new NotificationModule());
@@ -207,7 +205,7 @@ public class MediatorTest {
         m1.post(null);
     }
 
-//    @Test
+    //    @Test
     public void testRegister(@Capturing final Logger logger) {
         final DefaultMediator m1 = provider.get();
         final Subscriber s1 = new TestSubscriber();
@@ -242,7 +240,7 @@ public class MediatorTest {
         };
     }
 
-//    @Test
+    //    @Test
     public void testRegister1(@Capturing final Logger logger) {
         final DefaultMediator m1 = provider.get();
         final Subscriber s1 = new TestSubscriber();
@@ -294,7 +292,7 @@ public class MediatorTest {
         };
     }
 
-//    @Test
+    //    @Test
     public void testRegister2(@Capturing final Logger logger) {
         final DefaultMediator m1 = provider.get();
         final Subscriber s1 = new TestSubscriber();

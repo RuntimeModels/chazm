@@ -16,7 +16,7 @@ public interface PolicyFactory {
      * Constructs a {@linkplain Policy}.
      *
      * @param id the {@linkplain UniqueId} that represents the {@linkplain Policy}.
-     * @return a {@linkplain Agent}.
+     * @return a {@linkplain Policy}.
      */
     Policy buildPolicy(UniqueId<Policy> id);
 

@@ -3,53 +3,19 @@ package io.github.runtimemodels.notification;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Provider;
-import io.github.runtimemodels.chazm.entity.Agent;
-import io.github.runtimemodels.chazm.entity.Attribute;
-import io.github.runtimemodels.chazm.entity.Capability;
-import io.github.runtimemodels.chazm.entity.Characteristic;
-import io.github.runtimemodels.chazm.entity.InstanceGoal;
-import io.github.runtimemodels.chazm.entity.Pmf;
-import io.github.runtimemodels.chazm.entity.Policy;
-import io.github.runtimemodels.chazm.entity.Role;
-import io.github.runtimemodels.chazm.entity.SpecificationGoal;
-import io.github.runtimemodels.chazm.event.AchievesEvent;
-import io.github.runtimemodels.chazm.event.AgentEvent;
-import io.github.runtimemodels.chazm.event.AssignmentEvent;
-import io.github.runtimemodels.chazm.event.AttributeEvent;
-import io.github.runtimemodels.chazm.event.CapabilityEvent;
-import io.github.runtimemodels.chazm.event.CharacteristicEvent;
-import io.github.runtimemodels.chazm.event.ContainsEvent;
-import io.github.runtimemodels.chazm.event.EventCategory;
-import io.github.runtimemodels.chazm.event.HasEvent;
-import io.github.runtimemodels.chazm.event.InstanceGoalEvent;
-import io.github.runtimemodels.chazm.event.ModeratesEvent;
-import io.github.runtimemodels.chazm.event.NeedsEvent;
-import io.github.runtimemodels.chazm.event.PmfEvent;
-import io.github.runtimemodels.chazm.event.PolicyEvent;
-import io.github.runtimemodels.chazm.event.PossessesEvent;
-import io.github.runtimemodels.chazm.event.RequiresEvent;
-import io.github.runtimemodels.chazm.event.RoleEvent;
-import io.github.runtimemodels.chazm.event.SpecificationGoalEvent;
-import io.github.runtimemodels.chazm.event.UsesEvent;
-import io.github.runtimemodels.chazm.id.UniqueId;
+import io.github.runtimemodels.chazm.event.*;
 import io.github.runtimemodels.message.E;
-import mockit.Capturing;
-import mockit.Expectations;
-import mockit.FullVerifications;
-import mockit.Mock;
-import mockit.MockUp;
-import mockit.Mocked;
+import mockit.*;
 import mockit.integration.junit4.JMockit;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
+import runtimemodels.chazm.api.entity.*;
+import runtimemodels.chazm.api.id.UniqueId;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("javadoc")
@@ -91,7 +57,7 @@ public class SubscriberTest {
         assertThat(s1, is(not(sameInstance(s2))));
     }
 
-//    @Test
+    //    @Test
     public void testEvent1(@Mocked final AchievesEvent event) {
         final DefaultSubscriber s1 = provider.get();
         new Expectations() {
@@ -132,7 +98,7 @@ public class SubscriberTest {
         };
     }
 
-//    @Test
+    //    @Test
     public void testEvent2(@Mocked final AgentEvent event) {
         final DefaultSubscriber s1 = provider.get();
         new Expectations() {
@@ -171,7 +137,7 @@ public class SubscriberTest {
         };
     }
 
-//    @Test
+    //    @Test
     public void testEvent3(@Mocked final AssignmentEvent event) {
         final DefaultSubscriber s1 = provider.get();
         new Expectations() {
@@ -217,7 +183,7 @@ public class SubscriberTest {
         };
     }
 
-//    @Test
+    //    @Test
     public void testEvent4(@Mocked final AttributeEvent event) {
         final DefaultSubscriber s1 = provider.get();
         new Expectations() {
@@ -256,7 +222,7 @@ public class SubscriberTest {
         };
     }
 
-//    @Test
+    //    @Test
     public void testEvent5(@Mocked final CapabilityEvent event) {
         final DefaultSubscriber s1 = provider.get();
         new Expectations() {
@@ -295,7 +261,7 @@ public class SubscriberTest {
         };
     }
 
-//    @Test
+    //    @Test
     public void testEvent6(@Mocked final CharacteristicEvent event) {
         final DefaultSubscriber s1 = provider.get();
         new Expectations() {
@@ -334,7 +300,7 @@ public class SubscriberTest {
         };
     }
 
-//    @Test
+    //    @Test
     public void testEvent7(@Mocked final ContainsEvent event) {
         final DefaultSubscriber s1 = provider.get();
         new Expectations() {
@@ -380,7 +346,7 @@ public class SubscriberTest {
         };
     }
 
-//    @Test
+    //    @Test
     public void testEvent8(@Mocked final HasEvent event) {
         final DefaultSubscriber s1 = provider.get();
         new Expectations() {
@@ -426,7 +392,7 @@ public class SubscriberTest {
         };
     }
 
-//    @Test
+    //    @Test
     public void testEvent9(@Mocked final InstanceGoalEvent event) {
         final DefaultSubscriber s1 = provider.get();
         new Expectations() {
@@ -465,7 +431,7 @@ public class SubscriberTest {
         };
     }
 
-//    @Test
+    //    @Test
     public void testEvent10(@Mocked final ModeratesEvent event) {
         final DefaultSubscriber s1 = provider.get();
         new Expectations() {
@@ -506,7 +472,7 @@ public class SubscriberTest {
         };
     }
 
-//    @Test
+    //    @Test
     public void testEvent11(@Mocked final NeedsEvent event) {
         final DefaultSubscriber s1 = provider.get();
         new Expectations() {
@@ -547,7 +513,7 @@ public class SubscriberTest {
         };
     }
 
-//    @Test
+    //    @Test
     public void testEvent12(@Mocked final PmfEvent event) {
         final DefaultSubscriber s1 = provider.get();
         new Expectations() {
@@ -586,7 +552,7 @@ public class SubscriberTest {
         };
     }
 
-//    @Test
+    //    @Test
     public void testEvent13(@Mocked final PolicyEvent event) {
         final DefaultSubscriber s1 = provider.get();
         new Expectations() {
@@ -625,7 +591,7 @@ public class SubscriberTest {
         };
     }
 
-//    @Test
+    //    @Test
     public void testEvent14(@Mocked final PossessesEvent event) {
         final DefaultSubscriber s1 = provider.get();
         new Expectations() {
@@ -671,7 +637,7 @@ public class SubscriberTest {
         };
     }
 
-//    @Test
+    //    @Test
     public void testEvent15(@Mocked final RequiresEvent event) {
         final DefaultSubscriber s1 = provider.get();
         new Expectations() {
@@ -712,7 +678,7 @@ public class SubscriberTest {
         };
     }
 
-//    @Test
+    //    @Test
     public void testEvent16(@Mocked final RoleEvent event) {
         final DefaultSubscriber s1 = provider.get();
         new Expectations() {
@@ -751,7 +717,7 @@ public class SubscriberTest {
         };
     }
 
-//    @Test
+    //    @Test
     public void testEvent17(@Mocked final SpecificationGoalEvent event) {
         final DefaultSubscriber s1 = provider.get();
         new Expectations() {
@@ -790,7 +756,7 @@ public class SubscriberTest {
         };
     }
 
-//    @Test
+    //    @Test
     public void testEvent18(@Mocked final UsesEvent event) {
         final DefaultSubscriber s1 = provider.get();
         new Expectations() {

@@ -3,24 +3,17 @@ package io.github.runtimemodels.chazm.relation;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.ProvisionException;
-import io.github.runtimemodels.chazm.entity.Attribute;
-import io.github.runtimemodels.chazm.entity.Attribute.Type;
 import io.github.runtimemodels.chazm.entity.AttributeFactory;
-import io.github.runtimemodels.chazm.entity.Pmf;
 import io.github.runtimemodels.chazm.entity.PmfFactory;
 import io.github.runtimemodels.chazm.id.IdFactory;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import runtimemodels.chazm.api.entity.Attribute;
+import runtimemodels.chazm.api.entity.Pmf;
+import runtimemodels.chazm.api.relation.Moderates;
 
-import static org.hamcrest.CoreMatchers.allOf;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("javadoc")
@@ -38,7 +31,7 @@ public class ModeratesRelationTest {
     @Test
     public void testModeratesRelationsFactory() {
         final Pmf p = pmfFactory.buildPmf(idFactory.build(Pmf.class, "p"));
-        final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
+        final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
         final Moderates md1 = moderatesFactory.buildModerates(p, a);
         final Moderates md2 = moderatesFactory.buildModerates(p, a);
 
@@ -70,7 +63,7 @@ public class ModeratesRelationTest {
     @Test
     public void testGetPmf() {
         final Pmf p = pmfFactory.buildPmf(idFactory.build(Pmf.class, "p"));
-        final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
+        final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
         final Moderates md = moderatesFactory.buildModerates(p, a);
 
         assertThat(md.getPmf(), is(sameInstance(p)));
@@ -79,7 +72,7 @@ public class ModeratesRelationTest {
     @Test
     public void testGetAttribute() {
         final Pmf p = pmfFactory.buildPmf(idFactory.build(Pmf.class, "p"));
-        final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
+        final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
         final Moderates md = moderatesFactory.buildModerates(p, a);
 
         assertThat(md.getAttribute(), is(sameInstance(a)));
@@ -89,7 +82,7 @@ public class ModeratesRelationTest {
     public void testEquals() {
         final Pmf p1 = pmfFactory.buildPmf(idFactory.build(Pmf.class, "p1"));
         final Pmf p2 = pmfFactory.buildPmf(idFactory.build(Pmf.class, "p2"));
-        final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
+        final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
         final Moderates md1 = moderatesFactory.buildModerates(p1, a);
         final Moderates md2 = moderatesFactory.buildModerates(p2, a);
         final Moderates md3 = moderatesFactory.buildModerates(p1, a);
@@ -103,7 +96,7 @@ public class ModeratesRelationTest {
     public void testHashCode() {
         final Pmf p1 = pmfFactory.buildPmf(idFactory.build(Pmf.class, "p1"));
         final Pmf p2 = pmfFactory.buildPmf(idFactory.build(Pmf.class, "p2"));
-        final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
+        final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
         final Moderates md1 = moderatesFactory.buildModerates(p1, a);
         final Moderates md2 = moderatesFactory.buildModerates(p2, a);
         final Moderates md3 = moderatesFactory.buildModerates(p1, a);
@@ -116,7 +109,7 @@ public class ModeratesRelationTest {
     public void testToString() {
         final Pmf p1 = pmfFactory.buildPmf(idFactory.build(Pmf.class, "p1"));
         final Pmf p2 = pmfFactory.buildPmf(idFactory.build(Pmf.class, "p2"));
-        final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Type.NEGATIVE_QUALITY);
+        final Attribute a = attributeFactory.buildAttribute(idFactory.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
         final Moderates md1 = moderatesFactory.buildModerates(p1, a);
         final Moderates md2 = moderatesFactory.buildModerates(p2, a);
         final Moderates md3 = moderatesFactory.buildModerates(p1, a);

@@ -3,23 +3,15 @@ package io.github.runtimemodels.chazm.event;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.ProvisionException;
-import io.github.runtimemodels.chazm.entity.Agent;
-import io.github.runtimemodels.chazm.entity.Agent.ContactInfo;
 import io.github.runtimemodels.chazm.entity.AgentFactory;
 import io.github.runtimemodels.chazm.id.IdFactory;
 import io.github.runtimemodels.chazm.relation.RelationModule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import runtimemodels.chazm.api.entity.Agent;
 
-import static org.hamcrest.CoreMatchers.allOf;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("javadoc")
@@ -35,7 +27,8 @@ public class AgentEventTest {
 
     @Test
     public void testAgentEventFactory() {
-        final Agent a = af.buildAgent(idf.build(Agent.class, "a"), new ContactInfo() {});
+        final Agent a = af.buildAgent(idf.build(Agent.class, "a"), new Agent.ContactInfo() {
+        });
         final AgentEvent ae1 = aef.build(EventCategory.ADDED, a);
         final AgentEvent ae2 = aef.build(EventCategory.ADDED, a);
 
@@ -64,7 +57,8 @@ public class AgentEventTest {
 
     @Test
     public void testGetId() {
-        final Agent a = af.buildAgent(idf.build(Agent.class, "a"), new ContactInfo() {});
+        final Agent a = af.buildAgent(idf.build(Agent.class, "a"), new Agent.ContactInfo() {
+        });
         final AgentEvent ae = aef.build(EventCategory.ADDED, a);
 
         assertThat(ae.getId(), is(sameInstance(a.getId())));
@@ -72,9 +66,12 @@ public class AgentEventTest {
 
     @Test
     public void testEquals() {
-        final Agent a1 = af.buildAgent(idf.build(Agent.class, "a1"), new ContactInfo() {});
-        final Agent a2 = af.buildAgent(idf.build(Agent.class, "a2"), new ContactInfo() {});
-        final Agent a3 = af.buildAgent(idf.build(Agent.class, "a1"), new ContactInfo() {});
+        final Agent a1 = af.buildAgent(idf.build(Agent.class, "a1"), new Agent.ContactInfo() {
+        });
+        final Agent a2 = af.buildAgent(idf.build(Agent.class, "a2"), new Agent.ContactInfo() {
+        });
+        final Agent a3 = af.buildAgent(idf.build(Agent.class, "a1"), new Agent.ContactInfo() {
+        });
         final AgentEvent ae1 = aef.build(EventCategory.ADDED, a1);
         final AgentEvent ae2 = aef.build(EventCategory.ADDED, a2);
         final AgentEvent ae3 = aef.build(EventCategory.ADDED, a3);
@@ -86,9 +83,12 @@ public class AgentEventTest {
 
     @Test
     public void testHashCode() {
-        final Agent a1 = af.buildAgent(idf.build(Agent.class, "a1"), new ContactInfo() {});
-        final Agent a2 = af.buildAgent(idf.build(Agent.class, "a2"), new ContactInfo() {});
-        final Agent a3 = af.buildAgent(idf.build(Agent.class, "a1"), new ContactInfo() {});
+        final Agent a1 = af.buildAgent(idf.build(Agent.class, "a1"), new Agent.ContactInfo() {
+        });
+        final Agent a2 = af.buildAgent(idf.build(Agent.class, "a2"), new Agent.ContactInfo() {
+        });
+        final Agent a3 = af.buildAgent(idf.build(Agent.class, "a1"), new Agent.ContactInfo() {
+        });
         final AgentEvent ae1 = aef.build(EventCategory.ADDED, a1);
         final AgentEvent ae2 = aef.build(EventCategory.ADDED, a2);
         final AgentEvent ae3 = aef.build(EventCategory.ADDED, a3);
@@ -99,9 +99,12 @@ public class AgentEventTest {
 
     @Test
     public void testToString() {
-        final Agent a1 = af.buildAgent(idf.build(Agent.class, "a1"), new ContactInfo() {});
-        final Agent a2 = af.buildAgent(idf.build(Agent.class, "a2"), new ContactInfo() {});
-        final Agent a3 = af.buildAgent(idf.build(Agent.class, "a1"), new ContactInfo() {});
+        final Agent a1 = af.buildAgent(idf.build(Agent.class, "a1"), new Agent.ContactInfo() {
+        });
+        final Agent a2 = af.buildAgent(idf.build(Agent.class, "a2"), new Agent.ContactInfo() {
+        });
+        final Agent a3 = af.buildAgent(idf.build(Agent.class, "a1"), new Agent.ContactInfo() {
+        });
         final AgentEvent ae1 = aef.build(EventCategory.ADDED, a1);
         final AgentEvent ae2 = aef.build(EventCategory.ADDED, a2);
         final AgentEvent ae3 = aef.build(EventCategory.ADDED, a3);
