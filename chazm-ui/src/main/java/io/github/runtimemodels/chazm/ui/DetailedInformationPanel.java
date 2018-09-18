@@ -7,22 +7,11 @@
  */
 package io.github.runtimemodels.chazm.ui;
 
-import io.github.runtimemodels.chazm.entity.Agent;
-import io.github.runtimemodels.chazm.entity.Attribute;
-import io.github.runtimemodels.chazm.entity.Capability;
-import io.github.runtimemodels.chazm.entity.Characteristic;
-import io.github.runtimemodels.chazm.entity.InstanceGoal;
-import io.github.runtimemodels.chazm.entity.Pmf;
-import io.github.runtimemodels.chazm.entity.Role;
-import io.github.runtimemodels.chazm.entity.SpecificationGoal;
-import io.github.runtimemodels.chazm.relation.Assignment;
+import runtimemodels.chazm.api.entity.*;
+import runtimemodels.chazm.api.relation.Assignment;
 
 import javax.swing.*;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Style;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyleContext;
-import javax.swing.text.StyledDocument;
+import javax.swing.text.*;
 import java.awt.*;
 
 /**

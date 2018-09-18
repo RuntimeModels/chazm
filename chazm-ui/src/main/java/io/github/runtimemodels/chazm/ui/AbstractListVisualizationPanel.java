@@ -7,7 +7,7 @@
  */
 package io.github.runtimemodels.chazm.ui;
 
-import io.github.runtimemodels.chazm.Organization;
+import runtimemodels.chazm.api.Organization;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
@@ -84,11 +84,11 @@ public abstract class AbstractListVisualizationPanel<T> extends AbstractVisualiz
         SwingUtilities.invokeLater(() -> {
             /*
              * first, remove all elements from the list model that are not present in the updated list
-			 */
+             */
             toRemove.forEach(listModel::removeElement);
             /*
              * next, add the new elements from the updated list to the list model
-			 */
+             */
             for (final T o2 : updatedList) {
                 final int index = listModel.indexOf(o2);
                 if (index == -1) {

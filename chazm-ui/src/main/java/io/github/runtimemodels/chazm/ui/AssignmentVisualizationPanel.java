@@ -7,8 +7,8 @@
  */
 package io.github.runtimemodels.chazm.ui;
 
-import io.github.runtimemodels.chazm.Organization;
-import io.github.runtimemodels.chazm.relation.Assignment;
+import runtimemodels.chazm.api.Organization;
+import runtimemodels.chazm.api.relation.Assignment;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;

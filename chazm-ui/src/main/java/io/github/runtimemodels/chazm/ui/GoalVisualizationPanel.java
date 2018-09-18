@@ -7,9 +7,9 @@
  */
 package io.github.runtimemodels.chazm.ui;
 
-import io.github.runtimemodels.chazm.Organization;
-import io.github.runtimemodels.chazm.entity.InstanceGoal;
-import io.github.runtimemodels.chazm.entity.SpecificationGoal;
+import runtimemodels.chazm.api.Organization;
+import runtimemodels.chazm.api.entity.InstanceGoal;
+import runtimemodels.chazm.api.entity.SpecificationGoal;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;

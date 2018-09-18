@@ -7,7 +7,7 @@
  */
 package io.github.runtimemodels.chazm.ui;
 
-import io.github.runtimemodels.chazm.Organization;
+import runtimemodels.chazm.api.Organization;
 
 import javax.swing.*;
 import java.awt.*;
