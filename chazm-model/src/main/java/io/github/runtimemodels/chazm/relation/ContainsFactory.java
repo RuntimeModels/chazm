@@ -1,7 +1,8 @@
 package io.github.runtimemodels.chazm.relation;
 
-import io.github.runtimemodels.chazm.entity.Characteristic;
-import io.github.runtimemodels.chazm.entity.Role;
+import runtimemodels.chazm.api.entity.Characteristic;
+import runtimemodels.chazm.api.entity.Role;
+import runtimemodels.chazm.api.relation.Contains;
 
 /**
  * The {@linkplain ContainsFactory} interface defines the API for constructing {@linkplain Contains} relations.

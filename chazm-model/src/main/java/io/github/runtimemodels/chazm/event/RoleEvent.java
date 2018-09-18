@@ -1,10 +1,9 @@
 package io.github.runtimemodels.chazm.event;
 
 import com.google.inject.assistedinject.Assisted;
-import io.github.runtimemodels.chazm.entity.Role;
-import io.github.runtimemodels.chazm.entity.SpecificationGoal;
-import io.github.runtimemodels.chazm.id.UniqueId;
 import io.github.runtimemodels.message.M;
+import runtimemodels.chazm.api.entity.Role;
+import runtimemodels.chazm.api.id.UniqueId;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -30,7 +29,7 @@ public class RoleEvent extends AbstractEvent {
     }
 
     /**
-     * Returns a {@linkplain UniqueId} that represents a {@linkplain SpecificationGoal}.
+     * Returns a {@linkplain UniqueId} that represents a {@linkplain Role}.
      *
      * @return a {@linkplain UniqueId}.
      */

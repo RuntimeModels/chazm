@@ -1,9 +1,9 @@
 package io.github.runtimemodels.chazm.event;
 
 import com.google.inject.assistedinject.Assisted;
-import io.github.runtimemodels.chazm.entity.Attribute;
-import io.github.runtimemodels.chazm.id.UniqueId;
 import io.github.runtimemodels.message.M;
+import runtimemodels.chazm.api.entity.Attribute;
+import runtimemodels.chazm.api.id.UniqueId;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;

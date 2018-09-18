@@ -1,26 +1,15 @@
 package io.github.runtimemodels.chazm.parsers;
 
-import io.github.runtimemodels.chazm.Organization;
-import io.github.runtimemodels.chazm.entity.Agent;
-import io.github.runtimemodels.chazm.entity.Agent.ContactInfo;
-import io.github.runtimemodels.chazm.entity.Attribute;
-import io.github.runtimemodels.chazm.entity.Attribute.Type;
-import io.github.runtimemodels.chazm.entity.Capability;
-import io.github.runtimemodels.chazm.entity.Characteristic;
 import io.github.runtimemodels.chazm.entity.EntityFactory;
-import io.github.runtimemodels.chazm.entity.InstanceGoal;
-import io.github.runtimemodels.chazm.entity.InstanceGoal.Parameter;
-import io.github.runtimemodels.chazm.entity.Pmf;
-import io.github.runtimemodels.chazm.entity.Policy;
-import io.github.runtimemodels.chazm.entity.Role;
-import io.github.runtimemodels.chazm.entity.SpecificationGoal;
 import io.github.runtimemodels.chazm.id.IdFactory;
-import io.github.runtimemodels.chazm.id.UniqueId;
-import io.github.runtimemodels.chazm.relation.Assignment;
 import io.github.runtimemodels.chazm.relation.AssignmentFactory;
 import io.github.runtimemodels.message.E;
 import io.github.runtimemodels.message.L;
 import lombok.extern.slf4j.Slf4j;
+import runtimemodels.chazm.api.Organization;
+import runtimemodels.chazm.api.entity.*;
+import runtimemodels.chazm.api.id.UniqueId;
+import runtimemodels.chazm.api.relation.Assignment;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -139,7 +128,7 @@ class XmlParser {
                 if (AGENT_ELEMENT.equals(name.getLocalPart())) {
                     // TODO parse contact info
                     final UniqueId<Agent> id = idFactory.build(Agent.class, getAttributeValue(element, NAME_ATTRIBUTE));
-                    final ContactInfo contactInfo = new ContactInfo() {};
+                    final Agent.ContactInfo contactInfo = new Agent.ContactInfo() {};
                     build(id, agents, element, f -> entityFactory.buildAgent(f, contactInfo), organization::addAgent);
                     parseAgent(organization, reader, name, id, attributes, capabilities, list1);
                 } else if (ASSIGNMENT_ELEMENT.equals(name.getLocalPart())) {
@@ -147,7 +136,7 @@ class XmlParser {
                 } else if (ATTRIBUTE_ELEMENT.equals(name.getLocalPart())) {
                     final UniqueId<Attribute> id = idFactory.build(Attribute.class, getAttributeValue(element, NAME_ATTRIBUTE));
                     try {
-                        final Type type = Type.valueOf(getAttributeValue(element, TYPE_ATTRIBUTE));
+                        final Attribute.Type type = Attribute.Type.valueOf(getAttributeValue(element, TYPE_ATTRIBUTE));
                         build(id, attributes, element, f -> entityFactory.buildAttribute(f, type), organization::addAttribute);
                     } catch (final IllegalArgumentException e) {
                         throw new XMLStreamException(e);
@@ -285,7 +274,7 @@ class XmlParser {
             final SpecificationGoal goal = organization.getSpecificationGoal(goalId);
             final UniqueId<InstanceGoal> id = idFactory.build(InstanceGoal.class, getAttributeValue(element, NAME_ATTRIBUTE));
             // TODO parse parameter
-            final Parameter parameter = new Parameter() {
+            final InstanceGoal.Parameter parameter = new InstanceGoal.Parameter() {
                 private static final long serialVersionUID = 7160662689368879207L;
             };
             build(id, instanceGoals, element, f -> entityFactory.buildInstanceGoal(f, goal, parameter), organization::addInstanceGoal);

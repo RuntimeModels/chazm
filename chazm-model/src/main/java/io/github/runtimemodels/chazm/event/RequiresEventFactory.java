@@ -1,6 +1,6 @@
 package io.github.runtimemodels.chazm.event;
 
-import io.github.runtimemodels.chazm.relation.Requires;
+import runtimemodels.chazm.api.relation.Requires;
 
 /**
  * The {@linkplain RequiresEventFactory} interface defines the API for constructing {@linkplain RequiresEvent}s.

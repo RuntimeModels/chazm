@@ -1,7 +1,8 @@
 package io.github.runtimemodels.chazm.relation;
 
-import io.github.runtimemodels.chazm.entity.Role;
-import io.github.runtimemodels.chazm.entity.SpecificationGoal;
+import runtimemodels.chazm.api.entity.Role;
+import runtimemodels.chazm.api.entity.SpecificationGoal;
+import runtimemodels.chazm.api.relation.Achieves;
 
 /**
  * The {@linkplain AchievesFactory} interface defines the API for constructing {@linkplain Achieves} relations.

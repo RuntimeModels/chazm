@@ -1,6 +1,6 @@
 package io.github.runtimemodels.chazm.event;
 
-import io.github.runtimemodels.chazm.relation.Uses;
+import runtimemodels.chazm.api.relation.Uses;
 
 /**
  * The {@linkplain UsesEventFactory} interface defines the API for constructing {@linkplain UsesEvent}s.

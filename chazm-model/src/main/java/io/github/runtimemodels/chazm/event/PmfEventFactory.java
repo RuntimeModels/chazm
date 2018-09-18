@@ -1,6 +1,6 @@
 package io.github.runtimemodels.chazm.event;
 
-import io.github.runtimemodels.chazm.entity.Pmf;
+import runtimemodels.chazm.api.entity.Pmf;
 
 /**
  * The {@linkplain PmfEventFactory} interface defines the API for constructing {@linkplain PmfEvent}s.

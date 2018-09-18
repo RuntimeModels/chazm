@@ -1,13 +1,14 @@
 package io.github.runtimemodels.chazm.relation;
 
 import com.google.inject.assistedinject.Assisted;
-import io.github.runtimemodels.chazm.entity.Agent;
-import io.github.runtimemodels.chazm.entity.InstanceGoal;
-import io.github.runtimemodels.chazm.entity.Role;
 import io.github.runtimemodels.chazm.id.AbstractId;
-import io.github.runtimemodels.chazm.id.UniqueId;
 import io.github.runtimemodels.message.M;
 import lombok.Getter;
+import runtimemodels.chazm.api.entity.Agent;
+import runtimemodels.chazm.api.entity.InstanceGoal;
+import runtimemodels.chazm.api.entity.Role;
+import runtimemodels.chazm.api.id.UniqueId;
+import runtimemodels.chazm.api.relation.Assignment;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;

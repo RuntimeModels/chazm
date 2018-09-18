@@ -1,7 +1,8 @@
 package io.github.runtimemodels.chazm.relation;
 
-import io.github.runtimemodels.chazm.entity.Pmf;
-import io.github.runtimemodels.chazm.entity.Role;
+import runtimemodels.chazm.api.entity.Pmf;
+import runtimemodels.chazm.api.entity.Role;
+import runtimemodels.chazm.api.relation.Uses;
 
 /**
  * The {@linkplain UsesFactory} interface defines the API for constructing {@linkplain Uses} relations.

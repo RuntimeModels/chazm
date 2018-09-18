@@ -1,6 +1,6 @@
 package io.github.runtimemodels.chazm.event;
 
-import io.github.runtimemodels.chazm.entity.Attribute;
+import runtimemodels.chazm.api.entity.Attribute;
 
 /**
  * The {@linkplain AttributeEventFactory} interface defines the API for constructing {@linkplain AttributeEvent}s.

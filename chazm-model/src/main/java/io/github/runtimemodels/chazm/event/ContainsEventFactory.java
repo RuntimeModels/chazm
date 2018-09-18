@@ -1,6 +1,6 @@
 package io.github.runtimemodels.chazm.event;
 
-import io.github.runtimemodels.chazm.relation.Contains;
+import runtimemodels.chazm.api.relation.Contains;
 
 /**
  * The {@linkplain ContainsEventFactory} interface defines the API for constructing {@linkplain ContainsEvent}s.

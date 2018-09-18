@@ -1,6 +1,6 @@
 package io.github.runtimemodels.chazm.event;
 
-import io.github.runtimemodels.chazm.relation.Possesses;
+import runtimemodels.chazm.api.relation.Possesses;
 
 /**
  * The {@linkplain PossessesEventFactory} interface defines the API for constructing {@linkplain PossessesEvent}s.

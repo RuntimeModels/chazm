@@ -1,6 +1,6 @@
 package io.github.runtimemodels.chazm.event;
 
-import io.github.runtimemodels.chazm.relation.Moderates;
+import runtimemodels.chazm.api.relation.Moderates;
 
 /**
  * The {@linkplain ModeratesEventFactory} interface defines the API for constructing {@linkplain ModeratesEvent}s.

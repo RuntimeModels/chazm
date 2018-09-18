@@ -1,7 +1,8 @@
 package io.github.runtimemodels.chazm.relation;
 
-import io.github.runtimemodels.chazm.entity.Attribute;
-import io.github.runtimemodels.chazm.entity.Role;
+import runtimemodels.chazm.api.entity.Attribute;
+import runtimemodels.chazm.api.entity.Role;
+import runtimemodels.chazm.api.relation.Needs;
 
 /**
  * The {@linkplain NeedsFactory} interface defines the API for constructing {@linkplain Needs} relations.

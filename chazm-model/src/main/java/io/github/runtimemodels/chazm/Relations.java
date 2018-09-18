@@ -1,22 +1,8 @@
 package io.github.runtimemodels.chazm;
 
-import io.github.runtimemodels.chazm.entity.Agent;
-import io.github.runtimemodels.chazm.entity.Attribute;
-import io.github.runtimemodels.chazm.entity.Capability;
-import io.github.runtimemodels.chazm.entity.Characteristic;
-import io.github.runtimemodels.chazm.entity.Pmf;
-import io.github.runtimemodels.chazm.entity.Role;
-import io.github.runtimemodels.chazm.entity.SpecificationGoal;
-import io.github.runtimemodels.chazm.id.UniqueId;
-import io.github.runtimemodels.chazm.relation.Achieves;
-import io.github.runtimemodels.chazm.relation.Assignment;
-import io.github.runtimemodels.chazm.relation.Contains;
-import io.github.runtimemodels.chazm.relation.Has;
-import io.github.runtimemodels.chazm.relation.Moderates;
-import io.github.runtimemodels.chazm.relation.Needs;
-import io.github.runtimemodels.chazm.relation.Possesses;
-import io.github.runtimemodels.chazm.relation.Requires;
-import io.github.runtimemodels.chazm.relation.Uses;
+import runtimemodels.chazm.api.entity.*;
+import runtimemodels.chazm.api.id.UniqueId;
+import runtimemodels.chazm.api.relation.*;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

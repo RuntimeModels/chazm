@@ -1,6 +1,6 @@
 package io.github.runtimemodels.chazm.event;
 
-import io.github.runtimemodels.chazm.entity.Policy;
+import runtimemodels.chazm.api.entity.Policy;
 
 /**
  * The {@linkplain PolicyEventFactory} interface defines the API for constructing {@linkplain PolicyEvent}s.

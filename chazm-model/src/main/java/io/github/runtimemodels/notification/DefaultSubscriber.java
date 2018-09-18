@@ -1,23 +1,6 @@
 package io.github.runtimemodels.notification;
 
-import io.github.runtimemodels.chazm.event.AchievesEvent;
-import io.github.runtimemodels.chazm.event.AgentEvent;
-import io.github.runtimemodels.chazm.event.AssignmentEvent;
-import io.github.runtimemodels.chazm.event.AttributeEvent;
-import io.github.runtimemodels.chazm.event.CapabilityEvent;
-import io.github.runtimemodels.chazm.event.CharacteristicEvent;
-import io.github.runtimemodels.chazm.event.ContainsEvent;
-import io.github.runtimemodels.chazm.event.HasEvent;
-import io.github.runtimemodels.chazm.event.InstanceGoalEvent;
-import io.github.runtimemodels.chazm.event.ModeratesEvent;
-import io.github.runtimemodels.chazm.event.NeedsEvent;
-import io.github.runtimemodels.chazm.event.PmfEvent;
-import io.github.runtimemodels.chazm.event.PolicyEvent;
-import io.github.runtimemodels.chazm.event.PossessesEvent;
-import io.github.runtimemodels.chazm.event.RequiresEvent;
-import io.github.runtimemodels.chazm.event.RoleEvent;
-import io.github.runtimemodels.chazm.event.SpecificationGoalEvent;
-import io.github.runtimemodels.chazm.event.UsesEvent;
+import io.github.runtimemodels.chazm.event.*;
 import io.github.runtimemodels.message.L;
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,7 +1,8 @@
 package io.github.runtimemodels.chazm.relation;
 
-import io.github.runtimemodels.chazm.entity.Agent;
-import io.github.runtimemodels.chazm.entity.Attribute;
+import runtimemodels.chazm.api.entity.Agent;
+import runtimemodels.chazm.api.entity.Attribute;
+import runtimemodels.chazm.api.relation.Has;
 
 /**
  * The {@linkplain HasFactory} interface defines the API for constructing {@linkplain Has} relations.

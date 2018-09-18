@@ -1,6 +1,6 @@
 package io.github.runtimemodels.chazm.event;
 
-import io.github.runtimemodels.chazm.entity.Agent;
+import runtimemodels.chazm.api.entity.Agent;
 
 /**
  * The {@linkplain AgentEventFactory} interface defines the API for constructing {@linkplain AgentEvent}s.

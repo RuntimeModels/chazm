@@ -1,8 +1,8 @@
 package io.github.runtimemodels.chazm;
 
-import io.github.runtimemodels.chazm.entity.Role;
-import io.github.runtimemodels.chazm.function.Goodness;
-import io.github.runtimemodels.chazm.id.UniqueId;
+import runtimemodels.chazm.api.entity.Role;
+import runtimemodels.chazm.api.function.Goodness;
+import runtimemodels.chazm.api.id.UniqueId;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

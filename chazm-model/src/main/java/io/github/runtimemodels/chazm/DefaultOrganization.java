@@ -1,16 +1,18 @@
 package io.github.runtimemodels.chazm;
 
-import io.github.runtimemodels.chazm.entity.*;
 import io.github.runtimemodels.chazm.event.EventFactory;
-import io.github.runtimemodels.chazm.function.Effectiveness;
-import io.github.runtimemodels.chazm.function.Goodness;
-import io.github.runtimemodels.chazm.id.Identifiable;
-import io.github.runtimemodels.chazm.id.UniqueId;
-import io.github.runtimemodels.chazm.relation.*;
+import io.github.runtimemodels.chazm.relation.RelationFactory;
 import io.github.runtimemodels.message.E;
 import io.github.runtimemodels.message.L;
 import io.github.runtimemodels.notification.Publisher;
 import lombok.extern.slf4j.Slf4j;
+import runtimemodels.chazm.api.Organization;
+import runtimemodels.chazm.api.entity.*;
+import runtimemodels.chazm.api.function.Effectiveness;
+import runtimemodels.chazm.api.function.Goodness;
+import runtimemodels.chazm.api.id.Identifiable;
+import runtimemodels.chazm.api.id.UniqueId;
+import runtimemodels.chazm.api.relation.*;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;

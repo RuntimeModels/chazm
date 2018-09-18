@@ -1,6 +1,6 @@
 package io.github.runtimemodels.chazm.event;
 
-import io.github.runtimemodels.chazm.relation.Achieves;
+import runtimemodels.chazm.api.relation.Achieves;
 
 /**
  * The {@linkplain AchievesEventFactory} interface defines the API for constructing {@linkplain AchievesEvent}s.

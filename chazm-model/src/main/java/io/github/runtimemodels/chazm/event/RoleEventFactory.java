@@ -1,6 +1,6 @@
 package io.github.runtimemodels.chazm.event;
 
-import io.github.runtimemodels.chazm.entity.Role;
+import runtimemodels.chazm.api.entity.Role;
 
 /**
  * The {@linkplain RoleEventFactory} interface defines the API for constructing {@linkplain RoleEvent}s.

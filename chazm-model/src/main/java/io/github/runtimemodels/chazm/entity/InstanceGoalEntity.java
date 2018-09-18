@@ -1,9 +1,11 @@
 package io.github.runtimemodels.chazm.entity;
 
 import com.google.inject.assistedinject.Assisted;
-import io.github.runtimemodels.chazm.id.UniqueId;
 import io.github.runtimemodels.message.M;
 import lombok.Getter;
+import runtimemodels.chazm.api.entity.InstanceGoal;
+import runtimemodels.chazm.api.entity.SpecificationGoal;
+import runtimemodels.chazm.api.id.UniqueId;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -14,7 +16,7 @@ class InstanceGoalEntity extends AbstractEntity<InstanceGoal> implements Instanc
     @Getter
     private final SpecificationGoal goal;
     @Getter
-    private final Parameter parameter;
+    private final InstanceGoal.Parameter parameter;
     private transient Integer hashCode = null;
 
     @Inject

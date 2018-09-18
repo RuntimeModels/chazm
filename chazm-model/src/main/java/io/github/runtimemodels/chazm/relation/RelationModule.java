@@ -3,6 +3,7 @@ package io.github.runtimemodels.chazm.relation;
 import com.google.inject.AbstractModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import io.github.runtimemodels.chazm.entity.EntityModule;
+import runtimemodels.chazm.api.relation.*;
 
 /**
  * The {@linkplain RelationModule} class provides a Guice binding module for relations.

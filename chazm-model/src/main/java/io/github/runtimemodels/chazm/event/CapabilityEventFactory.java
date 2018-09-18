@@ -1,6 +1,6 @@
 package io.github.runtimemodels.chazm.event;
 
-import io.github.runtimemodels.chazm.entity.Capability;
+import runtimemodels.chazm.api.entity.Capability;
 
 /**
  * The {@linkplain CapabilityEventFactory} interface defines the API for constructing {@linkplain CapabilityEvent}s.

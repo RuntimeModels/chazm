@@ -1,11 +1,10 @@
 package io.github.runtimemodels.chazm.event;
 
 import com.google.inject.assistedinject.Assisted;
-import io.github.runtimemodels.chazm.entity.InstanceGoal;
-import io.github.runtimemodels.chazm.entity.InstanceGoal.Parameter;
-import io.github.runtimemodels.chazm.entity.SpecificationGoal;
-import io.github.runtimemodels.chazm.id.UniqueId;
 import io.github.runtimemodels.message.M;
+import runtimemodels.chazm.api.entity.InstanceGoal;
+import runtimemodels.chazm.api.entity.SpecificationGoal;
+import runtimemodels.chazm.api.id.UniqueId;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -22,7 +21,7 @@ public class InstanceGoalEvent extends AbstractEvent {
     private static final long serialVersionUID = -7178745959528744216L;
     private final UniqueId<InstanceGoal> id;
     private final UniqueId<SpecificationGoal> specificationGoalId;
-    private final Parameter parameter;
+    private final InstanceGoal.Parameter parameter;
     private transient Integer hashCode = null;
     private transient String toString = null;
 
@@ -53,11 +52,11 @@ public class InstanceGoalEvent extends AbstractEvent {
     }
 
     /**
-     * Returns a {@linkplain Parameter}.
+     * Returns a {@linkplain InstanceGoal.Parameter}.
      *
-     * @return a {@linkplain Parameter}.
+     * @return a {@linkplain InstanceGoal.Parameter}.
      */
-    public Parameter getParameter() {
+    public InstanceGoal.Parameter getParameter() {
         return parameter;
     }
 

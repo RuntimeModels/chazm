@@ -1,6 +1,6 @@
 package io.github.runtimemodels.chazm.event;
 
-import io.github.runtimemodels.chazm.entity.SpecificationGoal;
+import runtimemodels.chazm.api.entity.SpecificationGoal;
 
 /**
  * The {@linkplain SpecificationGoalEventFactory} interface defines the API for constructing {@linkplain SpecificationGoalEvent}s.

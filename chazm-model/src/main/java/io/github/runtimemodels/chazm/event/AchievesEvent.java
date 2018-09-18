@@ -1,11 +1,11 @@
 package io.github.runtimemodels.chazm.event;
 
 import com.google.inject.assistedinject.Assisted;
-import io.github.runtimemodels.chazm.entity.Role;
-import io.github.runtimemodels.chazm.entity.SpecificationGoal;
-import io.github.runtimemodels.chazm.id.UniqueId;
-import io.github.runtimemodels.chazm.relation.Achieves;
 import io.github.runtimemodels.message.M;
+import runtimemodels.chazm.api.entity.Role;
+import runtimemodels.chazm.api.entity.SpecificationGoal;
+import runtimemodels.chazm.api.id.UniqueId;
+import runtimemodels.chazm.api.relation.Achieves;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;

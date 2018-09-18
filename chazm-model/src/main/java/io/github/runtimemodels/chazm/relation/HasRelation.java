@@ -1,12 +1,12 @@
 package io.github.runtimemodels.chazm.relation;
 
 import com.google.inject.assistedinject.Assisted;
-import io.github.runtimemodels.chazm.entity.Agent;
-import io.github.runtimemodels.chazm.entity.Attribute;
-import io.github.runtimemodels.chazm.entity.Attribute.Type;
 import io.github.runtimemodels.message.E;
 import io.github.runtimemodels.message.M;
 import lombok.Getter;
+import runtimemodels.chazm.api.entity.Agent;
+import runtimemodels.chazm.api.entity.Attribute;
+import runtimemodels.chazm.api.relation.Has;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -44,7 +44,7 @@ class HasRelation implements Has {
 
     @Override
     public final void setValue(final double value) {
-        final Type type = getAttribute().getType();
+        final Attribute.Type type = getAttribute().getType();
         switch (type) {
             case POSITIVE_QUALITY:
             case NEGATIVE_QUALITY:

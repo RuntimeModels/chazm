@@ -3,6 +3,7 @@ package io.github.runtimemodels.chazm.entity;
 import com.google.inject.AbstractModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import io.github.runtimemodels.chazm.id.IdModule;
+import runtimemodels.chazm.api.entity.*;
 
 /**
  * The {@linkplain EntityModule} class provides a Guice binding module for entities.

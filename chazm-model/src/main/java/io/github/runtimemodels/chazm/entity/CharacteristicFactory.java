@@ -1,6 +1,7 @@
 package io.github.runtimemodels.chazm.entity;
 
-import io.github.runtimemodels.chazm.id.UniqueId;
+import runtimemodels.chazm.api.entity.Characteristic;
+import runtimemodels.chazm.api.id.UniqueId;
 
 /**
  * The {@linkplain CharacteristicFactory} interface defines the APIs for constructing {@linkplain Characteristic}s.

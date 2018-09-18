@@ -1,11 +1,12 @@
 package io.github.runtimemodels.chazm.function;
 
-import io.github.runtimemodels.chazm.Organization;
-import io.github.runtimemodels.chazm.entity.Agent;
-import io.github.runtimemodels.chazm.entity.Capability;
-import io.github.runtimemodels.chazm.entity.InstanceGoal;
-import io.github.runtimemodels.chazm.entity.Role;
-import io.github.runtimemodels.chazm.relation.Assignment;
+import runtimemodels.chazm.api.Organization;
+import runtimemodels.chazm.api.entity.Agent;
+import runtimemodels.chazm.api.entity.Capability;
+import runtimemodels.chazm.api.entity.InstanceGoal;
+import runtimemodels.chazm.api.entity.Role;
+import runtimemodels.chazm.api.function.Goodness;
+import runtimemodels.chazm.api.relation.Assignment;
 
 import javax.inject.Singleton;
 import javax.validation.constraints.NotNull;

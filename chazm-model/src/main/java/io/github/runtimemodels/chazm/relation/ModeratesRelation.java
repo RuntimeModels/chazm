@@ -1,10 +1,11 @@
 package io.github.runtimemodels.chazm.relation;
 
 import com.google.inject.assistedinject.Assisted;
-import io.github.runtimemodels.chazm.entity.Attribute;
-import io.github.runtimemodels.chazm.entity.Pmf;
 import io.github.runtimemodels.message.M;
 import lombok.Getter;
+import runtimemodels.chazm.api.entity.Attribute;
+import runtimemodels.chazm.api.entity.Pmf;
+import runtimemodels.chazm.api.relation.Moderates;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;

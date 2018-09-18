@@ -1,6 +1,8 @@
 package io.github.runtimemodels.chazm.function;
 
 import com.google.inject.AbstractModule;
+import runtimemodels.chazm.api.function.Effectiveness;
+import runtimemodels.chazm.api.function.Goodness;
 
 /**
  * The {@linkplain FunctionModule} class provides a Guice binding module for functions.

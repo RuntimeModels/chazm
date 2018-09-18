@@ -1,6 +1,6 @@
 package io.github.runtimemodels.chazm.event;
 
-import io.github.runtimemodels.chazm.entity.Characteristic;
+import runtimemodels.chazm.api.entity.Characteristic;
 
 /**
  * The {@linkplain CharacteristicEventFactory} interface defines the API for constructing {@linkplain CharacteristicEvent}s.

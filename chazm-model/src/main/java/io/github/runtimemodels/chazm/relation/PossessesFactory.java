@@ -1,7 +1,8 @@
 package io.github.runtimemodels.chazm.relation;
 
-import io.github.runtimemodels.chazm.entity.Agent;
-import io.github.runtimemodels.chazm.entity.Capability;
+import runtimemodels.chazm.api.entity.Agent;
+import runtimemodels.chazm.api.entity.Capability;
+import runtimemodels.chazm.api.relation.Possesses;
 
 /**
  * The {@linkplain PossessesFactory} interface defines the API for constructing {@linkplain Possesses} relations.

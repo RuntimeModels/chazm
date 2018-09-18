@@ -1,7 +1,8 @@
 package io.github.runtimemodels.chazm.entity;
 
-import io.github.runtimemodels.chazm.entity.InstanceGoal.Parameter;
-import io.github.runtimemodels.chazm.id.UniqueId;
+import runtimemodels.chazm.api.entity.InstanceGoal;
+import runtimemodels.chazm.api.entity.SpecificationGoal;
+import runtimemodels.chazm.api.id.UniqueId;
 
 /**
  * The {@linkplain InstanceGoalFactory} interface defines the APIs for constructing {@linkplain InstanceGoal}s.
@@ -17,9 +18,9 @@ public interface InstanceGoalFactory {
      *
      * @param id        the {@linkplain UniqueId} that represents the {@linkplain InstanceGoal}.
      * @param goal      the {@linkplain SpecificationGoal} of the {@linkplain InstanceGoal}.
-     * @param parameter the {@linkplain Parameter} of the {@linkplain InstanceGoal}.
+     * @param parameter the {@linkplain InstanceGoal.Parameter} of the {@linkplain InstanceGoal}.
      * @return an {@linkplain InstanceGoal}.
      */
-    InstanceGoal buildInstanceGoal(UniqueId<InstanceGoal> id, SpecificationGoal goal, Parameter parameter);
+    InstanceGoal buildInstanceGoal(UniqueId<InstanceGoal> id, SpecificationGoal goal, InstanceGoal.Parameter parameter);
 
 }

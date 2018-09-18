@@ -1,6 +1,7 @@
 package io.github.runtimemodels.chazm.id;
 
 import lombok.Getter;
+import runtimemodels.chazm.api.id.UniqueId;
 
 import javax.validation.constraints.NotNull;
 

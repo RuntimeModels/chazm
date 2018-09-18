@@ -1,6 +1,6 @@
 package io.github.runtimemodels.chazm.event;
 
-import io.github.runtimemodels.chazm.relation.Has;
+import runtimemodels.chazm.api.relation.Has;
 
 /**
  * The {@linkplain HasEventFactory} interface defines the API for constructing {@linkplain HasEvent}s.

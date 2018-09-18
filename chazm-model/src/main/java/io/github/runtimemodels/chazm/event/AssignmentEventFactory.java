@@ -1,6 +1,6 @@
 package io.github.runtimemodels.chazm.event;
 
-import io.github.runtimemodels.chazm.relation.Assignment;
+import runtimemodels.chazm.api.relation.Assignment;
 
 /**
  * The {@linkplain AssignmentEventFactory} interface defines the API for constructing {@linkplain AssignmentEvent}s.

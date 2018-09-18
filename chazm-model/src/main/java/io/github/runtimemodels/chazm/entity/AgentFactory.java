@@ -1,7 +1,7 @@
 package io.github.runtimemodels.chazm.entity;
 
-import io.github.runtimemodels.chazm.entity.Agent.ContactInfo;
-import io.github.runtimemodels.chazm.id.UniqueId;
+import runtimemodels.chazm.api.entity.Agent;
+import runtimemodels.chazm.api.id.UniqueId;
 
 /**
  * The {@linkplain AgentFactory} interface defines the APIs for constructing {@linkplain Agent}s.
@@ -16,9 +16,9 @@ public interface AgentFactory {
      * Constructs an {@linkplain Agent}.
      *
      * @param id          the {@linkplain UniqueId} that represents the {@linkplain Agent}.
-     * @param contactInfo the {@linkplain ContactInfo} for the {@linkplain Agent}.
+     * @param contactInfo the {@linkplain Agent.ContactInfo} for the {@linkplain Agent}.
      * @return an {@linkplain Agent}.
      */
-    Agent buildAgent(UniqueId<Agent> id, ContactInfo contactInfo);
+    Agent buildAgent(UniqueId<Agent> id, Agent.ContactInfo contactInfo);
 
 }

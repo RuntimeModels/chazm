@@ -1,8 +1,9 @@
 package io.github.runtimemodels.chazm.relation;
 
-import io.github.runtimemodels.chazm.entity.Agent;
-import io.github.runtimemodels.chazm.entity.InstanceGoal;
-import io.github.runtimemodels.chazm.entity.Role;
+import runtimemodels.chazm.api.entity.Agent;
+import runtimemodels.chazm.api.entity.InstanceGoal;
+import runtimemodels.chazm.api.entity.Role;
+import runtimemodels.chazm.api.relation.Assignment;
 
 /**
  * The {@linkplain AssignmentFactory} interface defines the API for constructing {@linkplain Assignment}s.

@@ -6,6 +6,7 @@ import io.github.runtimemodels.chazm.event.EventModule;
 import io.github.runtimemodels.chazm.function.FunctionModule;
 import io.github.runtimemodels.chazm.relation.RelationModule;
 import io.github.runtimemodels.notification.NotificationModule;
+import runtimemodels.chazm.api.Organization;
 
 /**
  * The {@linkplain OrganizationModule} class provides a Guice binding module for entities.

@@ -1,7 +1,8 @@
 package io.github.runtimemodels.chazm.relation;
 
-import io.github.runtimemodels.chazm.entity.Attribute;
-import io.github.runtimemodels.chazm.entity.Pmf;
+import runtimemodels.chazm.api.entity.Attribute;
+import runtimemodels.chazm.api.entity.Pmf;
+import runtimemodels.chazm.api.relation.Moderates;
 
 /**
  * The {@linkplain ModeratesFactory} interface defines the API for constructing {@linkplain Moderates} relations.

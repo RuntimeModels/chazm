@@ -1,7 +1,8 @@
 package io.github.runtimemodels.chazm.entity;
 
 import com.google.inject.assistedinject.Assisted;
-import io.github.runtimemodels.chazm.id.UniqueId;
+import runtimemodels.chazm.api.entity.Role;
+import runtimemodels.chazm.api.id.UniqueId;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;

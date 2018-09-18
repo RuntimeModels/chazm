@@ -1,11 +1,11 @@
 package io.github.runtimemodels.chazm.entity;
 
-import io.github.runtimemodels.chazm.id.Identifiable;
-import io.github.runtimemodels.chazm.id.UniqueId;
 import io.github.runtimemodels.message.M;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import runtimemodels.chazm.api.id.Identifiable;
+import runtimemodels.chazm.api.id.UniqueId;
 
 /**
  * The {@linkplain AbstractEntity} provides an abstract class for entities.
