@@ -7,6 +7,7 @@ import io.github.runtimemodels.chazm.entity.AgentFactory;
 import io.github.runtimemodels.chazm.entity.AttributeFactory;
 import io.github.runtimemodels.chazm.id.IdFactory;
 import io.github.runtimemodels.message.E;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -42,6 +43,7 @@ public class HasRelationTest {
     }
 
     @Test
+    @Ignore
     public void testHasRelationFactoryWithNullAgentAndNullAttribute() {
         exception.expect(instanceOf(ProvisionException.class));
 //        exception.expectMessage(allOf(
@@ -52,6 +54,7 @@ public class HasRelationTest {
     }
 
     @Test
+    @Ignore
     public void testHasRelationFactoryWithNullAttribute() {
         final Agent a = agentFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {
         });

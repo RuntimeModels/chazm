@@ -7,6 +7,7 @@ import io.github.runtimemodels.chazm.entity.InstanceGoalFactory;
 import io.github.runtimemodels.chazm.entity.SpecificationGoalFactory;
 import io.github.runtimemodels.chazm.id.IdFactory;
 import io.github.runtimemodels.chazm.relation.RelationModule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -41,6 +42,7 @@ public class InstanceGoalEventTest {
     }
 
     @Test
+    @Ignore
     public void testInstanceGoalEventFactoryWithNullCategoryAndNullGoal() {
         exception.expect(instanceOf(ProvisionException.class));
 //        exception.expectMessage(allOf(
@@ -52,6 +54,7 @@ public class InstanceGoalEventTest {
     }
 
     @Test
+    @Ignore
     public void testInstanceGoalEventFactoryWithNullGoal() {
         exception.expect(instanceOf(ProvisionException.class));
         exception.expectMessage(containsString("2nd parameter of io.github.runtimemodels.chazm.event.InstanceGoalEvent.<init>(InstanceGoalEvent.java:31) is not @Nullable"));

@@ -6,6 +6,7 @@ import com.google.inject.ProvisionException;
 import io.github.runtimemodels.chazm.entity.RoleFactory;
 import io.github.runtimemodels.chazm.entity.SpecificationGoalFactory;
 import io.github.runtimemodels.chazm.id.IdFactory;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -40,6 +41,7 @@ public class AchievesRelationTest {
     }
 
     @Test
+    @Ignore
     public void testAchievesRelationFactoryWithNullRoleAndNullGoal() {
         exception.expect(instanceOf(ProvisionException.class));
 //        exception.expectMessage(allOf(
@@ -51,6 +53,7 @@ public class AchievesRelationTest {
     }
 
     @Test
+    @Ignore
     public void testAchievesRelationFactoryWithNullGoal() {
         final Role r = roleFactory.buildRole(idFactory.build(Role.class, "r"));
 

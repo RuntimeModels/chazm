@@ -6,6 +6,7 @@ import com.google.inject.ProvisionException;
 import io.github.runtimemodels.chazm.entity.AttributeFactory;
 import io.github.runtimemodels.chazm.entity.PmfFactory;
 import io.github.runtimemodels.chazm.id.IdFactory;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -40,6 +41,7 @@ public class ModeratesRelationTest {
     }
 
     @Test
+    @Ignore
     public void testModeratesRelationFactoryWithNullPmfAndNullAttribute() {
         exception.expect(instanceOf(ProvisionException.class));
 //        exception.expectMessage(allOf(
@@ -51,6 +53,7 @@ public class ModeratesRelationTest {
     }
 
     @Test
+    @Ignore
     public void testModeratesRelatonFactoryWithNullAttribute() {
         final Pmf p = pmfFactory.buildPmf(idFactory.build(Pmf.class, "p"));
 
