@@ -1,6 +1,6 @@
 package runtimemodels.chazm.model.validation;
 
-import runtimemodels.chazm.message.E;
+import runtimemodels.chazm.model.message.E;
 
 import javax.inject.Singleton;
 

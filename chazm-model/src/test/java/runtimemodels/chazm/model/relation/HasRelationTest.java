@@ -10,7 +10,7 @@ import org.junit.rules.ExpectedException;
 import runtimemodels.chazm.api.entity.Agent;
 import runtimemodels.chazm.api.entity.Attribute;
 import runtimemodels.chazm.api.relation.Has;
-import runtimemodels.chazm.message.E;
+import runtimemodels.chazm.model.message.E;
 import runtimemodels.chazm.model.entity.AgentFactory;
 import runtimemodels.chazm.model.entity.AttributeFactory;
 import runtimemodels.chazm.model.id.IdFactory;

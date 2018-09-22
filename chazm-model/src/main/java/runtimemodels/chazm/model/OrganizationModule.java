@@ -1,12 +1,12 @@
 package runtimemodels.chazm.model;
 
 import com.google.inject.AbstractModule;
-import runtimemodels.chazm.aop.validation.ValidationModule;
+import runtimemodels.chazm.model.aop.validation.ValidationModule;
 import runtimemodels.chazm.api.Organization;
 import runtimemodels.chazm.model.event.EventModule;
 import runtimemodels.chazm.model.function.FunctionModule;
 import runtimemodels.chazm.model.relation.RelationModule;
-import runtimemodels.chazm.notification.NotificationModule;
+import runtimemodels.chazm.model.notification.NotificationModule;
 
 /**
  * The {@linkplain OrganizationModule} class provides a Guice binding module for entities.

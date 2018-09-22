@@ -5,7 +5,7 @@ import runtimemodels.chazm.api.entity.Role;
 import runtimemodels.chazm.api.entity.SpecificationGoal;
 import runtimemodels.chazm.api.id.UniqueId;
 import runtimemodels.chazm.api.relation.Achieves;
-import runtimemodels.chazm.message.M;
+import runtimemodels.chazm.model.message.M;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;

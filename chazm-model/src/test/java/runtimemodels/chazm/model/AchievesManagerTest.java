@@ -10,7 +10,7 @@ import runtimemodels.chazm.api.Organization;
 import runtimemodels.chazm.api.entity.Role;
 import runtimemodels.chazm.api.entity.SpecificationGoal;
 import runtimemodels.chazm.api.id.UniqueId;
-import runtimemodels.chazm.message.E;
+import runtimemodels.chazm.model.message.E;
 import runtimemodels.chazm.model.entity.EntityFactory;
 import runtimemodels.chazm.model.id.IdFactory;
 

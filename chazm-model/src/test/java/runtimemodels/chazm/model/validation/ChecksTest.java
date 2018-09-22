@@ -3,7 +3,7 @@ package runtimemodels.chazm.model.validation;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import runtimemodels.chazm.message.E;
+import runtimemodels.chazm.model.message.E;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;

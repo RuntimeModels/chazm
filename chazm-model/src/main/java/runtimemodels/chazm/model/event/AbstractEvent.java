@@ -1,6 +1,6 @@
 package runtimemodels.chazm.model.event;
 
-import runtimemodels.chazm.message.M;
+import runtimemodels.chazm.model.message.M;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;

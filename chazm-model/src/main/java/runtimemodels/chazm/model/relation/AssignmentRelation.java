@@ -6,7 +6,7 @@ import runtimemodels.chazm.api.entity.InstanceGoal;
 import runtimemodels.chazm.api.entity.Role;
 import runtimemodels.chazm.api.id.UniqueId;
 import runtimemodels.chazm.api.relation.Assignment;
-import runtimemodels.chazm.message.M;
+import runtimemodels.chazm.model.message.M;
 import runtimemodels.chazm.model.id.AbstractId;
 
 import javax.inject.Inject;

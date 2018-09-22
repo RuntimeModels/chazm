@@ -1,7 +1,7 @@
 package runtimemodels.chazm.model.id;
 
-import runtimemodels.chazm.aop.profiling.DoNotProfile;
-import runtimemodels.chazm.aop.validation.DoNotCheck;
+import runtimemodels.chazm.model.aop.profiling.DoNotProfile;
+import runtimemodels.chazm.model.aop.validation.DoNotCheck;
 import runtimemodels.chazm.api.id.UniqueId;
 
 @DoNotProfile

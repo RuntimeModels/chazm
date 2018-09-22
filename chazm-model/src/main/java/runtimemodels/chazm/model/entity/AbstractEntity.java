@@ -2,7 +2,7 @@ package runtimemodels.chazm.model.entity;
 
 import runtimemodels.chazm.api.id.Identifiable;
 import runtimemodels.chazm.api.id.UniqueId;
-import runtimemodels.chazm.message.M;
+import runtimemodels.chazm.model.message.M;
 
 /**
  * The {@linkplain AbstractEntity} provides an abstract class for entities.

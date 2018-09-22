@@ -4,7 +4,7 @@ import com.google.inject.assistedinject.Assisted;
 import runtimemodels.chazm.api.entity.Capability;
 import runtimemodels.chazm.api.entity.Role;
 import runtimemodels.chazm.api.relation.Requires;
-import runtimemodels.chazm.message.M;
+import runtimemodels.chazm.model.message.M;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;

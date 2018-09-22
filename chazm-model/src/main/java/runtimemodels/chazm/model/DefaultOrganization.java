@@ -8,12 +8,12 @@ import runtimemodels.chazm.api.function.Goodness;
 import runtimemodels.chazm.api.id.Identifiable;
 import runtimemodels.chazm.api.id.UniqueId;
 import runtimemodels.chazm.api.relation.*;
-import runtimemodels.chazm.message.E;
-import runtimemodels.chazm.message.L;
+import runtimemodels.chazm.model.message.E;
+import runtimemodels.chazm.model.message.L;
 import runtimemodels.chazm.model.event.EventCategory;
 import runtimemodels.chazm.model.event.EventFactory;
 import runtimemodels.chazm.model.relation.RelationFactory;
-import runtimemodels.chazm.notification.Publisher;
+import runtimemodels.chazm.model.notification.Publisher;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
