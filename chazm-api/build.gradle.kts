@@ -1,6 +1,7 @@
 import java.time.Instant
 
-val moduleName = "chazm.api"
+val moduleName = "runtimemodels.chazm.api"
+val junit = "org.junit.jupiter.api"
 
 plugins {
     `java-library`
@@ -23,7 +24,13 @@ java {
 group = rootProject.group
 version = "${rootProject.version}.0.0"
 
-dependencies {}
+dependencies {
+    testImplementation(d.junit.bom)
+    testImplementation(d.junit.jupiter.api)
+    testImplementation(d.junit.jupiter.params)
+    testImplementation(d.`assertj-core`)
+    testRuntimeOnly(d.junit.jupiter.engine)
+}
 
 val sourceJar by tasks.registering(Jar::class) {
     classifier = "sources"
@@ -74,20 +81,23 @@ tasks {
         doFirst {
             options.compilerArgs = listOf(
                     "--module-path", classpath.asPath,
-                    "--add-modules", "junit",
-                    "--add-reads", "$moduleName=junit",
+                    "--add-modules", junit,
+                    "--add-reads", "$moduleName=$junit",
                     "--patch-module", "$moduleName=" + files(sourceSets["test"].java.srcDirs).asPath
             )
             classpath = files()
         }
     }
     named("test", Test::class) {
+        useJUnitPlatform()
         inputs.property("moduleName", moduleName)
         doFirst {
             jvmArgs = listOf(
                     "--module-path", classpath.asPath,
                     "--add-modules", "ALL-MODULE-PATH",
-                    "--add-reads", "$moduleName=junit",
+                    "--add-reads", "$moduleName=$junit",
+                    "--add-reads", "$moduleName=org.assertj.core",
+                    "--add-opens", "$moduleName/$moduleName=org.junit.platform.commons",
                     "--patch-module", "$moduleName=" + files(sourceSets["test"].java.outputDir).asPath
             )
             classpath = files()
