@@ -1,6 +1,6 @@
 import java.time.Instant
 
-val moduleName = "io.github.runtimemodels"
+val moduleName = "runtimemodels.chazm.model"
 
 plugins {
     `java-library`
