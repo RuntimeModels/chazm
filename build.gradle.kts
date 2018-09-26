@@ -1,3 +1,5 @@
+import chazm.Dependencies
+
 plugins {
     `build-scan`
     base
@@ -8,8 +10,8 @@ plugins {
 //    id("org.sonarqube") version "2.6.2"
 //    id("org.standardout.versioneye") version "1.5.0"
 
-    id("io.spring.dependency-management") version "1.0.6.RELEASE" apply false
-    id("com.jfrog.bintray") version v.bintray apply false
+    chazm.Plugins.spring.dependencyManagement.add(this)
+    chazm.Plugins.bintray.add(this) apply false
 }
 
 buildScan {
@@ -17,7 +19,7 @@ buildScan {
     setTermsOfServiceAgree("yes")
 }
 
-//apply(from = "sonarqube.gradle")
+//add(from = "sonarqube.gradle")
 
 //versioneye {
 //    includeSubProjects = true
@@ -25,17 +27,48 @@ buildScan {
 
 apply(from = "ext.gradle")
 
-//apply(from = "subprojects.gradle")
+//add(from = "coveralls.gradle")
 
-//apply(from = "coveralls.gradle")
+//add(from = "jacocoTestReport.gradle")
 
-//apply(from = "jacocoTestReport.gradle")
+dependencyManagement {
+    val javaeeVersion: String by project
+    val jmockitVersion: String by project
+    val junitVersion: String by project
+    val lombokVersion: String by project
+    dependencies {
+        dependency("javax:javaee-api:$javaeeVersion")
+        dependency("org.jmockit:jmockit:$jmockitVersion")
+        dependency("junit:junit:$junitVersion")
+        dependency("org.projectlombok:lombok:$lombokVersion")
+    }
 
-apply(from = "printInfo.gradle")
+    imports {
+        mavenBom("io.spring.platform:platform-bom:2.0.8.RELEASE")
+        mavenBom(Dependencies.guice.bom)
+    }
+}
 
 tasks {
     withType(Wrapper::class) {
         distributionType = Wrapper.DistributionType.ALL
-        gradleVersion = v.gradle
+        gradleVersion = chazm.gradle
+    }
+    create("printInfo") {
+        doLast {
+            println(" Project name: ${project.name}")
+            println(" - Group Id: ${project.group}")
+            println(" - Major version: ${project.version}")
+            println(" - Number of subproject: ${subprojects.size}")
+            subprojects.forEach {
+                println("   - Subproject name: ${it.name}:")
+                println("     - Group Id: ${it.group}")
+                println("     - Version: ${it.version}")
+                println("     - Number of archive artifacts: ${it.configurations.archives.allArtifacts.size}")
+                it.configurations.archives.artifacts.files.forEach {
+                    println("       - Artifact: ${it.name}")
+                }
+            }
+        }
     }
 }

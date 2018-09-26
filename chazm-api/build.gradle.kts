@@ -1,3 +1,4 @@
+import chazm.*
 import java.time.Instant
 
 val moduleName = "runtimemodels.chazm.api"
@@ -8,7 +9,7 @@ plugins {
     jacoco
     `maven-publish`
     signing
-    id("com.jfrog.bintray")
+    chazm.Plugins.bintray.use(this)
 }
 
 repositories {
@@ -25,11 +26,11 @@ group = rootProject.group
 version = "${rootProject.version}.0.0"
 
 dependencies {
-    testImplementation(d.junit.bom)
-    testImplementation(d.junit.jupiter.api)
-    testImplementation(d.junit.jupiter.params)
-    testImplementation(d.`assertj-core`)
-    testRuntimeOnly(d.junit.jupiter.engine)
+    `junit-bom`(::testImplementation)
+    `junit-api`(::testImplementation)
+    `junit-params`(::testImplementation)
+    `assertj-core`(::testImplementation)
+    `junit-engine`(::testRuntimeOnly)
 }
 
 val sourceJar by tasks.registering(Jar::class) {

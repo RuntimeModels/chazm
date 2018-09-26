@@ -1,3 +1,7 @@
+import chazm.Dependencies
+import chazm.`guice-assistedinject`
+import chazm.`guice-bom`
+import chazm.guice
 import java.time.Instant
 
 val moduleName = "runtimemodels.chazm.model"
@@ -24,13 +28,14 @@ group = rootProject.group
 version = "${rootProject.version}.0.0"
 
 dependencies {
-    implementation(d.guice.bom)
     implementation(project(":chazm-api"))
+    `guice-bom`(::implementation)
+    guice(::implementation)
+    `guice-assistedinject`(::implementation)
     implementation("org.slf4j:slf4j-api:+")
     implementation("javax.inject:javax.inject:1")
     implementation("javax.validation:validation-api:2.0.1.Final")
-    implementation("com.google.inject:guice")
-    implementation("com.google.inject.extensions:guice-assistedinject")
+
 
     testImplementation("junit:junit:4.12")
 //    testImplementation(library.junit.bom) // BOM
