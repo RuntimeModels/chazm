@@ -35,6 +35,7 @@ dependencies {
     implementation("org.slf4j:slf4j-api:+")
     implementation("javax.inject:javax.inject:1")
     implementation("javax.validation:validation-api:2.0.1.Final")
+    implementation("io.reactivex.rxjava2:rxjava:2.2.2")
 
 
     testImplementation("junit:junit:4.12")
