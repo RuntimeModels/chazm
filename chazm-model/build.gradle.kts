@@ -1,10 +1,7 @@
-import chazm.Dependencies
-import chazm.`guice-assistedinject`
-import chazm.`guice-bom`
-import chazm.guice
 import org.jetbrains.kotlin.gradle.dsl.Coroutines
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.time.Instant
+import buildSrc.*
 
 val moduleName = "runtimemodels.chazm.model"
 
@@ -31,11 +28,11 @@ group = rootProject.group
 version = "${rootProject.version}.0.0"
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
     implementation(project(":chazm-api"))
-    `guice-bom`(::implementation)
-    guice(::implementation)
-    `guice-assistedinject`(::implementation)
+    implementation(kotlin("stdlib-jdk8"))
+    implementation(`guice-bom`)
+    implementation(guice)
+    implementation(`guice-assisted-inject`)
     implementation("org.slf4j:slf4j-api:+")
     implementation("javax.inject:javax.inject:1")
     implementation("javax.validation:validation-api:2.0.1.Final")

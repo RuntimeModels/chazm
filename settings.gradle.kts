@@ -1,4 +1,5 @@
-import chazm.Plugins
+import buildSrc.Plugins.Kotlin
+
 enableFeaturePreview("IMPROVED_POM_SUPPORT")
 enableFeaturePreview("STABLE_PUBLISHING")
 rootProject.name = "chazm"
@@ -6,7 +7,7 @@ pluginManagement {
     resolutionStrategy {
         eachPlugin {
             if (requested.id.id.startsWith("org.jetbrains.kotlin")) {
-                useVersion(Plugins.kotlin.version)
+                useVersion(Kotlin.version)
             }
         }
     }
