@@ -23,7 +23,7 @@ public class PolicyEvent extends AbstractEvent {
     private transient String toString = null;
 
     @Inject
-    PolicyEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final Policy policy) {
+    PolicyEvent(@NotNull @Assisted final EventType category, @NotNull @Assisted final Policy policy) {
         super(category);
         id = policy.getId();
     }

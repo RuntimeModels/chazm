@@ -14,10 +14,10 @@ public interface AssignmentEventFactory {
     /**
      * Constructs an {@linkplain AssignmentEvent}.
      *
-     * @param category   the {@linkplain EventCategory}.
+     * @param category   the {@linkplain EventType}.
      * @param assignment the {@linkplain Assignment}.
      * @return a {@linkplain AssignmentEvent}.
      */
-    AssignmentEvent build(EventCategory category, Assignment assignment);
+    AssignmentEvent build(EventType category, Assignment assignment);
 
 }

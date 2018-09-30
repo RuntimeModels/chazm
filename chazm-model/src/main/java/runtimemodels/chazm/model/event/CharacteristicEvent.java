@@ -23,7 +23,7 @@ public class CharacteristicEvent extends AbstractEvent {
     private transient String toString = null;
 
     @Inject
-    CharacteristicEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final Characteristic characteristic) {
+    CharacteristicEvent(@NotNull @Assisted final EventType category, @NotNull @Assisted final Characteristic characteristic) {
         super(category);
         id = characteristic.getId();
     }

@@ -14,10 +14,10 @@ public interface AgentEventFactory {
     /**
      * Constructs an {@linkplain AgentEvent}.
      *
-     * @param category the {@linkplain EventCategory}.
+     * @param category the {@linkplain EventType}.
      * @param agent    the {@linkplain Agent}.
      * @return a {@linkplain AgentEvent}.
      */
-    AgentEvent build(EventCategory category, Agent agent);
+    AgentEvent build(EventType category, Agent agent);
 
 }

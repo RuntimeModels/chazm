@@ -37,8 +37,8 @@ public class ContainsEventTest {
         final Role r = rf.buildRole(idf.build(Role.class, "r"));
         final Characteristic cc = ccf.buildCharacteristic(idf.build(Characteristic.class, "cc"));
         final Contains c = cf.buildContains(r, cc, 1d);
-        final ContainsEvent ce1 = cef.build(EventCategory.ADDED, c);
-        final ContainsEvent ce2 = cef.build(EventCategory.ADDED, c);
+        final ContainsEvent ce1 = cef.build(EventType.ADDED, c);
+        final ContainsEvent ce2 = cef.build(EventType.ADDED, c);
 
         assertThat(ce1, is(not(nullValue())));
         assertThat(ce1, is(not(sameInstance(ce2))));
@@ -62,7 +62,7 @@ public class ContainsEventTest {
         exception.expect(instanceOf(ProvisionException.class));
         exception.expectMessage((containsString("2nd parameter of ContainsEvent.<init>(ContainsEvent.java:31) is not @Nullable")));
 
-        cef.build(EventCategory.ADDED, null);
+        cef.build(EventType.ADDED, null);
     }
 
     @Test
@@ -70,7 +70,7 @@ public class ContainsEventTest {
         final Role r = rf.buildRole(idf.build(Role.class, "r"));
         final Characteristic cc = ccf.buildCharacteristic(idf.build(Characteristic.class, "cc"));
         final Contains c = cf.buildContains(r, cc, 1d);
-        final ContainsEvent ce = cef.build(EventCategory.ADDED, c);
+        final ContainsEvent ce = cef.build(EventType.ADDED, c);
 
         assertThat(ce.getRoleId(), is(sameInstance(r.getId())));
     }
@@ -80,7 +80,7 @@ public class ContainsEventTest {
         final Role r = rf.buildRole(idf.build(Role.class, "r"));
         final Characteristic cc = ccf.buildCharacteristic(idf.build(Characteristic.class, "cc"));
         final Contains c = cf.buildContains(r, cc, 1d);
-        final ContainsEvent ce = cef.build(EventCategory.ADDED, c);
+        final ContainsEvent ce = cef.build(EventType.ADDED, c);
 
         assertThat(ce.getCharacteristicId(), is(sameInstance(cc.getId())));
     }
@@ -90,7 +90,7 @@ public class ContainsEventTest {
         final Role r = rf.buildRole(idf.build(Role.class, "r"));
         final Characteristic cc = ccf.buildCharacteristic(idf.build(Characteristic.class, "cc"));
         final Contains c = cf.buildContains(r, cc, 1d);
-        final ContainsEvent ce = cef.build(EventCategory.ADDED, c);
+        final ContainsEvent ce = cef.build(EventType.ADDED, c);
 
         assertThat(ce.getValue(), is(equalTo(c.getValue())));
     }
@@ -103,9 +103,9 @@ public class ContainsEventTest {
         final Contains c1 = cf.buildContains(r1, cc, 1d);
         final Contains c2 = cf.buildContains(r2, cc, 1d);
         final Contains c3 = cf.buildContains(r1, cc, 1d);
-        final ContainsEvent ce1 = cef.build(EventCategory.ADDED, c1);
-        final ContainsEvent ce2 = cef.build(EventCategory.ADDED, c2);
-        final ContainsEvent ce3 = cef.build(EventCategory.ADDED, c3);
+        final ContainsEvent ce1 = cef.build(EventType.ADDED, c1);
+        final ContainsEvent ce2 = cef.build(EventType.ADDED, c2);
+        final ContainsEvent ce3 = cef.build(EventType.ADDED, c3);
 
         assertThat(ce1, is(not(equalTo(ce2))));
         assertThat(ce1, is(equalTo(ce3)));
@@ -120,9 +120,9 @@ public class ContainsEventTest {
         final Contains c1 = cf.buildContains(r1, cc, 1d);
         final Contains c2 = cf.buildContains(r2, cc, 1d);
         final Contains c3 = cf.buildContains(r1, cc, 1d);
-        final ContainsEvent ce1 = cef.build(EventCategory.ADDED, c1);
-        final ContainsEvent ce2 = cef.build(EventCategory.ADDED, c2);
-        final ContainsEvent ce3 = cef.build(EventCategory.ADDED, c3);
+        final ContainsEvent ce1 = cef.build(EventType.ADDED, c1);
+        final ContainsEvent ce2 = cef.build(EventType.ADDED, c2);
+        final ContainsEvent ce3 = cef.build(EventType.ADDED, c3);
 
         assertThat(ce1.hashCode(), is(not(equalTo(ce2.hashCode()))));
         assertThat(ce1.hashCode(), is(equalTo(ce3.hashCode())));
@@ -136,9 +136,9 @@ public class ContainsEventTest {
         final Contains c1 = cf.buildContains(r1, cc, 1d);
         final Contains c2 = cf.buildContains(r2, cc, 1d);
         final Contains c3 = cf.buildContains(r1, cc, 1d);
-        final ContainsEvent ce1 = cef.build(EventCategory.ADDED, c1);
-        final ContainsEvent ce2 = cef.build(EventCategory.ADDED, c2);
-        final ContainsEvent ce3 = cef.build(EventCategory.ADDED, c3);
+        final ContainsEvent ce1 = cef.build(EventType.ADDED, c1);
+        final ContainsEvent ce2 = cef.build(EventType.ADDED, c2);
+        final ContainsEvent ce3 = cef.build(EventType.ADDED, c3);
 
         assertThat(ce1.toString(), is(not(equalTo(ce2.toString()))));
         assertThat(ce1.toString(), is(equalTo(ce3.toString())));

@@ -23,7 +23,7 @@ public class SpecificationGoalEvent extends AbstractEvent {
     private transient String toString = null;
 
     @Inject
-    SpecificationGoalEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final SpecificationGoal goal) {
+    SpecificationGoalEvent(@NotNull @Assisted final EventType category, @NotNull @Assisted final SpecificationGoal goal) {
         super(category);
         id = goal.getId();
     }

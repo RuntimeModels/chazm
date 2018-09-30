@@ -47,8 +47,8 @@ public class AssignmentEventTest {
         final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
         });
         final Assignment a = af.buildAssignment(aa, r, ig);
-        final AssignmentEvent ae1 = aef.build(EventCategory.ADDED, a);
-        final AssignmentEvent ae2 = aef.build(EventCategory.ADDED, a);
+        final AssignmentEvent ae1 = aef.build(EventType.ADDED, a);
+        final AssignmentEvent ae2 = aef.build(EventType.ADDED, a);
 
         assertThat(ae1, is(not(nullValue())));
         assertThat(ae1, is(not(sameInstance(ae2))));
@@ -72,7 +72,7 @@ public class AssignmentEventTest {
         exception.expect(instanceOf(ProvisionException.class));
         exception.expectMessage((containsString("2nd parameter of AssignmentEvent.<init>(AssignmentEvent.java:32) is not @Nullable")));
 
-        aef.build(EventCategory.ADDED, null);
+        aef.build(EventType.ADDED, null);
     }
 
     @Test
@@ -84,7 +84,7 @@ public class AssignmentEventTest {
         final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
         });
         final Assignment a = af.buildAssignment(aa, r, ig);
-        final AssignmentEvent ae = aef.build(EventCategory.ADDED, a);
+        final AssignmentEvent ae = aef.build(EventType.ADDED, a);
 
         assertThat(ae.getAgentId(), is(sameInstance(aa.getId())));
     }
@@ -98,7 +98,7 @@ public class AssignmentEventTest {
         final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
         });
         final Assignment a = af.buildAssignment(aa, r, ig);
-        final AssignmentEvent ae = aef.build(EventCategory.ADDED, a);
+        final AssignmentEvent ae = aef.build(EventType.ADDED, a);
 
         assertThat(ae.getRoleId(), is(sameInstance(r.getId())));
     }
@@ -112,7 +112,7 @@ public class AssignmentEventTest {
         final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
         });
         final Assignment a = af.buildAssignment(aa, r, ig);
-        final AssignmentEvent ae = aef.build(EventCategory.ADDED, a);
+        final AssignmentEvent ae = aef.build(EventType.ADDED, a);
 
         assertThat(ae.getGoalId(), is(sameInstance(ig.getId())));
     }
@@ -129,9 +129,9 @@ public class AssignmentEventTest {
         final Assignment a1 = af.buildAssignment(aa, r1, ig);
         final Assignment a2 = af.buildAssignment(aa, r2, ig);
         final Assignment a3 = af.buildAssignment(aa, r1, ig);
-        final AssignmentEvent ae1 = aef.build(EventCategory.ADDED, a1);
-        final AssignmentEvent ae2 = aef.build(EventCategory.ADDED, a2);
-        final AssignmentEvent ae3 = aef.build(EventCategory.ADDED, a3);
+        final AssignmentEvent ae1 = aef.build(EventType.ADDED, a1);
+        final AssignmentEvent ae2 = aef.build(EventType.ADDED, a2);
+        final AssignmentEvent ae3 = aef.build(EventType.ADDED, a3);
 
         assertThat(ae1, is(not(equalTo(ae2))));
         assertThat(ae1, is(equalTo(ae3)));
@@ -150,9 +150,9 @@ public class AssignmentEventTest {
         final Assignment a1 = af.buildAssignment(aa, r1, ig);
         final Assignment a2 = af.buildAssignment(aa, r2, ig);
         final Assignment a3 = af.buildAssignment(aa, r1, ig);
-        final AssignmentEvent ae1 = aef.build(EventCategory.ADDED, a1);
-        final AssignmentEvent ae2 = aef.build(EventCategory.ADDED, a2);
-        final AssignmentEvent ae3 = aef.build(EventCategory.ADDED, a3);
+        final AssignmentEvent ae1 = aef.build(EventType.ADDED, a1);
+        final AssignmentEvent ae2 = aef.build(EventType.ADDED, a2);
+        final AssignmentEvent ae3 = aef.build(EventType.ADDED, a3);
 
         assertThat(ae1.hashCode(), is(not(equalTo(ae2.hashCode()))));
         assertThat(ae1.hashCode(), is(equalTo(ae3.hashCode())));
@@ -170,9 +170,9 @@ public class AssignmentEventTest {
         final Assignment a1 = af.buildAssignment(aa, r1, ig);
         final Assignment a2 = af.buildAssignment(aa, r2, ig);
         final Assignment a3 = af.buildAssignment(aa, r1, ig);
-        final AssignmentEvent ae1 = aef.build(EventCategory.ADDED, a1);
-        final AssignmentEvent ae2 = aef.build(EventCategory.ADDED, a2);
-        final AssignmentEvent ae3 = aef.build(EventCategory.ADDED, a3);
+        final AssignmentEvent ae1 = aef.build(EventType.ADDED, a1);
+        final AssignmentEvent ae2 = aef.build(EventType.ADDED, a2);
+        final AssignmentEvent ae3 = aef.build(EventType.ADDED, a3);
 
         assertThat(ae1.toString(), is(not(equalTo(ae2.toString()))));
         assertThat(ae1.toString(), is(equalTo(ae3.toString())));

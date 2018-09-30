@@ -14,10 +14,10 @@ public interface AttributeEventFactory {
     /**
      * Constructs an {@linkplain AttributeEvent}.
      *
-     * @param category  the {@linkplain EventCategory}.
+     * @param category  the {@linkplain EventType}.
      * @param attribute the {@linkplain Attribute}.
      * @return a {@linkplain AttributeEvent}.
      */
-    AttributeEvent build(EventCategory category, Attribute attribute);
+    AttributeEvent build(EventType category, Attribute attribute);
 
 }

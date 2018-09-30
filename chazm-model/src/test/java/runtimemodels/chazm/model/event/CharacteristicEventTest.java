@@ -29,8 +29,8 @@ public class CharacteristicEventTest {
     @Test
     public void testCharacteristicEventFactory() {
         final Characteristic c = cf.buildCharacteristic(idf.build(Characteristic.class, "c"));
-        final CharacteristicEvent ce1 = cef.build(EventCategory.ADDED, c);
-        final CharacteristicEvent ce2 = cef.build(EventCategory.ADDED, c);
+        final CharacteristicEvent ce1 = cef.build(EventType.ADDED, c);
+        final CharacteristicEvent ce2 = cef.build(EventType.ADDED, c);
 
         assertThat(ce1, is(not(nullValue())));
         assertThat(ce1, is(not(sameInstance(ce2))));
@@ -54,13 +54,13 @@ public class CharacteristicEventTest {
         exception.expect(instanceOf(ProvisionException.class));
         exception.expectMessage(containsString("2nd parameter of CharacteristicEvent.<init>(CharacteristicEvent.java:27) is not @Nullable"));
 
-        cef.build(EventCategory.ADDED, null);
+        cef.build(EventType.ADDED, null);
     }
 
     @Test
     public void testGetId() {
         final Characteristic c = cf.buildCharacteristic(idf.build(Characteristic.class, "c"));
-        final CharacteristicEvent ce = cef.build(EventCategory.ADDED, c);
+        final CharacteristicEvent ce = cef.build(EventType.ADDED, c);
 
         assertThat(ce.getId(), is(sameInstance(c.getId())));
     }
@@ -70,9 +70,9 @@ public class CharacteristicEventTest {
         final Characteristic c1 = cf.buildCharacteristic(idf.build(Characteristic.class, "c1"));
         final Characteristic c2 = cf.buildCharacteristic(idf.build(Characteristic.class, "c2"));
         final Characteristic c3 = cf.buildCharacteristic(idf.build(Characteristic.class, "c1"));
-        final CharacteristicEvent ce1 = cef.build(EventCategory.ADDED, c1);
-        final CharacteristicEvent ce2 = cef.build(EventCategory.ADDED, c2);
-        final CharacteristicEvent ce3 = cef.build(EventCategory.ADDED, c3);
+        final CharacteristicEvent ce1 = cef.build(EventType.ADDED, c1);
+        final CharacteristicEvent ce2 = cef.build(EventType.ADDED, c2);
+        final CharacteristicEvent ce3 = cef.build(EventType.ADDED, c3);
 
         assertThat(ce1, is(not(equalTo(ce2))));
         assertThat(ce1, is(equalTo(ce3)));
@@ -84,9 +84,9 @@ public class CharacteristicEventTest {
         final Characteristic c1 = cf.buildCharacteristic(idf.build(Characteristic.class, "c1"));
         final Characteristic c2 = cf.buildCharacteristic(idf.build(Characteristic.class, "c2"));
         final Characteristic c3 = cf.buildCharacteristic(idf.build(Characteristic.class, "c1"));
-        final CharacteristicEvent ce1 = cef.build(EventCategory.ADDED, c1);
-        final CharacteristicEvent ce2 = cef.build(EventCategory.ADDED, c2);
-        final CharacteristicEvent ce3 = cef.build(EventCategory.ADDED, c3);
+        final CharacteristicEvent ce1 = cef.build(EventType.ADDED, c1);
+        final CharacteristicEvent ce2 = cef.build(EventType.ADDED, c2);
+        final CharacteristicEvent ce3 = cef.build(EventType.ADDED, c3);
 
         assertThat(ce1.hashCode(), is(not(equalTo(ce2.hashCode()))));
         assertThat(ce1.hashCode(), is(equalTo(ce3.hashCode())));
@@ -97,9 +97,9 @@ public class CharacteristicEventTest {
         final Characteristic c1 = cf.buildCharacteristic(idf.build(Characteristic.class, "c1"));
         final Characteristic c2 = cf.buildCharacteristic(idf.build(Characteristic.class, "c2"));
         final Characteristic c3 = cf.buildCharacteristic(idf.build(Characteristic.class, "c1"));
-        final CharacteristicEvent ce1 = cef.build(EventCategory.ADDED, c1);
-        final CharacteristicEvent ce2 = cef.build(EventCategory.ADDED, c2);
-        final CharacteristicEvent ce3 = cef.build(EventCategory.ADDED, c3);
+        final CharacteristicEvent ce1 = cef.build(EventType.ADDED, c1);
+        final CharacteristicEvent ce2 = cef.build(EventType.ADDED, c2);
+        final CharacteristicEvent ce3 = cef.build(EventType.ADDED, c3);
 
         assertThat(ce1.toString(), is(not(equalTo(ce2.toString()))));
         assertThat(ce1.toString(), is(equalTo(ce3.toString())));

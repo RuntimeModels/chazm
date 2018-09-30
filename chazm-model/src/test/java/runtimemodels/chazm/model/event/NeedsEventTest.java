@@ -37,8 +37,8 @@ public class NeedsEventTest {
         final Role r = rf.buildRole(idf.build(Role.class, "r"));
         final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
         final Needs n = nf.buildNeeds(r, a);
-        final NeedsEvent ne1 = nef.build(EventCategory.ADDED, n);
-        final NeedsEvent ne2 = nef.build(EventCategory.ADDED, n);
+        final NeedsEvent ne1 = nef.build(EventType.ADDED, n);
+        final NeedsEvent ne2 = nef.build(EventType.ADDED, n);
 
         assertThat(ne1, is(not(nullValue())));
         assertThat(ne1, is(not(sameInstance(ne2))));
@@ -62,7 +62,7 @@ public class NeedsEventTest {
         exception.expect(instanceOf(ProvisionException.class));
         exception.expectMessage(containsString("2nd parameter of NeedsEvent.<init>(NeedsEvent.java:30) is not @Nullable"));
 
-        nef.build(EventCategory.ADDED, null);
+        nef.build(EventType.ADDED, null);
     }
 
     @Test
@@ -70,7 +70,7 @@ public class NeedsEventTest {
         final Role r = rf.buildRole(idf.build(Role.class, "r"));
         final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
         final Needs n = nf.buildNeeds(r, a);
-        final NeedsEvent ne = nef.build(EventCategory.ADDED, n);
+        final NeedsEvent ne = nef.build(EventType.ADDED, n);
 
         assertThat(ne.getRoleId(), is(sameInstance(r.getId())));
     }
@@ -80,7 +80,7 @@ public class NeedsEventTest {
         final Role r = rf.buildRole(idf.build(Role.class, "r"));
         final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
         final Needs n = nf.buildNeeds(r, a);
-        final NeedsEvent ne = nef.build(EventCategory.ADDED, n);
+        final NeedsEvent ne = nef.build(EventType.ADDED, n);
 
         assertThat(ne.getAttributeId(), is(sameInstance(a.getId())));
     }
@@ -93,9 +93,9 @@ public class NeedsEventTest {
         final Needs n1 = nf.buildNeeds(r1, a);
         final Needs n2 = nf.buildNeeds(r2, a);
         final Needs n3 = nf.buildNeeds(r1, a);
-        final NeedsEvent ne1 = nef.build(EventCategory.ADDED, n1);
-        final NeedsEvent ne2 = nef.build(EventCategory.ADDED, n2);
-        final NeedsEvent ne3 = nef.build(EventCategory.ADDED, n3);
+        final NeedsEvent ne1 = nef.build(EventType.ADDED, n1);
+        final NeedsEvent ne2 = nef.build(EventType.ADDED, n2);
+        final NeedsEvent ne3 = nef.build(EventType.ADDED, n3);
 
         assertThat(ne1, is(not(equalTo(ne2))));
         assertThat(ne1, is(equalTo(ne3)));
@@ -110,9 +110,9 @@ public class NeedsEventTest {
         final Needs n1 = nf.buildNeeds(r1, a);
         final Needs n2 = nf.buildNeeds(r2, a);
         final Needs n3 = nf.buildNeeds(r1, a);
-        final NeedsEvent ne1 = nef.build(EventCategory.ADDED, n1);
-        final NeedsEvent ne2 = nef.build(EventCategory.ADDED, n2);
-        final NeedsEvent ne3 = nef.build(EventCategory.ADDED, n3);
+        final NeedsEvent ne1 = nef.build(EventType.ADDED, n1);
+        final NeedsEvent ne2 = nef.build(EventType.ADDED, n2);
+        final NeedsEvent ne3 = nef.build(EventType.ADDED, n3);
 
         assertThat(ne1.hashCode(), is(not(equalTo(ne2.hashCode()))));
         assertThat(ne1.hashCode(), is(equalTo(ne3.hashCode())));
@@ -126,9 +126,9 @@ public class NeedsEventTest {
         final Needs n1 = nf.buildNeeds(r1, a);
         final Needs n2 = nf.buildNeeds(r2, a);
         final Needs n3 = nf.buildNeeds(r1, a);
-        final NeedsEvent ne1 = nef.build(EventCategory.ADDED, n1);
-        final NeedsEvent ne2 = nef.build(EventCategory.ADDED, n2);
-        final NeedsEvent ne3 = nef.build(EventCategory.ADDED, n3);
+        final NeedsEvent ne1 = nef.build(EventType.ADDED, n1);
+        final NeedsEvent ne2 = nef.build(EventType.ADDED, n2);
+        final NeedsEvent ne3 = nef.build(EventType.ADDED, n3);
 
         assertThat(ne1.toString(), is(not(equalTo(ne2.toString()))));
         assertThat(ne1.toString(), is(equalTo(ne3.toString())));

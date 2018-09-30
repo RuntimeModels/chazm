@@ -15,9 +15,9 @@ public class AbstractEventTest {
 
     @Test
     public void testAbstractEntity() {
-        final AbstractEvent e1 = new AbstractEvent(EventCategory.ADDED) {
+        final AbstractEvent e1 = new AbstractEvent(EventType.ADDED) {
         };
-        final AbstractEvent e2 = new AbstractEvent(EventCategory.ADDED) {
+        final AbstractEvent e2 = new AbstractEvent(EventType.ADDED) {
         };
 
         assertThat(e1, is(not(nullValue())));
@@ -26,22 +26,22 @@ public class AbstractEventTest {
 
     @Test
     public void testGetCategory() {
-        final AbstractEvent e1 = new AbstractEvent(EventCategory.ADDED) {
+        final AbstractEvent e1 = new AbstractEvent(EventType.ADDED) {
         };
-        final AbstractEvent e2 = new AbstractEvent(EventCategory.ADDED) {
+        final AbstractEvent e2 = new AbstractEvent(EventType.ADDED) {
         };
 
-        assertThat(e1.getCategory(), is(equalTo(EventCategory.ADDED)));
-        assertThat(e2.getCategory(), is(equalTo(EventCategory.ADDED)));
+        assertThat(e1.getCategory(), is(equalTo(EventType.ADDED)));
+        assertThat(e2.getCategory(), is(equalTo(EventType.ADDED)));
     }
 
     @Test
     public void testEquals() {
-        final AbstractEvent e1 = new AbstractEvent(EventCategory.ADDED) {
+        final AbstractEvent e1 = new AbstractEvent(EventType.ADDED) {
         };
-        final AbstractEvent e2 = new AbstractEvent(EventCategory.CHANGED) {
+        final AbstractEvent e2 = new AbstractEvent(EventType.UPDATED) {
         };
-        final AbstractEvent e3 = new AbstractEvent(EventCategory.ADDED) {
+        final AbstractEvent e3 = new AbstractEvent(EventType.ADDED) {
         };
 
         assertThat(e1, is(not(equalTo(e2))));
@@ -51,11 +51,11 @@ public class AbstractEventTest {
 
     @Test
     public void testHashCode() {
-        final AbstractEvent e1 = new AbstractEvent(EventCategory.ADDED) {
+        final AbstractEvent e1 = new AbstractEvent(EventType.ADDED) {
         };
-        final AbstractEvent e2 = new AbstractEvent(EventCategory.CHANGED) {
+        final AbstractEvent e2 = new AbstractEvent(EventType.UPDATED) {
         };
-        final AbstractEvent e3 = new AbstractEvent(EventCategory.ADDED) {
+        final AbstractEvent e3 = new AbstractEvent(EventType.ADDED) {
         };
 
         assertThat(e1.hashCode(), is(not(equalTo(e2.hashCode()))));
@@ -64,11 +64,11 @@ public class AbstractEventTest {
 
     @Test
     public void testToString() {
-        final AbstractEvent e1 = new AbstractEvent(EventCategory.ADDED) {
+        final AbstractEvent e1 = new AbstractEvent(EventType.ADDED) {
         };
-        final AbstractEvent e2 = new AbstractEvent(EventCategory.CHANGED) {
+        final AbstractEvent e2 = new AbstractEvent(EventType.UPDATED) {
         };
-        final AbstractEvent e3 = new AbstractEvent(EventCategory.ADDED) {
+        final AbstractEvent e3 = new AbstractEvent(EventType.ADDED) {
         };
 
         assertThat(e1.toString(), is(not(equalTo(e2.toString()))));

@@ -38,8 +38,8 @@ public class PossessesEventTest {
         });
         final Capability c = cf.buildCapability(idf.build(Capability.class, "c"));
         final Possesses p = pf.buildPossesses(a, c, 1d);
-        final PossessesEvent pe1 = pef.build(EventCategory.ADDED, p);
-        final PossessesEvent pe2 = pef.build(EventCategory.ADDED, p);
+        final PossessesEvent pe1 = pef.build(EventType.ADDED, p);
+        final PossessesEvent pe2 = pef.build(EventType.ADDED, p);
 
         assertThat(pe1, is(not(nullValue())));
         assertThat(pe1, is(not(sameInstance(pe2))));
@@ -63,7 +63,7 @@ public class PossessesEventTest {
         exception.expect(instanceOf(ProvisionException.class));
         exception.expectMessage(containsString("2nd parameter of PossessesEvent.<init>(PossessesEvent.java:31) is not @Nullable"));
 
-        pef.build(EventCategory.ADDED, null);
+        pef.build(EventType.ADDED, null);
     }
 
     @Test
@@ -72,7 +72,7 @@ public class PossessesEventTest {
         });
         final Capability c = cf.buildCapability(idf.build(Capability.class, "c"));
         final Possesses p = pf.buildPossesses(a, c, 1d);
-        final PossessesEvent pe = pef.build(EventCategory.ADDED, p);
+        final PossessesEvent pe = pef.build(EventType.ADDED, p);
 
         assertThat(pe.getAgentId(), is(sameInstance(a.getId())));
     }
@@ -83,7 +83,7 @@ public class PossessesEventTest {
         });
         final Capability c = cf.buildCapability(idf.build(Capability.class, "c"));
         final Possesses p = pf.buildPossesses(a, c, 1d);
-        final PossessesEvent pe = pef.build(EventCategory.ADDED, p);
+        final PossessesEvent pe = pef.build(EventType.ADDED, p);
 
         assertThat(pe.getCapabilityId(), is(sameInstance(c.getId())));
     }
@@ -94,7 +94,7 @@ public class PossessesEventTest {
         });
         final Capability c = cf.buildCapability(idf.build(Capability.class, "c"));
         final Possesses p = pf.buildPossesses(a, c, 1d);
-        final PossessesEvent pe = pef.build(EventCategory.ADDED, p);
+        final PossessesEvent pe = pef.build(EventType.ADDED, p);
 
         assertThat(pe.getScore(), is(equalTo(1d)));
     }
@@ -109,9 +109,9 @@ public class PossessesEventTest {
         final Possesses p1 = pf.buildPossesses(a1, c, 1d);
         final Possesses p2 = pf.buildPossesses(a2, c, 1d);
         final Possesses p3 = pf.buildPossesses(a1, c, 1d);
-        final PossessesEvent pe1 = pef.build(EventCategory.ADDED, p1);
-        final PossessesEvent pe2 = pef.build(EventCategory.ADDED, p2);
-        final PossessesEvent pe3 = pef.build(EventCategory.ADDED, p3);
+        final PossessesEvent pe1 = pef.build(EventType.ADDED, p1);
+        final PossessesEvent pe2 = pef.build(EventType.ADDED, p2);
+        final PossessesEvent pe3 = pef.build(EventType.ADDED, p3);
 
         assertThat(pe1, is(not(equalTo(pe2))));
         assertThat(pe1, is(equalTo(pe3)));
@@ -128,9 +128,9 @@ public class PossessesEventTest {
         final Possesses p1 = pf.buildPossesses(a1, c, 1d);
         final Possesses p2 = pf.buildPossesses(a2, c, 1d);
         final Possesses p3 = pf.buildPossesses(a1, c, 1d);
-        final PossessesEvent pe1 = pef.build(EventCategory.ADDED, p1);
-        final PossessesEvent pe2 = pef.build(EventCategory.ADDED, p2);
-        final PossessesEvent pe3 = pef.build(EventCategory.ADDED, p3);
+        final PossessesEvent pe1 = pef.build(EventType.ADDED, p1);
+        final PossessesEvent pe2 = pef.build(EventType.ADDED, p2);
+        final PossessesEvent pe3 = pef.build(EventType.ADDED, p3);
 
         assertThat(pe1.hashCode(), is(not(equalTo(pe2.hashCode()))));
         assertThat(pe1.hashCode(), is(equalTo(pe3.hashCode())));
@@ -146,9 +146,9 @@ public class PossessesEventTest {
         final Possesses p1 = pf.buildPossesses(a1, c, 1d);
         final Possesses p2 = pf.buildPossesses(a2, c, 1d);
         final Possesses p3 = pf.buildPossesses(a1, c, 1d);
-        final PossessesEvent pe1 = pef.build(EventCategory.ADDED, p1);
-        final PossessesEvent pe2 = pef.build(EventCategory.ADDED, p2);
-        final PossessesEvent pe3 = pef.build(EventCategory.ADDED, p3);
+        final PossessesEvent pe1 = pef.build(EventType.ADDED, p1);
+        final PossessesEvent pe2 = pef.build(EventType.ADDED, p2);
+        final PossessesEvent pe3 = pef.build(EventType.ADDED, p3);
 
         assertThat(pe1.toString(), is(not(equalTo(pe2.toString()))));
         assertThat(pe1.toString(), is(equalTo(pe3.toString())));

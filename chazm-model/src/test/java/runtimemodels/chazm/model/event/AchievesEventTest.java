@@ -37,8 +37,8 @@ public class AchievesEventTest {
         final Role r = rf.buildRole(idf.build(Role.class, "r"));
         final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
         final Achieves a = af.buildAchieves(r, sg);
-        final AchievesEvent ae1 = aef.build(EventCategory.ADDED, a);
-        final AchievesEvent ae2 = aef.build(EventCategory.ADDED, a);
+        final AchievesEvent ae1 = aef.build(EventType.ADDED, a);
+        final AchievesEvent ae2 = aef.build(EventType.ADDED, a);
 
         assertThat(ae1, is(not(nullValue())));
         assertThat(ae1, is(not(sameInstance(ae2))));
@@ -62,7 +62,7 @@ public class AchievesEventTest {
         exception.expect(instanceOf(ProvisionException.class));
         exception.expectMessage((containsString("2nd parameter of AchievesEvent.<init>(AchievesEvent.java:30) is not @Nullable")));
 
-        aef.build(EventCategory.ADDED, null);
+        aef.build(EventType.ADDED, null);
     }
 
     @Test
@@ -70,7 +70,7 @@ public class AchievesEventTest {
         final Role r = rf.buildRole(idf.build(Role.class, "r"));
         final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
         final Achieves a = af.buildAchieves(r, sg);
-        final AchievesEvent ae = aef.build(EventCategory.ADDED, a);
+        final AchievesEvent ae = aef.build(EventType.ADDED, a);
 
         assertThat(ae.getRoleId(), is(sameInstance(r.getId())));
     }
@@ -80,7 +80,7 @@ public class AchievesEventTest {
         final Role r = rf.buildRole(idf.build(Role.class, "r"));
         final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
         final Achieves a = af.buildAchieves(r, sg);
-        final AchievesEvent ae = aef.build(EventCategory.ADDED, a);
+        final AchievesEvent ae = aef.build(EventType.ADDED, a);
 
         assertThat(ae.getGoalId(), is(sameInstance(sg.getId())));
     }
@@ -93,9 +93,9 @@ public class AchievesEventTest {
         final Achieves a1 = af.buildAchieves(r1, g);
         final Achieves a2 = af.buildAchieves(r2, g);
         final Achieves a3 = af.buildAchieves(r1, g);
-        final AchievesEvent ae1 = aef.build(EventCategory.ADDED, a1);
-        final AchievesEvent ae2 = aef.build(EventCategory.ADDED, a2);
-        final AchievesEvent ae3 = aef.build(EventCategory.ADDED, a3);
+        final AchievesEvent ae1 = aef.build(EventType.ADDED, a1);
+        final AchievesEvent ae2 = aef.build(EventType.ADDED, a2);
+        final AchievesEvent ae3 = aef.build(EventType.ADDED, a3);
 
         assertThat(ae1, is(not(equalTo(ae2))));
         assertThat(ae1, is(equalTo(ae3)));
@@ -110,9 +110,9 @@ public class AchievesEventTest {
         final Achieves a1 = af.buildAchieves(r1, g);
         final Achieves a2 = af.buildAchieves(r2, g);
         final Achieves a3 = af.buildAchieves(r1, g);
-        final AchievesEvent ae1 = aef.build(EventCategory.ADDED, a1);
-        final AchievesEvent ae2 = aef.build(EventCategory.ADDED, a2);
-        final AchievesEvent ae3 = aef.build(EventCategory.ADDED, a3);
+        final AchievesEvent ae1 = aef.build(EventType.ADDED, a1);
+        final AchievesEvent ae2 = aef.build(EventType.ADDED, a2);
+        final AchievesEvent ae3 = aef.build(EventType.ADDED, a3);
 
         assertThat(ae1.hashCode(), is(not(equalTo(ae2.hashCode()))));
         assertThat(ae1.hashCode(), is(equalTo(ae3.hashCode())));
@@ -126,9 +126,9 @@ public class AchievesEventTest {
         final Achieves a1 = af.buildAchieves(r1, g);
         final Achieves a2 = af.buildAchieves(r2, g);
         final Achieves a3 = af.buildAchieves(r1, g);
-        final AchievesEvent ae1 = aef.build(EventCategory.ADDED, a1);
-        final AchievesEvent ae2 = aef.build(EventCategory.ADDED, a2);
-        final AchievesEvent ae3 = aef.build(EventCategory.ADDED, a3);
+        final AchievesEvent ae1 = aef.build(EventType.ADDED, a1);
+        final AchievesEvent ae2 = aef.build(EventType.ADDED, a2);
+        final AchievesEvent ae3 = aef.build(EventType.ADDED, a3);
 
         assertThat(ae1.toString(), is(not(equalTo(ae2.toString()))));
         assertThat(ae1.toString(), is(equalTo(ae3.toString())));

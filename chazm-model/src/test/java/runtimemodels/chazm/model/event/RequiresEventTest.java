@@ -37,8 +37,8 @@ public class RequiresEventTest {
         final Role rr = rrf.buildRole(idf.build(Role.class, "rr"));
         final Capability c = cf.buildCapability(idf.build(Capability.class, "c"));
         final Requires r = rf.buildRequires(rr, c);
-        final RequiresEvent re1 = ref.build(EventCategory.ADDED, r);
-        final RequiresEvent re2 = ref.build(EventCategory.ADDED, r);
+        final RequiresEvent re1 = ref.build(EventType.ADDED, r);
+        final RequiresEvent re2 = ref.build(EventType.ADDED, r);
 
         assertThat(re1, is(not(nullValue())));
         assertThat(re1, is(not(sameInstance(re2))));
@@ -62,7 +62,7 @@ public class RequiresEventTest {
         exception.expect(instanceOf(ProvisionException.class));
         exception.expectMessage(containsString("2nd parameter of RequiresEvent.<init>(RequiresEvent.java:30) is not @Nullable"));
 
-        ref.build(EventCategory.ADDED, null);
+        ref.build(EventType.ADDED, null);
     }
 
     @Test
@@ -70,7 +70,7 @@ public class RequiresEventTest {
         final Role rr = rrf.buildRole(idf.build(Role.class, "rr"));
         final Capability c = cf.buildCapability(idf.build(Capability.class, "c"));
         final Requires r = rf.buildRequires(rr, c);
-        final RequiresEvent re = ref.build(EventCategory.ADDED, r);
+        final RequiresEvent re = ref.build(EventType.ADDED, r);
 
         assertThat(re.getRoleId(), is(sameInstance(rr.getId())));
     }
@@ -80,7 +80,7 @@ public class RequiresEventTest {
         final Role rr = rrf.buildRole(idf.build(Role.class, "rr"));
         final Capability c = cf.buildCapability(idf.build(Capability.class, "c"));
         final Requires r = rf.buildRequires(rr, c);
-        final RequiresEvent re = ref.build(EventCategory.ADDED, r);
+        final RequiresEvent re = ref.build(EventType.ADDED, r);
 
         assertThat(re.getCapabilityId(), is(sameInstance(c.getId())));
     }
@@ -93,9 +93,9 @@ public class RequiresEventTest {
         final Requires r1 = rf.buildRequires(rr1, c);
         final Requires r2 = rf.buildRequires(rr2, c);
         final Requires r3 = rf.buildRequires(rr1, c);
-        final RequiresEvent re1 = ref.build(EventCategory.ADDED, r1);
-        final RequiresEvent re2 = ref.build(EventCategory.ADDED, r2);
-        final RequiresEvent re3 = ref.build(EventCategory.ADDED, r3);
+        final RequiresEvent re1 = ref.build(EventType.ADDED, r1);
+        final RequiresEvent re2 = ref.build(EventType.ADDED, r2);
+        final RequiresEvent re3 = ref.build(EventType.ADDED, r3);
 
         assertThat(re1, is(not(equalTo(re2))));
         assertThat(re1, is(equalTo(re3)));
@@ -110,9 +110,9 @@ public class RequiresEventTest {
         final Requires r1 = rf.buildRequires(rr1, c);
         final Requires r2 = rf.buildRequires(rr2, c);
         final Requires r3 = rf.buildRequires(rr1, c);
-        final RequiresEvent re1 = ref.build(EventCategory.ADDED, r1);
-        final RequiresEvent re2 = ref.build(EventCategory.ADDED, r2);
-        final RequiresEvent re3 = ref.build(EventCategory.ADDED, r3);
+        final RequiresEvent re1 = ref.build(EventType.ADDED, r1);
+        final RequiresEvent re2 = ref.build(EventType.ADDED, r2);
+        final RequiresEvent re3 = ref.build(EventType.ADDED, r3);
 
         assertThat(re1.hashCode(), is(not(equalTo(re2.hashCode()))));
         assertThat(re1.hashCode(), is(equalTo(re3.hashCode())));
@@ -126,9 +126,9 @@ public class RequiresEventTest {
         final Requires r1 = rf.buildRequires(rr1, c);
         final Requires r2 = rf.buildRequires(rr2, c);
         final Requires r3 = rf.buildRequires(rr1, c);
-        final RequiresEvent re1 = ref.build(EventCategory.ADDED, r1);
-        final RequiresEvent re2 = ref.build(EventCategory.ADDED, r2);
-        final RequiresEvent re3 = ref.build(EventCategory.ADDED, r3);
+        final RequiresEvent re1 = ref.build(EventType.ADDED, r1);
+        final RequiresEvent re2 = ref.build(EventType.ADDED, r2);
+        final RequiresEvent re3 = ref.build(EventType.ADDED, r3);
 
         assertThat(re1.toString(), is(not(equalTo(re2.toString()))));
         assertThat(re1.toString(), is(equalTo(re3.toString())));

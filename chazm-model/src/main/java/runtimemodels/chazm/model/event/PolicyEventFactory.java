@@ -14,10 +14,10 @@ public interface PolicyEventFactory {
     /**
      * Constructs an {@linkplain PolicyEvent}.
      *
-     * @param category the {@linkplain EventCategory}.
+     * @param category the {@linkplain EventType}.
      * @param policy   the {@linkplain Policy}.
      * @return a {@linkplain PolicyEvent}.
      */
-    PolicyEvent build(EventCategory category, Policy policy);
+    PolicyEvent build(EventType category, Policy policy);
 
 }

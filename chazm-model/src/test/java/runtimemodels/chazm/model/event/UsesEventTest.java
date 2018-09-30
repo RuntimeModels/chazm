@@ -37,8 +37,8 @@ public class UsesEventTest {
         final Role r = rf.buildRole(idf.build(Role.class, "r"));
         final Pmf p = pf.buildPmf(idf.build(Pmf.class, "p"));
         final Uses u = uf.buildUses(r, p);
-        final UsesEvent ue1 = uef.build(EventCategory.ADDED, u);
-        final UsesEvent ue2 = uef.build(EventCategory.ADDED, u);
+        final UsesEvent ue1 = uef.build(EventType.ADDED, u);
+        final UsesEvent ue2 = uef.build(EventType.ADDED, u);
 
         assertThat(ue1, is(not(nullValue())));
         assertThat(ue1, is(not(sameInstance(ue2))));
@@ -62,7 +62,7 @@ public class UsesEventTest {
         exception.expect(instanceOf(ProvisionException.class));
         exception.expectMessage(containsString("2nd parameter of UsesEvent.<init>(UsesEvent.java:30) is not @Nullable"));
 
-        uef.build(EventCategory.ADDED, null);
+        uef.build(EventType.ADDED, null);
     }
 
     @Test
@@ -70,7 +70,7 @@ public class UsesEventTest {
         final Role r = rf.buildRole(idf.build(Role.class, "r"));
         final Pmf p = pf.buildPmf(idf.build(Pmf.class, "p"));
         final Uses u = uf.buildUses(r, p);
-        final UsesEvent ue = uef.build(EventCategory.ADDED, u);
+        final UsesEvent ue = uef.build(EventType.ADDED, u);
 
         assertThat(ue.getRoleId(), is(sameInstance(r.getId())));
     }
@@ -80,7 +80,7 @@ public class UsesEventTest {
         final Role r = rf.buildRole(idf.build(Role.class, "r"));
         final Pmf p = pf.buildPmf(idf.build(Pmf.class, "p"));
         final Uses u = uf.buildUses(r, p);
-        final UsesEvent ue = uef.build(EventCategory.ADDED, u);
+        final UsesEvent ue = uef.build(EventType.ADDED, u);
 
         assertThat(ue.getPmfId(), is(sameInstance(p.getId())));
     }
@@ -93,9 +93,9 @@ public class UsesEventTest {
         final Uses u1 = uf.buildUses(r1, p);
         final Uses u2 = uf.buildUses(r2, p);
         final Uses u3 = uf.buildUses(r1, p);
-        final UsesEvent ue1 = uef.build(EventCategory.ADDED, u1);
-        final UsesEvent ue2 = uef.build(EventCategory.ADDED, u2);
-        final UsesEvent ue3 = uef.build(EventCategory.ADDED, u3);
+        final UsesEvent ue1 = uef.build(EventType.ADDED, u1);
+        final UsesEvent ue2 = uef.build(EventType.ADDED, u2);
+        final UsesEvent ue3 = uef.build(EventType.ADDED, u3);
 
         assertThat(ue1, is(not(equalTo(ue2))));
         assertThat(ue1, is(equalTo(ue3)));
@@ -110,9 +110,9 @@ public class UsesEventTest {
         final Uses u1 = uf.buildUses(r1, p);
         final Uses u2 = uf.buildUses(r2, p);
         final Uses u3 = uf.buildUses(r1, p);
-        final UsesEvent ue1 = uef.build(EventCategory.ADDED, u1);
-        final UsesEvent ue2 = uef.build(EventCategory.ADDED, u2);
-        final UsesEvent ue3 = uef.build(EventCategory.ADDED, u3);
+        final UsesEvent ue1 = uef.build(EventType.ADDED, u1);
+        final UsesEvent ue2 = uef.build(EventType.ADDED, u2);
+        final UsesEvent ue3 = uef.build(EventType.ADDED, u3);
 
         assertThat(ue1.hashCode(), is(not(equalTo(ue2.hashCode()))));
         assertThat(ue1.hashCode(), is(equalTo(ue3.hashCode())));
@@ -126,9 +126,9 @@ public class UsesEventTest {
         final Uses u1 = uf.buildUses(r1, p);
         final Uses u2 = uf.buildUses(r2, p);
         final Uses u3 = uf.buildUses(r1, p);
-        final UsesEvent ue1 = uef.build(EventCategory.ADDED, u1);
-        final UsesEvent ue2 = uef.build(EventCategory.ADDED, u2);
-        final UsesEvent ue3 = uef.build(EventCategory.ADDED, u3);
+        final UsesEvent ue1 = uef.build(EventType.ADDED, u1);
+        final UsesEvent ue2 = uef.build(EventType.ADDED, u2);
+        final UsesEvent ue3 = uef.build(EventType.ADDED, u3);
 
         assertThat(ue1.toString(), is(not(equalTo(ue2.toString()))));
         assertThat(ue1.toString(), is(equalTo(ue3.toString())));

@@ -28,7 +28,7 @@ public class AssignmentEvent extends AbstractEvent {
     private transient String toString = null;
 
     @Inject
-    AssignmentEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final Assignment assignment) {
+    AssignmentEvent(@NotNull @Assisted final EventType category, @NotNull @Assisted final Assignment assignment) {
         super(category);
         agentId = assignment.getAgent().getId();
         roleId = assignment.getRole().getId();

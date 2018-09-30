@@ -1,5 +1,7 @@
 package runtimemodels.chazm.model;
 
+import io.reactivex.FlowableEmitter;
+import io.reactivex.FlowableOnSubscribe;
 import org.slf4j.Logger;
 import runtimemodels.chazm.api.Organization;
 import runtimemodels.chazm.api.entity.*;
@@ -10,17 +12,14 @@ import runtimemodels.chazm.api.id.UniqueId;
 import runtimemodels.chazm.api.relation.*;
 import runtimemodels.chazm.model.message.E;
 import runtimemodels.chazm.model.message.L;
-import runtimemodels.chazm.model.event.EventCategory;
+import runtimemodels.chazm.model.event.EventType;
 import runtimemodels.chazm.model.event.EventFactory;
 import runtimemodels.chazm.model.relation.RelationFactory;
 import runtimemodels.chazm.model.notification.Publisher;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -28,7 +27,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-class DefaultOrganization implements Organization {
+class DefaultOrganization implements Organization, FlowableOnSubscribe<Organization> {
 
     private static final String POSSESSES = "possesses";
     private static final String ASSIGNMENTS_BY_AGENT = "assignmentsByAgent";
@@ -76,7 +75,7 @@ class DefaultOrganization implements Organization {
         relations.assignmentsByAgent.put(agent.getId(), new ConcurrentHashMap<>());
         relations.possesses.put(agent.getId(), new ConcurrentHashMap<>());
         relations.has.put(agent.getId(), new ConcurrentHashMap<>());
-        publisher.post(eventFactory.build(EventCategory.ADDED, agent));
+        publisher.post(eventFactory.build(EventType.ADDED, agent));
     }
 
     @Override
@@ -102,7 +101,7 @@ class DefaultOrganization implements Organization {
             remove(id, relations.assignmentsByAgent, ASSIGNMENTS_BY_AGENT, this::removeAssignment);
             remove(id, relations.possesses, POSSESSES, c -> removePossesses(id, c));
             remove(id, relations.has, HAS, c -> removeHas(id, c));
-            publisher.post(eventFactory.build(EventCategory.REMOVED, agent));
+            publisher.post(eventFactory.build(EventType.REMOVED, agent));
         }
     }
 
@@ -124,7 +123,7 @@ class DefaultOrganization implements Organization {
         relations.neededBy.put(attribute.getId(), new ConcurrentHashMap<>());
         relations.hadBy.put(attribute.getId(), new ConcurrentHashMap<>());
         relations.moderatedBy.put(attribute.getId(), new ConcurrentHashMap<>());
-        publisher.post(eventFactory.build(EventCategory.ADDED, attribute));
+        publisher.post(eventFactory.build(EventType.ADDED, attribute));
     }
 
     @Override
@@ -150,7 +149,7 @@ class DefaultOrganization implements Organization {
             remove(id, relations.neededBy, NEEDED_BY, c -> removeNeeds(c, id));
             remove(id, relations.hadBy, HAD_BY, c -> removeHas(c, id));
             remove(id, relations.moderatedBy, MODERATED_BY, c -> removeModerates(c, id));
-            publisher.post(eventFactory.build(EventCategory.REMOVED, attribute));
+            publisher.post(eventFactory.build(EventType.REMOVED, attribute));
         }
     }
 
@@ -171,7 +170,7 @@ class DefaultOrganization implements Organization {
         entities.capabilities.put(capability.getId(), capability);
         relations.requiredBy.put(capability.getId(), new ConcurrentHashMap<>());
         relations.possessedBy.put(capability.getId(), new ConcurrentHashMap<>());
-        publisher.post(eventFactory.build(EventCategory.ADDED, capability));
+        publisher.post(eventFactory.build(EventType.ADDED, capability));
     }
 
     @Override
@@ -196,7 +195,7 @@ class DefaultOrganization implements Organization {
             final Capability capability = entities.capabilities.remove(id);
             remove(id, relations.requiredBy, REQUIRED_BY, c -> removeRequires(c, id));
             remove(id, relations.possessedBy, POSSESSED_BY, c -> removePossesses(c, id));
-            publisher.post(eventFactory.build(EventCategory.REMOVED, capability));
+            publisher.post(eventFactory.build(EventType.REMOVED, capability));
         }
     }
 
@@ -216,7 +215,7 @@ class DefaultOrganization implements Organization {
         /* add the characteristic, containedBy map */
         entities.characteristics.put(characteristic.getId(), characteristic);
         relations.containedBy.put(characteristic.getId(), new ConcurrentHashMap<>());
-        publisher.post(eventFactory.build(EventCategory.ADDED, characteristic));
+        publisher.post(eventFactory.build(EventType.ADDED, characteristic));
     }
 
     @Override
@@ -240,7 +239,7 @@ class DefaultOrganization implements Organization {
             /* remove characteristics, all associated contains relations */
             final Characteristic characteristic = entities.characteristics.remove(id);
             remove(id, relations.containedBy, CONTAINED_BY, c -> removeContains(c, id));
-            publisher.post(eventFactory.build(EventCategory.REMOVED, characteristic));
+            publisher.post(eventFactory.build(EventType.REMOVED, characteristic));
         }
     }
 
@@ -263,7 +262,7 @@ class DefaultOrganization implements Organization {
         final Map<UniqueId<InstanceGoal>, InstanceGoal> map = get(goal.getGoal().getId(), entities.instanceGoalsBySpecificationGoal,
                 INSTANCE_GOALS_BY_SPECIFICATION_GOAL);
         map.put(goal.getId(), goal);
-        publisher.post(eventFactory.build(EventCategory.ADDED, goal));
+        publisher.post(eventFactory.build(EventType.ADDED, goal));
     }
 
     @Override
@@ -297,7 +296,7 @@ class DefaultOrganization implements Organization {
                 log.warn(L.MAP_IS_MISSING_KEY.get(), INSTANCE_GOALS_BY_SPECIFICATION_GOAL, goal.getGoal().getId());
                 entities.instanceGoalsBySpecificationGoal.put(goal.getGoal().getId(), new ConcurrentHashMap<>());
             }
-            publisher.post(eventFactory.build(EventCategory.REMOVED, goal));
+            publisher.post(eventFactory.build(EventType.REMOVED, goal));
         }
     }
 
@@ -316,7 +315,7 @@ class DefaultOrganization implements Organization {
         checkNotExists(pmf, entities.pmfs::containsKey);
         /* add the pmf */
         entities.pmfs.put(pmf.getId(), pmf);
-        publisher.post(eventFactory.build(EventCategory.ADDED, pmf));
+        publisher.post(eventFactory.build(EventType.ADDED, pmf));
     }
 
     @Override
@@ -342,7 +341,7 @@ class DefaultOrganization implements Organization {
             if (relations.moderates.containsKey(id)) {
                 removeModerates(id, relations.moderates.get(id).getAttribute().getId());
             }
-            publisher.post(eventFactory.build(EventCategory.REMOVED, pmf));
+            publisher.post(eventFactory.build(EventType.REMOVED, pmf));
         }
     }
 
@@ -361,7 +360,7 @@ class DefaultOrganization implements Organization {
         checkNotExists(policy, entities.policies::containsKey);
         /* add the policy */
         entities.policies.put(policy.getId(), policy);
-        publisher.post(eventFactory.build(EventCategory.ADDED, policy));
+        publisher.post(eventFactory.build(EventType.ADDED, policy));
     }
 
     @Override
@@ -384,7 +383,7 @@ class DefaultOrganization implements Organization {
         if (entities.policies.containsKey(id)) {
             /* remove the policy */
             final Policy policy = entities.policies.remove(id);
-            publisher.post(eventFactory.build(EventCategory.REMOVED, policy));
+            publisher.post(eventFactory.build(EventType.REMOVED, policy));
         }
     }
 
@@ -409,7 +408,7 @@ class DefaultOrganization implements Organization {
         relations.uses.put(role.getId(), new ConcurrentHashMap<>());
         relations.contains.put(role.getId(), new ConcurrentHashMap<>());
         functions.goodness.put(role.getId(), goodness);
-        publisher.post(eventFactory.build(EventCategory.ADDED, role));
+        publisher.post(eventFactory.build(EventType.ADDED, role));
     }
 
     @Override
@@ -441,7 +440,7 @@ class DefaultOrganization implements Organization {
             remove(id, relations.uses, USES, c -> removeUses(id, c));
             remove(id, relations.contains, CONTAINS, c -> removeContains(id, c));
             functions.goodness.remove(id);
-            publisher.post(eventFactory.build(EventCategory.REMOVED, role));
+            publisher.post(eventFactory.build(EventType.REMOVED, role));
         }
     }
 
@@ -462,7 +461,7 @@ class DefaultOrganization implements Organization {
         entities.specificationGoals.put(goal.getId(), goal);
         entities.instanceGoalsBySpecificationGoal.put(goal.getId(), new ConcurrentHashMap<>());
         relations.achievedBy.put(goal.getId(), new ConcurrentHashMap<>());
-        publisher.post(eventFactory.build(EventCategory.ADDED, goal));
+        publisher.post(eventFactory.build(EventType.ADDED, goal));
     }
 
     @Override
@@ -487,7 +486,7 @@ class DefaultOrganization implements Organization {
             final SpecificationGoal goal = entities.specificationGoals.remove(id);
             remove(id, entities.instanceGoalsBySpecificationGoal, INSTANCE_GOALS_BY_SPECIFICATION_GOAL, this::removeInstanceGoal);
             remove(id, relations.achievedBy, ACHIEVED_BY, c -> removeAchieves(c, id));
-            publisher.post(eventFactory.build(EventCategory.REMOVED, goal));
+            publisher.post(eventFactory.build(EventType.REMOVED, goal));
         }
     }
 
@@ -513,7 +512,7 @@ class DefaultOrganization implements Organization {
         final Achieves achieves = relationFactory.buildAchieves(role, goal);
         map.put(goalId, achieves);
         addBy(achieves, relations.achievedBy, ACHIEVED_BY, goalId, roleId);
-        publisher.post(eventFactory.build(EventCategory.ADDED, achieves));
+        publisher.post(eventFactory.build(EventType.ADDED, achieves));
     }
 
     @Override
@@ -531,7 +530,7 @@ class DefaultOrganization implements Organization {
         if (relations.achieves.containsKey(roleId) && relations.achieves.get(roleId).containsKey(goalId)) {
             final Achieves achieves = relations.achieves.get(roleId).remove(goalId);
             removeBy(goalId, roleId, relations.achievedBy, ACHIEVED_BY);
-            publisher.post(eventFactory.build(EventCategory.REMOVED, achieves));
+            publisher.post(eventFactory.build(EventType.REMOVED, achieves));
         }
     }
 
@@ -549,7 +548,7 @@ class DefaultOrganization implements Organization {
         /* add the assignment */
         relations.assignments.put(assignment.getId(), assignment);
         relations.assignmentsByAgent.get(assignment.getAgent().getId()).put(assignment.getId(), assignment);
-        publisher.post(eventFactory.build(EventCategory.ADDED, assignment));
+        publisher.post(eventFactory.build(EventType.ADDED, assignment));
     }
 
     @Override
@@ -587,7 +586,7 @@ class DefaultOrganization implements Organization {
                 log.warn(L.MAP_IS_MISSING_KEY.get(), ASSIGNMENTS_BY_AGENT, assignment.getAgent().getId());
                 relations.assignmentsByAgent.put(assignment.getAgent().getId(), new ConcurrentHashMap<>());
             }
-            publisher.post(eventFactory.build(EventCategory.REMOVED, assignment));
+            publisher.post(eventFactory.build(EventType.REMOVED, assignment));
         }
     }
 
@@ -613,7 +612,7 @@ class DefaultOrganization implements Organization {
         final Contains contains = relationFactory.buildContains(role, characteristic, value);
         map.put(characteristicId, contains);
         addBy(contains, relations.containedBy, CONTAINED_BY, characteristicId, roleId);
-        publisher.post(eventFactory.build(EventCategory.ADDED, contains));
+        publisher.post(eventFactory.build(EventType.ADDED, contains));
     }
 
     @Override
@@ -639,7 +638,7 @@ class DefaultOrganization implements Organization {
         if (relations.contains.containsKey(roleId) && relations.contains.get(roleId).containsKey(characteristicId)) {
             final Contains contains = relations.contains.get(roleId).get(characteristicId);
             contains.setValue(value);
-            publisher.post(eventFactory.build(EventCategory.CHANGED, contains));
+            publisher.post(eventFactory.build(EventType.UPDATED, contains));
         }
     }
 
@@ -648,7 +647,7 @@ class DefaultOrganization implements Organization {
         if (relations.contains.containsKey(roleId) && relations.contains.get(roleId).containsKey(characteristicId)) {
             final Contains contains = relations.contains.get(roleId).remove(characteristicId);
             removeBy(characteristicId, roleId, relations.containedBy, CONTAINED_BY);
-            publisher.post(eventFactory.build(EventCategory.REMOVED, contains));
+            publisher.post(eventFactory.build(EventType.REMOVED, contains));
         }
     }
 
@@ -669,7 +668,7 @@ class DefaultOrganization implements Organization {
         final Has has = relationFactory.buildHas(agent, attribute, value);
         map.put(attributeId, has);
         addBy(has, relations.hadBy, HAD_BY, attributeId, agentId);
-        publisher.post(eventFactory.build(EventCategory.ADDED, has));
+        publisher.post(eventFactory.build(EventType.ADDED, has));
     }
 
     @Override
@@ -695,7 +694,7 @@ class DefaultOrganization implements Organization {
         if (relations.has.containsKey(agentId) && relations.has.get(agentId).containsKey(attributeId)) {
             final Has has = relations.has.get(agentId).get(attributeId);
             has.setValue(value);
-            publisher.post(eventFactory.build(EventCategory.CHANGED, has));
+            publisher.post(eventFactory.build(EventType.UPDATED, has));
         }
     }
 
@@ -704,7 +703,7 @@ class DefaultOrganization implements Organization {
         if (relations.has.containsKey(agentId) && relations.has.get(agentId).containsKey(attributeId)) {
             final Has has = relations.has.get(agentId).remove(attributeId);
             removeBy(attributeId, agentId, relations.hadBy, HAD_BY);
-            publisher.post(eventFactory.build(EventCategory.REMOVED, has));
+            publisher.post(eventFactory.build(EventType.REMOVED, has));
         }
     }
 
@@ -723,7 +722,7 @@ class DefaultOrganization implements Organization {
         final Moderates moderates = relationFactory.buildModerates(pmf, attribute);
         relations.moderates.put(pmfId, moderates);
         addBy(moderates, relations.moderatedBy, MODERATED_BY, attributeId, pmfId);
-        publisher.post(eventFactory.build(EventCategory.ADDED, moderates));
+        publisher.post(eventFactory.build(EventType.ADDED, moderates));
     }
 
     @Override
@@ -744,7 +743,7 @@ class DefaultOrganization implements Organization {
         if (relations.moderates.containsKey(pmfId)) {
             final Moderates moderates = relations.moderates.remove(pmfId);
             removeBy(attributeId, pmfId, relations.moderatedBy, MODERATED_BY);
-            publisher.post(eventFactory.build(EventCategory.REMOVED, moderates));
+            publisher.post(eventFactory.build(EventType.REMOVED, moderates));
         }
     }
 
@@ -766,7 +765,7 @@ class DefaultOrganization implements Organization {
         final Needs needs = relationFactory.buildNeeds(role, attribute);
         map.put(attributeId, needs);
         addBy(needs, relations.neededBy, NEEDED_BY, attributeId, roleId);
-        publisher.post(eventFactory.build(EventCategory.ADDED, needs));
+        publisher.post(eventFactory.build(EventType.ADDED, needs));
     }
 
     @Override
@@ -784,7 +783,7 @@ class DefaultOrganization implements Organization {
         if (relations.needs.containsKey(roleId) && relations.needs.get(roleId).containsKey(attributeId)) {
             final Needs needs = relations.needs.get(roleId).remove(attributeId);
             removeBy(attributeId, roleId, relations.neededBy, NEEDED_BY);
-            publisher.post(eventFactory.build(EventCategory.REMOVED, needs));
+            publisher.post(eventFactory.build(EventType.REMOVED, needs));
         }
     }
 
@@ -805,7 +804,7 @@ class DefaultOrganization implements Organization {
         final Possesses possesses = relationFactory.buildPossesses(agent, capability, score);
         map.put(capabilityId, possesses);
         addBy(possesses, relations.possessedBy, POSSESSED_BY, capabilityId, agentId);
-        publisher.post(eventFactory.build(EventCategory.ADDED, possesses));
+        publisher.post(eventFactory.build(EventType.ADDED, possesses));
     }
 
     @Override
@@ -831,7 +830,7 @@ class DefaultOrganization implements Organization {
         if (relations.possesses.containsKey(agentId) && relations.possesses.get(agentId).containsKey(capabilityId)) {
             final Possesses possesses = relations.possesses.get(agentId).get(capabilityId);
             possesses.setScore(score);
-            publisher.post(eventFactory.build(EventCategory.CHANGED, possesses));
+            publisher.post(eventFactory.build(EventType.UPDATED, possesses));
         }
     }
 
@@ -840,7 +839,7 @@ class DefaultOrganization implements Organization {
         if (relations.possesses.containsKey(agentId) && relations.possesses.get(agentId).containsKey(capabilityId)) {
             final Possesses possesses = relations.possesses.get(agentId).remove(capabilityId);
             removeBy(capabilityId, agentId, relations.possessedBy, POSSESSED_BY);
-            publisher.post(eventFactory.build(EventCategory.REMOVED, possesses));
+            publisher.post(eventFactory.build(EventType.REMOVED, possesses));
         }
     }
 
@@ -861,7 +860,7 @@ class DefaultOrganization implements Organization {
         final Requires requires = relationFactory.buildRequires(role, capability);
         map.put(capabilityId, requires);
         addBy(requires, relations.requiredBy, REQUIRED_BY, capabilityId, roleId);
-        publisher.post(eventFactory.build(EventCategory.ADDED, requires));
+        publisher.post(eventFactory.build(EventType.ADDED, requires));
     }
 
     @Override
@@ -879,7 +878,7 @@ class DefaultOrganization implements Organization {
         if (relations.requires.containsKey(roleId) && relations.requires.get(roleId).containsKey(capabilityId)) {
             final Requires requires = relations.requires.get(roleId).remove(capabilityId);
             removeBy(capabilityId, roleId, relations.requiredBy, REQUIRED_BY);
-            publisher.post(eventFactory.build(EventCategory.REMOVED, requires));
+            publisher.post(eventFactory.build(EventType.REMOVED, requires));
         }
     }
 
@@ -900,7 +899,7 @@ class DefaultOrganization implements Organization {
         final Uses uses = relationFactory.buildUses(role, pmf);
         map.put(pmfId, uses);
         addBy(uses, relations.usedBy, USED_BY, pmfId, roleId);
-        publisher.post(eventFactory.build(EventCategory.ADDED, uses));
+        publisher.post(eventFactory.build(EventType.ADDED, uses));
     }
 
     @Override
@@ -918,7 +917,7 @@ class DefaultOrganization implements Organization {
         if (relations.uses.containsKey(roleId) && relations.uses.get(roleId).containsKey(pmfId)) {
             final Uses uses = relations.uses.get(roleId).remove(pmfId);
             removeBy(pmfId, roleId, relations.usedBy, USED_BY);
-            publisher.post(eventFactory.build(EventCategory.REMOVED, uses));
+            publisher.post(eventFactory.build(EventType.REMOVED, uses));
         }
     }
 
@@ -1103,4 +1102,8 @@ class DefaultOrganization implements Organization {
         return result;
     }
 
+    @Override
+    public void subscribe(FlowableEmitter<Organization> emitter) throws Exception {
+        emitter.onNext(this);
+    }
 }

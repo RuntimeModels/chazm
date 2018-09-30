@@ -37,8 +37,8 @@ public class ModeratesEventTest {
         final Pmf p = pf.buildPmf(idf.build(Pmf.class, "p"));
         final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
         final Moderates m = mf.buildModerates(p, a);
-        final ModeratesEvent me1 = mef.build(EventCategory.ADDED, m);
-        final ModeratesEvent me2 = mef.build(EventCategory.ADDED, m);
+        final ModeratesEvent me1 = mef.build(EventType.ADDED, m);
+        final ModeratesEvent me2 = mef.build(EventType.ADDED, m);
 
         assertThat(me1, is(not(nullValue())));
         assertThat(me1, is(not(sameInstance(me2))));
@@ -62,7 +62,7 @@ public class ModeratesEventTest {
         exception.expect(instanceOf(ProvisionException.class));
         exception.expectMessage(containsString("2nd parameter of ModeratesEvent.<init>(ModeratesEvent.java:30) is not @Nullable"));
 
-        mef.build(EventCategory.ADDED, null);
+        mef.build(EventType.ADDED, null);
     }
 
     @Test
@@ -70,7 +70,7 @@ public class ModeratesEventTest {
         final Pmf p = pf.buildPmf(idf.build(Pmf.class, "p"));
         final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
         final Moderates m = mf.buildModerates(p, a);
-        final ModeratesEvent me = mef.build(EventCategory.ADDED, m);
+        final ModeratesEvent me = mef.build(EventType.ADDED, m);
 
         assertThat(me.getPmfId(), is(sameInstance(p.getId())));
     }
@@ -80,7 +80,7 @@ public class ModeratesEventTest {
         final Pmf p = pf.buildPmf(idf.build(Pmf.class, "p"));
         final Attribute a = af.buildAttribute(idf.build(Attribute.class, "a"), Attribute.Type.NEGATIVE_QUALITY);
         final Moderates m = mf.buildModerates(p, a);
-        final ModeratesEvent me = mef.build(EventCategory.ADDED, m);
+        final ModeratesEvent me = mef.build(EventType.ADDED, m);
 
         assertThat(me.getAttributeId(), is(sameInstance(a.getId())));
     }
@@ -93,9 +93,9 @@ public class ModeratesEventTest {
         final Moderates m1 = mf.buildModerates(p1, a);
         final Moderates m2 = mf.buildModerates(p2, a);
         final Moderates m3 = mf.buildModerates(p1, a);
-        final ModeratesEvent me1 = mef.build(EventCategory.ADDED, m1);
-        final ModeratesEvent me2 = mef.build(EventCategory.ADDED, m2);
-        final ModeratesEvent me3 = mef.build(EventCategory.ADDED, m3);
+        final ModeratesEvent me1 = mef.build(EventType.ADDED, m1);
+        final ModeratesEvent me2 = mef.build(EventType.ADDED, m2);
+        final ModeratesEvent me3 = mef.build(EventType.ADDED, m3);
 
         assertThat(me1, is(not(equalTo(me2))));
         assertThat(me1, is(equalTo(me3)));
@@ -110,9 +110,9 @@ public class ModeratesEventTest {
         final Moderates m1 = mf.buildModerates(p1, a);
         final Moderates m2 = mf.buildModerates(p2, a);
         final Moderates m3 = mf.buildModerates(p1, a);
-        final ModeratesEvent me1 = mef.build(EventCategory.ADDED, m1);
-        final ModeratesEvent me2 = mef.build(EventCategory.ADDED, m2);
-        final ModeratesEvent me3 = mef.build(EventCategory.ADDED, m3);
+        final ModeratesEvent me1 = mef.build(EventType.ADDED, m1);
+        final ModeratesEvent me2 = mef.build(EventType.ADDED, m2);
+        final ModeratesEvent me3 = mef.build(EventType.ADDED, m3);
 
         assertThat(me1.hashCode(), is(not(equalTo(me2.hashCode()))));
         assertThat(me1.hashCode(), is(equalTo(me3.hashCode())));
@@ -126,9 +126,9 @@ public class ModeratesEventTest {
         final Moderates m1 = mf.buildModerates(p1, a);
         final Moderates m2 = mf.buildModerates(p2, a);
         final Moderates m3 = mf.buildModerates(p1, a);
-        final ModeratesEvent me1 = mef.build(EventCategory.ADDED, m1);
-        final ModeratesEvent me2 = mef.build(EventCategory.ADDED, m2);
-        final ModeratesEvent me3 = mef.build(EventCategory.ADDED, m3);
+        final ModeratesEvent me1 = mef.build(EventType.ADDED, m1);
+        final ModeratesEvent me2 = mef.build(EventType.ADDED, m2);
+        final ModeratesEvent me3 = mef.build(EventType.ADDED, m3);
 
         assertThat(me1.toString(), is(not(equalTo(me2.toString()))));
         assertThat(me1.toString(), is(equalTo(me3.toString())));

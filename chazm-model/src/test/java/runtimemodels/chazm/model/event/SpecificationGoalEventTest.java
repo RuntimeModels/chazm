@@ -29,8 +29,8 @@ public class SpecificationGoalEventTest {
     @Test
     public void testSpecificationGoalEventFactory() {
         final SpecificationGoal g = gf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "g"));
-        final SpecificationGoalEvent ge1 = gef.build(EventCategory.ADDED, g);
-        final SpecificationGoalEvent ge2 = gef.build(EventCategory.ADDED, g);
+        final SpecificationGoalEvent ge1 = gef.build(EventType.ADDED, g);
+        final SpecificationGoalEvent ge2 = gef.build(EventType.ADDED, g);
 
         assertThat(ge1, is(not(nullValue())));
         assertThat(ge1, is(not(sameInstance(ge2))));
@@ -54,13 +54,13 @@ public class SpecificationGoalEventTest {
         exception.expect(instanceOf(ProvisionException.class));
         exception.expectMessage((containsString("2nd parameter of SpecificationGoalEvent.<init>(SpecificationGoalEvent.java:27) is not @Nullable")));
 
-        gef.build(EventCategory.ADDED, null);
+        gef.build(EventType.ADDED, null);
     }
 
     @Test
     public void testGetId() {
         final SpecificationGoal g = gf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "g"));
-        final SpecificationGoalEvent ge = gef.build(EventCategory.ADDED, g);
+        final SpecificationGoalEvent ge = gef.build(EventType.ADDED, g);
 
         assertThat(ge.getId(), is(sameInstance(g.getId())));
     }
@@ -70,9 +70,9 @@ public class SpecificationGoalEventTest {
         final SpecificationGoal g1 = gf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "g1"));
         final SpecificationGoal g2 = gf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "g2"));
         final SpecificationGoal g3 = gf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "g1"));
-        final SpecificationGoalEvent ge1 = gef.build(EventCategory.ADDED, g1);
-        final SpecificationGoalEvent ge2 = gef.build(EventCategory.ADDED, g2);
-        final SpecificationGoalEvent ge3 = gef.build(EventCategory.ADDED, g3);
+        final SpecificationGoalEvent ge1 = gef.build(EventType.ADDED, g1);
+        final SpecificationGoalEvent ge2 = gef.build(EventType.ADDED, g2);
+        final SpecificationGoalEvent ge3 = gef.build(EventType.ADDED, g3);
 
         assertThat(ge1, is(not(equalTo(ge2))));
         assertThat(ge1, is(equalTo(ge3)));
@@ -84,9 +84,9 @@ public class SpecificationGoalEventTest {
         final SpecificationGoal g1 = gf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "g1"));
         final SpecificationGoal g2 = gf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "g2"));
         final SpecificationGoal g3 = gf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "g1"));
-        final SpecificationGoalEvent ge1 = gef.build(EventCategory.ADDED, g1);
-        final SpecificationGoalEvent ge2 = gef.build(EventCategory.ADDED, g2);
-        final SpecificationGoalEvent ge3 = gef.build(EventCategory.ADDED, g3);
+        final SpecificationGoalEvent ge1 = gef.build(EventType.ADDED, g1);
+        final SpecificationGoalEvent ge2 = gef.build(EventType.ADDED, g2);
+        final SpecificationGoalEvent ge3 = gef.build(EventType.ADDED, g3);
 
         assertThat(ge1.hashCode(), is(not(equalTo(ge2.hashCode()))));
         assertThat(ge1.hashCode(), is(equalTo(ge3.hashCode())));
@@ -97,9 +97,9 @@ public class SpecificationGoalEventTest {
         final SpecificationGoal g1 = gf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "g1"));
         final SpecificationGoal g2 = gf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "g2"));
         final SpecificationGoal g3 = gf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "g1"));
-        final SpecificationGoalEvent ge1 = gef.build(EventCategory.ADDED, g1);
-        final SpecificationGoalEvent ge2 = gef.build(EventCategory.ADDED, g2);
-        final SpecificationGoalEvent ge3 = gef.build(EventCategory.ADDED, g3);
+        final SpecificationGoalEvent ge1 = gef.build(EventType.ADDED, g1);
+        final SpecificationGoalEvent ge2 = gef.build(EventType.ADDED, g2);
+        final SpecificationGoalEvent ge3 = gef.build(EventType.ADDED, g3);
 
         assertThat(ge1.toString(), is(not(equalTo(ge2.toString()))));
         assertThat(ge1.toString(), is(equalTo(ge3.toString())));

@@ -26,7 +26,7 @@ public class UsesEvent extends AbstractEvent {
     private transient String toString = null;
 
     @Inject
-    UsesEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final Uses uses) {
+    UsesEvent(@NotNull @Assisted final EventType category, @NotNull @Assisted final Uses uses) {
         super(category);
         roleId = uses.getRole().getId();
         pmfId = uses.getPmf().getId();

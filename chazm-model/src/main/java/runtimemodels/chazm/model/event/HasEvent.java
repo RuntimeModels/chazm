@@ -27,7 +27,7 @@ public class HasEvent extends AbstractEvent {
     private transient String toString = null;
 
     @Inject
-    HasEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final Has has) {
+    HasEvent(@NotNull @Assisted final EventType category, @NotNull @Assisted final Has has) {
         super(category);
         agentId = has.getAgent().getId();
         attributeId = has.getAttribute().getId();

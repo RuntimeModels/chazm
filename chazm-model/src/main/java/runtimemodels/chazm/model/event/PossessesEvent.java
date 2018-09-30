@@ -27,7 +27,7 @@ public class PossessesEvent extends AbstractEvent {
     private transient String toString = null;
 
     @Inject
-    PossessesEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final Possesses possesses) {
+    PossessesEvent(@NotNull @Assisted final EventType category, @NotNull @Assisted final Possesses possesses) {
         super(category);
         agentId = possesses.getAgent().getId();
         capabilityId = possesses.getCapability().getId();

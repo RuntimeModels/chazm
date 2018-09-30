@@ -26,7 +26,7 @@ public class ModeratesEvent extends AbstractEvent {
     private transient String toString = null;
 
     @Inject
-    ModeratesEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final Moderates moderates) {
+    ModeratesEvent(@NotNull @Assisted final EventType category, @NotNull @Assisted final Moderates moderates) {
         super(category);
         pmfId = moderates.getPmf().getId();
         attributeId = moderates.getAttribute().getId();

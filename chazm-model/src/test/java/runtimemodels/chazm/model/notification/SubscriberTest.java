@@ -72,7 +72,7 @@ public class SubscriberTest {
         new Expectations() {
             {
                 event.getCategory();
-                returns(EventCategory.ADDED, EventCategory.ADDED, EventCategory.CHANGED, EventCategory.REMOVED);
+                returns(EventType.ADDED, EventType.ADDED, EventType.UPDATED, EventType.REMOVED);
                 event.getRoleId();
                 result = roleId;
                 event.getGoalId();
@@ -97,11 +97,11 @@ public class SubscriberTest {
             {
                 logger.info(anyString, any, any);
                 times = 4;
-                logger.debug("Received ({}, {}): role = {}, goal = {}", AchievesEvent.class.getSimpleName(), EventCategory.ADDED, roleId, specGoalId);
+                logger.debug("Received ({}, {}): role = {}, goal = {}", AchievesEvent.class.getSimpleName(), EventType.ADDED, roleId, specGoalId);
                 times = 2;
-                logger.debug("Received ({}, {}): role = {}, goal = {}", AchievesEvent.class.getSimpleName(), EventCategory.CHANGED, roleId, specGoalId);
+                logger.debug("Received ({}, {}): role = {}, goal = {}", AchievesEvent.class.getSimpleName(), EventType.UPDATED, roleId, specGoalId);
                 times = 1;
-                logger.debug("Received ({}, {}): role = {}, goal = {}", AchievesEvent.class.getSimpleName(), EventCategory.REMOVED, roleId, specGoalId);
+                logger.debug("Received ({}, {}): role = {}, goal = {}", AchievesEvent.class.getSimpleName(), EventType.REMOVED, roleId, specGoalId);
                 times = 1;
             }
         };
@@ -113,7 +113,7 @@ public class SubscriberTest {
         new Expectations() {
             {
                 event.getCategory();
-                returns(EventCategory.ADDED, EventCategory.ADDED, EventCategory.CHANGED, EventCategory.REMOVED);
+                returns(EventType.ADDED, EventType.ADDED, EventType.UPDATED, EventType.REMOVED);
                 event.getId();
                 result = agentId;
             }
@@ -136,11 +136,11 @@ public class SubscriberTest {
             {
                 logger.info(anyString, any, any);
                 times = 4;
-                logger.debug("Received ({}, {}): id = {}", AgentEvent.class.getSimpleName(), EventCategory.ADDED, agentId);
+                logger.debug("Received ({}, {}): id = {}", AgentEvent.class.getSimpleName(), EventType.ADDED, agentId);
                 times = 2;
-                logger.debug("Received ({}, {}): id = {}", AgentEvent.class.getSimpleName(), EventCategory.CHANGED, agentId);
+                logger.debug("Received ({}, {}): id = {}", AgentEvent.class.getSimpleName(), EventType.UPDATED, agentId);
                 times = 1;
-                logger.debug("Received ({}, {}): id = {}", AgentEvent.class.getSimpleName(), EventCategory.REMOVED, agentId);
+                logger.debug("Received ({}, {}): id = {}", AgentEvent.class.getSimpleName(), EventType.REMOVED, agentId);
                 times = 1;
             }
         };
@@ -152,7 +152,7 @@ public class SubscriberTest {
         new Expectations() {
             {
                 event.getCategory();
-                returns(EventCategory.ADDED, EventCategory.ADDED, EventCategory.CHANGED, EventCategory.REMOVED);
+                returns(EventType.ADDED, EventType.ADDED, EventType.UPDATED, EventType.REMOVED);
                 event.getAgentId();
                 result = agentId;
                 event.getRoleId();
@@ -179,13 +179,13 @@ public class SubscriberTest {
             {
                 logger.info(anyString, any, any);
                 times = 4;
-                logger.debug("Received ({}, {}): agent = {}, role = {}, goal = {}", AssignmentEvent.class.getSimpleName(), EventCategory.ADDED, agentId,
+                logger.debug("Received ({}, {}): agent = {}, role = {}, goal = {}", AssignmentEvent.class.getSimpleName(), EventType.ADDED, agentId,
                         roleId, instGoalId);
                 times = 2;
-                logger.debug("Received ({}, {}): agent = {}, role = {}, goal = {}", AssignmentEvent.class.getSimpleName(), EventCategory.CHANGED, agentId,
+                logger.debug("Received ({}, {}): agent = {}, role = {}, goal = {}", AssignmentEvent.class.getSimpleName(), EventType.UPDATED, agentId,
                         roleId, instGoalId);
                 times = 1;
-                logger.debug("Received ({}, {}): agent = {}, role = {}, goal = {}", AssignmentEvent.class.getSimpleName(), EventCategory.REMOVED, agentId,
+                logger.debug("Received ({}, {}): agent = {}, role = {}, goal = {}", AssignmentEvent.class.getSimpleName(), EventType.REMOVED, agentId,
                         roleId, instGoalId);
                 times = 1;
             }
@@ -198,7 +198,7 @@ public class SubscriberTest {
         new Expectations() {
             {
                 event.getCategory();
-                returns(EventCategory.ADDED, EventCategory.ADDED, EventCategory.CHANGED, EventCategory.REMOVED);
+                returns(EventType.ADDED, EventType.ADDED, EventType.UPDATED, EventType.REMOVED);
                 event.getId();
                 result = attributeId;
             }
@@ -221,11 +221,11 @@ public class SubscriberTest {
             {
                 logger.info(anyString, any, any);
                 times = 4;
-                logger.debug("Received ({}, {}): id = {}", AttributeEvent.class.getSimpleName(), EventCategory.ADDED, attributeId);
+                logger.debug("Received ({}, {}): id = {}", AttributeEvent.class.getSimpleName(), EventType.ADDED, attributeId);
                 times = 2;
-                logger.debug("Received ({}, {}): id = {}", AttributeEvent.class.getSimpleName(), EventCategory.CHANGED, attributeId);
+                logger.debug("Received ({}, {}): id = {}", AttributeEvent.class.getSimpleName(), EventType.UPDATED, attributeId);
                 times = 1;
-                logger.debug("Received ({}, {}): id = {}", AttributeEvent.class.getSimpleName(), EventCategory.REMOVED, attributeId);
+                logger.debug("Received ({}, {}): id = {}", AttributeEvent.class.getSimpleName(), EventType.REMOVED, attributeId);
                 times = 1;
             }
         };
@@ -237,7 +237,7 @@ public class SubscriberTest {
         new Expectations() {
             {
                 event.getCategory();
-                returns(EventCategory.ADDED, EventCategory.ADDED, EventCategory.CHANGED, EventCategory.REMOVED);
+                returns(EventType.ADDED, EventType.ADDED, EventType.UPDATED, EventType.REMOVED);
                 event.getId();
                 result = capabilityId;
             }
@@ -260,11 +260,11 @@ public class SubscriberTest {
             {
                 logger.info(anyString, any, any);
                 times = 4;
-                logger.debug("Received ({}, {}): id = {}", CapabilityEvent.class.getSimpleName(), EventCategory.ADDED, capabilityId);
+                logger.debug("Received ({}, {}): id = {}", CapabilityEvent.class.getSimpleName(), EventType.ADDED, capabilityId);
                 times = 2;
-                logger.debug("Received ({}, {}): id = {}", CapabilityEvent.class.getSimpleName(), EventCategory.CHANGED, capabilityId);
+                logger.debug("Received ({}, {}): id = {}", CapabilityEvent.class.getSimpleName(), EventType.UPDATED, capabilityId);
                 times = 1;
-                logger.debug("Received ({}, {}): id = {}", CapabilityEvent.class.getSimpleName(), EventCategory.REMOVED, capabilityId);
+                logger.debug("Received ({}, {}): id = {}", CapabilityEvent.class.getSimpleName(), EventType.REMOVED, capabilityId);
                 times = 1;
             }
         };
@@ -276,7 +276,7 @@ public class SubscriberTest {
         new Expectations() {
             {
                 event.getCategory();
-                returns(EventCategory.ADDED, EventCategory.ADDED, EventCategory.CHANGED, EventCategory.REMOVED);
+                returns(EventType.ADDED, EventType.ADDED, EventType.UPDATED, EventType.REMOVED);
                 event.getId();
                 result = characteristicId;
             }
@@ -299,11 +299,11 @@ public class SubscriberTest {
             {
                 logger.info(anyString, any, any);
                 times = 4;
-                logger.debug("Received ({}, {}): id = {}", CharacteristicEvent.class.getSimpleName(), EventCategory.ADDED, characteristicId);
+                logger.debug("Received ({}, {}): id = {}", CharacteristicEvent.class.getSimpleName(), EventType.ADDED, characteristicId);
                 times = 2;
-                logger.debug("Received ({}, {}): id = {}", CharacteristicEvent.class.getSimpleName(), EventCategory.CHANGED, characteristicId);
+                logger.debug("Received ({}, {}): id = {}", CharacteristicEvent.class.getSimpleName(), EventType.UPDATED, characteristicId);
                 times = 1;
-                logger.debug("Received ({}, {}): id = {}", CharacteristicEvent.class.getSimpleName(), EventCategory.REMOVED, characteristicId);
+                logger.debug("Received ({}, {}): id = {}", CharacteristicEvent.class.getSimpleName(), EventType.REMOVED, characteristicId);
                 times = 1;
             }
         };
@@ -315,7 +315,7 @@ public class SubscriberTest {
         new Expectations() {
             {
                 event.getCategory();
-                returns(EventCategory.ADDED, EventCategory.ADDED, EventCategory.CHANGED, EventCategory.REMOVED);
+                returns(EventType.ADDED, EventType.ADDED, EventType.UPDATED, EventType.REMOVED);
                 event.getRoleId();
                 result = roleId;
                 event.getCharacteristicId();
@@ -342,13 +342,13 @@ public class SubscriberTest {
             {
                 logger.info(anyString, any, any);
                 times = 4;
-                logger.debug("Received ({}, {}): role = {}, characteristic = {}, value = {}", ContainsEvent.class.getSimpleName(), EventCategory.ADDED, roleId,
+                logger.debug("Received ({}, {}): role = {}, characteristic = {}, value = {}", ContainsEvent.class.getSimpleName(), EventType.ADDED, roleId,
                         characteristicId, 0.25);
                 times = 2;
-                logger.debug("Received ({}, {}): role = {}, characteristic = {}, value = {}", ContainsEvent.class.getSimpleName(), EventCategory.CHANGED,
+                logger.debug("Received ({}, {}): role = {}, characteristic = {}, value = {}", ContainsEvent.class.getSimpleName(), EventType.UPDATED,
                         roleId, characteristicId, 0.25);
                 times = 1;
-                logger.debug("Received ({}, {}): role = {}, characteristic = {}, value = {}", ContainsEvent.class.getSimpleName(), EventCategory.REMOVED,
+                logger.debug("Received ({}, {}): role = {}, characteristic = {}, value = {}", ContainsEvent.class.getSimpleName(), EventType.REMOVED,
                         roleId, characteristicId, 0.25);
                 times = 1;
             }
@@ -361,7 +361,7 @@ public class SubscriberTest {
         new Expectations() {
             {
                 event.getCategory();
-                returns(EventCategory.ADDED, EventCategory.ADDED, EventCategory.CHANGED, EventCategory.REMOVED);
+                returns(EventType.ADDED, EventType.ADDED, EventType.UPDATED, EventType.REMOVED);
                 event.getAgentId();
                 result = agentId;
                 event.getAttributeId();
@@ -388,13 +388,13 @@ public class SubscriberTest {
             {
                 logger.info(anyString, any, any);
                 times = 4;
-                logger.debug("Received ({}, {}): agent = {}, attribute = {}, value = {}", HasEvent.class.getSimpleName(), EventCategory.ADDED, agentId,
+                logger.debug("Received ({}, {}): agent = {}, attribute = {}, value = {}", HasEvent.class.getSimpleName(), EventType.ADDED, agentId,
                         attributeId, 0.7);
                 times = 2;
-                logger.debug("Received ({}, {}): agent = {}, attribute = {}, value = {}", HasEvent.class.getSimpleName(), EventCategory.CHANGED, agentId,
+                logger.debug("Received ({}, {}): agent = {}, attribute = {}, value = {}", HasEvent.class.getSimpleName(), EventType.UPDATED, agentId,
                         attributeId, 0.7);
                 times = 1;
-                logger.debug("Received ({}, {}): agent = {}, attribute = {}, value = {}", HasEvent.class.getSimpleName(), EventCategory.REMOVED, agentId,
+                logger.debug("Received ({}, {}): agent = {}, attribute = {}, value = {}", HasEvent.class.getSimpleName(), EventType.REMOVED, agentId,
                         attributeId, 0.7);
                 times = 1;
             }
@@ -407,7 +407,7 @@ public class SubscriberTest {
         new Expectations() {
             {
                 event.getCategory();
-                returns(EventCategory.ADDED, EventCategory.ADDED, EventCategory.CHANGED, EventCategory.REMOVED);
+                returns(EventType.ADDED, EventType.ADDED, EventType.UPDATED, EventType.REMOVED);
                 event.getId();
                 result = instGoalId;
             }
@@ -430,11 +430,11 @@ public class SubscriberTest {
             {
                 logger.info(anyString, any, any);
                 times = 4;
-                logger.debug("Received ({}, {}): id = {}", InstanceGoalEvent.class.getSimpleName(), EventCategory.ADDED, instGoalId);
+                logger.debug("Received ({}, {}): id = {}", InstanceGoalEvent.class.getSimpleName(), EventType.ADDED, instGoalId);
                 times = 2;
-                logger.debug("Received ({}, {}): id = {}", InstanceGoalEvent.class.getSimpleName(), EventCategory.CHANGED, instGoalId);
+                logger.debug("Received ({}, {}): id = {}", InstanceGoalEvent.class.getSimpleName(), EventType.UPDATED, instGoalId);
                 times = 1;
-                logger.debug("Received ({}, {}): id = {}", InstanceGoalEvent.class.getSimpleName(), EventCategory.REMOVED, instGoalId);
+                logger.debug("Received ({}, {}): id = {}", InstanceGoalEvent.class.getSimpleName(), EventType.REMOVED, instGoalId);
                 times = 1;
             }
         };
@@ -446,7 +446,7 @@ public class SubscriberTest {
         new Expectations() {
             {
                 event.getCategory();
-                returns(EventCategory.ADDED, EventCategory.ADDED, EventCategory.CHANGED, EventCategory.REMOVED);
+                returns(EventType.ADDED, EventType.ADDED, EventType.UPDATED, EventType.REMOVED);
                 event.getPmfId();
                 result = pmfId;
                 event.getAttributeId();
@@ -471,11 +471,11 @@ public class SubscriberTest {
             {
                 logger.info(anyString, any, any);
                 times = 4;
-                logger.debug("Received ({}, {}): pmf = {}, attribute = {}", ModeratesEvent.class.getSimpleName(), EventCategory.ADDED, pmfId, attributeId);
+                logger.debug("Received ({}, {}): pmf = {}, attribute = {}", ModeratesEvent.class.getSimpleName(), EventType.ADDED, pmfId, attributeId);
                 times = 2;
-                logger.debug("Received ({}, {}): pmf = {}, attribute = {}", ModeratesEvent.class.getSimpleName(), EventCategory.CHANGED, pmfId, attributeId);
+                logger.debug("Received ({}, {}): pmf = {}, attribute = {}", ModeratesEvent.class.getSimpleName(), EventType.UPDATED, pmfId, attributeId);
                 times = 1;
-                logger.debug("Received ({}, {}): pmf = {}, attribute = {}", ModeratesEvent.class.getSimpleName(), EventCategory.REMOVED, pmfId, attributeId);
+                logger.debug("Received ({}, {}): pmf = {}, attribute = {}", ModeratesEvent.class.getSimpleName(), EventType.REMOVED, pmfId, attributeId);
                 times = 1;
             }
         };
@@ -487,7 +487,7 @@ public class SubscriberTest {
         new Expectations() {
             {
                 event.getCategory();
-                returns(EventCategory.ADDED, EventCategory.ADDED, EventCategory.CHANGED, EventCategory.REMOVED);
+                returns(EventType.ADDED, EventType.ADDED, EventType.UPDATED, EventType.REMOVED);
                 event.getRoleId();
                 result = roleId;
                 event.getAttributeId();
@@ -512,11 +512,11 @@ public class SubscriberTest {
             {
                 logger.info(anyString, any, any);
                 times = 4;
-                logger.debug("Received ({}, {}): role = {}, attribute = {}", NeedsEvent.class.getSimpleName(), EventCategory.ADDED, roleId, attributeId);
+                logger.debug("Received ({}, {}): role = {}, attribute = {}", NeedsEvent.class.getSimpleName(), EventType.ADDED, roleId, attributeId);
                 times = 2;
-                logger.debug("Received ({}, {}): role = {}, attribute = {}", NeedsEvent.class.getSimpleName(), EventCategory.CHANGED, roleId, attributeId);
+                logger.debug("Received ({}, {}): role = {}, attribute = {}", NeedsEvent.class.getSimpleName(), EventType.UPDATED, roleId, attributeId);
                 times = 1;
-                logger.debug("Received ({}, {}): role = {}, attribute = {}", NeedsEvent.class.getSimpleName(), EventCategory.REMOVED, roleId, attributeId);
+                logger.debug("Received ({}, {}): role = {}, attribute = {}", NeedsEvent.class.getSimpleName(), EventType.REMOVED, roleId, attributeId);
                 times = 1;
             }
         };
@@ -528,7 +528,7 @@ public class SubscriberTest {
         new Expectations() {
             {
                 event.getCategory();
-                returns(EventCategory.ADDED, EventCategory.ADDED, EventCategory.CHANGED, EventCategory.REMOVED);
+                returns(EventType.ADDED, EventType.ADDED, EventType.UPDATED, EventType.REMOVED);
                 event.getId();
                 result = pmfId;
             }
@@ -551,11 +551,11 @@ public class SubscriberTest {
             {
                 logger.info(anyString, any, any);
                 times = 4;
-                logger.debug("Received ({}, {}): id = {}", PmfEvent.class.getSimpleName(), EventCategory.ADDED, pmfId);
+                logger.debug("Received ({}, {}): id = {}", PmfEvent.class.getSimpleName(), EventType.ADDED, pmfId);
                 times = 2;
-                logger.debug("Received ({}, {}): id = {}", PmfEvent.class.getSimpleName(), EventCategory.CHANGED, pmfId);
+                logger.debug("Received ({}, {}): id = {}", PmfEvent.class.getSimpleName(), EventType.UPDATED, pmfId);
                 times = 1;
-                logger.debug("Received ({}, {}): id = {}", PmfEvent.class.getSimpleName(), EventCategory.REMOVED, pmfId);
+                logger.debug("Received ({}, {}): id = {}", PmfEvent.class.getSimpleName(), EventType.REMOVED, pmfId);
                 times = 1;
             }
         };
@@ -567,7 +567,7 @@ public class SubscriberTest {
         new Expectations() {
             {
                 event.getCategory();
-                returns(EventCategory.ADDED, EventCategory.ADDED, EventCategory.CHANGED, EventCategory.REMOVED);
+                returns(EventType.ADDED, EventType.ADDED, EventType.UPDATED, EventType.REMOVED);
                 event.getId();
                 result = policyId;
             }
@@ -590,11 +590,11 @@ public class SubscriberTest {
             {
                 logger.info(anyString, any, any);
                 times = 4;
-                logger.debug("Received ({}, {}): id = {}", PolicyEvent.class.getSimpleName(), EventCategory.ADDED, policyId);
+                logger.debug("Received ({}, {}): id = {}", PolicyEvent.class.getSimpleName(), EventType.ADDED, policyId);
                 times = 2;
-                logger.debug("Received ({}, {}): id = {}", PolicyEvent.class.getSimpleName(), EventCategory.CHANGED, policyId);
+                logger.debug("Received ({}, {}): id = {}", PolicyEvent.class.getSimpleName(), EventType.UPDATED, policyId);
                 times = 1;
-                logger.debug("Received ({}, {}): id = {}", PolicyEvent.class.getSimpleName(), EventCategory.REMOVED, policyId);
+                logger.debug("Received ({}, {}): id = {}", PolicyEvent.class.getSimpleName(), EventType.REMOVED, policyId);
                 times = 1;
             }
         };
@@ -606,7 +606,7 @@ public class SubscriberTest {
         new Expectations() {
             {
                 event.getCategory();
-                returns(EventCategory.ADDED, EventCategory.ADDED, EventCategory.CHANGED, EventCategory.REMOVED);
+                returns(EventType.ADDED, EventType.ADDED, EventType.UPDATED, EventType.REMOVED);
                 event.getAgentId();
                 result = agentId;
                 event.getCapabilityId();
@@ -633,13 +633,13 @@ public class SubscriberTest {
             {
                 logger.info(anyString, any, any);
                 times = 4;
-                logger.debug("Received ({}, {}): agent = {}, capability = {}, score = {}", PossessesEvent.class.getSimpleName(), EventCategory.ADDED, agentId,
+                logger.debug("Received ({}, {}): agent = {}, capability = {}, score = {}", PossessesEvent.class.getSimpleName(), EventType.ADDED, agentId,
                         capabilityId, 0.8);
                 times = 2;
-                logger.debug("Received ({}, {}): agent = {}, capability = {}, score = {}", PossessesEvent.class.getSimpleName(), EventCategory.CHANGED,
+                logger.debug("Received ({}, {}): agent = {}, capability = {}, score = {}", PossessesEvent.class.getSimpleName(), EventType.UPDATED,
                         agentId, capabilityId, 0.8);
                 times = 1;
-                logger.debug("Received ({}, {}): agent = {}, capability = {}, score = {}", PossessesEvent.class.getSimpleName(), EventCategory.REMOVED,
+                logger.debug("Received ({}, {}): agent = {}, capability = {}, score = {}", PossessesEvent.class.getSimpleName(), EventType.REMOVED,
                         agentId, capabilityId, 0.8);
                 times = 1;
             }
@@ -652,7 +652,7 @@ public class SubscriberTest {
         new Expectations() {
             {
                 event.getCategory();
-                returns(EventCategory.ADDED, EventCategory.ADDED, EventCategory.CHANGED, EventCategory.REMOVED);
+                returns(EventType.ADDED, EventType.ADDED, EventType.UPDATED, EventType.REMOVED);
                 event.getRoleId();
                 result = roleId;
                 event.getCapabilityId();
@@ -677,11 +677,11 @@ public class SubscriberTest {
             {
                 logger.info(anyString, any, any);
                 times = 4;
-                logger.debug("Received ({}, {}): role = {}, capability = {}", RequiresEvent.class.getSimpleName(), EventCategory.ADDED, roleId, capabilityId);
+                logger.debug("Received ({}, {}): role = {}, capability = {}", RequiresEvent.class.getSimpleName(), EventType.ADDED, roleId, capabilityId);
                 times = 2;
-                logger.debug("Received ({}, {}): role = {}, capability = {}", RequiresEvent.class.getSimpleName(), EventCategory.CHANGED, roleId, capabilityId);
+                logger.debug("Received ({}, {}): role = {}, capability = {}", RequiresEvent.class.getSimpleName(), EventType.UPDATED, roleId, capabilityId);
                 times = 1;
-                logger.debug("Received ({}, {}): role = {}, capability = {}", RequiresEvent.class.getSimpleName(), EventCategory.REMOVED, roleId, capabilityId);
+                logger.debug("Received ({}, {}): role = {}, capability = {}", RequiresEvent.class.getSimpleName(), EventType.REMOVED, roleId, capabilityId);
                 times = 1;
             }
         };
@@ -693,7 +693,7 @@ public class SubscriberTest {
         new Expectations() {
             {
                 event.getCategory();
-                returns(EventCategory.ADDED, EventCategory.ADDED, EventCategory.CHANGED, EventCategory.REMOVED);
+                returns(EventType.ADDED, EventType.ADDED, EventType.UPDATED, EventType.REMOVED);
                 event.getId();
                 result = roleId;
             }
@@ -716,11 +716,11 @@ public class SubscriberTest {
             {
                 logger.info(anyString, any, any);
                 times = 4;
-                logger.debug("Received ({}, {}): id = {}", RoleEvent.class.getSimpleName(), EventCategory.ADDED, roleId);
+                logger.debug("Received ({}, {}): id = {}", RoleEvent.class.getSimpleName(), EventType.ADDED, roleId);
                 times = 2;
-                logger.debug("Received ({}, {}): id = {}", RoleEvent.class.getSimpleName(), EventCategory.CHANGED, roleId);
+                logger.debug("Received ({}, {}): id = {}", RoleEvent.class.getSimpleName(), EventType.UPDATED, roleId);
                 times = 1;
-                logger.debug("Received ({}, {}): id = {}", RoleEvent.class.getSimpleName(), EventCategory.REMOVED, roleId);
+                logger.debug("Received ({}, {}): id = {}", RoleEvent.class.getSimpleName(), EventType.REMOVED, roleId);
                 times = 1;
             }
         };
@@ -732,7 +732,7 @@ public class SubscriberTest {
         new Expectations() {
             {
                 event.getCategory();
-                returns(EventCategory.ADDED, EventCategory.ADDED, EventCategory.CHANGED, EventCategory.REMOVED);
+                returns(EventType.ADDED, EventType.ADDED, EventType.UPDATED, EventType.REMOVED);
                 event.getId();
                 result = specGoalId;
             }
@@ -755,11 +755,11 @@ public class SubscriberTest {
             {
                 logger.info(anyString, any, any);
                 times = 4;
-                logger.debug("Received ({}, {}): id = {}", SpecificationGoalEvent.class.getSimpleName(), EventCategory.ADDED, specGoalId);
+                logger.debug("Received ({}, {}): id = {}", SpecificationGoalEvent.class.getSimpleName(), EventType.ADDED, specGoalId);
                 times = 2;
-                logger.debug("Received ({}, {}): id = {}", SpecificationGoalEvent.class.getSimpleName(), EventCategory.CHANGED, specGoalId);
+                logger.debug("Received ({}, {}): id = {}", SpecificationGoalEvent.class.getSimpleName(), EventType.UPDATED, specGoalId);
                 times = 1;
-                logger.debug("Received ({}, {}): id = {}", SpecificationGoalEvent.class.getSimpleName(), EventCategory.REMOVED, specGoalId);
+                logger.debug("Received ({}, {}): id = {}", SpecificationGoalEvent.class.getSimpleName(), EventType.REMOVED, specGoalId);
                 times = 1;
             }
         };
@@ -771,7 +771,7 @@ public class SubscriberTest {
         new Expectations() {
             {
                 event.getCategory();
-                returns(EventCategory.ADDED, EventCategory.ADDED, EventCategory.CHANGED, EventCategory.REMOVED);
+                returns(EventType.ADDED, EventType.ADDED, EventType.UPDATED, EventType.REMOVED);
                 event.getRoleId();
                 result = roleId;
                 event.getPmfId();
@@ -796,11 +796,11 @@ public class SubscriberTest {
             {
                 logger.info(anyString, any, any);
                 times = 4;
-                logger.debug("Received ({}, {}): role = {}, pmf = {}", UsesEvent.class.getSimpleName(), EventCategory.ADDED, roleId, pmfId);
+                logger.debug("Received ({}, {}): role = {}, pmf = {}", UsesEvent.class.getSimpleName(), EventType.ADDED, roleId, pmfId);
                 times = 2;
-                logger.debug("Received ({}, {}): role = {}, pmf = {}", UsesEvent.class.getSimpleName(), EventCategory.CHANGED, roleId, pmfId);
+                logger.debug("Received ({}, {}): role = {}, pmf = {}", UsesEvent.class.getSimpleName(), EventType.UPDATED, roleId, pmfId);
                 times = 1;
-                logger.debug("Received ({}, {}): role = {}, pmf = {}", UsesEvent.class.getSimpleName(), EventCategory.REMOVED, roleId, pmfId);
+                logger.debug("Received ({}, {}): role = {}, pmf = {}", UsesEvent.class.getSimpleName(), EventType.REMOVED, roleId, pmfId);
                 times = 1;
             }
         };

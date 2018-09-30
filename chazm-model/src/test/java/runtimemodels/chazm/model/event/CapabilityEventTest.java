@@ -29,8 +29,8 @@ public class CapabilityEventTest {
     @Test
     public void testCapabilityEventFactory() {
         final Capability c = cf.buildCapability(idf.build(Capability.class, "c"));
-        final CapabilityEvent ce1 = cef.build(EventCategory.ADDED, c);
-        final CapabilityEvent ce2 = cef.build(EventCategory.ADDED, c);
+        final CapabilityEvent ce1 = cef.build(EventType.ADDED, c);
+        final CapabilityEvent ce2 = cef.build(EventType.ADDED, c);
 
         assertThat(ce1, is(not(nullValue())));
         assertThat(ce1, is(not(sameInstance(ce2))));
@@ -54,13 +54,13 @@ public class CapabilityEventTest {
         exception.expect(instanceOf(ProvisionException.class));
         exception.expectMessage(containsString("2nd parameter of CapabilityEvent.<init>(CapabilityEvent.java:27) is not @Nullable"));
 
-        cef.build(EventCategory.ADDED, null);
+        cef.build(EventType.ADDED, null);
     }
 
     @Test
     public void testGetId() {
         final Capability c = cf.buildCapability(idf.build(Capability.class, "c"));
-        final CapabilityEvent ce = cef.build(EventCategory.ADDED, c);
+        final CapabilityEvent ce = cef.build(EventType.ADDED, c);
 
         assertThat(ce.getId(), is(sameInstance(c.getId())));
     }
@@ -70,9 +70,9 @@ public class CapabilityEventTest {
         final Capability c1 = cf.buildCapability(idf.build(Capability.class, "c1"));
         final Capability c2 = cf.buildCapability(idf.build(Capability.class, "c2"));
         final Capability c3 = cf.buildCapability(idf.build(Capability.class, "c1"));
-        final CapabilityEvent ce1 = cef.build(EventCategory.ADDED, c1);
-        final CapabilityEvent ce2 = cef.build(EventCategory.ADDED, c2);
-        final CapabilityEvent ce3 = cef.build(EventCategory.ADDED, c3);
+        final CapabilityEvent ce1 = cef.build(EventType.ADDED, c1);
+        final CapabilityEvent ce2 = cef.build(EventType.ADDED, c2);
+        final CapabilityEvent ce3 = cef.build(EventType.ADDED, c3);
 
         assertThat(ce1, is(not(equalTo(ce2))));
         assertThat(ce1, is(equalTo(ce3)));
@@ -84,9 +84,9 @@ public class CapabilityEventTest {
         final Capability c1 = cf.buildCapability(idf.build(Capability.class, "c1"));
         final Capability c2 = cf.buildCapability(idf.build(Capability.class, "c2"));
         final Capability c3 = cf.buildCapability(idf.build(Capability.class, "c1"));
-        final CapabilityEvent ce1 = cef.build(EventCategory.ADDED, c1);
-        final CapabilityEvent ce2 = cef.build(EventCategory.ADDED, c2);
-        final CapabilityEvent ce3 = cef.build(EventCategory.ADDED, c3);
+        final CapabilityEvent ce1 = cef.build(EventType.ADDED, c1);
+        final CapabilityEvent ce2 = cef.build(EventType.ADDED, c2);
+        final CapabilityEvent ce3 = cef.build(EventType.ADDED, c3);
 
         assertThat(ce1.hashCode(), is(not(equalTo(ce2.hashCode()))));
         assertThat(ce1.hashCode(), is(equalTo(ce3.hashCode())));
@@ -97,9 +97,9 @@ public class CapabilityEventTest {
         final Capability c1 = cf.buildCapability(idf.build(Capability.class, "c1"));
         final Capability c2 = cf.buildCapability(idf.build(Capability.class, "c2"));
         final Capability c3 = cf.buildCapability(idf.build(Capability.class, "c1"));
-        final CapabilityEvent ce1 = cef.build(EventCategory.ADDED, c1);
-        final CapabilityEvent ce2 = cef.build(EventCategory.ADDED, c2);
-        final CapabilityEvent ce3 = cef.build(EventCategory.ADDED, c3);
+        final CapabilityEvent ce1 = cef.build(EventType.ADDED, c1);
+        final CapabilityEvent ce2 = cef.build(EventType.ADDED, c2);
+        final CapabilityEvent ce3 = cef.build(EventType.ADDED, c3);
 
         assertThat(ce1.toString(), is(not(equalTo(ce2.toString()))));
         assertThat(ce1.toString(), is(equalTo(ce3.toString())));

@@ -34,8 +34,8 @@ public class InstanceGoalEventTest {
         final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
         final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
         });
-        final InstanceGoalEvent ige1 = igef.build(EventCategory.ADDED, ig);
-        final InstanceGoalEvent ige2 = igef.build(EventCategory.ADDED, ig);
+        final InstanceGoalEvent ige1 = igef.build(EventType.ADDED, ig);
+        final InstanceGoalEvent ige2 = igef.build(EventType.ADDED, ig);
 
         assertThat(ige1, is(not(nullValue())));
         assertThat(ige1, is(not(sameInstance(ige2))));
@@ -59,7 +59,7 @@ public class InstanceGoalEventTest {
         exception.expect(instanceOf(ProvisionException.class));
         exception.expectMessage(containsString("2nd parameter of InstanceGoalEvent.<init>(InstanceGoalEvent.java:31) is not @Nullable"));
 
-        igef.build(EventCategory.ADDED, null);
+        igef.build(EventType.ADDED, null);
     }
 
     @Test
@@ -67,7 +67,7 @@ public class InstanceGoalEventTest {
         final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
         final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
         });
-        final InstanceGoalEvent ige = igef.build(EventCategory.ADDED, ig);
+        final InstanceGoalEvent ige = igef.build(EventType.ADDED, ig);
 
         assertThat(ige.getId(), is(sameInstance(ig.getId())));
     }
@@ -77,7 +77,7 @@ public class InstanceGoalEventTest {
         final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
         final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
         });
-        final InstanceGoalEvent ige = igef.build(EventCategory.ADDED, ig);
+        final InstanceGoalEvent ige = igef.build(EventType.ADDED, ig);
 
         assertThat(ige.getSpecificationGoalId(), is(sameInstance(ig.getGoal().getId())));
     }
@@ -87,7 +87,7 @@ public class InstanceGoalEventTest {
         final SpecificationGoal sg = sgf.buildSpecificationGoal(idf.build(SpecificationGoal.class, "sg"));
         final InstanceGoal ig = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
         });
-        final InstanceGoalEvent ige = igef.build(EventCategory.ADDED, ig);
+        final InstanceGoalEvent ige = igef.build(EventType.ADDED, ig);
 
         assertThat(ige.getParameter(), is(sameInstance(ig.getParameter())));
     }
@@ -101,9 +101,9 @@ public class InstanceGoalEventTest {
         });
         final InstanceGoal ig3 = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig1"), sg, new InstanceGoal.Parameter() {
         });
-        final InstanceGoalEvent ige1 = igef.build(EventCategory.ADDED, ig1);
-        final InstanceGoalEvent ige2 = igef.build(EventCategory.ADDED, ig2);
-        final InstanceGoalEvent ige3 = igef.build(EventCategory.ADDED, ig3);
+        final InstanceGoalEvent ige1 = igef.build(EventType.ADDED, ig1);
+        final InstanceGoalEvent ige2 = igef.build(EventType.ADDED, ig2);
+        final InstanceGoalEvent ige3 = igef.build(EventType.ADDED, ig3);
 
         assertThat(ige1, is(not(equalTo(ige2))));
         assertThat(ige1, is(equalTo(ige3)));
@@ -119,9 +119,9 @@ public class InstanceGoalEventTest {
         });
         final InstanceGoal ig3 = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig1"), sg, new InstanceGoal.Parameter() {
         });
-        final InstanceGoalEvent ige1 = igef.build(EventCategory.ADDED, ig1);
-        final InstanceGoalEvent ige2 = igef.build(EventCategory.ADDED, ig2);
-        final InstanceGoalEvent ige3 = igef.build(EventCategory.ADDED, ig3);
+        final InstanceGoalEvent ige1 = igef.build(EventType.ADDED, ig1);
+        final InstanceGoalEvent ige2 = igef.build(EventType.ADDED, ig2);
+        final InstanceGoalEvent ige3 = igef.build(EventType.ADDED, ig3);
 
         assertThat(ige1.hashCode(), is(not(equalTo(ige2.hashCode()))));
         assertThat(ige1.hashCode(), is(equalTo(ige3.hashCode())));
@@ -135,9 +135,9 @@ public class InstanceGoalEventTest {
         final InstanceGoal ig1 = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig1"), sg, p1);
         final InstanceGoal ig2 = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig2"), sg, p1);
         final InstanceGoal ig3 = igf.buildInstanceGoal(idf.build(InstanceGoal.class, "ig1"), sg, p1);
-        final InstanceGoalEvent ige1 = igef.build(EventCategory.ADDED, ig1);
-        final InstanceGoalEvent ige2 = igef.build(EventCategory.ADDED, ig2);
-        final InstanceGoalEvent ige3 = igef.build(EventCategory.ADDED, ig3);
+        final InstanceGoalEvent ige1 = igef.build(EventType.ADDED, ig1);
+        final InstanceGoalEvent ige2 = igef.build(EventType.ADDED, ig2);
+        final InstanceGoalEvent ige3 = igef.build(EventType.ADDED, ig3);
 
         assertThat(ige1.toString(), is(not(equalTo(ige2.toString()))));
         assertThat(ige1.toString(), is(equalTo(ige3.toString())));

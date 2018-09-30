@@ -38,8 +38,8 @@ public class HasEventTest {
         });
         final Attribute aa = aaf.buildAttribute(idf.build(Attribute.class, "aa"), Attribute.Type.NEGATIVE_QUALITY);
         final Has h = hf.buildHas(a, aa, 1d);
-        final HasEvent he1 = hef.build(EventCategory.ADDED, h);
-        final HasEvent he2 = hef.build(EventCategory.ADDED, h);
+        final HasEvent he1 = hef.build(EventType.ADDED, h);
+        final HasEvent he2 = hef.build(EventType.ADDED, h);
 
         assertThat(he1, is(not(nullValue())));
         assertThat(he1, is(not(sameInstance(he2))));
@@ -63,7 +63,7 @@ public class HasEventTest {
         exception.expect(instanceOf(ProvisionException.class));
         exception.expectMessage(containsString("2nd parameter of HasEvent.<init>(HasEvent.java:31) is not @Nullable"));
 
-        hef.build(EventCategory.ADDED, null);
+        hef.build(EventType.ADDED, null);
     }
 
     @Test
@@ -72,7 +72,7 @@ public class HasEventTest {
         });
         final Attribute aa = aaf.buildAttribute(idf.build(Attribute.class, "aa"), Attribute.Type.NEGATIVE_QUALITY);
         final Has h = hf.buildHas(a, aa, 1d);
-        final HasEvent he = hef.build(EventCategory.ADDED, h);
+        final HasEvent he = hef.build(EventType.ADDED, h);
 
         assertThat(he.getAgentId(), is(sameInstance(a.getId())));
     }
@@ -83,7 +83,7 @@ public class HasEventTest {
         });
         final Attribute aa = aaf.buildAttribute(idf.build(Attribute.class, "aa"), Attribute.Type.NEGATIVE_QUALITY);
         final Has h = hf.buildHas(a, aa, 1d);
-        final HasEvent he = hef.build(EventCategory.ADDED, h);
+        final HasEvent he = hef.build(EventType.ADDED, h);
 
         assertThat(he.getAttributeId(), is(sameInstance(aa.getId())));
     }
@@ -94,7 +94,7 @@ public class HasEventTest {
         });
         final Attribute aa = aaf.buildAttribute(idf.build(Attribute.class, "aa"), Attribute.Type.NEGATIVE_QUALITY);
         final Has h = hf.buildHas(a, aa, 1d);
-        final HasEvent he = hef.build(EventCategory.ADDED, h);
+        final HasEvent he = hef.build(EventType.ADDED, h);
 
         assertThat(he.getValue(), is(equalTo(h.getValue())));
     }
@@ -109,9 +109,9 @@ public class HasEventTest {
         final Has h1 = hf.buildHas(a1, aa, 1d);
         final Has h2 = hf.buildHas(a2, aa, 1d);
         final Has h3 = hf.buildHas(a1, aa, 1d);
-        final HasEvent he1 = hef.build(EventCategory.ADDED, h1);
-        final HasEvent he2 = hef.build(EventCategory.ADDED, h2);
-        final HasEvent he3 = hef.build(EventCategory.ADDED, h3);
+        final HasEvent he1 = hef.build(EventType.ADDED, h1);
+        final HasEvent he2 = hef.build(EventType.ADDED, h2);
+        final HasEvent he3 = hef.build(EventType.ADDED, h3);
 
         assertThat(he1, is(not(equalTo(he2))));
         assertThat(he1, is(equalTo(he3)));
@@ -128,9 +128,9 @@ public class HasEventTest {
         final Has h1 = hf.buildHas(a1, aa, 1d);
         final Has h2 = hf.buildHas(a2, aa, 1d);
         final Has h3 = hf.buildHas(a1, aa, 1d);
-        final HasEvent he1 = hef.build(EventCategory.ADDED, h1);
-        final HasEvent he2 = hef.build(EventCategory.ADDED, h2);
-        final HasEvent he3 = hef.build(EventCategory.ADDED, h3);
+        final HasEvent he1 = hef.build(EventType.ADDED, h1);
+        final HasEvent he2 = hef.build(EventType.ADDED, h2);
+        final HasEvent he3 = hef.build(EventType.ADDED, h3);
 
         assertThat(he1.hashCode(), is(not(equalTo(he2.hashCode()))));
         assertThat(he1.hashCode(), is(equalTo(he3.hashCode())));
@@ -146,9 +146,9 @@ public class HasEventTest {
         final Has h1 = hf.buildHas(a1, aa, 1d);
         final Has h2 = hf.buildHas(a2, aa, 1d);
         final Has h3 = hf.buildHas(a1, aa, 1d);
-        final HasEvent he1 = hef.build(EventCategory.ADDED, h1);
-        final HasEvent he2 = hef.build(EventCategory.ADDED, h2);
-        final HasEvent he3 = hef.build(EventCategory.ADDED, h3);
+        final HasEvent he1 = hef.build(EventType.ADDED, h1);
+        final HasEvent he2 = hef.build(EventType.ADDED, h2);
+        final HasEvent he3 = hef.build(EventType.ADDED, h3);
 
         assertThat(he1.toString(), is(not(equalTo(he2.toString()))));
         assertThat(he1.toString(), is(equalTo(he3.toString())));

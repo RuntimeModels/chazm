@@ -29,8 +29,8 @@ public class PmfEventTest {
     @Test
     public void testPmfEventFactory() {
         final Pmf p = pf.buildPmf(idf.build(Pmf.class, "p"));
-        final PmfEvent pe1 = pef.build(EventCategory.ADDED, p);
-        final PmfEvent pe2 = pef.build(EventCategory.ADDED, p);
+        final PmfEvent pe1 = pef.build(EventType.ADDED, p);
+        final PmfEvent pe2 = pef.build(EventType.ADDED, p);
 
         assertThat(pe1, is(not(nullValue())));
         assertThat(pe1, is(not(sameInstance(pe2))));
@@ -54,13 +54,13 @@ public class PmfEventTest {
         exception.expect(instanceOf(ProvisionException.class));
         exception.expectMessage(containsString("2nd parameter of PmfEvent.<init>(PmfEvent.java:27) is not @Nullable"));
 
-        pef.build(EventCategory.ADDED, null);
+        pef.build(EventType.ADDED, null);
     }
 
     @Test
     public void testGetId() {
         final Pmf p = pf.buildPmf(idf.build(Pmf.class, "p"));
-        final PmfEvent pe = pef.build(EventCategory.ADDED, p);
+        final PmfEvent pe = pef.build(EventType.ADDED, p);
 
         assertThat(pe.getId(), is(sameInstance(p.getId())));
     }
@@ -70,9 +70,9 @@ public class PmfEventTest {
         final Pmf p1 = pf.buildPmf(idf.build(Pmf.class, "p1"));
         final Pmf p2 = pf.buildPmf(idf.build(Pmf.class, "p2"));
         final Pmf p3 = pf.buildPmf(idf.build(Pmf.class, "p1"));
-        final PmfEvent pe1 = pef.build(EventCategory.ADDED, p1);
-        final PmfEvent pe2 = pef.build(EventCategory.ADDED, p2);
-        final PmfEvent pe3 = pef.build(EventCategory.ADDED, p3);
+        final PmfEvent pe1 = pef.build(EventType.ADDED, p1);
+        final PmfEvent pe2 = pef.build(EventType.ADDED, p2);
+        final PmfEvent pe3 = pef.build(EventType.ADDED, p3);
 
         assertThat(pe1, is(not(equalTo(pe2))));
         assertThat(pe1, is(equalTo(pe3)));
@@ -84,9 +84,9 @@ public class PmfEventTest {
         final Pmf p1 = pf.buildPmf(idf.build(Pmf.class, "p1"));
         final Pmf p2 = pf.buildPmf(idf.build(Pmf.class, "p2"));
         final Pmf p3 = pf.buildPmf(idf.build(Pmf.class, "p1"));
-        final PmfEvent pe1 = pef.build(EventCategory.ADDED, p1);
-        final PmfEvent pe2 = pef.build(EventCategory.ADDED, p2);
-        final PmfEvent pe3 = pef.build(EventCategory.ADDED, p3);
+        final PmfEvent pe1 = pef.build(EventType.ADDED, p1);
+        final PmfEvent pe2 = pef.build(EventType.ADDED, p2);
+        final PmfEvent pe3 = pef.build(EventType.ADDED, p3);
 
         assertThat(pe1.hashCode(), is(not(equalTo(pe2.hashCode()))));
         assertThat(pe1.hashCode(), is(equalTo(pe3.hashCode())));
@@ -97,9 +97,9 @@ public class PmfEventTest {
         final Pmf p1 = pf.buildPmf(idf.build(Pmf.class, "p1"));
         final Pmf p2 = pf.buildPmf(idf.build(Pmf.class, "p2"));
         final Pmf p3 = pf.buildPmf(idf.build(Pmf.class, "p1"));
-        final PmfEvent pe1 = pef.build(EventCategory.ADDED, p1);
-        final PmfEvent pe2 = pef.build(EventCategory.ADDED, p2);
-        final PmfEvent pe3 = pef.build(EventCategory.ADDED, p3);
+        final PmfEvent pe1 = pef.build(EventType.ADDED, p1);
+        final PmfEvent pe2 = pef.build(EventType.ADDED, p2);
+        final PmfEvent pe3 = pef.build(EventType.ADDED, p3);
 
         assertThat(pe1.toString(), is(not(equalTo(pe2.toString()))));
         assertThat(pe1.toString(), is(equalTo(pe3.toString())));
