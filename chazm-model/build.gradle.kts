@@ -2,6 +2,8 @@ import chazm.Dependencies
 import chazm.`guice-assistedinject`
 import chazm.`guice-bom`
 import chazm.guice
+import org.jetbrains.kotlin.gradle.dsl.Coroutines
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.time.Instant
 
 val moduleName = "runtimemodels.chazm.model"
@@ -12,6 +14,7 @@ plugins {
     `maven-publish`
     signing
     id("com.jfrog.bintray")
+    kotlin("jvm") version ("1.2.71")
 }
 
 repositories {
@@ -28,6 +31,7 @@ group = rootProject.group
 version = "${rootProject.version}.0.0"
 
 dependencies {
+    implementation(kotlin("stdlib-jdk8"))
     implementation(project(":chazm-api"))
     `guice-bom`(::implementation)
     guice(::implementation)
@@ -82,6 +86,12 @@ bintray {
     pkg.version.released = Instant.now().toString()
 }
 
+kotlin {
+    experimental {
+        coroutines = Coroutines.ENABLE
+    }
+}
+
 tasks {
     named("compileJava", JavaCompile::class) {
         inputs.property("moduleName", moduleName)
@@ -103,7 +113,7 @@ tasks {
         }
     }
     named("test", Test::class) {
-//        inputs.property("moduleName", moduleName)
+        //        inputs.property("moduleName", moduleName)
 //        doFirst {
 //            jvmArgs = listOf(
 //                    "--module-path", classpath.asPath,
@@ -119,6 +129,11 @@ tasks {
             csv.isEnabled = false
             xml.isEnabled = true
             html.isEnabled = System.getenv("CI").isNullOrBlank()
+        }
+    }
+    withType(KotlinCompile::class) {
+        kotlinOptions {
+            jvmTarget = "1.8"
         }
     }
 }
