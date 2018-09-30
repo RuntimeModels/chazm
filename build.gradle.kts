@@ -12,6 +12,7 @@ plugins {
 
     chazm.Plugins.spring.dependencyManagement.add(this)
     chazm.Plugins.bintray.add(this) apply false
+    id("com.github.ben-manes.versions") version "0.20.0"
 }
 
 buildScan {
