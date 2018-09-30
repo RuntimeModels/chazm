@@ -11,7 +11,7 @@ plugins {
     `maven-publish`
     signing
     id("com.jfrog.bintray")
-    kotlin("jvm") version ("1.2.71")
+    buildSrc.Plugins.Kotlin.`add-jvm`(this)
 }
 
 repositories {
