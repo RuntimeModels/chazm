@@ -73,7 +73,9 @@ tasks {
     named("compileJava", JavaCompile::class) {
         inputs.property("moduleName", moduleName)
         doFirst {
-            options.compilerArgs = listOf("--module-path", classpath.asPath)
+            options.compilerArgs = listOf(
+                    "--module-path", classpath.asPath
+            )
             classpath = files()
         }
     }
