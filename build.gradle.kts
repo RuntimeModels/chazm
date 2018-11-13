@@ -1,17 +1,14 @@
-import chazm.Dependencies
-
 plugins {
     `build-scan`
     base
     eclipse
     idea
 
-//    id("com.github.kt3k.coveralls") version "2.8.2"
-//    id("org.sonarqube") version "2.6.2"
-//    id("org.standardout.versioneye") version "1.5.0"
+//    ID("com.github.kt3k.coveralls") version "2.8.2"
+//    ID("org.sonarqube") version "2.6.2"
+//    ID("org.standardout.versioneye") version "1.5.0"
 
-    chazm.Plugins.spring.dependencyManagement.add(this)
-    chazm.Plugins.bintray.add(this) apply false
+    `bintray-version` apply false
 }
 
 buildScan {
@@ -31,28 +28,11 @@ apply(from = "ext.gradle")
 
 //add(from = "jacocoTestReport.gradle")
 
-dependencyManagement {
-    val javaeeVersion: String by project
-    val jmockitVersion: String by project
-    val junitVersion: String by project
-    val lombokVersion: String by project
-    dependencies {
-        dependency("javax:javaee-api:$javaeeVersion")
-        dependency("org.jmockit:jmockit:$jmockitVersion")
-        dependency("junit:junit:$junitVersion")
-        dependency("org.projectlombok:lombok:$lombokVersion")
-    }
-
-    imports {
-        mavenBom("io.spring.platform:platform-bom:2.0.8.RELEASE")
-        mavenBom(Dependencies.guice.bom)
-    }
-}
 
 tasks {
     withType(Wrapper::class) {
         distributionType = Wrapper.DistributionType.ALL
-        gradleVersion = chazm.gradle
+        gradleVersion = Gradle.VERSION
     }
     create("printInfo") {
         doLast {
