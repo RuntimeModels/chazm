@@ -18,7 +18,7 @@ public interface Attribute extends Identifiable<Attribute> {
     Type getType();
 
     /**
-     * The {@linkplain Type}> enumerates the various types of {@linkplain Attribute}s.
+     * The {@linkplain Type} enumerates the various types of {@linkplain Attribute}s.
      *
      * @author Christopher Zhong
      * @since 5.0
