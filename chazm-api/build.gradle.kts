@@ -1,14 +1,12 @@
 import java.time.Instant
 
-val moduleName = "runtimemodels.chazm.api"
-val junit = "org.junit.jupiter.api"
-
 plugins {
     `java-library`
     jacoco
+    distribution
     `maven-publish`
     signing
-    id("com.jfrog.bintray")
+    bintray
 }
 
 repositories {
@@ -25,23 +23,50 @@ group = rootProject.group
 version = "${rootProject.version}.0.0"
 
 dependencies {
-    testImplementation(d.junit.bom)
-    testImplementation(d.junit.jupiter.api)
-    testImplementation(d.junit.jupiter.params)
-    testImplementation(d.`assertj-core`)
-    testRuntimeOnly(d.junit.jupiter.engine)
+    testImplementation(platform(org.junit.`junit-bom`))
+    testImplementation(org.junit.jupiter.`junit-jupiter-api`)
+    testImplementation(org.junit.jupiter.`junit-jupiter-params`)
+    testImplementation(org.assertj.`assertj-core`)
+
+    testRuntimeOnly(org.junit.jupiter.`junit-jupiter-engine`)
+}
+
+tasks.jar<Jar> {
+    manifest {
+        attributes["API-Title"] = project.name
+        attributes["API-Version"] = project.version
+    }
 }
 
 val sourceJar by tasks.registering(Jar::class) {
     classifier = "sources"
-    from(sourceSets["main"].allJava)
+    from(sourceSets.main.get().allJava)
+    manifest = tasks.jar.get().manifest
+}
+
+val javadocJar by tasks.registering(Jar::class) {
+    dependsOn(tasks.javadoc)
+    classifier = "javadoc"
+    from(tasks.javadoc.get().destinationDir)
+    manifest = tasks.jar.get().manifest
+}
+
+distributions {
+    main {
+        contents {
+            from(tasks.jar)
+            from(sourceJar)
+            from(javadocJar)
+        }
+    }
 }
 
 publishing {
     publications {
-        register("mavenJava", MavenPublication::class) {
-            from(components["java"])
+        create<MavenPublication>("mavenJava") {
+            artifact(tasks.jar.get())
             artifact(sourceJar.get())
+            artifact(javadocJar.get())
         }
     }
 }
@@ -69,14 +94,17 @@ bintray {
 }
 
 tasks {
-    named("compileJava", JavaCompile::class) {
+    val moduleName = "runtimemodels.chazm.api"
+    val junit = "org.junit.jupiter.api"
+
+    compileJava<JavaCompile> {
         inputs.property("moduleName", moduleName)
         doFirst {
             options.compilerArgs = listOf("--module-path", classpath.asPath)
             classpath = files()
         }
     }
-    named("compileTestJava", JavaCompile::class) {
+    compileTestJava<JavaCompile> {
         inputs.property("moduleName", moduleName)
         doFirst {
             options.compilerArgs = listOf(
@@ -88,7 +116,7 @@ tasks {
             classpath = files()
         }
     }
-    named("test", Test::class) {
+    test<Test> {
         useJUnitPlatform()
         inputs.property("moduleName", moduleName)
         doFirst {
@@ -103,7 +131,7 @@ tasks {
             classpath = files()
         }
     }
-    withType(JacocoReport::class) {
+    jacocoTestReport<JacocoReport> {
         reports {
             csv.isEnabled = false
             xml.isEnabled = true

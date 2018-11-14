@@ -15,15 +15,6 @@ import java.io.Serializable;
 public interface InstanceGoal extends Identifiable<InstanceGoal> {
 
     /**
-     * The {@linkplain Parameter} interface defines the parameter of an {@linkplain InstanceGoal}.
-     *
-     * @author Christopher Zhong
-     * @since 7.0.0
-     */
-    interface Parameter extends Serializable {
-    }
-
-    /**
      * Returns the {@linkplain SpecificationGoal} that instantiated this {@linkplain InstanceGoal}.
      *
      * @return the {@linkplain SpecificationGoal} that instantiated this {@linkplain InstanceGoal}.
@@ -36,5 +27,14 @@ public interface InstanceGoal extends Identifiable<InstanceGoal> {
      * @return the {@linkplain Parameter} of this {@linkplain InstanceGoal}.
      */
     Parameter getParameter();
+
+    /**
+     * The {@linkplain Parameter} interface defines the parameter of an {@linkplain InstanceGoal}.
+     *
+     * @author Christopher Zhong
+     * @since 7.0.0
+     */
+    interface Parameter extends Serializable {
+    }
 
 }

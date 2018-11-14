@@ -11,7 +11,14 @@ import runtimemodels.chazm.api.id.Identifiable;
  */
 public interface Attribute extends Identifiable<Attribute> {
     /**
-     * The {@linkplain Type}> enumerates the various types of {@linkplain Attribute}s.
+     * Returns the {@linkplain Type} of this {@linkplain Attribute}.
+     *
+     * @return the {@linkplain Type} of this {@linkplain Attribute}.
+     */
+    Type getType();
+
+    /**
+     * The {@linkplain Type} enumerates the various types of {@linkplain Attribute}s.
      *
      * @author Christopher Zhong
      * @since 5.0
@@ -44,11 +51,4 @@ public interface Attribute extends Identifiable<Attribute> {
          */
         NEGATIVE_UNBOUNDED
     }
-
-    /**
-     * Returns the {@linkplain Type} of this {@linkplain Attribute}.
-     *
-     * @return the {@linkplain Type} of this {@linkplain Attribute}.
-     */
-    Type getType();
 }

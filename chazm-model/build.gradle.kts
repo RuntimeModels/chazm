@@ -7,7 +7,7 @@ plugins {
     jacoco
     `maven-publish`
     signing
-    id("com.jfrog.bintray")
+    bintray
 }
 
 repositories {
@@ -24,20 +24,21 @@ group = rootProject.group
 version = "${rootProject.version}.0.0"
 
 dependencies {
-    implementation(d.guice.bom)
     implementation(project(":chazm-api"))
+    implementation(platform(com.google.inject.`guice-bom`))
+    implementation(com.google.inject.guice)
+    implementation(com.google.inject.extensions.`guice-assistedinject`)
     implementation("org.slf4j:slf4j-api:+")
     implementation("javax.inject:javax.inject:1")
     implementation("javax.validation:validation-api:2.0.1.Final")
-    implementation("com.google.inject:guice")
-    implementation("com.google.inject.extensions:guice-assistedinject")
 
-    testImplementation("junit:junit:4.12")
-//    testImplementation(library.junit.bom) // BOM
-//    testImplementation(library.junit.jupiter.api)
-//    testImplementation(library.junit.jupiter.params)
-    testImplementation("org.jmockit:jmockit:1.42")
-//    testRuntimeOnly(library.junit.jupiter.engine)
+    testImplementation(junit.junit)
+    testImplementation(platform(org.junit.`junit-bom`))
+    testImplementation(org.junit.jupiter.`junit-jupiter-api`)
+    testImplementation(org.junit.jupiter.`junit-jupiter-params`)
+    testImplementation(org.jmockit.jmockit)
+
+    testRuntimeOnly(org.junit.jupiter.`junit-jupiter-engine`)
 }
 
 val sourceJar by tasks.registering(Jar::class) {
