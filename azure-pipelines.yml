@@ -6,11 +6,10 @@
 pool:
   vmImage: 'Ubuntu 16.04'
 
-resources:
-- repo: self
+steps:
+- checkout: self
   submodules: recursive
 
-steps:
 - task: Gradle@2
   inputs:
     workingDirectory: ''
@@ -22,6 +21,7 @@ steps:
     publishJUnitResults: false
     testResultsFiles: '**/TEST-*.xml'
     tasks: 'build'
+
 - bash: |
     which bash
     ls -al
