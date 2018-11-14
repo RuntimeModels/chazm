@@ -30,23 +30,23 @@ apply(from = "ext.gradle")
 
 
 tasks {
-    withType(Wrapper::class) {
+    wrapper<Wrapper> {
         distributionType = Wrapper.DistributionType.ALL
         gradleVersion = Gradle.VERSION
     }
-    create("printInfo") {
+    register("printInfo") {
         doLast {
             println(" Project name: ${project.name}")
             println(" - Group Id: ${project.group}")
             println(" - Major version: ${project.version}")
             println(" - Number of subproject: ${subprojects.size}")
-            subprojects.forEach {
-                println("   - Subproject name: ${it.name}:")
-                println("     - Group Id: ${it.group}")
-                println("     - Version: ${it.version}")
-                println("     - Number of archive artifacts: ${it.configurations.archives.allArtifacts.size}")
-                it.configurations.archives.artifacts.files.forEach {
-                    println("       - Artifact: ${it.name}")
+            subprojects.forEach { project ->
+                println("   - Subproject name: ${project.name}:")
+                println("     - Group Id: ${project.group}")
+                println("     - Version: ${project.version}")
+                println("     - Number of archive artifacts: ${project.configurations.archives.get().allArtifacts.size}")
+                project.configurations.archives.get().allArtifacts.files.forEach { file ->
+                    println("       - Artifact: ${file.name}")
                 }
             }
         }
