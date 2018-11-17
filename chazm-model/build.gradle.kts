@@ -1,7 +1,5 @@
 import java.time.Instant
 
-val moduleName = "runtimemodels.chazm.model"
-
 plugins {
     `java-library`
     jacoco
@@ -37,6 +35,8 @@ dependencies {
     testImplementation(org.junit.jupiter.`junit-jupiter-api`)
     testImplementation(org.junit.jupiter.`junit-jupiter-params`)
     testImplementation(org.jmockit.jmockit)
+    testImplementation(org.assertj.`assertj-core`)
+    testImplementation(org.mockito.`mockito-core`)
 
     testRuntimeOnly(org.junit.jupiter.`junit-jupiter-engine`)
 }
@@ -78,38 +78,46 @@ bintray {
 }
 
 tasks {
-    named("compileJava", JavaCompile::class) {
+    val moduleName = "runtimemodels.chazm.model"
+    val junit = "org.junit.jupiter.api"
+
+    compileJava<JavaCompile> {
         inputs.property("moduleName", moduleName)
         doFirst {
             options.compilerArgs = listOf("--module-path", classpath.asPath)
             classpath = files()
         }
     }
-    named("compileTestJava", JavaCompile::class) {
+    compileTestJava<JavaCompile> {
         inputs.property("moduleName", moduleName)
         doFirst {
             options.compilerArgs = listOf(
                     "--module-path", classpath.asPath,
-                    "--add-modules", "junit",
-                    "--add-reads", "$moduleName=junit",
-                    "--patch-module", "$moduleName=" + files(sourceSets["test"].java.srcDirs).asPath
+                    "--add-modules", junit,
+//                    "--add-modules", "junit",
+                    "--add-reads", "$moduleName=$junit",
+//                    "--add-reads", "$moduleName=junit",
+                    "--patch-module", "$moduleName=" + files(sourceSets.test.get().java.srcDirs).asPath
             )
             classpath = files()
         }
     }
-    named("test", Test::class) {
-//        inputs.property("moduleName", moduleName)
-//        doFirst {
-//            jvmArgs = listOf(
-//                    "--module-path", classpath.asPath,
-//                    "--add-modules", "ALL-MODULE-PATH",
-//                    "--add-reads", "$moduleName=junit",
-//                    "--patch-module", "$moduleName=" + files(sourceSets["test"].java.outputDir).asPath
-//            )
-//            classpath = files()
-//        }
+    test<Test> {
+        useJUnitPlatform()
+        inputs.property("moduleName", moduleName)
+        doFirst {
+            jvmArgs = listOf(
+                    "--module-path", classpath.asPath,
+                    "--add-modules", "ALL-MODULE-PATH",
+                    "--add-reads", "$moduleName=$junit",
+                    "--add-reads", "$moduleName=org.assertj.core",
+                    "--add-opens", "$moduleName/$moduleName=org.junit.platform.commons",
+                    "--patch-module", "$moduleName=${files(sourceSets.test.get().java.outputDir).asPath}"
+            )
+            classpath = files()
+        }
     }
-    withType(JacocoReport::class) {
+    jacocoTestReport<JacocoReport> {
         reports {
             csv.isEnabled = false
             xml.isEnabled = true
