@@ -112,6 +112,7 @@ tasks {
                     "--add-reads", "$moduleName=$junit",
                     "--add-reads", "$moduleName=org.assertj.core",
                     "--add-opens", "$moduleName/$moduleName=org.junit.platform.commons",
+                    "--add-opens", "java.base/java.lang=com.google.guice",
                     "--patch-module", "$moduleName=${files(sourceSets.test.get().java.outputDir).asPath}"
             )
             classpath = files()
