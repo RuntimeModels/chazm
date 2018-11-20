@@ -3,6 +3,7 @@ import java.time.Instant
 plugins {
     `java-library`
     jacoco
+    distribution
     `maven-publish`
     signing
     bintray
@@ -30,27 +31,52 @@ dependencies {
     implementation("javax.inject:javax.inject:1")
     implementation("javax.validation:validation-api:2.0.1.Final")
 
-    testImplementation(junit.junit)
     testImplementation(platform(org.junit.`junit-bom`))
     testImplementation(org.junit.jupiter.`junit-jupiter-api`)
     testImplementation(org.junit.jupiter.`junit-jupiter-params`)
-    testImplementation(org.jmockit.jmockit)
     testImplementation(org.assertj.`assertj-core`)
     testImplementation(org.mockito.`mockito-core`)
+    testImplementation(org.mockito.`mockito-junit-jupiter`)
 
     testRuntimeOnly(org.junit.jupiter.`junit-jupiter-engine`)
 }
 
+tasks.jar<Jar> {
+    manifest {
+        attributes["Implementation-Title"] = project.name
+        attributes["Implementation-Version"] = project.version
+    }
+}
+
 val sourceJar by tasks.registering(Jar::class) {
     classifier = "sources"
-    from(sourceSets["main"].allJava)
+    from(sourceSets.main.get().allJava)
+    manifest = tasks.jar.get().manifest
+}
+
+val javadocJar by tasks.registering(Jar::class) {
+    dependsOn(tasks.javadoc)
+    classifier = "javadoc"
+    from(tasks.javadoc.get().destinationDir)
+    manifest = tasks.jar.get().manifest
+}
+
+distributions {
+    main {
+        contents {
+            from(tasks.jar)
+            from(sourceJar)
+            from(javadocJar)
+        }
+    }
 }
 
 publishing {
     publications {
-        register("mavenJava", MavenPublication::class) {
-            from(components["java"])
+        create<MavenPublication>("mavenJava") {
+            artifact(tasks.jar.get())
             artifact(sourceJar.get())
+            artifact(javadocJar.get())
         }
     }
 }
@@ -94,9 +120,7 @@ tasks {
             options.compilerArgs = listOf(
                     "--module-path", classpath.asPath,
                     "--add-modules", junit,
-//                    "--add-modules", "junit",
                     "--add-reads", "$moduleName=$junit",
-//                    "--add-reads", "$moduleName=junit",
                     "--patch-module", "$moduleName=" + files(sourceSets.test.get().java.srcDirs).asPath
             )
             classpath = files()
@@ -113,6 +137,9 @@ tasks {
                     "--add-reads", "$moduleName=org.assertj.core",
                     "--add-opens", "$moduleName/$moduleName=org.junit.platform.commons",
                     "--add-opens", "$moduleName/$moduleName.entity=org.junit.platform.commons",
+                    "--add-opens", "$moduleName/$moduleName.function=org.junit.platform.commons",
+                    "--add-opens", "$moduleName/$moduleName.parsers=org.junit.platform.commons",
+                    "--add-opens", "$moduleName/$moduleName.parsers=org.mockito",
                     "--add-opens", "java.base/java.lang=com.google.guice",
                     "--patch-module", "$moduleName=${files(sourceSets.test.get().java.outputDir).asPath}"
             )
