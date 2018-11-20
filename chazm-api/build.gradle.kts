@@ -111,7 +111,7 @@ tasks {
                     "--module-path", classpath.asPath,
                     "--add-modules", junit,
                     "--add-reads", "$moduleName=$junit",
-                    "--patch-module", "$moduleName=" + files(sourceSets["test"].java.srcDirs).asPath
+                    "--patch-module", "$moduleName=" + files(sourceSets.test.get().java.srcDirs).asPath
             )
             classpath = files()
         }
@@ -126,7 +126,7 @@ tasks {
                     "--add-reads", "$moduleName=$junit",
                     "--add-reads", "$moduleName=org.assertj.core",
                     "--add-opens", "$moduleName/$moduleName=org.junit.platform.commons",
-                    "--patch-module", "$moduleName=" + files(sourceSets["test"].java.outputDir).asPath
+                    "--patch-module", "$moduleName=${files(sourceSets.test.get().java.outputDir).asPath}"
             )
             classpath = files()
         }

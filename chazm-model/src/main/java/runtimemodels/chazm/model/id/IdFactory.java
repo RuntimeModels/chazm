@@ -13,6 +13,8 @@ public interface IdFactory {
     /**
      * Constructs an {@linkplain UniqueId}.
      *
+     * @param <T> the type that this {@linkplain UniqueId} will be associated.
+     * @param <U> the type of the identifier for this {@linkplain UniqueId}.
      * @param clazz the type of the {@linkplain UniqueId}.
      * @param id    the {@linkplain Class} id for the {@linkplain UniqueId}.
      * @return an {@linkplain UniqueId}.
@@ -22,6 +24,7 @@ public interface IdFactory {
     /**
      * Constructs an {@linkplain UniqueId}.
      *
+     * @param <T> the type that this {@linkplain UniqueId} will be associated.
      * @param clazz the type of the {@linkplain UniqueId}.
      * @param id    the <code>long</code> id for the {@linkplain UniqueId}.
      * @return an {@linkplain UniqueId}.
@@ -31,6 +34,7 @@ public interface IdFactory {
     /**
      * Constructs an {@linkplain UniqueId}.
      *
+     * @param <T> the type that this {@linkplain UniqueId} will be associated.
      * @param clazz the type of the {@linkplain UniqueId}.
      * @param id    the {@linkplain String} id for the {@linkplain UniqueId}.
      * @return an {@linkplain UniqueId}.

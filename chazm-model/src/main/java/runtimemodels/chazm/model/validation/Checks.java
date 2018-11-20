@@ -16,6 +16,8 @@ public final class Checks {
     /**
      * Checks and throws an {@linkplain IllegalArgumentException} if the variable is <code>null</code>.
      *
+     * @param <T> the type of the variable.
+     * @param <U> the type of the variable name.
      * @param variable     the variable to check.
      * @param variableName the variable name.
      * @throws IllegalArgumentException if the variable is <code>null</code>.
