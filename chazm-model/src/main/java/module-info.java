@@ -7,6 +7,7 @@ module runtimemodels.chazm.model {
     requires java.validation;
     requires java.xml;
     requires javax.inject;
+    requires kotlin.stdlib;
     requires org.slf4j;
 
     exports runtimemodels.chazm.model.id to com.google.guice;

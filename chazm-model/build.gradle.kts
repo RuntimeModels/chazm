@@ -1,7 +1,9 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.time.Instant
 
 plugins {
     `java-library`
+    `kotlin-jvm`
     jacoco
     distribution
     `maven-publish`
@@ -24,6 +26,7 @@ version = "${rootProject.version}.0.0"
 
 dependencies {
     implementation(project(":chazm-api"))
+    implementation(kotlin("stdlib-jdk8"))
     implementation(platform(com.google.inject.`guice-bom`))
     implementation(com.google.inject.guice)
     implementation(com.google.inject.extensions.`guice-assistedinject`)
@@ -114,6 +117,12 @@ tasks {
             classpath = files()
         }
     }
+    compileKotlin<KotlinCompile> {
+        inputs.property("moduleName", moduleName)
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+    }
     compileTestJava<JavaCompile> {
         inputs.property("moduleName", moduleName)
         doFirst {
@@ -124,6 +133,12 @@ tasks {
                     "--patch-module", "$moduleName=" + files(sourceSets.test.get().java.srcDirs).asPath
             )
             classpath = files()
+        }
+    }
+    compileTestKotlin<KotlinCompile> {
+        inputs.property("moduleName", moduleName)
+        kotlinOptions {
+            jvmTarget = "1.8"
         }
     }
     test<Test> {
