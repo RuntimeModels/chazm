@@ -1,3 +1,5 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.time.Instant
 
@@ -34,6 +36,7 @@ dependencies {
     implementation("javax.inject:javax.inject:1")
     implementation("javax.validation:validation-api:2.0.1.Final")
 
+    testImplementation(kotlin("test-junit5"))
     testImplementation(platform(org.junit.`junit-bom`))
     testImplementation(org.junit.jupiter.`junit-jupiter-api`)
     testImplementation(org.junit.jupiter.`junit-jupiter-params`)
@@ -144,6 +147,9 @@ tasks {
     test<Test> {
         useJUnitPlatform()
         inputs.property("moduleName", moduleName)
+        testLogging {
+            events(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
+        }
         doFirst {
             jvmArgs = listOf(
                     "--module-path", classpath.asPath,
