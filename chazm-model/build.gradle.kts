@@ -153,4 +153,11 @@ tasks {
             html.isEnabled = System.getenv("CI").isNullOrBlank()
         }
     }
+    javadoc {
+        inputs.property("moduleName", moduleName)
+        val options = options as CoreJavadocOptions
+        doFirst {
+            options.addStringOption("-module-path", classpath.asPath)
+        }
+    }
 }
