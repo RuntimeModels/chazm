@@ -1,21 +1,43 @@
-# Java artifacts
+### Java/Kotlin template
+# Compiled class file
 *.class
+# Log file
+*.log
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
 
-# Gradle artifacts
+### Gradle template
+.gradle
 build/
-.gradle/
+# Ignore Gradle GUI config
+gradle-app.setting
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle/wrapper/gradle-wrapper.jar
+# Cache of project
+.gradletasknamecache
+# # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
+# gradle/wrapper/gradle-wrapper.properties
 
-# Eclipse artifacts
-bin/
-.classpath
-.project
-.refactorings/
-.settings/
+### macOS template
+.DS_Store
 
-# Idea artifacts
+### JetBrains template
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
+# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
+# User-specific stuff
 .idea/
-*.iml
+# File-based project format
+*.iws
+# IntelliJ
+out/
 
-# OSX artifacts
-.DS_Store/
-
+### VS Code template
+.vscode/
