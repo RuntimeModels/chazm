@@ -1,4 +1,4 @@
-package runtimemodels.chazm.model.event
+package runtimemodels.chazm.model.event;
 
 /**
  * The [EventType] enumerates the three type of updates that can occur: something was added, something was removed, something was changed.
@@ -6,7 +6,7 @@ package runtimemodels.chazm.model.event
  * @author Christopher Zhong
  * @since 7.0.0
  */
-enum class EventType {
+public enum EventType {
 
     /**
      * Indicates that associated object was added.
