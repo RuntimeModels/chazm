@@ -1,13 +1,13 @@
 module runtimemodels.chazm.model {
     requires transitive runtimemodels.chazm.api;
-    requires aopalliance;
-    requires com.google.guice;
-    requires com.google.guice.extensions.assistedinject;
-    requires io.reactivex.rxjava2;
+    requires aopalliance; // automatic module
+    requires com.google.guice; // automatic module
+    requires com.google.guice.extensions.assistedinject; // automatic module
+    requires io.reactivex.rxjava2; // automatic module
     requires java.desktop;
-    requires java.validation;
+    requires java.validation; // automatic module
     requires java.xml;
-    requires javax.inject;
+    requires javax.inject; // automatic module
     requires org.slf4j;
 
     exports runtimemodels.chazm.model.id to com.google.guice;

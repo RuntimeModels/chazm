@@ -1,3 +1,4 @@
+import org.gradle.api.tasks.testing.logging.TestLogEvent
 import java.time.Instant
 
 plugins {
@@ -9,18 +10,18 @@ plugins {
     bintray
 }
 
+group = rootProject.group
+version = "${rootProject.version}.0.0"
+
 repositories {
     jcenter()
     mavenCentral()
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_10
-    targetCompatibility = JavaVersion.VERSION_1_10
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
-
-group = rootProject.group
-version = "${rootProject.version}.0.0"
 
 dependencies {
     testImplementation(platform(org.junit.`junit-bom`))
@@ -29,13 +30,6 @@ dependencies {
     testImplementation(org.assertj.`assertj-core`)
 
     testRuntimeOnly(org.junit.jupiter.`junit-jupiter-engine`)
-}
-
-tasks.jar<Jar> {
-    manifest {
-        attributes["API-Title"] = project.name
-        attributes["API-Version"] = project.version
-    }
 }
 
 val sourceJar by tasks.registering(Jar::class) {
@@ -95,12 +89,16 @@ bintray {
 
 tasks {
     val moduleName = "runtimemodels.chazm.api"
-    val junit = "org.junit.jupiter.api"
+    val junitModule = "org.junit.jupiter.api"
 
     compileJava<JavaCompile> {
         inputs.property("moduleName", moduleName)
         doFirst {
-            options.compilerArgs = listOf("--module-path", classpath.asPath)
+            options.compilerArgs = listOf(
+                    "-Xlint", // Enables all recommended warnings.
+                    "-Werror", // Terminates compilation when warnings occur.
+                    "--module-path", classpath.asPath
+            )
             classpath = files()
         }
     }
@@ -108,10 +106,13 @@ tasks {
         inputs.property("moduleName", moduleName)
         doFirst {
             options.compilerArgs = listOf(
+                    "-Xlint",     // Enables all recommended warnings.
+                    "-Xlint:-overrides", // Disables "method overrides" warnings.
+                    "-parameters", // Generates metadata for reflection on method parameters.
                     "--module-path", classpath.asPath,
-                    "--add-modules", junit,
-                    "--add-reads", "$moduleName=$junit",
-                    "--patch-module", "$moduleName=" + files(sourceSets.test.get().java.srcDirs).asPath
+                    "--add-modules", junitModule,
+                    "--add-reads", "$moduleName=$junitModule",
+                    "--patch-module", "$moduleName=${files(sourceSets.test.get().java.srcDirs).asPath}"
             )
             classpath = files()
         }
@@ -123,12 +124,15 @@ tasks {
             jvmArgs = listOf(
                     "--module-path", classpath.asPath,
                     "--add-modules", "ALL-MODULE-PATH",
-                    "--add-reads", "$moduleName=$junit",
+                    "--add-reads", "$moduleName=$junitModule",
                     "--add-reads", "$moduleName=org.assertj.core",
                     "--add-opens", "$moduleName/$moduleName=org.junit.platform.commons",
                     "--patch-module", "$moduleName=${files(sourceSets.test.get().java.outputDir).asPath}"
             )
             classpath = files()
+        }
+        testLogging {
+            events(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
         }
     }
     jacocoTestReport<JacocoReport> {
@@ -136,6 +140,19 @@ tasks {
             csv.isEnabled = false
             xml.isEnabled = true
             html.isEnabled = System.getenv("CI").isNullOrBlank()
+        }
+    }
+    jar<Jar> {
+        manifest {
+            attributes["API-Title"] = project.name
+            attributes["API-Version"] = project.version
+        }
+    }
+    javadoc {
+        inputs.property("moduleName", moduleName)
+        val options = options as CoreJavadocOptions
+        doFirst {
+            options.addStringOption("-module-path", classpath.asPath)
         }
     }
 }
