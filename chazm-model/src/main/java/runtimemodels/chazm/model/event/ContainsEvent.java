@@ -27,7 +27,7 @@ public class ContainsEvent extends AbstractEvent {
     private transient String toString = null;
 
     @Inject
-    ContainsEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final Contains contains) {
+    ContainsEvent(@NotNull @Assisted final EventType category, @NotNull @Assisted final Contains contains) {
         super(category);
         roleId = contains.getRole().getId();
         characteristicId = contains.getCharacteristic().getId();

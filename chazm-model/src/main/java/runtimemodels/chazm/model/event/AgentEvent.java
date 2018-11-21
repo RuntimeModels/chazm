@@ -23,7 +23,7 @@ public class AgentEvent extends AbstractEvent {
     private transient String toString = null;
 
     @Inject
-    AgentEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final Agent agent) {
+    AgentEvent(@NotNull @Assisted final EventType category, @NotNull @Assisted final Agent agent) {
         super(category);
         id = agent.getId();
     }

@@ -23,7 +23,7 @@ public class RoleEvent extends AbstractEvent {
     private transient String toString = null;
 
     @Inject
-    RoleEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final Role role) {
+    RoleEvent(@NotNull @Assisted final EventType category, @NotNull @Assisted final Role role) {
         super(category);
         id = role.getId();
     }

@@ -3,6 +3,7 @@ module runtimemodels.chazm.model {
     requires aopalliance;
     requires com.google.guice;
     requires com.google.guice.extensions.assistedinject;
+    requires io.reactivex.rxjava2;
     requires java.desktop;
     requires java.validation;
     requires java.xml;

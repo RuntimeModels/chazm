@@ -23,7 +23,7 @@ public class CapabilityEvent extends AbstractEvent {
     private transient String toString = null;
 
     @Inject
-    CapabilityEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final Capability capability) {
+    CapabilityEvent(@NotNull @Assisted final EventType category, @NotNull @Assisted final Capability capability) {
         super(category);
         id = capability.getId();
     }

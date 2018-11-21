@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- * The {@linkplain AbstractEvent} class provides an easier way to implement events as they all have the category.
+ * The {@linkplain AbstractEvent} class provides an easier way to implement events as they all have the type.
  *
  * @author Christopher Zhong
  * @since 7.0.0
@@ -14,25 +14,25 @@ import java.io.Serializable;
 public abstract class AbstractEvent implements Serializable {
 
     private static final long serialVersionUID = 3392050291256215349L;
-    private final EventCategory category;
+    private final EventType category;
     private transient Integer hashCode = null;
     private transient String toString = null;
 
     /**
      * Constructs a new instance of {@linkplain AbstractEvent}.
      *
-     * @param category the category of the update.
+     * @param category the type of the update.
      */
-    protected AbstractEvent(@NotNull final EventCategory category) {
+    protected AbstractEvent(@NotNull final EventType category) {
         this.category = category;
     }
 
     /**
-     * Returns the category of the update.
+     * Returns the type of the update.
      *
-     * @return the category.
+     * @return the type.
      */
-    public EventCategory getCategory() {
+    public EventType getCategory() {
         return category;
     }
 

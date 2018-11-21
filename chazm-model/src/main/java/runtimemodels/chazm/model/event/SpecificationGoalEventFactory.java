@@ -14,10 +14,10 @@ public interface SpecificationGoalEventFactory {
     /**
      * Constructs an {@linkplain SpecificationGoalEvent}.
      *
-     * @param category the {@linkplain EventCategory}.
+     * @param category the {@linkplain EventType}.
      * @param goal     the {@linkplain SpecificationGoal}.
      * @return a {@linkplain SpecificationGoalEvent}.
      */
-    SpecificationGoalEvent build(EventCategory category, SpecificationGoal goal);
+    SpecificationGoalEvent build(EventType category, SpecificationGoal goal);
 
 }

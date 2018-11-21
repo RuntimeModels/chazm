@@ -26,7 +26,7 @@ public class InstanceGoalEvent extends AbstractEvent {
     private transient String toString = null;
 
     @Inject
-    InstanceGoalEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final InstanceGoal goal) {
+    InstanceGoalEvent(@NotNull @Assisted final EventType category, @NotNull @Assisted final InstanceGoal goal) {
         super(category);
         id = goal.getId();
         specificationGoalId = goal.getGoal().getId();

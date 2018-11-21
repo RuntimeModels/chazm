@@ -14,10 +14,10 @@ public interface PmfEventFactory {
     /**
      * Constructs an {@linkplain PmfEvent}.
      *
-     * @param category the {@linkplain EventCategory}.
+     * @param category the {@linkplain EventType}.
      * @param pmf      the {@linkplain Pmf}.
      * @return a {@linkplain PmfEvent}.
      */
-    PmfEvent build(EventCategory category, Pmf pmf);
+    PmfEvent build(EventType category, Pmf pmf);
 
 }

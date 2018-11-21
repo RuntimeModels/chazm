@@ -14,10 +14,10 @@ public interface NeedsEventFactory {
     /**
      * Constructs an {@linkplain NeedsEvent}.
      *
-     * @param category the {@linkplain EventCategory}.
+     * @param category the {@linkplain EventType}.
      * @param needs    the {@linkplain Needs}.
      * @return a {@linkplain NeedsEvent}.
      */
-    NeedsEvent build(EventCategory category, Needs needs);
+    NeedsEvent build(EventType category, Needs needs);
 
 }

@@ -26,7 +26,7 @@ public class AchievesEvent extends AbstractEvent {
     private transient String toString = null;
 
     @Inject
-    AchievesEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final Achieves achieves) {
+    AchievesEvent(@NotNull @Assisted final EventType category, @NotNull @Assisted final Achieves achieves) {
         super(category);
         roleId = achieves.getRole().getId();
         goalId = achieves.getGoal().getId();

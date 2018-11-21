@@ -23,7 +23,7 @@ public class PmfEvent extends AbstractEvent {
     private transient String toString = null;
 
     @Inject
-    PmfEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final Pmf pmf) {
+    PmfEvent(@NotNull @Assisted final EventType category, @NotNull @Assisted final Pmf pmf) {
         super(category);
         id = pmf.getId();
     }

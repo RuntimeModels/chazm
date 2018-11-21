@@ -4,11 +4,12 @@ plugins {
     eclipse
     idea
 
-//    ID("com.github.kt3k.coveralls") version "2.8.2"
-//    ID("org.sonarqube") version "2.6.2"
-//    ID("org.standardout.versioneye") version "1.5.0"
+//    id("com.github.kt3k.coveralls") version "2.8.2"
+//    id("org.sonarqube") version "2.6.2"
+//    id("org.standardout.versioneye") version "1.5.0"
 
     `bintray-version` apply false
+    id("com.github.ben-manes.versions") version "0.20.0"
 }
 
 buildScan {
@@ -27,7 +28,6 @@ apply(from = "ext.gradle")
 //add(from = "coveralls.gradle")
 
 //add(from = "jacocoTestReport.gradle")
-
 
 tasks {
     wrapper<Wrapper> {

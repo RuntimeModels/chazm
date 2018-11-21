@@ -26,7 +26,7 @@ public class NeedsEvent extends AbstractEvent {
     private transient String toString = null;
 
     @Inject
-    NeedsEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final Needs needs) {
+    NeedsEvent(@NotNull @Assisted final EventType category, @NotNull @Assisted final Needs needs) {
         super(category);
         roleId = needs.getRole().getId();
         attributeId = needs.getAttribute().getId();

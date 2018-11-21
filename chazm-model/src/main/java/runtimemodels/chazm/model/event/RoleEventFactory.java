@@ -14,10 +14,10 @@ public interface RoleEventFactory {
     /**
      * Constructs an {@linkplain RoleEvent}.
      *
-     * @param category the {@linkplain EventCategory}.
+     * @param category the {@linkplain EventType}.
      * @param role     the {@linkplain Role}.
      * @return a {@linkplain RoleEvent}.
      */
-    RoleEvent build(EventCategory category, Role role);
+    RoleEvent build(EventType category, Role role);
 
 }

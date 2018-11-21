@@ -23,7 +23,7 @@ public class AttributeEvent extends AbstractEvent {
     private transient String toString = null;
 
     @Inject
-    AttributeEvent(@NotNull @Assisted final EventCategory category, @NotNull @Assisted final Attribute attribute) {
+    AttributeEvent(@NotNull @Assisted final EventType category, @NotNull @Assisted final Attribute attribute) {
         super(category);
         id = attribute.getId();
     }
