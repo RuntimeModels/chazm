@@ -3,12 +3,12 @@ package runtimemodels.chazm.model.notification;
 /**
  * The {@linkplain Subscriber} interface defines the APIs for a publish/subscribe pattern (a.k.a. observer pattern). Subscribers receive updates that have been
  * pushed out by publishers. The example below show a {@linkplain Subscriber} that subscribes to two different types of event.
- * <p>
+ * <br>
  * <pre>
  * &#064;Subscribe
  * public void onEvent(String event);
  * </pre>
- * <p>
+ * <br>
  * <pre>
  * &#064;Subscribe
  * public void someOtherEvent(Integer event);

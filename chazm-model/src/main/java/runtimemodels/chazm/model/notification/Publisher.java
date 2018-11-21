@@ -12,6 +12,7 @@ public interface Publisher {
     /**
      * Post an event.
      *
+     * @param <T> the type of event.
      * @param event the event.
      */
     <T> void post(final T event);

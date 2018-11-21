@@ -1,5 +1,3 @@
-import buildSrc.*
-
 plugins {
     `build-scan`
     base
@@ -10,7 +8,7 @@ plugins {
 //    id("org.sonarqube") version "2.6.2"
 //    id("org.standardout.versioneye") version "1.5.0"
 
-    buildSrc.Plugins.Bintray.add(this) apply false
+    `bintray-version` apply false
     id("com.github.ben-manes.versions") version "0.20.0"
 }
 
@@ -32,22 +30,22 @@ apply(from = "ext.gradle")
 //add(from = "jacocoTestReport.gradle")
 
 tasks {
-    withType(Wrapper::class) {
+    wrapper<Wrapper> {
         distributionType = Wrapper.DistributionType.ALL
-        gradleVersion = buildSrc.Gradle.version
+        gradleVersion = Gradle.VERSION
     }
-    create("printInfo") {
+    register("printInfo") {
         doLast {
             println(" Project name: ${project.name}")
             println(" - Group Id: ${project.group}")
             println(" - Major version: ${project.version}")
             println(" - Number of subproject: ${subprojects.size}")
-            for (project in subprojects) {
+            subprojects.forEach { project ->
                 println("   - Subproject name: ${project.name}:")
                 println("     - Group Id: ${project.group}")
                 println("     - Version: ${project.version}")
-                println("     - Number of archive artifacts: ${project.configurations.archives.allArtifacts.size}")
-                for (file in project.configurations.archives.artifacts.files) {
+                println("     - Number of archive artifacts: ${project.configurations.archives.get().allArtifacts.size}")
+                project.configurations.archives.get().allArtifacts.files.forEach { file ->
                     println("       - Artifact: ${file.name}")
                 }
             }

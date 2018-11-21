@@ -11,6 +11,7 @@ public interface Mediator {
     /**
      * Pushes an event to interested {@linkplain Subscriber}s.
      *
+     * @param <T> the type of the event.
      * @param event the event.
      */
     <T> void post(T event);

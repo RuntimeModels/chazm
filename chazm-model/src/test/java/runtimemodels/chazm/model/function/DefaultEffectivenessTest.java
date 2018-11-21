@@ -3,24 +3,20 @@ package runtimemodels.chazm.model.function;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Provider;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 import runtimemodels.chazm.api.Organization;
 import runtimemodels.chazm.api.entity.*;
 import runtimemodels.chazm.api.function.Effectiveness;
 import runtimemodels.chazm.api.relation.Assignment;
-import runtimemodels.chazm.model.message.E;
 import runtimemodels.chazm.model.OrganizationModule;
 import runtimemodels.chazm.model.entity.EntityFactory;
 import runtimemodels.chazm.model.id.IdFactory;
 import runtimemodels.chazm.model.relation.RelationFactory;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@SuppressWarnings({"javadoc", "serial"})
+
 public class DefaultEffectivenessTest {
 
     private final Injector injector = Guice.createInjector(new OrganizationModule(), new FunctionModule());
@@ -29,9 +25,6 @@ public class DefaultEffectivenessTest {
     private final EntityFactory entityFactory = injector.getInstance(EntityFactory.class);
     private final RelationFactory relationFactory = injector.getInstance(RelationFactory.class);
     private final Effectiveness effectiveness = injector.getInstance(Effectiveness.class);
-
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
 
     @Test
     public void testCompute() {
@@ -53,7 +46,7 @@ public class DefaultEffectivenessTest {
         final Assignment as3 = relationFactory.buildAssignment(a2, r, ig1);
         final Assignment as4 = relationFactory.buildAssignment(a2, r, ig2);
 
-        assertThat(effectiveness.compute(o, o.getAssignments()), is(equalTo(0.0)));
+        assertThat(effectiveness.compute(o, o.getAssignments())).isEqualTo(0.0);
 
         o.addAgent(a1);
         o.addAgent(a2);
@@ -68,37 +61,31 @@ public class DefaultEffectivenessTest {
         o.addPossesses(a1.getId(), c1.getId(), 1.0);
         o.addAssignment(as1);
 
-        assertThat(effectiveness.compute(o, o.getAssignments()), is(equalTo(1.0)));
+        assertThat(effectiveness.compute(o, o.getAssignments())).isEqualTo(1.0);
 
         o.addAssignment(as2);
 
-        assertThat(effectiveness.compute(o, o.getAssignments()), is(equalTo(2.0)));
+        assertThat(effectiveness.compute(o, o.getAssignments())).isEqualTo(2.0);
 
         o.addAssignment(as3);
 
-        assertThat(effectiveness.compute(o, o.getAssignments()), is(equalTo(2.0)));
+        assertThat(effectiveness.compute(o, o.getAssignments())).isEqualTo(2.0);
 
         o.addAssignment(as4);
 
-        assertThat(effectiveness.compute(o, o.getAssignments()), is(equalTo(2.0)));
+        assertThat(effectiveness.compute(o, o.getAssignments())).isEqualTo(2.0);
     }
 
     @Test
     public void testCompute1() {
-        exception.expect(IllegalArgumentException.class);
-        exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg0", "compute")));
-
-        effectiveness.compute(null, null);
+        assertThrows(IllegalArgumentException.class, () -> effectiveness.compute(null, null));
     }
 
     @Test
     public void testCompute2() {
         final Organization o = provider.get();
 
-        exception.expect(IllegalArgumentException.class);
-        exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg1", "compute")));
-
-        effectiveness.compute(o, null);
+        assertThrows(IllegalArgumentException.class, () -> effectiveness.compute(o, null));
     }
 
 }

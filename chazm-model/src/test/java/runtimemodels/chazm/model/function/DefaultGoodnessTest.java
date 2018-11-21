@@ -3,24 +3,19 @@ package runtimemodels.chazm.model.function;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Provider;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 import runtimemodels.chazm.api.Organization;
 import runtimemodels.chazm.api.entity.*;
 import runtimemodels.chazm.api.function.Goodness;
-import runtimemodels.chazm.model.message.E;
 import runtimemodels.chazm.model.OrganizationModule;
 import runtimemodels.chazm.model.entity.EntityFactory;
 import runtimemodels.chazm.model.id.IdFactory;
 
 import java.util.HashSet;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@SuppressWarnings({"javadoc", "serial"})
 public class DefaultGoodnessTest {
 
     private final Injector injector = Guice.createInjector(new OrganizationModule(), new FunctionModule());
@@ -28,9 +23,6 @@ public class DefaultGoodnessTest {
     private final IdFactory idFactory = injector.getInstance(IdFactory.class);
     private final EntityFactory entityFactory = injector.getInstance(EntityFactory.class);
     private final Goodness goodness = injector.getInstance(Goodness.class);
-
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
 
     @Test
     public void testCompute() {
@@ -45,7 +37,7 @@ public class DefaultGoodnessTest {
         final Capability c2 = entityFactory.buildCapability(idFactory.build(Capability.class, "c2"));
         final Attribute t = entityFactory.buildAttribute(idFactory.build(Attribute.class, "t"), Attribute.Type.NEGATIVE_QUALITY);
 
-        assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(DefaultGoodness.MIN_SCORE)));
+        assertThat(goodness.compute(o, a, r, ig, new HashSet<>())).isEqualTo(DefaultGoodness.MIN_SCORE);
 
         o.addAgent(a);
         o.addRole(r);
@@ -54,48 +46,41 @@ public class DefaultGoodnessTest {
         o.addCapability(c1);
         o.addAchieves(r.getId(), sg.getId());
 
-        assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(DefaultGoodness.MAX_SCORE)));
+        assertThat(goodness.compute(o, a, r, ig, new HashSet<>())).isEqualTo(DefaultGoodness.MAX_SCORE);
 
         o.addRequires(r.getId(), c1.getId());
 
-        assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(DefaultGoodness.MIN_SCORE)));
+        assertThat(goodness.compute(o, a, r, ig, new HashSet<>())).isEqualTo(DefaultGoodness.MIN_SCORE);
 
         o.addPossesses(a.getId(), c1.getId(), 0.0);
 
-        assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(DefaultGoodness.MIN_SCORE)));
+        assertThat(goodness.compute(o, a, r, ig, new HashSet<>())).isEqualTo(DefaultGoodness.MIN_SCORE);
 
         o.setPossessesScore(a.getId(), c1.getId(), 1.0);
 
-        assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(DefaultGoodness.MAX_SCORE)));
+        assertThat(goodness.compute(o, a, r, ig, new HashSet<>())).isEqualTo(DefaultGoodness.MAX_SCORE);
 
         o.addCapability(c2);
         o.addRequires(r.getId(), c2.getId());
         o.addPossesses(a.getId(), c2.getId(), 1.0);
 
-        assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(DefaultGoodness.MAX_SCORE)));
+        assertThat(goodness.compute(o, a, r, ig, new HashSet<>())).isEqualTo(DefaultGoodness.MAX_SCORE);
 
         o.addAttribute(t);
         o.addNeeds(r.getId(), t.getId());
 
-        assertThat(goodness.compute(o, a, r, ig, new HashSet<>()), is(equalTo(DefaultGoodness.MIN_SCORE)));
+        assertThat(goodness.compute(o, a, r, ig, new HashSet<>())).isEqualTo(DefaultGoodness.MIN_SCORE);
     }
 
     @Test
     public void testCompute1() {
-        exception.expect(IllegalArgumentException.class);
-        exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg0", "compute")));
-
-        goodness.compute(null, null, null, null, null);
+        assertThrows(IllegalArgumentException.class, () -> goodness.compute(null, null, null, null, null));
     }
 
     @Test
     public void testCompute2() {
         final Organization o = provider.get();
-
-        exception.expect(IllegalArgumentException.class);
-        exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg1", "compute")));
-
-        goodness.compute(o, null, null, null, null);
+        assertThrows(IllegalArgumentException.class, () -> goodness.compute(o, null, null, null, null));
     }
 
     @Test
@@ -104,10 +89,7 @@ public class DefaultGoodnessTest {
         final Agent a = entityFactory.buildAgent(idFactory.build(Agent.class, "a"), new Agent.ContactInfo() {
         });
 
-        exception.expect(IllegalArgumentException.class);
-        exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg2", "compute")));
-
-        goodness.compute(o, a, null, null, null);
+        assertThrows(IllegalArgumentException.class, () -> goodness.compute(o, a, null, null, null));
     }
 
     @Test
@@ -117,10 +99,7 @@ public class DefaultGoodnessTest {
         });
         final Role r = entityFactory.buildRole(idFactory.build(Role.class, "r"));
 
-        exception.expect(IllegalArgumentException.class);
-        exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg3", "compute")));
-
-        goodness.compute(o, a, r, null, null);
+        assertThrows(IllegalArgumentException.class, () -> goodness.compute(o, a, r, null, null));
     }
 
     @Test
@@ -133,10 +112,7 @@ public class DefaultGoodnessTest {
         final InstanceGoal ig = entityFactory.buildInstanceGoal(idFactory.build(InstanceGoal.class, "ig"), sg, new InstanceGoal.Parameter() {
         });
 
-        exception.expect(IllegalArgumentException.class);
-        exception.expectMessage(equalTo(E.PARAMETER_CANNOT_BE_NULL.get("arg4", "compute")));
-
-        goodness.compute(o, a, r, ig, null);
+        assertThrows(IllegalArgumentException.class, () -> goodness.compute(o, a, r, ig, null));
     }
 
 }

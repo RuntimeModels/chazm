@@ -1,17 +1,13 @@
-import org.jetbrains.kotlin.gradle.dsl.Coroutines
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.time.Instant
-import buildSrc.*
-
-val moduleName = "runtimemodels.chazm.model"
 
 plugins {
     `java-library`
+    `kotlin-jvm`
     jacoco
+    distribution
     `maven-publish`
     signing
-    id("com.jfrog.bintray")
-    buildSrc.Plugins.Kotlin.`add-jvm`(this)
+    bintray
 }
 
 repositories {
@@ -30,33 +26,60 @@ version = "${rootProject.version}.0.0"
 dependencies {
     implementation(project(":chazm-api"))
     implementation(kotlin("stdlib-jdk8"))
-    implementation(`guice-bom`)
-    implementation(guice)
-    implementation(`guice-assisted-inject`)
+    implementation(platform(com.google.inject.`guice-bom`))
+    implementation(com.google.inject.guice)
+    implementation(com.google.inject.extensions.`guice-assistedinject`)
     implementation("org.slf4j:slf4j-api:+")
     implementation("javax.inject:javax.inject:1")
     implementation("javax.validation:validation-api:2.0.1.Final")
     implementation("io.reactivex.rxjava2:rxjava:2.2.2")
 
+    testImplementation(platform(org.junit.`junit-bom`))
+    testImplementation(org.junit.jupiter.`junit-jupiter-api`)
+    testImplementation(org.junit.jupiter.`junit-jupiter-params`)
+    testImplementation(org.assertj.`assertj-core`)
+    testImplementation(org.mockito.`mockito-core`)
+    testImplementation(org.mockito.`mockito-junit-jupiter`)
 
-    testImplementation("junit:junit:4.12")
-//    testImplementation(library.junit.bom) // BOM
-//    testImplementation(library.junit.jupiter.api)
-//    testImplementation(library.junit.jupiter.params)
-    testImplementation("org.jmockit:jmockit:1.42")
-//    testRuntimeOnly(library.junit.jupiter.engine)
+    testRuntimeOnly(org.junit.jupiter.`junit-jupiter-engine`)
+}
+
+tasks.jar<Jar> {
+    manifest {
+        attributes["Implementation-Title"] = project.name
+        attributes["Implementation-Version"] = project.version
+    }
 }
 
 val sourceJar by tasks.registering(Jar::class) {
     classifier = "sources"
-    from(sourceSets["main"].allJava)
+    from(sourceSets.main.get().allJava)
+    manifest = tasks.jar.get().manifest
+}
+
+val javadocJar by tasks.registering(Jar::class) {
+    dependsOn(tasks.javadoc)
+    classifier = "javadoc"
+    from(tasks.javadoc.get().destinationDir)
+    manifest = tasks.jar.get().manifest
+}
+
+distributions {
+    main {
+        contents {
+            from(tasks.jar)
+            from(sourceJar)
+            from(javadocJar)
+        }
+    }
 }
 
 publishing {
     publications {
-        register("mavenJava", MavenPublication::class) {
-            from(components["java"])
+        create<MavenPublication>("mavenJava") {
+            artifact(tasks.jar.get())
             artifact(sourceJar.get())
+            artifact(javadocJar.get())
         }
     }
 }
@@ -83,54 +106,61 @@ bintray {
     pkg.version.released = Instant.now().toString()
 }
 
-kotlin {
-    experimental {
-        coroutines = Coroutines.ENABLE
-    }
-}
-
 tasks {
-    named("compileJava", JavaCompile::class) {
+    val moduleName = "runtimemodels.chazm.model"
+    val junit = "org.junit.jupiter.api"
+
+    compileJava<JavaCompile> {
         inputs.property("moduleName", moduleName)
         doFirst {
             options.compilerArgs = listOf("--module-path", classpath.asPath)
             classpath = files()
         }
     }
-    named("compileTestJava", JavaCompile::class) {
+    compileTestJava<JavaCompile> {
         inputs.property("moduleName", moduleName)
         doFirst {
             options.compilerArgs = listOf(
                     "--module-path", classpath.asPath,
-                    "--add-modules", "junit",
-                    "--add-reads", "$moduleName=junit",
-                    "--patch-module", "$moduleName=" + files(sourceSets["test"].java.srcDirs).asPath
+                    "--add-modules", junit,
+                    "--add-reads", "$moduleName=$junit",
+                    "--patch-module", "$moduleName=" + files(sourceSets.test.get().java.srcDirs).asPath
             )
             classpath = files()
         }
     }
-    named("test", Test::class) {
-        //        inputs.property("moduleName", moduleName)
-//        doFirst {
-//            jvmArgs = listOf(
-//                    "--module-path", classpath.asPath,
-//                    "--add-modules", "ALL-MODULE-PATH",
-//                    "--add-reads", "$moduleName=junit",
-//                    "--patch-module", "$moduleName=" + files(sourceSets["test"].java.outputDir).asPath
-//            )
-//            classpath = files()
-//        }
+    test<Test> {
+        useJUnitPlatform()
+        inputs.property("moduleName", moduleName)
+        doFirst {
+            jvmArgs = listOf(
+                    "--module-path", classpath.asPath,
+                    "--add-modules", "ALL-MODULE-PATH",
+                    "--add-reads", "$moduleName=$junit",
+                    "--add-reads", "$moduleName=org.assertj.core",
+                    "--add-opens", "$moduleName/$moduleName=org.junit.platform.commons",
+                    "--add-opens", "$moduleName/$moduleName.entity=org.junit.platform.commons",
+                    "--add-opens", "$moduleName/$moduleName.function=org.junit.platform.commons",
+                    "--add-opens", "$moduleName/$moduleName.parsers=org.junit.platform.commons",
+                    "--add-opens", "$moduleName/$moduleName.parsers=org.mockito",
+                    "--add-opens", "java.base/java.lang=com.google.guice",
+                    "--patch-module", "$moduleName=${files(sourceSets.test.get().java.outputDir).asPath}"
+            )
+            classpath = files()
+        }
     }
-    withType(JacocoReport::class) {
+    jacocoTestReport<JacocoReport> {
         reports {
             csv.isEnabled = false
             xml.isEnabled = true
             html.isEnabled = System.getenv("CI").isNullOrBlank()
         }
     }
-    withType(KotlinCompile::class) {
-        kotlinOptions {
-            jvmTarget = "1.8"
+    javadoc {
+        inputs.property("moduleName", moduleName)
+        val options = options as CoreJavadocOptions
+        doFirst {
+            options.addStringOption("-module-path", classpath.asPath)
         }
     }
 }

@@ -11,6 +11,13 @@ import runtimemodels.chazm.api.id.Identifiable;
  */
 public interface Agent extends Identifiable<Agent> {
     /**
+     * Returns the {@linkplain ContactInfo} for this {@linkplain Agent}.
+     *
+     * @return the {@linkplain ContactInfo} of this {@linkplain Agent}.
+     */
+    ContactInfo getContactInfo();
+
+    /**
      * The {@linkplain ContactInfo} defines the interface on how {@linkplain Agent}s can be contacted.
      *
      * @author Christopher Zhong
@@ -18,11 +25,4 @@ public interface Agent extends Identifiable<Agent> {
      */
     interface ContactInfo {
     }
-
-    /**
-     * Returns the {@linkplain ContactInfo} for this {@linkplain Agent}.
-     *
-     * @return the {@linkplain ContactInfo} of this {@linkplain Agent}.
-     */
-    ContactInfo getContactInfo();
 }
