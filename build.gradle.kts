@@ -9,11 +9,11 @@ plugins {
 //    id("org.standardout.versioneye") version "1.5.0"
 
     `bintray-version` apply false
-    id("com.github.ben-manes.versions") version "0.20.0"
+    `gradle-versions-plugin`
 }
 
 buildScan {
-    setTermsOfServiceUrl("https://gradle.com/terms-of-service")
+    termsOfServiceUrl = "https://gradle.com/terms-of-service"
     setTermsOfServiceAgree("yes")
 }
 

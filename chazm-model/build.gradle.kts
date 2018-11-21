@@ -32,14 +32,14 @@ dependencies {
     implementation("org.slf4j:slf4j-api:+")
     implementation("javax.inject:javax.inject:1")
     implementation("javax.validation:validation-api:2.0.1.Final")
-    implementation("io.reactivex.rxjava2:rxjava:2.2.2")
+    implementation(io.reactivex.rxjava2.rxjava)
 
     testImplementation(platform(org.junit.`junit-bom`))
     testImplementation(org.junit.jupiter.`junit-jupiter-api`)
     testImplementation(org.junit.jupiter.`junit-jupiter-params`)
     testImplementation(org.assertj.`assertj-core`)
     testImplementation(org.mockito.`mockito-core`)
-    testImplementation(org.mockito.`mockito-junit-jupiter`)
+//    testImplementation(org.mockito.`mockito-junit-jupiter`)
 
     testRuntimeOnly(org.junit.jupiter.`junit-jupiter-engine`)
 }
