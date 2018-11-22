@@ -104,69 +104,66 @@ bintray {
 }
 
 tasks {
-    val moduleName = "runtimemodels.chazm.model"
-    val junitModule = "org.junit.jupiter.api"
+//    val moduleName = "runtimemodels.chazm.model"
+//    val junitModule = "org.junit.jupiter.api"
 
     compileJava<JavaCompile> {
-        inputs.property("moduleName", moduleName)
+//        inputs.property("moduleName", moduleName)
         doFirst {
             options.compilerArgs = listOf(
-                    "-Xlint", // Enables all recommended warnings.
+                    "-Xlint" // Enables all recommended warnings.
 //                    "-Werror", // Terminates compilation when warnings occur.
-                    "--module-path", classpath.asPath
+//                    "--module-path", classpath.asPath
             )
-            classpath = files()
+//            classpath = files()
         }
     }
     compileKotlin<KotlinCompile> {
-        inputs.property("moduleName", moduleName)
+//        inputs.property("moduleName", moduleName)
         kotlinOptions {
             jvmTarget = "1.8"
         }
     }
     compileTestJava<JavaCompile> {
-        inputs.property("moduleName", moduleName)
+//        inputs.property("moduleName", moduleName)
         doFirst {
             options.compilerArgs = listOf(
                     "-Xlint",     // Enables all recommended warnings.
                     "-Xlint:-overrides", // Disables "method overrides" warnings.
-                    "-parameters", // Generates metadata for reflection on method parameters.
-                    "--module-path", classpath.asPath,
-                    "--add-modules", junitModule,
-                    "--add-reads", "$moduleName=$junitModule",
-                    "--patch-module", "$moduleName=${files(sourceSets.test.get().java.srcDirs).asPath}"
+                    "-parameters" // Generates metadata for reflection on method parameters.
+//                    "--module-path", classpath.asPath,
+//                    "--add-modules", junitModule,
+//                    "--add-reads", "$moduleName=$junitModule",
+//                    "--patch-module", "$moduleName=${files(sourceSets.test.get().java.srcDirs).asPath}"
             )
-            classpath = files()
+//            classpath = files()
         }
     }
     compileTestKotlin<KotlinCompile> {
-        inputs.property("moduleName", moduleName)
+//        inputs.property("moduleName", moduleName)
         kotlinOptions {
             jvmTarget = "1.8"
         }
     }
     test<Test> {
         useJUnitPlatform()
-        inputs.property("moduleName", moduleName)
-        testLogging {
-            events(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
-        }
-        doFirst {
-            jvmArgs = listOf(
-                    "--module-path", classpath.asPath,
-                    "--add-modules", "ALL-MODULE-PATH",
-                    "--add-reads", "$moduleName=$junitModule",
-                    "--add-reads", "$moduleName=org.assertj.core",
-                    "--add-opens", "$moduleName/$moduleName=org.junit.platform.commons",
-                    "--add-opens", "$moduleName/$moduleName.entity=org.junit.platform.commons",
-                    "--add-opens", "$moduleName/$moduleName.function=org.junit.platform.commons",
-                    "--add-opens", "$moduleName/$moduleName.parsers=org.junit.platform.commons",
-                    "--add-opens", "$moduleName/$moduleName.parsers=org.mockito",
-                    "--add-opens", "java.base/java.lang=com.google.guice",
-                    "--patch-module", "$moduleName=${files(sourceSets.test.get().java.outputDir).asPath}"
-            )
-            classpath = files()
-        }
+//        inputs.property("moduleName", moduleName)
+//        doFirst {
+//            jvmArgs = listOf(
+//                    "--module-path", classpath.asPath,
+//                    "--add-modules", "ALL-MODULE-PATH",
+//                    "--add-reads", "$moduleName=$junitModule",
+//                    "--add-reads", "$moduleName=org.assertj.core",
+//                    "--add-opens", "$moduleName/$moduleName=org.junit.platform.commons",
+//                    "--add-opens", "$moduleName/$moduleName.entity=org.junit.platform.commons",
+//                    "--add-opens", "$moduleName/$moduleName.function=org.junit.platform.commons",
+//                    "--add-opens", "$moduleName/$moduleName.parsers=org.junit.platform.commons",
+//                    "--add-opens", "$moduleName/$moduleName.parsers=org.mockito",
+//                    "--add-opens", "java.base/java.lang=com.google.guice",
+//                    "--patch-module", "$moduleName=${files(sourceSets.test.get().java.outputDir).asPath}"
+//            )
+//            classpath = files()
+//        }
         testLogging {
             events(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
         }
@@ -185,10 +182,10 @@ tasks {
         }
     }
     javadoc {
-        inputs.property("moduleName", moduleName)
-        val options = options as CoreJavadocOptions
-        doFirst {
-            options.addStringOption("-module-path", classpath.asPath)
-        }
+//        inputs.property("moduleName", moduleName)
+//        val options = options as CoreJavadocOptions
+//        doFirst {
+//            options.addStringOption("-module-path", classpath.asPath)
+//        }
     }
 }
