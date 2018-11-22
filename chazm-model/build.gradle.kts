@@ -1,8 +1,11 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.time.Instant
 
 plugins {
     `java-library`
+    `kotlin-jvm`
     jacoco
     distribution
     `maven-publish`
@@ -25,7 +28,7 @@ java {
 
 dependencies {
     api(project(":chazm-api"))
-
+    implementation(kotlin("stdlib-jdk8"))
     implementation(platform(com.google.inject.`guice-bom`))
     implementation(com.google.inject.guice)
     implementation(com.google.inject.extensions.`guice-assistedinject`)
@@ -34,12 +37,13 @@ dependencies {
     implementation("javax.validation:validation-api:2.0.1.Final")
     implementation(io.reactivex.rxjava2.rxjava)
 
+    testImplementation(kotlin("test-junit5"))
     testImplementation(platform(org.junit.`junit-bom`))
     testImplementation(org.junit.jupiter.`junit-jupiter-api`)
     testImplementation(org.junit.jupiter.`junit-jupiter-params`)
     testImplementation(org.assertj.`assertj-core`)
     testImplementation(org.mockito.`mockito-core`)
-//    testImplementation(org.mockito.`mockito-junit-jupiter`)
+    testImplementation(org.mockito.`mockito-junit-jupiter`)
 
     testRuntimeOnly(org.junit.jupiter.`junit-jupiter-engine`)
 }
@@ -114,6 +118,12 @@ tasks {
             classpath = files()
         }
     }
+    compileKotlin<KotlinCompile> {
+        inputs.property("moduleName", moduleName)
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+    }
     compileTestJava<JavaCompile> {
         inputs.property("moduleName", moduleName)
         doFirst {
@@ -129,9 +139,18 @@ tasks {
             classpath = files()
         }
     }
+    compileTestKotlin<KotlinCompile> {
+        inputs.property("moduleName", moduleName)
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+    }
     test<Test> {
         useJUnitPlatform()
         inputs.property("moduleName", moduleName)
+        testLogging {
+            events(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
+        }
         doFirst {
             jvmArgs = listOf(
                     "--module-path", classpath.asPath,
