@@ -115,58 +115,58 @@ tasks {
     val junit = "org.junit.jupiter.api"
 
     compileJava<JavaCompile> {
-        inputs.property("moduleName", moduleName)
-        doFirst {
-            options.compilerArgs = listOf("--module-path", classpath.asPath)
-            classpath = files()
-        }
+//        inputs.property("moduleName", moduleName)
+//        doFirst {
+//            options.compilerArgs = listOf("--module-path", classpath.asPath)
+//            classpath = files()
+//        }
     }
     compileKotlin<KotlinCompile> {
-        inputs.property("moduleName", moduleName)
+//        inputs.property("moduleName", moduleName)
         kotlinOptions {
             jvmTarget = "1.8"
         }
     }
     compileTestJava<JavaCompile> {
-        inputs.property("moduleName", moduleName)
-        doFirst {
-            options.compilerArgs = listOf(
-                    "--module-path", classpath.asPath,
-                    "--add-modules", junit,
-                    "--add-reads", "$moduleName=$junit",
-                    "--patch-module", "$moduleName=" + files(sourceSets.test.get().java.srcDirs).asPath
-            )
-            classpath = files()
-        }
+//        inputs.property("moduleName", moduleName)
+//        doFirst {
+//            options.compilerArgs = listOf(
+//                    "--module-path", classpath.asPath,
+//                    "--add-modules", junit,
+//                    "--add-reads", "$moduleName=$junit",
+//                    "--patch-module", "$moduleName=" + files(sourceSets.test.get().java.srcDirs).asPath
+//            )
+//            classpath = files()
+//        }
     }
     compileTestKotlin<KotlinCompile> {
-        inputs.property("moduleName", moduleName)
+//        inputs.property("moduleName", moduleName)
         kotlinOptions {
             jvmTarget = "1.8"
         }
     }
     test<Test> {
         useJUnitPlatform()
-        inputs.property("moduleName", moduleName)
+//        inputs.property("moduleName", moduleName)
         testLogging {
             events(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
         }
-        doFirst {
-            jvmArgs = listOf(
-                    "--module-path", classpath.asPath,
-                    "--add-modules", "ALL-MODULE-PATH",
-                    "--add-reads", "$moduleName=$junit",
-                    "--add-reads", "$moduleName=org.assertj.core",
-                    "--add-opens", "$moduleName/$moduleName=org.junit.platform.commons",
-                    "--add-opens", "$moduleName/$moduleName.entity=org.junit.platform.commons",
-                    "--add-opens", "$moduleName/$moduleName.function=org.junit.platform.commons",
-                    "--add-opens", "$moduleName/$moduleName.parsers=org.junit.platform.commons",
-                    "--add-opens", "$moduleName/$moduleName.parsers=org.mockito",
-                    "--add-opens", "java.base/java.lang=com.google.guice",
-                    "--patch-module", "$moduleName=${files(sourceSets.test.get().java.outputDir).asPath}"
-            )
-            classpath = files()
-        }
+//        doFirst {
+//            jvmArgs = listOf(
+//                    "--module-path", classpath.asPath,
+//                    "--add-modules", "ALL-MODULE-PATH",
+//                    "--add-reads", "$moduleName=$junit",
+//                    "--add-reads", "$moduleName=org.assertj.core",
+//                    "--add-opens", "$moduleName/$moduleName=org.junit.platform.commons",
+//                    "--add-opens", "$moduleName/$moduleName.entity=org.junit.platform.commons",
+//                    "--add-opens", "$moduleName/$moduleName.function=org.junit.platform.commons",
+//                    "--add-opens", "$moduleName/$moduleName.parsers=org.junit.platform.commons",
+//                    "--add-opens", "$moduleName/$moduleName.parsers=org.mockito",
+//                    "--add-opens", "java.base/java.lang=com.google.guice",
+//                    "--patch-module", "$moduleName=${files(sourceSets.test.get().java.outputDir).asPath}"
+//            )
+//            classpath = files()
+//        }
     }
     jacocoTestReport<JacocoReport> {
         reports {
@@ -176,10 +176,10 @@ tasks {
         }
     }
     javadoc {
-        inputs.property("moduleName", moduleName)
-        val options = options as CoreJavadocOptions
-        doFirst {
-            options.addStringOption("-module-path", classpath.asPath)
-        }
+//        inputs.property("moduleName", moduleName)
+//        val options = options as CoreJavadocOptions
+//        doFirst {
+//            options.addStringOption("-module-path", classpath.asPath)
+//        }
     }
 }
