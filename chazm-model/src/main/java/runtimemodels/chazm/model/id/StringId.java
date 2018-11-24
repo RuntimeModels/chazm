@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
+@Deprecated
 class StringId<T> extends AbstractId<T> {
 
     private static final long serialVersionUID = 522905742372399827L;

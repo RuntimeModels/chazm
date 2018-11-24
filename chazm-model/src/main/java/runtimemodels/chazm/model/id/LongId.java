@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import static runtimemodels.chazm.model.validation.Checks.checkNotNull;
 
+@Deprecated
 class LongId<T> extends AbstractId<T> {
 
     private static final long serialVersionUID = 8542765061773217208L;
