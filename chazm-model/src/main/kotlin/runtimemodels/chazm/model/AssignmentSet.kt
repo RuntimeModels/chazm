@@ -5,23 +5,25 @@ import runtimemodels.chazm.api.entity.InstanceGoal
 import runtimemodels.chazm.api.entity.Role
 import runtimemodels.chazm.api.relation.Assignment
 
+typealias Assignments = MutableSet<Assignment>
+
 @Suppress("unused")
 class AssignmentSet {
-    private val assignments: MutableList<Assignment> = ArrayList()
-    private val assignmentsByAgent: MutableMap<Agent, MutableList<Assignment>> = HashMap()
-    private val assignmentsByRole: MutableMap<Role, MutableList<Assignment>> = HashMap()
-    private val assignmentsByGoal: MutableMap<InstanceGoal, MutableList<Assignment>> = HashMap()
+    private val assignments: Assignments = mutableSetOf()
+    private val assignmentsByAgent: MutableMap<Agent, Assignments> = mutableMapOf()
+    private val assignmentsByRole: MutableMap<Role, Assignments> = mutableMapOf()
+    private val assignmentsByGoal: MutableMap<InstanceGoal, Assignments> = mutableMapOf()
 
     @Synchronized
     fun addAssignment(assignment: Assignment) {
         assignments.add(assignment)
-        assignmentsByAgent.computeIfAbsent(assignment.agent) { ArrayList() }.add(assignment)
-        assignmentsByRole.computeIfAbsent(assignment.role) { ArrayList() }.add(assignment)
-        assignmentsByGoal.computeIfAbsent(assignment.goal) { ArrayList() }.add(assignment)
+        assignmentsByAgent.computeIfAbsent(assignment.agent) { mutableSetOf() }.add(assignment)
+        assignmentsByRole.computeIfAbsent(assignment.role) { mutableSetOf() }.add(assignment)
+        assignmentsByGoal.computeIfAbsent(assignment.goal) { mutableSetOf() }.add(assignment)
     }
 
     @Synchronized
-    fun addAssignments(assignments: Collection<Assignment>) = assignments.forEach(::addAssignment)
+    fun addAssignments(assignments: Set<Assignment>) = assignments.forEach(::addAssignment)
 
 
     @Synchronized
@@ -33,18 +35,18 @@ class AssignmentSet {
     }
 
     @Synchronized
-    fun removeAssignments(assignments: Collection<Assignment>) = assignments.forEach(::removeAssignment)
+    fun removeAssignments(assignments: Set<Assignment>) = assignments.forEach(::removeAssignment)
 
     @Synchronized
     fun getAssignments(): Set<Assignment> = assignments.toSet()
 
     @Synchronized
-    fun getAssignmentsByAgent(agent: Agent): Set<Assignment> = assignmentsByAgent.getOrDefault(agent, mutableListOf()).toSet()
+    fun getAssignmentsByAgent(agent: Agent): Set<Assignment> = assignmentsByAgent.getOrDefault(agent, mutableSetOf()).toSet()
 
     @Synchronized
-    fun getAssignmentsByRole(role: Role): Set<Assignment> = assignmentsByRole.getOrDefault(role, mutableListOf()).toSet()
+    fun getAssignmentsByRole(role: Role): Set<Assignment> = assignmentsByRole.getOrDefault(role, mutableSetOf()).toSet()
 
     @Synchronized
-    fun getAssignmentsByGoal(goal: InstanceGoal): Set<Assignment> = assignmentsByGoal.getOrDefault(goal, mutableListOf()).toSet()
+    fun getAssignmentsByGoal(goal: InstanceGoal): Set<Assignment> = assignmentsByGoal.getOrDefault(goal, mutableSetOf()).toSet()
 
 }
