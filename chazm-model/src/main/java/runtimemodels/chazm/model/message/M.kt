@@ -17,7 +17,7 @@ enum class M(private val string: String) { // everything else
     RELATION("<%s, %s>"), //
     RELATION_WITH_VALUE("<%s, %s>: %s");
 
-    operator fun get(vararg args: Any): String? {
+    fun get(vararg args: Any): String? {
         return try {
             String.format(string, *args)
         } catch (e: MissingFormatArgumentException) {
