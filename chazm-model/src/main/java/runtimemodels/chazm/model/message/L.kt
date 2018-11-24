@@ -1,7 +1,6 @@
-package runtimemodels.chazm.model.message;
+package runtimemodels.chazm.model.message
 
-@SuppressWarnings("javadoc")
-public enum L { // for loggers
+enum class L(private val string: String) { // for loggers
 
     CHECK_NOT_NULL("Checking @NotNull for {} with {}"), //
     EXECUTION_TIME("{}: {} nanoseconds: {} {}.{}()"), //
@@ -22,14 +21,8 @@ public enum L { // for loggers
     SUBSCRIBER_REGISTERED("Registering ({}) for ({}) with ({})"), //
     UNABLE_TO_INVOKE("Unable to invoke {}.{}({})");
 
-    private final String string;
-
-    L(final String string) {
-        this.string = string;
-    }
-
-    public String get() {
-        return string;
+    fun get(): String {
+        return string
     }
 
 }
