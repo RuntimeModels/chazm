@@ -6,13 +6,16 @@ import runtimemodels.chazm.api.entity.Role
 import runtimemodels.chazm.api.relation.Assignment
 
 typealias Assignments = MutableSet<Assignment>
+typealias AgentAssignments = MutableMap<Agent, Assignments>
+typealias RoleAssignments = MutableMap<Role, Assignments>
+typealias GoalAssignments = MutableMap<InstanceGoal, Assignments>
 
 @Suppress("unused")
 class AssignmentSet {
     private val assignments: Assignments = mutableSetOf()
-    private val assignmentsByAgent: MutableMap<Agent, Assignments> = mutableMapOf()
-    private val assignmentsByRole: MutableMap<Role, Assignments> = mutableMapOf()
-    private val assignmentsByGoal: MutableMap<InstanceGoal, Assignments> = mutableMapOf()
+    private val assignmentsByAgent: AgentAssignments = mutableMapOf()
+    private val assignmentsByRole: RoleAssignments = mutableMapOf()
+    private val assignmentsByGoal: GoalAssignments = mutableMapOf()
 
     @Synchronized
     fun addAssignment(assignment: Assignment) {
