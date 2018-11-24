@@ -17,6 +17,7 @@ internal open class HasRelation @Inject constructor(
     init {
         setValue(value)
     }
+
     override fun equals(other: Any?): Boolean {
         if (other is Has) {
             return agent == other.agent && attribute == other.attribute
