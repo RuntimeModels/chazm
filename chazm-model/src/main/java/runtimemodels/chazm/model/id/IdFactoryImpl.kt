@@ -21,3 +21,15 @@ internal class IdFactoryImpl : IdFactory {
     }
 
 }
+
+inline fun <reified T, U> IdFactory.build(id: Class<U>): UniqueId<T> {
+    return build(T::class.java, id)
+}
+
+inline fun <reified T> IdFactory.build(id: Long): UniqueId<T> {
+    return build(T::class.java, id)
+}
+
+inline fun <reified T> IdFactory.build(id: String): UniqueId<T> {
+    return build(T::class.java, id)
+}
