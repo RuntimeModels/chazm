@@ -21,7 +21,7 @@ internal open class NeedsRelation @Inject constructor(
 
     override fun hashCode(): Int = Objects.hash(getRole(), getAttribute())
 
-    override fun toString(): String = M.RELATION.get(role.id, attribute.id)!!
+    override fun toString(): String = M.RELATION[role.id, attribute.id]
 
     override fun getRole(): Role = role
 

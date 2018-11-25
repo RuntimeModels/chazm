@@ -22,7 +22,7 @@ internal open class ContainsRelation @Inject constructor(
 
     override fun hashCode(): Int = Objects.hash(role, characteristic)
 
-    override fun toString(): String = M.RELATION_WITH_VALUE.get(role.id, characteristic.id, value)!!
+    override fun toString(): String = M.RELATION_WITH_VALUE[role.id, characteristic.id, value]
 
     override fun getRole(): Role = role
 

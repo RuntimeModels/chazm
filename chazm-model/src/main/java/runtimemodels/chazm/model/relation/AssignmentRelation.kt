@@ -35,7 +35,7 @@ internal open class AssignmentRelation @Inject constructor(
 
     override fun hashCode(): Int = id.hashCode()
 
-    override fun toString(): String = M.ASSIGNMENT.get(agent.id, role.id, goal.id)!!
+    override fun toString(): String = M.ASSIGNMENT[agent.id, role.id, goal.id]
 
 }
 
@@ -94,7 +94,7 @@ class AssignmentId
 
     override fun hashCode(): Int = Objects.hash(super.hashCode(), agentId, roleId, goalId)
 
-    override fun toString(): String = M.ASSIGNMENT_ID.get(javaClass.simpleName, agentId, roleId, goalId)!!
+    override fun toString(): String = M.ASSIGNMENT_ID[javaClass.simpleName, agentId, roleId, goalId]
 
     companion object {
         /**

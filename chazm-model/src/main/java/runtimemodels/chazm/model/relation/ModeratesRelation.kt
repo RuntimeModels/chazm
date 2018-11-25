@@ -21,7 +21,7 @@ internal open class ModeratesRelation @Inject constructor(
 
     override fun hashCode(): Int = Objects.hash(pmf, attribute)
 
-    override fun toString(): String = M.RELATION.get(getPmf().id, getAttribute().id)!!
+    override fun toString(): String = M.RELATION[getPmf().id, getAttribute().id]
 
     override fun getPmf(): Pmf = pmf
 

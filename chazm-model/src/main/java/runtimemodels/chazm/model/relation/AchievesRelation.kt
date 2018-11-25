@@ -21,7 +21,7 @@ internal open class AchievesRelation @Inject constructor(
 
     override fun hashCode(): Int = Objects.hash(role, goal)
 
-    override fun toString(): String = M.RELATION.get(role.id, goal.id)!!
+    override fun toString(): String = M.RELATION[role.id, goal.id]
 
     override fun getRole(): Role = this.role
 
