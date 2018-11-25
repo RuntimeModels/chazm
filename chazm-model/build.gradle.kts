@@ -111,8 +111,8 @@ bintray {
 }
 
 tasks {
-    val moduleName = "runtimemodels.chazm.model"
-    val junit = "org.junit.jupiter.api"
+    //    val moduleName = "runtimemodels.chazm.model"
+//    val junit = "org.junit.jupiter.api"
 
     compileJava<JavaCompile> {
 //        inputs.property("moduleName", moduleName)
