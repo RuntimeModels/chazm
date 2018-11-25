@@ -1,5 +1,8 @@
 package runtimemodels.chazm.model.message
 
+import org.slf4j.LoggerFactory
+import java.util.*
+
 enum class L(private val string: String) { // for loggers
 
     CHECK_NOT_NULL("Checking @NotNull for {} with {}"), //
@@ -21,8 +24,16 @@ enum class L(private val string: String) { // for loggers
     SUBSCRIBER_REGISTERED("Registering ({}) for ({}) with ({})"), //
     UNABLE_TO_INVOKE("Unable to invoke {}.{}({})");
 
-    fun get(): String {
-        return string
+    operator fun get(vararg args: Any): String {
+        return try {
+            String.format(string, *args)
+        } catch (e: MissingFormatArgumentException) {
+            log.warn("{}", e)
+            ""
+        }
     }
 
+    companion object {
+        private val log = LoggerFactory.getLogger(L::class.java)
+    }
 }

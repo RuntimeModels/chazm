@@ -15,12 +15,12 @@ enum class E(private val string: String) { // for exceptions
     VALUE_AT_LEAST("For '%s' attribute type, value='%s' must be at least '%s'"), //
     VALUE_BETWEEN("For '%s' attribute type, value='%s' must be between '%s' and '%s'");
 
-    operator fun get(vararg args: Any): String? {
+    operator fun get(vararg args: Any): String {
         return try {
             String.format(string, *args)
         } catch (e: MissingFormatArgumentException) {
             log.warn("{}", e)
-            null
+            ""
         }
     }
 

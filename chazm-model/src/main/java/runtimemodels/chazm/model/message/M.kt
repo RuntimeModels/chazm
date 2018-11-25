@@ -1,5 +1,6 @@
 package runtimemodels.chazm.model.message
 
+import org.slf4j.LoggerFactory
 import java.util.*
 
 enum class M(private val string: String) { // everything else
@@ -17,13 +18,16 @@ enum class M(private val string: String) { // everything else
     RELATION("<%s, %s>"), //
     RELATION_WITH_VALUE("<%s, %s>: %s");
 
-    fun get(vararg args: Any): String? {
+    operator fun get(vararg args: Any): String {
         return try {
             String.format(string, *args)
         } catch (e: MissingFormatArgumentException) {
-            null
+            log.warn("{}", e)
+            ""
         }
-
     }
 
+    companion object {
+        private val log = LoggerFactory.getLogger(M::class.java)
+    }
 }
