@@ -27,7 +27,7 @@ internal open class PossessesRelation @Inject constructor(
 
     override fun hashCode(): Int = Objects.hash(agent, capability)
 
-    override fun toString(): String = M.RELATION_WITH_VALUE.get(agent.id, capability.id, score)!!
+    override fun toString(): String = M.RELATION_WITH_VALUE[agent.id, capability.id, score]
 
     override fun getAgent(): Agent = agent
 
