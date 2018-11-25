@@ -6,11 +6,10 @@ import runtimemodels.chazm.api.id.UniqueId
 import runtimemodels.chazm.model.message.M
 import java.util.*
 import javax.inject.Inject
-import javax.validation.constraints.NotNull
 
 internal open class AttributeEntity @Inject constructor(
     @Assisted id: UniqueId<Attribute>,
-    @param:NotNull @param:Assisted private val type: Attribute.Type
+    @param:Assisted private val type: Attribute.Type
 ) : AbstractEntity<Attribute>(id), Attribute {
     override fun equals(other: Any?): Boolean {
         if (other is Attribute) {

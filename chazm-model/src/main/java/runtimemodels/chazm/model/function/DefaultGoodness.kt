@@ -7,12 +7,17 @@ import runtimemodels.chazm.api.entity.Role
 import runtimemodels.chazm.api.function.Goodness
 import runtimemodels.chazm.api.relation.Assignment
 import javax.inject.Singleton
-import javax.validation.constraints.NotNull
 
 @Singleton
 internal open class DefaultGoodness : Goodness {
 
-    override fun compute(@NotNull organization: Organization, @NotNull agent: Agent, @NotNull role: Role, @NotNull goal: InstanceGoal, @NotNull assignments: Collection<Assignment>): Double {
+    override fun compute(
+        organization: Organization,
+        agent: Agent,
+        role: Role,
+        goal: InstanceGoal,
+        assignments: Collection<Assignment>
+    ): Double {
         /*
          * first, check that the agent has all the necessary attributes. otherwise, return a null to indicate that the agent cannot play the role
 		 */

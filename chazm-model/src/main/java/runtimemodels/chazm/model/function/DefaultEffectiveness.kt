@@ -5,12 +5,11 @@ import runtimemodels.chazm.api.function.Effectiveness
 import runtimemodels.chazm.api.relation.Assignment
 
 import javax.inject.Singleton
-import javax.validation.constraints.NotNull
 
 @Singleton
 internal open class DefaultEffectiveness : Effectiveness {
 
-    override fun compute(@NotNull organization: Organization, @NotNull assignments: Collection<Assignment>): Double {
+    override fun compute(organization: Organization, assignments: Collection<Assignment>): Double {
         return assignments
             .parallelStream()
             .mapToDouble { m ->

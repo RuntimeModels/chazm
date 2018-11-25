@@ -3,7 +3,6 @@ package runtimemodels.chazm.model.aop.profiling
 import org.aopalliance.intercept.MethodInterceptor
 import org.aopalliance.intercept.MethodInvocation
 import runtimemodels.chazm.model.message.L
-import javax.validation.constraints.NotNull
 
 /**
  * The [ExecutionTime] is a method Interceptor that tracks the time it takes for a method to complete.
@@ -14,7 +13,7 @@ import javax.validation.constraints.NotNull
 internal class ExecutionTime : MethodInterceptor {
 
     @Throws(Throwable::class)
-    override fun invoke(@NotNull invocation: MethodInvocation): Any {
+    override fun invoke(invocation: MethodInvocation): Any {
         val start = System.nanoTime()
         try {
             return invocation.proceed()
