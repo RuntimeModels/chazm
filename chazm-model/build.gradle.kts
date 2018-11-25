@@ -34,7 +34,7 @@ dependencies {
     implementation(com.google.inject.guice)
     implementation(com.google.inject.extensions.`guice-assistedinject`)
     implementation(org.slf4j.`slf4j-api`)
-    implementation("javax.inject:javax.inject:1")
+    implementation(javax.inject.javax_inject)
     implementation("javax.validation:validation-api:2.0.1.Final")
     implementation(io.reactivex.rxjava2.rxjava)
 
