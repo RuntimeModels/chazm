@@ -22,7 +22,7 @@ internal open class InstanceGoalEntity @Inject constructor(
 
     override fun hashCode(): Int = Objects.hash(super.hashCode(), goal)
 
-    override fun toString(): String = M.ENTITY_2.get(super.toString(), goal, parameter)!!
+    override fun toString(): String = M.ENTITY_2[super.toString(), goal, parameter]
 
     override fun getGoal(): SpecificationGoal = goal
 

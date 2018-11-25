@@ -20,7 +20,7 @@ internal open class AttributeEntity @Inject constructor(
 
     override fun hashCode(): Int = Objects.hash(super.hashCode(), type)
 
-    override fun toString(): String = M.ENTITY_1.get(super.toString(), type)!!
+    override fun toString(): String = M.ENTITY_1[super.toString(), type]
 
     override fun getType(): Attribute.Type = type
 }
