@@ -27,8 +27,9 @@ group = rootProject.group
 version = "${rootProject.version}.0.0"
 
 dependencies {
-    implementation(project(":chazm-api"))
-    implementation(kotlin("stdlib-jdk8"))
+    api(project(":chazm-api"))
+
+    implementation(org.jetbrains.kotlin.`kotlin-stdlib-jdk8`)
     implementation(platform(com.google.inject.`guice-bom`))
     implementation(com.google.inject.guice)
     implementation(com.google.inject.extensions.`guice-assistedinject`)
@@ -37,7 +38,7 @@ dependencies {
     implementation("javax.validation:validation-api:2.0.1.Final")
     implementation(io.reactivex.rxjava2.rxjava)
 
-    testImplementation(kotlin("test-junit5"))
+    testImplementation(org.jetbrains.kotlin.`kotlin-test-junit5`)
     testImplementation(platform(org.junit.`junit-bom`))
     testImplementation(org.junit.jupiter.`junit-jupiter-api`)
     testImplementation(org.junit.jupiter.`junit-jupiter-params`)
