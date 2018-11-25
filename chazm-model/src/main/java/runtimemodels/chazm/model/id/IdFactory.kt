@@ -29,7 +29,7 @@ interface IdFactory {
      * @param id    the `long` id for the [UniqueId].
      * @return an [UniqueId].
     </T> */
-    fun <T> build(clazz: Class<T>, id: Long?): UniqueId<T>
+    fun <T> build(clazz: Class<T>, id: Long): UniqueId<T>
 
     /**
      * Constructs an [UniqueId].

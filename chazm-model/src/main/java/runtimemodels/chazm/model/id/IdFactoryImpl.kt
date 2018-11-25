@@ -12,7 +12,7 @@ internal class IdFactoryImpl : IdFactory {
         return ClassId(clazz, id)
     }
 
-    override fun <T> build(clazz: Class<T>, id: Long?): UniqueId<T> {
+    override fun <T> build(clazz: Class<T>, id: Long): UniqueId<T> {
         return LongId(clazz, id)
     }
 
