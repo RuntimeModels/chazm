@@ -46,6 +46,7 @@ internal open class HasRelation @Inject constructor(
                 if (value < QUANTITY_MIN_AMOUNT) {
                     throw IllegalArgumentException(E.VALUE_AT_LEAST[type, value, QUANTITY_MIN_AMOUNT])
                 }
+            else -> Unit
         }
         this.value = value
     }
