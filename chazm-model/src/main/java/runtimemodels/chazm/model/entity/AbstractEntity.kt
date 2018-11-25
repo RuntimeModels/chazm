@@ -11,7 +11,9 @@ import runtimemodels.chazm.model.message.M
  * @author Christopher Zhong
  * @since 7.0.0
 </T> */
-abstract class AbstractEntity<T> @java.beans.ConstructorProperties("id") constructor(private val id: UniqueId<T>) : Identifiable<T> {
+abstract class AbstractEntity<T> @java.beans.ConstructorProperties("id") constructor(
+    private val id: UniqueId<T>
+) : Identifiable<T> {
     override fun equals(other: Any?): Boolean {
         if (other is Identifiable<*>) {
             return getId() == other.id
@@ -21,7 +23,7 @@ abstract class AbstractEntity<T> @java.beans.ConstructorProperties("id") constru
 
     override fun hashCode(): Int = id.hashCode()
 
-    override fun toString(): String = M.ENTITY_0.get(javaClass.simpleName, id)!!
+    override fun toString(): String = M.ENTITY_0[javaClass.simpleName, id]
 
     override fun getId(): UniqueId<T> = id
 }

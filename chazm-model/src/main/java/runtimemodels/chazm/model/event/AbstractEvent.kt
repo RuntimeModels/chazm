@@ -32,7 +32,7 @@ protected constructor(
 
     override fun hashCode(): Int = category.hashCode()
 
-    override fun toString(): String = M.EVENT.get(javaClass.simpleName, category)!!
+    override fun toString(): String = M.EVENT[javaClass.simpleName, category]
 
     companion object {
         private const val serialVersionUID = 3392050291256215349L
