@@ -21,7 +21,7 @@ internal open class DefaultGoodness : Goodness {
         /*
          * first, check that the agent has all the necessary attributes. otherwise, return a null to indicate that the agent cannot play the role
 		 */
-        if (organization.getNeeds(role.id).parallelStream().anyMatch { p -> organization.getHasValue(agent.id, p.id) == null }) {
+        if (organization.getNeeds(role.id).any { organization.getHasValue(agent.id, it.id) == null }) {
             return MIN_SCORE
         }
         if (organization.getAchieves(role.id).contains(goal.goal)) {
