@@ -23,7 +23,7 @@ class DefaultEffectivenessTest {
     private val effectiveness = injector.getInstance(Effectiveness::class.java)
 
     @Test
-    fun testCompute() {
+    fun `test that compute works correctly`() {
         val o = provider.get()
         val a1 = entityFactory.buildAgent(idFactory.build(Agent::class.java, "a1"), object : Agent.ContactInfo {
         })
@@ -73,12 +73,12 @@ class DefaultEffectivenessTest {
     }
 
     @Test
-    fun testCompute1() {
+    fun `test compute function with a null organization and a null assignments`() {
         assertThrows<IllegalArgumentException> { effectiveness.compute(null, null) }
     }
 
     @Test
-    fun testCompute2() {
+    fun `test compute function with a null assignments`() {
         val o = provider.get()
 
         assertThrows<IllegalArgumentException> { effectiveness.compute(o, null) }

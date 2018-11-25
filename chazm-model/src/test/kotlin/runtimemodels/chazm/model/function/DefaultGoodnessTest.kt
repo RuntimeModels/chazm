@@ -2,14 +2,17 @@ package runtimemodels.chazm.model.function
 
 import com.google.inject.Guice
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import runtimemodels.chazm.api.Organization
-import runtimemodels.chazm.api.entity.*
+import runtimemodels.chazm.api.entity.Agent
+import runtimemodels.chazm.api.entity.Attribute
+import runtimemodels.chazm.api.entity.InstanceGoal
 import runtimemodels.chazm.api.function.Goodness
 import runtimemodels.chazm.model.OrganizationModule
 import runtimemodels.chazm.model.entity.EntityFactory
 import runtimemodels.chazm.model.id.IdFactory
+import runtimemodels.chazm.model.id.build
 
 class DefaultGoodnessTest {
 
@@ -20,19 +23,19 @@ class DefaultGoodnessTest {
     private val goodness = injector.getInstance(Goodness::class.java)
 
     @Test
-    fun testCompute() {
+    fun `test that the compute function works properly`() {
         val o = provider.get()
-        val a = entityFactory.buildAgent(idFactory.build(Agent::class.java, "a"), object : Agent.ContactInfo {
+        val a = entityFactory.buildAgent(idFactory.build("a"), object : Agent.ContactInfo {
 
         })
-        val r = entityFactory.buildRole(idFactory.build(Role::class.java, "r"))
-        val sg = entityFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal::class.java, "sg"))
-        val ig = entityFactory.buildInstanceGoal(idFactory.build(InstanceGoal::class.java, "ig"), sg, object : InstanceGoal.Parameter {
+        val r = entityFactory.buildRole(idFactory.build("r"))
+        val sg = entityFactory.buildSpecificationGoal(idFactory.build("sg"))
+        val ig = entityFactory.buildInstanceGoal(idFactory.build("ig"), sg, object : InstanceGoal.Parameter {
 
         })
-        val c1 = entityFactory.buildCapability(idFactory.build(Capability::class.java, "c1"))
-        val c2 = entityFactory.buildCapability(idFactory.build(Capability::class.java, "c2"))
-        val t = entityFactory.buildAttribute(idFactory.build(Attribute::class.java, "t"), Attribute.Type.NEGATIVE_QUALITY)
+        val c1 = entityFactory.buildCapability(idFactory.build("c1"))
+        val c2 = entityFactory.buildCapability(idFactory.build("c2"))
+        val t = entityFactory.buildAttribute(idFactory.build("t"), Attribute.Type.NEGATIVE_QUALITY)
 
         assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MIN_SCORE)
 
@@ -70,50 +73,49 @@ class DefaultGoodnessTest {
     }
 
     @Test
-    fun testCompute1() {
-        assertThrows(IllegalArgumentException::class.java) { goodness.compute(null, null, null, null, null) }
+    fun `test that the compute function throws an IllegalArgumentException when called with all parameters as null`() {
+        assertThrows<IllegalArgumentException> { goodness.compute(null, null, null, null, null) }
     }
 
     @Test
-    fun testCompute2() {
+    fun `test that the compute function throws an IllegalArgumentException when called with a null agent, a null role, a null goal, and a null assignment`() {
         val o = provider.get()
-        assertThrows(IllegalArgumentException::class.java) { goodness.compute(o, null, null, null, null) }
+        assertThrows<IllegalArgumentException> { goodness.compute(o, null, null, null, null) }
     }
 
     @Test
-    fun testCompute3() {
+    fun `test that the compute function throws an IllegalArgumentException when called with a null role, a null goal, and a null assignment`() {
         val o = provider.get()
-        val a = entityFactory.buildAgent(idFactory.build(Agent::class.java, "a"), object : Agent.ContactInfo {
-
+        val a = entityFactory.buildAgent(idFactory.build("a"), object : Agent.ContactInfo {
         })
 
-        assertThrows(IllegalArgumentException::class.java) { goodness.compute(o, a, null, null, null) }
+        assertThrows<IllegalArgumentException> { goodness.compute(o, a, null, null, null) }
     }
 
     @Test
-    fun testCompute4() {
+    fun `test that the compute function throws an IllegalArgumentException when called with a null goal and a null assignment`() {
         val o = provider.get()
-        val a = entityFactory.buildAgent(idFactory.build(Agent::class.java, "a"), object : Agent.ContactInfo {
+        val a = entityFactory.buildAgent(idFactory.build("a"), object : Agent.ContactInfo {
 
         })
-        val r = entityFactory.buildRole(idFactory.build(Role::class.java, "r"))
+        val r = entityFactory.buildRole(idFactory.build("r"))
 
-        assertThrows(IllegalArgumentException::class.java) { goodness.compute(o, a, r, null, null) }
+        assertThrows<IllegalArgumentException> { goodness.compute(o, a, r, null, null) }
     }
 
     @Test
-    fun testCompute5() {
+    fun `test that the compute function throws an IllegalArgumentException when called with a null assignment`() {
         val o = provider.get()
-        val a = entityFactory.buildAgent(idFactory.build(Agent::class.java, "a"), object : Agent.ContactInfo {
+        val a = entityFactory.buildAgent(idFactory.build("a"), object : Agent.ContactInfo {
 
         })
-        val r = entityFactory.buildRole(idFactory.build(Role::class.java, "r"))
-        val sg = entityFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal::class.java, "sg"))
-        val ig = entityFactory.buildInstanceGoal(idFactory.build(InstanceGoal::class.java, "ig"), sg, object : InstanceGoal.Parameter {
+        val r = entityFactory.buildRole(idFactory.build("r"))
+        val sg = entityFactory.buildSpecificationGoal(idFactory.build("sg"))
+        val ig = entityFactory.buildInstanceGoal(idFactory.build("ig"), sg, object : InstanceGoal.Parameter {
 
         })
 
-        assertThrows(IllegalArgumentException::class.java) { goodness.compute(o, a, r, ig, null) }
+        assertThrows<IllegalArgumentException> { goodness.compute(o, a, r, ig, null) }
     }
 
 }
