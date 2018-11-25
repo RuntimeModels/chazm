@@ -11,11 +11,9 @@ internal open class DefaultEffectiveness : Effectiveness {
 
     override fun compute(organization: Organization, assignments: Collection<Assignment>): Double {
         return assignments
-            .parallelStream()
-            .mapToDouble { m ->
-                organization.getGoodness(m.role.id).compute(organization, m.agent, m.role, m.goal,
-                    organization.assignments)
-            }.sum()
+            .sumByDouble {
+                organization.getGoodness(it.role.id).compute(organization, it.agent, it.role, it.goal, organization.assignments)
+            }
     }
 
 }
