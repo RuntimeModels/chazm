@@ -36,11 +36,11 @@ internal open class DefaultGoodness : Goodness {
                 count++
             }
 
-            if (count < 2) {
-                return score
+            return if (count < 2) {
+                score
             } else {
                 val inverse = 1.0 / count
-                return Math.pow(score, inverse)
+                Math.pow(score, inverse)
             }
         }
         return MIN_SCORE
