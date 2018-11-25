@@ -16,7 +16,7 @@ internal class IdFactoryImpl : IdFactory {
         return LongId(clazz, id)
     }
 
-    override fun <T> build(clazz: Class<T>, id: String): StringId<T> {
+    override fun <T> build(clazz: Class<T>, id: String): UniqueId<T> {
         return StringId(clazz, id)
     }
 
