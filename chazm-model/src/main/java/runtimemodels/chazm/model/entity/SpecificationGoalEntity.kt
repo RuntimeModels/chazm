@@ -3,7 +3,6 @@ package runtimemodels.chazm.model.entity
 import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.SpecificationGoal
 import runtimemodels.chazm.api.id.UniqueId
-
 import javax.inject.Inject
 
 internal open class SpecificationGoalEntity @Inject constructor(
