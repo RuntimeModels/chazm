@@ -1,7 +1,6 @@
 package runtimemodels.chazm.model.notification
 
 import com.google.inject.AbstractModule
-import runtimemodels.chazm.model.aop.validation.ValidationModule
 
 /**
  * The [NotificationModule] class provides a Guice binding module for events (such as pub/sub event notifications).
@@ -15,7 +14,6 @@ class NotificationModule : AbstractModule() {
         bind(Mediator::class.java).to(DefaultMediator::class.java)
         bind(Publisher::class.java).to(DefaultPublisher::class.java)
         bind(Subscriber::class.java).to(DefaultSubscriber::class.java)
-        install(ValidationModule())
     }
 
 }
