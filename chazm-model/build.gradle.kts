@@ -4,13 +4,13 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.time.Instant
 
 plugins {
-    `java-library`
-    `kotlin-jvm`
+    `kotlin-jvm`()
+    dokka()
     jacoco
     distribution
     `maven-publish`
     signing
-    bintray
+    bintray(includeVersion = false)
 }
 
 group = rootProject.group
@@ -28,16 +28,17 @@ java {
 
 dependencies {
     api(project(":chazm-api"))
-    implementation(kotlin("stdlib-jdk8"))
+
+    implementation(org.jetbrains.kotlin.`kotlin-stdlib-jdk8`)
     implementation(platform(com.google.inject.`guice-bom`))
     implementation(com.google.inject.guice)
     implementation(com.google.inject.extensions.`guice-assistedinject`)
-    implementation("org.slf4j:slf4j-api:+")
-    implementation("javax.inject:javax.inject:1")
-    implementation("javax.validation:validation-api:2.0.1.Final")
+    implementation(org.slf4j.`slf4j-api`)
+    implementation(javax.inject.javax_inject)
+    implementation(javax.validation.`validation-api`)
     implementation(io.reactivex.rxjava2.rxjava)
 
-    testImplementation(kotlin("test-junit5"))
+    testImplementation(org.jetbrains.kotlin.`kotlin-test-junit5`)
     testImplementation(platform(org.junit.`junit-bom`))
     testImplementation(org.junit.jupiter.`junit-jupiter-api`)
     testImplementation(org.junit.jupiter.`junit-jupiter-params`)
@@ -54,10 +55,10 @@ val sourceJar by tasks.registering(Jar::class) {
     manifest = tasks.jar.get().manifest
 }
 
-val javadocJar by tasks.registering(Jar::class) {
-    dependsOn(tasks.javadoc)
-    classifier = "javadoc"
-    from(tasks.javadoc.get().destinationDir)
+val dokkaJar by tasks.registering(Jar::class) {
+    dependsOn(tasks.dokka)
+    classifier = "dokka"
+    from(tasks.dokka.get().outputDirectory)
     manifest = tasks.jar.get().manifest
 }
 
@@ -66,7 +67,7 @@ distributions {
         contents {
             from(tasks.jar)
             from(sourceJar)
-            from(javadocJar)
+            from(dokkaJar)
         }
     }
 }
@@ -76,7 +77,7 @@ publishing {
         create<MavenPublication>("mavenJava") {
             artifact(tasks.jar.get())
             artifact(sourceJar.get())
-            artifact(javadocJar.get())
+            artifact(dokkaJar.get())
         }
     }
 }
@@ -104,88 +105,33 @@ bintray {
 }
 
 tasks {
-//    val moduleName = "runtimemodels.chazm.model"
-//    val junitModule = "org.junit.jupiter.api"
-
-    compileJava<JavaCompile> {
-//        inputs.property("moduleName", moduleName)
-        doFirst {
-            options.compilerArgs = listOf(
-                    "-Xlint" // Enables all recommended warnings.
-//                    "-Werror", // Terminates compilation when warnings occur.
-//                    "--module-path", classpath.asPath
-            )
-//            classpath = files()
-        }
-    }
-    compileKotlin<KotlinCompile> {
-//        inputs.property("moduleName", moduleName)
+    compileKotlin {
         kotlinOptions {
             jvmTarget = "1.8"
         }
     }
-    compileTestJava<JavaCompile> {
-//        inputs.property("moduleName", moduleName)
-        doFirst {
-            options.compilerArgs = listOf(
-                    "-Xlint",     // Enables all recommended warnings.
-                    "-Xlint:-overrides", // Disables "method overrides" warnings.
-                    "-parameters" // Generates metadata for reflection on method parameters.
-//                    "--module-path", classpath.asPath,
-//                    "--add-modules", junitModule,
-//                    "--add-reads", "$moduleName=$junitModule",
-//                    "--patch-module", "$moduleName=${files(sourceSets.test.get().java.srcDirs).asPath}"
-            )
-//            classpath = files()
-        }
-    }
-    compileTestKotlin<KotlinCompile> {
-//        inputs.property("moduleName", moduleName)
+    compileTestKotlin {
         kotlinOptions {
             jvmTarget = "1.8"
         }
     }
-    test<Test> {
+    test {
         useJUnitPlatform()
-//        inputs.property("moduleName", moduleName)
-//        doFirst {
-//            jvmArgs = listOf(
-//                    "--module-path", classpath.asPath,
-//                    "--add-modules", "ALL-MODULE-PATH",
-//                    "--add-reads", "$moduleName=$junitModule",
-//                    "--add-reads", "$moduleName=org.assertj.core",
-//                    "--add-opens", "$moduleName/$moduleName=org.junit.platform.commons",
-//                    "--add-opens", "$moduleName/$moduleName.entity=org.junit.platform.commons",
-//                    "--add-opens", "$moduleName/$moduleName.function=org.junit.platform.commons",
-//                    "--add-opens", "$moduleName/$moduleName.parsers=org.junit.platform.commons",
-//                    "--add-opens", "$moduleName/$moduleName.parsers=org.mockito",
-//                    "--add-opens", "java.base/java.lang=com.google.guice",
-//                    "--patch-module", "$moduleName=${files(sourceSets.test.get().java.outputDir).asPath}"
-//            )
-//            classpath = files()
-//        }
         testLogging {
             events(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
         }
     }
-    jacocoTestReport<JacocoReport> {
+    jacocoTestReport {
         reports {
             csv.isEnabled = false
             xml.isEnabled = true
             html.isEnabled = System.getenv("CI").isNullOrBlank()
         }
     }
-    jar<Jar> {
+    jar {
         manifest {
             attributes["Implementation-Title"] = project.name
             attributes["Implementation-Version"] = project.version
         }
-    }
-    javadoc {
-//        inputs.property("moduleName", moduleName)
-//        val options = options as CoreJavadocOptions
-//        doFirst {
-//            options.addStringOption("-module-path", classpath.asPath)
-//        }
     }
 }

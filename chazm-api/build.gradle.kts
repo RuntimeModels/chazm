@@ -7,7 +7,7 @@ plugins {
     distribution
     `maven-publish`
     signing
-    bintray
+    bintray(includeVersion = false)
 }
 
 group = rootProject.group

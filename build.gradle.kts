@@ -8,8 +8,8 @@ plugins {
 //    id("org.sonarqube") version "2.6.2"
 //    id("org.standardout.versioneye") version "1.5.0"
 
-    `bintray-version` apply false
-    `gradle-versions-plugin`
+    bintray() apply false
+    `gradle-versions-plugin`()
 }
 
 buildScan {
@@ -33,23 +33,6 @@ tasks {
     wrapper<Wrapper> {
         distributionType = Wrapper.DistributionType.ALL
         gradleVersion = Gradle.VERSION
-    }
-    register("printInfo") {
-        doLast {
-            println(" Project name: ${project.name}")
-            println(" - Group Id: ${project.group}")
-            println(" - Major version: ${project.version}")
-            println(" - Number of subproject: ${subprojects.size}")
-            subprojects.forEach { project ->
-                println("   - Subproject name: ${project.name}:")
-                println("     - Group Id: ${project.group}")
-                println("     - Version: ${project.version}")
-                println("     - Number of archive artifacts: ${project.configurations.archives.get().allArtifacts.size}")
-                project.configurations.archives.get().allArtifacts.files.forEach { file ->
-                    println("       - Artifact: ${file.name}")
-                }
-            }
-        }
     }
     projectInfo()
 }

@@ -3,6 +3,8 @@ package runtimemodels.chazm.api.entity;
 import runtimemodels.chazm.api.Organization;
 import runtimemodels.chazm.api.id.Identifiable;
 
+import java.util.Map;
+
 /**
  * The {@linkplain Agent} interface defines the agent entity of an {@linkplain Organization}.
  *
@@ -11,18 +13,24 @@ import runtimemodels.chazm.api.id.Identifiable;
  */
 public interface Agent extends Identifiable<Agent> {
     /**
-     * Returns the {@linkplain ContactInfo} for this {@linkplain Agent}.
+     * Returns a {@linkplain Map} with information for contacting this {@linkplain Agent}.
      *
-     * @return the {@linkplain ContactInfo} of this {@linkplain Agent}.
+     * @return a {@linkplain Map} with information for contacting this {@linkplain Agent}.
      */
-    ContactInfo getContactInfo();
+    Map<Object, Object> getContactInfo();
 
     /**
-     * The {@linkplain ContactInfo} defines the interface on how {@linkplain Agent}s can be contacted.
+     * Adds the given {@linkplain Object} {@code key} and {@linkplain Object} {@code value} as a contact information for this {@linkplain Agent}.
      *
-     * @author Christopher Zhong
-     * @since 7.0.0
+     * @param key   an {@linkplain Object} representing the {@code key}.
+     * @param value an {@linkplain Object} representing the {@code value}.
      */
-    interface ContactInfo {
-    }
+    void addContactInfo(Object key, Object value);
+
+    /**
+     * Removes a contact information by the given {@linkplain Object} {@code key} from this {@linkplain Agent}.
+     *
+     * @param key   an {@linkplain Object} representing the {@code key}.
+     */
+    void removeContactInfo(Object key);
 }

@@ -213,8 +213,8 @@ public class DetailedInformationPanel extends JPanel {
             writeEntityRelation("Instance Identifier:");
             writeEntityEntity(instanceGoal.getId().toString());
             writeRelation("Parameter(s):");
-            if (instanceGoal.getParameter() != null) {
-                writeRelationEntity(instanceGoal.getParameter().toString());
+            if (instanceGoal.getParameters() != null) {
+                writeRelationEntity(instanceGoal.getParameters().toString());
             }
         } catch (final BadLocationException e) {
             e.printStackTrace();
@@ -296,8 +296,8 @@ public class DetailedInformationPanel extends JPanel {
             writeEntityRelation("Achieving Goal:");
             writeEntityEntity(assignment.getGoal().getId().toString());
             writeEntityRelation("Parameters:");
-            if (assignment.getGoal().getParameter() != null) {
-                writeEntityEntity(assignment.getGoal().getParameter().toString());
+            if (assignment.getGoal().getParameters() != null) {
+                writeEntityEntity(assignment.getGoal().getParameters().toString());
             }
         } catch (final BadLocationException e) {
             e.printStackTrace();
