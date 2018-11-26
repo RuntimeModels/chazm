@@ -3,7 +3,7 @@ package runtimemodels.chazm.api.entity;
 import runtimemodels.chazm.api.Organization;
 import runtimemodels.chazm.api.id.Identifiable;
 
-import java.io.Serializable;
+import java.util.Map;
 
 /**
  * The {@linkplain InstanceGoal} interface defines the instance goal, which is a concrete instantiation of a {@linkplain SpecificationGoal}, of an
@@ -13,7 +13,6 @@ import java.io.Serializable;
  * @since 3.4
  */
 public interface InstanceGoal extends Identifiable<InstanceGoal> {
-
     /**
      * Returns the {@linkplain SpecificationGoal} that instantiated this {@linkplain InstanceGoal}.
      *
@@ -22,19 +21,24 @@ public interface InstanceGoal extends Identifiable<InstanceGoal> {
     SpecificationGoal getGoal();
 
     /**
-     * Returns the {@linkplain Parameter} of this {@linkplain InstanceGoal}.
+     * Returns a {@linkplain Map} that represents the parameters of this {@linkplain InstanceGoal}.
      *
-     * @return the {@linkplain Parameter} of this {@linkplain InstanceGoal}.
+     * @return a {@linkplain Map} that represents the parameters of this {@linkplain InstanceGoal}.
      */
-    Parameter getParameter();
+    Map<Object, Object> getParameters();
 
     /**
-     * The {@linkplain Parameter} interface defines the parameter of an {@linkplain InstanceGoal}.
+     * Adds the given {@linkplain Object} {@code key} and {@linkplain Object} {@code value} as a parameter to this {@linkplain InstanceGoal}.
      *
-     * @author Christopher Zhong
-     * @since 7.0.0
+     * @param key   an {@linkplain Object} representing the {@code key}.
+     * @param value an {@linkplain Object} representing the {@code value}.
      */
-    interface Parameter extends Serializable {
-    }
+    void addParameter(Object key, Object value);
 
+    /**
+     * Removes a parameter by the given {@linkplain Object} {@code key} from this {@linkplain InstanceGoal}.
+     *
+     * @param key an {@linkplain Object} representing the {@code key}.
+     */
+    void removeParameter(Object key);
 }

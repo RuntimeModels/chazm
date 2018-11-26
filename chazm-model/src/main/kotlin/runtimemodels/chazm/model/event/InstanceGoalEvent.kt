@@ -31,11 +31,11 @@ open class InstanceGoalEvent @Inject internal constructor(
      */
     val specificationGoalId: UniqueId<SpecificationGoal> = goal.goal.id
     /**
-     * Returns a [InstanceGoal.Parameter].
+     * Returns a [Map] of parameters for the [InstanceGoal].
      *
-     * @return a [InstanceGoal.Parameter].
+     * @return a [Map] of parameters for the [InstanceGoal].
      */
-    val parameter: InstanceGoal.Parameter = goal.parameter
+    val parameters: Map<Any, Any> = goal.parameters
 
     override fun equals(other: Any?): Boolean {
         if (other is InstanceGoalEvent) {
@@ -46,7 +46,7 @@ open class InstanceGoalEvent @Inject internal constructor(
 
     override fun hashCode(): Int = Objects.hash(category, id, specificationGoalId)
 
-    override fun toString(): String = M.EVENT_WITH_2_IDS_AND_VALUE[super.toString(), id, specificationGoalId, parameter]
+    override fun toString(): String = M.EVENT_WITH_2_IDS_AND_VALUE[super.toString(), id, specificationGoalId, parameters]
 
     companion object {
         private const val serialVersionUID = -7178745959528744216L

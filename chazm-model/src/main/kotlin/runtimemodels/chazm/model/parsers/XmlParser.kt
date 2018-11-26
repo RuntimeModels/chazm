@@ -244,9 +244,7 @@ internal open class XmlParser @Inject constructor(
                 val goal = organization.getSpecificationGoal(goalId)
                 val id = idFactory.build(InstanceGoal::class.java, getAttributeValue(element, NAME_ATTRIBUTE))
                 // TODO parse parameter
-                val parameter = object : InstanceGoal.Parameter {
-                    private val serialVersionUID = 7160662689368879207L
-                }
+                val parameter = mapOf<Any, Any>()
                 return build(id, instanceGoals, element, Function { entityFactory.buildInstanceGoal(it, goal, parameter) }, Consumer { organization.addInstanceGoal(it) })
             }
         })
