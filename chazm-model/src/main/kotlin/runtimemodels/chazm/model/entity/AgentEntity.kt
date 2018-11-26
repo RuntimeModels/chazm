@@ -8,8 +8,13 @@ import javax.inject.Inject
 
 internal open class AgentEntity @Inject constructor(
     @Assisted id: UniqueId<Agent>,
-    @param:Assisted private val contactInfo: Agent.ContactInfo
+    @Assisted contactInfo: Map<Any, Any>
 ) : AbstractEntity<Agent>(id), Agent {
+    private val contactInfo: MutableMap<Any, Any> = mutableMapOf()
+
+    init {
+        this.contactInfo.putAll(contactInfo)
+    }
 
     override fun equals(other: Any?): Boolean {
         if (other is Agent) {
@@ -22,5 +27,13 @@ internal open class AgentEntity @Inject constructor(
 
     override fun toString(): String = super.toString()
 
-    override fun getContactInfo(): Agent.ContactInfo = contactInfo
+    override fun getContactInfo(): Map<Any, Any> = contactInfo.toMap()
+
+    override fun addContactInfo(key: Any, value: Any) {
+        contactInfo[key] = value
+    }
+
+    override fun removeContactInfo(key: Any) {
+        contactInfo.remove(key)
+    }
 }

@@ -5,7 +5,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import runtimemodels.chazm.api.Organization
-import runtimemodels.chazm.api.entity.Agent
 import runtimemodels.chazm.api.entity.Attribute
 import runtimemodels.chazm.api.entity.InstanceGoal
 import runtimemodels.chazm.api.function.Goodness
@@ -25,9 +24,7 @@ class DefaultGoodnessTest {
     @Test
     fun `test that the compute function works properly`() {
         val o = provider.get()
-        val a = entityFactory.buildAgent(idFactory.build("a"), object : Agent.ContactInfo {
-
-        })
+        val a = entityFactory.buildAgent(idFactory.build("a"), mapOf())
         val r = entityFactory.buildRole(idFactory.build("r"))
         val sg = entityFactory.buildSpecificationGoal(idFactory.build("sg"))
         val ig = entityFactory.buildInstanceGoal(idFactory.build("ig"), sg, object : InstanceGoal.Parameter {
@@ -86,8 +83,7 @@ class DefaultGoodnessTest {
     @Test
     fun `test that the compute function throws an IllegalArgumentException when called with a null role, a null goal, and a null assignment`() {
         val o = provider.get()
-        val a = entityFactory.buildAgent(idFactory.build("a"), object : Agent.ContactInfo {
-        })
+        val a = entityFactory.buildAgent(idFactory.build("a"), mapOf())
 
         assertThrows<IllegalArgumentException> { goodness.compute(o, a, null, null, null) }
     }
@@ -95,9 +91,7 @@ class DefaultGoodnessTest {
     @Test
     fun `test that the compute function throws an IllegalArgumentException when called with a null goal and a null assignment`() {
         val o = provider.get()
-        val a = entityFactory.buildAgent(idFactory.build("a"), object : Agent.ContactInfo {
-
-        })
+        val a = entityFactory.buildAgent(idFactory.build("a"), mapOf())
         val r = entityFactory.buildRole(idFactory.build("r"))
 
         assertThrows<IllegalArgumentException> { goodness.compute(o, a, r, null, null) }
@@ -106,9 +100,7 @@ class DefaultGoodnessTest {
     @Test
     fun `test that the compute function throws an IllegalArgumentException when called with a null assignment`() {
         val o = provider.get()
-        val a = entityFactory.buildAgent(idFactory.build("a"), object : Agent.ContactInfo {
-
-        })
+        val a = entityFactory.buildAgent(idFactory.build("a"), mapOf())
         val r = entityFactory.buildRole(idFactory.build("r"))
         val sg = entityFactory.buildSpecificationGoal(idFactory.build("sg"))
         val ig = entityFactory.buildInstanceGoal(idFactory.build("ig"), sg, object : InstanceGoal.Parameter {
