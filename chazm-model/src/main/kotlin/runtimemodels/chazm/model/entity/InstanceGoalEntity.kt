@@ -11,8 +11,14 @@ import javax.inject.Inject
 internal open class InstanceGoalEntity @Inject constructor(
     @Assisted id: UniqueId<InstanceGoal>,
     @param:Assisted private val goal: SpecificationGoal,
-    @param:Assisted private val parameter: InstanceGoal.Parameter
+    @Assisted parameters: Map<Any, Any>
 ) : AbstractEntity<InstanceGoal>(id), InstanceGoal {
+    private val parameters: MutableMap<Any, Any> = mutableMapOf()
+
+    init {
+        this.parameters.putAll(parameters)
+    }
+
     override fun equals(other: Any?): Boolean {
         if (other is InstanceGoal) {
             return super.equals(other) && goal == other.goal
@@ -22,9 +28,17 @@ internal open class InstanceGoalEntity @Inject constructor(
 
     override fun hashCode(): Int = Objects.hash(super.hashCode(), goal)
 
-    override fun toString(): String = M.ENTITY_2[super.toString(), goal, parameter]
+    override fun toString(): String = M.ENTITY_2[super.toString(), goal, parameters]
 
     override fun getGoal(): SpecificationGoal = goal
 
-    override fun getParameter(): InstanceGoal.Parameter = parameter
+    override fun getParameters(): Map<Any, Any> = parameters.toMap()
+
+    override fun addParameter(key: Any, value: Any) {
+        parameters[key] = value
+    }
+
+    override fun removeParameter(key: Any) {
+        parameters.remove(key)
+    }
 }

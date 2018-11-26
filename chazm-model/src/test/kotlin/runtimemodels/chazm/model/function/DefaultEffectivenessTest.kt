@@ -33,10 +33,8 @@ class DefaultEffectivenessTest {
         val a2 = entityFactory.buildAgent(idFactory.build("a2"), mapOf())
         val r = entityFactory.buildRole(idFactory.build(Role::class.java, "r"))
         val sg = entityFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal::class.java, "sg"))
-        val ig1 = entityFactory.buildInstanceGoal(idFactory.build(InstanceGoal::class.java, "ig1"), sg, object : InstanceGoal.Parameter {
-        })
-        val ig2 = entityFactory.buildInstanceGoal(idFactory.build(InstanceGoal::class.java, "ig2"), sg, object : InstanceGoal.Parameter {
-        })
+        val ig1 = entityFactory.buildInstanceGoal(idFactory.build(InstanceGoal::class.java, "ig1"), sg, mapOf())
+        val ig2 = entityFactory.buildInstanceGoal(idFactory.build(InstanceGoal::class.java, "ig2"), sg, mapOf())
         val c1 = entityFactory.buildCapability(idFactory.build(Capability::class.java, "c1"))
         val c2 = entityFactory.buildCapability(idFactory.build(Capability::class.java, "c2"))
         val as1 = relationFactory.buildAssignment(a1, r, ig1)

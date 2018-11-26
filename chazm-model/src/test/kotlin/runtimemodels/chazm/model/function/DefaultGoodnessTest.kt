@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import runtimemodels.chazm.api.Organization
 import runtimemodels.chazm.api.entity.Attribute
-import runtimemodels.chazm.api.entity.InstanceGoal
 import runtimemodels.chazm.api.function.Goodness
 import runtimemodels.chazm.model.OrganizationModule
 import runtimemodels.chazm.model.entity.EntityFactory
@@ -27,9 +26,7 @@ class DefaultGoodnessTest {
         val a = entityFactory.buildAgent(idFactory.build("a"), mapOf())
         val r = entityFactory.buildRole(idFactory.build("r"))
         val sg = entityFactory.buildSpecificationGoal(idFactory.build("sg"))
-        val ig = entityFactory.buildInstanceGoal(idFactory.build("ig"), sg, object : InstanceGoal.Parameter {
-
-        })
+        val ig = entityFactory.buildInstanceGoal(idFactory.build("ig"), sg, mapOf())
         val c1 = entityFactory.buildCapability(idFactory.build("c1"))
         val c2 = entityFactory.buildCapability(idFactory.build("c2"))
         val t = entityFactory.buildAttribute(idFactory.build("t"), Attribute.Type.NEGATIVE_QUALITY)
@@ -103,9 +100,7 @@ class DefaultGoodnessTest {
         val a = entityFactory.buildAgent(idFactory.build("a"), mapOf())
         val r = entityFactory.buildRole(idFactory.build("r"))
         val sg = entityFactory.buildSpecificationGoal(idFactory.build("sg"))
-        val ig = entityFactory.buildInstanceGoal(idFactory.build("ig"), sg, object : InstanceGoal.Parameter {
-
-        })
+        val ig = entityFactory.buildInstanceGoal(idFactory.build("ig"), sg, mapOf())
 
         assertThrows<IllegalArgumentException> { goodness.compute(o, a, r, ig, null) }
     }
