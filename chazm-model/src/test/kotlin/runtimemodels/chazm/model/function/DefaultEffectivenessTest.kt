@@ -5,11 +5,15 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import runtimemodels.chazm.api.Organization
-import runtimemodels.chazm.api.entity.*
+import runtimemodels.chazm.api.entity.Capability
+import runtimemodels.chazm.api.entity.InstanceGoal
+import runtimemodels.chazm.api.entity.Role
+import runtimemodels.chazm.api.entity.SpecificationGoal
 import runtimemodels.chazm.api.function.Effectiveness
 import runtimemodels.chazm.model.OrganizationModule
 import runtimemodels.chazm.model.entity.EntityFactory
 import runtimemodels.chazm.model.id.IdFactory
+import runtimemodels.chazm.model.id.build
 import runtimemodels.chazm.model.relation.RelationFactory
 
 
@@ -25,10 +29,8 @@ class DefaultEffectivenessTest {
     @Test
     fun `test that compute works correctly`() {
         val o = provider.get()
-        val a1 = entityFactory.buildAgent(idFactory.build(Agent::class.java, "a1"), object : Agent.ContactInfo {
-        })
-        val a2 = entityFactory.buildAgent(idFactory.build(Agent::class.java, "a2"), object : Agent.ContactInfo {
-        })
+        val a1 = entityFactory.buildAgent(idFactory.build("a1"), mapOf())
+        val a2 = entityFactory.buildAgent(idFactory.build("a2"), mapOf())
         val r = entityFactory.buildRole(idFactory.build(Role::class.java, "r"))
         val sg = entityFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal::class.java, "sg"))
         val ig1 = entityFactory.buildInstanceGoal(idFactory.build(InstanceGoal::class.java, "ig1"), sg, object : InstanceGoal.Parameter {

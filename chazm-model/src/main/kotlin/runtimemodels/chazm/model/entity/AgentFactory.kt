@@ -11,14 +11,12 @@ import runtimemodels.chazm.api.id.UniqueId
  */
 @FunctionalInterface
 interface AgentFactory {
-
     /**
      * Constructs an [Agent].
      *
-     * @param id          the [UniqueId] that represents the [Agent].
-     * @param contactInfo the [Agent.ContactInfo] for the [Agent].
+     * @param id          the [UniqueId] that represents this [Agent].
+     * @param contactInfo a [Map] with contact information for this [Agent].
      * @return an [Agent].
      */
-    fun buildAgent(id: UniqueId<Agent>, contactInfo: Agent.ContactInfo): Agent
-
+    fun buildAgent(id: UniqueId<Agent>, contactInfo: Map<Any, Any>): Agent
 }

@@ -5,6 +5,7 @@ import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.api.id.UniqueId
 import runtimemodels.chazm.model.entity.EntityFactory
 import runtimemodels.chazm.model.id.IdFactory
+import runtimemodels.chazm.model.id.build
 import runtimemodels.chazm.model.message.E
 import runtimemodels.chazm.model.message.L
 import runtimemodels.chazm.model.relation.AssignmentFactory
@@ -83,11 +84,9 @@ internal open class XmlParser @Inject constructor(
                 val element = event.asStartElement()
                 val name = element.name
                 if (AGENT_ELEMENT == name.localPart) {
+                    val id = idFactory.build<Agent>(getAttributeValue(element, NAME_ATTRIBUTE))
                     // TODO parse contact info
-                    val id = idFactory.build(Agent::class.java, getAttributeValue(element, NAME_ATTRIBUTE))
-                    val contactInfo = object : Agent.ContactInfo {
-
-                    }
+                    val contactInfo = mapOf<Any, Any>()
                     build(id, agents, element, Function { entityFactory.buildAgent(it, contactInfo) }, Consumer { organization.addAgent(it) })
                     parseAgent(organization, reader, name, id, attributes, capabilities, list1)
                 } else if (ASSIGNMENT_ELEMENT == name.localPart) {
