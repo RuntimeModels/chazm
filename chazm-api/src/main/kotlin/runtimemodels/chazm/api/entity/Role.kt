@@ -1,8 +1,8 @@
 package runtimemodels.chazm.api.entity
 
-import runtimemodels.chazm.api.Organization
 import runtimemodels.chazm.api.function.Goodness
 import runtimemodels.chazm.api.id.Identifiable
+import runtimemodels.chazm.api.organization.Organization
 
 /**
  * The [Role] interface defines a role entity of an [Organization].

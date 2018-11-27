@@ -1,8 +1,8 @@
 package runtimemodels.chazm.api.relation
 
-import runtimemodels.chazm.api.Organization
 import runtimemodels.chazm.api.entity.Attribute
 import runtimemodels.chazm.api.entity.Pmf
+import runtimemodels.chazm.api.organization.Organization
 
 /**
  * The [Moderates] interface defines a moderates relation, where a [Pmf] moderates an [Attribute], of an

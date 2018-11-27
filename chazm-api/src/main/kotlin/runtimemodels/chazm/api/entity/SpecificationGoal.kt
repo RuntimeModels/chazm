@@ -1,7 +1,7 @@
 package runtimemodels.chazm.api.entity
 
-import runtimemodels.chazm.api.Organization
 import runtimemodels.chazm.api.id.Identifiable
+import runtimemodels.chazm.api.organization.Organization
 
 /**
  * The [SpecificationGoal] interface defines a specification goal entity of an [Organization].

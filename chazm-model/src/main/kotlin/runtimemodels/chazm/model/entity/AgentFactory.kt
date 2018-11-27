@@ -1,6 +1,7 @@
 package runtimemodels.chazm.model.entity
 
 import runtimemodels.chazm.api.entity.Agent
+import runtimemodels.chazm.api.id.AgentId
 import runtimemodels.chazm.api.id.UniqueId
 
 /**
@@ -18,5 +19,5 @@ interface AgentFactory {
      * @param contactInfo a [Map] with contact information for this [Agent].
      * @return an [Agent].
      */
-    fun buildAgent(id: UniqueId<Agent>, contactInfo: Map<Any, Any>): Agent
+    fun buildAgent(id: AgentId, contactInfo: Map<Any, Any>): Agent
 }

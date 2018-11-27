@@ -3,6 +3,7 @@ package runtimemodels.chazm.model.event
 import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.Agent
 import runtimemodels.chazm.api.entity.Capability
+import runtimemodels.chazm.api.id.AgentId
 import runtimemodels.chazm.api.id.UniqueId
 import runtimemodels.chazm.api.relation.Possesses
 import runtimemodels.chazm.model.message.M
@@ -24,7 +25,7 @@ open class PossessesEvent @Inject internal constructor(
      *
      * @return a [UniqueId].
      */
-    val agentId: UniqueId<Agent> = possesses.agent.id
+    val agentId: AgentId = possesses.agent.id
     /**
      * Returns a [UniqueId] that represents a [Capability].
      *

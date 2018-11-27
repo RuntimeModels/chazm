@@ -7,7 +7,7 @@
  */
 package runtimemodels.chazm.model.ui;
 
-import runtimemodels.chazm.api.Organization;
+import runtimemodels.chazm.api.organization.Organization;
 import runtimemodels.chazm.api.relation.Assignment;
 
 import javax.swing.*;

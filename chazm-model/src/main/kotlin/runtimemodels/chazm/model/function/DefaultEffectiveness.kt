@@ -1,7 +1,7 @@
 package runtimemodels.chazm.model.function
 
-import runtimemodels.chazm.api.Organization
 import runtimemodels.chazm.api.function.Effectiveness
+import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.api.relation.Assignment
 import javax.inject.Inject
 import javax.inject.Singleton

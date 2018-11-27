@@ -3,6 +3,7 @@ package runtimemodels.chazm.model.id
 import runtimemodels.chazm.api.entity.Agent
 import runtimemodels.chazm.api.entity.InstanceGoal
 import runtimemodels.chazm.api.entity.Role
+import runtimemodels.chazm.api.id.AgentId
 import runtimemodels.chazm.api.id.UniqueId
 import runtimemodels.chazm.api.relation.Assignment
 import runtimemodels.chazm.model.message.M
@@ -33,7 +34,7 @@ class AssignmentId
      *
      * @return the [UniqueId] that represents an [Agent].
      */
-    private val agentId: UniqueId<Agent>,
+    private val agentId: AgentId,
     /**
      * The [UniqueId] that represents a [Role].
      */

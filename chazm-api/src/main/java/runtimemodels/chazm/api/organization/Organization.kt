@@ -1,8 +1,10 @@
-package runtimemodels.chazm.api
+package runtimemodels.chazm.api.organization
 
+import runtimemodels.chazm.api.entity.Agent
 import runtimemodels.chazm.api.entity.Role
 import runtimemodels.chazm.api.entity.manager.*
 import runtimemodels.chazm.api.function.Goodness
+import runtimemodels.chazm.api.id.AgentId
 import runtimemodels.chazm.api.id.UniqueId
 import runtimemodels.chazm.api.relation.Assignment
 import runtimemodels.chazm.api.relation.manager.*
@@ -14,7 +16,12 @@ import java.util.function.Predicate
  * @author Christopher Zhong
  * @since 4.0
  */
-interface Organization : AgentManager, AttributeManager, CapabilityManager, CharacteristicManager, InstanceGoalManager, PmfManager, PolicyManager, RoleManager, SpecificationGoalManager, AchievesManager, AssignmentManager, ContainsManager, HasManager, ModeratesManager, NeedsManager, PossessesManager, RequiresManager, UsesManager {
+interface Organization : AttributeManager, CapabilityManager, CharacteristicManager, InstanceGoalManager, PmfManager, PolicyManager, RoleManager, SpecificationGoalManager, AchievesManager, AssignmentManager, ContainsManager, HasManager, ModeratesManager, NeedsManager, PossessesManager, RequiresManager, UsesManager {
+    val agents: Agents
+
+    fun addAgent(agent: Agent)
+
+    fun removeAgent(id: AgentId)
 
     /**
      * Checks if this [Organization] is valid. Validity rules differ from one organization to another, so there is no general algorithm to determine

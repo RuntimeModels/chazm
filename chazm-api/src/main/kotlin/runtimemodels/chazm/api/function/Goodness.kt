@@ -1,9 +1,9 @@
 package runtimemodels.chazm.api.function
 
-import runtimemodels.chazm.api.Organization
 import runtimemodels.chazm.api.entity.Agent
 import runtimemodels.chazm.api.entity.InstanceGoal
 import runtimemodels.chazm.api.entity.Role
+import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.api.relation.Assignment
 
 /**

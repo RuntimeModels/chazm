@@ -1,8 +1,8 @@
 package runtimemodels.chazm.api.relation
 
-import runtimemodels.chazm.api.Organization
 import runtimemodels.chazm.api.entity.Role
 import runtimemodels.chazm.api.entity.SpecificationGoal
+import runtimemodels.chazm.api.organization.Organization
 
 /**
  * The [Achieves] interface defines an achieves relation, which means that a [Role] achieves

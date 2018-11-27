@@ -1,6 +1,6 @@
 package runtimemodels.chazm.api.id
 
-import runtimemodels.chazm.api.Organization
+import runtimemodels.chazm.api.organization.Organization
 
 /**
  * The [Identifiable] interface is used to mark entities of an [Organization] that can be uniquely identified.

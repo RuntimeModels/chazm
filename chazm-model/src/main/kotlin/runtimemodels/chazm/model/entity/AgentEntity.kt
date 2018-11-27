@@ -2,12 +2,11 @@ package runtimemodels.chazm.model.entity
 
 import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.Agent
-import runtimemodels.chazm.api.id.UniqueId
-
+import runtimemodels.chazm.api.id.AgentId
 import javax.inject.Inject
 
 internal open class AgentEntity @Inject constructor(
-    @Assisted id: UniqueId<Agent>,
+    @Assisted override val id: AgentId,
     @Assisted contactInfo: Map<Any, Any>
 ) : AbstractEntity<Agent>(id), Agent {
     final override val contactInfo: MutableMap<Any, Any> = mutableMapOf()

@@ -7,8 +7,8 @@
  */
 package runtimemodels.chazm.model.ui;
 
-import runtimemodels.chazm.api.Organization;
 import runtimemodels.chazm.api.entity.Characteristic;
+import runtimemodels.chazm.api.organization.Organization;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;

@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap
 
 internal class Entities {
 
-    val agents: MutableMap<UniqueId<Agent>, Agent> = ConcurrentHashMap()
+    //    val agents: MutableMap<AgentId, Agent> = ConcurrentHashMap()
     val attributes: MutableMap<UniqueId<Attribute>, Attribute> = ConcurrentHashMap()
     val capabilities: MutableMap<UniqueId<Capability>, Capability> = ConcurrentHashMap()
     val characteristics: MutableMap<UniqueId<Characteristic>, Characteristic> = ConcurrentHashMap()

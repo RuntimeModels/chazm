@@ -1,7 +1,8 @@
 package runtimemodels.chazm.api.entity
 
-import runtimemodels.chazm.api.Organization
+import runtimemodels.chazm.api.id.AgentId
 import runtimemodels.chazm.api.id.Identifiable
+import runtimemodels.chazm.api.organization.Organization
 
 /**
  * The [Agent] interface defines an agent entity of an [Organization].
@@ -11,9 +12,11 @@ import runtimemodels.chazm.api.id.Identifiable
  */
 interface Agent : Identifiable<Agent> {
     /**
-     * Returns a [Map] with information for contacting this [Agent].
-     *
-     * @return a [Map] with information for contacting this [Agent].
+     * The [AgentId] that represents this [Agent].
+     */
+    override val id: AgentId
+    /**
+     * A [Map] with information for contacting this [Agent].
      */
     val contactInfo: Map<Any, Any>
 

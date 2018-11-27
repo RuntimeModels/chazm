@@ -1,8 +1,8 @@
 package runtimemodels.chazm.api.relation
 
-import runtimemodels.chazm.api.Organization
 import runtimemodels.chazm.api.entity.Characteristic
 import runtimemodels.chazm.api.entity.Role
+import runtimemodels.chazm.api.organization.Organization
 
 /**
  * The [Contains] interface defines a contains relation, where a [Role] contains a [Characteristic], of an

@@ -1,6 +1,7 @@
 package runtimemodels.chazm.api.relation.manager;
 
 import runtimemodels.chazm.api.entity.Agent;
+import runtimemodels.chazm.api.id.AgentId;
 import runtimemodels.chazm.api.id.UniqueId;
 import runtimemodels.chazm.api.relation.Assignment;
 
@@ -49,7 +50,7 @@ public interface AssignmentManager {
      * @param id an {@linkplain UniqueId} that represents the {@linkplain Agent}.
      * @return a set of {@linkplain Assignment}s.
      */
-    Set<Assignment> getAssignmentsByAgent(UniqueId<Agent> id);
+    Set<Assignment> getAssignmentsByAgent(AgentId id);
 
     /**
      * Removes an {@linkplain Assignment} from this {@linkplain AssignmentManager}.

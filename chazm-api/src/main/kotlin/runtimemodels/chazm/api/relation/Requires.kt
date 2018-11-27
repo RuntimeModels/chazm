@@ -1,8 +1,8 @@
 package runtimemodels.chazm.api.relation
 
-import runtimemodels.chazm.api.Organization
 import runtimemodels.chazm.api.entity.Capability
 import runtimemodels.chazm.api.entity.Role
+import runtimemodels.chazm.api.organization.Organization
 
 /**
  * The [Requires] interface defines a requires relation, where a [Role] requires a [Capability], of an

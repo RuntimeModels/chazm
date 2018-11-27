@@ -1,8 +1,8 @@
 package runtimemodels.chazm.api.relation
 
-import runtimemodels.chazm.api.Organization
 import runtimemodels.chazm.api.entity.Agent
 import runtimemodels.chazm.api.entity.Attribute
+import runtimemodels.chazm.api.organization.Organization
 
 /**
  * The [Has] interface defines a has relation, where an [Agent] has an [Attribute], of an [Organization].
