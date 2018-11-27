@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 internal open class AttributeEntity @Inject constructor(
     @Assisted id: UniqueId<Attribute>,
-    @param:Assisted private val type: Attribute.Type
+    @param:Assisted override val type: Attribute.Type
 ) : AbstractEntity<Attribute>(id), Attribute {
     override fun equals(other: Any?): Boolean {
         if (other is Attribute) {
@@ -21,6 +21,4 @@ internal open class AttributeEntity @Inject constructor(
     override fun hashCode(): Int = Objects.hash(super.hashCode(), type)
 
     override fun toString(): String = M.ENTITY_1[super.toString(), type]
-
-    override fun getType(): Attribute.Type = type
 }

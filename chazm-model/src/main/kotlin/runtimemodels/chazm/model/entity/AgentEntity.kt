@@ -10,7 +10,7 @@ internal open class AgentEntity @Inject constructor(
     @Assisted id: UniqueId<Agent>,
     @Assisted contactInfo: Map<Any, Any>
 ) : AbstractEntity<Agent>(id), Agent {
-    private val contactInfo: MutableMap<Any, Any> = mutableMapOf()
+    final override val contactInfo: MutableMap<Any, Any> = mutableMapOf()
 
     init {
         this.contactInfo.putAll(contactInfo)
@@ -26,8 +26,6 @@ internal open class AgentEntity @Inject constructor(
     override fun hashCode(): Int = super.hashCode()
 
     override fun toString(): String = super.toString()
-
-    override fun getContactInfo(): Map<Any, Any> = contactInfo.toMap()
 
     override fun addContactInfo(key: Any, value: Any) {
         contactInfo[key] = value

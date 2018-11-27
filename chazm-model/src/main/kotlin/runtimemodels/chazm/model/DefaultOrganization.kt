@@ -194,7 +194,7 @@ internal open class DefaultOrganization @Inject constructor(
 
     override fun addInstanceGoal(goal: InstanceGoal) {
         checkNotExists(goal, Predicate { entities.instanceGoals.containsKey(it) })
-        checkExists(goal.goal.id, Function { getSpecificationGoal(it) })
+        checkExists(goal.goal.id, Function<UniqueId<SpecificationGoal>, SpecificationGoal?> { getSpecificationGoal(it) })
         /* add the instance goal, instanceGoalsBySpecificationGoal map */
         entities.instanceGoals[goal.id] = goal
         val map = get(goal.goal.id, entities.instanceGoalsBySpecificationGoal,

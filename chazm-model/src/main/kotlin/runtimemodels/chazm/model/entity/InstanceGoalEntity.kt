@@ -10,10 +10,10 @@ import javax.inject.Inject
 
 internal open class InstanceGoalEntity @Inject constructor(
     @Assisted id: UniqueId<InstanceGoal>,
-    @param:Assisted private val goal: SpecificationGoal,
+    @param:Assisted override val goal: SpecificationGoal,
     @Assisted parameters: Map<Any, Any>
 ) : AbstractEntity<InstanceGoal>(id), InstanceGoal {
-    private val parameters: MutableMap<Any, Any> = mutableMapOf()
+    final override val parameters: MutableMap<Any, Any> = mutableMapOf()
 
     init {
         this.parameters.putAll(parameters)
@@ -29,10 +29,6 @@ internal open class InstanceGoalEntity @Inject constructor(
     override fun hashCode(): Int = Objects.hash(super.hashCode(), goal)
 
     override fun toString(): String = M.ENTITY_2[super.toString(), goal, parameters]
-
-    override fun getGoal(): SpecificationGoal = goal
-
-    override fun getParameters(): Map<Any, Any> = parameters.toMap()
 
     override fun addParameter(key: Any, value: Any) {
         parameters[key] = value
