@@ -3,7 +3,6 @@ package runtimemodels.chazm.model.function
 import com.google.inject.Guice
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import runtimemodels.chazm.api.Organization
 import runtimemodels.chazm.api.entity.Attribute
 import runtimemodels.chazm.api.function.Goodness
@@ -65,44 +64,4 @@ class DefaultGoodnessTest {
 
         assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MIN_SCORE)
     }
-
-    @Test
-    fun `test that the compute function throws an IllegalArgumentException when called with all parameters as null`() {
-        assertThrows<IllegalArgumentException> { goodness.compute(null, null, null, null, null) }
-    }
-
-    @Test
-    fun `test that the compute function throws an IllegalArgumentException when called with a null agent, a null role, a null goal, and a null assignment`() {
-        val o = provider.get()
-        assertThrows<IllegalArgumentException> { goodness.compute(o, null, null, null, null) }
-    }
-
-    @Test
-    fun `test that the compute function throws an IllegalArgumentException when called with a null role, a null goal, and a null assignment`() {
-        val o = provider.get()
-        val a = entityFactory.buildAgent(idFactory.build("a"), mapOf())
-
-        assertThrows<IllegalArgumentException> { goodness.compute(o, a, null, null, null) }
-    }
-
-    @Test
-    fun `test that the compute function throws an IllegalArgumentException when called with a null goal and a null assignment`() {
-        val o = provider.get()
-        val a = entityFactory.buildAgent(idFactory.build("a"), mapOf())
-        val r = entityFactory.buildRole(idFactory.build("r"))
-
-        assertThrows<IllegalArgumentException> { goodness.compute(o, a, r, null, null) }
-    }
-
-    @Test
-    fun `test that the compute function throws an IllegalArgumentException when called with a null assignment`() {
-        val o = provider.get()
-        val a = entityFactory.buildAgent(idFactory.build("a"), mapOf())
-        val r = entityFactory.buildRole(idFactory.build("r"))
-        val sg = entityFactory.buildSpecificationGoal(idFactory.build("sg"))
-        val ig = entityFactory.buildInstanceGoal(idFactory.build("ig"), sg, mapOf())
-
-        assertThrows<IllegalArgumentException> { goodness.compute(o, a, r, ig, null) }
-    }
-
 }

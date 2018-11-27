@@ -3,7 +3,6 @@ package runtimemodels.chazm.model.function
 import com.google.inject.Guice
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import runtimemodels.chazm.api.Organization
 import runtimemodels.chazm.api.entity.Capability
 import runtimemodels.chazm.api.entity.InstanceGoal
@@ -71,17 +70,4 @@ class DefaultEffectivenessTest {
 
         assertThat(effectiveness.compute(o, o.assignments)).isEqualTo(2.0)
     }
-
-    @Test
-    fun `test compute function with a null organization and a null assignments`() {
-        assertThrows<IllegalArgumentException> { effectiveness.compute(null, null) }
-    }
-
-    @Test
-    fun `test compute function with a null assignments`() {
-        val o = provider.get()
-
-        assertThrows<IllegalArgumentException> { effectiveness.compute(o, null) }
-    }
-
 }

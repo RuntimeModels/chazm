@@ -771,7 +771,7 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun effectiveness(assignments: Collection<Assignment>): Double {
-        return effectiveness.compute(this, assignments)
+        return effectiveness.compute(this, assignments.toSet())
     }
 
     override fun getGoodness(id: UniqueId<Role>): Goodness? {
