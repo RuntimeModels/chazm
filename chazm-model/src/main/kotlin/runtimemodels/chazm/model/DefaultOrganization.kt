@@ -569,7 +569,7 @@ internal open class DefaultOrganization @Inject constructor(
     override fun setHasValue(agentId: UniqueId<Agent>, attributeId: UniqueId<Attribute>, value: Double) {
         if (relations.has.containsKey(agentId) && relations.has[agentId]!!.containsKey(attributeId)) {
             val has = relations.has[agentId]!![attributeId]!!
-            has.setValue(value)
+            has.value = value
             publisher.post<HasEvent>(eventFactory.build(EventType.UPDATED, has))
         }
     }
@@ -600,7 +600,7 @@ internal open class DefaultOrganization @Inject constructor(
 
     override fun getModerates(id: UniqueId<Pmf>): Attribute? {
         return if (relations.moderates.containsKey(id)) {
-            relations.moderates[id]!!.getAttribute()
+            relations.moderates[id]!!.attribute
         } else null
     }
 
@@ -685,7 +685,7 @@ internal open class DefaultOrganization @Inject constructor(
     override fun setPossessesScore(agentId: UniqueId<Agent>, capabilityId: UniqueId<Capability>, score: Double) {
         if (relations.possesses.containsKey(agentId) && relations.possesses[agentId]!!.containsKey(capabilityId)) {
             val possesses = relations.possesses[agentId]!![capabilityId]!!
-            possesses.setScore(score)
+            possesses.score = score
             publisher.post<PossessesEvent>(eventFactory.build(EventType.UPDATED, possesses))
         }
     }
