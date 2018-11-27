@@ -16,9 +16,7 @@ internal open class AssignmentRelation @Inject constructor(
     @param:Assisted private val role: Role,
     @param:Assisted private val goal: InstanceGoal
 ) : Assignment {
-    private val id: UniqueId<Assignment> = AssignmentId(agent.id, role.id, goal.id)
-
-    override fun getId(): UniqueId<Assignment> = id
+    override val id: UniqueId<Assignment> = AssignmentId(agent.id, role.id, goal.id)
 
     override fun getAgent(): Agent = agent
 
