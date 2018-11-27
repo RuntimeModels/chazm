@@ -11,6 +11,7 @@ import org.mockito.Mockito.mock
 import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.model.id.DefaultAgentId
+import runtimemodels.chazm.model.id.DefaultAttributeId
 import runtimemodels.chazm.model.id.IdFactory
 import runtimemodels.chazm.model.message.E
 import java.io.InputStream
@@ -62,7 +63,7 @@ class XmlParserTest {
         parser.parse(organization, inputStream)
 
         val agent1 = DefaultAgentId("Agent 1")
-        val attribute1 = idf.build(Attribute::class.java, "Attribute 1")
+        val attribute1 = DefaultAttributeId("Attribute 1")
         val capability1 = idf.build(Capability::class.java, "Capability 1")
         val characteristic1 = idf.build(Characteristic::class.java, "Characteristic 1")
         val instanceGoal1 = idf.build(InstanceGoal::class.java, "Instance Goal 1")

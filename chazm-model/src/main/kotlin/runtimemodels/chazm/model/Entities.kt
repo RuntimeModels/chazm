@@ -1,13 +1,14 @@
 package runtimemodels.chazm.model
 
 import runtimemodels.chazm.api.entity.*
+import runtimemodels.chazm.api.id.AttributeId
 import runtimemodels.chazm.api.id.UniqueId
 import java.util.concurrent.ConcurrentHashMap
 
 internal class Entities {
 
     //    val agents: MutableMap<AgentId, Agent> = ConcurrentHashMap()
-    val attributes: MutableMap<UniqueId<Attribute>, Attribute> = ConcurrentHashMap()
+    val attributes: MutableMap<AttributeId, Attribute> = ConcurrentHashMap()
     val capabilities: MutableMap<UniqueId<Capability>, Capability> = ConcurrentHashMap()
     val characteristics: MutableMap<UniqueId<Characteristic>, Characteristic> = ConcurrentHashMap()
     val instanceGoals: MutableMap<UniqueId<InstanceGoal>, InstanceGoal> = ConcurrentHashMap()

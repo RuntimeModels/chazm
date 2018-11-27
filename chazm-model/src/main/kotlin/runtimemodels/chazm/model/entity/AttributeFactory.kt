@@ -1,6 +1,7 @@
 package runtimemodels.chazm.model.entity
 
 import runtimemodels.chazm.api.entity.Attribute
+import runtimemodels.chazm.api.id.AttributeId
 import runtimemodels.chazm.api.id.UniqueId
 
 /**
@@ -19,6 +20,6 @@ interface AttributeFactory {
      * @param type the [Attribute.Type] of the [Attribute].
      * @return an [Attribute].
      */
-    fun buildAttribute(id: UniqueId<Attribute>, type: Attribute.Type): Attribute
+    fun buildAttribute(id: AttributeId, type: Attribute.Type): Attribute
 
 }

@@ -9,6 +9,7 @@ import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.model.OrganizationModule
 import runtimemodels.chazm.model.entity.EntityFactory
 import runtimemodels.chazm.model.id.DefaultAgentId
+import runtimemodels.chazm.model.id.DefaultAttributeId
 import runtimemodels.chazm.model.id.IdFactory
 import runtimemodels.chazm.model.id.build
 
@@ -29,7 +30,7 @@ class DefaultGoodnessTest {
         val ig = entityFactory.buildInstanceGoal(idFactory.build("ig"), sg, mapOf())
         val c1 = entityFactory.buildCapability(idFactory.build("c1"))
         val c2 = entityFactory.buildCapability(idFactory.build("c2"))
-        val t = entityFactory.buildAttribute(idFactory.build("t"), Attribute.Type.NEGATIVE_QUALITY)
+        val t = entityFactory.buildAttribute(DefaultAttributeId("t"), Attribute.Type.NEGATIVE_QUALITY)
 
         assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MIN_SCORE)
 

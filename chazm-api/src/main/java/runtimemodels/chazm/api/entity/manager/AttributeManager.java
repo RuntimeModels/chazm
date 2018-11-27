@@ -1,6 +1,7 @@
 package runtimemodels.chazm.api.entity.manager;
 
 import runtimemodels.chazm.api.entity.Attribute;
+import runtimemodels.chazm.api.id.AttributeId;
 import runtimemodels.chazm.api.id.UniqueId;
 
 import java.util.Collection;
@@ -33,7 +34,7 @@ public interface AttributeManager {
      * @param id the {@linkplain UniqueId} that represents the {@linkplain Attribute} to retrieve.
      * @return the {@linkplain Attribute} if it exists, <code>null</code> otherwise.
      */
-    Attribute getAttribute(UniqueId<Attribute> id);
+    Attribute getAttribute(AttributeId id);
 
     /**
      * Returns a set of {@linkplain Attribute}s from this {@linkplain AttributeManager}.
@@ -47,14 +48,14 @@ public interface AttributeManager {
      *
      * @param id the {@linkplain UniqueId} that represents the {@linkplain Attribute} to remove.
      */
-    void removeAttribute(UniqueId<Attribute> id);
+    void removeAttribute(AttributeId id);
 
     /**
      * Removes a set of {@linkplain Attribute}s from this {@linkplain AttributeManager}.
      *
      * @param ids the set of {@linkplain UniqueId}s that represents the {@linkplain Attribute}s to remove.
      */
-    void removeAttributes(Collection<UniqueId<Attribute>> ids);
+    void removeAttributes(Collection<AttributeId> ids);
 
     /**
      * Removes all {@linkplain Attribute}s from this {@linkplain AttributeManager}.

@@ -2,13 +2,13 @@ package runtimemodels.chazm.model.entity
 
 import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.Attribute
-import runtimemodels.chazm.api.id.UniqueId
+import runtimemodels.chazm.api.id.AttributeId
 import runtimemodels.chazm.model.message.M
 import java.util.*
 import javax.inject.Inject
 
 internal open class AttributeEntity @Inject constructor(
-    @Assisted id: UniqueId<Attribute>,
+    @Assisted override val id: AttributeId,
     @param:Assisted override val type: Attribute.Type
 ) : AbstractEntity<Attribute>(id), Attribute {
     override fun equals(other: Any?): Boolean {

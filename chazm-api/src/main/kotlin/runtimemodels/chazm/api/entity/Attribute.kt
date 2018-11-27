@@ -1,5 +1,6 @@
 package runtimemodels.chazm.api.entity
 
+import runtimemodels.chazm.api.id.AttributeId
 import runtimemodels.chazm.api.id.Identifiable
 import runtimemodels.chazm.api.organization.Organization
 
@@ -10,6 +11,10 @@ import runtimemodels.chazm.api.organization.Organization
  * @since 5.0
  */
 interface Attribute : Identifiable<Attribute> {
+    /**
+     * The [AttributeId] of this [Attribute].
+     */
+    override val id: AttributeId
     /**
      * Returns the [Type] of this [Attribute].
      *

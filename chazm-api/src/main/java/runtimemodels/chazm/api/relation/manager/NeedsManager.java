@@ -2,6 +2,7 @@ package runtimemodels.chazm.api.relation.manager;
 
 import runtimemodels.chazm.api.entity.Attribute;
 import runtimemodels.chazm.api.entity.Role;
+import runtimemodels.chazm.api.id.AttributeId;
 import runtimemodels.chazm.api.id.UniqueId;
 import runtimemodels.chazm.api.relation.Needs;
 
@@ -20,7 +21,7 @@ public interface NeedsManager {
      * @param roleId      the {@linkplain UniqueId} that represents the {@linkplain Role}.
      * @param attributeId the {@linkplain UniqueId} that represents the {@linkplain Attribute}.
      */
-    void addNeeds(UniqueId<Role> roleId, UniqueId<Attribute> attributeId);
+    void addNeeds(UniqueId<Role> roleId, AttributeId attributeId);
 
     /**
      * Returns a set of {@linkplain Attribute}s that is needed by a {@linkplain Role} in this {@linkplain NeedsManager}.
@@ -36,7 +37,7 @@ public interface NeedsManager {
      * @param id the {@linkplain UniqueId} that represents the {@linkplain Attribute}.
      * @return a set of {@linkplain Role}s.
      */
-    Set<Role> getNeededBy(UniqueId<Attribute> id);
+    Set<Role> getNeededBy(AttributeId id);
 
     /**
      * Removes a needs relation between a {@linkplain Role} and an {@linkplain Attribute} from this {@linkplain NeedsManager}.
@@ -44,7 +45,7 @@ public interface NeedsManager {
      * @param roleId      the {@linkplain UniqueId} that represents the {@linkplain Role}.
      * @param attributeId the {@linkplain UniqueId} that represents the {@linkplain Attribute}.
      */
-    void removeNeeds(UniqueId<Role> roleId, UniqueId<Attribute> attributeId);
+    void removeNeeds(UniqueId<Role> roleId, AttributeId attributeId);
 
     /**
      * Removes all needs relations from this {@linkplain NeedsManager}.

@@ -2,10 +2,12 @@ package runtimemodels.chazm.model.parsers
 
 import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.api.id.AgentId
+import runtimemodels.chazm.api.id.AttributeId
 import runtimemodels.chazm.api.id.UniqueId
 import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.model.entity.EntityFactory
 import runtimemodels.chazm.model.id.DefaultAgentId
+import runtimemodels.chazm.model.id.DefaultAttributeId
 import runtimemodels.chazm.model.id.IdFactory
 import runtimemodels.chazm.model.message.E
 import runtimemodels.chazm.model.message.L
@@ -69,7 +71,7 @@ internal open class XmlParser @Inject constructor(
     @Throws(XMLStreamException::class)
     private fun parseDiagram(organization: Organization, reader: XMLEventReader, tagName: QName) {
         val agents = HashMap<String, AgentId>()
-        val attributes = HashMap<String, UniqueId<Attribute>>()
+        val attributes = HashMap<String, AttributeId>()
         val capabilities = HashMap<String, UniqueId<Capability>>()
         val characteristics = HashMap<String, UniqueId<Characteristic>>()
         val instanceGoals = HashMap<String, UniqueId<InstanceGoal>>()
@@ -93,10 +95,10 @@ internal open class XmlParser @Inject constructor(
                 } else if (ASSIGNMENT_ELEMENT == name.localPart) {
                     parseAssignment(organization, element, agents, instanceGoals, roles, list2)
                 } else if (ATTRIBUTE_ELEMENT == name.localPart) {
-                    val id = idFactory.build(Attribute::class.java, getAttributeValue(element, NAME_ATTRIBUTE))
+                    val id = DefaultAttributeId(getAttributeValue(element, NAME_ATTRIBUTE))
                     try {
                         val type = Attribute.Type.valueOf(getAttributeValue(element, TYPE_ATTRIBUTE))
-                        build(id, attributes, element, Function<UniqueId<Attribute>, Attribute> { entityFactory.buildAttribute(it, type) }, Consumer { organization.addAttribute(it) })
+                        build(id, attributes, element, Function<AttributeId, Attribute> { entityFactory.buildAttribute(it, type) }, Consumer { organization.addAttribute(it) })
                     } catch (e: IllegalArgumentException) {
                         throw XMLStreamException(e)
                     }
@@ -167,7 +169,7 @@ internal open class XmlParser @Inject constructor(
 
     @Throws(XMLStreamException::class)
     private fun parseAgent(organization: Organization, reader: XMLEventReader, tagName: QName, id: AgentId,
-                           attributes: Map<String, UniqueId<Attribute>>, capabilities: Map<String, UniqueId<Capability>>, list: MutableList<RunLater>) {
+                           attributes: Map<String, AttributeId>, capabilities: Map<String, UniqueId<Capability>>, list: MutableList<RunLater>) {
         while (reader.hasNext()) {
             val event = reader.nextEvent()
             if (event.isStartElement) {
@@ -253,7 +255,7 @@ internal open class XmlParser @Inject constructor(
 
     @Throws(XMLStreamException::class)
     private fun parsePmf(organization: Organization, reader: XMLEventReader, tagName: QName, id: UniqueId<Pmf>,
-                         attributes: Map<String, UniqueId<Attribute>>, list: MutableList<RunLater>) {
+                         attributes: Map<String, AttributeId>, list: MutableList<RunLater>) {
         while (reader.hasNext()) {
             val event = reader.nextEvent()
             if (event.isStartElement) {
@@ -279,7 +281,7 @@ internal open class XmlParser @Inject constructor(
 
     @Throws(XMLStreamException::class)
     private fun parseRole(organization: Organization, reader: XMLEventReader, tagName: QName, id: UniqueId<Role>,
-                          attributes: Map<String, UniqueId<Attribute>>, capabilities: Map<String, UniqueId<Capability>>,
+                          attributes: Map<String, AttributeId>, capabilities: Map<String, UniqueId<Capability>>,
                           characteristics: Map<String, UniqueId<Characteristic>>, goals: Map<String, UniqueId<SpecificationGoal>>, list: MutableList<RunLater>) {
         while (reader.hasNext()) {
             val event = reader.nextEvent()
