@@ -1,6 +1,7 @@
 package runtimemodels.chazm.api.entity.manager;
 
 import runtimemodels.chazm.api.entity.Pmf;
+import runtimemodels.chazm.api.id.PmfId;
 import runtimemodels.chazm.api.id.UniqueId;
 
 import java.util.Collection;
@@ -33,7 +34,7 @@ public interface PmfManager {
      * @param id the {@linkplain UniqueId} that represents the {@linkplain Pmf} to retrieve.
      * @return the {@linkplain Pmf} if it exists, <code>null</code> otherwise.
      */
-    Pmf getPmf(UniqueId<Pmf> id);
+    Pmf getPmf(PmfId id);
 
     /**
      * Returns a set of {@linkplain Pmf}s from this {@linkplain PmfManager}.
@@ -47,14 +48,14 @@ public interface PmfManager {
      *
      * @param id the {@linkplain UniqueId} that represents the {@linkplain Pmf} to remove.
      */
-    void removePmf(UniqueId<Pmf> id);
+    void removePmf(PmfId id);
 
     /**
      * Removes a set of {@linkplain Pmf}s from this {@linkplain PmfManager}.
      *
      * @param ids the set of {@linkplain UniqueId}s that represents the {@linkplain Pmf}s to remove.
      */
-    void removePmfs(Collection<UniqueId<Pmf>> ids);
+    void removePmfs(Collection<PmfId> ids);
 
     /**
      * Removes all {@linkplain Pmf}s from this {@linkplain PmfManager}.

@@ -2,6 +2,7 @@ package runtimemodels.chazm.model.event
 
 import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.Pmf
+import runtimemodels.chazm.api.id.PmfId
 import runtimemodels.chazm.api.id.UniqueId
 import runtimemodels.chazm.model.message.M
 import java.util.*
@@ -22,7 +23,7 @@ open class PmfEvent @Inject internal constructor(
      *
      * @return a [UniqueId].
      */
-    val id: UniqueId<Pmf> = pmf.id
+    val id: PmfId = pmf.id
 
     override fun equals(other: Any?): Boolean {
         if (other is PmfEvent) {

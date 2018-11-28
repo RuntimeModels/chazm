@@ -2,6 +2,7 @@ package runtimemodels.chazm.api.entity
 
 import runtimemodels.chazm.api.function.Goodness
 import runtimemodels.chazm.api.id.Identifiable
+import runtimemodels.chazm.api.id.RoleId
 import runtimemodels.chazm.api.organization.Organization
 
 /**
@@ -12,4 +13,9 @@ import runtimemodels.chazm.api.organization.Organization
  *
  * @since 3.4
  */
-interface Role : Identifiable<Role>
+interface Role : Identifiable<Role> {
+    /**
+     * The [RoleId] of this [Role].
+     */
+    override val id: RoleId
+}

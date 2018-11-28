@@ -8,10 +8,7 @@ import runtimemodels.chazm.api.function.Goodness
 import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.model.OrganizationModule
 import runtimemodels.chazm.model.entity.EntityFactory
-import runtimemodels.chazm.model.id.DefaultAgentId
-import runtimemodels.chazm.model.id.DefaultAttributeId
-import runtimemodels.chazm.model.id.IdFactory
-import runtimemodels.chazm.model.id.build
+import runtimemodels.chazm.model.id.*
 
 class DefaultGoodnessTest {
 
@@ -25,11 +22,11 @@ class DefaultGoodnessTest {
     fun `test that the compute function works properly`() {
         val o = provider.get()
         val a = entityFactory.buildAgent(DefaultAgentId("a"), mapOf())
-        val r = entityFactory.buildRole(idFactory.build("r"))
-        val sg = entityFactory.buildSpecificationGoal(idFactory.build("sg"))
-        val ig = entityFactory.buildInstanceGoal(idFactory.build("ig"), sg, mapOf())
-        val c1 = entityFactory.buildCapability(idFactory.build("c1"))
-        val c2 = entityFactory.buildCapability(idFactory.build("c2"))
+        val r = entityFactory.buildRole(DefaultRoleId("r"))
+        val sg = entityFactory.buildSpecificationGoal(DefaultSpecificationGoalId("sg"))
+        val ig = entityFactory.buildInstanceGoal(DefaultInstanceGoalId("ig"), sg, mapOf())
+        val c1 = entityFactory.buildCapability(DefaultCapabilityId("c1"))
+        val c2 = entityFactory.buildCapability(DefaultCapabilityId("c2"))
         val t = entityFactory.buildAttribute(DefaultAttributeId("t"), Attribute.Type.NEGATIVE_QUALITY)
 
         assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MIN_SCORE)

@@ -2,6 +2,8 @@ package runtimemodels.chazm.api.relation.manager;
 
 import runtimemodels.chazm.api.entity.Pmf;
 import runtimemodels.chazm.api.entity.Role;
+import runtimemodels.chazm.api.id.PmfId;
+import runtimemodels.chazm.api.id.RoleId;
 import runtimemodels.chazm.api.id.UniqueId;
 
 import java.util.Set;
@@ -19,7 +21,7 @@ public interface UsesManager {
      * @param roleId the {@linkplain UniqueId} that represents the {@linkplain Role}.
      * @param pmfId  the {@linkplain UniqueId} that represents the {@linkplain Pmf}.
      */
-    void addUses(UniqueId<Role> roleId, UniqueId<Pmf> pmfId);
+    void addUses(RoleId roleId, PmfId pmfId);
 
     /**
      * Returns a set of {@linkplain Pmf}s that is used by a {@linkplain Role} in this {@linkplain UsesManager}.
@@ -27,7 +29,7 @@ public interface UsesManager {
      * @param id the {@linkplain UniqueId} that represents the {@linkplain Role}.
      * @return a set of {@linkplain Pmf}s.
      */
-    Set<Pmf> getUses(UniqueId<Role> id);
+    Set<Pmf> getUses(RoleId id);
 
     /**
      * Returns a set of {@linkplain Role}s that uses a {@linkplain Pmf} in this {@linkplain UsesManager}.
@@ -35,7 +37,7 @@ public interface UsesManager {
      * @param id the {@linkplain UniqueId} that represents the {@linkplain Pmf}.
      * @return a set of {@linkplain Role}s.
      */
-    Set<Role> getUsedBy(UniqueId<Pmf> id);
+    Set<Role> getUsedBy(PmfId id);
 
     /**
      * Removes a uses relation between a {@linkplain Role} and a {@linkplain Pmf} from this {@linkplain UsesManager}.
@@ -43,7 +45,7 @@ public interface UsesManager {
      * @param roleId the {@linkplain UniqueId} that represents the {@linkplain Role}.
      * @param pmfId  the {@linkplain UniqueId} that represents the {@linkplain Pmf}.
      */
-    void removeUses(UniqueId<Role> roleId, UniqueId<Pmf> pmfId);
+    void removeUses(RoleId roleId, PmfId pmfId);
 
     /**
      * Removes all uses relations from this {@linkplain UsesManager}.

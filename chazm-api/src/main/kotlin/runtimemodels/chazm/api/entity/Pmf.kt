@@ -1,6 +1,7 @@
 package runtimemodels.chazm.api.entity
 
 import runtimemodels.chazm.api.id.Identifiable
+import runtimemodels.chazm.api.id.PmfId
 import runtimemodels.chazm.api.organization.Organization
 
 /**
@@ -9,4 +10,9 @@ import runtimemodels.chazm.api.organization.Organization
  * @author Christopher Zhong
  * @since 6.0
  */
-interface Pmf : Identifiable<Pmf>
+interface Pmf : Identifiable<Pmf> {
+    /**
+     * The [PmfId] of this [Pmf].
+     */
+    override val id: PmfId
+}

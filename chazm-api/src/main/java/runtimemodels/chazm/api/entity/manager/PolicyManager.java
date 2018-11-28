@@ -1,6 +1,7 @@
 package runtimemodels.chazm.api.entity.manager;
 
 import runtimemodels.chazm.api.entity.Policy;
+import runtimemodels.chazm.api.id.PolicyId;
 import runtimemodels.chazm.api.id.UniqueId;
 
 import java.util.Collection;
@@ -33,7 +34,7 @@ public interface PolicyManager {
      * @param id the {@linkplain UniqueId} that represents the {@linkplain Policy} to retrieve.
      * @return the {@linkplain Policy} if it exists, <code>null</code> otherwise.
      */
-    Policy getPolicy(UniqueId<Policy> id);
+    Policy getPolicy(PolicyId id);
 
     /**
      * Returns a set of {@linkplain Policy} from this {@linkplain PolicyManager}.
@@ -47,14 +48,14 @@ public interface PolicyManager {
      *
      * @param policyId the {@linkplain UniqueId} that represents the {@linkplain Policy} to remove.
      */
-    void removePolicy(UniqueId<Policy> policyId);
+    void removePolicy(PolicyId policyId);
 
     /**
      * Removes a set of {@linkplain Policy}s from this {@linkplain PolicyManager}.
      *
      * @param ids the set of {@linkplain UniqueId}s that represents the {@linkplain Policy}s to remove.
      */
-    void removePolicies(Collection<UniqueId<Policy>> ids);
+    void removePolicies(Collection<PolicyId> ids);
 
     /**
      * Removes all {@linkplain Policy}s from this {@linkplain PolicyManager}.

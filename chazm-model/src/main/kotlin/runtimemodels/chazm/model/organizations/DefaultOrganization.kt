@@ -5,10 +5,7 @@ import io.reactivex.FlowableOnSubscribe
 import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.api.function.Effectiveness
 import runtimemodels.chazm.api.function.Goodness
-import runtimemodels.chazm.api.id.AgentId
-import runtimemodels.chazm.api.id.AttributeId
-import runtimemodels.chazm.api.id.Identifiable
-import runtimemodels.chazm.api.id.UniqueId
+import runtimemodels.chazm.api.id.*
 import runtimemodels.chazm.api.organization.Agents
 import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.api.relation.Assignment
@@ -67,7 +64,7 @@ internal open class DefaultOrganization @Inject constructor(
             /* remove the agent, all associated assignments, all associated possesses relations, all associated has relations */
             val agent = agents.remove(id)
             remove(id, relations.assignmentsByAgent, ASSIGNMENTS_BY_AGENT, Consumer { removeAssignment(it) })
-            remove(id, relations.possesses, POSSESSES, Consumer<UniqueId<Capability>> { removePossesses(id, it) })
+            remove(id, relations.possesses, POSSESSES, Consumer<CapabilityId> { removePossesses(id, it) })
             remove(id, relations.has, HAS, Consumer { removeHas(id, it) })
             publisher.post<AgentEvent>(eventFactory.build(EventType.REMOVED, agent))
         }
@@ -135,7 +132,7 @@ internal open class DefaultOrganization @Inject constructor(
         capabilities.forEach(::addCapability)
     }
 
-    override fun getCapability(id: UniqueId<Capability>): Capability? {
+    override fun getCapability(id: CapabilityId): Capability? {
         return entities.capabilities[id]
     }
 
@@ -143,7 +140,7 @@ internal open class DefaultOrganization @Inject constructor(
         return entities.capabilities.values.toSet()
     }
 
-    override fun removeCapability(id: UniqueId<Capability>) {
+    override fun removeCapability(id: CapabilityId) {
         if (entities.capabilities.containsKey(id)) {
             /* remove the capability, all associated requires relations, all associated possesses relations */
             val capability = entities.capabilities.remove(id)!!
@@ -153,7 +150,7 @@ internal open class DefaultOrganization @Inject constructor(
         }
     }
 
-    override fun removeCapabilities(ids: Collection<UniqueId<Capability>>) {
+    override fun removeCapabilities(ids: Collection<CapabilityId>) {
         ids.forEach(::removeCapability)
     }
 
@@ -173,7 +170,7 @@ internal open class DefaultOrganization @Inject constructor(
         characteristics.forEach(::addCharacteristic)
     }
 
-    override fun getCharacteristic(id: UniqueId<Characteristic>): Characteristic? {
+    override fun getCharacteristic(id: CharacteristicId): Characteristic? {
         return entities.characteristics[id]
     }
 
@@ -181,7 +178,7 @@ internal open class DefaultOrganization @Inject constructor(
         return entities.characteristics.values.toSet()
     }
 
-    override fun removeCharacteristic(id: UniqueId<Characteristic>) {
+    override fun removeCharacteristic(id: CharacteristicId) {
         if (entities.characteristics.containsKey(id)) {
             /* remove characteristics, all associated contains relations */
             val characteristic = entities.characteristics.remove(id)!!
@@ -190,7 +187,7 @@ internal open class DefaultOrganization @Inject constructor(
         }
     }
 
-    override fun removeCharacteristics(ids: Collection<UniqueId<Characteristic>>) {
+    override fun removeCharacteristics(ids: Collection<CharacteristicId>) {
         ids.forEach(::removeCharacteristic)
     }
 
@@ -200,7 +197,7 @@ internal open class DefaultOrganization @Inject constructor(
 
     override fun addInstanceGoal(goal: InstanceGoal) {
         checkNotExists(goal, Predicate { entities.instanceGoals.containsKey(it) })
-        checkExists(goal.goal.id, Function<UniqueId<SpecificationGoal>, SpecificationGoal?> { getSpecificationGoal(it) })
+        checkExists(goal.goal.id, Function<SpecificationGoalId, SpecificationGoal?> { getSpecificationGoal(it) })
         /* add the instance goal, instanceGoalsBySpecificationGoal map */
         entities.instanceGoals[goal.id] = goal
         val map = getMap(goal.goal.id, entities.instanceGoalsBySpecificationGoal,
@@ -213,7 +210,7 @@ internal open class DefaultOrganization @Inject constructor(
         goals.forEach(::addInstanceGoal)
     }
 
-    override fun getInstanceGoal(id: UniqueId<InstanceGoal>): InstanceGoal? {
+    override fun getInstanceGoal(id: InstanceGoalId): InstanceGoal? {
         return entities.instanceGoals[id]
     }
 
@@ -221,7 +218,7 @@ internal open class DefaultOrganization @Inject constructor(
         return entities.instanceGoals.values.toSet()
     }
 
-    override fun removeInstanceGoal(id: UniqueId<InstanceGoal>) {
+    override fun removeInstanceGoal(id: InstanceGoalId) {
         if (entities.instanceGoals.containsKey(id)) {
             /* remove the instance goal, instanceGoalsBySpecificationGoal map */
             val goal = entities.instanceGoals.remove(id)!!
@@ -240,7 +237,7 @@ internal open class DefaultOrganization @Inject constructor(
         }
     }
 
-    override fun removeInstanceGoals(ids: Collection<UniqueId<InstanceGoal>>) {
+    override fun removeInstanceGoals(ids: Collection<InstanceGoalId>) {
         ids.forEach(::removeInstanceGoal)
     }
 
@@ -259,7 +256,7 @@ internal open class DefaultOrganization @Inject constructor(
         pmfs.forEach(::addPmf)
     }
 
-    override fun getPmf(id: UniqueId<Pmf>): Pmf? {
+    override fun getPmf(id: PmfId): Pmf? {
         return entities.pmfs[id]
     }
 
@@ -267,7 +264,7 @@ internal open class DefaultOrganization @Inject constructor(
         return entities.pmfs.values.toSet()
     }
 
-    override fun removePmf(id: UniqueId<Pmf>) {
+    override fun removePmf(id: PmfId) {
         if (entities.pmfs.containsKey(id)) {
             /* remove the pmf, all associated moderates relations */
             val pmf = entities.pmfs.remove(id)!!
@@ -278,7 +275,7 @@ internal open class DefaultOrganization @Inject constructor(
         }
     }
 
-    override fun removePmfs(ids: Collection<UniqueId<Pmf>>) {
+    override fun removePmfs(ids: Collection<PmfId>) {
         ids.forEach(::removePmf)
     }
 
@@ -297,7 +294,7 @@ internal open class DefaultOrganization @Inject constructor(
         policies.forEach(::addPolicy)
     }
 
-    override fun getPolicy(id: UniqueId<Policy>): Policy? {
+    override fun getPolicy(id: PolicyId): Policy? {
         return entities.policies[id]
     }
 
@@ -305,7 +302,7 @@ internal open class DefaultOrganization @Inject constructor(
         return entities.policies.values.toSet()
     }
 
-    override fun removePolicy(id: UniqueId<Policy>) {
+    override fun removePolicy(id: PolicyId) {
         if (entities.policies.containsKey(id)) {
             /* remove the policy */
             val policy = entities.policies.remove(id)!!
@@ -313,7 +310,7 @@ internal open class DefaultOrganization @Inject constructor(
         }
     }
 
-    override fun removePolicies(ids: Collection<UniqueId<Policy>>) {
+    override fun removePolicies(ids: Collection<PolicyId>) {
         ids.forEach(::removePolicy)
     }
 
@@ -338,7 +335,7 @@ internal open class DefaultOrganization @Inject constructor(
         roles.forEach(::addRole)
     }
 
-    override fun getRole(id: UniqueId<Role>): Role? {
+    override fun getRole(id: RoleId): Role? {
         return entities.roles[id]
     }
 
@@ -346,7 +343,7 @@ internal open class DefaultOrganization @Inject constructor(
         return entities.roles.values.toSet()
     }
 
-    override fun removeRole(id: UniqueId<Role>) {
+    override fun removeRole(id: RoleId) {
         if (entities.roles.containsKey(id)) {
             /*
              * remove role, all associated achieves relations, all associated requires relations, all associated needs relations, all associated uses relations,
@@ -363,7 +360,7 @@ internal open class DefaultOrganization @Inject constructor(
         }
     }
 
-    override fun removeRoles(ids: Collection<UniqueId<Role>>) {
+    override fun removeRoles(ids: Collection<RoleId>) {
         ids.forEach(::removeRole)
     }
 
@@ -384,7 +381,7 @@ internal open class DefaultOrganization @Inject constructor(
         goals.forEach(::addSpecificationGoal)
     }
 
-    override fun getSpecificationGoal(id: UniqueId<SpecificationGoal>): SpecificationGoal? {
+    override fun getSpecificationGoal(id: SpecificationGoalId): SpecificationGoal? {
         return entities.specificationGoals[id]
     }
 
@@ -392,7 +389,7 @@ internal open class DefaultOrganization @Inject constructor(
         return entities.specificationGoals.values.toSet()
     }
 
-    override fun removeSpecificationGoal(id: UniqueId<SpecificationGoal>) {
+    override fun removeSpecificationGoal(id: SpecificationGoalId) {
         if (entities.specificationGoals.containsKey(id)) {
             /* remove the specification goal, all associated instance goals, all associated achieves relations */
             val goal = entities.specificationGoals.remove(id)!!
@@ -402,7 +399,7 @@ internal open class DefaultOrganization @Inject constructor(
         }
     }
 
-    override fun removeSpecificationGoals(ids: Collection<UniqueId<SpecificationGoal>>) {
+    override fun removeSpecificationGoals(ids: Collection<SpecificationGoalId>) {
         ids.forEach(::removeSpecificationGoal)
     }
 
@@ -410,9 +407,9 @@ internal open class DefaultOrganization @Inject constructor(
         removeSpecificationGoals(entities.specificationGoals.keys)
     }
 
-    override fun addAchieves(roleId: UniqueId<Role>, goalId: UniqueId<SpecificationGoal>) {
-        val role = checkExists(roleId, Function<UniqueId<Role>, Role?>(::getRole))
-        val goal = checkExists(goalId, Function<UniqueId<SpecificationGoal>, SpecificationGoal?>(::getSpecificationGoal))
+    override fun addAchieves(roleId: RoleId, goalId: SpecificationGoalId) {
+        val role = checkExists(roleId, Function<RoleId, Role?>(::getRole))
+        val goal = checkExists(goalId, Function<SpecificationGoalId, SpecificationGoal?>(::getSpecificationGoal))
         val map = getMap(roleId, relations.achieves, ACHIEVES)
         if (map.containsKey(goalId)) {
             /* relation already exists do nothing */
@@ -424,15 +421,15 @@ internal open class DefaultOrganization @Inject constructor(
         publisher.post<AchievesEvent>(eventFactory.build(EventType.ADDED, achieves))
     }
 
-    override fun getAchieves(id: UniqueId<Role>): Set<SpecificationGoal> {
+    override fun getAchieves(id: RoleId): Set<SpecificationGoal> {
         return getSet(id, relations.achieves, Function { it.goal })
     }
 
-    override fun getAchievedBy(id: UniqueId<SpecificationGoal>): Set<Role> {
+    override fun getAchievedBy(id: SpecificationGoalId): Set<Role> {
         return getSet(id, relations.achievedBy, Function { it.role })
     }
 
-    override fun removeAchieves(roleId: UniqueId<Role>, goalId: UniqueId<SpecificationGoal>) {
+    override fun removeAchieves(roleId: RoleId, goalId: SpecificationGoalId) {
         if (relations.achieves.containsKey(roleId) && relations.achieves[roleId]!!.containsKey(goalId)) {
             val achieves = relations.achieves[roleId]!!.remove(goalId)!!
             removeBy(goalId, roleId, relations.achievedBy, ACHIEVED_BY)
@@ -496,9 +493,9 @@ internal open class DefaultOrganization @Inject constructor(
         removeAssignments(relations.assignments.keys)
     }
 
-    override fun addContains(roleId: UniqueId<Role>, characteristicId: UniqueId<Characteristic>, value: Double) {
-        val role = checkExists(roleId, Function<UniqueId<Role>, Role?>(::getRole))
-        val characteristic = checkExists(characteristicId, Function<UniqueId<Characteristic>, Characteristic?>(::getCharacteristic))
+    override fun addContains(roleId: RoleId, characteristicId: CharacteristicId, value: Double) {
+        val role = checkExists(roleId, Function<RoleId, Role?>(::getRole))
+        val characteristic = checkExists(characteristicId, Function<CharacteristicId, Characteristic?>(::getCharacteristic))
         val map = getMap(roleId, relations.contains, CONTAINS)
         if (map.containsKey(characteristicId)) {
             /* relation already exists do nothing */
@@ -510,21 +507,21 @@ internal open class DefaultOrganization @Inject constructor(
         publisher.post<ContainsEvent>(eventFactory.build(EventType.ADDED, contains))
     }
 
-    override fun getContains(id: UniqueId<Role>): Set<Characteristic> {
+    override fun getContains(id: RoleId): Set<Characteristic> {
         return getSet(id, relations.contains, Function { it.characteristic })
     }
 
-    override fun getContainedBy(id: UniqueId<Characteristic>): Set<Role> {
+    override fun getContainedBy(id: CharacteristicId): Set<Role> {
         return getSet(id, relations.containedBy, Function { it.role })
     }
 
-    override fun getContainsValue(roleId: UniqueId<Role>, characteristicId: UniqueId<Characteristic>): Double? {
+    override fun getContainsValue(roleId: RoleId, characteristicId: CharacteristicId): Double? {
         return if (relations.contains.containsKey(roleId) && relations.contains[roleId]!!.containsKey(characteristicId)) {
             relations.contains[roleId]!![characteristicId]!!.value
         } else null
     }
 
-    override fun setContainsValue(roleId: UniqueId<Role>, characteristicId: UniqueId<Characteristic>, value: Double) {
+    override fun setContainsValue(roleId: RoleId, characteristicId: CharacteristicId, value: Double) {
         if (relations.contains.containsKey(roleId) && relations.contains[roleId]!!.containsKey(characteristicId)) {
             val contains = relations.contains[roleId]!![characteristicId]!!
             contains.value = value
@@ -532,7 +529,7 @@ internal open class DefaultOrganization @Inject constructor(
         }
     }
 
-    override fun removeContains(roleId: UniqueId<Role>, characteristicId: UniqueId<Characteristic>) {
+    override fun removeContains(roleId: RoleId, characteristicId: CharacteristicId) {
         if (relations.contains.containsKey(roleId) && relations.contains[roleId]!!.containsKey(characteristicId)) {
             val contains = relations.contains[roleId]!!.remove(characteristicId)!!
             removeBy(characteristicId, roleId, relations.containedBy, CONTAINED_BY)
@@ -592,8 +589,8 @@ internal open class DefaultOrganization @Inject constructor(
         removeAll(relations.has, BiConsumer(::removeHas), Function { it.agent.id }, Function { it.attribute.id })
     }
 
-    override fun addModerates(pmfId: UniqueId<Pmf>, attributeId: AttributeId) {
-        val pmf = checkExists(pmfId, Function<UniqueId<Pmf>, Pmf?>(::getPmf))
+    override fun addModerates(pmfId: PmfId, attributeId: AttributeId) {
+        val pmf = checkExists(pmfId, Function<PmfId, Pmf?>(::getPmf))
         val attribute = checkExists(attributeId, Function<AttributeId, Attribute?>(::getAttribute))
         if (relations.moderates.containsKey(pmfId)) {
             return
@@ -604,7 +601,7 @@ internal open class DefaultOrganization @Inject constructor(
         publisher.post<ModeratesEvent>(eventFactory.build(EventType.ADDED, moderates))
     }
 
-    override fun getModerates(id: UniqueId<Pmf>): Attribute? {
+    override fun getModerates(id: PmfId): Attribute? {
         return if (relations.moderates.containsKey(id)) {
             relations.moderates[id]!!.attribute
         } else null
@@ -614,7 +611,7 @@ internal open class DefaultOrganization @Inject constructor(
         return getSet(id, relations.moderatedBy, Function { it.pmf })
     }
 
-    override fun removeModerates(pmfId: UniqueId<Pmf>, attributeId: AttributeId) {
+    override fun removeModerates(pmfId: PmfId, attributeId: AttributeId) {
         if (relations.moderates.containsKey(pmfId)) {
             val moderates = relations.moderates.remove(pmfId)!!
             removeBy(attributeId, pmfId, relations.moderatedBy, MODERATED_BY)
@@ -626,8 +623,8 @@ internal open class DefaultOrganization @Inject constructor(
         relations.moderates.values.toSet().forEach { removeModerates(it.pmf.id, it.attribute.id) }
     }
 
-    override fun addNeeds(roleId: UniqueId<Role>, attributeId: AttributeId) {
-        val role = checkExists(roleId, Function<UniqueId<Role>, Role?>(::getRole))
+    override fun addNeeds(roleId: RoleId, attributeId: AttributeId) {
+        val role = checkExists(roleId, Function<RoleId, Role?>(::getRole))
         val attribute = checkExists(attributeId, Function<AttributeId, Attribute?>(::getAttribute))
         val map = getMap(roleId, relations.needs, NEEDS)
         if (map.containsKey(attributeId)) {
@@ -640,7 +637,7 @@ internal open class DefaultOrganization @Inject constructor(
         publisher.post<NeedsEvent>(eventFactory.build(EventType.ADDED, needs))
     }
 
-    override fun getNeeds(id: UniqueId<Role>): Set<Attribute> {
+    override fun getNeeds(id: RoleId): Set<Attribute> {
         return getSet(id, relations.needs, Function { it.attribute })
     }
 
@@ -648,7 +645,7 @@ internal open class DefaultOrganization @Inject constructor(
         return getSet(id, relations.neededBy, Function { it.role })
     }
 
-    override fun removeNeeds(roleId: UniqueId<Role>, attributeId: AttributeId) {
+    override fun removeNeeds(roleId: RoleId, attributeId: AttributeId) {
         if (relations.needs.containsKey(roleId) && relations.needs[roleId]!!.containsKey(attributeId)) {
             val needs = relations.needs[roleId]!!.remove(attributeId)!!
             removeBy(attributeId, roleId, relations.neededBy, NEEDED_BY)
@@ -660,9 +657,9 @@ internal open class DefaultOrganization @Inject constructor(
         removeAll(relations.needs, BiConsumer(::removeNeeds), Function { it.role.id }, Function { it.attribute.id })
     }
 
-    override fun addPossesses(agentId: AgentId, capabilityId: UniqueId<Capability>, score: Double) {
+    override fun addPossesses(agentId: AgentId, capabilityId: CapabilityId, score: Double) {
         val agent = checkExists(agentId, Function<AgentId, Agent?>(::getAgent))
-        val capability = checkExists(capabilityId, Function<UniqueId<Capability>, Capability?>(::getCapability))
+        val capability = checkExists(capabilityId, Function<CapabilityId, Capability?>(::getCapability))
         val map = getMap(agentId, relations.possesses, POSSESSES)
         if (map.containsKey(capabilityId)) {
             /* relation already exists do nothing */
@@ -678,17 +675,17 @@ internal open class DefaultOrganization @Inject constructor(
         return getSet(id, relations.possesses, Function { it.capability })
     }
 
-    override fun getPossessedBy(id: UniqueId<Capability>): Set<Agent> {
+    override fun getPossessedBy(id: CapabilityId): Set<Agent> {
         return getSet(id, relations.possessedBy, Function { it.agent })
     }
 
-    override fun getPossessesScore(agentId: AgentId, capabilityId: UniqueId<Capability>): Double {
+    override fun getPossessesScore(agentId: AgentId, capabilityId: CapabilityId): Double {
         return if (relations.possesses.containsKey(agentId) && relations.possesses[agentId]!!.containsKey(capabilityId)) {
             relations.possesses[agentId]!![capabilityId]!!.score
         } else 0.0
     }
 
-    override fun setPossessesScore(agentId: AgentId, capabilityId: UniqueId<Capability>, score: Double) {
+    override fun setPossessesScore(agentId: AgentId, capabilityId: CapabilityId, score: Double) {
         if (relations.possesses.containsKey(agentId) && relations.possesses[agentId]!!.containsKey(capabilityId)) {
             val possesses = relations.possesses[agentId]!![capabilityId]!!
             possesses.score = score
@@ -696,7 +693,7 @@ internal open class DefaultOrganization @Inject constructor(
         }
     }
 
-    override fun removePossesses(agentId: AgentId, capabilityId: UniqueId<Capability>) {
+    override fun removePossesses(agentId: AgentId, capabilityId: CapabilityId) {
         if (relations.possesses.containsKey(agentId) && relations.possesses[agentId]!!.containsKey(capabilityId)) {
             val possesses = relations.possesses[agentId]!!.remove(capabilityId)!!
             removeBy(capabilityId, agentId, relations.possessedBy, POSSESSED_BY)
@@ -708,9 +705,9 @@ internal open class DefaultOrganization @Inject constructor(
         removeAll(relations.possesses, BiConsumer(::removePossesses), Function { it.agent.id }, Function { f -> f.capability.id })
     }
 
-    override fun addRequires(roleId: UniqueId<Role>, capabilityId: UniqueId<Capability>) {
-        val role = checkExists(roleId, Function<UniqueId<Role>, Role?>(::getRole))
-        val capability = checkExists(capabilityId, Function<UniqueId<Capability>, Capability?>(::getCapability))
+    override fun addRequires(roleId: RoleId, capabilityId: CapabilityId) {
+        val role = checkExists(roleId, Function<RoleId, Role?>(::getRole))
+        val capability = checkExists(capabilityId, Function<CapabilityId, Capability?>(::getCapability))
         val map = getMap(roleId, relations.requires, REQUIRES)
         if (map.containsKey(capabilityId)) {
             /* relation already exists do nothing */
@@ -722,15 +719,15 @@ internal open class DefaultOrganization @Inject constructor(
         publisher.post<RequiresEvent>(eventFactory.build(EventType.ADDED, requires))
     }
 
-    override fun getRequires(id: UniqueId<Role>): Set<Capability> {
+    override fun getRequires(id: RoleId): Set<Capability> {
         return getSet(id, relations.requires, Function { it.capability })
     }
 
-    override fun getRequiredBy(id: UniqueId<Capability>): Set<Role> {
+    override fun getRequiredBy(id: CapabilityId): Set<Role> {
         return getSet(id, relations.requiredBy, Function { it.role })
     }
 
-    override fun removeRequires(roleId: UniqueId<Role>, capabilityId: UniqueId<Capability>) {
+    override fun removeRequires(roleId: RoleId, capabilityId: CapabilityId) {
         if (relations.requires.containsKey(roleId) && relations.requires[roleId]!!.containsKey(capabilityId)) {
             val requires = relations.requires[roleId]!!.remove(capabilityId)!!
             removeBy(capabilityId, roleId, relations.requiredBy, REQUIRED_BY)
@@ -742,9 +739,9 @@ internal open class DefaultOrganization @Inject constructor(
         removeAll(relations.requires, BiConsumer(::removeRequires), Function { it.role.id }, Function { it.capability.id })
     }
 
-    override fun addUses(roleId: UniqueId<Role>, pmfId: UniqueId<Pmf>) {
-        val role = checkExists(roleId, Function<UniqueId<Role>, Role?>(::getRole))
-        val pmf = checkExists(pmfId, Function<UniqueId<Pmf>, Pmf?>(::getPmf))
+    override fun addUses(roleId: RoleId, pmfId: PmfId) {
+        val role = checkExists(roleId, Function<RoleId, Role?>(::getRole))
+        val pmf = checkExists(pmfId, Function<PmfId, Pmf?>(::getPmf))
         val map = getMap(roleId, relations.uses, USES)
         if (map.containsKey(pmfId)) {
             /* relation already exists do nothing */
@@ -756,15 +753,15 @@ internal open class DefaultOrganization @Inject constructor(
         publisher.post<UsesEvent>(eventFactory.build(EventType.ADDED, uses))
     }
 
-    override fun getUses(id: UniqueId<Role>): Set<Pmf> {
+    override fun getUses(id: RoleId): Set<Pmf> {
         return getSet(id, relations.uses, Function { it.pmf })
     }
 
-    override fun getUsedBy(id: UniqueId<Pmf>): Set<Role> {
+    override fun getUsedBy(id: PmfId): Set<Role> {
         return getSet(id, relations.usedBy, Function { it.role })
     }
 
-    override fun removeUses(roleId: UniqueId<Role>, pmfId: UniqueId<Pmf>) {
+    override fun removeUses(roleId: RoleId, pmfId: PmfId) {
         if (relations.uses.containsKey(roleId) && relations.uses[roleId]!!.containsKey(pmfId)) {
             val uses = relations.uses[roleId]!!.remove(pmfId)!!
             removeBy(pmfId, roleId, relations.usedBy, USED_BY)
@@ -780,12 +777,12 @@ internal open class DefaultOrganization @Inject constructor(
         return effectiveness.compute(this, assignments.toSet())
     }
 
-    override fun getGoodness(id: UniqueId<Role>): Goodness? {
+    override fun getGoodness(id: RoleId): Goodness? {
         return functions.goodness[id]
     }
 
-    override fun setGoodness(id: UniqueId<Role>, goodness: Goodness) {
-        checkExists(id, Function<UniqueId<Role>, Role?>(::getRole))
+    override fun setGoodness(id: RoleId, goodness: Goodness) {
+        checkExists(id, Function<RoleId, Role?>(::getRole))
         functions.goodness[id] = goodness
     }
 

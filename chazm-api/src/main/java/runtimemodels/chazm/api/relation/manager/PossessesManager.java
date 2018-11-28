@@ -3,6 +3,7 @@ package runtimemodels.chazm.api.relation.manager;
 import runtimemodels.chazm.api.entity.Agent;
 import runtimemodels.chazm.api.entity.Capability;
 import runtimemodels.chazm.api.id.AgentId;
+import runtimemodels.chazm.api.id.CapabilityId;
 import runtimemodels.chazm.api.id.UniqueId;
 import runtimemodels.chazm.api.relation.Possesses;
 
@@ -22,7 +23,7 @@ public interface PossessesManager {
      * @param capabilityId the {@linkplain UniqueId} that represents the {@linkplain Capability}.
      * @param score        the <code>double</code> score of the possesses relation.
      */
-    void addPossesses(AgentId agentId, UniqueId<Capability> capabilityId, double score);
+    void addPossesses(AgentId agentId, CapabilityId capabilityId, double score);
 
     /**
      * Returns a set of {@linkplain Capability}s that is possessed by an {@linkplain Agent} in this {@linkplain PossessesManager}.
@@ -38,7 +39,7 @@ public interface PossessesManager {
      * @param id the {@linkplain UniqueId} that represents the {@linkplain Capability}.
      * @return a set of {@linkplain Agent}s.
      */
-    Set<Agent> getPossessedBy(UniqueId<Capability> id);
+    Set<Agent> getPossessedBy(CapabilityId id);
 
     /**
      * Returns the <code>double</code> score of the possesses relation between an {@linkplain Agent} and a {@linkplain Capability} in this
@@ -48,7 +49,7 @@ public interface PossessesManager {
      * @param capabilityId the {@linkplain UniqueId} that represents the {@linkplain Capability}.
      * @return the <code>double</code> score.
      */
-    double getPossessesScore(AgentId agentId, UniqueId<Capability> capabilityId);
+    double getPossessesScore(AgentId agentId, CapabilityId capabilityId);
 
     /**
      * Sets a new <code>double</code> score for the possesses relation between an {@linkplain Agent} and a {@linkplain Capability} in this
@@ -58,7 +59,7 @@ public interface PossessesManager {
      * @param capabilityId the {@linkplain UniqueId} that represents the {@linkplain Capability}.
      * @param score        the new <code>double</code> score.
      */
-    void setPossessesScore(AgentId agentId, UniqueId<Capability> capabilityId, double score);
+    void setPossessesScore(AgentId agentId, CapabilityId capabilityId, double score);
 
     /**
      * Removes a possesses relation between an {@linkplain Agent} and a {@linkplain Capability} from this {@linkplain PossessesManager}.
@@ -66,7 +67,7 @@ public interface PossessesManager {
      * @param agentId      the {@linkplain UniqueId} that represents the {@linkplain Agent}.
      * @param capabilityId the {@linkplain UniqueId} that represents the {@linkplain Capability}.
      */
-    void removePossesses(AgentId agentId, UniqueId<Capability> capabilityId);
+    void removePossesses(AgentId agentId, CapabilityId capabilityId);
 
     /**
      * Removes all possesses relations from this {@linkplain PossessesManager}.

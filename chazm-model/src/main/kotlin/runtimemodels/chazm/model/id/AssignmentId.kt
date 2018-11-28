@@ -4,6 +4,8 @@ import runtimemodels.chazm.api.entity.Agent
 import runtimemodels.chazm.api.entity.InstanceGoal
 import runtimemodels.chazm.api.entity.Role
 import runtimemodels.chazm.api.id.AgentId
+import runtimemodels.chazm.api.id.InstanceGoalId
+import runtimemodels.chazm.api.id.RoleId
 import runtimemodels.chazm.api.id.UniqueId
 import runtimemodels.chazm.api.relation.Assignment
 import runtimemodels.chazm.model.message.M
@@ -13,46 +15,20 @@ import java.util.*
  * The [AssignmentId] extends the [AbstractId] by using three [UniqueId]s: the [UniqueId] of an [Agent], the
  * [UniqueId] of a [Role], and the [UniqueId] of an [InstanceGoal].
  *
+ * @constructor Constructs a new instance of [Assignment].
+ * @property agentId the [UniqueId] that represents an [Agent].
+ * @property roleId  the [UniqueId] that represents a [Role].
+ * @property goalId  the [UniqueId] that represents an [InstanceGoal].
+ *
  * @author Christopher Zhong
  * @see UniqueId
  * @since 4.0
  */
-class AssignmentId
-/**
- * Constructs a new instance of [Assignment].
- *
- * @param agentId the [UniqueId] that represents an [Agent].
- * @param roleId  the [UniqueId] that represents a [Role].
- * @param goalId  the [UniqueId] that represents an [InstanceGoal].
- */
-(
-    /**
-     * The [UniqueId] that represents an [Agent].
-     */
-    /**
-     * Returns the [UniqueId] that represents an [Agent].
-     *
-     * @return the [UniqueId] that represents an [Agent].
-     */
+class AssignmentId(
     private val agentId: AgentId,
-    /**
-     * The [UniqueId] that represents a [Role].
-     */
-    /**
-     * Returns the [UniqueId] that represents a [Role].
-     *
-     * @return the [UniqueId] that represents a [Role].
-     */
-    private val roleId: UniqueId<Role>,
-    /**
-     * The [UniqueId] that represents an [InstanceGoal].
-     */
-    /**
-     * Returns the [UniqueId] that represents an [InstanceGoal].
-     *
-     * @return the [UniqueId] that represents an [InstanceGoal].
-     */
-    private val goalId: UniqueId<InstanceGoal>) : AbstractId<Assignment>(Assignment::class.java) {
+    private val roleId: RoleId,
+    private val goalId: InstanceGoalId
+) : AbstractId<Assignment>(Assignment::class.java) {
 
     override fun equals(other: Any?): Boolean {
         if (other is AssignmentId) {

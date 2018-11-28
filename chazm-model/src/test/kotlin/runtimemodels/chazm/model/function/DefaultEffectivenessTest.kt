@@ -3,16 +3,11 @@ package runtimemodels.chazm.model.function
 import com.google.inject.Guice
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import runtimemodels.chazm.api.entity.Capability
-import runtimemodels.chazm.api.entity.InstanceGoal
-import runtimemodels.chazm.api.entity.Role
-import runtimemodels.chazm.api.entity.SpecificationGoal
 import runtimemodels.chazm.api.function.Effectiveness
 import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.model.OrganizationModule
 import runtimemodels.chazm.model.entity.EntityFactory
-import runtimemodels.chazm.model.id.DefaultAgentId
-import runtimemodels.chazm.model.id.IdFactory
+import runtimemodels.chazm.model.id.*
 import runtimemodels.chazm.model.relation.RelationFactory
 
 
@@ -30,12 +25,12 @@ class DefaultEffectivenessTest {
         val o = provider.get()
         val a1 = entityFactory.buildAgent(DefaultAgentId("a1"), mapOf())
         val a2 = entityFactory.buildAgent(DefaultAgentId("a2"), mapOf())
-        val r = entityFactory.buildRole(idFactory.build(Role::class.java, "r"))
-        val sg = entityFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal::class.java, "sg"))
-        val ig1 = entityFactory.buildInstanceGoal(idFactory.build(InstanceGoal::class.java, "ig1"), sg, mapOf())
-        val ig2 = entityFactory.buildInstanceGoal(idFactory.build(InstanceGoal::class.java, "ig2"), sg, mapOf())
-        val c1 = entityFactory.buildCapability(idFactory.build(Capability::class.java, "c1"))
-        val c2 = entityFactory.buildCapability(idFactory.build(Capability::class.java, "c2"))
+        val r = entityFactory.buildRole(DefaultRoleId("r"))
+        val sg = entityFactory.buildSpecificationGoal(DefaultSpecificationGoalId("sg"))
+        val ig1 = entityFactory.buildInstanceGoal(DefaultInstanceGoalId("ig1"), sg, mapOf())
+        val ig2 = entityFactory.buildInstanceGoal(DefaultInstanceGoalId("ig2"), sg, mapOf())
+        val c1 = entityFactory.buildCapability(DefaultCapabilityId("c1"))
+        val c2 = entityFactory.buildCapability(DefaultCapabilityId("c2"))
         val as1 = relationFactory.buildAssignment(a1, r, ig1)
         val as2 = relationFactory.buildAssignment(a1, r, ig2)
         val as3 = relationFactory.buildAssignment(a2, r, ig1)

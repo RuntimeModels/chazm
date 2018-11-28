@@ -1,6 +1,7 @@
 package runtimemodels.chazm.model.entity
 
 import runtimemodels.chazm.api.entity.Pmf
+import runtimemodels.chazm.api.id.PmfId
 import runtimemodels.chazm.api.id.UniqueId
 
 /**
@@ -18,6 +19,6 @@ interface PmfFactory {
      * @param id the [UniqueId] that represents the [Pmf].
      * @return a [Pmf].
      */
-    fun buildPmf(id: UniqueId<Pmf>): Pmf
+    fun buildPmf(id: PmfId): Pmf
 
 }

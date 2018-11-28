@@ -3,13 +3,13 @@ package runtimemodels.chazm.model.entity
 import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.InstanceGoal
 import runtimemodels.chazm.api.entity.SpecificationGoal
-import runtimemodels.chazm.api.id.UniqueId
+import runtimemodels.chazm.api.id.InstanceGoalId
 import runtimemodels.chazm.model.message.M
 import java.util.*
 import javax.inject.Inject
 
 internal open class InstanceGoalEntity @Inject constructor(
-    @Assisted id: UniqueId<InstanceGoal>,
+    @Assisted override val id: InstanceGoalId,
     @param:Assisted override val goal: SpecificationGoal,
     @Assisted parameters: Map<Any, Any>
 ) : AbstractEntity<InstanceGoal>(id), InstanceGoal {

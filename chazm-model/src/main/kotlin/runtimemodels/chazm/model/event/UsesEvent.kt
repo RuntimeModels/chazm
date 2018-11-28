@@ -3,6 +3,8 @@ package runtimemodels.chazm.model.event
 import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.Pmf
 import runtimemodels.chazm.api.entity.Role
+import runtimemodels.chazm.api.id.PmfId
+import runtimemodels.chazm.api.id.RoleId
 import runtimemodels.chazm.api.id.UniqueId
 import runtimemodels.chazm.api.relation.Uses
 import runtimemodels.chazm.model.message.M
@@ -24,13 +26,13 @@ open class UsesEvent @Inject internal constructor(
      *
      * @return a [UniqueId].
      */
-    val roleId: UniqueId<Role> = uses.role.id
+    val roleId: RoleId = uses.role.id
     /**
      * Returns a [UniqueId] that represents a [Pmf].
      *
      * @return a [UniqueId].
      */
-    val pmfId: UniqueId<Pmf> = uses.pmf.id
+    val pmfId: PmfId = uses.pmf.id
 
     override fun equals(other: Any?): Boolean {
         if (other is UsesEvent) {

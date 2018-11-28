@@ -1,6 +1,7 @@
 package runtimemodels.chazm.api.entity.manager;
 
 import runtimemodels.chazm.api.entity.InstanceGoal;
+import runtimemodels.chazm.api.id.InstanceGoalId;
 import runtimemodels.chazm.api.id.UniqueId;
 
 import java.util.Collection;
@@ -33,7 +34,7 @@ public interface InstanceGoalManager {
      * @param id the {@linkplain UniqueId} that represents the {@linkplain InstanceGoal} to retrieve.
      * @return the {@linkplain InstanceGoal} if it exists, <code>null</code> otherwise.
      */
-    InstanceGoal getInstanceGoal(UniqueId<InstanceGoal> id);
+    InstanceGoal getInstanceGoal(InstanceGoalId id);
 
     /**
      * Returns a set of {@linkplain InstanceGoal} from this {@linkplain InstanceGoalManager}.
@@ -47,14 +48,14 @@ public interface InstanceGoalManager {
      *
      * @param id the {@linkplain UniqueId} that represents the {@linkplain InstanceGoal} to remove.
      */
-    void removeInstanceGoal(UniqueId<InstanceGoal> id);
+    void removeInstanceGoal(InstanceGoalId id);
 
     /**
      * Removes a set of {@linkplain InstanceGoal}s from this {@linkplain InstanceGoalManager}.
      *
      * @param ids the set of {@linkplain UniqueId} that represents the {@linkplain InstanceGoal}s to remove.
      */
-    void removeInstanceGoals(Collection<UniqueId<InstanceGoal>> ids);
+    void removeInstanceGoals(Collection<InstanceGoalId> ids);
 
     /**
      * Removes all {@linkplain InstanceGoal}s from this {@linkplain InstanceGoalManager}.

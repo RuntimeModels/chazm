@@ -1,6 +1,7 @@
 package runtimemodels.chazm.api.entity.manager;
 
 import runtimemodels.chazm.api.entity.Role;
+import runtimemodels.chazm.api.id.RoleId;
 import runtimemodels.chazm.api.id.UniqueId;
 
 import java.util.Collection;
@@ -33,7 +34,7 @@ public interface RoleManager {
      * @param id the {@linkplain UniqueId} that represents the {@linkplain Role} to retrieve.
      * @return the {@linkplain Role} if it exists, <code>null</code> otherwise.
      */
-    Role getRole(UniqueId<Role> id);
+    Role getRole(RoleId id);
 
     /**
      * Returns a set of {@linkplain Role}s from this {@linkplain RoleManager}.
@@ -47,14 +48,14 @@ public interface RoleManager {
      *
      * @param id the {@linkplain UniqueId} that represents the {@linkplain Role} to remove.
      */
-    void removeRole(UniqueId<Role> id);
+    void removeRole(RoleId id);
 
     /**
      * Removes a set of {@linkplain Role}s from this {@linkplain RoleManager}.
      *
      * @param ids the set of {@linkplain UniqueId}s that represents the {@linkplain Role}s to remove.
      */
-    void removeRoles(Collection<UniqueId<Role>> ids);
+    void removeRoles(Collection<RoleId> ids);
 
     /**
      * Removes all {@linkplain Role}s from this {@linkplain RoleManager}.

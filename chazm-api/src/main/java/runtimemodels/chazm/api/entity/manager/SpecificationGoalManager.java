@@ -1,6 +1,7 @@
 package runtimemodels.chazm.api.entity.manager;
 
 import runtimemodels.chazm.api.entity.SpecificationGoal;
+import runtimemodels.chazm.api.id.SpecificationGoalId;
 import runtimemodels.chazm.api.id.UniqueId;
 
 import java.util.Collection;
@@ -33,7 +34,7 @@ public interface SpecificationGoalManager {
      * @param id the {@linkplain UniqueId} that represents a {@linkplain SpecificationGoal} to retrieve.
      * @return the {@linkplain SpecificationGoal} if it exists, <code>null</code> otherwise.
      */
-    SpecificationGoal getSpecificationGoal(UniqueId<SpecificationGoal> id);
+    SpecificationGoal getSpecificationGoal(SpecificationGoalId id);
 
     /**
      * Returns a set of {@linkplain SpecificationGoal}s from this {@linkplain SpecificationGoalManager}.
@@ -47,14 +48,14 @@ public interface SpecificationGoalManager {
      *
      * @param id the {@linkplain UniqueId} that represents the {@linkplain SpecificationGoal} to remove.
      */
-    void removeSpecificationGoal(UniqueId<SpecificationGoal> id);
+    void removeSpecificationGoal(SpecificationGoalId id);
 
     /**
      * Removes a set of {@linkplain SpecificationGoal}s from this {@linkplain SpecificationGoalManager}.
      *
      * @param ids a set of {@linkplain UniqueId}s that represents the {@linkplain SpecificationGoal}s to remove.
      */
-    void removeSpecificationGoals(Collection<UniqueId<SpecificationGoal>> ids);
+    void removeSpecificationGoals(Collection<SpecificationGoalId> ids);
 
     /**
      * Removes all {@linkplain SpecificationGoal}s from this {@linkplain SpecificationGoalManager}.

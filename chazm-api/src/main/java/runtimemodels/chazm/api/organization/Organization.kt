@@ -5,6 +5,7 @@ import runtimemodels.chazm.api.entity.Role
 import runtimemodels.chazm.api.entity.manager.*
 import runtimemodels.chazm.api.function.Goodness
 import runtimemodels.chazm.api.id.AgentId
+import runtimemodels.chazm.api.id.RoleId
 import runtimemodels.chazm.api.id.UniqueId
 import runtimemodels.chazm.api.relation.Assignment
 import runtimemodels.chazm.api.relation.manager.*
@@ -48,7 +49,7 @@ interface Organization : AttributeManager, CapabilityManager, CharacteristicMana
      * @param id the [UniqueId] that represents a [Role].
      * @return a [Goodness] function.
      */
-    fun getGoodness(id: UniqueId<Role>): Goodness?
+    fun getGoodness(id: RoleId): Goodness?
 
     /**
      * Sets a new [Goodness] function for a [Role] in this [Organization].
@@ -56,6 +57,6 @@ interface Organization : AttributeManager, CapabilityManager, CharacteristicMana
      * @param id       the [UniqueId] that represents a [Role].
      * @param goodness the [Goodness] function.
      */
-    fun setGoodness(id: UniqueId<Role>, goodness: Goodness)
+    fun setGoodness(id: RoleId, goodness: Goodness)
 
 }

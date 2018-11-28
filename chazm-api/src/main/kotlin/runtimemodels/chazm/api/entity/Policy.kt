@@ -1,6 +1,7 @@
 package runtimemodels.chazm.api.entity
 
 import runtimemodels.chazm.api.id.Identifiable
+import runtimemodels.chazm.api.id.PolicyId
 import runtimemodels.chazm.api.organization.Organization
 
 /**
@@ -9,4 +10,9 @@ import runtimemodels.chazm.api.organization.Organization
  * @author Christopher Zhong
  * @since 3.4
  */
-interface Policy : Identifiable<Policy>
+interface Policy : Identifiable<Policy> {
+    /**
+     * The [PolicyId] of this [Policy].
+     */
+    override val id: PolicyId
+}

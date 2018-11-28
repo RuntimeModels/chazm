@@ -1,5 +1,6 @@
 package runtimemodels.chazm.api.entity
 
+import runtimemodels.chazm.api.id.CapabilityId
 import runtimemodels.chazm.api.id.Identifiable
 import runtimemodels.chazm.api.organization.Organization
 
@@ -9,4 +10,9 @@ import runtimemodels.chazm.api.organization.Organization
  * @author Christopher Zhong
  * @since 3.4
  */
-interface Capability : Identifiable<Capability>
+interface Capability : Identifiable<Capability> {
+    /**
+     * The [CapabilityId] of this [Capability].
+     */
+    override val id: CapabilityId
+}

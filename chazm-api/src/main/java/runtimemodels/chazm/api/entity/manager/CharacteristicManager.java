@@ -1,6 +1,7 @@
 package runtimemodels.chazm.api.entity.manager;
 
 import runtimemodels.chazm.api.entity.Characteristic;
+import runtimemodels.chazm.api.id.CharacteristicId;
 import runtimemodels.chazm.api.id.UniqueId;
 
 import java.util.Collection;
@@ -33,7 +34,7 @@ public interface CharacteristicManager {
      * @param id the {@linkplain UniqueId} that represents the {@linkplain Characteristic} to retrieve.
      * @return the {@linkplain Characteristic} if it exists, <code>null</code> otherwise.
      */
-    Characteristic getCharacteristic(UniqueId<Characteristic> id);
+    Characteristic getCharacteristic(CharacteristicId id);
 
     /**
      * Returns a set of {@linkplain Characteristic}s from this {@linkplain CharacteristicManager}.
@@ -47,14 +48,14 @@ public interface CharacteristicManager {
      *
      * @param id the {@linkplain UniqueId} that represents the {@linkplain Characteristic} to remove.
      */
-    void removeCharacteristic(UniqueId<Characteristic> id);
+    void removeCharacteristic(CharacteristicId id);
 
     /**
      * Removes a set of {@linkplain Characteristic}s from this {@linkplain CharacteristicManager}.
      *
      * @param ids the set of {@linkplain UniqueId}s that represents the {@linkplain Characteristic}s to remove.
      */
-    void removeCharacteristics(Collection<UniqueId<Characteristic>> ids);
+    void removeCharacteristics(Collection<CharacteristicId> ids);
 
     /**
      * Removes all {@linkplain Characteristic}s from this {@linkplain CharacteristicManager}.

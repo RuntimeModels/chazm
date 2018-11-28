@@ -10,9 +10,7 @@ import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
 import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.api.organization.Organization
-import runtimemodels.chazm.model.id.DefaultAgentId
-import runtimemodels.chazm.model.id.DefaultAttributeId
-import runtimemodels.chazm.model.id.IdFactory
+import runtimemodels.chazm.model.id.*
 import runtimemodels.chazm.model.message.E
 import java.io.InputStream
 import javax.xml.namespace.QName
@@ -64,13 +62,13 @@ class XmlParserTest {
 
         val agent1 = DefaultAgentId("Agent 1")
         val attribute1 = DefaultAttributeId("Attribute 1")
-        val capability1 = idf.build(Capability::class.java, "Capability 1")
-        val characteristic1 = idf.build(Characteristic::class.java, "Characteristic 1")
-        val instanceGoal1 = idf.build(InstanceGoal::class.java, "Instance Goal 1")
-        val pmf1 = idf.build(Pmf::class.java, "Pmf 1")
-        val policy1 = idf.build(Policy::class.java, "Policy 1")
-        val role1 = idf.build(Role::class.java, "Role 1")
-        val specificationGoal1 = idf.build(SpecificationGoal::class.java, "Goal 1")
+        val capability1 = DefaultCapabilityId("Capability 1")
+        val characteristic1 = DefaultCharacteristicId("Characteristic 1")
+        val instanceGoal1 = DefaultInstanceGoalId("Instance Goal 1")
+        val pmf1 = DefaultPmfId("Pmf 1")
+        val policy1 = DefaultPolicyId("Policy 1")
+        val role1 = DefaultRoleId("Role 1")
+        val specificationGoal1 = DefaultSpecificationGoalId("Goal 1")
 
 
         assertAll(
@@ -126,9 +124,9 @@ class XmlParserTest {
 
         parser.parse(organization, inputStream)
 
-        val c1 = idf.build(Capability::class.java, "Capability 1")
-        val r1 = idf.build(Role::class.java, "Role 1")
-        val g1 = idf.build(SpecificationGoal::class.java, "Goal 1")
+        val c1 = DefaultCapabilityId("Capability 1")
+        val r1 = DefaultRoleId("Role 1")
+        val g1 = DefaultSpecificationGoalId("Goal 1")
 
         assertAll(
             { assertThat(organization.capabilities.size).isEqualTo(1) },
@@ -158,9 +156,9 @@ class XmlParserTest {
 
         parser.parse(organization, inputStream)
 
-        val c1 = idf.build(Capability::class.java, "Capability 1")
-        val g1 = idf.build(SpecificationGoal::class.java, "Goal 1")
-        val r1 = idf.build(Role::class.java, "Role 1")
+        val c1 = DefaultCapabilityId("Capability 1")
+        val g1 = DefaultSpecificationGoalId("Goal 1")
+        val r1 = DefaultRoleId("Role 1")
 
         assertAll(
             { assertThat(organization.capabilities.size).isEqualTo(1) },
@@ -190,13 +188,13 @@ class XmlParserTest {
 
         parser.parse(organization, inputStream)
 
-        val c1 = idf.build(Capability::class.java, "Capability 1")
-        val c2 = idf.build(Capability::class.java, "Capability 2")
-        val c3 = idf.build(Capability::class.java, "Capability 3")
-        val g1 = idf.build(SpecificationGoal::class.java, "Goal 1")
-        val g2 = idf.build(SpecificationGoal::class.java, "Goal 2")
-        val g3 = idf.build(SpecificationGoal::class.java, "Goal 3")
-        val r1 = idf.build(Role::class.java, "Role 1")
+        val c1 = DefaultCapabilityId("Capability 1")
+        val c2 = DefaultCapabilityId("Capability 2")
+        val c3 = DefaultCapabilityId("Capability 3")
+        val g1 = DefaultSpecificationGoalId("Goal 1")
+        val g2 = DefaultSpecificationGoalId("Goal 2")
+        val g3 = DefaultSpecificationGoalId("Goal 3")
+        val r1 = DefaultRoleId("Role 1")
 
         assertAll(
             { assertThat(organization.capabilities.size).isEqualTo(3) },
@@ -230,13 +228,13 @@ class XmlParserTest {
 
         parser.parse(organization, inputStream)
 
-        val c1 = idf.build(Capability::class.java, "Capability 1")
-        val c2 = idf.build(Capability::class.java, "Capability 2")
-        val c3 = idf.build(Capability::class.java, "Capability 3")
-        val g1 = idf.build(SpecificationGoal::class.java, "Goal 1")
-        val g2 = idf.build(SpecificationGoal::class.java, "Goal 2")
-        val g3 = idf.build(SpecificationGoal::class.java, "Goal 3")
-        val r1 = idf.build(Role::class.java, "Role 1")
+        val c1 = DefaultCapabilityId("Capability 1")
+        val c2 = DefaultCapabilityId("Capability 2")
+        val c3 = DefaultCapabilityId("Capability 3")
+        val g1 = DefaultSpecificationGoalId("Goal 1")
+        val g2 = DefaultSpecificationGoalId("Goal 2")
+        val g3 = DefaultSpecificationGoalId("Goal 3")
+        val r1 = DefaultRoleId("Role 1")
 
         assertAll(
             { assertThat(organization.capabilities.size).isEqualTo(3) },
@@ -270,7 +268,7 @@ class XmlParserTest {
 
         parser.parse(organization, inputStream)
 
-        val r1 = idf.build(Role::class.java, "Role 1")
+        val r1 = DefaultRoleId("Role 1")
 
         assertAll(
             { assertThat(organization.roles.size).isEqualTo(1) },
