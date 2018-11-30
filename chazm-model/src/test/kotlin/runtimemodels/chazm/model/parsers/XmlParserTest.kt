@@ -76,7 +76,7 @@ class XmlParserTest {
             { assertThat(organization.agents.size).isEqualTo(1) },
             { assertThat(organization.agents[agent1]).isNotNull() },
             { assertThat(organization.attributes.size).isEqualTo(1) },
-            { assertThat(organization.getAttribute(attribute1)).isNotNull() },
+            { assertThat(organization.attributes[attribute1]).isNotNull() },
             { assertThat(organization.capabilities.size).isEqualTo(1) },
             { assertThat(organization.getCapability(capability1)).isNotNull() },
             { assertThat(organization.characteristics.size).isEqualTo(1) },

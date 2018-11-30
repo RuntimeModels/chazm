@@ -7,6 +7,7 @@ import runtimemodels.chazm.api.function.Effectiveness
 import runtimemodels.chazm.api.function.Goodness
 import runtimemodels.chazm.api.id.*
 import runtimemodels.chazm.api.organization.Agents
+import runtimemodels.chazm.api.organization.AttributeManager
 import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.api.relation.Assignment
 import runtimemodels.chazm.model.Entities
@@ -31,7 +32,8 @@ internal open class DefaultOrganization @Inject constructor(
     private val goodness: Goodness,
     private val effectiveness: Effectiveness,
     private val publisher: Publisher,
-    override val agents: Agents
+    override val agents: Agents,
+    override val attributes: AttributeManager
 ) : Organization, FlowableOnSubscribe<Organization> {
 
     private val entities = Entities()
@@ -51,13 +53,9 @@ internal open class DefaultOrganization @Inject constructor(
         agents.forEach(::addAgent)
     }
 
-    fun getAgent(id: AgentId): Agent? {
-        return agents[id]
-    }
-
-    fun getAgents(): Set<Agent> {
-        return agents.values.toSet()
-    }
+//    fun getAgents(): Set<Agent> {
+//        return agents.values.toSet()
+//    }
 
     override fun removeAgent(id: AgentId) {
         if (agents.contains(id)) {
@@ -79,31 +77,27 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun addAttribute(attribute: Attribute) {
-        checkNotExists(attribute, Predicate { entities.attributes.containsKey(it) })
+        checkNotExists(attribute, Predicate { attributes.containsKey(it) })
         /* add the attribute, neededBy map, hadBy map, moderatedBy map */
-        entities.attributes[attribute.id] = attribute
+        attributes.add(attribute)
         relations.neededBy[attribute.id] = ConcurrentHashMap()
         relations.hadBy[attribute.id] = ConcurrentHashMap()
         relations.moderatedBy[attribute.id] = ConcurrentHashMap()
         publisher.post<AttributeEvent>(eventFactory.build(EventType.ADDED, attribute))
     }
 
-    override fun addAttributes(attributes: Collection<Attribute>) {
+    fun addAttributes(attributes: Collection<Attribute>) {
         attributes.forEach(::addAttribute)
     }
 
-    override fun getAttribute(id: AttributeId): Attribute? {
-        return entities.attributes[id]
-    }
-
-    override fun getAttributes(): Set<Attribute> {
-        return entities.attributes.values.toSet()
-    }
+//    fun getAttributes(): Set<Attribute> {
+//        return attributes.values.toSet()
+//    }
 
     override fun removeAttribute(id: AttributeId) {
-        if (entities.attributes.containsKey(id)) {
+        if (attributes.containsKey(id)) {
             /* remove the attribute, all associated needs relations, all associated has relations, all associated moderates relations */
-            val attribute = entities.attributes.remove(id)!!
+            val attribute = attributes.remove(id)
             remove(id, relations.neededBy, NEEDED_BY, Consumer { removeNeeds(it, id) })
             remove(id, relations.hadBy, HAD_BY, Consumer { removeHas(it, id) })
             remove(id, relations.moderatedBy, MODERATED_BY, Consumer { removeModerates(it, id) })
@@ -111,12 +105,8 @@ internal open class DefaultOrganization @Inject constructor(
         }
     }
 
-    override fun removeAttributes(ids: Collection<AttributeId>) {
+    fun removeAttributes(ids: Collection<AttributeId>) {
         ids.forEach(::removeAttribute)
-    }
-
-    override fun removeAllAttributes() {
-        removeAttributes(entities.attributes.keys)
     }
 
     override fun addCapability(capability: Capability) {
@@ -443,7 +433,7 @@ internal open class DefaultOrganization @Inject constructor(
 
     override fun addAssignment(assignment: Assignment) {
         checkNotExists(assignment, Predicate { relations.assignments.containsKey(it) })
-        checkExists(assignment.agent.id, Function(::getAgent))
+        checkExists(assignment.agent.id, Function(agents::get))
         checkExists(assignment.role.id, Function(::getRole))
         checkExists(assignment.goal.id, Function(::getInstanceGoal))
         /* add the assignment */
@@ -542,8 +532,8 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun addHas(agentId: AgentId, attributeId: AttributeId, value: Double) {
-        val agent = checkExists(agentId, Function<AgentId, Agent?>(::getAgent))
-        val attribute = checkExists(attributeId, Function<AttributeId, Attribute?>(::getAttribute))
+        val agent = checkExists(agentId, Function<AgentId, Agent?>(agents::get))
+        val attribute = checkExists(attributeId, Function<AttributeId, Attribute?>(attributes::get))
         val map = getMap(agentId, relations.has, HAS)
         if (map.containsKey(attributeId)) {
             /* relation already exists do nothing */
@@ -591,7 +581,7 @@ internal open class DefaultOrganization @Inject constructor(
 
     override fun addModerates(pmfId: PmfId, attributeId: AttributeId) {
         val pmf = checkExists(pmfId, Function<PmfId, Pmf?>(::getPmf))
-        val attribute = checkExists(attributeId, Function<AttributeId, Attribute?>(::getAttribute))
+        val attribute = checkExists(attributeId, Function<AttributeId, Attribute?>(attributes::get))
         if (relations.moderates.containsKey(pmfId)) {
             return
         }
@@ -625,7 +615,7 @@ internal open class DefaultOrganization @Inject constructor(
 
     override fun addNeeds(roleId: RoleId, attributeId: AttributeId) {
         val role = checkExists(roleId, Function<RoleId, Role?>(::getRole))
-        val attribute = checkExists(attributeId, Function<AttributeId, Attribute?>(::getAttribute))
+        val attribute = checkExists(attributeId, Function<AttributeId, Attribute?>(attributes::get))
         val map = getMap(roleId, relations.needs, NEEDS)
         if (map.containsKey(attributeId)) {
             /* relation already exists do nothing */
@@ -658,7 +648,7 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun addPossesses(agentId: AgentId, capabilityId: CapabilityId, score: Double) {
-        val agent = checkExists(agentId, Function<AgentId, Agent?>(::getAgent))
+        val agent = checkExists(agentId, Function<AgentId, Agent?>(agents::get))
         val capability = checkExists(capabilityId, Function<CapabilityId, Capability?>(::getCapability))
         val map = getMap(agentId, relations.possesses, POSSESSES)
         if (map.containsKey(capabilityId)) {
