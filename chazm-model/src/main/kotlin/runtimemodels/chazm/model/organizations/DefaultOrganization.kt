@@ -6,7 +6,7 @@ import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.api.function.Effectiveness
 import runtimemodels.chazm.api.function.Goodness
 import runtimemodels.chazm.api.id.*
-import runtimemodels.chazm.api.organization.Agents
+import runtimemodels.chazm.api.organization.AgentManager
 import runtimemodels.chazm.api.organization.AttributeManager
 import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.api.relation.Assignment
@@ -32,7 +32,7 @@ internal open class DefaultOrganization @Inject constructor(
     private val goodness: Goodness,
     private val effectiveness: Effectiveness,
     private val publisher: Publisher,
-    override val agents: Agents,
+    override val agents: AgentManager,
     override val attributes: AttributeManager
 ) : Organization, FlowableOnSubscribe<Organization> {
 

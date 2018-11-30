@@ -2,14 +2,14 @@ package runtimemodels.chazm.model.organizations
 
 import runtimemodels.chazm.api.entity.Agent
 import runtimemodels.chazm.api.id.AgentId
-import runtimemodels.chazm.api.organization.Agents
+import runtimemodels.chazm.api.organization.AgentManager
 import runtimemodels.chazm.model.exceptions.AgentExistsException
 import runtimemodels.chazm.model.exceptions.AgentNotExistsException
 import javax.inject.Inject
 
-internal class DefaultAgents @Inject constructor(
-    override val map: MutableMap<AgentId, Agent>
-) : Agents, Map<AgentId, Agent> by map {
+internal data class DefaultAgentManager @Inject constructor(
+    private val map: MutableMap<AgentId, Agent>
+) : AgentManager, Map<AgentId, Agent> by map {
     override fun add(agent: Agent) {
         if (map.containsKey(agent.id)) {
             throw AgentExistsException(agent.id)

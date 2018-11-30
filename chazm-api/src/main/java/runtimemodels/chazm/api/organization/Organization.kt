@@ -20,7 +20,7 @@ import java.util.function.Predicate
  * @since 4.0
  */
 interface Organization : CapabilityManager, CharacteristicManager, InstanceGoalManager, PmfManager, PolicyManager, RoleManager, SpecificationGoalManager, AchievesManager, AssignmentManager, ContainsManager, HasManager, ModeratesManager, NeedsManager, PossessesManager, RequiresManager, UsesManager {
-    val agents: Agents
+    val agents: AgentManager
 
     fun addAgent(agent: Agent)
 
