@@ -3,7 +3,6 @@ package runtimemodels.chazm.model.entity
 import com.google.inject.AbstractModule
 import com.google.inject.assistedinject.FactoryModuleBuilder
 import runtimemodels.chazm.api.entity.*
-import runtimemodels.chazm.model.id.IdModule
 
 /**
  * The [EntityModule] class provides a Guice binding module for entities.
@@ -14,7 +13,6 @@ import runtimemodels.chazm.model.id.IdModule
 class EntityModule : AbstractModule() {
 
     override fun configure() {
-        install(IdModule())
         val factoryModuleBuilder = FactoryModuleBuilder()
             .implement(Agent::class.java, AgentEntity::class.java)
             .implement(Attribute::class.java, AttributeEntity::class.java)

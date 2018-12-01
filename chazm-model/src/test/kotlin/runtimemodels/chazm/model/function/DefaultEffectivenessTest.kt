@@ -15,7 +15,6 @@ class DefaultEffectivenessTest {
 
     private val injector = Guice.createInjector(OrganizationModule(), FunctionModule())
     private val provider = injector.getProvider(Organization::class.java)
-    private val idFactory = injector.getInstance(IdFactory::class.java)
     private val entityFactory = injector.getInstance(EntityFactory::class.java)
     private val relationFactory = injector.getInstance(RelationFactory::class.java)
     private val effectiveness = injector.getInstance(Effectiveness::class.java)

@@ -14,7 +14,6 @@ class DefaultGoodnessTest {
 
     private val injector = Guice.createInjector(OrganizationModule(), FunctionModule())
     private val provider = injector.getProvider(Organization::class.java)
-    private val idFactory = injector.getInstance(IdFactory::class.java)
     private val entityFactory = injector.getInstance(EntityFactory::class.java)
     private val goodness = injector.getInstance(Goodness::class.java)
 
