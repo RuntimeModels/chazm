@@ -460,6 +460,7 @@ class XmlParserTest {
         val parser = provider.get()
         val organization = injector.getInstance(Organization::class.java)
         /* test missing </RoleDiagram> end tag */
+        `when`(factory.createXMLEventReader(inputStream)).thenReturn(reader)
         `when`(reader.hasNext()).thenReturn(true, false)
         `when`(reader.nextEvent()).thenReturn(event)
         `when`(event.isStartElement).thenReturn(true)
@@ -484,6 +485,7 @@ class XmlParserTest {
         val parser = provider.get()
         val organization = injector.getInstance(Organization::class.java)
         /* test missing </Agent> end tag */
+        `when`(factory.createXMLEventReader(inputStream)).thenReturn(reader)
         `when`(reader.hasNext()).thenReturn(true, true, false)
         `when`(reader.nextEvent()).thenReturn(event)
         `when`(event.isStartElement).thenReturn(true)
@@ -509,6 +511,7 @@ class XmlParserTest {
         val parser = provider.get()
         val organization = injector.getInstance(Organization::class.java)
         /* test missing </Pmf> end tag */
+        `when`(factory.createXMLEventReader(inputStream)).thenReturn(reader)
         `when`(reader.hasNext()).thenReturn(true, true, false)
         `when`(reader.nextEvent()).thenReturn(event)
         `when`(event.isStartElement).thenReturn(true)
@@ -534,6 +537,7 @@ class XmlParserTest {
         val parser = provider.get()
         val organization = injector.getInstance(Organization::class.java)
         /* test missing </Role> end tag */
+        `when`(factory.createXMLEventReader(inputStream)).thenReturn(reader)
         `when`(reader.hasNext()).thenReturn(true, true, false)
         `when`(reader.nextEvent()).thenReturn(event)
         `when`(event.isStartElement).thenReturn(true)
@@ -559,6 +563,7 @@ class XmlParserTest {
         val parser = provider.get()
         val organization = injector.getInstance(Organization::class.java)
         /* test missing relations end tags: </has>, </possesses>, </moderates>, </achieves>, </contains>, </needs>, </requires> */
+        `when`(factory.createXMLEventReader(inputStream)).thenReturn(reader)
         `when`(reader.hasNext()).thenReturn(true, true, true, false)
         `when`(reader.nextEvent()).thenReturn(event)
         `when`(event.isStartElement).thenReturn(true)

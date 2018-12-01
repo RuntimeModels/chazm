@@ -29,7 +29,7 @@ import javax.xml.stream.events.StartElement
  */
 @Singleton
 internal open class XmlParser @Inject constructor(
-    private val idFactory: IdFactory,
+    private val factory: XMLInputFactory,
     private val entityFactory: EntityFactory,
     private val assignmentFactory: AssignmentFactory
 ) {
@@ -49,7 +49,6 @@ internal open class XmlParser @Inject constructor(
      */
     @Throws(XMLStreamException::class)
     fun parse(organization: Organization, inputStream: InputStream) {
-        val factory = XMLInputFactory.newInstance()
         val reader = factory.createXMLEventReader(inputStream)
         while (reader.hasNext()) {
             val event = reader.nextEvent()
@@ -240,7 +239,7 @@ internal open class XmlParser @Inject constructor(
                 val value = getAttributeValue(element, SPECIFICATION_ATTRIBUTE)
                 val goalId = specificationGoals[value]
                     ?: throw XMLStreamException(E.INCOMPLETE_XML_FILE[SpecificationGoal::class.java.simpleName, value])
-                val goal = organization.getSpecificationGoal(goalId)
+                val goal = organization.specificationGoals[goalId]!!
                 val id = DefaultInstanceGoalId(getAttributeValue(element, NAME_ATTRIBUTE))
                 // TODO parse parameter
                 val parameter = mapOf<Any, Any>()
