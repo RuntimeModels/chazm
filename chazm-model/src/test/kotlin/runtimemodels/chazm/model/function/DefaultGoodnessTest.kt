@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test
 import runtimemodels.chazm.api.entity.Attribute
 import runtimemodels.chazm.api.function.Goodness
 import runtimemodels.chazm.api.organization.Organization
-import runtimemodels.chazm.model.OrganizationModule
 import runtimemodels.chazm.model.entity.EntityFactory
 import runtimemodels.chazm.model.id.*
+import runtimemodels.chazm.model.organizations.OrganizationModule
 
 class DefaultGoodnessTest {
 

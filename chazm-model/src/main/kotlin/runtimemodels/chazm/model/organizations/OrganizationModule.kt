@@ -1,4 +1,4 @@
-package runtimemodels.chazm.model
+package runtimemodels.chazm.model.organizations
 
 import com.google.inject.AbstractModule
 import com.google.inject.Provides
@@ -8,7 +8,6 @@ import runtimemodels.chazm.api.organization.*
 import runtimemodels.chazm.model.event.EventModule
 import runtimemodels.chazm.model.function.FunctionModule
 import runtimemodels.chazm.model.notification.NotificationModule
-import runtimemodels.chazm.model.organizations.*
 import runtimemodels.chazm.model.relation.RelationModule
 
 /**
