@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- missing instance goal for 'assignment' element -->
+<!-- missing goal for 'assignment' element -->
 <RoleDiagram>
     <Agent id="15cf816f-fcde-4e5e-8758-e004f48e4ee3" name="Agent 1"/>
     <assignment agent="15cf816f-fcde-4e5e-8758-e004f48e4ee3" role="d3a3aa33-88c7-41a6-91a0-423e84354e7c"

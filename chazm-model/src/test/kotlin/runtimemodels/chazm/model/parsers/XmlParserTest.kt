@@ -28,7 +28,7 @@ class XmlParserTest {
     private val provider = injector.getProvider(XmlParser::class.java)
 
     @Test
-    fun testXmlParser() {
+    fun `XmlParser instantiates as a singleton`() {
         val parser1 = provider.get()
         val parser2 = provider.get()
 
@@ -52,9 +52,7 @@ class XmlParserTest {
     }
 
     @Test
-    @Disabled
-    @Throws(XMLStreamException::class)
-    fun testParseSample1() {
+    fun `reads the Sample1 file correctly`() {
         val parser = provider.get()
         val organization = injector.getInstance(Organization::class.java)
         val inputStream = ClassLoader.getSystemResourceAsStream("Sample1.xml")
@@ -70,7 +68,6 @@ class XmlParserTest {
         val policy1 = DefaultPolicyId("Policy 1")
         val role1 = DefaultRoleId("Role 1")
         val specificationGoal1 = DefaultSpecificationGoalId("Goal 1")
-
 
         assertAll(
             // check all 9 entities entities
@@ -116,9 +113,7 @@ class XmlParserTest {
     }
 
     @Test
-    @Disabled
-    @Throws(XMLStreamException::class)
-    fun testParseSample2() {
+    fun `reads the Sample2 file correctly`() {
         val parser = provider.get()
         val organization = injector.getInstance(Organization::class.java)
         val inputStream = ClassLoader.getSystemResourceAsStream("Sample2.xml")
@@ -148,9 +143,7 @@ class XmlParserTest {
     }
 
     @Test
-    @Disabled
-    @Throws(XMLStreamException::class)
-    fun testSample3() {
+    fun `reads the Sample3 file correctly`() {
         val parser = provider.get()
         val organization = injector.getInstance(Organization::class.java)
         val inputStream = ClassLoader.getSystemResourceAsStream("Sample3.xml")
@@ -180,9 +173,7 @@ class XmlParserTest {
     }
 
     @Test
-    @Disabled
-    @Throws(XMLStreamException::class)
-    fun testSample4() {
+    fun `reads the Sample4 file correctly`() {
         val parser = provider.get()
         val organization = injector.getInstance(Organization::class.java)
         val inputStream = ClassLoader.getSystemResourceAsStream("Sample4.xml")
@@ -220,9 +211,7 @@ class XmlParserTest {
     }
 
     @Test
-    @Disabled
-    @Throws(XMLStreamException::class)
-    fun testSample5() {
+    fun `reads the Sample5 file correctly`() {
         val parser = provider.get()
         val organization = injector.getInstance(Organization::class.java)
         val inputStream = ClassLoader.getSystemResourceAsStream("Sample5.xml")
@@ -260,9 +249,7 @@ class XmlParserTest {
     }
 
     @Test
-    @Disabled
-    @Throws(XMLStreamException::class)
-    fun testSample6() {
+    fun `reads the Sample6 file correctly`() {
         val parser = provider.get()
         val organization = injector.getInstance(Organization::class.java)
         val inputStream = ClassLoader.getSystemResourceAsStream("Sample6.xml")
@@ -282,25 +269,24 @@ class XmlParserTest {
     }
 
     @Test
-    @Disabled
-    fun testSample7() {
+    fun `handles duplicate entities correctly`() {
         val parser = provider.get()
         val organization = injector.getInstance(Organization::class.java)
-        val inputStream = ClassLoader.getSystemResourceAsStream("Sample7.xml")
+        val inputStream = ClassLoader.getSystemResourceAsStream("Bad1.xml")
 
         val exception = assertThrows<XMLStreamException> { parser.parse(organization, inputStream) }
+
         assertAll(
             { assertThat(exception.cause).isInstanceOf(IllegalArgumentException::class.java) },
-            { assertThat(exception.message).isEqualTo(E.ENTITY_ALREADY_EXISTS["Capability", Capability::class.java.name + ":Capability 1"]) }
+            { assertThat(exception.message).isEqualTo(IllegalArgumentException(E.ENTITY_ALREADY_EXISTS["Capability", DefaultCapabilityId("Capability 1")]).toString()) }
         )
     }
 
     @Test
-    @Disabled
-    fun testSample8() {
+    fun `handles missing or incorrect Id used in creating relations`() {
         val parser = provider.get()
         val organization = injector.getInstance(Organization::class.java)
-        val inputStream = ClassLoader.getSystemResourceAsStream("Sample8.xml")
+        val inputStream = ClassLoader.getSystemResourceAsStream("Bad2.xml")
 
         val exception = assertThrows<XMLStreamException> { parser.parse(organization, inputStream) }
 
@@ -308,26 +294,24 @@ class XmlParserTest {
     }
 
     @Test
-    @Disabled
-    fun testSample9() {
+    fun `handles undefined attribute type`() {
         val parser = provider.get()
         val organization = injector.getInstance(Organization::class.java)
-        val inputStream = ClassLoader.getSystemResourceAsStream("Sample9.xml")
+        val inputStream = ClassLoader.getSystemResourceAsStream("Bad3.xml")
 
         val exception = assertThrows<XMLStreamException> { parser.parse(organization, inputStream) }
 
         assertAll(
             { assertThat(exception.cause).isInstanceOf(IllegalArgumentException::class.java) },
-            { assertThat(exception.message).isEqualTo("No enum constant") }
+            { assertThat(exception.message).isEqualTo("${IllegalArgumentException("No enum constant runtimemodels.chazm.api.entity.Attribute.Type.!")}") }
         )
     }
 
     @Test
-    @Disabled
-    fun testSample10() {
+    fun `handles missing attribute`() {
         val parser = provider.get()
         val organization = injector.getInstance(Organization::class.java)
-        val inputStream = ClassLoader.getSystemResourceAsStream("/Sample10.xml")
+        val inputStream = ClassLoader.getSystemResourceAsStream("Bad4.xml")
 
         val exception = assertThrows<XMLStreamException> { parser.parse(organization, inputStream) }
 
@@ -335,56 +319,52 @@ class XmlParserTest {
     }
 
     @Test
-    @Disabled
-    fun testSample11() {
+    fun `handles incorrect value in the 'value' attribute of the 'has' element`() {
         val parser = provider.get()
         val organization = injector.getInstance(Organization::class.java)
-        val inputStream = ClassLoader.getSystemResourceAsStream("Sample11.xml")
+        val inputStream = ClassLoader.getSystemResourceAsStream("Bad5.xml")
 
         val exception = assertThrows<XMLStreamException> { parser.parse(organization, inputStream) }
 
         assertAll(
             { assertThat(exception.cause).isInstanceOf(NumberFormatException::class.java) },
-            { assertThat(exception.message).isEqualTo("For input string: \"a\"") }
+            { assertThat(exception.message).isEqualTo(NumberFormatException("For input string: \"a\"").toString()) }
         )
     }
 
     @Test
-    @Disabled
-    fun testSample12() {
+    fun `handles incorrect value in the 'score' attribute of the 'possesses' element`() {
         val parser = provider.get()
         val organization = injector.getInstance(Organization::class.java)
-        val inputStream = ClassLoader.getSystemResourceAsStream("Sample12.xml")
+        val inputStream = ClassLoader.getSystemResourceAsStream("Bad6.xml")
 
         val exception = assertThrows<XMLStreamException> { parser.parse(organization, inputStream) }
 
         assertAll(
             { assertThat(exception.cause).isInstanceOf(NumberFormatException::class.java) },
-            { assertThat(exception.message).isEqualTo("For input string: \"a\"") }
+            { assertThat(exception.message).isEqualTo(NumberFormatException("For input string: \"a\"").toString()) }
         )
     }
 
     @Test
-    @Disabled
-    fun testSample13() {
+    fun `handles incorrect value in the 'value' attribute of the 'contains' element`() {
         val parser = provider.get()
         val organization = injector.getInstance(Organization::class.java)
-        val inputStream = ClassLoader.getSystemResourceAsStream("Sample13.xml")
+        val inputStream = ClassLoader.getSystemResourceAsStream("Bad7.xml")
 
         val exception = assertThrows<XMLStreamException> { parser.parse(organization, inputStream) }
 
         assertAll(
             { assertThat(exception.cause).isInstanceOf(NumberFormatException::class.java) },
-            { assertThat(exception.message).isEqualTo("For input string: \"a\"") }
+            { assertThat(exception.message).isEqualTo(NumberFormatException("For input string: \"a\"").toString()) }
         )
     }
 
     @Test
-    @Disabled
-    fun testSample14() {
+    fun `handles missing agent for 'assignment' element`() {
         val parser = provider.get()
         val organization = injector.getInstance(Organization::class.java)
-        val inputStream = ClassLoader.getSystemResourceAsStream("Sample14.xml")
+        val inputStream = ClassLoader.getSystemResourceAsStream("Bad8.xml")
 
         val exception = assertThrows<XMLStreamException> { parser.parse(organization, inputStream) }
 
@@ -392,11 +372,10 @@ class XmlParserTest {
     }
 
     @Test
-    @Disabled
-    fun testSample15() {
+    fun `missing role for 'assignment' element`() {
         val parser = provider.get()
         val organization = injector.getInstance(Organization::class.java)
-        val inputStream = ClassLoader.getSystemResourceAsStream("Sample15.xml")
+        val inputStream = ClassLoader.getSystemResourceAsStream("Bad9.xml")
 
         val exception = assertThrows<XMLStreamException> { parser.parse(organization, inputStream) }
 
@@ -404,11 +383,10 @@ class XmlParserTest {
     }
 
     @Test
-    @Disabled
-    fun testSample16() {
+    fun `missing goal for 'assignment' element`() {
         val parser = provider.get()
         val organization = injector.getInstance(Organization::class.java)
-        val inputStream = ClassLoader.getSystemResourceAsStream("Sample16.xml")
+        val inputStream = ClassLoader.getSystemResourceAsStream("Bad10.xml")
 
         val exception = assertThrows<XMLStreamException> { parser.parse(organization, inputStream) }
 
@@ -416,11 +394,10 @@ class XmlParserTest {
     }
 
     @Test
-    @Disabled
-    fun testSample17() {
+    fun `handles missing specification goal`() {
         val parser = provider.get()
         val organization = injector.getInstance(Organization::class.java)
-        val inputStream = ClassLoader.getSystemResourceAsStream("Sample17.xml")
+        val inputStream = ClassLoader.getSystemResourceAsStream("Bad11.xml")
 
         val exception = assertThrows<XMLStreamException> { parser.parse(organization, inputStream) }
 
@@ -428,12 +405,10 @@ class XmlParserTest {
     }
 
     @Test
-    @Disabled
-    @Throws(XMLStreamException::class)
-    fun testSample18() {
+    fun `ignores unknown child elements in the 'Agent' element`() {
         val parser = provider.get()
         val organization = injector.getInstance(Organization::class.java)
-        val inputStream = ClassLoader.getSystemResourceAsStream("Sample18.xml")
+        val inputStream = ClassLoader.getSystemResourceAsStream("Bad12.xml")
 
         parser.parse(organization, inputStream)
 
@@ -441,12 +416,10 @@ class XmlParserTest {
     }
 
     @Test
-    @Disabled
-    @Throws(XMLStreamException::class)
-    fun testSample19() {
+    fun `ignores unknown child elements in the 'Pmf' element`() {
         val parser = provider.get()
         val organization = injector.getInstance(Organization::class.java)
-        val inputStream = ClassLoader.getSystemResourceAsStream("Sample19.xml")
+        val inputStream = ClassLoader.getSystemResourceAsStream("Bad13.xml")
 
         parser.parse(organization, inputStream)
 
@@ -454,12 +427,10 @@ class XmlParserTest {
     }
 
     @Test
-    @Disabled
-    @Throws(XMLStreamException::class)
-    fun testSample20() {
+    fun `ignores unknown child elements in the 'Role' element`() {
         val parser = provider.get()
         val organization = injector.getInstance(Organization::class.java)
-        val inputStream = ClassLoader.getSystemResourceAsStream("Sample20.xml")
+        val inputStream = ClassLoader.getSystemResourceAsStream("Bad14.xml")
 
         parser.parse(organization, inputStream)
 
@@ -467,12 +438,10 @@ class XmlParserTest {
     }
 
     @Test
-    @Disabled
-    @Throws(XMLStreamException::class)
-    fun testSample21() {
+    fun `ignores unknown child elements in 'has' element`() {
         val parser = provider.get()
         val organization = injector.getInstance(Organization::class.java)
-        val inputStream = ClassLoader.getSystemResourceAsStream("Sample21.xml")
+        val inputStream = ClassLoader.getSystemResourceAsStream("Bad15.xml")
 
         parser.parse(organization, inputStream)
 

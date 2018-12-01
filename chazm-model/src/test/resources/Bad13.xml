@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- optimized sample XML -->
+<!-- unknown child element in the 'Pmf' element -->
 <RoleDiagram xmlns="model:organization-model" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="model:organization-model ../../main/resources/organization-model.xsd">
     <Pmf id="176986f8-a2ad-46d9-8cc0-6cc539055769" name="Pmf 1">
