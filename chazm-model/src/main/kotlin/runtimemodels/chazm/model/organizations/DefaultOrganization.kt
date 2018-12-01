@@ -33,7 +33,8 @@ internal open class DefaultOrganization @Inject constructor(
     override val agents: AgentManager,
     override val attributes: AttributeManager,
     override val capabilities: CapabilityManager,
-    override val characteristics: CharacteristicManager
+    override val characteristics: CharacteristicManager,
+    override val instanceGoals: InstanceGoalManager
 ) : Organization, FlowableOnSubscribe<Organization> {
 
     private val entities = Entities()
@@ -186,54 +187,40 @@ internal open class DefaultOrganization @Inject constructor(
 //    }
 
     override fun addInstanceGoal(goal: InstanceGoal) {
-        checkNotExists(goal, Predicate { entities.instanceGoals.containsKey(it) })
+        checkNotExists(goal, Predicate { instanceGoals.containsKey(it) })
         checkExists(goal.goal.id, Function<SpecificationGoalId, SpecificationGoal?> { getSpecificationGoal(it) })
         /* add the instance goal, instanceGoalsBySpecificationGoal map */
-        entities.instanceGoals[goal.id] = goal
-        val map = getMap(goal.goal.id, entities.instanceGoalsBySpecificationGoal,
-            INSTANCE_GOALS_BY_SPECIFICATION_GOAL)
-        map[goal.id] = goal
+        instanceGoals.add(goal)
         publisher.post<InstanceGoalEvent>(eventFactory.build(EventType.ADDED, goal))
     }
 
-    override fun addInstanceGoals(goals: Collection<InstanceGoal>) {
-        goals.forEach(::addInstanceGoal)
-    }
+//    override fun addInstanceGoals(goals: Collection<InstanceGoal>) {
+//        goals.forEach(::addInstanceGoal)
+//    }
 
-    override fun getInstanceGoal(id: InstanceGoalId): InstanceGoal? {
-        return entities.instanceGoals[id]
-    }
+//    override fun getInstanceGoal(id: InstanceGoalId): InstanceGoal? {
+//        return entities.instanceGoals[id]
+//    }
 
-    override fun getInstanceGoals(): Set<InstanceGoal> {
-        return entities.instanceGoals.values.toSet()
-    }
+//    override fun getInstanceGoals(): Set<InstanceGoal> {
+//        return entities.instanceGoals.values.toSet()
+//    }
 
     override fun removeInstanceGoal(id: InstanceGoalId) {
-        if (entities.instanceGoals.containsKey(id)) {
+        if (instanceGoals.containsKey(id)) {
             /* remove the instance goal, instanceGoalsBySpecificationGoal map */
-            val goal = entities.instanceGoals.remove(id)!!
-            if (entities.instanceGoalsBySpecificationGoal.containsKey(goal.goal.id)) {
-                val map = entities.instanceGoalsBySpecificationGoal[goal.goal.id]!!
-                if (map.containsKey(goal.id)) {
-                    map.remove(goal.id)
-                } else {
-                    log.warn(L.MAP_IS_MISSING_ENTRY.get(), INSTANCE_GOALS_BY_SPECIFICATION_GOAL, goal.goal.id, goal.id)
-                }
-            } else {
-                log.warn(L.MAP_IS_MISSING_KEY.get(), INSTANCE_GOALS_BY_SPECIFICATION_GOAL, goal.goal.id)
-                entities.instanceGoalsBySpecificationGoal[goal.goal.id] = ConcurrentHashMap()
-            }
+            val goal = instanceGoals.remove(id)
             publisher.post<InstanceGoalEvent>(eventFactory.build(EventType.REMOVED, goal))
         }
     }
 
-    override fun removeInstanceGoals(ids: Collection<InstanceGoalId>) {
-        ids.forEach(::removeInstanceGoal)
-    }
+//    fun removeInstanceGoals(ids: Collection<InstanceGoalId>) {
+//        ids.forEach(::removeInstanceGoal)
+//    }
 
-    override fun removeAllInstanceGoals() {
-        removeInstanceGoals(entities.instanceGoals.keys)
-    }
+//    override fun removeAllInstanceGoals() {
+//        removeInstanceGoals(entities.instanceGoals.keys)
+//    }
 
     override fun addPmf(pmf: Pmf) {
         checkNotExists(pmf, Predicate { entities.pmfs.containsKey(it) })
@@ -362,7 +349,7 @@ internal open class DefaultOrganization @Inject constructor(
         checkNotExists(goal, Predicate { entities.specificationGoals.containsKey(it) })
         /* add the specification goal, instanceGoalsBySpecificationGoal map, achievedBy map */
         entities.specificationGoals[goal.id] = goal
-        entities.instanceGoalsBySpecificationGoal[goal.id] = ConcurrentHashMap()
+//        entities.instanceGoalsBySpecificationGoal[goal.id] = ConcurrentHashMap()
         relations.achievedBy[goal.id] = ConcurrentHashMap()
         publisher.post<SpecificationGoalEvent>(eventFactory.build(EventType.ADDED, goal))
     }
@@ -383,7 +370,7 @@ internal open class DefaultOrganization @Inject constructor(
         if (entities.specificationGoals.containsKey(id)) {
             /* remove the specification goal, all associated instance goals, all associated achieves relations */
             val goal = entities.specificationGoals.remove(id)!!
-            remove(id, entities.instanceGoalsBySpecificationGoal, INSTANCE_GOALS_BY_SPECIFICATION_GOAL, Consumer(::removeInstanceGoal))
+//            remove(id, entities.instanceGoalsBySpecificationGoal, INSTANCE_GOALS_BY_SPECIFICATION_GOAL, Consumer(::removeInstanceGoal))
             remove(id, relations.achievedBy, ACHIEVED_BY, Consumer { removeAchieves(it, id) })
             publisher.post<SpecificationGoalEvent>(eventFactory.build(EventType.REMOVED, goal))
         }
@@ -435,7 +422,7 @@ internal open class DefaultOrganization @Inject constructor(
         checkNotExists(assignment, Predicate { relations.assignments.containsKey(it) })
         checkExists(assignment.agent.id, Function(agents::get))
         checkExists(assignment.role.id, Function(::getRole))
-        checkExists(assignment.goal.id, Function(::getInstanceGoal))
+        checkExists(assignment.goal.id, Function(instanceGoals::get))
         /* add the assignment */
         relations.assignments[assignment.id] = assignment
         relations.assignmentsByAgent[assignment.agent.id]!![assignment.id] = assignment

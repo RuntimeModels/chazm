@@ -80,7 +80,7 @@ class XmlParserTest {
             { assertThat(organization.characteristics.size).isEqualTo(1) },
             { assertThat(organization.characteristics[characteristic1]).isNotNull() },
             { assertThat(organization.instanceGoals.size).isEqualTo(1) },
-            { assertThat(organization.getInstanceGoal(instanceGoal1)).isNotNull() },
+            { assertThat(organization.instanceGoals[instanceGoal1]).isNotNull() },
             { assertThat(organization.pmfs.size).isEqualTo(1) },
             { assertThat(organization.getPmf(pmf1)).isNotNull() },
             { assertThat(organization.policies.size).isEqualTo(1) },

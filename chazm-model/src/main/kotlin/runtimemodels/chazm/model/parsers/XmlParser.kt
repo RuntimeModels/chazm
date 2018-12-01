@@ -224,7 +224,7 @@ internal open class XmlParser @Inject constructor(
                 val gId = getAttributeValue(element, GOAL_ATTRIBUTE)
                 val goalId = instanceGoals[gId]
                     ?: throw XMLStreamException(E.INCOMPLETE_XML_FILE[InstanceGoal::class.java.simpleName, gId])
-                val goal = organization.getInstanceGoal(goalId)
+                val goal = organization.instanceGoals[goalId]!!
                 val assignment = assignmentFactory.buildAssignment(agent, role, goal)
                 return organization.addAssignment(assignment)
             }
