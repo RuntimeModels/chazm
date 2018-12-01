@@ -8,7 +8,6 @@ import runtimemodels.chazm.api.function.Goodness
 import runtimemodels.chazm.api.id.*
 import runtimemodels.chazm.api.organization.*
 import runtimemodels.chazm.api.relation.Assignment
-import runtimemodels.chazm.model.Entities
 import runtimemodels.chazm.model.Functions
 import runtimemodels.chazm.model.Relations
 import runtimemodels.chazm.model.event.*
@@ -41,7 +40,6 @@ internal open class DefaultOrganization @Inject constructor(
     override val specificationGoals: SpecificationGoalManager
 ) : Organization, FlowableOnSubscribe<Organization> {
 
-    private val entities = Entities()
     private val relations = Relations()
     private val functions = Functions()
 
