@@ -15,57 +15,39 @@ import java.util.function.Predicate
  */
 interface Organization : AchievesManager, AssignmentManager, ContainsManager, HasManager, ModeratesManager, NeedsManager, PossessesManager, RequiresManager, UsesManager {
     val agents: AgentManager
-
     fun add(agent: Agent)
-
     fun remove(id: AgentId)
 
     val attributes: AttributeManager
-
     fun add(attribute: Attribute)
-
     fun remove(id: AttributeId)
 
     val capabilities: CapabilityManager
-
     fun add(capability: Capability)
-
     fun remove(id: CapabilityId)
 
     val characteristics: CharacteristicManager
-
     fun add(characteristic: Characteristic)
-
     fun remove(id: CharacteristicId)
 
     val instanceGoals: InstanceGoalManager
-
     fun add(goal: InstanceGoal)
-
     fun remove(id: InstanceGoalId)
 
     val pmfs: PmfManager
-
     fun add(pmf: Pmf)
-
     fun remove(id: PmfId)
 
     val policies: PolicyManager
-
     fun add(policy: Policy)
-
     fun remove(id: PolicyId)
 
     val roles: RoleManager
-
     fun add(role: Role)
-
     fun remove(id: RoleId)
 
     val specificationGoals: SpecificationGoalManager
-
     fun add(goal: SpecificationGoal)
-
     fun remove(id: SpecificationGoalId)
 
     /**
