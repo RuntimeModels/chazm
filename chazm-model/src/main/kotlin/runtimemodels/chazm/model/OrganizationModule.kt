@@ -5,20 +5,16 @@ import com.google.inject.Provides
 import runtimemodels.chazm.api.entity.Agent
 import runtimemodels.chazm.api.entity.Attribute
 import runtimemodels.chazm.api.entity.Capability
+import runtimemodels.chazm.api.entity.Characteristic
 import runtimemodels.chazm.api.id.AgentId
 import runtimemodels.chazm.api.id.AttributeId
 import runtimemodels.chazm.api.id.CapabilityId
-import runtimemodels.chazm.api.organization.AgentManager
-import runtimemodels.chazm.api.organization.AttributeManager
-import runtimemodels.chazm.api.organization.CapabilityManager
-import runtimemodels.chazm.api.organization.Organization
+import runtimemodels.chazm.api.id.CharacteristicId
+import runtimemodels.chazm.api.organization.*
 import runtimemodels.chazm.model.event.EventModule
 import runtimemodels.chazm.model.function.FunctionModule
 import runtimemodels.chazm.model.notification.NotificationModule
-import runtimemodels.chazm.model.organizations.DefaultAgentManager
-import runtimemodels.chazm.model.organizations.DefaultAttributeManager
-import runtimemodels.chazm.model.organizations.DefaultCapabilityManager
-import runtimemodels.chazm.model.organizations.DefaultOrganization
+import runtimemodels.chazm.model.organizations.*
 import runtimemodels.chazm.model.relation.RelationModule
 
 /**
@@ -37,11 +33,15 @@ class OrganizationModule : AbstractModule() {
     @Provides
     fun capabilities(): MutableMap<CapabilityId, Capability> = mutableMapOf()
 
+    @Provides
+    fun characteristics(): MutableMap<CharacteristicId, Characteristic> = mutableMapOf()
+
     override fun configure() {
         bind(Organization::class.java).to(DefaultOrganization::class.java)
         bind(AgentManager::class.java).to(DefaultAgentManager::class.java)
         bind(AttributeManager::class.java).to(DefaultAttributeManager::class.java)
         bind(CapabilityManager::class.java).to(DefaultCapabilityManager::class.java)
+        bind(CharacteristicManager::class.java).to(DefaultCharacteristicManager::class.java)
 
         install(RelationModule())
         install(FunctionModule())

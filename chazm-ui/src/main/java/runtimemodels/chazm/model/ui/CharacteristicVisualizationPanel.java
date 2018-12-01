@@ -13,7 +13,6 @@ import runtimemodels.chazm.api.organization.Organization;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -51,9 +50,10 @@ public class CharacteristicVisualizationPanel extends AbstractListVisualizationP
 
     @Override
     List<Characteristic> getCollection() {
-        final List<Characteristic> characteristics = new ArrayList<>(getOrganization().getCharacteristics());
-        final Comparator<Characteristic> comparator = (characteristic1, characteristic2) -> characteristic1.toString().compareTo(characteristic2.toString());
-        Collections.sort(characteristics, comparator);
+//        final List<Characteristic> characteristics = new ArrayList<>(getOrganization().getCharacteristics());
+        final List<Characteristic> characteristics = new ArrayList<>();
+        final Comparator<Characteristic> comparator = Comparator.comparing(Object::toString);
+        characteristics.sort(comparator);
         return characteristics;
     }
 

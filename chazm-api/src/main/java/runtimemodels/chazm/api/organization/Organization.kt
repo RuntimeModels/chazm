@@ -1,9 +1,6 @@
 package runtimemodels.chazm.api.organization
 
-import runtimemodels.chazm.api.entity.Agent
-import runtimemodels.chazm.api.entity.Attribute
-import runtimemodels.chazm.api.entity.Capability
-import runtimemodels.chazm.api.entity.Role
+import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.api.entity.manager.*
 import runtimemodels.chazm.api.function.Goodness
 import runtimemodels.chazm.api.id.*
@@ -17,7 +14,7 @@ import java.util.function.Predicate
  * @author Christopher Zhong
  * @since 4.0
  */
-interface Organization : CharacteristicManager, InstanceGoalManager, PmfManager, PolicyManager, RoleManager, SpecificationGoalManager, AchievesManager, AssignmentManager, ContainsManager, HasManager, ModeratesManager, NeedsManager, PossessesManager, RequiresManager, UsesManager {
+interface Organization : InstanceGoalManager, PmfManager, PolicyManager, RoleManager, SpecificationGoalManager, AchievesManager, AssignmentManager, ContainsManager, HasManager, ModeratesManager, NeedsManager, PossessesManager, RequiresManager, UsesManager {
     val agents: AgentManager
 
     fun addAgent(agent: Agent)
@@ -35,6 +32,12 @@ interface Organization : CharacteristicManager, InstanceGoalManager, PmfManager,
     fun addCapability(capability: Capability)
 
     fun removeCapability(id: CapabilityId)
+
+    val characteristics: CharacteristicManager
+
+    fun addCharacteristic(characteristic: Characteristic)
+
+    fun removeCharacteristic(id: CharacteristicId)
 
     /**
      * Checks if this [Organization] is valid. Validity rules differ from one organization to another, so there is no general algorithm to determine

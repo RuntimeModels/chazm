@@ -6,10 +6,7 @@ import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.api.function.Effectiveness
 import runtimemodels.chazm.api.function.Goodness
 import runtimemodels.chazm.api.id.*
-import runtimemodels.chazm.api.organization.AgentManager
-import runtimemodels.chazm.api.organization.AttributeManager
-import runtimemodels.chazm.api.organization.CapabilityManager
-import runtimemodels.chazm.api.organization.Organization
+import runtimemodels.chazm.api.organization.*
 import runtimemodels.chazm.api.relation.Assignment
 import runtimemodels.chazm.model.Entities
 import runtimemodels.chazm.model.Functions
@@ -35,7 +32,8 @@ internal open class DefaultOrganization @Inject constructor(
     private val publisher: Publisher,
     override val agents: AgentManager,
     override val attributes: AttributeManager,
-    override val capabilities: CapabilityManager
+    override val capabilities: CapabilityManager,
+    override val characteristics: CharacteristicManager
 ) : Organization, FlowableOnSubscribe<Organization> {
 
     private val entities = Entities()
@@ -151,41 +149,41 @@ internal open class DefaultOrganization @Inject constructor(
 //    }
 
     override fun addCharacteristic(characteristic: Characteristic) {
-        checkNotExists(characteristic, Predicate { entities.characteristics.containsKey(it) })
+        checkNotExists(characteristic, Predicate { characteristics.containsKey(it) })
         /* add the characteristic, containedBy map */
-        entities.characteristics[characteristic.id] = characteristic
+        characteristics.add(characteristic)
         relations.containedBy[characteristic.id] = ConcurrentHashMap()
         publisher.post<CharacteristicEvent>(eventFactory.build(EventType.ADDED, characteristic))
     }
 
-    override fun addCharacteristics(characteristics: Collection<Characteristic>) {
+    fun addCharacteristics(characteristics: Collection<Characteristic>) {
         characteristics.forEach(::addCharacteristic)
     }
 
-    override fun getCharacteristic(id: CharacteristicId): Characteristic? {
-        return entities.characteristics[id]
-    }
+//    fun getCharacteristic(id: CharacteristicId): Characteristic? {
+//        return characteristics[id]
+//    }
 
-    override fun getCharacteristics(): Set<Characteristic> {
-        return entities.characteristics.values.toSet()
-    }
+//    fun getCharacteristics(): Set<Characteristic> {
+//        return characteristics.values.toSet()
+//    }
 
     override fun removeCharacteristic(id: CharacteristicId) {
-        if (entities.characteristics.containsKey(id)) {
+        if (characteristics.containsKey(id)) {
             /* remove characteristics, all associated contains relations */
-            val characteristic = entities.characteristics.remove(id)!!
+            val characteristic = characteristics.remove(id)
             remove(id, relations.containedBy, CONTAINED_BY, Consumer { removeContains(it, id) })
             publisher.post<CharacteristicEvent>(eventFactory.build(EventType.REMOVED, characteristic))
         }
     }
 
-    override fun removeCharacteristics(ids: Collection<CharacteristicId>) {
+    fun removeCharacteristics(ids: Collection<CharacteristicId>) {
         ids.forEach(::removeCharacteristic)
     }
 
-    override fun removeAllCharacteristic() {
-        removeCharacteristics(entities.characteristics.keys)
-    }
+//    override fun removeAllCharacteristic() {
+//        removeCharacteristics(characteristics.keys)
+//    }
 
     override fun addInstanceGoal(goal: InstanceGoal) {
         checkNotExists(goal, Predicate { entities.instanceGoals.containsKey(it) })
@@ -487,7 +485,7 @@ internal open class DefaultOrganization @Inject constructor(
 
     override fun addContains(roleId: RoleId, characteristicId: CharacteristicId, value: Double) {
         val role = checkExists(roleId, Function<RoleId, Role?>(::getRole))
-        val characteristic = checkExists(characteristicId, Function<CharacteristicId, Characteristic?>(::getCharacteristic))
+        val characteristic = checkExists(characteristicId, Function(characteristics::get))
         val map = getMap(roleId, relations.contains, CONTAINS)
         if (map.containsKey(characteristicId)) {
             /* relation already exists do nothing */

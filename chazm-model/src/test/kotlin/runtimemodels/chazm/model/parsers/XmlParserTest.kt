@@ -8,7 +8,10 @@ import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
-import runtimemodels.chazm.api.entity.*
+import runtimemodels.chazm.api.entity.Agent
+import runtimemodels.chazm.api.entity.InstanceGoal
+import runtimemodels.chazm.api.entity.Role
+import runtimemodels.chazm.api.entity.SpecificationGoal
 import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.model.id.*
 import runtimemodels.chazm.model.message.E
@@ -19,7 +22,6 @@ import javax.xml.stream.XMLInputFactory
 import javax.xml.stream.XMLStreamException
 import javax.xml.stream.events.XMLEvent
 
-//@ExtendWith(MockitoExtension.class)
 class XmlParserTest {
 
     private val injector = Guice.createInjector(ParsersModule())
@@ -80,7 +82,7 @@ class XmlParserTest {
             { assertThat(organization.capabilities.size).isEqualTo(1) },
             { assertThat(organization.capabilities[capability1]).isNotNull() },
             { assertThat(organization.characteristics.size).isEqualTo(1) },
-            { assertThat(organization.getCharacteristic(characteristic1)).isNotNull() },
+            { assertThat(organization.characteristics[characteristic1]).isNotNull() },
             { assertThat(organization.instanceGoals.size).isEqualTo(1) },
             { assertThat(organization.getInstanceGoal(instanceGoal1)).isNotNull() },
             { assertThat(organization.pmfs.size).isEqualTo(1) },
