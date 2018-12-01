@@ -1,4 +1,4 @@
-package runtimemodels.chazm.model.organizations
+package runtimemodels.chazm.model.organization
 
 import runtimemodels.chazm.api.entity.Policy
 import runtimemodels.chazm.api.id.PolicyId

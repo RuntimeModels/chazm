@@ -1,4 +1,4 @@
-package runtimemodels.chazm.model.organizations
+package runtimemodels.chazm.model.organization
 
 import io.reactivex.FlowableEmitter
 import io.reactivex.FlowableOnSubscribe

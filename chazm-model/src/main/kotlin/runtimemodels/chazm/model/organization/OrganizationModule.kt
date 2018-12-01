@@ -1,4 +1,4 @@
-package runtimemodels.chazm.model.organizations
+package runtimemodels.chazm.model.organization
 
 import com.google.inject.AbstractModule
 import com.google.inject.Provides

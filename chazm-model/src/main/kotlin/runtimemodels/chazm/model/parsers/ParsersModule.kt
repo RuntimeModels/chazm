@@ -2,7 +2,7 @@ package runtimemodels.chazm.model.parsers
 
 import com.google.inject.AbstractModule
 import com.google.inject.Provides
-import runtimemodels.chazm.model.organizations.OrganizationModule
+import runtimemodels.chazm.model.organization.OrganizationModule
 import javax.xml.stream.XMLInputFactory
 
 /**

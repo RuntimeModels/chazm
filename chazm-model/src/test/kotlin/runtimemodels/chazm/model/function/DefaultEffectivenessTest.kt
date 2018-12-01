@@ -7,7 +7,7 @@ import runtimemodels.chazm.api.function.Effectiveness
 import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.model.entity.EntityFactory
 import runtimemodels.chazm.model.id.*
-import runtimemodels.chazm.model.organizations.OrganizationModule
+import runtimemodels.chazm.model.organization.OrganizationModule
 import runtimemodels.chazm.model.relation.RelationFactory
 
 
