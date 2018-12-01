@@ -95,23 +95,23 @@ class XmlParserTest {
 
             // check all 8 relations
             { assertThat(organization.getAchieves(role1).size).isEqualTo(1) },
-            { assertThat(organization.getAchieves(role1).map { it.id }.toSet()).containsExactly(specificationGoal1) },
+            { assertThat(organization.getAchieves(role1).map { it.id }).containsOnly(specificationGoal1) },
             { assertThat(organization.assignments.size).isEqualTo(1) },
-            { assertThat(organization.assignments.map { it.agent }.map { it.id }.toSet()).containsExactly(agent1) },
-            { assertThat(organization.assignments.map { it.role }.map { it.id }.toSet()).containsExactly(role1) },
-            { assertThat(organization.assignments.map { it.goal }.map { it.id }.toSet()).containsExactly(instanceGoal1) },
+            { assertThat(organization.assignments.map { it.agent }.map { it.id }).containsOnly(agent1) },
+            { assertThat(organization.assignments.map { it.role }.map { it.id }).containsOnly(role1) },
+            { assertThat(organization.assignments.map { it.goal }.map { it.id }).containsOnly(instanceGoal1) },
             { assertThat(organization.getContains(role1).size).isEqualTo(1) },
-            { assertThat(organization.getContains(role1).map { it.id }.toSet()).containsExactly(characteristic1) },
+            { assertThat(organization.getContains(role1).map { it.id }).containsOnly(characteristic1) },
             { assertThat(organization.getHas(agent1).size).isEqualTo(1) },
-            { assertThat(organization.getHas(agent1).map { it.id }.toSet()).containsExactly(attribute1) },
+            { assertThat(organization.getHas(agent1).map { it.id }).containsOnly(attribute1) },
             { assertThat(organization.getModerates(pmf1)).isNotNull() },
             { assertThat(organization.getModerates(pmf1).id).isEqualTo(attribute1) },
             { assertThat(organization.getNeeds(role1).size).isEqualTo(1) },
-            { assertThat(organization.getNeeds(role1).map { it.id }.toSet()).containsExactly(attribute1) },
+            { assertThat(organization.getNeeds(role1).map { it.id }).containsOnly(attribute1) },
             { assertThat(organization.getPossesses(agent1).size).isEqualTo(1) },
-            { assertThat(organization.getPossesses(agent1).map { it.id }.toSet()).containsExactly(capability1) },
+            { assertThat(organization.getPossesses(agent1).map { it.id }).containsOnly(capability1) },
             { assertThat(organization.getRequires(role1).size).isEqualTo(1) },
-            { assertThat(organization.getRequires(role1).map { it.id }.toSet()).containsExactly(capability1) }
+            { assertThat(organization.getRequires(role1).map { it.id }).containsOnly(capability1) }
         )
     }
 
@@ -140,10 +140,10 @@ class XmlParserTest {
             { assertThat(organization.getSpecificationGoal(g1)).isNotNull() },
 
             { assertThat(organization.getAchieves(r1).size).isEqualTo(1) },
-            { assertThat(organization.getAchieves(r1).map { it.id }.toSet()).containsExactly(g1) },
+            { assertThat(organization.getAchieves(r1).map { it.id }).containsOnly(g1) },
 
             { assertThat(organization.getRequires(r1).size).isEqualTo(1) },
-            { assertThat(organization.getRequires(r1).map { it.id }.toSet()).containsExactly(c1) }
+            { assertThat(organization.getRequires(r1).map { it.id }).containsOnly(c1) }
         )
     }
 
@@ -172,10 +172,10 @@ class XmlParserTest {
             { assertThat(organization.getRole(r1)).isNotNull() },
 
             { assertThat(organization.getAchieves(r1).size).isEqualTo(1) },
-            { assertThat(organization.getAchieves(r1).map { it.id }.toSet()).containsExactly(g1) },
+            { assertThat(organization.getAchieves(r1).map { it.id }).containsOnly(g1) },
 
             { assertThat(organization.getRequires(r1).size).isEqualTo(1) },
-            { assertThat(organization.getRequires(r1).map { it.id }.toSet()).containsExactly(c1) }
+            { assertThat(organization.getRequires(r1).map { it.id }).containsOnly(c1) }
         )
     }
 
@@ -212,10 +212,10 @@ class XmlParserTest {
             { assertThat(organization.getRole(r1)).isNotNull() },
 
             { assertThat(organization.getAchieves(r1).size).isEqualTo(3) },
-            { assertThat(organization.getAchieves(r1).map { it.id }.toSet()).containsExactly(g1, g2, g3) },
+            { assertThat(organization.getAchieves(r1).map { it.id }).containsOnly(g1, g2, g3) },
 
             { assertThat(organization.getRequires(r1).size).isEqualTo(3) },
-            { assertThat(organization.getRequires(r1).map { it.id }.toSet()).containsExactly(c1, c2, c3) }
+            { assertThat(organization.getRequires(r1).map { it.id }).containsOnly(c1, c2, c3) }
         )
     }
 
@@ -252,10 +252,10 @@ class XmlParserTest {
             { assertThat(organization.getRole(r1)).isNotNull() },
 
             { assertThat(organization.getAchieves(r1).size).isEqualTo(3) },
-            { assertThat(organization.getAchieves(r1).map { it.id }.toSet()).containsExactly(g1, g2, g3) },
+            { assertThat(organization.getAchieves(r1).map { it.id }).containsOnly(g1, g2, g3) },
 
             { assertThat(organization.getRequires(r1).size).isEqualTo(3) },
-            { assertThat(organization.getRequires(r1).map { it.id }.toSet()).containsExactly(c1, c2, c3) }
+            { assertThat(organization.getRequires(r1).map { it.id }).containsOnly(c1, c2, c3) }
         )
     }
 
