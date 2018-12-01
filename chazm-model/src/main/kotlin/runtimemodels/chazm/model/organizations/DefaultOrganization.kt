@@ -34,7 +34,8 @@ internal open class DefaultOrganization @Inject constructor(
     override val attributes: AttributeManager,
     override val capabilities: CapabilityManager,
     override val characteristics: CharacteristicManager,
-    override val instanceGoals: InstanceGoalManager
+    override val instanceGoals: InstanceGoalManager,
+    override val pmfs: PmfManager
 ) : Organization, FlowableOnSubscribe<Organization> {
 
     private val entities = Entities()
@@ -223,28 +224,28 @@ internal open class DefaultOrganization @Inject constructor(
 //    }
 
     override fun addPmf(pmf: Pmf) {
-        checkNotExists(pmf, Predicate { entities.pmfs.containsKey(it) })
+        checkNotExists(pmf, Predicate { pmfs.containsKey(it) })
         /* add the pmf */
-        entities.pmfs[pmf.id] = pmf
+        pmfs.add(pmf)
         publisher.post<PmfEvent>(eventFactory.build(EventType.ADDED, pmf))
     }
 
-    override fun addPmfs(pmfs: Collection<Pmf>) {
+    fun addPmfs(pmfs: Collection<Pmf>) {
         pmfs.forEach(::addPmf)
     }
 
-    override fun getPmf(id: PmfId): Pmf? {
-        return entities.pmfs[id]
-    }
+//    override fun getPmf(id: PmfId): Pmf? {
+//        return entities.pmfs[id]
+//    }
 
-    override fun getPmfs(): Set<Pmf> {
-        return entities.pmfs.values.toSet()
-    }
+//    override fun getPmfs(): Set<Pmf> {
+//        return entities.pmfs.values.toSet()
+//    }
 
     override fun removePmf(id: PmfId) {
-        if (entities.pmfs.containsKey(id)) {
+        if (pmfs.containsKey(id)) {
             /* remove the pmf, all associated moderates relations */
-            val pmf = entities.pmfs.remove(id)!!
+            val pmf = pmfs.remove(id)
             if (relations.moderates.containsKey(id)) {
                 removeModerates(id, relations.moderates[id]!!.attribute.id)
             }
@@ -252,13 +253,13 @@ internal open class DefaultOrganization @Inject constructor(
         }
     }
 
-    override fun removePmfs(ids: Collection<PmfId>) {
+    fun removePmfs(ids: Collection<PmfId>) {
         ids.forEach(::removePmf)
     }
 
-    override fun removeAllPmfs() {
-        removePmfs(entities.pmfs.keys)
-    }
+//    override fun removeAllPmfs() {
+//        removePmfs(entities.pmfs.keys)
+//    }
 
     override fun addPolicy(policy: Policy) {
         checkNotExists(policy, Predicate { entities.policies.containsKey(it) })
@@ -567,7 +568,7 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun addModerates(pmfId: PmfId, attributeId: AttributeId) {
-        val pmf = checkExists(pmfId, Function<PmfId, Pmf?>(::getPmf))
+        val pmf = checkExists(pmfId, Function(pmfs::get))
         val attribute = checkExists(attributeId, Function<AttributeId, Attribute?>(attributes::get))
         if (relations.moderates.containsKey(pmfId)) {
             return
@@ -718,7 +719,7 @@ internal open class DefaultOrganization @Inject constructor(
 
     override fun addUses(roleId: RoleId, pmfId: PmfId) {
         val role = checkExists(roleId, Function<RoleId, Role?>(::getRole))
-        val pmf = checkExists(pmfId, Function<PmfId, Pmf?>(::getPmf))
+        val pmf = checkExists(pmfId, Function(pmfs::get))
         val map = getMap(roleId, relations.uses, USES)
         if (map.containsKey(pmfId)) {
             /* relation already exists do nothing */

@@ -36,6 +36,9 @@ class OrganizationModule : AbstractModule() {
     @Provides
     fun instanceGoalsBySpecificationGoals(): MutableMap<SpecificationGoalId, MutableMap<InstanceGoalId, InstanceGoal>> = mutableMapOf()
 
+    @Provides
+    fun pmfs(): MutableMap<PmfId, Pmf> = mutableMapOf()
+
     override fun configure() {
         bind(Organization::class.java).to(DefaultOrganization::class.java)
         bind(AgentManager::class.java).to(DefaultAgentManager::class.java)
@@ -43,6 +46,7 @@ class OrganizationModule : AbstractModule() {
         bind(CapabilityManager::class.java).to(DefaultCapabilityManager::class.java)
         bind(CharacteristicManager::class.java).to(DefaultCharacteristicManager::class.java)
         bind(InstanceGoalManager::class.java).to(DefaultInstanceGoalManager::class.java)
+        bind(PmfManager::class.java).to(DefaultPmfManager::class.java)
 
         install(RelationModule())
         install(FunctionModule())

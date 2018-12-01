@@ -1,7 +1,6 @@
 package runtimemodels.chazm.api.organization
 
 import runtimemodels.chazm.api.entity.*
-import runtimemodels.chazm.api.entity.manager.PmfManager
 import runtimemodels.chazm.api.entity.manager.PolicyManager
 import runtimemodels.chazm.api.entity.manager.RoleManager
 import runtimemodels.chazm.api.entity.manager.SpecificationGoalManager
@@ -17,7 +16,7 @@ import java.util.function.Predicate
  * @author Christopher Zhong
  * @since 4.0
  */
-interface Organization : PmfManager, PolicyManager, RoleManager, SpecificationGoalManager, AchievesManager, AssignmentManager, ContainsManager, HasManager, ModeratesManager, NeedsManager, PossessesManager, RequiresManager, UsesManager {
+interface Organization : PolicyManager, RoleManager, SpecificationGoalManager, AchievesManager, AssignmentManager, ContainsManager, HasManager, ModeratesManager, NeedsManager, PossessesManager, RequiresManager, UsesManager {
     val agents: AgentManager
 
     fun addAgent(agent: Agent)
@@ -47,6 +46,12 @@ interface Organization : PmfManager, PolicyManager, RoleManager, SpecificationGo
     fun addInstanceGoal(goal: InstanceGoal)
 
     fun removeInstanceGoal(id: InstanceGoalId)
+
+    val pmfs: PmfManager
+
+    fun addPmf(pmf: Pmf)
+
+    fun removePmf(id: PmfId)
 
     /**
      * Checks if this [Organization] is valid. Validity rules differ from one organization to another, so there is no general algorithm to determine
