@@ -21,6 +21,7 @@ interface AgentManager : Map<AgentId, Agent> {
      * Removes an [Agent] from this [AgentManager].
      *
      * @param id the [AgentId] that represents the [Agent] to remove.
+     * @return the [Agent] that was removed.
      */
     fun remove(id: AgentId): Agent
 }
