@@ -35,7 +35,8 @@ internal open class DefaultOrganization @Inject constructor(
     override val capabilities: CapabilityManager,
     override val characteristics: CharacteristicManager,
     override val instanceGoals: InstanceGoalManager,
-    override val pmfs: PmfManager
+    override val pmfs: PmfManager,
+    override val policies: PolicyManager
 ) : Organization, FlowableOnSubscribe<Organization> {
 
     private val entities = Entities()
@@ -262,39 +263,39 @@ internal open class DefaultOrganization @Inject constructor(
 //    }
 
     override fun addPolicy(policy: Policy) {
-        checkNotExists(policy, Predicate { entities.policies.containsKey(it) })
+        checkNotExists(policy, Predicate { policies.containsKey(it) })
         /* add the policy */
-        entities.policies[policy.id] = policy
+        policies.add(policy)
         publisher.post<PolicyEvent>(eventFactory.build(EventType.ADDED, policy))
     }
 
-    override fun addPolicies(policies: Collection<Policy>) {
-        policies.forEach(::addPolicy)
-    }
+//    fun addPolicies(policies: Collection<Policy>) {
+//        policies.forEach(::addPolicy)
+//    }
 
-    override fun getPolicy(id: PolicyId): Policy? {
-        return entities.policies[id]
-    }
+//    override fun getPolicy(id: PolicyId): Policy? {
+//        return entities.policies[id]
+//    }
 
-    override fun getPolicies(): Set<Policy> {
-        return entities.policies.values.toSet()
-    }
+//    override fun getPolicies(): Set<Policy> {
+//        return entities.policies.values.toSet()
+//    }
 
     override fun removePolicy(id: PolicyId) {
-        if (entities.policies.containsKey(id)) {
+        if (policies.containsKey(id)) {
             /* remove the policy */
-            val policy = entities.policies.remove(id)!!
+            val policy = policies.remove(id)
             publisher.post<PolicyEvent>(eventFactory.build(EventType.REMOVED, policy))
         }
     }
 
-    override fun removePolicies(ids: Collection<PolicyId>) {
+    fun removePolicies(ids: Collection<PolicyId>) {
         ids.forEach(::removePolicy)
     }
 
-    override fun removeAllPolicies() {
-        removePolicies(entities.policies.keys)
-    }
+//    override fun removeAllPolicies() {
+//        removePolicies(entities.policies.keys)
+//    }
 
     override fun addRole(role: Role) {
         checkNotExists(role, Predicate { entities.roles.containsKey(it) })
