@@ -36,7 +36,8 @@ internal open class DefaultOrganization @Inject constructor(
     override val characteristics: CharacteristicManager,
     override val instanceGoals: InstanceGoalManager,
     override val pmfs: PmfManager,
-    override val policies: PolicyManager
+    override val policies: PolicyManager,
+    override val roles: RoleManager
 ) : Organization, FlowableOnSubscribe<Organization> {
 
     private val entities = Entities()
@@ -298,9 +299,9 @@ internal open class DefaultOrganization @Inject constructor(
 //    }
 
     override fun addRole(role: Role) {
-        checkNotExists(role, Predicate { entities.roles.containsKey(it) })
+        checkNotExists(role, Predicate { roles.containsKey(it) })
         /* add the role, achieves map, requires map, needs map, uses, contains map */
-        entities.roles[role.id] = role
+        roles.add(role)
         relations.achieves[role.id] = ConcurrentHashMap()
         relations.requires[role.id] = ConcurrentHashMap()
         relations.needs[role.id] = ConcurrentHashMap()
@@ -310,25 +311,25 @@ internal open class DefaultOrganization @Inject constructor(
         publisher.post<RoleEvent>(eventFactory.build(EventType.ADDED, role))
     }
 
-    override fun addRoles(roles: Collection<Role>) {
+    fun addRoles(roles: Collection<Role>) {
         roles.forEach(::addRole)
     }
 
-    override fun getRole(id: RoleId): Role? {
-        return entities.roles[id]
-    }
+//    override fun getRole(id: RoleId): Role? {
+//        return entities.roles[id]
+//    }
 
-    override fun getRoles(): Set<Role> {
-        return entities.roles.values.toSet()
-    }
+//    override fun getRoles(): Set<Role> {
+//        return entities.roles.values.toSet()
+//    }
 
     override fun removeRole(id: RoleId) {
-        if (entities.roles.containsKey(id)) {
+        if (roles.containsKey(id)) {
             /*
              * remove role, all associated achieves relations, all associated requires relations, all associated needs relations, all associated uses relations,
 			 * all associated contains relations
 			 */
-            val role = entities.roles.remove(id)!!
+            val role = roles.remove(id)
             remove(id, relations.achieves, ACHIEVES, Consumer { removeAchieves(id, it) })
             remove(id, relations.requires, REQUIRES, Consumer { removeRequires(id, it) })
             remove(id, relations.needs, NEEDS, Consumer { removeNeeds(id, it) })
@@ -339,13 +340,13 @@ internal open class DefaultOrganization @Inject constructor(
         }
     }
 
-    override fun removeRoles(ids: Collection<RoleId>) {
+    fun removeRoles(ids: Collection<RoleId>) {
         ids.forEach(::removeRole)
     }
 
-    override fun removeAllRoles() {
-        removeRoles(entities.roles.keys)
-    }
+//    override fun removeAllRoles() {
+//        removeRoles(entities.roles.keys)
+//    }
 
     override fun addSpecificationGoal(goal: SpecificationGoal) {
         checkNotExists(goal, Predicate { entities.specificationGoals.containsKey(it) })
@@ -387,7 +388,7 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun addAchieves(roleId: RoleId, goalId: SpecificationGoalId) {
-        val role = checkExists(roleId, Function<RoleId, Role?>(::getRole))
+        val role = checkExists(roleId, Function(roles::get))
         val goal = checkExists(goalId, Function<SpecificationGoalId, SpecificationGoal?>(::getSpecificationGoal))
         val map = getMap(roleId, relations.achieves, ACHIEVES)
         if (map.containsKey(goalId)) {
@@ -423,7 +424,7 @@ internal open class DefaultOrganization @Inject constructor(
     override fun addAssignment(assignment: Assignment) {
         checkNotExists(assignment, Predicate { relations.assignments.containsKey(it) })
         checkExists(assignment.agent.id, Function(agents::get))
-        checkExists(assignment.role.id, Function(::getRole))
+        checkExists(assignment.role.id, Function(roles::get))
         checkExists(assignment.goal.id, Function(instanceGoals::get))
         /* add the assignment */
         relations.assignments[assignment.id] = assignment
@@ -473,7 +474,7 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun addContains(roleId: RoleId, characteristicId: CharacteristicId, value: Double) {
-        val role = checkExists(roleId, Function<RoleId, Role?>(::getRole))
+        val role = checkExists(roleId, Function<RoleId, Role?>(roles::get))
         val characteristic = checkExists(characteristicId, Function(characteristics::get))
         val map = getMap(roleId, relations.contains, CONTAINS)
         if (map.containsKey(characteristicId)) {
@@ -603,7 +604,7 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun addNeeds(roleId: RoleId, attributeId: AttributeId) {
-        val role = checkExists(roleId, Function<RoleId, Role?>(::getRole))
+        val role = checkExists(roleId, Function<RoleId, Role?>(roles::get))
         val attribute = checkExists(attributeId, Function<AttributeId, Attribute?>(attributes::get))
         val map = getMap(roleId, relations.needs, NEEDS)
         if (map.containsKey(attributeId)) {
@@ -685,7 +686,7 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun addRequires(roleId: RoleId, capabilityId: CapabilityId) {
-        val role = checkExists(roleId, Function<RoleId, Role?>(::getRole))
+        val role = checkExists(roleId, Function<RoleId, Role?>(roles::get))
         val capability = checkExists(capabilityId, Function(capabilities::get))
         val map = getMap(roleId, relations.requires, REQUIRES)
         if (map.containsKey(capabilityId)) {
@@ -719,7 +720,7 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun addUses(roleId: RoleId, pmfId: PmfId) {
-        val role = checkExists(roleId, Function<RoleId, Role?>(::getRole))
+        val role = checkExists(roleId, Function<RoleId, Role?>(roles::get))
         val pmf = checkExists(pmfId, Function(pmfs::get))
         val map = getMap(roleId, relations.uses, USES)
         if (map.containsKey(pmfId)) {
@@ -761,7 +762,7 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun setGoodness(id: RoleId, goodness: Goodness) {
-        checkExists(id, Function<RoleId, Role?>(::getRole))
+        checkExists(id, Function<RoleId, Role?>(roles::get))
         functions.goodness[id] = goodness
     }
 
@@ -895,7 +896,7 @@ internal open class DefaultOrganization @Inject constructor(
             for (goal in organization.specificationGoals) {
                 var isAchievable = false
                 for (role in organization.getAchievedBy(goal.id)) {
-                    isAchievable = isAchievable or (organization.getRole(role.id) != null)
+                    isAchievable = isAchievable or (organization.roles[role.id] != null)
                     if (isAchievable) { /* short circuit */
                         /*
                      * can stop checking because there is at least one role that can achieve the goal
@@ -918,7 +919,7 @@ internal open class DefaultOrganization @Inject constructor(
                 /*
              * there is no reason to continue checking if the previous results are false
 			 */
-                for (role in organization.roles) {
+                for ((_, role) in organization.roles) {
                     /*
                  * every role requires at least one capability
 				 */

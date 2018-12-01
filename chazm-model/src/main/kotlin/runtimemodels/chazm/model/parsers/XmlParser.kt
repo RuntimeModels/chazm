@@ -220,7 +220,7 @@ internal open class XmlParser @Inject constructor(
                 val rId = getAttributeValue(element, ROLE_ATTRIBUTE)
                 val roleId = roles[rId]
                     ?: throw XMLStreamException(E.INCOMPLETE_XML_FILE[Role::class.java.simpleName, rId])
-                val role = organization.getRole(roleId)
+                val role = organization.roles[roleId]!!
                 val gId = getAttributeValue(element, GOAL_ATTRIBUTE)
                 val goalId = instanceGoals[gId]
                     ?: throw XMLStreamException(E.INCOMPLETE_XML_FILE[InstanceGoal::class.java.simpleName, gId])

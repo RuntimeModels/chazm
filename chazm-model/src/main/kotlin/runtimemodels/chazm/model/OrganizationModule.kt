@@ -42,6 +42,9 @@ class OrganizationModule : AbstractModule() {
     @Provides
     fun policies(): MutableMap<PolicyId, Policy> = mutableMapOf()
 
+    @Provides
+    fun roles(): MutableMap<RoleId, Role> = mutableMapOf()
+
     override fun configure() {
         bind(Organization::class.java).to(DefaultOrganization::class.java)
         bind(AgentManager::class.java).to(DefaultAgentManager::class.java)
@@ -51,6 +54,7 @@ class OrganizationModule : AbstractModule() {
         bind(InstanceGoalManager::class.java).to(DefaultInstanceGoalManager::class.java)
         bind(PmfManager::class.java).to(DefaultPmfManager::class.java)
         bind(PolicyManager::class.java).to(DefaultPolicyManager::class.java)
+        bind(RoleManager::class.java).to(DefaultRoleManager::class.java)
 
         install(RelationModule())
         install(FunctionModule())

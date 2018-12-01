@@ -58,7 +58,8 @@ public class GoalVisualizationPanel extends AbstractTreeVisualizationPanel {
 
     @Override
     void updateVisualizationPanel() {
-        final Collection<MutableTreeNode> instanceGoalsToRemove = instanceGoals.keySet().stream().filter(instanceGoal -> !getOrganization().getInstanceGoals().contains(instanceGoal)).map(instanceGoals::remove).collect(Collectors.toCollection(ArrayList::new));
+//        final Collection<MutableTreeNode> instanceGoalsToRemove = instanceGoals.keySet().stream().filter(instanceGoal -> !getOrganization().getInstanceGoals().contains(instanceGoal)).map(instanceGoals::remove).collect(Collectors.toCollection(ArrayList::new));
+        final Collection<MutableTreeNode> instanceGoalsToRemove = new ArrayList<>();
         final Collection<MutableTreeNode> specificationGoalsToRemove = specificationGoals.keySet().stream().filter(specificationGoal -> !getOrganization().getSpecificationGoals().contains(specificationGoal)).map(specificationGoals::remove).collect(Collectors.toCollection(ArrayList::new));
         SwingUtilities.invokeLater(() -> {
             /*
@@ -81,11 +82,11 @@ public class GoalVisualizationPanel extends AbstractTreeVisualizationPanel {
                 getTreeModel().insertNodeInto(node1, getRoot(), getRoot().getChildCount());
                 getTreeModel().reload();
             });
-            getOrganization().getInstanceGoals().stream().filter(goal2 -> !instanceGoals.containsKey(goal2) && specificationGoals.containsKey(goal2.getGoal())).forEach(goal2 -> {
-                final DefaultMutableTreeNode node2 = new DefaultMutableTreeNode(goal2);
-                instanceGoals.put(goal2, node2);
-                getTreeModel().insertNodeInto(node2, specificationGoals.get(goal2.getGoal()), specificationGoals.get(goal2.getGoal()).getChildCount());
-            });
+//            getOrganization().getInstanceGoals().stream().filter(goal2 -> !instanceGoals.containsKey(goal2) && specificationGoals.containsKey(goal2.getGoal())).forEach(goal2 -> {
+//                final DefaultMutableTreeNode node2 = new DefaultMutableTreeNode(goal2);
+//                instanceGoals.put(goal2, node2);
+//                getTreeModel().insertNodeInto(node2, specificationGoals.get(goal2.getGoal()), specificationGoals.get(goal2.getGoal()).getChildCount());
+//            });
         });
     }
 
