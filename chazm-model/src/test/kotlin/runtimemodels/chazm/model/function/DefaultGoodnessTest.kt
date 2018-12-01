@@ -31,11 +31,11 @@ class DefaultGoodnessTest {
 
         assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MIN_SCORE)
 
-        o.addAgent(a)
-        o.addRole(r)
-        o.addSpecificationGoal(sg)
-        o.addInstanceGoal(ig)
-        o.addCapability(c1)
+        o.add(a)
+        o.add(r)
+        o.add(sg)
+        o.add(ig)
+        o.add(c1)
         o.addAchieves(r.id, sg.id)
 
         assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MAX_SCORE)
@@ -52,13 +52,13 @@ class DefaultGoodnessTest {
 
         assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MAX_SCORE)
 
-        o.addCapability(c2)
+        o.add(c2)
         o.addRequires(r.id, c2.id)
         o.addPossesses(a.id, c2.id, 1.0)
 
         assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MAX_SCORE)
 
-        o.addAttribute(t)
+        o.add(t)
         o.addNeeds(r.id, t.id)
 
         assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MIN_SCORE)

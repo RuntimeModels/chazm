@@ -85,7 +85,7 @@ internal open class XmlParser @Inject constructor(
                     val id: AgentId = DefaultAgentId(getAttributeValue(element, NAME_ATTRIBUTE))
                     // TODO parse contact info
                     val contactInfo: Map<Any, Any> = mapOf()
-                    build(id, agents, element, Function<AgentId, Agent> { entityFactory.buildAgent(it, contactInfo) }, Consumer { organization.addAgent(it) })
+                    build(id, agents, element, Function<AgentId, Agent> { entityFactory.buildAgent(it, contactInfo) }, Consumer { organization.add(it) })
                     parseAgent(organization, reader, name, id, attributes, capabilities, list1)
                 } else if (ASSIGNMENT_ELEMENT == name.localPart) {
                     parseAssignment(organization, element, agents, instanceGoals, roles, list2)
@@ -93,33 +93,33 @@ internal open class XmlParser @Inject constructor(
                     val id = DefaultAttributeId(getAttributeValue(element, NAME_ATTRIBUTE))
                     try {
                         val type = Attribute.Type.valueOf(getAttributeValue(element, TYPE_ATTRIBUTE))
-                        build(id, attributes, element, Function<AttributeId, Attribute> { entityFactory.buildAttribute(it, type) }, Consumer { organization.addAttribute(it) })
+                        build(id, attributes, element, Function<AttributeId, Attribute> { entityFactory.buildAttribute(it, type) }, Consumer { organization.add(it) })
                     } catch (e: IllegalArgumentException) {
                         throw XMLStreamException(e)
                     }
 
                 } else if (CAPABILITY_ELEMENT == name.localPart) {
                     val id = DefaultCapabilityId(getAttributeValue(element, NAME_ATTRIBUTE))
-                    build(id, capabilities, element, Function<CapabilityId, Capability> { entityFactory.buildCapability(it) }, Consumer { organization.addCapability(it) })
+                    build(id, capabilities, element, Function<CapabilityId, Capability> { entityFactory.buildCapability(it) }, Consumer { organization.add(it) })
                 } else if (CHARACTERISTIC_ELEMENT == name.localPart) {
                     val id = DefaultCharacteristicId(getAttributeValue(element, NAME_ATTRIBUTE))
-                    build(id, characteristics, element, Function<CharacteristicId, Characteristic> { entityFactory.buildCharacteristic(it) }, Consumer { organization.addCharacteristic(it) })
+                    build(id, characteristics, element, Function<CharacteristicId, Characteristic> { entityFactory.buildCharacteristic(it) }, Consumer { organization.add(it) })
                 } else if (INSTANCEGOAL_ELEMENT == name.localPart) {
                     parseInstanceGoal(organization, element, specificationGoals, instanceGoals, list1)
                 } else if (PMF_ELEMENT == name.localPart) {
                     val id = DefaultPmfId(getAttributeValue(element, NAME_ATTRIBUTE))
-                    build(id, pmfs, element, Function<PmfId, Pmf> { entityFactory.buildPmf(it) }, Consumer { organization.addPmf(it) })
+                    build(id, pmfs, element, Function<PmfId, Pmf> { entityFactory.buildPmf(it) }, Consumer { organization.add(it) })
                     parsePmf(organization, reader, name, id, attributes, list1)
                 } else if (POLICY_ELEMENT == name.localPart) {
                     val id = DefaultPolicyId(getAttributeValue(element, NAME_ATTRIBUTE))
-                    build(id, policies, element, Function<PolicyId, Policy> { entityFactory.buildPolicy(it) }, Consumer { organization.addPolicy(it) })
+                    build(id, policies, element, Function<PolicyId, Policy> { entityFactory.buildPolicy(it) }, Consumer { organization.add(it) })
                 } else if (ROLE_ELEMENT == name.localPart) {
                     val id = DefaultRoleId(getAttributeValue(element, NAME_ATTRIBUTE))
-                    build(id, roles, element, Function<RoleId, Role> { entityFactory.buildRole(it) }, Consumer { organization.addRole(it) })
+                    build(id, roles, element, Function<RoleId, Role> { entityFactory.buildRole(it) }, Consumer { organization.add(it) })
                     parseRole(organization, reader, name, id, attributes, capabilities, characteristics, specificationGoals, list1)
                 } else if (GOAL_ELEMENT == name.localPart) {
                     val id = DefaultSpecificationGoalId(getAttributeValue(element, NAME_ATTRIBUTE))
-                    build(id, specificationGoals, element, Function<SpecificationGoalId, SpecificationGoal> { entityFactory.buildSpecificationGoal(it) }, Consumer { organization.addSpecificationGoal(it) })
+                    build(id, specificationGoals, element, Function<SpecificationGoalId, SpecificationGoal> { entityFactory.buildSpecificationGoal(it) }, Consumer { organization.add(it) })
                 }
             } else if (event.isEndElement) {
                 val element = event.asEndElement()
@@ -243,7 +243,7 @@ internal open class XmlParser @Inject constructor(
                 val id = DefaultInstanceGoalId(getAttributeValue(element, NAME_ATTRIBUTE))
                 // TODO parse parameter
                 val parameter = mapOf<Any, Any>()
-                return build(id, instanceGoals, element, Function<InstanceGoalId, InstanceGoal> { entityFactory.buildInstanceGoal(it, goal, parameter) }, Consumer { organization.addInstanceGoal(it) })
+                return build(id, instanceGoals, element, Function<InstanceGoalId, InstanceGoal> { entityFactory.buildInstanceGoal(it, goal, parameter) }, Consumer { organization.add(it) })
             }
         })
     }

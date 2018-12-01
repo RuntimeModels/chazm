@@ -16,57 +16,57 @@ import java.util.function.Predicate
 interface Organization : AchievesManager, AssignmentManager, ContainsManager, HasManager, ModeratesManager, NeedsManager, PossessesManager, RequiresManager, UsesManager {
     val agents: AgentManager
 
-    fun addAgent(agent: Agent)
+    fun add(agent: Agent)
 
-    fun removeAgent(id: AgentId)
+    fun remove(id: AgentId)
 
     val attributes: AttributeManager
 
-    fun addAttribute(attribute: Attribute)
+    fun add(attribute: Attribute)
 
-    fun removeAttribute(id: AttributeId)
+    fun remove(id: AttributeId)
 
     val capabilities: CapabilityManager
 
-    fun addCapability(capability: Capability)
+    fun add(capability: Capability)
 
-    fun removeCapability(id: CapabilityId)
+    fun remove(id: CapabilityId)
 
     val characteristics: CharacteristicManager
 
-    fun addCharacteristic(characteristic: Characteristic)
+    fun add(characteristic: Characteristic)
 
-    fun removeCharacteristic(id: CharacteristicId)
+    fun remove(id: CharacteristicId)
 
     val instanceGoals: InstanceGoalManager
 
-    fun addInstanceGoal(goal: InstanceGoal)
+    fun add(goal: InstanceGoal)
 
-    fun removeInstanceGoal(id: InstanceGoalId)
+    fun remove(id: InstanceGoalId)
 
     val pmfs: PmfManager
 
-    fun addPmf(pmf: Pmf)
+    fun add(pmf: Pmf)
 
-    fun removePmf(id: PmfId)
+    fun remove(id: PmfId)
 
     val policies: PolicyManager
 
-    fun addPolicy(policy: Policy)
+    fun add(policy: Policy)
 
-    fun removePolicy(id: PolicyId)
+    fun remove(id: PolicyId)
 
     val roles: RoleManager
 
-    fun addRole(role: Role)
+    fun add(role: Role)
 
-    fun removeRole(id: RoleId)
+    fun remove(id: RoleId)
 
     val specificationGoals: SpecificationGoalManager
 
-    fun addSpecificationGoal(goal: SpecificationGoal)
+    fun add(goal: SpecificationGoal)
 
-    fun removeSpecificationGoal(id: SpecificationGoalId)
+    fun remove(id: SpecificationGoalId)
 
     /**
      * Checks if this [Organization] is valid. Validity rules differ from one organization to another, so there is no general algorithm to determine
