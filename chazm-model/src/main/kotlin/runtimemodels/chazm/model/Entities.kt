@@ -1,9 +1,5 @@
 package runtimemodels.chazm.model
 
-import runtimemodels.chazm.api.entity.SpecificationGoal
-import runtimemodels.chazm.api.id.SpecificationGoalId
-import java.util.concurrent.ConcurrentHashMap
-
 internal class Entities {
 
     //    val agents: MutableMap<AgentId, Agent> = ConcurrentHashMap()
@@ -15,6 +11,6 @@ internal class Entities {
 //    val pmfs: MutableMap<PmfId, Pmf> = ConcurrentHashMap()
 //    val policies: MutableMap<PolicyId, Policy> = ConcurrentHashMap()
 //    val roles: MutableMap<RoleId, Role> = ConcurrentHashMap()
-    val specificationGoals: MutableMap<SpecificationGoalId, SpecificationGoal> = ConcurrentHashMap()
+//    val specificationGoals: MutableMap<SpecificationGoalId, SpecificationGoal> = ConcurrentHashMap()
 
 }

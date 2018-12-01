@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 /**
  * The <code>GoalVisualizationPanel</code> class is a Swing component to visualize the <code>SpecificationGoal</code> and <code>InstanceGoal</code> currently in
@@ -60,7 +59,8 @@ public class GoalVisualizationPanel extends AbstractTreeVisualizationPanel {
     void updateVisualizationPanel() {
 //        final Collection<MutableTreeNode> instanceGoalsToRemove = instanceGoals.keySet().stream().filter(instanceGoal -> !getOrganization().getInstanceGoals().contains(instanceGoal)).map(instanceGoals::remove).collect(Collectors.toCollection(ArrayList::new));
         final Collection<MutableTreeNode> instanceGoalsToRemove = new ArrayList<>();
-        final Collection<MutableTreeNode> specificationGoalsToRemove = specificationGoals.keySet().stream().filter(specificationGoal -> !getOrganization().getSpecificationGoals().contains(specificationGoal)).map(specificationGoals::remove).collect(Collectors.toCollection(ArrayList::new));
+//        final Collection<MutableTreeNode> specificationGoalsToRemove = specificationGoals.keySet().stream().filter(specificationGoal -> !getOrganization().getSpecificationGoals().contains(specificationGoal)).map(specificationGoals::remove).collect(Collectors.toCollection(ArrayList::new));
+        final Collection<MutableTreeNode> specificationGoalsToRemove = new ArrayList<>();
         SwingUtilities.invokeLater(() -> {
             /*
              * first, remove all elements from the tree model that are not present in the updated list; removes all instance goals first then the specification
@@ -76,12 +76,12 @@ public class GoalVisualizationPanel extends AbstractTreeVisualizationPanel {
             /*
              * next, add the new elements from the updated list to the tree model; adds the specification goals first then the instance goals
 			 */
-            getOrganization().getSpecificationGoals().stream().filter(goal1 -> !specificationGoals.containsKey(goal1)).forEach(goal1 -> {
-                final DefaultMutableTreeNode node1 = new DefaultMutableTreeNode(goal1);
-                specificationGoals.put(goal1, node1);
-                getTreeModel().insertNodeInto(node1, getRoot(), getRoot().getChildCount());
-                getTreeModel().reload();
-            });
+//            getOrganization().getSpecificationGoals().stream().filter(goal1 -> !specificationGoals.containsKey(goal1)).forEach(goal1 -> {
+//                final DefaultMutableTreeNode node1 = new DefaultMutableTreeNode(goal1);
+//                specificationGoals.put(goal1, node1);
+//                getTreeModel().insertNodeInto(node1, getRoot(), getRoot().getChildCount());
+//                getTreeModel().reload();
+//            });
 //            getOrganization().getInstanceGoals().stream().filter(goal2 -> !instanceGoals.containsKey(goal2) && specificationGoals.containsKey(goal2.getGoal())).forEach(goal2 -> {
 //                final DefaultMutableTreeNode node2 = new DefaultMutableTreeNode(goal2);
 //                instanceGoals.put(goal2, node2);

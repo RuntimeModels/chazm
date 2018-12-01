@@ -88,7 +88,7 @@ class XmlParserTest {
             { assertThat(organization.roles.size).isEqualTo(1) },
             { assertThat(organization.roles[role1]).isNotNull() },
             { assertThat(organization.specificationGoals.size).isEqualTo(1) },
-            { assertThat(organization.getSpecificationGoal(specificationGoal1)).isNotNull() },
+            { assertThat(organization.specificationGoals[specificationGoal1]).isNotNull() },
 
             // check all 8 relations
             { assertThat(organization.getAchieves(role1).size).isEqualTo(1) },
@@ -132,7 +132,7 @@ class XmlParserTest {
             { assertThat(organization.roles[r1]).isNotNull() },
 
             { assertThat(organization.specificationGoals.size).isEqualTo(1) },
-            { assertThat(organization.getSpecificationGoal(g1)).isNotNull() },
+            { assertThat(organization.specificationGoals[g1]).isNotNull() },
 
             { assertThat(organization.getAchieves(r1).size).isEqualTo(1) },
             { assertThat(organization.getAchieves(r1).map { it.id }).containsOnly(g1) },
@@ -159,7 +159,7 @@ class XmlParserTest {
             { assertThat(organization.capabilities[c1]).isNotNull() },
 
             { assertThat(organization.specificationGoals.size).isEqualTo(1) },
-            { assertThat(organization.getSpecificationGoal(g1)).isNotNull() },
+            { assertThat(organization.specificationGoals[g1]).isNotNull() },
 
             { assertThat(organization.roles.size).isEqualTo(1) },
             { assertThat(organization.roles[r1]).isNotNull() },
@@ -195,9 +195,9 @@ class XmlParserTest {
             { assertThat(organization.capabilities[c3]).isNotNull() },
 
             { assertThat(organization.specificationGoals.size).isEqualTo(3) },
-            { assertThat(organization.getSpecificationGoal(g1)).isNotNull() },
-            { assertThat(organization.getSpecificationGoal(g2)).isNotNull() },
-            { assertThat(organization.getSpecificationGoal(g3)).isNotNull() },
+            { assertThat(organization.specificationGoals[g1]).isNotNull() },
+            { assertThat(organization.specificationGoals[g2]).isNotNull() },
+            { assertThat(organization.specificationGoals[g3]).isNotNull() },
 
             { assertThat(organization.roles.size).isEqualTo(1) },
             { assertThat(organization.roles[r1]).isNotNull() },
@@ -233,9 +233,9 @@ class XmlParserTest {
             { assertThat(organization.capabilities[c3]).isNotNull() },
 
             { assertThat(organization.specificationGoals.size).isEqualTo(3) },
-            { assertThat(organization.getSpecificationGoal(g1)).isNotNull() },
-            { assertThat(organization.getSpecificationGoal(g2)).isNotNull() },
-            { assertThat(organization.getSpecificationGoal(g3)).isNotNull() },
+            { assertThat(organization.specificationGoals[g1]).isNotNull() },
+            { assertThat(organization.specificationGoals[g2]).isNotNull() },
+            { assertThat(organization.specificationGoals[g3]).isNotNull() },
 
             { assertThat(organization.roles.size).isEqualTo(1) },
             { assertThat(organization.roles[r1]).isNotNull() },
