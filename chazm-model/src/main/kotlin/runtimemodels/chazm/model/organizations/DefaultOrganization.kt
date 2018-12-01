@@ -8,6 +8,7 @@ import runtimemodels.chazm.api.function.Goodness
 import runtimemodels.chazm.api.id.*
 import runtimemodels.chazm.api.organization.AgentManager
 import runtimemodels.chazm.api.organization.AttributeManager
+import runtimemodels.chazm.api.organization.CapabilityManager
 import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.api.relation.Assignment
 import runtimemodels.chazm.model.Entities
@@ -33,7 +34,8 @@ internal open class DefaultOrganization @Inject constructor(
     private val effectiveness: Effectiveness,
     private val publisher: Publisher,
     override val agents: AgentManager,
-    override val attributes: AttributeManager
+    override val attributes: AttributeManager,
+    override val capabilities: CapabilityManager
 ) : Organization, FlowableOnSubscribe<Organization> {
 
     private val entities = Entities()
@@ -110,43 +112,43 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun addCapability(capability: Capability) {
-        checkNotExists(capability, Predicate { entities.capabilities.containsKey(it) })
+        checkNotExists(capability, Predicate { capabilities.containsKey(it) })
         /* add the capability, requiredBy map, possessedBy map */
-        entities.capabilities[capability.id] = capability
+        capabilities.add(capability)
         relations.requiredBy[capability.id] = ConcurrentHashMap()
         relations.possessedBy[capability.id] = ConcurrentHashMap()
         publisher.post<CapabilityEvent>(eventFactory.build(EventType.ADDED, capability))
     }
 
-    override fun addCapabilities(capabilities: Collection<Capability>) {
+    fun addCapabilities(capabilities: Collection<Capability>) {
         capabilities.forEach(::addCapability)
     }
 
-    override fun getCapability(id: CapabilityId): Capability? {
-        return entities.capabilities[id]
-    }
+//    fun getCapability(id: CapabilityId): Capability? {
+//        return capabilities[id]
+//    }
 
-    override fun getCapabilities(): Set<Capability> {
-        return entities.capabilities.values.toSet()
-    }
+//    fun getCapabilities(): Set<Capability> {
+//        return capabilities.values.toSet()
+//    }
 
     override fun removeCapability(id: CapabilityId) {
-        if (entities.capabilities.containsKey(id)) {
+        if (capabilities.containsKey(id)) {
             /* remove the capability, all associated requires relations, all associated possesses relations */
-            val capability = entities.capabilities.remove(id)!!
+            val capability = capabilities.remove(id)
             remove(id, relations.requiredBy, REQUIRED_BY, Consumer { removeRequires(it, id) })
             remove(id, relations.possessedBy, POSSESSED_BY, Consumer { removePossesses(it, id) })
             publisher.post<CapabilityEvent>(eventFactory.build(EventType.REMOVED, capability))
         }
     }
 
-    override fun removeCapabilities(ids: Collection<CapabilityId>) {
+    fun removeCapabilities(ids: Collection<CapabilityId>) {
         ids.forEach(::removeCapability)
     }
 
-    override fun removeAllCapabilities() {
-        removeCapabilities(entities.capabilities.keys)
-    }
+//    fun removeAllCapabilities() {
+//        removeCapabilities(capabilities.keys)
+//    }
 
     override fun addCharacteristic(characteristic: Characteristic) {
         checkNotExists(characteristic, Predicate { entities.characteristics.containsKey(it) })
@@ -649,7 +651,7 @@ internal open class DefaultOrganization @Inject constructor(
 
     override fun addPossesses(agentId: AgentId, capabilityId: CapabilityId, score: Double) {
         val agent = checkExists(agentId, Function<AgentId, Agent?>(agents::get))
-        val capability = checkExists(capabilityId, Function<CapabilityId, Capability?>(::getCapability))
+        val capability = checkExists(capabilityId, Function(capabilities::get))
         val map = getMap(agentId, relations.possesses, POSSESSES)
         if (map.containsKey(capabilityId)) {
             /* relation already exists do nothing */
@@ -697,7 +699,7 @@ internal open class DefaultOrganization @Inject constructor(
 
     override fun addRequires(roleId: RoleId, capabilityId: CapabilityId) {
         val role = checkExists(roleId, Function<RoleId, Role?>(::getRole))
-        val capability = checkExists(capabilityId, Function<CapabilityId, Capability?>(::getCapability))
+        val capability = checkExists(capabilityId, Function(capabilities::get))
         val map = getMap(roleId, relations.requires, REQUIRES)
         if (map.containsKey(capabilityId)) {
             /* relation already exists do nothing */
@@ -941,7 +943,7 @@ internal open class DefaultOrganization @Inject constructor(
                         break
                     }
                     for (capability in organization.getRequires(role.id)) {
-                        result = result and (organization.getCapability(capability.id) != null)
+                        result = result and (organization.capabilities[capability.id] != null)
                         if (!result) { /* short circuit */
                             /*
                          * can stop checking because there is at least one capability required by a role that is not in the organization
@@ -962,7 +964,7 @@ internal open class DefaultOrganization @Inject constructor(
 				 */
                     for ((_, agent) in organization.agents) {
                         for (capability in organization.getPossesses(agent.id)) {
-                            result = result and (organization.getCapability(capability.id) != null)
+                            result = result and (organization.capabilities[capability.id] != null)
                             if (!result) { /* short circuit */
                                 /*
                              * can stop checking because there is at least one capability possessed by an agent that is not in the organization

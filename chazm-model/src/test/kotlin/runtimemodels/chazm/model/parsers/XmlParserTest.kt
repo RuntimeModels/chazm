@@ -78,7 +78,7 @@ class XmlParserTest {
             { assertThat(organization.attributes.size).isEqualTo(1) },
             { assertThat(organization.attributes[attribute1]).isNotNull() },
             { assertThat(organization.capabilities.size).isEqualTo(1) },
-            { assertThat(organization.getCapability(capability1)).isNotNull() },
+            { assertThat(organization.capabilities[capability1]).isNotNull() },
             { assertThat(organization.characteristics.size).isEqualTo(1) },
             { assertThat(organization.getCharacteristic(characteristic1)).isNotNull() },
             { assertThat(organization.instanceGoals.size).isEqualTo(1) },
@@ -130,7 +130,7 @@ class XmlParserTest {
 
         assertAll(
             { assertThat(organization.capabilities.size).isEqualTo(1) },
-            { assertThat(organization.getCapability(c1)).isNotNull() },
+            { assertThat(organization.capabilities[c1]).isNotNull() },
 
             { assertThat(organization.roles.size).isEqualTo(1) },
             { assertThat(organization.getRole(r1)).isNotNull() },
@@ -162,7 +162,7 @@ class XmlParserTest {
 
         assertAll(
             { assertThat(organization.capabilities.size).isEqualTo(1) },
-            { assertThat(organization.getCapability(c1)).isNotNull() },
+            { assertThat(organization.capabilities[c1]).isNotNull() },
 
             { assertThat(organization.specificationGoals.size).isEqualTo(1) },
             { assertThat(organization.getSpecificationGoal(g1)).isNotNull() },
@@ -198,9 +198,9 @@ class XmlParserTest {
 
         assertAll(
             { assertThat(organization.capabilities.size).isEqualTo(3) },
-            { assertThat(organization.getCapability(c1)).isNotNull() },
-            { assertThat(organization.getCapability(c2)).isNotNull() },
-            { assertThat(organization.getCapability(c3)).isNotNull() },
+            { assertThat(organization.capabilities[c1]).isNotNull() },
+            { assertThat(organization.capabilities[c2]).isNotNull() },
+            { assertThat(organization.capabilities[c3]).isNotNull() },
 
             { assertThat(organization.specificationGoals.size).isEqualTo(3) },
             { assertThat(organization.getSpecificationGoal(g1)).isNotNull() },
@@ -238,9 +238,9 @@ class XmlParserTest {
 
         assertAll(
             { assertThat(organization.capabilities.size).isEqualTo(3) },
-            { assertThat(organization.getCapability(c1)).isNotNull() },
-            { assertThat(organization.getCapability(c2)).isNotNull() },
-            { assertThat(organization.getCapability(c3)).isNotNull() },
+            { assertThat(organization.capabilities[c1]).isNotNull() },
+            { assertThat(organization.capabilities[c2]).isNotNull() },
+            { assertThat(organization.capabilities[c3]).isNotNull() },
 
             { assertThat(organization.specificationGoals.size).isEqualTo(3) },
             { assertThat(organization.getSpecificationGoal(g1)).isNotNull() },
