@@ -26,7 +26,6 @@ class XmlParserTest {
 
     private val injector = Guice.createInjector(ParsersModule())
     private val provider = injector.getProvider(XmlParser::class.java)
-    private val idf = injector.getInstance(IdFactory::class.java)
 
     @Test
     fun testXmlParser() {
