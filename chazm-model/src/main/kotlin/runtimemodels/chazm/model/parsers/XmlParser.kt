@@ -283,25 +283,27 @@ internal open class XmlParser @Inject constructor(
             if (event.isStartElement) {
                 val element = event.asStartElement()
                 val name = element.name
-                when {
-                    ACHIEVES_ELEMENT == name.localPart -> {
+                when (name.localPart) {
+                    ACHIEVES_ELEMENT -> {
                         val ids = collectChild(reader, name)
                         list.add(object : RunLater {
                             override fun run() {
-                                return addRelation(id,
+                                return addRelation(
+                                    id,
                                     ids,
                                     goals,
                                     BiConsumer { roleId, goalId ->
-                                        organization.achievesRelations.add(AchievesRelation(
+                                        organization.achievesRelations.add(relationFactory.buildAchieves(
                                             organization.roles[roleId]!!,
                                             organization.specificationGoals[goalId]!!
                                         ))
                                     },
-                                    SpecificationGoal::class.java)
+                                    SpecificationGoal::class.java
+                                )
                             }
                         })
                     }
-                    CONTAINS_ELEMENT == name.localPart -> {
+                    CONTAINS_ELEMENT -> {
                         val ids = collectChild(reader, name)
                         try {
                             val value = java.lang.Double.valueOf(getAttributeValue(element, VALUE_ATTRIBUTE))
@@ -327,7 +329,7 @@ internal open class XmlParser @Inject constructor(
                         }
 
                     }
-                    NEEDS_ELEMENT == name.localPart -> {
+                    NEEDS_ELEMENT -> {
                         val ids = collectChild(reader, name)
                         list.add(object : RunLater {
                             override fun run() {
@@ -335,7 +337,7 @@ internal open class XmlParser @Inject constructor(
                             }
                         })
                     }
-                    REQUIRES_ELEMENT == name.localPart -> {
+                    REQUIRES_ELEMENT -> {
                         val ids = collectChild(reader, name)
                         list.add(object : RunLater {
                             override fun run() {
