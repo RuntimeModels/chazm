@@ -13,6 +13,7 @@ import runtimemodels.chazm.api.entity.InstanceGoal
 import runtimemodels.chazm.api.entity.Role
 import runtimemodels.chazm.api.entity.SpecificationGoal
 import runtimemodels.chazm.api.organization.Organization
+import runtimemodels.chazm.model.guice.ParsersModule
 import runtimemodels.chazm.model.id.*
 import runtimemodels.chazm.model.message.E
 import java.io.InputStream

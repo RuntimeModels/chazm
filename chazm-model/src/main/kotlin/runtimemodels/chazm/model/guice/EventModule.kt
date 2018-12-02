@@ -1,7 +1,8 @@
-package runtimemodels.chazm.model.event
+package runtimemodels.chazm.model.guice
 
 import com.google.inject.AbstractModule
 import com.google.inject.assistedinject.FactoryModuleBuilder
+import runtimemodels.chazm.model.event.*
 
 /**
  * The [EventModule] class provides a Guice binding module for events (such as pub/sub event notifications).

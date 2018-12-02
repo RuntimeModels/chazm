@@ -1,4 +1,4 @@
-package runtimemodels.chazm.model.organization
+package runtimemodels.chazm.model.guice
 
 import com.google.inject.AbstractModule
 import com.google.inject.Provides
@@ -6,10 +6,8 @@ import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.api.id.*
 import runtimemodels.chazm.api.organization.*
 import runtimemodels.chazm.api.relation.Achieves
-import runtimemodels.chazm.model.event.EventModule
 import runtimemodels.chazm.model.function.FunctionModule
-import runtimemodels.chazm.model.notification.NotificationModule
-import runtimemodels.chazm.model.relation.RelationModule
+import runtimemodels.chazm.model.organization.*
 
 /**
  * The [OrganizationModule] class provides a Guice binding module for entities.

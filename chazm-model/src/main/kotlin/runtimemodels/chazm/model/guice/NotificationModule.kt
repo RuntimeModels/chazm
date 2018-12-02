@@ -1,6 +1,7 @@
-package runtimemodels.chazm.model.notification
+package runtimemodels.chazm.model.guice
 
 import com.google.inject.AbstractModule
+import runtimemodels.chazm.model.notification.*
 
 /**
  * The [NotificationModule] class provides a Guice binding module for events (such as pub/sub event notifications).

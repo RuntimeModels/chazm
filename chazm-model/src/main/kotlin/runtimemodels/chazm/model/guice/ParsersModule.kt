@@ -1,8 +1,8 @@
-package runtimemodels.chazm.model.parsers
+package runtimemodels.chazm.model.guice
 
 import com.google.inject.AbstractModule
 import com.google.inject.Provides
-import runtimemodels.chazm.model.organization.OrganizationModule
+import runtimemodels.chazm.model.parsers.XmlParser
 import javax.xml.stream.XMLInputFactory
 
 /**

@@ -1,8 +1,9 @@
-package runtimemodels.chazm.model.entity
+package runtimemodels.chazm.model.guice
 
 import com.google.inject.AbstractModule
 import com.google.inject.assistedinject.FactoryModuleBuilder
 import runtimemodels.chazm.api.entity.*
+import runtimemodels.chazm.model.entity.*
 import runtimemodels.chazm.model.factory.*
 
 /**
