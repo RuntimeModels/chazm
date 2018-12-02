@@ -6,17 +6,13 @@ import runtimemodels.chazm.api.id.RoleId
 import runtimemodels.chazm.api.id.SpecificationGoalId
 import runtimemodels.chazm.api.relation.Achieves
 
-typealias SpecificationGoalIdAchievesMap = Map<SpecificationGoalId, Achieves>
-
-typealias RoleIdSpecificationGoalIdAchievesMapMap = Map<RoleId, SpecificationGoalIdAchievesMap>
-
 /**
  * The [AchievesManager] interface defines the APIs for managing a set of [Achieves] relations.
  *
  * @author Christopher Zhong
  * @since 7.0.0
  */
-interface AchievesManager : RoleIdSpecificationGoalIdAchievesMapMap {
+interface AchievesManager : Map<RoleId, Map<SpecificationGoalId, Achieves>> {
     /**
      * Adds an [Achieves] relation to this [AchievesManager].
      *
