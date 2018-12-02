@@ -20,7 +20,7 @@ internal open class DefaultGoodness @Inject constructor() : Goodness {
     ): Double {
         // first, check that the agent has all the necessary attributes. otherwise, return a null
         // to indicate that the agent cannot play the role
-        if (organization.getNeeds(role.id).any { organization.getHasValue(agent.id, it.id) == null }) {
+        if (organization.getNeeds(role.id).any { organization.hasRelations[agent.id, it.id] == null }) {
             return MIN_SCORE
         }
         if (organization.achievesRelations[role.id].containsKey(goal.goal.id)) {

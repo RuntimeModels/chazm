@@ -176,7 +176,19 @@ internal open class XmlParser @Inject constructor(
                         val value = java.lang.Double.valueOf(getAttributeValue(element, VALUE_ATTRIBUTE))
                         list.add(object : RunLater {
                             override fun run() {
-                                return addRelation(id, ids, attributes, BiConsumer { c, d -> organization.addHas(c, d, value) }, Attribute::class.java)
+                                return addRelation(
+                                    id,
+                                    ids,
+                                    attributes,
+                                    BiConsumer { agentId, attributeId ->
+                                        organization.hasRelations.add(relationFactory.buildHas(
+                                            organization.agents[agentId]!!,
+                                            organization.attributes[attributeId]!!,
+                                            value
+                                        ))
+                                    },
+                                    Attribute::class.java
+                                )
                             }
                         })
                     } catch (e: NumberFormatException) {

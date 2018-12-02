@@ -10,6 +10,7 @@ import runtimemodels.chazm.api.organization.*
 import runtimemodels.chazm.api.relation.Achieves
 import runtimemodels.chazm.api.relation.Assignment
 import runtimemodels.chazm.api.relation.Contains
+import runtimemodels.chazm.api.relation.Has
 import runtimemodels.chazm.model.Functions
 import runtimemodels.chazm.model.Relations
 import runtimemodels.chazm.model.event.*
@@ -41,18 +42,17 @@ internal open class DefaultOrganization @Inject constructor(
     override val roles: RoleManager,
     override val specificationGoals: SpecificationGoalManager,
     override val achievesRelations: AchievesManager,
-    override val containsRelations: ContainsManager
+    override val containsRelations: ContainsManager,
+    override val hasRelations: HasManager
 ) : Organization, FlowableOnSubscribe<Organization> {
 
     private val relations = Relations()
     private val functions = Functions()
 
     override fun add(agent: Agent) {
-        /* add the agent, assignmentsByAgent map, possesses map, has map */
         agents.add(agent)
         relations.assignmentsByAgent[agent.id] = ConcurrentHashMap()
         relations.possesses[agent.id] = ConcurrentHashMap()
-        relations.has[agent.id] = ConcurrentHashMap()
         publisher.post(eventFactory.build(EventType.ADDED, agent))
     }
 
@@ -61,28 +61,29 @@ internal open class DefaultOrganization @Inject constructor(
             /* remove the agent, all associated assignments, all associated possesses relations, all associated has relations */
             val agent = agents.remove(id)
             remove(id, relations.assignmentsByAgent, ASSIGNMENTS_BY_AGENT, Consumer { removeAssignment(it) })
+            hasRelations.remove(id)
             remove(id, relations.possesses, POSSESSES, Consumer { removePossesses(id, it) })
-            remove(id, relations.has, HAS, Consumer { removeHas(id, it) })
             publisher.post(eventFactory.build(EventType.REMOVED, agent))
         }
     }
 
     override fun add(attribute: Attribute) {
         checkNotExists(attribute, Predicate { attributes.containsKey(it) })
-        /* add the attribute, neededBy map, hadBy map, moderatedBy map */
         attributes.add(attribute)
         relations.neededBy[attribute.id] = ConcurrentHashMap()
-        relations.hadBy[attribute.id] = ConcurrentHashMap()
         relations.moderatedBy[attribute.id] = ConcurrentHashMap()
         publisher.post(eventFactory.build(EventType.ADDED, attribute))
     }
 
     override fun remove(id: AttributeId) {
         if (attributes.containsKey(id)) {
-            /* remove the attribute, all associated needs relations, all associated has relations, all associated moderates relations */
+            // remove the attribute,
+            // all associated has relations,
+            // all associated moderates relations,
+            // all associated needs relations,
             val attribute = attributes.remove(id)
+            hasRelations.remove(id)
             remove(id, relations.neededBy, NEEDED_BY, Consumer { removeNeeds(it, id) })
-            remove(id, relations.hadBy, HAD_BY, Consumer { removeHas(it, id) })
             remove(id, relations.moderatedBy, MODERATED_BY, Consumer { removeModerates(it, id) })
             publisher.post(eventFactory.build(EventType.REMOVED, attribute))
         }
@@ -90,7 +91,6 @@ internal open class DefaultOrganization @Inject constructor(
 
     override fun add(capability: Capability) {
         checkNotExists(capability, Predicate { capabilities.containsKey(it) })
-        /* add the capability, requiredBy map, possessedBy map */
         capabilities.add(capability)
         relations.requiredBy[capability.id] = ConcurrentHashMap()
         relations.possessedBy[capability.id] = ConcurrentHashMap()
@@ -109,7 +109,6 @@ internal open class DefaultOrganization @Inject constructor(
 
     override fun add(characteristic: Characteristic) {
         checkNotExists(characteristic, Predicate { characteristics.containsKey(it) })
-        /* add the characteristic, containedBy map */
         characteristics.add(characteristic)
         publisher.post(eventFactory.build(EventType.ADDED, characteristic))
     }
@@ -126,7 +125,6 @@ internal open class DefaultOrganization @Inject constructor(
     override fun add(goal: InstanceGoal) {
         checkNotExists(goal, Predicate { instanceGoals.containsKey(it) })
         checkExists(goal.goal.id, Function<SpecificationGoalId, SpecificationGoal?> { specificationGoals[it] })
-        /* add the instance goal, instanceGoalsBySpecificationGoal map */
         instanceGoals.add(goal)
         publisher.post(eventFactory.build(EventType.ADDED, goal))
     }
@@ -141,7 +139,6 @@ internal open class DefaultOrganization @Inject constructor(
 
     override fun add(pmf: Pmf) {
         checkNotExists(pmf, Predicate { pmfs.containsKey(it) })
-        /* add the pmf */
         pmfs.add(pmf)
         publisher.post(eventFactory.build(EventType.ADDED, pmf))
     }
@@ -159,7 +156,6 @@ internal open class DefaultOrganization @Inject constructor(
 
     override fun add(policy: Policy) {
         checkNotExists(policy, Predicate { policies.containsKey(it) })
-        /* add the policy */
         policies.add(policy)
         publisher.post(eventFactory.build(EventType.ADDED, policy))
     }
@@ -174,7 +170,6 @@ internal open class DefaultOrganization @Inject constructor(
 
     override fun add(role: Role) {
         checkNotExists(role, Predicate { roles.containsKey(it) })
-        /* add the role, achieves map, requires map, needs map, uses, contains map */
         roles.add(role)
         functions.goodness[role.id] = goodness
         publisher.post(eventFactory.build(EventType.ADDED, role))
@@ -295,52 +290,18 @@ internal open class DefaultOrganization @Inject constructor(
         }
     }
 
-    override fun addHas(agentId: AgentId, attributeId: AttributeId, value: Double) {
-        val agent = checkExists(agentId, Function<AgentId, Agent?>(agents::get))
-        val attribute = checkExists(attributeId, Function<AttributeId, Attribute?>(attributes::get))
-        val map = getMap(agentId, relations.has, HAS)
-        if (map.containsKey(attributeId)) {
-            /* relation already exists do nothing */
-            return
+    override fun add(has: Has) {
+        checkExists(has.agent.id, Function(agents::get))
+        checkExists(has.attribute.id, Function(attributes::get))
+        hasRelations.add(has)
+        publisher.post(eventFactory.build(EventType.ADDED, has))
+    }
+
+    override fun remove(agentId: AgentId, attributeId: AttributeId) {
+        if (hasRelations.containsKey(agentId) && hasRelations[agentId].containsKey(attributeId)) {
+            val has = hasRelations.remove(agentId, attributeId)
+            publisher.post(eventFactory.build(EventType.REMOVED, has))
         }
-        val has = relationFactory.buildHas(agent, attribute, value)
-        map[attributeId] = has
-        addBy(has, relations.hadBy, HAD_BY, attributeId, agentId)
-        publisher.post<HasEvent>(eventFactory.build(EventType.ADDED, has))
-    }
-
-    override fun getHas(id: AgentId): Set<Attribute> {
-        return getSet(id, relations.has, Function { it.attribute })
-    }
-
-    override fun getHadBy(id: AttributeId): Set<Agent> {
-        return getSet(id, relations.hadBy, Function { it.agent })
-    }
-
-    override fun getHasValue(agentId: AgentId, attributeId: AttributeId): Double? {
-        return if (relations.has.containsKey(agentId) && relations.has[agentId]!!.containsKey(attributeId)) {
-            relations.has[agentId]!![attributeId]!!.value
-        } else null
-    }
-
-    override fun setHasValue(agentId: AgentId, attributeId: AttributeId, value: Double) {
-        if (relations.has.containsKey(agentId) && relations.has[agentId]!!.containsKey(attributeId)) {
-            val has = relations.has[agentId]!![attributeId]!!
-            has.value = value
-            publisher.post<HasEvent>(eventFactory.build(EventType.UPDATED, has))
-        }
-    }
-
-    override fun removeHas(agentId: AgentId, attributeId: AttributeId) {
-        if (relations.has.containsKey(agentId) && relations.has[agentId]!!.containsKey(attributeId)) {
-            val has = relations.has[agentId]!!.remove(attributeId)!!
-            removeBy(attributeId, agentId, relations.hadBy, HAD_BY)
-            publisher.post<HasEvent>(eventFactory.build(EventType.REMOVED, has))
-        }
-    }
-
-    override fun removeAllHas() {
-        removeAll(relations.has, BiConsumer(::removeHas), Function { it.agent.id }, Function { it.attribute.id })
     }
 
     override fun addModerates(pmfId: PmfId, attributeId: AttributeId) {
