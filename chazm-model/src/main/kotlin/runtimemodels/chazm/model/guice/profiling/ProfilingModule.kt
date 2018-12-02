@@ -1,4 +1,4 @@
-package runtimemodels.chazm.model.aop.profiling
+package runtimemodels.chazm.model.guice.profiling
 
 import com.google.inject.AbstractModule
 

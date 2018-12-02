@@ -1,4 +1,4 @@
-package runtimemodels.chazm.model.aop.profiling
+package runtimemodels.chazm.model.guice.profiling
 
 import org.aopalliance.intercept.MethodInterceptor
 import org.aopalliance.intercept.MethodInvocation
