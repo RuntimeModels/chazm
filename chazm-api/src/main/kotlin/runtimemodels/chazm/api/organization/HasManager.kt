@@ -22,6 +22,7 @@ interface HasManager : Map<AgentId, Map<AttributeId, Has>> {
 
     /**
      * Returns the [Has] relation between an [Agent] and an [Attribute] from this [HasManager].
+     *
      * @param agentId the [AgentId] that represents the [Agent].
      * @param attributeId the [AttributeId] that represents the [Attribute].
      * @return the [Has] relation if it exists, `null` otherwise.

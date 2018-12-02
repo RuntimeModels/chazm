@@ -21,6 +21,15 @@ interface ContainsManager : Map<RoleId, Map<CharacteristicId, Contains>> {
     fun add(contains: Contains)
 
     /**
+     * Returns the [Contains] relation between an [Role] and an [Characteristic] from this [HasManager].
+     *
+     * @param roleId           the [RoleId] that represents the [Role].
+     * @param characteristicId the [CharacteristicId] that represents the [Characteristic].
+     * @return the [Contains] relation if it exists, `null` otherwise.
+     */
+    operator fun get(roleId: RoleId, characteristicId: CharacteristicId): Contains?
+
+    /**
      * Returns a [Map] of [Characteristic]s that are contained by a [Role] from this [ContainsManager].
      *
      * @param key the [RoleId] that represents the [Role].

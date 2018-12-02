@@ -21,6 +21,15 @@ interface AchievesManager : Map<RoleId, Map<SpecificationGoalId, Achieves>> {
     fun add(achieves: Achieves)
 
     /**
+     * Returns the [Achieves] relation between an [Role] and an [SpecificationGoal] from this [HasManager].
+     *
+     * @param roleId the [RoleId] that represents the [Role].
+     * @param goalId the [SpecificationGoalId] that represents the [SpecificationGoal].
+     * @return the [Achieves] relation if it exists, `null` otherwise.
+     */
+    operator fun get(roleId: RoleId, goalId: SpecificationGoalId): Achieves?
+
+    /**
      * Returns a [Map] of the [SpecificationGoal]s that are achieved by a [Role].
      *
      * @param key the [RoleId] that represents the [Role].

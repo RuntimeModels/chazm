@@ -21,6 +21,8 @@ internal data class DefaultContainsManager @Inject constructor(
         byMap.computeIfAbsent(contains.characteristic.id) { mutableMapOf() }[contains.role.id] = contains
     }
 
+    override operator fun get(roleId: RoleId, characteristicId: CharacteristicId): Contains? = map[roleId]?.get(characteristicId)
+
     override operator fun get(key: RoleId): Map<CharacteristicId, Contains> = map.getOrDefault(key, mutableMapOf())
 
     override operator fun get(id: CharacteristicId): Map<RoleId, Contains> = byMap.getOrDefault(id, mutableMapOf())

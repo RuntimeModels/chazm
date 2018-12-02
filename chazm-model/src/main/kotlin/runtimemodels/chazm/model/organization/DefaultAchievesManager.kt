@@ -21,6 +21,8 @@ internal data class DefaultAchievesManager @Inject constructor(
         byMap.computeIfAbsent(achieves.goal.id) { mutableMapOf() }[achieves.role.id] = achieves
     }
 
+    override operator fun get(roleId: RoleId, goalId: SpecificationGoalId): Achieves? = map[roleId]?.get(goalId)
+
     override operator fun get(key: RoleId): Map<SpecificationGoalId, Achieves> = map.getOrDefault(key, mutableMapOf())
 
     override operator fun get(id: SpecificationGoalId): Map<RoleId, Achieves> = byMap.getOrDefault(id, mutableMapOf())
