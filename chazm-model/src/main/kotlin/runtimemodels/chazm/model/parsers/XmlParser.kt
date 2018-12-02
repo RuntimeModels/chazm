@@ -30,7 +30,7 @@ import javax.xml.stream.events.StartElement
  */
 @Singleton
 internal open class XmlParser @Inject constructor(
-    private val factory: XMLInputFactory,
+    private val xmlFactory: XMLInputFactory,
     private val entityFactory: EntityFactory,
     private val relationFactory: RelationFactory
 ) {
@@ -50,7 +50,7 @@ internal open class XmlParser @Inject constructor(
      */
     @Throws(XMLStreamException::class)
     fun parse(organization: Organization, inputStream: InputStream) {
-        val reader = factory.createXMLEventReader(inputStream)
+        val reader = xmlFactory.createXMLEventReader(inputStream)
         while (reader.hasNext()) {
             val event = reader.nextEvent()
             if (event.isStartElement) {
