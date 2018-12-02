@@ -8,7 +8,6 @@ import runtimemodels.chazm.model.factory.RelationFactory
 import runtimemodels.chazm.model.id.*
 import runtimemodels.chazm.model.message.E
 import runtimemodels.chazm.model.message.L
-import runtimemodels.chazm.model.relation.AchievesRelation
 import java.io.InputStream
 import java.util.*
 import java.util.function.BiConsumer
@@ -308,7 +307,19 @@ internal open class XmlParser @Inject constructor(
                             val value = java.lang.Double.valueOf(getAttributeValue(element, VALUE_ATTRIBUTE))
                             list.add(object : RunLater {
                                 override fun run() {
-                                    return addRelation(id, ids, characteristics, BiConsumer { c, d -> organization.addContains(c, d, value) }, Characteristic::class.java)
+                                    return addRelation(
+                                        id,
+                                        ids,
+                                        characteristics,
+                                        BiConsumer { roleId, characteristicId ->
+                                            organization.containsRelations.add(relationFactory.buildContains(
+                                                organization.roles[roleId]!!,
+                                                organization.characteristics[characteristicId]!!,
+                                                value
+                                            ))
+                                        },
+                                        Characteristic::class.java
+                                    )
                                 }
                             })
                         } catch (e: NumberFormatException) {

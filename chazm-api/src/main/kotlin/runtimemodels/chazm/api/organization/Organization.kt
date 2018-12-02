@@ -5,6 +5,7 @@ import runtimemodels.chazm.api.function.Goodness
 import runtimemodels.chazm.api.id.*
 import runtimemodels.chazm.api.relation.Achieves
 import runtimemodels.chazm.api.relation.Assignment
+import runtimemodels.chazm.api.relation.Contains
 import runtimemodels.chazm.api.relation.manager.*
 import java.util.function.Predicate
 
@@ -14,7 +15,7 @@ import java.util.function.Predicate
  * @author Christopher Zhong
  * @since 4.0
  */
-interface Organization : AssignmentManager, ContainsManager, HasManager, ModeratesManager, NeedsManager, PossessesManager, RequiresManager, UsesManager {
+interface Organization : AssignmentManager, HasManager, ModeratesManager, NeedsManager, PossessesManager, RequiresManager, UsesManager {
     val agents: AgentManager
     fun add(agent: Agent)
     fun remove(id: AgentId)
@@ -54,6 +55,12 @@ interface Organization : AssignmentManager, ContainsManager, HasManager, Moderat
     val achievesRelations: AchievesManager
     fun add(achieves: Achieves)
     fun remove(roleId: RoleId, goalId: SpecificationGoalId)
+
+    // save for assignment
+
+    val containsRelations: ContainsManager
+    fun add(contains: Contains)
+    fun remove(roleId: RoleId, characteristicId: CharacteristicId)
 
     /**
      * Checks if this [Organization] is valid. Validity rules differ from one organization to another, so there is no general algorithm to determine
