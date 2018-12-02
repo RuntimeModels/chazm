@@ -20,8 +20,18 @@ interface AchievesManager : Map<RoleId, Map<SpecificationGoalId, Achieves>> {
      */
     fun add(achieves: Achieves)
 
+    /**
+     * Returns a [Map] of the [SpecificationGoal]s that are achieved by a [Role].
+     *
+     * @param key the [RoleId] that represents the [Role].
+     */
     override operator fun get(key: RoleId): Map<SpecificationGoalId, Achieves>
 
+    /**
+     * Returns a [Map] of the [Role]s that achieves a [SpecificationGoal].
+     *
+     * @param id the [SpecificationGoalId] that represents the [SpecificationGoal].
+     */
     operator fun get(id: SpecificationGoalId): Map<RoleId, Achieves>
 
     /**
