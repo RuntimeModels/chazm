@@ -1,7 +1,9 @@
 package runtimemodels.chazm.api.organization
 
 import runtimemodels.chazm.api.entity.InstanceGoal
+import runtimemodels.chazm.api.entity.SpecificationGoal
 import runtimemodels.chazm.api.id.InstanceGoalId
+import runtimemodels.chazm.api.id.SpecificationGoalId
 
 /**
  * The [InstanceGoalManager] interface defines APIs that can be used for managing a set [InstanceGoal]s.
@@ -24,4 +26,11 @@ interface InstanceGoalManager : Map<InstanceGoalId, InstanceGoal> {
      * @return the [InstanceGoal] that was removed.
      */
     fun remove(id: InstanceGoalId): InstanceGoal
+
+    /**
+     * Removes all [InstanceGoal]s associated to a [SpecificationGoal] from this [InstanceGoalManager].
+     *
+     * @param id the [SpecificationGoalId] that represents the [SpecificationGoal]
+     */
+    fun remove(id: SpecificationGoalId)
 }

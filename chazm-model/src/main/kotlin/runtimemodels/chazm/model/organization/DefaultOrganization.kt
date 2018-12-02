@@ -209,6 +209,7 @@ internal open class DefaultOrganization @Inject constructor(
         if (specificationGoals.containsKey(id)) {
             /* remove the specification goal, all associated instance goals, all associated achieves relations */
             val goal = specificationGoals.remove(id)
+            instanceGoals.remove(id)
             achievesRelations.remove(id)
             publisher.post(eventFactory.build(EventType.REMOVED, goal))
         }

@@ -41,4 +41,9 @@ internal data class DefaultInstanceGoalManager @Inject constructor(
         }
         throw InstanceGoalNotExistsException(id)
     }
+
+    override fun remove(id: SpecificationGoalId) {
+        val mBy = byMap.remove(id)
+        mBy?.forEach { map.remove(it.key) }
+    }
 }
