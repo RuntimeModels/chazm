@@ -34,7 +34,7 @@ class OrganizationModule : AbstractModule() {
     fun instanceGoals(): MutableMap<InstanceGoalId, InstanceGoal> = mutableMapOf()
 
     @Provides
-    fun instanceGoalsBySpecificationGoals(): MutableMap<SpecificationGoalId, MutableMap<InstanceGoalId, InstanceGoal>> = mutableMapOf()
+    fun instanceGoalsBy(): MutableMap<SpecificationGoalId, MutableMap<InstanceGoalId, InstanceGoal>> = mutableMapOf()
 
     @Provides
     fun pmfs(): MutableMap<PmfId, Pmf> = mutableMapOf()

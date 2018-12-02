@@ -102,7 +102,7 @@ class XmlParserTest {
             { assertThat(organization.getHas(agent1).size).isEqualTo(1) },
             { assertThat(organization.getHas(agent1).map { it.id }).containsOnly(attribute1) },
             { assertThat(organization.getModerates(pmf1)).isNotNull() },
-            { assertThat(organization.getModerates(pmf1).id).isEqualTo(attribute1) },
+            { assertThat(organization.getModerates(pmf1)?.id).isEqualTo(attribute1) },
             { assertThat(organization.getNeeds(role1).size).isEqualTo(1) },
             { assertThat(organization.getNeeds(role1).map { it.id }).containsOnly(attribute1) },
             { assertThat(organization.getPossesses(agent1).size).isEqualTo(1) },

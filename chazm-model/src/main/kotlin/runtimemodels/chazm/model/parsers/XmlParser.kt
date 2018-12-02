@@ -32,7 +32,7 @@ import javax.xml.stream.events.StartElement
 internal open class XmlParser @Inject constructor(
     private val factory: XMLInputFactory,
     private val entityFactory: EntityFactory,
-    private val assignmentFactory: AssignmentFactory
+    private val relationFactory: RelationFactory
 ) {
 
     @FunctionalInterface
@@ -225,7 +225,7 @@ internal open class XmlParser @Inject constructor(
                 val goalId = instanceGoals[gId]
                     ?: throw XMLStreamException(E.INCOMPLETE_XML_FILE[InstanceGoal::class.java.simpleName, gId])
                 val goal = organization.instanceGoals[goalId]!!
-                val assignment = assignmentFactory.buildAssignment(agent, role, goal)
+                val assignment = relationFactory.buildAssignment(agent, role, goal)
                 return organization.addAssignment(assignment)
             }
         })
@@ -315,20 +315,23 @@ internal open class XmlParser @Inject constructor(
                             throw XMLStreamException(e)
                         }
 
-                } else if (NEEDS_ELEMENT == name.localPart) {
-                    val ids = collectChild(reader, name)
-                    list.add(object : RunLater {
-                        override fun run() {
-                            return addRelation(id, ids, attributes, BiConsumer { roleId, attributeId -> organization.addNeeds(roleId, attributeId) }, Attribute::class.java)
-                        }
-                    })
-                } else if (REQUIRES_ELEMENT == name.localPart) {
-                    val ids = collectChild(reader, name)
-                    list.add(object : RunLater {
-                        override fun run() {
-                            return addRelation(id, ids, capabilities, BiConsumer { roleId, capabilityId -> organization.addRequires(roleId, capabilityId) }, Capability::class.java)
-                        }
-                    })
+                    }
+                    NEEDS_ELEMENT == name.localPart -> {
+                        val ids = collectChild(reader, name)
+                        list.add(object : RunLater {
+                            override fun run() {
+                                return addRelation(id, ids, attributes, BiConsumer { roleId, attributeId -> organization.addNeeds(roleId, attributeId) }, Attribute::class.java)
+                            }
+                        })
+                    }
+                    REQUIRES_ELEMENT == name.localPart -> {
+                        val ids = collectChild(reader, name)
+                        list.add(object : RunLater {
+                            override fun run() {
+                                return addRelation(id, ids, capabilities, BiConsumer { roleId, capabilityId -> organization.addRequires(roleId, capabilityId) }, Capability::class.java)
+                            }
+                        })
+                    }
                 }
             } else if (event.isEndElement) {
                 val element = event.asEndElement()
