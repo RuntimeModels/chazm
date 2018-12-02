@@ -3,12 +3,12 @@ package runtimemodels.chazm.model.parsers
 import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.api.id.*
 import runtimemodels.chazm.api.organization.Organization
-import runtimemodels.chazm.model.entity.EntityFactory
+import runtimemodels.chazm.model.factory.EntityFactory
+import runtimemodels.chazm.model.factory.RelationFactory
 import runtimemodels.chazm.model.id.*
 import runtimemodels.chazm.model.message.E
 import runtimemodels.chazm.model.message.L
 import runtimemodels.chazm.model.relation.AchievesRelation
-import runtimemodels.chazm.model.factory.RelationFactory
 import java.io.InputStream
 import java.util.*
 import java.util.function.BiConsumer

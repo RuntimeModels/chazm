@@ -5,7 +5,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import runtimemodels.chazm.api.function.Effectiveness
 import runtimemodels.chazm.api.organization.Organization
-import runtimemodels.chazm.model.entity.EntityFactory
+import runtimemodels.chazm.model.factory.EntityFactory
 import runtimemodels.chazm.model.factory.RelationFactory
 import runtimemodels.chazm.model.guice.OrganizationModule
 import runtimemodels.chazm.model.id.*
