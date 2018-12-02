@@ -23,7 +23,7 @@ internal open class DefaultGoodness @Inject constructor() : Goodness {
         if (organization.getNeeds(role.id).any { organization.getHasValue(agent.id, it.id) == null }) {
             return MIN_SCORE
         }
-        if (organization.getAchieves(role.id).contains(goal.goal)) {
+        if (organization.achievesRelations[role.id].containsKey(goal.goal.id)) {
             var score = MAX_SCORE
             var count = 0
             organization.getRequires(role.id).forEach { capability ->

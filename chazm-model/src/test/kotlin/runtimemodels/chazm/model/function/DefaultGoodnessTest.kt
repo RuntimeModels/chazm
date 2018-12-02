@@ -9,6 +9,7 @@ import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.model.entity.EntityFactory
 import runtimemodels.chazm.model.id.*
 import runtimemodels.chazm.model.organization.OrganizationModule
+import runtimemodels.chazm.model.relation.AchievesRelation
 
 class DefaultGoodnessTest {
 
@@ -35,7 +36,7 @@ class DefaultGoodnessTest {
         o.add(sg)
         o.add(ig)
         o.add(c1)
-        o.addAchieves(r.id, sg.id)
+        o.add(AchievesRelation(r, sg))
 
         assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MAX_SCORE)
 

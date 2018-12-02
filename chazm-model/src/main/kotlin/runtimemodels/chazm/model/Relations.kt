@@ -6,8 +6,8 @@ import java.util.concurrent.ConcurrentHashMap
 
 internal class Relations {
 
-    val achieves: MutableMap<RoleId, MutableMap<SpecificationGoalId, Achieves>> = ConcurrentHashMap()
-    val achievedBy: MutableMap<SpecificationGoalId, MutableMap<RoleId, Achieves>> = ConcurrentHashMap()
+    //    val achieves: MutableMap<RoleId, MutableMap<SpecificationGoalId, Achieves>> = ConcurrentHashMap()
+//    val achievedBy: MutableMap<SpecificationGoalId, MutableMap<RoleId, Achieves>> = ConcurrentHashMap()
     val assignments: MutableMap<UniqueId<Assignment>, Assignment> = ConcurrentHashMap()
     val assignmentsByAgent: MutableMap<AgentId, MutableMap<UniqueId<Assignment>, Assignment>> = ConcurrentHashMap()
     val contains: MutableMap<RoleId, MutableMap<CharacteristicId, Contains>> = ConcurrentHashMap()

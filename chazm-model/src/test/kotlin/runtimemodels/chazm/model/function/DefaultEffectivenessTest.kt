@@ -34,6 +34,7 @@ class DefaultEffectivenessTest {
         val as2 = relationFactory.buildAssignment(a1, r, ig2)
         val as3 = relationFactory.buildAssignment(a2, r, ig1)
         val as4 = relationFactory.buildAssignment(a2, r, ig2)
+        val ar1 = relationFactory.buildAchieves(r, sg)
 
         assertThat(effectiveness.compute(o, o.assignments)).isEqualTo(0.0)
 
@@ -45,7 +46,7 @@ class DefaultEffectivenessTest {
         o.add(ig2)
         o.add(c1)
         o.add(c2)
-        o.addAchieves(r.id, sg.id)
+        o.add(ar1)
         o.addRequires(r.id, c1.id)
         o.addPossesses(a1.id, c1.id, 1.0)
         o.addAssignment(as1)

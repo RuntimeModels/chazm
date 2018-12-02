@@ -5,6 +5,7 @@ import com.google.inject.Provides
 import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.api.id.*
 import runtimemodels.chazm.api.organization.*
+import runtimemodels.chazm.api.relation.Achieves
 import runtimemodels.chazm.model.event.EventModule
 import runtimemodels.chazm.model.function.FunctionModule
 import runtimemodels.chazm.model.notification.NotificationModule
@@ -47,6 +48,12 @@ class OrganizationModule : AbstractModule() {
     @Provides
     fun specificationGoals(): MutableMap<SpecificationGoalId, SpecificationGoal> = mutableMapOf()
 
+    @Provides
+    fun achieves(): MutableMap<RoleId, MutableMap<SpecificationGoalId, Achieves>> = mutableMapOf()
+
+    @Provides
+    fun achievesBy(): MutableMap<SpecificationGoalId, MutableMap<RoleId, Achieves>> = mutableMapOf()
+
     override fun configure() {
         bind(Organization::class.java).to(DefaultOrganization::class.java)
         bind(AgentManager::class.java).to(DefaultAgentManager::class.java)
@@ -58,6 +65,8 @@ class OrganizationModule : AbstractModule() {
         bind(PolicyManager::class.java).to(DefaultPolicyManager::class.java)
         bind(RoleManager::class.java).to(DefaultRoleManager::class.java)
         bind(SpecificationGoalManager::class.java).to(DefaultSpecifcationGoalManager::class.java)
+
+        bind(AchievesManager::class.java).to(DefaultAchievesManager::class.java)
 
         install(RelationModule())
         install(FunctionModule())

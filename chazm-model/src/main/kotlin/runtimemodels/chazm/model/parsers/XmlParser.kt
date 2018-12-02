@@ -7,7 +7,8 @@ import runtimemodels.chazm.model.entity.EntityFactory
 import runtimemodels.chazm.model.id.*
 import runtimemodels.chazm.model.message.E
 import runtimemodels.chazm.model.message.L
-import runtimemodels.chazm.model.relation.AssignmentFactory
+import runtimemodels.chazm.model.relation.AchievesRelation
+import runtimemodels.chazm.model.relation.RelationFactory
 import java.io.InputStream
 import java.util.*
 import java.util.function.BiConsumer
@@ -283,25 +284,36 @@ internal open class XmlParser @Inject constructor(
             if (event.isStartElement) {
                 val element = event.asStartElement()
                 val name = element.name
-                if (ACHIEVES_ELEMENT == name.localPart) {
-                    val ids = collectChild(reader, name)
-                    list.add(object : RunLater {
-                        override fun run() {
-                            return addRelation(id, ids, goals, BiConsumer { roleId, goalId -> organization.addAchieves(roleId, goalId) }, SpecificationGoal::class.java)
-                        }
-                    })
-                } else if (CONTAINS_ELEMENT == name.localPart) {
-                    val ids = collectChild(reader, name)
-                    try {
-                        val value = java.lang.Double.valueOf(getAttributeValue(element, VALUE_ATTRIBUTE))
+                when {
+                    ACHIEVES_ELEMENT == name.localPart -> {
+                        val ids = collectChild(reader, name)
                         list.add(object : RunLater {
                             override fun run() {
-                                return addRelation(id, ids, characteristics, BiConsumer { c, d -> organization.addContains(c, d, value) }, Characteristic::class.java)
+                                return addRelation(id,
+                                    ids,
+                                    goals,
+                                    BiConsumer { roleId, goalId ->
+                                        organization.achievesRelations.add(AchievesRelation(
+                                            organization.roles[roleId]!!,
+                                            organization.specificationGoals[goalId]!!
+                                        ))
+                                    },
+                                    SpecificationGoal::class.java)
                             }
                         })
-                    } catch (e: NumberFormatException) {
-                        throw XMLStreamException(e)
                     }
+                    CONTAINS_ELEMENT == name.localPart -> {
+                        val ids = collectChild(reader, name)
+                        try {
+                            val value = java.lang.Double.valueOf(getAttributeValue(element, VALUE_ATTRIBUTE))
+                            list.add(object : RunLater {
+                                override fun run() {
+                                    return addRelation(id, ids, characteristics, BiConsumer { c, d -> organization.addContains(c, d, value) }, Characteristic::class.java)
+                                }
+                            })
+                        } catch (e: NumberFormatException) {
+                            throw XMLStreamException(e)
+                        }
 
                 } else if (NEEDS_ELEMENT == name.localPart) {
                     val ids = collectChild(reader, name)

@@ -91,8 +91,8 @@ class XmlParserTest {
             { assertThat(organization.specificationGoals[specificationGoal1]).isNotNull() },
 
             // check all 8 relations
-            { assertThat(organization.getAchieves(role1).size).isEqualTo(1) },
-            { assertThat(organization.getAchieves(role1).map { it.id }).containsOnly(specificationGoal1) },
+            { assertThat(organization.achievesRelations[role1].size).isEqualTo(1) },
+            { assertThat(organization.achievesRelations[role1].map { it.key }).containsOnly(specificationGoal1) },
             { assertThat(organization.assignments.size).isEqualTo(1) },
             { assertThat(organization.assignments.map { it.agent }.map { it.id }).containsOnly(agent1) },
             { assertThat(organization.assignments.map { it.role }.map { it.id }).containsOnly(role1) },
@@ -134,8 +134,8 @@ class XmlParserTest {
             { assertThat(organization.specificationGoals.size).isEqualTo(1) },
             { assertThat(organization.specificationGoals[g1]).isNotNull() },
 
-            { assertThat(organization.getAchieves(r1).size).isEqualTo(1) },
-            { assertThat(organization.getAchieves(r1).map { it.id }).containsOnly(g1) },
+            { assertThat(organization.achievesRelations[r1].size).isEqualTo(1) },
+            { assertThat(organization.achievesRelations[r1].map { it.key }).containsOnly(g1) },
 
             { assertThat(organization.getRequires(r1).size).isEqualTo(1) },
             { assertThat(organization.getRequires(r1).map { it.id }).containsOnly(c1) }
@@ -164,8 +164,8 @@ class XmlParserTest {
             { assertThat(organization.roles.size).isEqualTo(1) },
             { assertThat(organization.roles[r1]).isNotNull() },
 
-            { assertThat(organization.getAchieves(r1).size).isEqualTo(1) },
-            { assertThat(organization.getAchieves(r1).map { it.id }).containsOnly(g1) },
+            { assertThat(organization.achievesRelations[r1].size).isEqualTo(1) },
+            { assertThat(organization.achievesRelations[r1].map { it.key }).containsOnly(g1) },
 
             { assertThat(organization.getRequires(r1).size).isEqualTo(1) },
             { assertThat(organization.getRequires(r1).map { it.id }).containsOnly(c1) }
@@ -202,8 +202,8 @@ class XmlParserTest {
             { assertThat(organization.roles.size).isEqualTo(1) },
             { assertThat(organization.roles[r1]).isNotNull() },
 
-            { assertThat(organization.getAchieves(r1).size).isEqualTo(3) },
-            { assertThat(organization.getAchieves(r1).map { it.id }).containsOnly(g1, g2, g3) },
+            { assertThat(organization.achievesRelations[r1].size).isEqualTo(3) },
+            { assertThat(organization.achievesRelations[r1].map { it.key }).containsOnly(g1, g2, g3) },
 
             { assertThat(organization.getRequires(r1).size).isEqualTo(3) },
             { assertThat(organization.getRequires(r1).map { it.id }).containsOnly(c1, c2, c3) }
@@ -240,8 +240,8 @@ class XmlParserTest {
             { assertThat(organization.roles.size).isEqualTo(1) },
             { assertThat(organization.roles[r1]).isNotNull() },
 
-            { assertThat(organization.getAchieves(r1).size).isEqualTo(3) },
-            { assertThat(organization.getAchieves(r1).map { it.id }).containsOnly(g1, g2, g3) },
+            { assertThat(organization.achievesRelations[r1].size).isEqualTo(3) },
+            { assertThat(organization.achievesRelations[r1].map { it.key }).containsOnly(g1, g2, g3) },
 
             { assertThat(organization.getRequires(r1).size).isEqualTo(3) },
             { assertThat(organization.getRequires(r1).map { it.id }).containsOnly(c1, c2, c3) }
@@ -262,7 +262,7 @@ class XmlParserTest {
             { assertThat(organization.roles.size).isEqualTo(1) },
             { assertThat(organization.roles[r1]).isNotNull() },
 
-            { assertThat(organization.getAchieves(r1).size).isEqualTo(0) },
+            { assertThat(organization.achievesRelations[r1].size).isEqualTo(0) },
 
             { assertThat(organization.getRequires(r1).size).isEqualTo(0) }
         )

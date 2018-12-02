@@ -7,6 +7,7 @@ import runtimemodels.chazm.api.function.Effectiveness
 import runtimemodels.chazm.api.function.Goodness
 import runtimemodels.chazm.api.id.*
 import runtimemodels.chazm.api.organization.*
+import runtimemodels.chazm.api.relation.Achieves
 import runtimemodels.chazm.api.relation.Assignment
 import runtimemodels.chazm.model.Functions
 import runtimemodels.chazm.model.Relations
@@ -37,7 +38,8 @@ internal open class DefaultOrganization @Inject constructor(
     override val pmfs: PmfManager,
     override val policies: PolicyManager,
     override val roles: RoleManager,
-    override val specificationGoals: SpecificationGoalManager
+    override val specificationGoals: SpecificationGoalManager,
+    override val achievesRelations: AchievesManager
 ) : Organization, FlowableOnSubscribe<Organization> {
 
     private val relations = Relations()
@@ -173,7 +175,7 @@ internal open class DefaultOrganization @Inject constructor(
         checkNotExists(role, Predicate { roles.containsKey(it) })
         /* add the role, achieves map, requires map, needs map, uses, contains map */
         roles.add(role)
-        relations.achieves[role.id] = ConcurrentHashMap()
+//        relations.achieves[role.id] = ConcurrentHashMap()
         relations.requires[role.id] = ConcurrentHashMap()
         relations.needs[role.id] = ConcurrentHashMap()
         relations.uses[role.id] = ConcurrentHashMap()
@@ -189,7 +191,7 @@ internal open class DefaultOrganization @Inject constructor(
 			 * all associated contains relations
 			 */
             val role = roles.remove(id)
-            remove(id, relations.achieves, ACHIEVES, Consumer { removeAchieves(id, it) })
+            achievesRelations.remove(id)
             remove(id, relations.requires, REQUIRES, Consumer { removeRequires(id, it) })
             remove(id, relations.needs, NEEDS, Consumer { removeNeeds(id, it) })
             remove(id, relations.uses, USES, Consumer { removeUses(id, it) })
@@ -203,8 +205,7 @@ internal open class DefaultOrganization @Inject constructor(
         checkNotExists(goal, Predicate { specificationGoals.containsKey(it) })
         /* add the specification goal, instanceGoalsBySpecificationGoal map, achievedBy map */
         specificationGoals.add(goal)
-//        entities.instanceGoalsBySpecificationGoal[goal.id] = ConcurrentHashMap()
-        relations.achievedBy[goal.id] = ConcurrentHashMap()
+//        relations.achievedBy[goal.id] = ConcurrentHashMap()
         publisher.post(eventFactory.build(EventType.ADDED, goal))
     }
 
@@ -212,44 +213,23 @@ internal open class DefaultOrganization @Inject constructor(
         if (specificationGoals.containsKey(id)) {
             /* remove the specification goal, all associated instance goals, all associated achieves relations */
             val goal = specificationGoals.remove(id)
-//            remove(id, entities.instanceGoalsBySpecificationGoal, INSTANCE_GOALS_BY_SPECIFICATION_GOAL, Consumer(::remove))
-            remove(id, relations.achievedBy, ACHIEVED_BY, Consumer { removeAchieves(it, id) })
+            achievesRelations.remove(id)
             publisher.post(eventFactory.build(EventType.REMOVED, goal))
         }
     }
 
-    override fun addAchieves(roleId: RoleId, goalId: SpecificationGoalId) {
-        val role = checkExists(roleId, Function(roles::get))
-        val goal = checkExists(goalId, Function<SpecificationGoalId, SpecificationGoal?>(specificationGoals::get))
-        val map = getMap(roleId, relations.achieves, ACHIEVES)
-        if (map.containsKey(goalId)) {
-            /* relation already exists do nothing */
-            return
+    override fun add(achieves: Achieves) {
+        checkExists(achieves.role.id, Function(roles::get))
+        checkExists(achieves.goal.id, Function(specificationGoals::get))
+        achievesRelations.add(achieves)
+        publisher.post(eventFactory.build(EventType.ADDED, achieves))
+    }
+
+    override fun remove(roleId: RoleId, goalId: SpecificationGoalId) {
+        if (achievesRelations.containsKey(roleId) && achievesRelations[roleId].containsKey(goalId)) {
+            val achieves = achievesRelations.remove(roleId, goalId)
+            publisher.post(eventFactory.build(EventType.REMOVED, achieves))
         }
-        val achieves = relationFactory.buildAchieves(role, goal)
-        map[goalId] = achieves
-        addBy(achieves, relations.achievedBy, ACHIEVED_BY, goalId, roleId)
-        publisher.post<AchievesEvent>(eventFactory.build(EventType.ADDED, achieves))
-    }
-
-    override fun getAchieves(id: RoleId): Set<SpecificationGoal> {
-        return getSet(id, relations.achieves, Function { it.goal })
-    }
-
-    override fun getAchievedBy(id: SpecificationGoalId): Set<Role> {
-        return getSet(id, relations.achievedBy, Function { it.role })
-    }
-
-    override fun removeAchieves(roleId: RoleId, goalId: SpecificationGoalId) {
-        if (relations.achieves.containsKey(roleId) && relations.achieves[roleId]!!.containsKey(goalId)) {
-            val achieves = relations.achieves[roleId]!!.remove(goalId)!!
-            removeBy(goalId, roleId, relations.achievedBy, ACHIEVED_BY)
-            publisher.post<AchievesEvent>(eventFactory.build(EventType.REMOVED, achieves))
-        }
-    }
-
-    override fun removeAllAchieves() {
-        removeAll(relations.achieves, BiConsumer(::removeAchieves), Function { it.role.id }, Function { it.goal.id })
     }
 
     override fun addAssignment(assignment: Assignment) {
@@ -726,8 +706,8 @@ internal open class DefaultOrganization @Inject constructor(
 		 */
             for ((_, goal) in organization.specificationGoals) {
                 var isAchievable = false
-                for (role in organization.getAchievedBy(goal.id)) {
-                    isAchievable = isAchievable or (organization.roles[role.id] != null)
+                for ((_, achieves) in organization.achievesRelations[goal.id]) {
+                    isAchievable = isAchievable or (organization.roles[achieves.role.id] != null)
                     if (isAchievable) { /* short circuit */
                         /*
                      * can stop checking because there is at least one role that can achieve the goal
