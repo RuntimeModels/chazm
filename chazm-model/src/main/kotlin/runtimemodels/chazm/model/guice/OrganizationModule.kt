@@ -8,6 +8,7 @@ import runtimemodels.chazm.api.organization.*
 import runtimemodels.chazm.api.relation.Achieves
 import runtimemodels.chazm.api.relation.Contains
 import runtimemodels.chazm.api.relation.Has
+import runtimemodels.chazm.api.relation.Moderates
 import runtimemodels.chazm.model.function.FunctionModule
 import runtimemodels.chazm.model.organization.*
 
@@ -68,6 +69,12 @@ class OrganizationModule : AbstractModule() {
     @Provides
     fun hasBy(): MutableMap<AttributeId, MutableMap<AgentId, Has>> = mutableMapOf()
 
+    @Provides
+    fun moderates(): MutableMap<PmfId, MutableMap<AttributeId, Moderates>> = mutableMapOf()
+
+    @Provides
+    fun moderatesBy(): MutableMap<AttributeId, MutableMap<PmfId, Moderates>> = mutableMapOf()
+
     override fun configure() {
         bind(Organization::class.java).to(DefaultOrganization::class.java)
         bind(AgentManager::class.java).to(DefaultAgentManager::class.java)
@@ -84,6 +91,7 @@ class OrganizationModule : AbstractModule() {
         // save for assignment
         bind(ContainsManager::class.java).to(DefaultContainsManager::class.java)
         bind(HasManager::class.java).to(DefaultHasManager::class.java)
+        bind(ModeratesManager::class.java).to(DefaultModeratesManager::class.java)
 
         install(RelationModule())
         install(FunctionModule())

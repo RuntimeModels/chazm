@@ -7,10 +7,7 @@ import runtimemodels.chazm.api.function.Effectiveness
 import runtimemodels.chazm.api.function.Goodness
 import runtimemodels.chazm.api.id.*
 import runtimemodels.chazm.api.organization.*
-import runtimemodels.chazm.api.relation.Achieves
-import runtimemodels.chazm.api.relation.Assignment
-import runtimemodels.chazm.api.relation.Contains
-import runtimemodels.chazm.api.relation.Has
+import runtimemodels.chazm.api.relation.*
 import runtimemodels.chazm.model.Functions
 import runtimemodels.chazm.model.Relations
 import runtimemodels.chazm.model.event.*
@@ -43,7 +40,8 @@ internal open class DefaultOrganization @Inject constructor(
     override val specificationGoals: SpecificationGoalManager,
     override val achievesRelations: AchievesManager,
     override val containsRelations: ContainsManager,
-    override val hasRelations: HasManager
+    override val hasRelations: HasManager,
+    override val moderatesRelations: ModeratesManager
 ) : Organization, FlowableOnSubscribe<Organization> {
 
     private val relations = Relations()
@@ -71,7 +69,6 @@ internal open class DefaultOrganization @Inject constructor(
         checkNotExists(attribute, Predicate { attributes.containsKey(it) })
         attributes.add(attribute)
         relations.neededBy[attribute.id] = ConcurrentHashMap()
-        relations.moderatedBy[attribute.id] = ConcurrentHashMap()
         publisher.post(eventFactory.build(EventType.ADDED, attribute))
     }
 
@@ -83,8 +80,8 @@ internal open class DefaultOrganization @Inject constructor(
             // all associated needs relations,
             val attribute = attributes.remove(id)
             hasRelations.remove(id)
+            moderatesRelations.remove(id)
             remove(id, relations.neededBy, NEEDED_BY, Consumer { removeNeeds(it, id) })
-            remove(id, relations.moderatedBy, MODERATED_BY, Consumer { removeModerates(it, id) })
             publisher.post(eventFactory.build(EventType.REMOVED, attribute))
         }
     }
@@ -147,9 +144,7 @@ internal open class DefaultOrganization @Inject constructor(
         if (pmfs.containsKey(id)) {
             /* remove the pmf, all associated moderates relations */
             val pmf = pmfs.remove(id)
-            if (relations.moderates.containsKey(id)) {
-                removeModerates(id, relations.moderates[id]!!.attribute.id)
-            }
+            moderatesRelations.remove(id)
             publisher.post(eventFactory.build(EventType.REMOVED, pmf))
         }
     }
@@ -304,38 +299,18 @@ internal open class DefaultOrganization @Inject constructor(
         }
     }
 
-    override fun addModerates(pmfId: PmfId, attributeId: AttributeId) {
-        val pmf = checkExists(pmfId, Function(pmfs::get))
-        val attribute = checkExists(attributeId, Function<AttributeId, Attribute?>(attributes::get))
-        if (relations.moderates.containsKey(pmfId)) {
-            return
-        }
-        val moderates = relationFactory.buildModerates(pmf, attribute)
-        relations.moderates[pmfId] = moderates
-        addBy(moderates, relations.moderatedBy, MODERATED_BY, attributeId, pmfId)
-        publisher.post<ModeratesEvent>(eventFactory.build(EventType.ADDED, moderates))
+    override fun add(moderates: Moderates) {
+        checkExists(moderates.pmf.id, Function(pmfs::get))
+        checkExists(moderates.attribute.id, Function(attributes::get))
+        moderatesRelations.add(moderates)
+        publisher.post(eventFactory.build(EventType.ADDED, moderates))
     }
 
-    override fun getModerates(id: PmfId): Attribute? {
-        return if (relations.moderates.containsKey(id)) {
-            relations.moderates[id]!!.attribute
-        } else null
-    }
-
-    override fun getModeratedBy(id: AttributeId): Set<Pmf> {
-        return getSet(id, relations.moderatedBy, Function { it.pmf })
-    }
-
-    override fun removeModerates(pmfId: PmfId, attributeId: AttributeId) {
-        if (relations.moderates.containsKey(pmfId)) {
-            val moderates = relations.moderates.remove(pmfId)!!
-            removeBy(attributeId, pmfId, relations.moderatedBy, MODERATED_BY)
+    override fun remove(pmfId: PmfId, attributeId: AttributeId) {
+        if (moderatesRelations.containsKey(pmfId)) {
+            val moderates = moderatesRelations.remove(pmfId, attributeId)
             publisher.post(eventFactory.build(EventType.REMOVED, moderates))
         }
-    }
-
-    override fun removeAllModerates() {
-        relations.moderates.values.toSet().forEach { removeModerates(it.pmf.id, it.attribute.id) }
     }
 
     override fun addNeeds(roleId: RoleId, attributeId: AttributeId) {
