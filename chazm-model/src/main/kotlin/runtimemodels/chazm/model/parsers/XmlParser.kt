@@ -8,7 +8,7 @@ import runtimemodels.chazm.model.id.*
 import runtimemodels.chazm.model.message.E
 import runtimemodels.chazm.model.message.L
 import runtimemodels.chazm.model.relation.AchievesRelation
-import runtimemodels.chazm.model.relation.RelationFactory
+import runtimemodels.chazm.model.factory.RelationFactory
 import java.io.InputStream
 import java.util.*
 import java.util.function.BiConsumer

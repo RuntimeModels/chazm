@@ -4,6 +4,7 @@ import com.google.inject.AbstractModule
 import com.google.inject.assistedinject.FactoryModuleBuilder
 import runtimemodels.chazm.api.relation.*
 import runtimemodels.chazm.model.entity.EntityModule
+import runtimemodels.chazm.model.factory.*
 
 /**
  * The [RelationModule] class provides a Guice binding module for relations.

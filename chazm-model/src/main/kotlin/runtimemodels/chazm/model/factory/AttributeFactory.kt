@@ -1,4 +1,4 @@
-package runtimemodels.chazm.model.entity
+package runtimemodels.chazm.model.factory
 
 import runtimemodels.chazm.api.entity.Attribute
 import runtimemodels.chazm.api.id.AttributeId

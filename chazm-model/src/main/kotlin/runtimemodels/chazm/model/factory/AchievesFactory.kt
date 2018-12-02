@@ -1,4 +1,4 @@
-package runtimemodels.chazm.model.relation
+package runtimemodels.chazm.model.factory
 
 import runtimemodels.chazm.api.entity.Role
 import runtimemodels.chazm.api.entity.SpecificationGoal

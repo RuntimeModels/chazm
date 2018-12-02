@@ -1,4 +1,4 @@
-package runtimemodels.chazm.model.relation
+package runtimemodels.chazm.model.factory
 
 /**
  * The [RelationFactory] interface defines the APIs for constructing relations.

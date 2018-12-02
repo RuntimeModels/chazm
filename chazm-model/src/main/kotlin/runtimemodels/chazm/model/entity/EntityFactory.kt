@@ -1,5 +1,7 @@
 package runtimemodels.chazm.model.entity
 
+import runtimemodels.chazm.model.factory.*
+
 /**
  * The [EntityFactory] interface defines the APIs for constructing entities.
  *

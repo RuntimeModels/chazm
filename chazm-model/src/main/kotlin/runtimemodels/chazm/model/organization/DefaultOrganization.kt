@@ -15,7 +15,7 @@ import runtimemodels.chazm.model.event.*
 import runtimemodels.chazm.model.message.E
 import runtimemodels.chazm.model.message.L
 import runtimemodels.chazm.model.notification.Publisher
-import runtimemodels.chazm.model.relation.RelationFactory
+import runtimemodels.chazm.model.factory.RelationFactory
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.function.BiConsumer

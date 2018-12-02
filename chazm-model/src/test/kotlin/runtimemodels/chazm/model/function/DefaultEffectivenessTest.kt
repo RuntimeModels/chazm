@@ -8,7 +8,7 @@ import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.model.entity.EntityFactory
 import runtimemodels.chazm.model.id.*
 import runtimemodels.chazm.model.organization.OrganizationModule
-import runtimemodels.chazm.model.relation.RelationFactory
+import runtimemodels.chazm.model.factory.RelationFactory
 
 
 class DefaultEffectivenessTest {
