@@ -20,7 +20,6 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.function.BiConsumer
 import java.util.function.Consumer
 import java.util.function.Function
-import java.util.function.Predicate
 import javax.inject.Inject
 
 internal open class DefaultOrganization @Inject constructor(
@@ -48,6 +47,7 @@ internal open class DefaultOrganization @Inject constructor(
     private val functions = Functions()
 
     override fun add(agent: Agent) {
+        checkNotExists(agent) { agents.containsKey(it) }
         agents.add(agent)
         relations.assignmentsByAgent[agent.id] = ConcurrentHashMap()
         relations.possesses[agent.id] = ConcurrentHashMap()
@@ -66,7 +66,7 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun add(attribute: Attribute) {
-        checkNotExists(attribute, Predicate { attributes.containsKey(it) })
+        checkNotExists(attribute) { attributes.containsKey(it) }
         attributes.add(attribute)
         relations.neededBy[attribute.id] = ConcurrentHashMap()
         publisher.post(eventFactory.build(EventType.ADDED, attribute))
@@ -87,7 +87,7 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun add(capability: Capability) {
-        checkNotExists(capability, Predicate { capabilities.containsKey(it) })
+        checkNotExists(capability) { capabilities.containsKey(it) }
         capabilities.add(capability)
         relations.requiredBy[capability.id] = ConcurrentHashMap()
         relations.possessedBy[capability.id] = ConcurrentHashMap()
@@ -105,7 +105,7 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun add(characteristic: Characteristic) {
-        checkNotExists(characteristic, Predicate { characteristics.containsKey(it) })
+        checkNotExists(characteristic) { characteristics.containsKey(it) }
         characteristics.add(characteristic)
         publisher.post(eventFactory.build(EventType.ADDED, characteristic))
     }
@@ -120,8 +120,8 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun add(goal: InstanceGoal) {
-        checkNotExists(goal, Predicate { instanceGoals.containsKey(it) })
-        checkExists(goal.goal.id, Function<SpecificationGoalId, SpecificationGoal?> { specificationGoals[it] })
+        checkNotExists(goal) { instanceGoals.containsKey(it) }
+        checkExists(goal.goal.id, specificationGoals::get)
         instanceGoals.add(goal)
         publisher.post(eventFactory.build(EventType.ADDED, goal))
     }
@@ -135,7 +135,7 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun add(pmf: Pmf) {
-        checkNotExists(pmf, Predicate { pmfs.containsKey(it) })
+        checkNotExists(pmf) { pmfs.containsKey(it) }
         pmfs.add(pmf)
         publisher.post(eventFactory.build(EventType.ADDED, pmf))
     }
@@ -150,7 +150,7 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun add(policy: Policy) {
-        checkNotExists(policy, Predicate { policies.containsKey(it) })
+        checkNotExists(policy) { policies.containsKey(it) }
         policies.add(policy)
         publisher.post(eventFactory.build(EventType.ADDED, policy))
     }
@@ -164,7 +164,7 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun add(role: Role) {
-        checkNotExists(role, Predicate { roles.containsKey(it) })
+        checkNotExists(role) { roles.containsKey(it) }
         roles.add(role)
         functions.goodness[role.id] = goodness
         publisher.post(eventFactory.build(EventType.ADDED, role))
@@ -190,7 +190,7 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun add(goal: SpecificationGoal) {
-        checkNotExists(goal, Predicate { specificationGoals.containsKey(it) })
+        checkNotExists(goal) { specificationGoals.containsKey(it) }
         specificationGoals.add(goal)
         publisher.post(eventFactory.build(EventType.ADDED, goal))
     }
@@ -206,8 +206,8 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun add(achieves: Achieves) {
-        checkExists(achieves.role.id, Function(roles::get))
-        checkExists(achieves.goal.id, Function(specificationGoals::get))
+        checkExists(achieves.role.id, roles::get)
+        checkExists(achieves.goal.id, specificationGoals::get)
         achievesRelations.add(achieves)
         publisher.post(eventFactory.build(EventType.ADDED, achieves))
     }
@@ -220,10 +220,10 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun addAssignment(assignment: Assignment) {
-        checkNotExists(assignment, Predicate { relations.assignments.containsKey(it) })
-        checkExists(assignment.agent.id, Function(agents::get))
-        checkExists(assignment.role.id, Function(roles::get))
-        checkExists(assignment.goal.id, Function(instanceGoals::get))
+        checkNotExists(assignment) { relations.assignments.containsKey(it) }
+        checkExists(assignment.agent.id, (agents::get))
+        checkExists(assignment.role.id, (roles::get))
+        checkExists(assignment.goal.id, (instanceGoals::get))
         /* add the assignment */
         relations.assignments[assignment.id] = assignment
         relations.assignmentsByAgent[assignment.agent.id]!![assignment.id] = assignment
@@ -272,8 +272,8 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun add(contains: Contains) {
-        checkExists(contains.role.id, Function(roles::get))
-        checkExists(contains.characteristic.id, Function(characteristics::get))
+        checkExists(contains.role.id, roles::get)
+        checkExists(contains.characteristic.id, characteristics::get)
         containsRelations.add(contains)
         publisher.post(eventFactory.build(EventType.ADDED, contains))
     }
@@ -286,8 +286,8 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun add(has: Has) {
-        checkExists(has.agent.id, Function(agents::get))
-        checkExists(has.attribute.id, Function(attributes::get))
+        checkExists(has.agent.id, agents::get)
+        checkExists(has.attribute.id, attributes::get)
         hasRelations.add(has)
         publisher.post(eventFactory.build(EventType.ADDED, has))
     }
@@ -300,8 +300,8 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun add(moderates: Moderates) {
-        checkExists(moderates.pmf.id, Function(pmfs::get))
-        checkExists(moderates.attribute.id, Function(attributes::get))
+        checkExists(moderates.pmf.id, pmfs::get)
+        checkExists(moderates.attribute.id, attributes::get)
         moderatesRelations.add(moderates)
         publisher.post(eventFactory.build(EventType.ADDED, moderates))
     }
@@ -314,8 +314,8 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun addNeeds(roleId: RoleId, attributeId: AttributeId) {
-        val role = checkExists(roleId, Function<RoleId, Role?>(roles::get))
-        val attribute = checkExists(attributeId, Function<AttributeId, Attribute?>(attributes::get))
+        val role = checkExists(roleId, (roles::get))
+        val attribute = checkExists(attributeId, (attributes::get))
         val map = getMap(roleId, relations.needs, NEEDS)
         if (map.containsKey(attributeId)) {
             /* relation already exists do nothing */
@@ -348,8 +348,8 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun addPossesses(agentId: AgentId, capabilityId: CapabilityId, score: Double) {
-        val agent = checkExists(agentId, Function<AgentId, Agent?>(agents::get))
-        val capability = checkExists(capabilityId, Function(capabilities::get))
+        val agent = checkExists(agentId, (agents::get))
+        val capability = checkExists(capabilityId, (capabilities::get))
         val map = getMap(agentId, relations.possesses, POSSESSES)
         if (map.containsKey(capabilityId)) {
             /* relation already exists do nothing */
@@ -396,8 +396,8 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun addRequires(roleId: RoleId, capabilityId: CapabilityId) {
-        val role = checkExists(roleId, Function<RoleId, Role?>(roles::get))
-        val capability = checkExists(capabilityId, Function(capabilities::get))
+        val role = checkExists(roleId, (roles::get))
+        val capability = checkExists(capabilityId, (capabilities::get))
         val map = getMap(roleId, relations.requires, REQUIRES)
         if (map.containsKey(capabilityId)) {
             /* relation already exists do nothing */
@@ -430,8 +430,8 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun addUses(roleId: RoleId, pmfId: PmfId) {
-        val role = checkExists(roleId, Function<RoleId, Role?>(roles::get))
-        val pmf = checkExists(pmfId, Function(pmfs::get))
+        val role = checkExists(roleId, (roles::get))
+        val pmf = checkExists(pmfId, (pmfs::get))
         val map = getMap(roleId, relations.uses, USES)
         if (map.containsKey(pmfId)) {
             /* relation already exists do nothing */
@@ -472,7 +472,7 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun setGoodness(id: RoleId, goodness: Goodness) {
-        checkExists(id, Function<RoleId, Role?>(roles::get))
+        checkExists(id, (roles::get))
         functions.goodness[id] = goodness
     }
 
@@ -486,19 +486,11 @@ internal open class DefaultOrganization @Inject constructor(
         private val POSSESSES = "possesses"
         private val ASSIGNMENTS_BY_AGENT = "assignmentsByAgent"
         private val NEEDED_BY = "neededBy"
-        private val HAD_BY = "hadBy"
-        private val MODERATED_BY = "moderatedBy"
-        private val HAS = "has"
         private val REQUIRED_BY = "requiredBy"
         private val POSSESSED_BY = "possessedBy"
-        private val CONTAINED_BY = "containedBy"
-        private val INSTANCE_GOALS_BY_SPECIFICATION_GOAL = "instanceGoalsBySpecificationGoal"
-        private val ACHIEVES = "achieves"
         private val REQUIRES = "requires"
         private val NEEDS = "needs"
         private val USES = "uses"
-        private val CONTAINS = "contains"
-        private val ACHIEVED_BY = "achievedBy"
         private val USED_BY = "usedBy"
         private val log = org.slf4j.LoggerFactory.getLogger(DefaultOrganization::class.java)
 
@@ -579,14 +571,14 @@ internal open class DefaultOrganization @Inject constructor(
             map.values.flatMap { it.values }.toSet().forEach { consumer.accept(function1.apply(it), function2.apply(it)) }
         }
 
-        private fun <T : Identifiable<T>> checkNotExists(t: T, p: Predicate<UniqueId<T>>) {
-            if (p.test(t.id)) {
+        private fun <T : Identifiable<T>> checkNotExists(t: T, predicate: (UniqueId<T>) -> Boolean) {
+            if (predicate(t.id)) {
                 throw IllegalArgumentException(E.ENTITY_ALREADY_EXISTS[t.id.type.simpleName, t.id])
             }
         }
 
-        private fun <T, U : UniqueId<T>> checkExists(id: U, f: Function<U, T?>): T {
-            return f.apply(id) ?: throw IllegalArgumentException(E.ENTITY_DOES_NOT_EXISTS[id.type.simpleName, id])
+        private fun <T : UniqueId<U>, U> checkExists(id: T, function: (T) -> U?): U {
+            return function(id) ?: throw IllegalArgumentException(E.ENTITY_DOES_NOT_EXISTS[id.type.simpleName, id])
         }
 
         /**

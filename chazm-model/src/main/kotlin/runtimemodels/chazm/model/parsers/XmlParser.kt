@@ -10,9 +10,6 @@ import runtimemodels.chazm.model.message.E
 import runtimemodels.chazm.model.message.L
 import java.io.InputStream
 import java.util.*
-import java.util.function.BiConsumer
-import java.util.function.Consumer
-import java.util.function.Function
 import javax.inject.Inject
 import javax.inject.Singleton
 import javax.xml.namespace.QName
@@ -85,7 +82,7 @@ internal open class XmlParser @Inject constructor(
                     val id: AgentId = DefaultAgentId(getAttributeValue(element, NAME_ATTRIBUTE))
                     // TODO parse contact info
                     val contactInfo: Map<Any, Any> = mapOf()
-                    build(id, agents, element, Function<AgentId, Agent> { entityFactory.buildAgent(it, contactInfo) }, Consumer { organization.add(it) })
+                    build(id, agents, element, { entityFactory.buildAgent(it, contactInfo) }, { organization.add(it) })
                     parseAgent(organization, reader, name, id, attributes, capabilities, list1)
                 } else if (ASSIGNMENT_ELEMENT == name.localPart) {
                     parseAssignment(organization, element, agents, instanceGoals, roles, list2)
@@ -93,33 +90,33 @@ internal open class XmlParser @Inject constructor(
                     val id = DefaultAttributeId(getAttributeValue(element, NAME_ATTRIBUTE))
                     try {
                         val type = Attribute.Type.valueOf(getAttributeValue(element, TYPE_ATTRIBUTE))
-                        build(id, attributes, element, Function<AttributeId, Attribute> { entityFactory.buildAttribute(it, type) }, Consumer { organization.add(it) })
+                        build(id, attributes, element, { entityFactory.buildAttribute(it, type) }, { organization.add(it) })
                     } catch (e: IllegalArgumentException) {
                         throw XMLStreamException(e)
                     }
 
                 } else if (CAPABILITY_ELEMENT == name.localPart) {
                     val id = DefaultCapabilityId(getAttributeValue(element, NAME_ATTRIBUTE))
-                    build(id, capabilities, element, Function<CapabilityId, Capability> { entityFactory.buildCapability(it) }, Consumer { organization.add(it) })
+                    build(id, capabilities, element, { entityFactory.buildCapability(it) }, { organization.add(it) })
                 } else if (CHARACTERISTIC_ELEMENT == name.localPart) {
                     val id = DefaultCharacteristicId(getAttributeValue(element, NAME_ATTRIBUTE))
-                    build(id, characteristics, element, Function<CharacteristicId, Characteristic> { entityFactory.buildCharacteristic(it) }, Consumer { organization.add(it) })
+                    build(id, characteristics, element, { entityFactory.buildCharacteristic(it) }, { organization.add(it) })
                 } else if (INSTANCEGOAL_ELEMENT == name.localPart) {
                     parseInstanceGoal(organization, element, specificationGoals, instanceGoals, list1)
                 } else if (PMF_ELEMENT == name.localPart) {
                     val id = DefaultPmfId(getAttributeValue(element, NAME_ATTRIBUTE))
-                    build(id, pmfs, element, Function<PmfId, Pmf> { entityFactory.buildPmf(it) }, Consumer { organization.add(it) })
+                    build(id, pmfs, element, { entityFactory.buildPmf(it) }, { organization.add(it) })
                     parsePmf(organization, reader, name, id, attributes, list1)
                 } else if (POLICY_ELEMENT == name.localPart) {
                     val id = DefaultPolicyId(getAttributeValue(element, NAME_ATTRIBUTE))
-                    build(id, policies, element, Function<PolicyId, Policy> { entityFactory.buildPolicy(it) }, Consumer { organization.add(it) })
+                    build(id, policies, element, { entityFactory.buildPolicy(it) }, { organization.add(it) })
                 } else if (ROLE_ELEMENT == name.localPart) {
                     val id = DefaultRoleId(getAttributeValue(element, NAME_ATTRIBUTE))
-                    build(id, roles, element, Function<RoleId, Role> { entityFactory.buildRole(it) }, Consumer { organization.add(it) })
+                    build(id, roles, element, { entityFactory.buildRole(it) }, { organization.add(it) })
                     parseRole(organization, reader, name, id, attributes, capabilities, characteristics, specificationGoals, list1)
                 } else if (GOAL_ELEMENT == name.localPart) {
                     val id = DefaultSpecificationGoalId(getAttributeValue(element, NAME_ATTRIBUTE))
-                    build(id, specificationGoals, element, Function<SpecificationGoalId, SpecificationGoal> { entityFactory.buildSpecificationGoal(it) }, Consumer { organization.add(it) })
+                    build(id, specificationGoals, element, { entityFactory.buildSpecificationGoal(it) }, { organization.add(it) })
                 }
             } else if (event.isEndElement) {
                 val element = event.asEndElement()
@@ -142,13 +139,13 @@ internal open class XmlParser @Inject constructor(
         id: T,
         map: MutableMap<String, T>,
         element: StartElement,
-        f: Function<T, U>,
-        c: Consumer<U>
+        f: (T) -> U,
+        c: (U) -> Unit
     ) {
         map[getAttributeValue(element, ID_ATTRIBUTE)] = id
-        val t = f.apply(id)
+        val t = f(id)
         try {
-            c.accept(t)
+            c(t)
         } catch (e: IllegalArgumentException) {
             throw XMLStreamException(e)
         }
@@ -180,7 +177,7 @@ internal open class XmlParser @Inject constructor(
                                     id,
                                     ids,
                                     attributes,
-                                    BiConsumer { agentId, attributeId ->
+                                    { agentId, attributeId ->
                                         organization.hasRelations.add(relationFactory.buildHas(
                                             organization.agents[agentId]!!,
                                             organization.attributes[attributeId]!!,
@@ -201,7 +198,7 @@ internal open class XmlParser @Inject constructor(
                         val value = java.lang.Double.valueOf(getAttributeValue(element, SCORE_ATTRIBUTE))
                         list.add(object : RunLater {
                             override fun run() {
-                                return addRelation(id, ids, capabilities, BiConsumer { c, d -> organization.addPossesses(c, d, value) }, Capability::class.java)
+                                return addRelation(id, ids, capabilities, { c, d -> organization.addPossesses(c, d, value) }, Capability::class.java)
                             }
                         })
                     } catch (e: NumberFormatException) {
@@ -255,7 +252,7 @@ internal open class XmlParser @Inject constructor(
                 val id = DefaultInstanceGoalId(getAttributeValue(element, NAME_ATTRIBUTE))
                 // TODO parse parameter
                 val parameter = mapOf<Any, Any>()
-                return build(id, instanceGoals, element, Function<InstanceGoalId, InstanceGoal> { entityFactory.buildInstanceGoal(it, goal, parameter) }, Consumer { organization.add(it) })
+                return build(id, instanceGoals, element, { entityFactory.buildInstanceGoal(it, goal, parameter) }, { organization.add(it) })
             }
         })
     }
@@ -276,7 +273,7 @@ internal open class XmlParser @Inject constructor(
                                 id,
                                 ids,
                                 attributes,
-                                BiConsumer { pmfId, attributeId ->
+                                { pmfId, attributeId ->
                                     organization.moderatesRelations.add(relationFactory.buildModerates(
                                         organization.pmfs[pmfId]!!,
                                         organization.attributes[attributeId]!!
@@ -315,7 +312,7 @@ internal open class XmlParser @Inject constructor(
                                     id,
                                     ids,
                                     goals,
-                                    BiConsumer { roleId, goalId ->
+                                    { roleId, goalId ->
                                         organization.achievesRelations.add(relationFactory.buildAchieves(
                                             organization.roles[roleId]!!,
                                             organization.specificationGoals[goalId]!!
@@ -336,7 +333,7 @@ internal open class XmlParser @Inject constructor(
                                         id,
                                         ids,
                                         characteristics,
-                                        BiConsumer { roleId, characteristicId ->
+                                        { roleId, characteristicId ->
                                             organization.containsRelations.add(relationFactory.buildContains(
                                                 organization.roles[roleId]!!,
                                                 organization.characteristics[characteristicId]!!,
@@ -356,7 +353,7 @@ internal open class XmlParser @Inject constructor(
                         val ids = collectChild(reader, name)
                         list.add(object : RunLater {
                             override fun run() {
-                                return addRelation(id, ids, attributes, BiConsumer { roleId, attributeId -> organization.addNeeds(roleId, attributeId) }, Attribute::class.java)
+                                return addRelation(id, ids, attributes, { roleId, attributeId -> organization.addNeeds(roleId, attributeId) }, Attribute::class.java)
                             }
                         })
                     }
@@ -364,7 +361,7 @@ internal open class XmlParser @Inject constructor(
                         val ids = collectChild(reader, name)
                         list.add(object : RunLater {
                             override fun run() {
-                                return addRelation(id, ids, capabilities, BiConsumer { roleId, capabilityId -> organization.addRequires(roleId, capabilityId) }, Capability::class.java)
+                                return addRelation(id, ids, capabilities, { roleId, capabilityId -> organization.addRequires(roleId, capabilityId) }, Capability::class.java)
                             }
                         })
                     }
@@ -384,12 +381,12 @@ internal open class XmlParser @Inject constructor(
         entity1: T,
         ids: List<String>,
         map: Map<String, U>,
-        c: BiConsumer<T, U>,
+        c: (T, U) -> Unit,
         clazz: Class<W>
     ) {
         for (id in ids) {
             val entity2 = map[id] ?: throw XMLStreamException(E.INCOMPLETE_XML_FILE[clazz.simpleName, id])
-            c.accept(entity1, entity2)
+            c(entity1, entity2)
         }
     }
 
