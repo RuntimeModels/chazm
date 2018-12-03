@@ -4,7 +4,6 @@ import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.api.function.Goodness
 import runtimemodels.chazm.api.id.*
 import runtimemodels.chazm.api.relation.*
-import runtimemodels.chazm.api.relation.manager.AssignmentManager
 import java.util.function.Predicate
 
 /**
@@ -13,7 +12,7 @@ import java.util.function.Predicate
  * @author Christopher Zhong
  * @since 4.0
  */
-interface Organization : AssignmentManager {
+interface Organization {
     val agents: AgentManager
     fun add(agent: Agent)
     fun remove(id: AgentId)
@@ -54,7 +53,9 @@ interface Organization : AssignmentManager {
     fun add(achieves: Achieves)
     fun remove(roleId: RoleId, goalId: SpecificationGoalId)
 
-    // save for assignment
+    val assignmentRelations: AssignmentManager
+    fun add(assignment: Assignment)
+    fun remove(agentId: AgentId, roleId: RoleId, goalId: InstanceGoalId)
 
     val containsRelations: ContainsManager
     fun add(contains: Contains)

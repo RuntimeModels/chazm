@@ -52,7 +52,14 @@ class OrganizationModule : AbstractModule() {
     @Provides
     fun achievesBy(): MutableMap<SpecificationGoalId, MutableMap<RoleId, Achieves>> = mutableMapOf()
 
-    // save for assignments
+    @Provides
+    fun assignments(): MutableMap<AgentId, MutableMap<RoleId, MutableMap<InstanceGoalId, Assignment>>> = mutableMapOf()
+
+    @Provides
+    fun assignmentsByRole(): MutableMap<RoleId, MutableMap<AgentId, MutableMap<InstanceGoalId, Assignment>>> = mutableMapOf()
+
+    @Provides
+    fun assignmentsByGoal(): MutableMap<InstanceGoalId, MutableMap<AgentId, MutableMap<RoleId, Assignment>>> = mutableMapOf()
 
     @Provides
     fun contains(): MutableMap<RoleId, MutableMap<CharacteristicId, Contains>> = mutableMapOf()
@@ -109,7 +116,7 @@ class OrganizationModule : AbstractModule() {
         bind(SpecificationGoalManager::class.java).to(DefaultSpecifcationGoalManager::class.java)
 
         bind(AchievesManager::class.java).to(DefaultAchievesManager::class.java)
-        // save for assignment
+        bind(AssignmentManager::class.java).to(DefaultAssignmentManager::class.java)
         bind(ContainsManager::class.java).to(DefaultContainsManager::class.java)
         bind(HasManager::class.java).to(DefaultHasManager::class.java)
         bind(ModeratesManager::class.java).to(DefaultModeratesManager::class.java)

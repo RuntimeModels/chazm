@@ -10,20 +10,15 @@ import runtimemodels.chazm.api.organization.*
 import runtimemodels.chazm.api.relation.*
 import runtimemodels.chazm.model.Functions
 import runtimemodels.chazm.model.Relations
-import runtimemodels.chazm.model.event.AssignmentEvent
 import runtimemodels.chazm.model.event.EventFactory
 import runtimemodels.chazm.model.event.EventType
-import runtimemodels.chazm.model.factory.RelationFactory
 import runtimemodels.chazm.model.message.E
 import runtimemodels.chazm.model.message.L
 import runtimemodels.chazm.model.notification.Publisher
-import java.util.*
-import java.util.concurrent.ConcurrentHashMap
 import java.util.function.Consumer
 import javax.inject.Inject
 
 internal open class DefaultOrganization @Inject constructor(
-    private val relationFactory: RelationFactory,
     private val eventFactory: EventFactory,
     private val goodness: Goodness,
     private val effectiveness: Effectiveness,
@@ -38,6 +33,7 @@ internal open class DefaultOrganization @Inject constructor(
     override val roles: RoleManager,
     override val specificationGoals: SpecificationGoalManager,
     override val achievesRelations: AchievesManager,
+    override val assignmentRelations: AssignmentManager,
     override val containsRelations: ContainsManager,
     override val hasRelations: HasManager,
     override val moderatesRelations: ModeratesManager,
@@ -53,7 +49,6 @@ internal open class DefaultOrganization @Inject constructor(
     override fun add(agent: Agent) {
         checkNotExists(agent) { agents.containsKey(it) }
         agents.add(agent)
-        relations.assignmentsByAgent[agent.id] = ConcurrentHashMap()
         publisher.post(eventFactory.build(EventType.ADDED, agent))
     }
 
@@ -61,7 +56,7 @@ internal open class DefaultOrganization @Inject constructor(
         if (agents.contains(id)) {
             /* remove the agent, all associated assignments, all associated possesses relations, all associated has relations */
             val agent = agents.remove(id)
-            remove(id, relations.assignmentsByAgent, ASSIGNMENTS_BY_AGENT, Consumer { removeAssignment(it) })
+            assignmentRelations.remove(id)
             hasRelations.remove(id)
             possessesRelations.remove(id)
             publisher.post(eventFactory.build(EventType.REMOVED, agent))
@@ -219,56 +214,19 @@ internal open class DefaultOrganization @Inject constructor(
         }
     }
 
-    override fun addAssignment(assignment: Assignment) {
-        checkNotExists(assignment) { relations.assignments.containsKey(it) }
-        checkExists(assignment.agent.id, (agents::get))
-        checkExists(assignment.role.id, (roles::get))
-        checkExists(assignment.goal.id, (instanceGoals::get))
-        /* add the assignment */
-        relations.assignments[assignment.id] = assignment
-        relations.assignmentsByAgent[assignment.agent.id]!![assignment.id] = assignment
-        publisher.post<AssignmentEvent>(eventFactory.build(EventType.ADDED, assignment))
+    override fun add(assignment: Assignment) {
+        checkExists(assignment.agent.id, agents::get)
+        checkExists(assignment.role.id, roles::get)
+        checkExists(assignment.goal.id, instanceGoals::get)
+        assignmentRelations.add(assignment)
+        publisher.post(eventFactory.build(EventType.ADDED, assignment))
     }
 
-    override fun addAssignments(assignments: Collection<Assignment>) {
-        assignments.forEach(::addAssignment)
-    }
-
-    override fun getAssignment(id: UniqueId<Assignment>): Assignment? {
-        return relations.assignments[id]
-    }
-
-    override fun getAssignments(): Set<Assignment> {
-        return relations.assignments.values.toSet()
-    }
-
-    override fun getAssignmentsByAgent(id: AgentId): Set<Assignment> {
-        return if (relations.assignmentsByAgent.containsKey(id)) {
-            relations.assignmentsByAgent[id]!!.values.toSet()
-        } else HashSet()
-    }
-
-    override fun removeAssignment(id: UniqueId<Assignment>) {
-        if (relations.assignments.containsKey(id)) {
-            val assignment = relations.assignments.remove(id)!!
-            if (relations.assignmentsByAgent.containsKey(assignment.agent.id)) {
-                if (relations.assignmentsByAgent[assignment.agent.id]!!.remove(id) == null) {
-                    log.warn(L.MAP_IS_MISSING_ENTRY.get(), ASSIGNMENTS_BY_AGENT, assignment.agent.id, id)
-                }
-            } else {
-                log.warn(L.MAP_IS_MISSING_KEY.get(), ASSIGNMENTS_BY_AGENT, assignment.agent.id)
-                relations.assignmentsByAgent[assignment.agent.id] = ConcurrentHashMap()
-            }
-            publisher.post<AssignmentEvent>(eventFactory.build(EventType.REMOVED, assignment))
+    override fun remove(agentId: AgentId, roleId: RoleId, goalId: InstanceGoalId) {
+        if (assignmentRelations[agentId][roleId]?.containsKey(goalId) == true) {
+            val assignment = assignmentRelations.remove(agentId, roleId, goalId)
+            publisher.post(eventFactory.build(EventType.REMOVED, assignment))
         }
-    }
-
-    override fun removeAssignments(ids: Collection<UniqueId<Assignment>>) {
-        ids.forEach(::removeAssignment)
-    }
-
-    override fun removeAllAssignments() {
-        removeAssignments(relations.assignments.keys)
     }
 
     override fun add(contains: Contains) {

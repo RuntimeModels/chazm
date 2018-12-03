@@ -16,7 +16,7 @@ internal open class DefaultEffectiveness @Inject constructor() : Effectiveness {
                     it.agent,
                     it.role,
                     it.goal,
-                    organization.assignments
+                    organization.assignmentRelations.flatMap { it.value.flatMap { it.value.values } }
                 ) ?: 0.0
             }
     }

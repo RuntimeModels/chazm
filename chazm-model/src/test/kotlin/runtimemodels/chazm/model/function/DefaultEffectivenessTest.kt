@@ -38,7 +38,7 @@ class DefaultEffectivenessTest {
         val assignment4 = relationFactory.buildAssignment(agent2, role, instanceGoal2)
         val achieves = relationFactory.buildAchieves(role, specificationGoal)
 
-        assertThat(effectiveness.compute(organization, organization.assignments)).isEqualTo(0.0)
+        assertThat(effectiveness.compute(organization, organization.assignmentRelations.flatMap { it.value.flatMap { it.value.values } }.toSet())).isEqualTo(0.0)
 
         organization.add(agent1)
         organization.add(agent2)
@@ -51,20 +51,20 @@ class DefaultEffectivenessTest {
         organization.add(achieves)
         organization.add(RequiresRelation(role, capability1))
         organization.add(PossessesRelation(agent1, capability1, 1.0))
-        organization.addAssignment(assignment1)
+        organization.add(assignment1)
 
-        assertThat(effectiveness.compute(organization, organization.assignments)).isEqualTo(1.0)
+        assertThat(effectiveness.compute(organization, organization.assignmentRelations.flatMap { it.value.flatMap { it.value.values } }.toSet())).isEqualTo(1.0)
 
-        organization.addAssignment(assignment2)
+        organization.add(assignment2)
 
-        assertThat(effectiveness.compute(organization, organization.assignments)).isEqualTo(2.0)
+        assertThat(effectiveness.compute(organization, organization.assignmentRelations.flatMap { it.value.flatMap { it.value.values } }.toSet())).isEqualTo(2.0)
 
-        organization.addAssignment(assignment3)
+        organization.add(assignment3)
 
-        assertThat(effectiveness.compute(organization, organization.assignments)).isEqualTo(2.0)
+        assertThat(effectiveness.compute(organization, organization.assignmentRelations.flatMap { it.value.flatMap { it.value.values } }.toSet())).isEqualTo(2.0)
 
-        organization.addAssignment(assignment4)
+        organization.add(assignment4)
 
-        assertThat(effectiveness.compute(organization, organization.assignments)).isEqualTo(2.0)
+        assertThat(effectiveness.compute(organization, organization.assignmentRelations.flatMap { it.value.flatMap { it.value.values } }.toSet())).isEqualTo(2.0)
     }
 }
