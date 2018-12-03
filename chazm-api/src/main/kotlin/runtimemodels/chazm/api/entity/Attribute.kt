@@ -10,18 +10,7 @@ import runtimemodels.chazm.api.organization.Organization
  * @author Christopher Zhong
  * @since 5.0
  */
-interface Attribute : Identifiable<Attribute> {
-    /**
-     * The [AttributeId] of this [Attribute].
-     */
-    override val id: AttributeId
-    /**
-     * Returns the [Type] of this [Attribute].
-     *
-     * @return the [Type] of this [Attribute].
-     */
-    val type: Type
-
+interface Attribute : Identifiable<Attribute, AttributeId> {
     /**
      * The [Type] enumerates the various types of an [Attribute].
      *
@@ -60,4 +49,9 @@ interface Attribute : Identifiable<Attribute> {
          */
         NEGATIVE_UNBOUNDED
     }
+
+    /**
+     * The [Type] of this [Attribute].
+     */
+    val type: Type
 }

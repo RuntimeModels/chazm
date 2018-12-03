@@ -14,10 +14,10 @@ internal open class AssignmentRelation @Inject constructor(
     @param:Assisted final override val role: Role,
     @param:Assisted final override val goal: InstanceGoal
 ) : Assignment {
-    override val id: AssignmentId = AssignmentId(agent.id, role.id, goal.id)
+    private val id: AssignmentId = AssignmentId(agent.id, role.id, goal.id)
 
     override fun equals(other: Any?): Boolean {
-        if (other is Assignment) {
+        if (other is AssignmentRelation) {
             return id == other.id
         }
         return false

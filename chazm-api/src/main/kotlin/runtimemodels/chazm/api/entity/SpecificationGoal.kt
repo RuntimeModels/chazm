@@ -15,9 +15,4 @@ import runtimemodels.chazm.api.organization.Organization
  * @author Christopher Zhong
  * @since 3.4
  */
-interface SpecificationGoal : Identifiable<SpecificationGoal> {
-    /**
-     * The [SpecificationGoalId] of this [SpecificationGoal].
-     */
-    override val id: SpecificationGoalId
-}
+interface SpecificationGoal : Identifiable<SpecificationGoal, SpecificationGoalId>

@@ -12,38 +12,34 @@ import runtimemodels.chazm.api.organization.Organization
  * @see [SpecificationGoal]
  * @since 3.4
  */
-interface InstanceGoal : Identifiable<InstanceGoal> {
+interface InstanceGoal : Identifiable<InstanceGoal, InstanceGoalId> {
     /**
-     * The [InstanceGoalId] of this [InstanceGoal].
+     * The [GoalParameter] interface defines a wrapper for a [Map] of [Any].
      */
-    override val id: InstanceGoalId
+    interface GoalParameter : Map<Any, Any> {
+        /**
+         * Adds the given `key` and `value` as a parameter to this [InstanceGoal].
+         *
+         * @param key   an [Any] representing the `key`.
+         * @param value an [Any] representing the `value`.
+         */
+        fun add(key: Any, value: Any)
+
+        /**
+         * Removes a parameter by the given `key` from this [InstanceGoal].
+         *
+         * @param key an [Any] representing the `key`.
+         */
+        fun remove(key: Any)
+    }
 
     /**
-     * Returns the [SpecificationGoal] that this [InstanceGoal] belongs.
-     *
-     * @return the [SpecificationGoal] that this [InstanceGoal] belongs.
+     * The [SpecificationGoal] that represents this [InstanceGoal].
      */
     val goal: SpecificationGoal
 
     /**
-     * Returns a [Map] that represents the parameters of this [InstanceGoal].
-     *
-     * @return a [Map] that represents the parameters of this [InstanceGoal].
+     * A [GoalParameter] that represents the parameters of this [InstanceGoal].
      */
-    val parameters: Map<Any, Any>
-
-    /**
-     * Adds the given `key` and `value` as a parameter to this [InstanceGoal].
-     *
-     * @param key   an [Any] representing the `key`.
-     * @param value an [Any] representing the `value`.
-     */
-    fun addParameter(key: Any, value: Any)
-
-    /**
-     * Removes a parameter by the given `key` from this [InstanceGoal].
-     *
-     * @param key an [Any] representing the `key`.
-     */
-    fun removeParameter(key: Any)
+    val parameters: GoalParameter
 }

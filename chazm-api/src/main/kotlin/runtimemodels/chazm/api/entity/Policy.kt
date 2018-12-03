@@ -10,9 +10,4 @@ import runtimemodels.chazm.api.organization.Organization
  * @author Christopher Zhong
  * @since 3.4
  */
-interface Policy : Identifiable<Policy> {
-    /**
-     * The [PolicyId] of this [Policy].
-     */
-    override val id: PolicyId
-}
+interface Policy : Identifiable<Policy, PolicyId>

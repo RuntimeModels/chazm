@@ -3,7 +3,6 @@ package runtimemodels.chazm.api.relation
 import runtimemodels.chazm.api.entity.Agent
 import runtimemodels.chazm.api.entity.InstanceGoal
 import runtimemodels.chazm.api.entity.Role
-import runtimemodels.chazm.api.id.Identifiable
 import runtimemodels.chazm.api.organization.Organization
 
 /**
@@ -16,7 +15,7 @@ import runtimemodels.chazm.api.organization.Organization
  * @see InstanceGoal
  * @since 7.0.0
  */
-interface Assignment : Identifiable<Assignment> {
+interface Assignment {
     /**
      * The [Agent] of this [Assignment].
      */

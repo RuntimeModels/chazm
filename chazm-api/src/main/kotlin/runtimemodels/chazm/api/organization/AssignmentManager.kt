@@ -30,7 +30,7 @@ interface AssignmentManager : Map<AgentId, Map<RoleId, Map<InstanceGoalId, Assig
      * @param goalId the [InstanceGoalId] that represents the [InstanceGoal].
      * @return the [Assignment] relation if it exists, `null` otherwise.
      */
-    fun get(agentId: AgentId, roleId: RoleId, goalId: InstanceGoalId): Assignment?
+    operator fun get(agentId: AgentId, roleId: RoleId, goalId: InstanceGoalId): Assignment?
 
     /**
      * Returns a [Map] of [Role]s and [InstanceGoal]s of an [Agent] from this [AssignmentManager].

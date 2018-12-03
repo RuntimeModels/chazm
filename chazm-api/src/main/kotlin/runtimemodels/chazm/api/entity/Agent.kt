@@ -10,28 +10,32 @@ import runtimemodels.chazm.api.organization.Organization
  * @author Christopher Zhong
  * @since 3.4
  */
-interface Agent : Identifiable<Agent> {
+interface Agent : Identifiable<Agent, AgentId> {
     /**
-     * The [AgentId] that represents this [Agent].
+     * The [ContactInfo] interface defines a wrapper for a key-value [Map] of [Any].
+     *
+     * @author Christopher Zhong
+     * @since 7.0
      */
-    override val id: AgentId
-    /**
-     * A [Map] with information for contacting this [Agent].
-     */
-    val contactInfo: Map<Any, Any>
+    interface ContactInfo : Map<Any, Any> {
+        /**
+         * Adds the given `key` and `value` as a contact information for this [Agent].
+         *
+         * @param key   an [Any] representing the `key`.
+         * @param value an [Any] representing the `value`.
+         */
+        fun add(key: Any, value: Any)
+
+        /**
+         * Removes a contact information by the given `key` from this [Agent].
+         *
+         * @param key   an [Any] representing the `key`.
+         */
+        fun remove(key: Any)
+    }
 
     /**
-     * Adds the given `key` and `value` as a contact information for this [Agent].
-     *
-     * @param key   an [Any] representing the `key`.
-     * @param value an [Any] representing the `value`.
+     * A [ContactInfo] with information for contacting this [Agent].
      */
-    fun addContactInfo(key: Any, value: Any)
-
-    /**
-     * Removes a contact information by the given `key` from this [Agent].
-     *
-     * @param key   an [Any] representing the `key`.
-     */
-    fun removeContactInfo(key: Any)
+    val contactInfo: ContactInfo
 }

@@ -10,9 +10,4 @@ import runtimemodels.chazm.api.organization.Organization
  * @author Christopher Zhong
  * @since 3.4
  */
-interface Capability : Identifiable<Capability> {
-    /**
-     * The [CapabilityId] of this [Capability].
-     */
-    override val id: CapabilityId
-}
+interface Capability : Identifiable<Capability, CapabilityId>

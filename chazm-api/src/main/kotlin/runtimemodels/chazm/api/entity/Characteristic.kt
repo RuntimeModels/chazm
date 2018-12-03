@@ -10,9 +10,4 @@ import runtimemodels.chazm.api.organization.Organization
  * @author Christopher Zhong
  * @since 6.0
  */
-interface Characteristic : Identifiable<Characteristic> {
-    /**
-     * The [CharacteristicId] of this [Characteristic].
-     */
-    override val id: CharacteristicId
-}
+interface Characteristic : Identifiable<Characteristic, CharacteristicId>
