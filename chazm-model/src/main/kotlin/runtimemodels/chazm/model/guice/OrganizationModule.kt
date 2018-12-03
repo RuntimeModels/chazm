@@ -5,10 +5,7 @@ import com.google.inject.Provides
 import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.api.id.*
 import runtimemodels.chazm.api.organization.*
-import runtimemodels.chazm.api.relation.Achieves
-import runtimemodels.chazm.api.relation.Contains
-import runtimemodels.chazm.api.relation.Has
-import runtimemodels.chazm.api.relation.Moderates
+import runtimemodels.chazm.api.relation.*
 import runtimemodels.chazm.model.function.FunctionModule
 import runtimemodels.chazm.model.organization.*
 
@@ -75,6 +72,12 @@ class OrganizationModule : AbstractModule() {
     @Provides
     fun moderatesBy(): MutableMap<AttributeId, MutableMap<PmfId, Moderates>> = mutableMapOf()
 
+    @Provides
+    fun needs(): MutableMap<RoleId, MutableMap<AttributeId, Needs>> = mutableMapOf()
+
+    @Provides
+    fun needsBy(): MutableMap<AttributeId, MutableMap<RoleId, Needs>> = mutableMapOf()
+
     override fun configure() {
         bind(Organization::class.java).to(DefaultOrganization::class.java)
         bind(AgentManager::class.java).to(DefaultAgentManager::class.java)
@@ -92,6 +95,7 @@ class OrganizationModule : AbstractModule() {
         bind(ContainsManager::class.java).to(DefaultContainsManager::class.java)
         bind(HasManager::class.java).to(DefaultHasManager::class.java)
         bind(ModeratesManager::class.java).to(DefaultModeratesManager::class.java)
+        bind(NeedsManager::class.java).to(DefaultNeedsManager::class.java)
 
         install(RelationModule())
         install(FunctionModule())

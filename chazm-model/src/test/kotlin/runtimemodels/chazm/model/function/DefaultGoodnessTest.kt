@@ -10,6 +10,7 @@ import runtimemodels.chazm.model.factory.EntityFactory
 import runtimemodels.chazm.model.guice.OrganizationModule
 import runtimemodels.chazm.model.id.*
 import runtimemodels.chazm.model.relation.AchievesRelation
+import runtimemodels.chazm.model.relation.NeedsRelation
 
 class DefaultGoodnessTest {
 
@@ -20,47 +21,47 @@ class DefaultGoodnessTest {
 
     @Test
     fun `test that the compute function works properly`() {
-        val o = provider.get()
-        val a = entityFactory.buildAgent(DefaultAgentId("a"), mapOf())
-        val r = entityFactory.buildRole(DefaultRoleId("r"))
-        val sg = entityFactory.buildSpecificationGoal(DefaultSpecificationGoalId("sg"))
-        val ig = entityFactory.buildInstanceGoal(DefaultInstanceGoalId("ig"), sg, mapOf())
-        val c1 = entityFactory.buildCapability(DefaultCapabilityId("c1"))
-        val c2 = entityFactory.buildCapability(DefaultCapabilityId("c2"))
-        val t = entityFactory.buildAttribute(DefaultAttributeId("t"), Attribute.Type.NEGATIVE_QUALITY)
+        val organization = provider.get()
+        val agent = entityFactory.buildAgent(DefaultAgentId("a"), mapOf())
+        val role = entityFactory.buildRole(DefaultRoleId("r"))
+        val specificationGoal = entityFactory.buildSpecificationGoal(DefaultSpecificationGoalId("sg"))
+        val instanceGoal = entityFactory.buildInstanceGoal(DefaultInstanceGoalId("ig"), specificationGoal, mapOf())
+        val capability1 = entityFactory.buildCapability(DefaultCapabilityId("c1"))
+        val capability2 = entityFactory.buildCapability(DefaultCapabilityId("c2"))
+        val attribute = entityFactory.buildAttribute(DefaultAttributeId("t"), Attribute.Type.NEGATIVE_QUALITY)
 
-        assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MIN_SCORE)
+        assertThat(goodness.compute(organization, agent, role, instanceGoal, setOf())).isEqualTo(DefaultGoodness.MIN_SCORE)
 
-        o.add(a)
-        o.add(r)
-        o.add(sg)
-        o.add(ig)
-        o.add(c1)
-        o.add(AchievesRelation(r, sg))
+        organization.add(agent)
+        organization.add(role)
+        organization.add(specificationGoal)
+        organization.add(instanceGoal)
+        organization.add(capability1)
+        organization.add(AchievesRelation(role, specificationGoal))
 
-        assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MAX_SCORE)
+        assertThat(goodness.compute(organization, agent, role, instanceGoal, setOf())).isEqualTo(DefaultGoodness.MAX_SCORE)
 
-        o.addRequires(r.id, c1.id)
+        organization.addRequires(role.id, capability1.id)
 
-        assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MIN_SCORE)
+        assertThat(goodness.compute(organization, agent, role, instanceGoal, setOf())).isEqualTo(DefaultGoodness.MIN_SCORE)
 
-        o.addPossesses(a.id, c1.id, 0.0)
+        organization.addPossesses(agent.id, capability1.id, 0.0)
 
-        assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MIN_SCORE)
+        assertThat(goodness.compute(organization, agent, role, instanceGoal, setOf())).isEqualTo(DefaultGoodness.MIN_SCORE)
 
-        o.setPossessesScore(a.id, c1.id, 1.0)
+        organization.setPossessesScore(agent.id, capability1.id, 1.0)
 
-        assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MAX_SCORE)
+        assertThat(goodness.compute(organization, agent, role, instanceGoal, setOf())).isEqualTo(DefaultGoodness.MAX_SCORE)
 
-        o.add(c2)
-        o.addRequires(r.id, c2.id)
-        o.addPossesses(a.id, c2.id, 1.0)
+        organization.add(capability2)
+        organization.addRequires(role.id, capability2.id)
+        organization.addPossesses(agent.id, capability2.id, 1.0)
 
-        assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MAX_SCORE)
+        assertThat(goodness.compute(organization, agent, role, instanceGoal, setOf())).isEqualTo(DefaultGoodness.MAX_SCORE)
 
-        o.add(t)
-        o.addNeeds(r.id, t.id)
+        organization.add(attribute)
+        organization.add(NeedsRelation(role, attribute))
 
-        assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MIN_SCORE)
+        assertThat(goodness.compute(organization, agent, role, instanceGoal, setOf())).isEqualTo(DefaultGoodness.MIN_SCORE)
     }
 }

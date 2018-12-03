@@ -360,7 +360,18 @@ internal open class XmlParser @Inject constructor(
                         val ids = collectChild(reader, name)
                         list.add(object : RunLater {
                             override fun run() {
-                                return addRelation(id, ids, attributes, { roleId, attributeId -> organization.addNeeds(roleId, attributeId) }, Attribute::class.java)
+                                return addRelation(
+                                    id,
+                                    ids,
+                                    attributes,
+                                    { roleId, attributeId ->
+                                        organization.needsRelations.add(relationFactory.buildNeeds(
+                                            organization.roles[roleId]!!,
+                                            organization.attributes[attributeId]!!
+                                        ))
+                                    },
+                                    Attribute::class.java
+                                )
                             }
                         })
                     }

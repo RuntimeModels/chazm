@@ -40,7 +40,8 @@ internal open class DefaultOrganization @Inject constructor(
     override val achievesRelations: AchievesManager,
     override val containsRelations: ContainsManager,
     override val hasRelations: HasManager,
-    override val moderatesRelations: ModeratesManager
+    override val moderatesRelations: ModeratesManager,
+    override val needsRelations: NeedsManager
 ) : Organization, FlowableOnSubscribe<Organization> {
 
     private val relations = Relations()
@@ -68,7 +69,6 @@ internal open class DefaultOrganization @Inject constructor(
     override fun add(attribute: Attribute) {
         checkNotExists(attribute) { attributes.containsKey(it) }
         attributes.add(attribute)
-        relations.neededBy[attribute.id] = ConcurrentHashMap()
         publisher.post(eventFactory.build(EventType.ADDED, attribute))
     }
 
@@ -81,7 +81,7 @@ internal open class DefaultOrganization @Inject constructor(
             val attribute = attributes.remove(id)
             hasRelations.remove(id)
             moderatesRelations.remove(id)
-            remove(id, relations.neededBy, NEEDED_BY, Consumer { removeNeeds(it, id) })
+            needsRelations.remove(id)
             publisher.post(eventFactory.build(EventType.REMOVED, attribute))
         }
     }
@@ -181,8 +181,8 @@ internal open class DefaultOrganization @Inject constructor(
             val role = roles.remove(id)
             achievesRelations.remove(id)
             containsRelations.remove(id)
+            needsRelations.remove(id)
             remove(id, relations.requires, REQUIRES, Consumer { removeRequires(id, it) })
-            remove(id, relations.needs, NEEDS, Consumer { removeNeeds(id, it) })
             remove(id, relations.uses, USES, Consumer { removeUses(id, it) })
             functions.goodness.remove(id)
             publisher.post(eventFactory.build(EventType.REMOVED, role))
@@ -313,38 +313,18 @@ internal open class DefaultOrganization @Inject constructor(
         }
     }
 
-    override fun addNeeds(roleId: RoleId, attributeId: AttributeId) {
-        val role = checkExists(roleId, (roles::get))
-        val attribute = checkExists(attributeId, (attributes::get))
-        val map = getMap(roleId, relations.needs, NEEDS)
-        if (map.containsKey(attributeId)) {
-            /* relation already exists do nothing */
-            return
+    override fun add(needs: Needs) {
+        checkExists(needs.role.id, roles::get)
+        checkExists(needs.attribute.id, attributes::get)
+        needsRelations.add(needs)
+        publisher.post(eventFactory.build(EventType.ADDED, needs))
+    }
+
+    override fun remove(roleId: RoleId, attributeId: AttributeId) {
+        if (needsRelations.containsKey(roleId) && needsRelations[roleId].containsKey(attributeId)) {
+            val needs = needsRelations.remove(roleId, attributeId)
+            publisher.post(eventFactory.build(EventType.REMOVED, needs))
         }
-        val needs = relationFactory.buildNeeds(role, attribute)
-        map[attributeId] = needs
-        addBy(needs, relations.neededBy, NEEDED_BY, attributeId, roleId)
-        publisher.post<NeedsEvent>(eventFactory.build(EventType.ADDED, needs))
-    }
-
-    override fun getNeeds(id: RoleId): Set<Attribute> {
-        return getSet(id, relations.needs, Function { it.attribute })
-    }
-
-    override fun getNeededBy(id: AttributeId): Set<Role> {
-        return getSet(id, relations.neededBy, Function { it.role })
-    }
-
-    override fun removeNeeds(roleId: RoleId, attributeId: AttributeId) {
-        if (relations.needs.containsKey(roleId) && relations.needs[roleId]!!.containsKey(attributeId)) {
-            val needs = relations.needs[roleId]!!.remove(attributeId)!!
-            removeBy(attributeId, roleId, relations.neededBy, NEEDED_BY)
-            publisher.post<NeedsEvent>(eventFactory.build(EventType.REMOVED, needs))
-        }
-    }
-
-    override fun removeAllNeeds() {
-        removeAll(relations.needs, BiConsumer(::removeNeeds), Function { it.role.id }, Function { it.attribute.id })
     }
 
     override fun addPossesses(agentId: AgentId, capabilityId: CapabilityId, score: Double) {
