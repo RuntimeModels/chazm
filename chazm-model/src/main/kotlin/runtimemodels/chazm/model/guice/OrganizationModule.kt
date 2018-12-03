@@ -90,6 +90,12 @@ class OrganizationModule : AbstractModule() {
     @Provides
     fun requiresBy(): MutableMap<CapabilityId, MutableMap<RoleId, Requires>> = mutableMapOf()
 
+    @Provides
+    fun uses(): MutableMap<RoleId, MutableMap<PmfId, Uses>> = mutableMapOf()
+
+    @Provides
+    fun usesBy(): MutableMap<PmfId, MutableMap<RoleId, Uses>> = mutableMapOf()
+
     override fun configure() {
         bind(Organization::class.java).to(DefaultOrganization::class.java)
         bind(AgentManager::class.java).to(DefaultAgentManager::class.java)
@@ -110,6 +116,7 @@ class OrganizationModule : AbstractModule() {
         bind(NeedsManager::class.java).to(DefaultNeedsManager::class.java)
         bind(PossessesManager::class.java).to(DefaultPossessesManager::class.java)
         bind(RequiresManager::class.java).to(DefaultRequiresManager::class.java)
+        bind(UsesManager::class.java).to(DefaultUsesManager::class.java)
 
         install(RelationModule())
         install(FunctionModule())

@@ -27,7 +27,7 @@ interface RequiresManager : Map<RoleId, Map<CapabilityId, Requires>> {
      * @param capabilityId the [CapabilityId] that represents the [Capability].
      * @return the [Requires] relation if it exists, `null` otherwise.
      */
-    fun get(roleId: RoleId, capabilityId: CapabilityId): Requires?
+    operator fun get(roleId: RoleId, capabilityId: CapabilityId): Requires?
 
     /**
      * Returns a [Map] of [Capability]s that is required by a [Role] in this [RequiresManager].

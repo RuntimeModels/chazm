@@ -13,16 +13,13 @@ import runtimemodels.chazm.model.Relations
 import runtimemodels.chazm.model.event.AssignmentEvent
 import runtimemodels.chazm.model.event.EventFactory
 import runtimemodels.chazm.model.event.EventType
-import runtimemodels.chazm.model.event.UsesEvent
 import runtimemodels.chazm.model.factory.RelationFactory
 import runtimemodels.chazm.model.message.E
 import runtimemodels.chazm.model.message.L
 import runtimemodels.chazm.model.notification.Publisher
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
-import java.util.function.BiConsumer
 import java.util.function.Consumer
-import java.util.function.Function
 import javax.inject.Inject
 
 internal open class DefaultOrganization @Inject constructor(
@@ -46,7 +43,8 @@ internal open class DefaultOrganization @Inject constructor(
     override val moderatesRelations: ModeratesManager,
     override val needsRelations: NeedsManager,
     override val possessesRelations: PossessesManager,
-    override val requiresRelations: RequiresManager
+    override val requiresRelations: RequiresManager,
+    override val usesRelations: UsesManager
 ) : Organization, FlowableOnSubscribe<Organization> {
 
     private val relations = Relations()
@@ -185,7 +183,7 @@ internal open class DefaultOrganization @Inject constructor(
             containsRelations.remove(id)
             needsRelations.remove(id)
             requiresRelations.remove(id)
-            remove(id, relations.uses, USES, Consumer { removeUses(id, it) })
+            usesRelations.remove(id)
             functions.goodness.remove(id)
             publisher.post(eventFactory.build(EventType.REMOVED, role))
         }
@@ -357,38 +355,18 @@ internal open class DefaultOrganization @Inject constructor(
         }
     }
 
-    override fun addUses(roleId: RoleId, pmfId: PmfId) {
-        val role = checkExists(roleId, (roles::get))
-        val pmf = checkExists(pmfId, (pmfs::get))
-        val map = getMap(roleId, relations.uses, USES)
-        if (map.containsKey(pmfId)) {
-            /* relation already exists do nothing */
-            return
+    override fun add(uses: Uses) {
+        checkExists(uses.role.id, roles::get)
+        checkExists(uses.pmf.id, pmfs::get)
+        usesRelations.add(uses)
+        publisher.post(eventFactory.build(EventType.ADDED, uses))
+    }
+
+    override fun remove(roleId: RoleId, pmfId: PmfId) {
+        if (usesRelations.containsKey(roleId) && usesRelations[roleId].containsKey(pmfId)) {
+            val uses = usesRelations.remove(roleId, pmfId)
+            publisher.post(eventFactory.build(EventType.REMOVED, uses))
         }
-        val uses = relationFactory.buildUses(role, pmf)
-        map[pmfId] = uses
-        addBy(uses, relations.usedBy, USED_BY, pmfId, roleId)
-        publisher.post<UsesEvent>(eventFactory.build(EventType.ADDED, uses))
-    }
-
-    override fun getUses(id: RoleId): Set<Pmf> {
-        return getSet(id, relations.uses, Function { it.pmf })
-    }
-
-    override fun getUsedBy(id: PmfId): Set<Role> {
-        return getSet(id, relations.usedBy, Function { it.role })
-    }
-
-    override fun removeUses(roleId: RoleId, pmfId: PmfId) {
-        if (relations.uses.containsKey(roleId) && relations.uses[roleId]!!.containsKey(pmfId)) {
-            val uses = relations.uses[roleId]!!.remove(pmfId)!!
-            removeBy(pmfId, roleId, relations.usedBy, USED_BY)
-            publisher.post<UsesEvent>(eventFactory.build(EventType.REMOVED, uses))
-        }
-    }
-
-    override fun removeAllUses() {
-        removeAll(relations.uses, BiConsumer(::removeUses), Function { it.role.id }, Function { it.pmf.id })
     }
 
     override fun effectiveness(assignments: Collection<Assignment>): Double {
@@ -411,44 +389,7 @@ internal open class DefaultOrganization @Inject constructor(
 
     companion object {
         private val ASSIGNMENTS_BY_AGENT = "assignmentsByAgent"
-        private val USES = "uses"
-        private val USED_BY = "usedBy"
         private val log = org.slf4j.LoggerFactory.getLogger(DefaultOrganization::class.java)
-
-        private fun <T, U, V> addBy(
-            value: T,
-            map: MutableMap<U, MutableMap<V, T>>,
-            mapName: String,
-            id1: U,
-            id2: V
-        ) {
-            map.computeIfAbsent(id1) {
-                log.warn(L.MAP_IS_MISSING_KEY.get(), mapName, id1)
-                ConcurrentHashMap()
-            }
-            map[id1]!![id2] = value
-        }
-
-        private fun <T : UniqueId<W>, U : UniqueId<V>, V, W, X> getMap(
-            id: T,
-            map: MutableMap<T, MutableMap<U, X>>,
-            mapName: String
-        ): MutableMap<U, X> {
-            return map.computeIfAbsent(id) {
-                log.warn(L.MAP_IS_MISSING_KEY.get(), mapName, id)
-                ConcurrentHashMap()
-            }
-        }
-
-        private fun <T, U, V, W : UniqueId<U>, X : UniqueId<T>> getSet(
-            id: W,
-            map: Map<W, Map<X, V>>,
-            f: Function<V, T>
-        ): Set<T> {
-            return if (map.containsKey(id)) {
-                map[id]!!.values.map { f.apply(it) }.toSet()
-            } else setOf()
-        }
 
         private fun <T, U : UniqueId<V>, V, W> remove(
             id: T,
@@ -463,33 +404,6 @@ internal open class DefaultOrganization @Inject constructor(
             } else {
                 log.warn(L.MAP_IS_MISSING_KEY.get(), mapName, id)
             }
-        }
-
-        private fun <T, U, V> removeBy(
-            id1: T,
-            id2: U,
-            map: MutableMap<T, MutableMap<U, V>>,
-            mapName: String
-        ) {
-            if (map.containsKey(id1)) {
-                if (map[id1]!!.containsKey(id2)) {
-                    map[id1]!!.remove(id2)
-                } else {
-                    log.warn(L.MAP_IS_MISSING_ENTRY.get(), mapName, id1, id2)
-                }
-            } else {
-                log.warn(L.MAP_IS_MISSING_KEY.get(), mapName, id1)
-                map[id1] = ConcurrentHashMap()
-            }
-        }
-
-        private fun <T, U, V, W : UniqueId<T>, X : UniqueId<U>> removeAll(
-            map: Map<W, Map<X, V>>,
-            consumer: BiConsumer<W, X>,
-            function1: Function<V, W>,
-            function2: Function<V, X>
-        ) {
-            map.values.flatMap { it.values }.toSet().forEach { consumer.accept(function1.apply(it), function2.apply(it)) }
         }
 
         private fun <T : Identifiable<T>> checkNotExists(t: T, predicate: (UniqueId<T>) -> Boolean) {
