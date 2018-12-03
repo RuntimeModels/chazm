@@ -78,45 +78,52 @@ internal open class XmlParser @Inject constructor(
             if (event.isStartElement) {
                 val element = event.asStartElement()
                 val name = element.name
-                if (AGENT_ELEMENT == name.localPart) {
-                    val id: AgentId = DefaultAgentId(getAttributeValue(element, NAME_ATTRIBUTE))
-                    // TODO parse contact info
-                    val contactInfo: Map<Any, Any> = mapOf()
-                    build(id, agents, element, { entityFactory.buildAgent(it, contactInfo) }, { organization.add(it) })
-                    parseAgent(organization, reader, name, id, attributes, capabilities, list1)
-                } else if (ASSIGNMENT_ELEMENT == name.localPart) {
-                    parseAssignment(organization, element, agents, instanceGoals, roles, list2)
-                } else if (ATTRIBUTE_ELEMENT == name.localPart) {
-                    val id = DefaultAttributeId(getAttributeValue(element, NAME_ATTRIBUTE))
-                    try {
-                        val type = Attribute.Type.valueOf(getAttributeValue(element, TYPE_ATTRIBUTE))
-                        build(id, attributes, element, { entityFactory.buildAttribute(it, type) }, { organization.add(it) })
-                    } catch (e: IllegalArgumentException) {
-                        throw XMLStreamException(e)
+                when (name.localPart) {
+                    AGENT_ELEMENT -> {
+                        val id: AgentId = DefaultAgentId(getAttributeValue(element, NAME_ATTRIBUTE))
+                        // TODO parse contact info
+                        val contactInfo: Map<Any, Any> = mapOf()
+                        build(id, agents, element, { entityFactory.buildAgent(it, contactInfo) }, { organization.add(it) })
+                        parseAgent(organization, reader, name, id, attributes, capabilities, list1)
                     }
+                    ASSIGNMENT_ELEMENT -> parseAssignment(organization, element, agents, instanceGoals, roles, list2)
+                    ATTRIBUTE_ELEMENT -> {
+                        val id = DefaultAttributeId(getAttributeValue(element, NAME_ATTRIBUTE))
+                        try {
+                            val type = Attribute.Type.valueOf(getAttributeValue(element, TYPE_ATTRIBUTE))
+                            build(id, attributes, element, { entityFactory.buildAttribute(it, type) }, { organization.add(it) })
+                        } catch (e: IllegalArgumentException) {
+                            throw XMLStreamException(e)
+                        }
 
-                } else if (CAPABILITY_ELEMENT == name.localPart) {
-                    val id = DefaultCapabilityId(getAttributeValue(element, NAME_ATTRIBUTE))
-                    build(id, capabilities, element, { entityFactory.buildCapability(it) }, { organization.add(it) })
-                } else if (CHARACTERISTIC_ELEMENT == name.localPart) {
-                    val id = DefaultCharacteristicId(getAttributeValue(element, NAME_ATTRIBUTE))
-                    build(id, characteristics, element, { entityFactory.buildCharacteristic(it) }, { organization.add(it) })
-                } else if (INSTANCEGOAL_ELEMENT == name.localPart) {
-                    parseInstanceGoal(organization, element, specificationGoals, instanceGoals, list1)
-                } else if (PMF_ELEMENT == name.localPart) {
-                    val id = DefaultPmfId(getAttributeValue(element, NAME_ATTRIBUTE))
-                    build(id, pmfs, element, { entityFactory.buildPmf(it) }, { organization.add(it) })
-                    parsePmf(organization, reader, name, id, attributes, list1)
-                } else if (POLICY_ELEMENT == name.localPart) {
-                    val id = DefaultPolicyId(getAttributeValue(element, NAME_ATTRIBUTE))
-                    build(id, policies, element, { entityFactory.buildPolicy(it) }, { organization.add(it) })
-                } else if (ROLE_ELEMENT == name.localPart) {
-                    val id = DefaultRoleId(getAttributeValue(element, NAME_ATTRIBUTE))
-                    build(id, roles, element, { entityFactory.buildRole(it) }, { organization.add(it) })
-                    parseRole(organization, reader, name, id, attributes, capabilities, characteristics, specificationGoals, list1)
-                } else if (GOAL_ELEMENT == name.localPart) {
-                    val id = DefaultSpecificationGoalId(getAttributeValue(element, NAME_ATTRIBUTE))
-                    build(id, specificationGoals, element, { entityFactory.buildSpecificationGoal(it) }, { organization.add(it) })
+                    }
+                    CAPABILITY_ELEMENT -> {
+                        val id = DefaultCapabilityId(getAttributeValue(element, NAME_ATTRIBUTE))
+                        build(id, capabilities, element, { entityFactory.buildCapability(it) }, { organization.add(it) })
+                    }
+                    CHARACTERISTIC_ELEMENT -> {
+                        val id = DefaultCharacteristicId(getAttributeValue(element, NAME_ATTRIBUTE))
+                        build(id, characteristics, element, { entityFactory.buildCharacteristic(it) }, { organization.add(it) })
+                    }
+                    INSTANCEGOAL_ELEMENT -> parseInstanceGoal(organization, element, specificationGoals, instanceGoals, list1)
+                    PMF_ELEMENT -> {
+                        val id = DefaultPmfId(getAttributeValue(element, NAME_ATTRIBUTE))
+                        build(id, pmfs, element, { entityFactory.buildPmf(it) }, { organization.add(it) })
+                        parsePmf(organization, reader, name, id, attributes, list1)
+                    }
+                    POLICY_ELEMENT -> {
+                        val id = DefaultPolicyId(getAttributeValue(element, NAME_ATTRIBUTE))
+                        build(id, policies, element, { entityFactory.buildPolicy(it) }, { organization.add(it) })
+                    }
+                    ROLE_ELEMENT -> {
+                        val id = DefaultRoleId(getAttributeValue(element, NAME_ATTRIBUTE))
+                        build(id, roles, element, { entityFactory.buildRole(it) }, { organization.add(it) })
+                        parseRole(organization, reader, name, id, attributes, capabilities, characteristics, specificationGoals, list1)
+                    }
+                    GOAL_ELEMENT -> {
+                        val id = DefaultSpecificationGoalId(getAttributeValue(element, NAME_ATTRIBUTE))
+                        build(id, specificationGoals, element, { entityFactory.buildSpecificationGoal(it) }, { organization.add(it) })
+                    }
                 }
             } else if (event.isEndElement) {
                 val element = event.asEndElement()
@@ -412,37 +419,35 @@ internal open class XmlParser @Inject constructor(
     }
 
     companion object {
-
         private val log = org.slf4j.LoggerFactory.getLogger(XmlParser::class.java)
 
-        private val ROLE_DIAGRAM_ELEMENT = "RoleDiagram" //$NON-NLS-1$
-        private val AGENT_ELEMENT = "Agent" //$NON-NLS-1$
-        private val ATTRIBUTE_ELEMENT = "Attribute" //$NON-NLS-1$
-        private val CAPABILITY_ELEMENT = "Capability" //$NON-NLS-1$
-        private val CHARACTERISTIC_ELEMENT = "Characteristic" //$NON-NLS-1$
-        private val INSTANCEGOAL_ELEMENT = "InstanceGoal" //$NON-NLS-1$
-        private val PMF_ELEMENT = "Pmf" //$NON-NLS-1$
-        private val POLICY_ELEMENT = "Policy" //$NON-NLS-1$
-        private val ROLE_ELEMENT = "Role" //$NON-NLS-1$
-        private val GOAL_ELEMENT = "Goal" //$NON-NLS-1$
-        private val ACHIEVES_ELEMENT = "achieves" //$NON-NLS-1$
-        private val ASSIGNMENT_ELEMENT = "assignment" //$NON-NLS-1$
-        private val CONTAINS_ELEMENT = "contains" //$NON-NLS-1$
-        private val HAS_ELEMENT = "has" //$NON-NLS-1$
-        private val MODERATES_ELEMENT = "moderates" //$NON-NLS-1$
-        private val NEEDS_ELEMENT = "needs" //$NON-NLS-1$
-        private val POSSESSES_ELEMENT = "possesses" //$NON-NLS-1$
-        private val REQUIRES_ELEMENT = "requires" //$NON-NLS-1$
-        private val ID_ATTRIBUTE = "id" //$NON-NLS-1$
-        private val NAME_ATTRIBUTE = "name" //$NON-NLS-1$
-        private val TYPE_ATTRIBUTE = "type" //$NON-NLS-1$
-        private val SPECIFICATION_ATTRIBUTE = "specification" //$NON-NLS-1$
-        private val VALUE_ATTRIBUTE = "value" //$NON-NLS-1$
-        private val SCORE_ATTRIBUTE = "score" //$NON-NLS-1$
-        private val AGENT_ATTRIBUTE = "agent" //$NON-NLS-1$
-        private val ROLE_ATTRIBUTE = "role" //$NON-NLS-1$
-        private val GOAL_ATTRIBUTE = "goal" //$NON-NLS-1$
-        private val CHILD_ELEMENT = "child" //$NON-NLS-1$
+        private const val ROLE_DIAGRAM_ELEMENT = "RoleDiagram" //$NON-NLS-1$
+        private const val AGENT_ELEMENT = "Agent" //$NON-NLS-1$
+        private const val ATTRIBUTE_ELEMENT = "Attribute" //$NON-NLS-1$
+        private const val CAPABILITY_ELEMENT = "Capability" //$NON-NLS-1$
+        private const val CHARACTERISTIC_ELEMENT = "Characteristic" //$NON-NLS-1$
+        private const val INSTANCEGOAL_ELEMENT = "InstanceGoal" //$NON-NLS-1$
+        private const val PMF_ELEMENT = "Pmf" //$NON-NLS-1$
+        private const val POLICY_ELEMENT = "Policy" //$NON-NLS-1$
+        private const val ROLE_ELEMENT = "Role" //$NON-NLS-1$
+        private const val GOAL_ELEMENT = "Goal" //$NON-NLS-1$
+        private const val ACHIEVES_ELEMENT = "achieves" //$NON-NLS-1$
+        private const val ASSIGNMENT_ELEMENT = "assignment" //$NON-NLS-1$
+        private const val CONTAINS_ELEMENT = "contains" //$NON-NLS-1$
+        private const val HAS_ELEMENT = "has" //$NON-NLS-1$
+        private const val MODERATES_ELEMENT = "moderates" //$NON-NLS-1$
+        private const val NEEDS_ELEMENT = "needs" //$NON-NLS-1$
+        private const val POSSESSES_ELEMENT = "possesses" //$NON-NLS-1$
+        private const val REQUIRES_ELEMENT = "requires" //$NON-NLS-1$
+        private const val ID_ATTRIBUTE = "id" //$NON-NLS-1$
+        private const val NAME_ATTRIBUTE = "name" //$NON-NLS-1$
+        private const val TYPE_ATTRIBUTE = "type" //$NON-NLS-1$
+        private const val SPECIFICATION_ATTRIBUTE = "specification" //$NON-NLS-1$
+        private const val VALUE_ATTRIBUTE = "value" //$NON-NLS-1$
+        private const val SCORE_ATTRIBUTE = "score" //$NON-NLS-1$
+        private const val AGENT_ATTRIBUTE = "agent" //$NON-NLS-1$
+        private const val ROLE_ATTRIBUTE = "role" //$NON-NLS-1$
+        private const val GOAL_ATTRIBUTE = "goal" //$NON-NLS-1$
+        private const val CHILD_ELEMENT = "child" //$NON-NLS-1$
     }
-
 }
