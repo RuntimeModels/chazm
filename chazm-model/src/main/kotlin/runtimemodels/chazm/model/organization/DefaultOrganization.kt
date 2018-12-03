@@ -41,7 +41,8 @@ internal open class DefaultOrganization @Inject constructor(
     override val containsRelations: ContainsManager,
     override val hasRelations: HasManager,
     override val moderatesRelations: ModeratesManager,
-    override val needsRelations: NeedsManager
+    override val needsRelations: NeedsManager,
+    override val possessesRelations: PossessesManager
 ) : Organization, FlowableOnSubscribe<Organization> {
 
     private val relations = Relations()
@@ -51,7 +52,6 @@ internal open class DefaultOrganization @Inject constructor(
         checkNotExists(agent) { agents.containsKey(it) }
         agents.add(agent)
         relations.assignmentsByAgent[agent.id] = ConcurrentHashMap()
-        relations.possesses[agent.id] = ConcurrentHashMap()
         publisher.post(eventFactory.build(EventType.ADDED, agent))
     }
 
@@ -61,7 +61,7 @@ internal open class DefaultOrganization @Inject constructor(
             val agent = agents.remove(id)
             remove(id, relations.assignmentsByAgent, ASSIGNMENTS_BY_AGENT, Consumer { removeAssignment(it) })
             hasRelations.remove(id)
-            remove(id, relations.possesses, POSSESSES, Consumer { removePossesses(id, it) })
+            possessesRelations.remove(id)
             publisher.post(eventFactory.build(EventType.REMOVED, agent))
         }
     }
@@ -90,7 +90,6 @@ internal open class DefaultOrganization @Inject constructor(
         checkNotExists(capability) { capabilities.containsKey(it) }
         capabilities.add(capability)
         relations.requiredBy[capability.id] = ConcurrentHashMap()
-        relations.possessedBy[capability.id] = ConcurrentHashMap()
         publisher.post(eventFactory.build(EventType.ADDED, capability))
     }
 
@@ -98,8 +97,8 @@ internal open class DefaultOrganization @Inject constructor(
         if (capabilities.containsKey(id)) {
             /* remove the capability, all associated requires relations, all associated possesses relations */
             val capability = capabilities.remove(id)
+            possessesRelations.remove(id)
             remove(id, relations.requiredBy, REQUIRED_BY, Consumer { removeRequires(it, id) })
-            remove(id, relations.possessedBy, POSSESSED_BY, Consumer { removePossesses(it, id) })
             publisher.post(eventFactory.build(EventType.REMOVED, capability))
         }
     }
@@ -327,52 +326,18 @@ internal open class DefaultOrganization @Inject constructor(
         }
     }
 
-    override fun addPossesses(agentId: AgentId, capabilityId: CapabilityId, score: Double) {
-        val agent = checkExists(agentId, (agents::get))
-        val capability = checkExists(capabilityId, (capabilities::get))
-        val map = getMap(agentId, relations.possesses, POSSESSES)
-        if (map.containsKey(capabilityId)) {
-            /* relation already exists do nothing */
-            return
+    override fun add(possesses: Possesses) {
+        checkExists(possesses.agent.id, agents::get)
+        checkExists(possesses.capability.id, capabilities::get)
+        possessesRelations.add(possesses)
+        publisher.post(eventFactory.build(EventType.ADDED, possesses))
+    }
+
+    override fun remove(agentId: AgentId, capabilityId: CapabilityId) {
+        if (possessesRelations.containsKey(agentId) && possessesRelations[agentId].containsKey(capabilityId)) {
+            val possesses = possessesRelations.remove(agentId, capabilityId)
+            publisher.post(eventFactory.build(EventType.REMOVED, possesses))
         }
-        val possesses = relationFactory.buildPossesses(agent, capability, score)
-        map[capabilityId] = possesses
-        addBy(possesses, relations.possessedBy, POSSESSED_BY, capabilityId, agentId)
-        publisher.post<PossessesEvent>(eventFactory.build(EventType.ADDED, possesses))
-    }
-
-    override fun getPossesses(id: AgentId): Set<Capability> {
-        return getSet(id, relations.possesses, Function { it.capability })
-    }
-
-    override fun getPossessedBy(id: CapabilityId): Set<Agent> {
-        return getSet(id, relations.possessedBy, Function { it.agent })
-    }
-
-    override fun getPossessesScore(agentId: AgentId, capabilityId: CapabilityId): Double {
-        return if (relations.possesses.containsKey(agentId) && relations.possesses[agentId]!!.containsKey(capabilityId)) {
-            relations.possesses[agentId]!![capabilityId]!!.score
-        } else 0.0
-    }
-
-    override fun setPossessesScore(agentId: AgentId, capabilityId: CapabilityId, score: Double) {
-        if (relations.possesses.containsKey(agentId) && relations.possesses[agentId]!!.containsKey(capabilityId)) {
-            val possesses = relations.possesses[agentId]!![capabilityId]!!
-            possesses.score = score
-            publisher.post<PossessesEvent>(eventFactory.build(EventType.UPDATED, possesses))
-        }
-    }
-
-    override fun removePossesses(agentId: AgentId, capabilityId: CapabilityId) {
-        if (relations.possesses.containsKey(agentId) && relations.possesses[agentId]!!.containsKey(capabilityId)) {
-            val possesses = relations.possesses[agentId]!!.remove(capabilityId)!!
-            removeBy(capabilityId, agentId, relations.possessedBy, POSSESSED_BY)
-            publisher.post<PossessesEvent>(eventFactory.build(EventType.REMOVED, possesses))
-        }
-    }
-
-    override fun removeAllPossesses() {
-        removeAll(relations.possesses, BiConsumer(::removePossesses), Function { it.agent.id }, Function { f -> f.capability.id })
     }
 
     override fun addRequires(roleId: RoleId, capabilityId: CapabilityId) {
@@ -462,14 +427,9 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     companion object {
-
-        private val POSSESSES = "possesses"
         private val ASSIGNMENTS_BY_AGENT = "assignmentsByAgent"
-        private val NEEDED_BY = "neededBy"
         private val REQUIRED_BY = "requiredBy"
-        private val POSSESSED_BY = "possessedBy"
         private val REQUIRES = "requires"
-        private val NEEDS = "needs"
         private val USES = "uses"
         private val USED_BY = "usedBy"
         private val log = org.slf4j.LoggerFactory.getLogger(DefaultOrganization::class.java)
@@ -633,8 +593,8 @@ internal open class DefaultOrganization @Inject constructor(
                  * there is no reason to continue checking if the previous results are false
 				 */
                     for ((_, agent) in organization.agents) {
-                        for (capability in organization.getPossesses(agent.id)) {
-                            result = result and (organization.capabilities[capability.id] != null)
+                        for ((capabilityId, _) in organization.possessesRelations[agent.id]) {
+                            result = result and (organization.capabilities[capabilityId] != null)
                             if (!result) { /* short circuit */
                                 /*
                              * can stop checking because there is at least one capability possessed by an agent that is not in the organization

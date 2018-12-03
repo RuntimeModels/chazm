@@ -2,7 +2,6 @@ package runtimemodels.chazm.model
 
 import runtimemodels.chazm.api.id.*
 import runtimemodels.chazm.api.relation.Assignment
-import runtimemodels.chazm.api.relation.Possesses
 import runtimemodels.chazm.api.relation.Requires
 import runtimemodels.chazm.api.relation.Uses
 import java.util.concurrent.ConcurrentHashMap
@@ -21,8 +20,8 @@ internal class Relations {
 //    val moderatedBy: MutableMap<AttributeId, MutableMap<PmfId, Moderates>> = ConcurrentHashMap()
 //    val needs: MutableMap<RoleId, MutableMap<AttributeId, Needs>> = ConcurrentHashMap()
 //    val neededBy: MutableMap<AttributeId, MutableMap<RoleId, Needs>> = ConcurrentHashMap()
-    val possesses: MutableMap<AgentId, MutableMap<CapabilityId, Possesses>> = ConcurrentHashMap()
-    val possessedBy: MutableMap<CapabilityId, MutableMap<AgentId, Possesses>> = ConcurrentHashMap()
+//    val possesses: MutableMap<AgentId, MutableMap<CapabilityId, Possesses>> = ConcurrentHashMap()
+//    val possessedBy: MutableMap<CapabilityId, MutableMap<AgentId, Possesses>> = ConcurrentHashMap()
     val requires: MutableMap<RoleId, MutableMap<CapabilityId, Requires>> = ConcurrentHashMap()
     val requiredBy: MutableMap<CapabilityId, MutableMap<RoleId, Requires>> = ConcurrentHashMap()
     val uses: MutableMap<RoleId, MutableMap<PmfId, Uses>> = ConcurrentHashMap()

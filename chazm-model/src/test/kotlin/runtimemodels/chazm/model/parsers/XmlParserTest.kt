@@ -106,8 +106,8 @@ class XmlParserTest {
             { assertThat(organization.moderatesRelations[pmf1].map { it.key }).containsOnly(attribute1) },
             { assertThat(organization.needsRelations[role1].size).isEqualTo(1) },
             { assertThat(organization.needsRelations[role1].map { it.key }).containsOnly(attribute1) },
-            { assertThat(organization.getPossesses(agent1).size).isEqualTo(1) },
-            { assertThat(organization.getPossesses(agent1).map { it.id }).containsOnly(capability1) },
+            { assertThat(organization.possessesRelations[agent1].size).isEqualTo(1) },
+            { assertThat(organization.possessesRelations[agent1].map { it.key }).containsOnly(capability1) },
             { assertThat(organization.getRequires(role1).size).isEqualTo(1) },
             { assertThat(organization.getRequires(role1).map { it.id }).containsOnly(capability1) }
         )

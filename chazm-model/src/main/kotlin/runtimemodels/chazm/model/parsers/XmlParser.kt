@@ -174,44 +174,59 @@ internal open class XmlParser @Inject constructor(
             if (event.isStartElement) {
                 val element = event.asStartElement()
                 val name = element.name
-                if (HAS_ELEMENT == name.localPart) {
-                    val ids = collectChild(reader, name)
-                    try {
-                        val value = java.lang.Double.valueOf(getAttributeValue(element, VALUE_ATTRIBUTE))
-                        list.add(object : RunLater {
-                            override fun run() {
-                                return addRelation(
-                                    id,
-                                    ids,
-                                    attributes,
-                                    { agentId, attributeId ->
-                                        organization.hasRelations.add(relationFactory.buildHas(
-                                            organization.agents[agentId]!!,
-                                            organization.attributes[attributeId]!!,
-                                            value
-                                        ))
-                                    },
-                                    Attribute::class.java
-                                )
-                            }
-                        })
-                    } catch (e: NumberFormatException) {
-                        throw XMLStreamException(e)
-                    }
+                when (name.localPart) {
+                    HAS_ELEMENT -> {
+                        val ids = collectChild(reader, name)
+                        try {
+                            val value = java.lang.Double.valueOf(getAttributeValue(element, VALUE_ATTRIBUTE))
+                            list.add(object : RunLater {
+                                override fun run() {
+                                    return addRelation(
+                                        id,
+                                        ids,
+                                        attributes,
+                                        { agentId, attributeId ->
+                                            organization.hasRelations.add(relationFactory.buildHas(
+                                                organization.agents[agentId]!!,
+                                                organization.attributes[attributeId]!!,
+                                                value
+                                            ))
+                                        },
+                                        Attribute::class.java
+                                    )
+                                }
+                            })
+                        } catch (e: NumberFormatException) {
+                            throw XMLStreamException(e)
+                        }
 
-                } else if (POSSESSES_ELEMENT == name.localPart) {
-                    val ids = collectChild(reader, name)
-                    try {
-                        val value = java.lang.Double.valueOf(getAttributeValue(element, SCORE_ATTRIBUTE))
-                        list.add(object : RunLater {
-                            override fun run() {
-                                return addRelation(id, ids, capabilities, { c, d -> organization.addPossesses(c, d, value) }, Capability::class.java)
-                            }
-                        })
-                    } catch (e: NumberFormatException) {
-                        throw XMLStreamException(e)
                     }
+                    POSSESSES_ELEMENT -> {
+                        val ids = collectChild(reader, name)
+                        try {
+                            val value = java.lang.Double.valueOf(getAttributeValue(element, SCORE_ATTRIBUTE))
+                            list.add(object : RunLater {
+                                override fun run() {
+                                    return addRelation(
+                                        id,
+                                        ids,
+                                        capabilities,
+                                        { agentId, capabilityId ->
+                                            organization.possessesRelations.add(relationFactory.buildPossesses(
+                                                organization.agents[agentId]!!,
+                                                organization.capabilities[capabilityId]!!,
+                                                value
+                                            ))
+                                        },
+                                        Capability::class.java
+                                    )
+                                }
+                            })
+                        } catch (e: NumberFormatException) {
+                            throw XMLStreamException(e)
+                        }
 
+                    }
                 }
             } else if (event.isEndElement) {
                 val element = event.asEndElement()
