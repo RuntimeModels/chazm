@@ -11,8 +11,13 @@ internal open class DefaultEffectiveness @Inject constructor() : Effectiveness {
     override fun compute(organization: Organization, assignments: Set<Assignment>): Double {
         return assignments
             .sumByDouble {
-                organization.getGoodness(it.role.id)?.compute(organization, it.agent, it.role, it.goal, organization.assignments)
-                    ?: 0.0
+                organization.getGoodness(it.role.id)?.compute(
+                    organization,
+                    it.agent,
+                    it.role,
+                    it.goal,
+                    organization.assignments
+                ) ?: 0.0
             }
     }
 }
