@@ -26,8 +26,8 @@ internal open class DefaultGoodness @Inject constructor() : Goodness {
         if (organization.achievesRelations[role.id].containsKey(goal.goal.id)) {
             var score = MAX_SCORE
             var count = 0
-            organization.getRequires(role.id).forEach { capability ->
-                score *= organization.possessesRelations[agent.id, capability.id]?.score ?: MIN_SCORE
+            organization.requiresRelations[role.id].forEach {
+                score *= organization.possessesRelations[agent.id, it.key]?.score ?: MIN_SCORE
                 if (java.lang.Double.compare(score, MIN_SCORE) == 0) { // short circuit
                     return MIN_SCORE
                 }

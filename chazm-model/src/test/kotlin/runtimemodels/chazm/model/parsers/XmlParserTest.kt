@@ -108,8 +108,8 @@ class XmlParserTest {
             { assertThat(organization.needsRelations[role1].map { it.key }).containsOnly(attribute1) },
             { assertThat(organization.possessesRelations[agent1].size).isEqualTo(1) },
             { assertThat(organization.possessesRelations[agent1].map { it.key }).containsOnly(capability1) },
-            { assertThat(organization.getRequires(role1).size).isEqualTo(1) },
-            { assertThat(organization.getRequires(role1).map { it.id }).containsOnly(capability1) }
+            { assertThat(organization.requiresRelations[role1].size).isEqualTo(1) },
+            { assertThat(organization.requiresRelations[role1].map { it.key }).containsOnly(capability1) }
         )
     }
 
@@ -138,8 +138,8 @@ class XmlParserTest {
             { assertThat(organization.achievesRelations[r1].size).isEqualTo(1) },
             { assertThat(organization.achievesRelations[r1].map { it.key }).containsOnly(g1) },
 
-            { assertThat(organization.getRequires(r1).size).isEqualTo(1) },
-            { assertThat(organization.getRequires(r1).map { it.id }).containsOnly(c1) }
+            { assertThat(organization.requiresRelations[r1].size).isEqualTo(1) },
+            { assertThat(organization.requiresRelations[r1].map { it.key }).containsOnly(c1) }
         )
     }
 
@@ -168,8 +168,8 @@ class XmlParserTest {
             { assertThat(organization.achievesRelations[r1].size).isEqualTo(1) },
             { assertThat(organization.achievesRelations[r1].map { it.key }).containsOnly(g1) },
 
-            { assertThat(organization.getRequires(r1).size).isEqualTo(1) },
-            { assertThat(organization.getRequires(r1).map { it.id }).containsOnly(c1) }
+            { assertThat(organization.requiresRelations[r1].size).isEqualTo(1) },
+            { assertThat(organization.requiresRelations[r1].map { it.key }).containsOnly(c1) }
         )
     }
 
@@ -206,8 +206,8 @@ class XmlParserTest {
             { assertThat(organization.achievesRelations[r1].size).isEqualTo(3) },
             { assertThat(organization.achievesRelations[r1].map { it.key }).containsOnly(g1, g2, g3) },
 
-            { assertThat(organization.getRequires(r1).size).isEqualTo(3) },
-            { assertThat(organization.getRequires(r1).map { it.id }).containsOnly(c1, c2, c3) }
+            { assertThat(organization.requiresRelations[r1].size).isEqualTo(3) },
+            { assertThat(organization.requiresRelations[r1].map { it.key }).containsOnly(c1, c2, c3) }
         )
     }
 
@@ -244,8 +244,8 @@ class XmlParserTest {
             { assertThat(organization.achievesRelations[r1].size).isEqualTo(3) },
             { assertThat(organization.achievesRelations[r1].map { it.key }).containsOnly(g1, g2, g3) },
 
-            { assertThat(organization.getRequires(r1).size).isEqualTo(3) },
-            { assertThat(organization.getRequires(r1).map { it.id }).containsOnly(c1, c2, c3) }
+            { assertThat(organization.requiresRelations[r1].size).isEqualTo(3) },
+            { assertThat(organization.requiresRelations[r1].map { it.key }).containsOnly(c1, c2, c3) }
         )
     }
 
@@ -265,7 +265,7 @@ class XmlParserTest {
 
             { assertThat(organization.achievesRelations[r1].size).isEqualTo(0) },
 
-            { assertThat(organization.getRequires(r1).size).isEqualTo(0) }
+            { assertThat(organization.requiresRelations[r1].size).isEqualTo(0) }
         )
     }
 

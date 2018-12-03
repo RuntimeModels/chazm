@@ -10,6 +10,7 @@ import runtimemodels.chazm.model.factory.RelationFactory
 import runtimemodels.chazm.model.guice.OrganizationModule
 import runtimemodels.chazm.model.id.*
 import runtimemodels.chazm.model.relation.PossessesRelation
+import runtimemodels.chazm.model.relation.RequiresRelation
 
 
 class DefaultEffectivenessTest {
@@ -48,7 +49,7 @@ class DefaultEffectivenessTest {
         organization.add(capability1)
         organization.add(capability2)
         organization.add(achieves)
-        organization.addRequires(role.id, capability1.id)
+        organization.add(RequiresRelation(role, capability1))
         organization.add(PossessesRelation(agent1, capability1, 1.0))
         organization.addAssignment(assignment1)
 

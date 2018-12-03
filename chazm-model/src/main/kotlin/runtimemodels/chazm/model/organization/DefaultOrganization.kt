@@ -10,7 +10,10 @@ import runtimemodels.chazm.api.organization.*
 import runtimemodels.chazm.api.relation.*
 import runtimemodels.chazm.model.Functions
 import runtimemodels.chazm.model.Relations
-import runtimemodels.chazm.model.event.*
+import runtimemodels.chazm.model.event.AssignmentEvent
+import runtimemodels.chazm.model.event.EventFactory
+import runtimemodels.chazm.model.event.EventType
+import runtimemodels.chazm.model.event.UsesEvent
 import runtimemodels.chazm.model.factory.RelationFactory
 import runtimemodels.chazm.model.message.E
 import runtimemodels.chazm.model.message.L
@@ -42,7 +45,8 @@ internal open class DefaultOrganization @Inject constructor(
     override val hasRelations: HasManager,
     override val moderatesRelations: ModeratesManager,
     override val needsRelations: NeedsManager,
-    override val possessesRelations: PossessesManager
+    override val possessesRelations: PossessesManager,
+    override val requiresRelations: RequiresManager
 ) : Organization, FlowableOnSubscribe<Organization> {
 
     private val relations = Relations()
@@ -89,7 +93,6 @@ internal open class DefaultOrganization @Inject constructor(
     override fun add(capability: Capability) {
         checkNotExists(capability) { capabilities.containsKey(it) }
         capabilities.add(capability)
-        relations.requiredBy[capability.id] = ConcurrentHashMap()
         publisher.post(eventFactory.build(EventType.ADDED, capability))
     }
 
@@ -98,7 +101,7 @@ internal open class DefaultOrganization @Inject constructor(
             /* remove the capability, all associated requires relations, all associated possesses relations */
             val capability = capabilities.remove(id)
             possessesRelations.remove(id)
-            remove(id, relations.requiredBy, REQUIRED_BY, Consumer { removeRequires(it, id) })
+            requiresRelations.remove(id)
             publisher.post(eventFactory.build(EventType.REMOVED, capability))
         }
     }
@@ -181,7 +184,7 @@ internal open class DefaultOrganization @Inject constructor(
             achievesRelations.remove(id)
             containsRelations.remove(id)
             needsRelations.remove(id)
-            remove(id, relations.requires, REQUIRES, Consumer { removeRequires(id, it) })
+            requiresRelations.remove(id)
             remove(id, relations.uses, USES, Consumer { removeUses(id, it) })
             functions.goodness.remove(id)
             publisher.post(eventFactory.build(EventType.REMOVED, role))
@@ -340,38 +343,18 @@ internal open class DefaultOrganization @Inject constructor(
         }
     }
 
-    override fun addRequires(roleId: RoleId, capabilityId: CapabilityId) {
-        val role = checkExists(roleId, (roles::get))
-        val capability = checkExists(capabilityId, (capabilities::get))
-        val map = getMap(roleId, relations.requires, REQUIRES)
-        if (map.containsKey(capabilityId)) {
-            /* relation already exists do nothing */
-            return
+    override fun add(requires: Requires) {
+        checkExists(requires.role.id, roles::get)
+        checkExists(requires.capability.id, capabilities::get)
+        requiresRelations.add(requires)
+        publisher.post(eventFactory.build(EventType.ADDED, requires))
+    }
+
+    override fun remove(roleId: RoleId, capabilityId: CapabilityId) {
+        if (requiresRelations.containsKey(roleId) && requiresRelations[roleId].containsKey(capabilityId)) {
+            val requires = requiresRelations.remove(roleId, capabilityId)
+            publisher.post(eventFactory.build(EventType.REMOVED, requires))
         }
-        val requires = relationFactory.buildRequires(role, capability)
-        map[capabilityId] = requires
-        addBy(requires, relations.requiredBy, REQUIRED_BY, capabilityId, roleId)
-        publisher.post<RequiresEvent>(eventFactory.build(EventType.ADDED, requires))
-    }
-
-    override fun getRequires(id: RoleId): Set<Capability> {
-        return getSet(id, relations.requires, Function { it.capability })
-    }
-
-    override fun getRequiredBy(id: CapabilityId): Set<Role> {
-        return getSet(id, relations.requiredBy, Function { it.role })
-    }
-
-    override fun removeRequires(roleId: RoleId, capabilityId: CapabilityId) {
-        if (relations.requires.containsKey(roleId) && relations.requires[roleId]!!.containsKey(capabilityId)) {
-            val requires = relations.requires[roleId]!!.remove(capabilityId)!!
-            removeBy(capabilityId, roleId, relations.requiredBy, REQUIRED_BY)
-            publisher.post<RequiresEvent>(eventFactory.build(EventType.REMOVED, requires))
-        }
-    }
-
-    override fun removeAllRequires() {
-        removeAll(relations.requires, BiConsumer(::removeRequires), Function { it.role.id }, Function { it.capability.id })
     }
 
     override fun addUses(roleId: RoleId, pmfId: PmfId) {
@@ -428,8 +411,6 @@ internal open class DefaultOrganization @Inject constructor(
 
     companion object {
         private val ASSIGNMENTS_BY_AGENT = "assignmentsByAgent"
-        private val REQUIRED_BY = "requiredBy"
-        private val REQUIRES = "requires"
         private val USES = "uses"
         private val USED_BY = "usedBy"
         private val log = org.slf4j.LoggerFactory.getLogger(DefaultOrganization::class.java)
@@ -565,15 +546,15 @@ internal open class DefaultOrganization @Inject constructor(
                     /*
                  * every role requires at least one capability
 				 */
-                    result = result and (organization.getRequires(role.id).size > 0)
+                    result = result and organization.requiresRelations[role.id].isNotEmpty()
                     if (!result) { /* short circuit */
                         /*
                      * can stop checking because there is a role that does not require at least one capability
 					 */
                         break
                     }
-                    for (capability in organization.getRequires(role.id)) {
-                        result = result and (organization.capabilities[capability.id] != null)
+                    for ((capabilityId, _) in organization.requiresRelations[role.id]) {
+                        result = result and (organization.capabilities[capabilityId] != null)
                         if (!result) { /* short circuit */
                             /*
                          * can stop checking because there is at least one capability required by a role that is not in the organization

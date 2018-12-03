@@ -12,6 +12,7 @@ import runtimemodels.chazm.model.id.*
 import runtimemodels.chazm.model.relation.AchievesRelation
 import runtimemodels.chazm.model.relation.NeedsRelation
 import runtimemodels.chazm.model.relation.PossessesRelation
+import runtimemodels.chazm.model.relation.RequiresRelation
 
 class DefaultGoodnessTest {
 
@@ -42,7 +43,7 @@ class DefaultGoodnessTest {
 
         assertThat(goodness.compute(organization, agent, role, instanceGoal, setOf())).isEqualTo(DefaultGoodness.MAX_SCORE)
 
-        organization.addRequires(role.id, capability1.id)
+        organization.add(RequiresRelation(role, capability1))
 
         assertThat(goodness.compute(organization, agent, role, instanceGoal, setOf())).isEqualTo(DefaultGoodness.MIN_SCORE)
 
@@ -55,7 +56,7 @@ class DefaultGoodnessTest {
         assertThat(goodness.compute(organization, agent, role, instanceGoal, setOf())).isEqualTo(DefaultGoodness.MAX_SCORE)
 
         organization.add(capability2)
-        organization.addRequires(role.id, capability2.id)
+        organization.add(RequiresRelation(role, capability2))
         organization.add(PossessesRelation(agent, capability2, 1.0))
 
         assertThat(goodness.compute(organization, agent, role, instanceGoal, setOf())).isEqualTo(DefaultGoodness.MAX_SCORE)
