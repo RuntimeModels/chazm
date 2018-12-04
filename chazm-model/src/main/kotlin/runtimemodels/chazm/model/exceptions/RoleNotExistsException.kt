@@ -5,4 +5,4 @@ import runtimemodels.chazm.model.message.E
 
 class RoleNotExistsException(
     val id: RoleId
-) : IllegalArgumentException(E.ENTITY_DOES_NOT_EXISTS[id.type.simpleName, id])
+) : IllegalArgumentException(E.ENTITY_DOES_NOT_EXISTS[id.type, id])

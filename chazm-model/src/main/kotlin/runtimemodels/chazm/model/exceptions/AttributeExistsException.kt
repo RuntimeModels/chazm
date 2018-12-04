@@ -5,4 +5,4 @@ import runtimemodels.chazm.model.message.E
 
 class AttributeExistsException(
     val id: AttributeId
-) : IllegalArgumentException(E.ENTITY_ALREADY_EXISTS[id.type.simpleName, id])
+) : IllegalArgumentException(E.ENTITY_ALREADY_EXISTS[id.type, id])

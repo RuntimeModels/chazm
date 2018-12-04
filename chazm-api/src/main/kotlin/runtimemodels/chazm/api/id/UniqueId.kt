@@ -3,31 +3,24 @@ package runtimemodels.chazm.api.id
 import runtimemodels.chazm.api.organization.Organization
 
 import java.io.Serializable
+import kotlin.reflect.KClass
 
 /**
  * The [UniqueId] is an interface to uniquely identify elements within an [Organization].
  *
  * Implementations of [UniqueId] are not required to ensure that [UniqueId]s are globally unique across
- * [Organization]s due to the fact that [UniqueId]s are unique within an [Organization]; i.e.,
+ * [Organization]s due to the requirement that [UniqueId]s should be unique within an [Organization]; i.e.,
  * an [UniqueId] together with an [Organization] should be globally unique across [Organization]s.
  *
- * @param <T> the type of this [UniqueId].
+ * @param <T> the type for this [UniqueId].
  *
  * @author Christopher Zhong
  * @since 4.0
 </T> */
 @FunctionalInterface
-interface UniqueId<T> : Serializable {
+interface UniqueId<T : Any> : Serializable {
     /**
-     * Returns the type of this [UniqueId].
-     *
-     * @return the type of this [UniqueId].
+     * The [KClass] for this [UniqueId].
      */
-    val type: Class<T>
-
-    override fun equals(other: Any?): Boolean
-
-    override fun hashCode(): Int
-
-    override fun toString(): String
+    val type: KClass<T>
 }

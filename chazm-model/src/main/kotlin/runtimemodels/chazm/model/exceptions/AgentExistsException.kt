@@ -5,4 +5,4 @@ import runtimemodels.chazm.model.message.E
 
 class AgentExistsException(
     val id: AgentId
-) : IllegalArgumentException(E.ENTITY_ALREADY_EXISTS[id.type.simpleName, id])
+) : IllegalArgumentException(E.ENTITY_ALREADY_EXISTS[id.type, id])

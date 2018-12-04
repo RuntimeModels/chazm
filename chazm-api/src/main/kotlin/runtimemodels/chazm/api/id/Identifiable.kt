@@ -12,7 +12,7 @@ import runtimemodels.chazm.api.organization.Organization
  * @since 7.0.0
  */
 @FunctionalInterface
-interface Identifiable<T, U : UniqueId<T>> {
+interface Identifiable<T : Any, U : UniqueId<T>> {
     /**
      * The `id`.
      */

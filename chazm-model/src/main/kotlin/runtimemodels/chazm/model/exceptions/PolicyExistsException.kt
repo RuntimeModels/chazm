@@ -5,4 +5,4 @@ import runtimemodels.chazm.model.message.E
 
 class PolicyExistsException(
     val id: PolicyId
-) : IllegalArgumentException(E.ENTITY_ALREADY_EXISTS[id.type.simpleName, id])
+) : IllegalArgumentException(E.ENTITY_ALREADY_EXISTS[id.type, id])
