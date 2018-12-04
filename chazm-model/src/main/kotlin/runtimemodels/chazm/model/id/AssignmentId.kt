@@ -28,7 +28,7 @@ class AssignmentId(
     private val agentId: AgentId,
     private val roleId: RoleId,
     private val goalId: InstanceGoalId
-) : AbstractId<Assignment>(Assignment::class.java) {
+) : AbstractId<Assignment>(Assignment::class) {
 
     override fun equals(other: Any?): Boolean {
         if (other is AssignmentId) {
