@@ -8,10 +8,7 @@ import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
-import runtimemodels.chazm.api.entity.Agent
-import runtimemodels.chazm.api.entity.InstanceGoal
-import runtimemodels.chazm.api.entity.Role
-import runtimemodels.chazm.api.entity.SpecificationGoal
+import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.model.guice.ParsersModule
 import runtimemodels.chazm.model.id.*
@@ -279,7 +276,7 @@ class XmlParserTest {
 
         assertAll(
             { assertThat(exception.cause).isInstanceOf(IllegalArgumentException::class.java) },
-            { assertThat(exception.message).isEqualTo(IllegalArgumentException(E.ENTITY_ALREADY_EXISTS["Capability", DefaultCapabilityId("Capability 1")]).toString()) }
+            { assertThat(exception.message).isEqualTo(IllegalArgumentException(E.ENTITY_ALREADY_EXISTS[Capability::class, DefaultCapabilityId("Capability 1")]).toString()) }
         )
     }
 
