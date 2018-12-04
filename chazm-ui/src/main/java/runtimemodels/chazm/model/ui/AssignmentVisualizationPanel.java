@@ -13,7 +13,6 @@ import runtimemodels.chazm.api.relation.Assignment;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -50,9 +49,10 @@ public class AssignmentVisualizationPanel extends AbstractListVisualizationPanel
 
     @Override
     List<Assignment> getCollection() {
-        final List<Assignment> assignments = new ArrayList<>(getOrganization().getAssignments());
-        final Comparator<Assignment> comparator = (assignment1, assignment2) -> assignment1.toString().compareTo(assignment2.toString());
-        Collections.sort(assignments, comparator);
+//        final List<Assignment> assignments = new ArrayList<>(getOrganization().getAssignments());
+        final List<Assignment> assignments = new ArrayList<>();
+        final Comparator<Assignment> comparator = Comparator.comparing(Object::toString);
+        assignments.sort(comparator);
         return assignments;
     }
 
