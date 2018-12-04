@@ -3,8 +3,8 @@ package runtimemodels.chazm.model.organization
 import runtimemodels.chazm.api.entity.Capability
 import runtimemodels.chazm.api.id.CapabilityId
 import runtimemodels.chazm.api.organization.CapabilityManager
-import runtimemodels.chazm.model.exceptions.CapabilityExistsException
-import runtimemodels.chazm.model.exceptions.CapabilityNotExistsException
+import runtimemodels.chazm.model.exceptions.EntityExistsException
+import runtimemodels.chazm.model.exceptions.EntityNotExistsException
 import javax.inject.Inject
 
 internal data class DefaultCapabilityManager @Inject constructor(
@@ -12,7 +12,7 @@ internal data class DefaultCapabilityManager @Inject constructor(
 ) : CapabilityManager, Map<CapabilityId, Capability> by map {
     override fun add(capability: Capability) {
         if (map.containsKey(capability.id)) {
-            throw CapabilityExistsException(capability.id)
+            throw EntityExistsException(capability.id)
         }
         map[capability.id] = capability
     }
@@ -21,6 +21,6 @@ internal data class DefaultCapabilityManager @Inject constructor(
         if (map.containsKey(id)) {
             return map.remove(id)!!
         }
-        throw CapabilityNotExistsException(id)
+        throw EntityNotExistsException(id)
     }
 }

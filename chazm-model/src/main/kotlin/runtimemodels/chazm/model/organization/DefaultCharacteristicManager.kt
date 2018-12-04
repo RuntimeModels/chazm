@@ -3,8 +3,8 @@ package runtimemodels.chazm.model.organization
 import runtimemodels.chazm.api.entity.Characteristic
 import runtimemodels.chazm.api.id.CharacteristicId
 import runtimemodels.chazm.api.organization.CharacteristicManager
-import runtimemodels.chazm.model.exceptions.CharacteristicExistsException
-import runtimemodels.chazm.model.exceptions.CharacteristicNotExistsException
+import runtimemodels.chazm.model.exceptions.EntityExistsException
+import runtimemodels.chazm.model.exceptions.EntityNotExistsException
 import javax.inject.Inject
 
 internal data class DefaultCharacteristicManager @Inject constructor(
@@ -12,7 +12,7 @@ internal data class DefaultCharacteristicManager @Inject constructor(
 ) : CharacteristicManager, Map<CharacteristicId, Characteristic> by map {
     override fun add(characteristic: Characteristic) {
         if (map.containsKey(characteristic.id)) {
-            throw CharacteristicExistsException(characteristic.id)
+            throw EntityExistsException(characteristic.id)
         }
         map[characteristic.id] = characteristic
     }
@@ -21,6 +21,6 @@ internal data class DefaultCharacteristicManager @Inject constructor(
         if (map.containsKey(id)) {
             return map.remove(id)!!
         }
-        throw CharacteristicNotExistsException(id)
+        throw EntityNotExistsException(id)
     }
 }

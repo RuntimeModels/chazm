@@ -3,8 +3,8 @@ package runtimemodels.chazm.model.organization
 import runtimemodels.chazm.api.entity.Agent
 import runtimemodels.chazm.api.id.AgentId
 import runtimemodels.chazm.api.organization.AgentManager
-import runtimemodels.chazm.model.exceptions.AgentExistsException
-import runtimemodels.chazm.model.exceptions.AgentNotExistsException
+import runtimemodels.chazm.model.exceptions.EntityExistsException
+import runtimemodels.chazm.model.exceptions.EntityNotExistsException
 import javax.inject.Inject
 
 internal data class DefaultAgentManager @Inject constructor(
@@ -12,7 +12,7 @@ internal data class DefaultAgentManager @Inject constructor(
 ) : AgentManager, Map<AgentId, Agent> by map {
     override fun add(agent: Agent) {
         if (map.containsKey(agent.id)) {
-            throw AgentExistsException(agent.id)
+            throw EntityExistsException(agent.id)
         }
         map[agent.id] = agent
     }
@@ -21,6 +21,6 @@ internal data class DefaultAgentManager @Inject constructor(
         if (map.containsKey(id)) {
             return map.remove(id)!!
         }
-        throw AgentNotExistsException(id)
+        throw EntityNotExistsException(id)
     }
 }

@@ -4,8 +4,8 @@ import runtimemodels.chazm.api.entity.InstanceGoal
 import runtimemodels.chazm.api.id.InstanceGoalId
 import runtimemodels.chazm.api.id.SpecificationGoalId
 import runtimemodels.chazm.api.organization.InstanceGoalManager
-import runtimemodels.chazm.model.exceptions.InstanceGoalExistsException
-import runtimemodels.chazm.model.exceptions.InstanceGoalNotExistsException
+import runtimemodels.chazm.model.exceptions.EntityExistsException
+import runtimemodels.chazm.model.exceptions.EntityNotExistsException
 import javax.inject.Inject
 
 internal data class DefaultInstanceGoalManager @Inject constructor(
@@ -14,7 +14,7 @@ internal data class DefaultInstanceGoalManager @Inject constructor(
 ) : InstanceGoalManager, Map<InstanceGoalId, InstanceGoal> by map {
     override fun add(goal: InstanceGoal) {
         if (map.containsKey(goal.id)) {
-            throw InstanceGoalExistsException(goal.id)
+            throw EntityExistsException(goal.id)
         }
         map[goal.id] = goal
         byMap.computeIfAbsent(goal.goal.id) { mutableMapOf() }[goal.id] = goal
@@ -39,7 +39,7 @@ internal data class DefaultInstanceGoalManager @Inject constructor(
                 throw IllegalStateException("the key '${goal.goal.id}' is missing from map 'byMap'")
             }
         }
-        throw InstanceGoalNotExistsException(id)
+        throw EntityNotExistsException(id)
     }
 
     override fun remove(id: SpecificationGoalId) {

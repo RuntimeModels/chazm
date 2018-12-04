@@ -366,12 +366,12 @@ internal open class DefaultOrganization @Inject constructor(
 
         private fun <T : Identifiable<T, U>, U : UniqueId<T>> checkNotExists(t: T, predicate: (U) -> Boolean) {
             if (predicate(t.id)) {
-                throw IllegalArgumentException(E.ENTITY_ALREADY_EXISTS[t.id.type.simpleName, t.id])
+                throw IllegalArgumentException(E.ENTITY_ALREADY_EXISTS[t.id.type, t.id])
             }
         }
 
         private fun <T : UniqueId<U>, U> checkExists(id: T, function: (T) -> U?): U {
-            return function(id) ?: throw IllegalArgumentException(E.ENTITY_DOES_NOT_EXISTS[id.type.simpleName, id])
+            return function(id) ?: throw IllegalArgumentException(E.ENTITY_DOES_NOT_EXISTS[id.type, id])
         }
 
         /**

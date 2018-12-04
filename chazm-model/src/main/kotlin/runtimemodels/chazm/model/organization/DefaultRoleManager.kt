@@ -3,8 +3,8 @@ package runtimemodels.chazm.model.organization
 import runtimemodels.chazm.api.entity.Role
 import runtimemodels.chazm.api.id.RoleId
 import runtimemodels.chazm.api.organization.RoleManager
-import runtimemodels.chazm.model.exceptions.RoleExistsException
-import runtimemodels.chazm.model.exceptions.RoleNotExistsException
+import runtimemodels.chazm.model.exceptions.EntityExistsException
+import runtimemodels.chazm.model.exceptions.EntityNotExistsException
 import javax.inject.Inject
 
 internal data class DefaultRoleManager @Inject constructor(
@@ -12,7 +12,7 @@ internal data class DefaultRoleManager @Inject constructor(
 ) : RoleManager, Map<RoleId, Role> by map {
     override fun add(role: Role) {
         if (map.containsKey(role.id)) {
-            throw RoleExistsException(role.id)
+            throw EntityExistsException(role.id)
         }
         map[role.id] = role
     }
@@ -21,6 +21,6 @@ internal data class DefaultRoleManager @Inject constructor(
         if (map.containsKey(id)) {
             return map.remove(id)!!
         }
-        throw RoleNotExistsException(id)
+        throw EntityNotExistsException(id)
     }
 }
