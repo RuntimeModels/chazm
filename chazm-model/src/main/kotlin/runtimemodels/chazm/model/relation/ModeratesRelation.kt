@@ -9,8 +9,8 @@ import java.util.*
 import javax.inject.Inject
 
 internal open class ModeratesRelation @Inject constructor(
-    @param:Assisted private val pmf: Pmf,
-    @param:Assisted private val attribute: Attribute
+    @param:Assisted override val pmf: Pmf,
+    @param:Assisted override val attribute: Attribute
 ) : Moderates {
     override fun equals(other: Any?): Boolean {
         if (other is Moderates) {
@@ -21,9 +21,5 @@ internal open class ModeratesRelation @Inject constructor(
 
     override fun hashCode(): Int = Objects.hash(pmf, attribute)
 
-    override fun toString(): String = M.RELATION[getPmf().id, getAttribute().id]
-
-    override fun getPmf(): Pmf = pmf
-
-    override fun getAttribute(): Attribute = attribute
+    override fun toString(): String = M.RELATION[pmf.id, attribute.id]
 }

@@ -9,8 +9,8 @@ import java.util.*
 import javax.inject.Inject
 
 internal open class UsesRelation @Inject constructor(
-    @param:Assisted private val role: Role,
-    @param:Assisted private val pmf: Pmf
+    @param:Assisted override val role: Role,
+    @param:Assisted override val pmf: Pmf
 ) : Uses {
     override fun equals(other: Any?): Boolean {
         if (other is UsesRelation) {
@@ -22,8 +22,4 @@ internal open class UsesRelation @Inject constructor(
     override fun hashCode(): Int = Objects.hash(role, pmf)
 
     override fun toString(): String = M.RELATION[role.id, pmf.id]
-
-    override fun getRole(): Role = role
-
-    override fun getPmf(): Pmf = pmf
 }

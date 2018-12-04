@@ -3,6 +3,8 @@ package runtimemodels.chazm.model.event
 import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.Attribute
 import runtimemodels.chazm.api.entity.Role
+import runtimemodels.chazm.api.id.AttributeId
+import runtimemodels.chazm.api.id.RoleId
 import runtimemodels.chazm.api.id.UniqueId
 import runtimemodels.chazm.api.relation.Needs
 import runtimemodels.chazm.model.message.M
@@ -24,13 +26,13 @@ open class NeedsEvent @Inject internal constructor(
      *
      * @return a [UniqueId].
      */
-    val roleId: UniqueId<Role> = needs.role.id
+    val roleId: RoleId = needs.role.id
     /**
      * Returns a [UniqueId] that represents a [Attribute].
      *
      * @return a [UniqueId].
      */
-    val attributeId: UniqueId<Attribute> = needs.attribute.id
+    val attributeId: AttributeId = needs.attribute.id
 
     override fun equals(other: Any?): Boolean {
         if (other is NeedsEvent) {

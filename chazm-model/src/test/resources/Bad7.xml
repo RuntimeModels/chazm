@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- invalid value in the 'value' attribute of the 'contains' element -->
+<RoleDiagram>
+    <Characteristic id="66ff30ec-1419-417d-9eec-811dbe8941fa" name="Characteristic 1"/>
+    <Role id="d3a3aa33-88c7-41a6-91a0-423e84354e7c" name="Role 1">
+        <contains value="a">
+            <child>66ff30ec-1419-417d-9eec-811dbe8941fa</child>
+        </contains>
+    </Role>
+</RoleDiagram>

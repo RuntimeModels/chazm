@@ -2,6 +2,7 @@ package runtimemodels.chazm.model.event
 
 import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.Agent
+import runtimemodels.chazm.api.id.AgentId
 import runtimemodels.chazm.api.id.UniqueId
 import runtimemodels.chazm.model.message.M
 import java.util.*
@@ -22,7 +23,7 @@ open class AgentEvent @Inject internal constructor(
      *
      * @return a [UniqueId].
      */
-    val id: UniqueId<Agent> = agent.id
+    val id: AgentId = agent.id
 
     override fun equals(other: Any?): Boolean {
         if (other is AgentEvent) {

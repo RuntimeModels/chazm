@@ -9,9 +9,9 @@ import java.util.*
 import javax.inject.Inject
 
 internal open class ContainsRelation @Inject constructor(
-    @param:Assisted private val role: Role,
-    @param:Assisted private val characteristic: Characteristic,
-    @param:Assisted private var value: Double
+    @param:Assisted override val role: Role,
+    @param:Assisted override val characteristic: Characteristic,
+    @param:Assisted override var value: Double
 ) : Contains {
     override fun equals(other: Any?): Boolean {
         if (other is Contains) {
@@ -23,14 +23,4 @@ internal open class ContainsRelation @Inject constructor(
     override fun hashCode(): Int = Objects.hash(role, characteristic)
 
     override fun toString(): String = M.RELATION_WITH_VALUE[role.id, characteristic.id, value]
-
-    override fun getRole(): Role = role
-
-    override fun getCharacteristic(): Characteristic = characteristic
-
-    override fun getValue(): Double = value
-
-    override fun setValue(value: Double) {
-        this.value = value
-    }
 }

@@ -4,7 +4,8 @@ import com.google.inject.Guice
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
-import runtimemodels.chazm.api.Organization
+import runtimemodels.chazm.api.organization.Organization
+import runtimemodels.chazm.model.guice.OrganizationModule
 
 class OrganizationTest {
 

@@ -3,6 +3,8 @@ package runtimemodels.chazm.model.event
 import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.Role
 import runtimemodels.chazm.api.entity.SpecificationGoal
+import runtimemodels.chazm.api.id.RoleId
+import runtimemodels.chazm.api.id.SpecificationGoalId
 import runtimemodels.chazm.api.id.UniqueId
 import runtimemodels.chazm.api.relation.Achieves
 import runtimemodels.chazm.model.message.M
@@ -24,13 +26,13 @@ open class AchievesEvent @Inject internal constructor(
      *
      * @return a [UniqueId].
      */
-    val roleId: UniqueId<Role> = achieves.role.id
+    val roleId: RoleId = achieves.role.id
     /**
      * Returns a [UniqueId] that represents a [SpecificationGoal].
      *
      * @return a [UniqueId].
      */
-    val goalId: UniqueId<SpecificationGoal> = achieves.goal.id
+    val goalId: SpecificationGoalId = achieves.goal.id
 
     override fun equals(other: Any?): Boolean {
         if (other is AchievesEvent) {

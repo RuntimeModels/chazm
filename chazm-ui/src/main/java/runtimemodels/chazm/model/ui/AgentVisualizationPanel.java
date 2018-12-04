@@ -7,8 +7,8 @@
  */
 package runtimemodels.chazm.model.ui;
 
-import runtimemodels.chazm.api.Organization;
 import runtimemodels.chazm.api.entity.Agent;
+import runtimemodels.chazm.api.organization.Organization;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -50,7 +50,8 @@ public class AgentVisualizationPanel extends AbstractListVisualizationPanel<Agen
 
     @Override
     List<Agent> getCollection() {
-        final List<Agent> agents = new ArrayList<>(getOrganization().getAgents());
+//        final List<Agent> agents = new ArrayList<>(getOrganization().getAgents());
+        final List<Agent> agents = new ArrayList<>();
         final Comparator<Agent> comparator = Comparator.comparing(Agent::toString);
         Collections.sort(agents, comparator);
         return agents;

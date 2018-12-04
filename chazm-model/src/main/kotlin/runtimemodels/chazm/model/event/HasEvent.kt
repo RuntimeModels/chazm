@@ -3,6 +3,8 @@ package runtimemodels.chazm.model.event
 import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.Agent
 import runtimemodels.chazm.api.entity.Attribute
+import runtimemodels.chazm.api.id.AgentId
+import runtimemodels.chazm.api.id.AttributeId
 import runtimemodels.chazm.api.id.UniqueId
 import runtimemodels.chazm.api.relation.Has
 import runtimemodels.chazm.model.message.M
@@ -24,13 +26,13 @@ open class HasEvent @Inject internal constructor(
      *
      * @return a [UniqueId].
      */
-    val agentId: UniqueId<Agent> = has.agent.id
+    val agentId: AgentId = has.agent.id
     /**
      * Returns a [UniqueId] that represents an [Attribute].
      *
      * @return a [UniqueId].
      */
-    val attributeId: UniqueId<Attribute> = has.attribute.id
+    val attributeId: AttributeId = has.attribute.id
     /**
      * Returns a `double` value.
      *
