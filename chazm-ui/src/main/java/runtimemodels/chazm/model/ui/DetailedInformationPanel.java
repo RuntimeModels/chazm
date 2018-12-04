@@ -29,7 +29,7 @@ public class DetailedInformationPanel extends JPanel {
      * @author Christopher Zhong
      * @since 4.0
      */
-    static enum Styles {
+    enum Styles {
 
         /**
          * The standard style that every other styles in <code>Styles</code> is based on.
@@ -213,9 +213,9 @@ public class DetailedInformationPanel extends JPanel {
             writeEntityRelation("Instance Identifier:");
             writeEntityEntity(instanceGoal.getId().toString());
             writeRelation("Parameter(s):");
-            if (instanceGoal.getParameters() != null) {
-                writeRelationEntity(instanceGoal.getParameters().toString());
-            }
+//            if (instanceGoal.getParameters() != null) {
+//                writeRelationEntity(instanceGoal.getParameters().toString());
+//            }
         } catch (final BadLocationException e) {
             e.printStackTrace();
         }
@@ -288,7 +288,7 @@ public class DetailedInformationPanel extends JPanel {
         try {
             /* clears the contents of the document */
             doc.remove(0, doc.getLength());
-            writeEntity(assignment.getId().toString());
+//            writeEntity(assignment.getId().toString());
             writeEntityRelation("Agent:");
             writeEntityEntity(assignment.getAgent().getId().toString());
             writeEntityRelation("Playing Role:");
@@ -296,9 +296,9 @@ public class DetailedInformationPanel extends JPanel {
             writeEntityRelation("Achieving Goal:");
             writeEntityEntity(assignment.getGoal().getId().toString());
             writeEntityRelation("Parameters:");
-            if (assignment.getGoal().getParameters() != null) {
-                writeEntityEntity(assignment.getGoal().getParameters().toString());
-            }
+//            if (assignment.getGoal().getParameters() != null) {
+//                writeEntityEntity(assignment.getGoal().getParameters().toString());
+//            }
         } catch (final BadLocationException e) {
             e.printStackTrace();
         }

@@ -4,6 +4,9 @@ import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.Agent
 import runtimemodels.chazm.api.entity.InstanceGoal
 import runtimemodels.chazm.api.entity.Role
+import runtimemodels.chazm.api.id.AgentId
+import runtimemodels.chazm.api.id.InstanceGoalId
+import runtimemodels.chazm.api.id.RoleId
 import runtimemodels.chazm.api.id.UniqueId
 import runtimemodels.chazm.api.relation.Assignment
 import runtimemodels.chazm.model.message.M
@@ -25,19 +28,19 @@ open class AssignmentEvent @Inject internal constructor(
      *
      * @return a [UniqueId].
      */
-    val agentId: UniqueId<Agent> = assignment.agent.id
+    val agentId: AgentId = assignment.agent.id
     /**
      * Returns a [UniqueId] that represents an [Role].
      *
      * @return a [UniqueId].
      */
-    val roleId: UniqueId<Role> = assignment.role.id
+    val roleId: RoleId = assignment.role.id
     /**
      * Returns a [UniqueId] that represents an [InstanceGoal].
      *
      * @return a [UniqueId].
      */
-    val goalId: UniqueId<InstanceGoal> = assignment.goal.id
+    val goalId: InstanceGoalId = assignment.goal.id
 
     override fun equals(other: Any?): Boolean {
         if (other is AssignmentEvent) {

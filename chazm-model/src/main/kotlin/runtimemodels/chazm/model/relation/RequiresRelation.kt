@@ -9,8 +9,8 @@ import java.util.*
 import javax.inject.Inject
 
 internal open class RequiresRelation @Inject constructor(
-    @param:Assisted private val role: Role,
-    @param:Assisted private val capability: Capability
+    @param:Assisted override val role: Role,
+    @param:Assisted override val capability: Capability
 ) : Requires {
     override fun equals(other: Any?): Boolean {
         if (other is Requires) {
@@ -22,8 +22,4 @@ internal open class RequiresRelation @Inject constructor(
     override fun hashCode(): Int = Objects.hash(role, capability)
 
     override fun toString(): String = M.RELATION[role.id, capability.id]
-
-    override fun getRole(): Role = role
-
-    override fun getCapability(): Capability = capability
 }

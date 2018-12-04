@@ -3,6 +3,8 @@ package runtimemodels.chazm.model.event
 import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.Attribute
 import runtimemodels.chazm.api.entity.Pmf
+import runtimemodels.chazm.api.id.AttributeId
+import runtimemodels.chazm.api.id.PmfId
 import runtimemodels.chazm.api.id.UniqueId
 import runtimemodels.chazm.api.relation.Moderates
 import runtimemodels.chazm.model.message.M
@@ -24,13 +26,13 @@ open class ModeratesEvent @Inject internal constructor(
      *
      * @return a [UniqueId].
      */
-    val pmfId: UniqueId<Pmf> = moderates.pmf.id
+    val pmfId: PmfId = moderates.pmf.id
     /**
      * Returns a [UniqueId] that represents an [Attribute].
      *
      * @return a [UniqueId].
      */
-    val attributeId: UniqueId<Attribute> = moderates.attribute.id
+    val attributeId: AttributeId = moderates.attribute.id
 
     override fun equals(other: Any?): Boolean {
         if (other is ModeratesEvent) {

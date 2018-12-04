@@ -3,106 +3,67 @@ package runtimemodels.chazm.model.function
 import com.google.inject.Guice
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
-import runtimemodels.chazm.api.Organization
 import runtimemodels.chazm.api.entity.Attribute
 import runtimemodels.chazm.api.function.Goodness
-import runtimemodels.chazm.model.OrganizationModule
-import runtimemodels.chazm.model.entity.EntityFactory
-import runtimemodels.chazm.model.id.IdFactory
-import runtimemodels.chazm.model.id.build
+import runtimemodels.chazm.api.organization.Organization
+import runtimemodels.chazm.model.factory.EntityFactory
+import runtimemodels.chazm.model.guice.OrganizationModule
+import runtimemodels.chazm.model.id.*
+import runtimemodels.chazm.model.relation.AchievesRelation
+import runtimemodels.chazm.model.relation.NeedsRelation
+import runtimemodels.chazm.model.relation.PossessesRelation
+import runtimemodels.chazm.model.relation.RequiresRelation
 
 class DefaultGoodnessTest {
 
     private val injector = Guice.createInjector(OrganizationModule(), FunctionModule())
     private val provider = injector.getProvider(Organization::class.java)
-    private val idFactory = injector.getInstance(IdFactory::class.java)
     private val entityFactory = injector.getInstance(EntityFactory::class.java)
     private val goodness = injector.getInstance(Goodness::class.java)
 
     @Test
     fun `test that the compute function works properly`() {
-        val o = provider.get()
-        val a = entityFactory.buildAgent(idFactory.build("a"), mapOf())
-        val r = entityFactory.buildRole(idFactory.build("r"))
-        val sg = entityFactory.buildSpecificationGoal(idFactory.build("sg"))
-        val ig = entityFactory.buildInstanceGoal(idFactory.build("ig"), sg, mapOf())
-        val c1 = entityFactory.buildCapability(idFactory.build("c1"))
-        val c2 = entityFactory.buildCapability(idFactory.build("c2"))
-        val t = entityFactory.buildAttribute(idFactory.build("t"), Attribute.Type.NEGATIVE_QUALITY)
+        val organization = provider.get()
+        val agent = entityFactory.buildAgent(DefaultAgentId("a"), mapOf())
+        val role = entityFactory.buildRole(DefaultRoleId("r"))
+        val specificationGoal = entityFactory.buildSpecificationGoal(DefaultSpecificationGoalId("sg"))
+        val instanceGoal = entityFactory.buildInstanceGoal(DefaultInstanceGoalId("ig"), specificationGoal, mapOf())
+        val capability1 = entityFactory.buildCapability(DefaultCapabilityId("c1"))
+        val capability2 = entityFactory.buildCapability(DefaultCapabilityId("c2"))
+        val attribute = entityFactory.buildAttribute(DefaultAttributeId("t"), Attribute.Type.NEGATIVE_QUALITY)
 
-        assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MIN_SCORE)
+        assertThat(goodness.compute(organization, agent, role, instanceGoal, setOf())).isEqualTo(DefaultGoodness.MIN_SCORE)
 
-        o.addAgent(a)
-        o.addRole(r)
-        o.addSpecificationGoal(sg)
-        o.addInstanceGoal(ig)
-        o.addCapability(c1)
-        o.addAchieves(r.id, sg.id)
+        organization.add(agent)
+        organization.add(role)
+        organization.add(specificationGoal)
+        organization.add(instanceGoal)
+        organization.add(capability1)
+        organization.add(AchievesRelation(role, specificationGoal))
 
-        assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MAX_SCORE)
+        assertThat(goodness.compute(organization, agent, role, instanceGoal, setOf())).isEqualTo(DefaultGoodness.MAX_SCORE)
 
-        o.addRequires(r.id, c1.id)
+        organization.add(RequiresRelation(role, capability1))
 
-        assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MIN_SCORE)
+        assertThat(goodness.compute(organization, agent, role, instanceGoal, setOf())).isEqualTo(DefaultGoodness.MIN_SCORE)
 
-        o.addPossesses(a.id, c1.id, 0.0)
+        organization.add(PossessesRelation(agent, capability1, 0.0))
 
-        assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MIN_SCORE)
+        assertThat(goodness.compute(organization, agent, role, instanceGoal, setOf())).isEqualTo(DefaultGoodness.MIN_SCORE)
 
-        o.setPossessesScore(a.id, c1.id, 1.0)
+        organization.possessesRelations[agent.id, capability1.id]!!.score = 1.0
 
-        assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MAX_SCORE)
+        assertThat(goodness.compute(organization, agent, role, instanceGoal, setOf())).isEqualTo(DefaultGoodness.MAX_SCORE)
 
-        o.addCapability(c2)
-        o.addRequires(r.id, c2.id)
-        o.addPossesses(a.id, c2.id, 1.0)
+        organization.add(capability2)
+        organization.add(RequiresRelation(role, capability2))
+        organization.add(PossessesRelation(agent, capability2, 1.0))
 
-        assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MAX_SCORE)
+        assertThat(goodness.compute(organization, agent, role, instanceGoal, setOf())).isEqualTo(DefaultGoodness.MAX_SCORE)
 
-        o.addAttribute(t)
-        o.addNeeds(r.id, t.id)
+        organization.add(attribute)
+        organization.add(NeedsRelation(role, attribute))
 
-        assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MIN_SCORE)
+        assertThat(goodness.compute(organization, agent, role, instanceGoal, setOf())).isEqualTo(DefaultGoodness.MIN_SCORE)
     }
-
-    @Test
-    fun `test that the compute function throws an IllegalArgumentException when called with all parameters as null`() {
-        assertThrows<IllegalArgumentException> { goodness.compute(null, null, null, null, null) }
-    }
-
-    @Test
-    fun `test that the compute function throws an IllegalArgumentException when called with a null agent, a null role, a null goal, and a null assignment`() {
-        val o = provider.get()
-        assertThrows<IllegalArgumentException> { goodness.compute(o, null, null, null, null) }
-    }
-
-    @Test
-    fun `test that the compute function throws an IllegalArgumentException when called with a null role, a null goal, and a null assignment`() {
-        val o = provider.get()
-        val a = entityFactory.buildAgent(idFactory.build("a"), mapOf())
-
-        assertThrows<IllegalArgumentException> { goodness.compute(o, a, null, null, null) }
-    }
-
-    @Test
-    fun `test that the compute function throws an IllegalArgumentException when called with a null goal and a null assignment`() {
-        val o = provider.get()
-        val a = entityFactory.buildAgent(idFactory.build("a"), mapOf())
-        val r = entityFactory.buildRole(idFactory.build("r"))
-
-        assertThrows<IllegalArgumentException> { goodness.compute(o, a, r, null, null) }
-    }
-
-    @Test
-    fun `test that the compute function throws an IllegalArgumentException when called with a null assignment`() {
-        val o = provider.get()
-        val a = entityFactory.buildAgent(idFactory.build("a"), mapOf())
-        val r = entityFactory.buildRole(idFactory.build("r"))
-        val sg = entityFactory.buildSpecificationGoal(idFactory.build("sg"))
-        val ig = entityFactory.buildInstanceGoal(idFactory.build("ig"), sg, mapOf())
-
-        assertThrows<IllegalArgumentException> { goodness.compute(o, a, r, ig, null) }
-    }
-
 }

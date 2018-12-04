@@ -9,8 +9,8 @@ import java.util.*
 import javax.inject.Inject
 
 internal open class AchievesRelation @Inject constructor(
-    @param:Assisted private val role: Role,
-    @param:Assisted private val goal: SpecificationGoal
+    @param:Assisted override val role: Role,
+    @param:Assisted override val goal: SpecificationGoal
 ) : Achieves {
     override fun equals(other: Any?): Boolean {
         if (other is Achieves) {
@@ -22,8 +22,4 @@ internal open class AchievesRelation @Inject constructor(
     override fun hashCode(): Int = Objects.hash(role, goal)
 
     override fun toString(): String = M.RELATION[role.id, goal.id]
-
-    override fun getRole(): Role = this.role
-
-    override fun getGoal(): SpecificationGoal = this.goal
 }

@@ -7,8 +7,8 @@
  */
 package runtimemodels.chazm.model.ui;
 
-import runtimemodels.chazm.api.Organization;
 import runtimemodels.chazm.api.entity.Pmf;
+import runtimemodels.chazm.api.organization.Organization;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -51,7 +51,8 @@ public class PerformanceFunctionVisualizationPanel extends AbstractListVisualiza
 
     @Override
     List<Pmf> getCollection() {
-        final List<Pmf> pmfs = new ArrayList<>(getOrganization().getPmfs());
+//        final List<Pmf> pmfs = new ArrayList<>(getOrganization().getPmfs());
+        final List<Pmf> pmfs = new ArrayList<>();
         final Comparator<Pmf> comparator = Comparator.comparing(Pmf::toString);
         Collections.sort(pmfs, comparator);
         return pmfs;

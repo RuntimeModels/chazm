@@ -3,6 +3,8 @@ package runtimemodels.chazm.model.event
 import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.Characteristic
 import runtimemodels.chazm.api.entity.Role
+import runtimemodels.chazm.api.id.CharacteristicId
+import runtimemodels.chazm.api.id.RoleId
 import runtimemodels.chazm.api.id.UniqueId
 import runtimemodels.chazm.api.relation.Contains
 import runtimemodels.chazm.model.message.M
@@ -24,13 +26,13 @@ open class ContainsEvent @Inject internal constructor(
      *
      * @return a [UniqueId].
      */
-    val roleId: UniqueId<Role> = contains.role.id
+    val roleId: RoleId = contains.role.id
     /**
      * Returns a [UniqueId] that represents a [Characteristic].
      *
      * @return a [UniqueId].
      */
-    val characteristicId: UniqueId<Characteristic> = contains.characteristic.id
+    val characteristicId: CharacteristicId = contains.characteristic.id
     /**
      * Returns a `double` value.
      *

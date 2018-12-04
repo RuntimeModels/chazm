@@ -3,6 +3,8 @@ package runtimemodels.chazm.model.event
 import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.InstanceGoal
 import runtimemodels.chazm.api.entity.SpecificationGoal
+import runtimemodels.chazm.api.id.InstanceGoalId
+import runtimemodels.chazm.api.id.SpecificationGoalId
 import runtimemodels.chazm.api.id.UniqueId
 import runtimemodels.chazm.model.message.M
 import java.util.*
@@ -23,13 +25,13 @@ open class InstanceGoalEvent @Inject internal constructor(
      *
      * @return a [UniqueId].
      */
-    val id: UniqueId<InstanceGoal> = goal.id
+    val id: InstanceGoalId = goal.id
     /**
      * Returns a [UniqueId] that represents a [SpecificationGoal].
      *
      * @return a [UniqueId].
      */
-    val specificationGoalId: UniqueId<SpecificationGoal> = goal.goal.id
+    val specificationGoalId: SpecificationGoalId = goal.goal.id
     /**
      * Returns a [Map] of parameters for the [InstanceGoal].
      *
