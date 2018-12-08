@@ -29,7 +29,7 @@ internal data class DefaultUsesManager @Inject constructor(
         return map[roleId]?.remove(pmfId)?.also {
             byMap[pmfId]?.apply {
                 remove(roleId)?.let { uses ->
-                    if (it == uses) {
+                    if (it === uses) {
                         return it
                     }
                     throw IllegalStateException("the '$it' and '$uses' are different instances!")

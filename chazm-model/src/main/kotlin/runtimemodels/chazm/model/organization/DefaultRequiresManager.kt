@@ -29,7 +29,7 @@ internal data class DefaultRequiresManager @Inject constructor(
         return map[roleId]?.remove(capabilityId)?.also {
             byMap[capabilityId]?.apply {
                 remove(roleId)?.let { requires ->
-                    if (it == requires) {
+                    if (it === requires) {
                         return it
                     }
                     throw IllegalStateException("the '$it' and '$requires' are different instances!")

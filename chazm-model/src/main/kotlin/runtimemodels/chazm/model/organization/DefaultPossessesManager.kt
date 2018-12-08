@@ -29,7 +29,7 @@ internal data class DefaultPossessesManager @Inject constructor(
         return map[agentId]?.remove(capabilityId)?.also {
             byMap[capabilityId]?.apply {
                 remove(agentId)?.let { possesses ->
-                    if (it == possesses) {
+                    if (it === possesses) {
                         return it
                     }
                     throw IllegalStateException("the '$it' and '$possesses' are different instances!")

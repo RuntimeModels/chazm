@@ -29,7 +29,7 @@ internal data class DefaultHasManager @Inject constructor(
         return map[agentId]?.remove(attributeId)?.also {
             byMap[attributeId]?.apply {
                 remove(agentId)?.let { has ->
-                    if (it == has) {
+                    if (it === has) {
                         return it
                     }
                     throw IllegalStateException("the '$it' and '$has' are different instances!")

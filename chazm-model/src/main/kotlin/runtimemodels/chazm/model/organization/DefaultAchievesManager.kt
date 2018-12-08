@@ -29,7 +29,7 @@ internal data class DefaultAchievesManager @Inject constructor(
         return map[roleId]?.remove(goalId)?.also {
             byMap[goalId]?.apply {
                 remove(roleId)?.also { achieves ->
-                    if (it == achieves) {
+                    if (it === achieves) {
                         return it
                     }
                     throw IllegalStateException("the '$it' and '$achieves' are different instances!")

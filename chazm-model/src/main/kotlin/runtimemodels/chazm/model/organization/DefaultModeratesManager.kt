@@ -29,7 +29,7 @@ internal data class DefaultModeratesManager @Inject constructor(
         return map[pmfId]?.remove(attributeId)?.also {
             byMap[attributeId]?.apply {
                 remove(pmfId)?.let { moderates ->
-                    if (it == moderates) {
+                    if (it === moderates) {
                         return it
                     }
                     throw IllegalStateException("the '$it' and '$moderates' are different instances!")

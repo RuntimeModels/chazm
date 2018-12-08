@@ -29,7 +29,7 @@ internal data class DefaultContainsManager @Inject constructor(
         return map[roleId]?.remove(characteristicId)?.also {
             byMap[characteristicId]?.apply {
                 remove(roleId)?.also { contains ->
-                    if (it == contains) {
+                    if (it === contains) {
                         return it
                     }
                     throw IllegalStateException("the '$it' and '$contains' are different instances!")
