@@ -5,25 +5,10 @@ import runtimemodels.chazm.api.entity.Agent
 import runtimemodels.chazm.api.entity.InstanceGoal
 import runtimemodels.chazm.api.entity.Role
 import runtimemodels.chazm.api.relation.Assignment
-import runtimemodels.chazm.model.id.AssignmentId
-import runtimemodels.chazm.model.message.M
 import javax.inject.Inject
 
-internal open class AssignmentRelation @Inject constructor(
-    @param:Assisted final override val agent: Agent,
-    @param:Assisted final override val role: Role,
-    @param:Assisted final override val goal: InstanceGoal
-) : Assignment {
-    private val id: AssignmentId = AssignmentId(agent.id, role.id, goal.id)
-
-    override fun equals(other: Any?): Boolean {
-        if (other is AssignmentRelation) {
-            return id == other.id
-        }
-        return false
-    }
-
-    override fun hashCode(): Int = id.hashCode()
-
-    override fun toString(): String = M.ASSIGNMENT[agent.id, role.id, goal.id]
-}
+internal data class AssignmentRelation @Inject constructor(
+    @param:Assisted override val agent: Agent,
+    @param:Assisted override val role: Role,
+    @param:Assisted override val goal: InstanceGoal
+) : Assignment
