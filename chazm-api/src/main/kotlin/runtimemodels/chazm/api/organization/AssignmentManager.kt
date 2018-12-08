@@ -14,7 +14,27 @@ import runtimemodels.chazm.api.relation.Assignment
  * @author Christopher Zhong
  * @since 7.0.0
  */
-interface AssignmentManager : Map<AgentId, Map<RoleId, Map<InstanceGoalId, Assignment>>> {
+interface AssignmentManager {
+    /**
+     * The [Set] of [Assignment]s.
+     */
+    val assignments: Set<Assignment>
+
+    /**
+     * The [Set] of [AgentId]s.
+     */
+    val agentIds: Set<AgentId>
+
+    /**
+     * The [Set] of [RoleId]s.
+     */
+    val roleIds: Set<RoleId>
+
+    /**
+     *The [Set] of [InstanceGoalId]s.
+     */
+    val goalIds: Set<InstanceGoalId>
+
     /**
      * Adds an [Assignment] relation among a [Agent], a [Role], and an [InstanceGoal] to this [AssignmentManager].
      *
@@ -35,10 +55,10 @@ interface AssignmentManager : Map<AgentId, Map<RoleId, Map<InstanceGoalId, Assig
     /**
      * Returns a [Map] of [Role]s and [InstanceGoal]s of an [Agent] from this [AssignmentManager].
      *
-     * @param key an [AgentId] that represents the [Agent].
+     * @param id an [AgentId] that represents the [Agent].
      * @return a [Map] of [Role]s and [InstanceGoal]s.
      */
-    override operator fun get(key: AgentId): Map<RoleId, Map<InstanceGoalId, Assignment>>
+    operator fun get(id: AgentId): Map<RoleId, Map<InstanceGoalId, Assignment>>
 
     /**
      * Returns a [Map] of [Agent]s and [InstanceGoal]s of a [Role] from this [AssignmentManager].
@@ -62,9 +82,9 @@ interface AssignmentManager : Map<AgentId, Map<RoleId, Map<InstanceGoalId, Assig
      * @param agentId the [AgentId] that represents the [Agent].
      * @param roleId the [RoleId] that represents the [Role].
      * @param goalId the [InstanceGoalId] that represents the [InstanceGoal].
-     * @return the [Assignment] that was removed.
+     * @return the [Assignment] that was removed, `null` otherwise.
      */
-    fun remove(agentId: AgentId, roleId: RoleId, goalId: InstanceGoalId): Assignment
+    fun remove(agentId: AgentId, roleId: RoleId, goalId: InstanceGoalId): Assignment?
 
     /**
      * Removes all [Assignment] relations that are associated to an [Agent] from this [AssignmentManager].

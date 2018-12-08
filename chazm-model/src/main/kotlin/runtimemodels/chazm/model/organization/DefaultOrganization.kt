@@ -218,9 +218,8 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun remove(agentId: AgentId, roleId: RoleId, goalId: InstanceGoalId) {
-        if (assignmentRelations[agentId][roleId]?.containsKey(goalId) == true) {
-            val assignment = assignmentRelations.remove(agentId, roleId, goalId)
-            publisher.post(eventFactory.build(EventType.REMOVED, assignment))
+        assignmentRelations.remove(agentId, roleId, goalId)?.also {
+            publisher.post(eventFactory.build(EventType.REMOVED, it))
         }
     }
 
