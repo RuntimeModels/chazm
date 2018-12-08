@@ -12,7 +12,7 @@ import runtimemodels.chazm.api.relation.Contains
  * @author Christopher Zhong
  * @since 7.0.0
  */
-interface ContainsManager : Map<RoleId, Map<CharacteristicId, Contains>> {
+interface ContainsManager {
     /**
      * Adds a [Contains] relation between a [Role] and a [Characteristic] to this [ContainsManager].
      *
@@ -32,10 +32,10 @@ interface ContainsManager : Map<RoleId, Map<CharacteristicId, Contains>> {
     /**
      * Returns a [Map] of [Characteristic]s that are contained by a [Role] from this [ContainsManager].
      *
-     * @param key the [RoleId] that represents the [Role].
+     * @param id the [RoleId] that represents the [Role].
      * @return a [Map] of [Characteristic]s.
      */
-    override operator fun get(key: RoleId): Map<CharacteristicId, Contains>
+    operator fun get(id: RoleId): Map<CharacteristicId, Contains>
 
     /**
      * Returns a [Map] of [Role]s that contains a [Characteristic] from this [ContainsManager].
@@ -50,9 +50,9 @@ interface ContainsManager : Map<RoleId, Map<CharacteristicId, Contains>> {
      *
      * @param roleId           the [RoleId] that represents the [Role].
      * @param characteristicId the [CharacteristicId] that represents the [Characteristic].
-     * @return the [Characteristic] that was removed.
+     * @return the [Characteristic] that was removed, `null` otherwise.
      */
-    fun remove(roleId: RoleId, characteristicId: CharacteristicId): Contains
+    fun remove(roleId: RoleId, characteristicId: CharacteristicId): Contains?
 
     /**
      * Removes all [Contains] relations associated to a [Role] from this [ContainsManager].
