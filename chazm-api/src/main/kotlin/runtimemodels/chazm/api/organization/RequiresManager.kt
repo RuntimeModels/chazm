@@ -12,7 +12,7 @@ import runtimemodels.chazm.api.relation.Requires
  * @author Christopher Zhong
  * @since 7.0.0
  */
-interface RequiresManager : Map<RoleId, Map<CapabilityId, Requires>> {
+interface RequiresManager {
     /**
      * Adds a [Requires] relation between a [Role] and a [Capability] to this [RequiresManager].
      *
@@ -32,10 +32,10 @@ interface RequiresManager : Map<RoleId, Map<CapabilityId, Requires>> {
     /**
      * Returns a [Map] of [Capability]s that is required by a [Role] in this [RequiresManager].
      *
-     * @param key the [RoleId] that represents the [Role].
+     * @param id the [RoleId] that represents the [Role].
      * @return the [Map] of [Capability]s.
      */
-    override operator fun get(key: RoleId): Map<CapabilityId, Requires>
+    operator fun get(id: RoleId): Map<CapabilityId, Requires>
 
     /**
      * Returns a [Map] of [Role]s that requires a [Capability] in this [RequiresManager].
@@ -50,9 +50,9 @@ interface RequiresManager : Map<RoleId, Map<CapabilityId, Requires>> {
      *
      * @param roleId       the [RoleId] that represents the [Role].
      * @param capabilityId the [CapabilityId] that represents the [Capability].
-     * @return the [Requires] relation that was removed.
+     * @return the [Requires] relation that was removed, `null` otherwise.
      */
-    fun remove(roleId: RoleId, capabilityId: CapabilityId): Requires
+    fun remove(roleId: RoleId, capabilityId: CapabilityId): Requires?
 
     /**
      * Removes all [Requires] relations associated to a [Role] from this [RequiresManager].
