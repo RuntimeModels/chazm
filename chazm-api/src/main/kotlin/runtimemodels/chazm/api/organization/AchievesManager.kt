@@ -12,7 +12,7 @@ import runtimemodels.chazm.api.relation.Achieves
  * @author Christopher Zhong
  * @since 7.0.0
  */
-interface AchievesManager : Map<RoleId, Map<SpecificationGoalId, Achieves>> {
+interface AchievesManager {
     /**
      * Adds an [Achieves] relation to this [AchievesManager].
      *
@@ -32,9 +32,9 @@ interface AchievesManager : Map<RoleId, Map<SpecificationGoalId, Achieves>> {
     /**
      * Returns a [Map] of the [SpecificationGoal]s that are achieved by a [Role].
      *
-     * @param key the [RoleId] that represents the [Role].
+     * @param id the [RoleId] that represents the [Role].
      */
-    override operator fun get(key: RoleId): Map<SpecificationGoalId, Achieves>
+    operator fun get(id: RoleId): Map<SpecificationGoalId, Achieves>
 
     /**
      * Returns a [Map] of the [Role]s that achieves a [SpecificationGoal].
@@ -48,9 +48,9 @@ interface AchievesManager : Map<RoleId, Map<SpecificationGoalId, Achieves>> {
      *
      * @param roleId the [RoleId] that represents the [Role].
      * @param goalId the [SpecificationGoalId] that represents the [SpecificationGoal].
-     * @return the [Achieves] relation that was removed.
+     * @return the [Achieves] relation that was removed, `null` otherwise.
      */
-    fun remove(roleId: RoleId, goalId: SpecificationGoalId): Achieves
+    fun remove(roleId: RoleId, goalId: SpecificationGoalId): Achieves?
 
     /**
      * Removes all [Achieves] relations associated to a [Role] from this [AchievesManager].
