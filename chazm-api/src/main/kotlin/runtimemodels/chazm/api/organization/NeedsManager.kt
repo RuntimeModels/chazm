@@ -12,7 +12,7 @@ import runtimemodels.chazm.api.relation.Needs
  * @author Christopher Zhong
  * @since 7.0.0
  */
-interface NeedsManager : Map<RoleId, Map<AttributeId, Needs>> {
+interface NeedsManager {
     /**
      * Adds a [Needs] relation between a [Role] and an [Attribute] to this [NeedsManager].
      *
@@ -32,10 +32,10 @@ interface NeedsManager : Map<RoleId, Map<AttributeId, Needs>> {
     /**
      * Returns a [Map] of [Attribute]s that are contained by a [Role] from this [NeedsManager].
      *
-     * @param key the [RoleId] that represents the [Role].
+     * @param id the [RoleId] that represents the [Role].
      * @return a [Map] of [Attribute]s.
      */
-    override operator fun get(key: RoleId): Map<AttributeId, Needs>
+    operator fun get(id: RoleId): Map<AttributeId, Needs>
 
     /**
      * Returns a [Map] of [Role]s that contains a [Attribute] from this [NeedsManager].
@@ -50,9 +50,9 @@ interface NeedsManager : Map<RoleId, Map<AttributeId, Needs>> {
      *
      * @param roleId      the [RoleId] that represents the [Role].
      * @param attributeId the [AttributeId] that represents the [Attribute].
-     * @return the [Needs] relation that was removed.
+     * @return the [Needs] relation that was removed, `null` otherwise.
      */
-    fun remove(roleId: RoleId, attributeId: AttributeId): Needs
+    fun remove(roleId: RoleId, attributeId: AttributeId): Needs?
 
     /**
      * Removes all [Needs] relations associated to a [Role] from this [NeedsManager].
