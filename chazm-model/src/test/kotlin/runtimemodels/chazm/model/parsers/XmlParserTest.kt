@@ -20,7 +20,7 @@ import javax.xml.stream.XMLInputFactory
 import javax.xml.stream.XMLStreamException
 import javax.xml.stream.events.XMLEvent
 
-class XmlParserTest {
+internal class XmlParserTest {
 
     private val injector = Guice.createInjector(ParsersModule())
     private val provider = injector.getProvider(XmlParser::class.java)
