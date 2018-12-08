@@ -247,9 +247,8 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun remove(agentId: AgentId, attributeId: AttributeId) {
-        if (hasRelations.containsKey(agentId) && hasRelations[agentId].containsKey(attributeId)) {
-            val has = hasRelations.remove(agentId, attributeId)
-            publisher.post(eventFactory.build(EventType.REMOVED, has))
+        hasRelations.remove(agentId, attributeId)?.also {
+            publisher.post(eventFactory.build(EventType.REMOVED, it))
         }
     }
 

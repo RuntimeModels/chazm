@@ -12,7 +12,7 @@ import runtimemodels.chazm.api.relation.Has
  * @author Christopher Zhong
  * @since 7.0.0
  */
-interface HasManager : Map<AgentId, Map<AttributeId, Has>> {
+interface HasManager {
     /**
      * Adds a [Has] relation between an [Agent] and an [Attribute] to this [HasManager].
      *
@@ -32,10 +32,10 @@ interface HasManager : Map<AgentId, Map<AttributeId, Has>> {
     /**
      * Returns a [Map] of [Attribute]s that an [Agent] has in this [HasManager].
      *
-     * @param key the [AgentId] that represents the [Agent].
+     * @param id the [AgentId] that represents the [Agent].
      * @return a [Map] of [Attribute]s.
      */
-    override operator fun get(key: AgentId): Map<AttributeId, Has>
+    operator fun get(id: AgentId): Map<AttributeId, Has>
 
     /**
      * Returns a [Map] of [Agent]s that has an [Attribute] in this [HasManager].
@@ -50,9 +50,9 @@ interface HasManager : Map<AgentId, Map<AttributeId, Has>> {
      *
      * @param agentId           the [AgentId] that represents the [Agent].
      * @param attributeId the [AttributeId] that represents the [Attribute].
-     * @return the [Attribute] that was removed.
+     * @return the [Attribute] that was removed, `null` otherwise.
      */
-    fun remove(agentId: AgentId, attributeId: AttributeId): Has
+    fun remove(agentId: AgentId, attributeId: AttributeId): Has?
 
     /**
      * Removes all [Has] relations associated to a [Agent] from this [HasManager].
