@@ -27,12 +27,11 @@ group = rootProject.group
 version = "${rootProject.version}.0.0"
 
 dependencies {
-    kapt(com.google.dagger.`dagger-compiler`)
 
     api(project(":chazm-api"))
 
     implementation(org.jetbrains.kotlin.`kotlin-stdlib-jdk8`)
-    implementation(com.google.dagger.dagger)
+    implementation(org.koin.`koin-core`)
     implementation(platform(com.google.inject.`guice-bom`))
     implementation(com.google.inject.guice)
     implementation(com.google.inject.extensions.`guice-assistedinject`)
@@ -42,6 +41,7 @@ dependencies {
     implementation(io.reactivex.rxjava2.rxjava)
 
     testImplementation(org.jetbrains.kotlin.`kotlin-test-junit5`)
+    testImplementation(org.koin.`koin-test`)
     testImplementation(platform(org.junit.`junit-bom`))
     testImplementation(org.junit.jupiter.`junit-jupiter-api`)
     testImplementation(org.junit.jupiter.`junit-jupiter-params`)
