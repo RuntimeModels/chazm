@@ -12,9 +12,7 @@ import runtimemodels.chazm.model.Functions
 import runtimemodels.chazm.model.event.EventFactory
 import runtimemodels.chazm.model.event.EventType
 import runtimemodels.chazm.model.message.E
-import runtimemodels.chazm.model.message.L
 import runtimemodels.chazm.model.notification.Publisher
-import java.util.function.Consumer
 import javax.inject.Inject
 
 internal open class DefaultOrganization @Inject constructor(
@@ -336,24 +334,6 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     companion object {
-        private val ASSIGNMENTS_BY_AGENT = "assignmentsByAgent"
-        private val log = org.slf4j.LoggerFactory.getLogger(DefaultOrganization::class.java)
-
-        private fun <T, U : UniqueId<V>, V, W> remove(
-            id: T,
-            map: MutableMap<T, MutableMap<U, W>>,
-            mapName: String,
-            consumer: Consumer<U>
-        ) {
-            if (map.containsKey(id)) {
-                val ids = map[id]!!.keys
-                ids.forEach(consumer)
-                map.remove(id)
-            } else {
-                log.warn(L.MAP_IS_MISSING_KEY.get(), mapName, id)
-            }
-        }
-
         private fun <T : Identifiable<T, U>, U : UniqueId<T>> checkNotExists(t: T, predicate: (U) -> Boolean) {
             if (predicate(t.id)) {
                 throw IllegalArgumentException(E.ENTITY_ALREADY_EXISTS[t.id.type, t.id])
