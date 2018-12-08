@@ -1,22 +1,23 @@
 package runtimemodels.chazm.model.function
 
+import any
+import mock
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
-import org.mockito.Mockito
 import org.mockito.Mockito.`when`
-import org.mockito.Mockito.mock
 import runtimemodels.chazm.api.entity.Role
 import runtimemodels.chazm.api.function.Effectiveness
 import runtimemodels.chazm.api.function.Goodness
 import runtimemodels.chazm.api.organization.AssignmentManager
 import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.api.relation.Assignment
+import scaleInt
 
 class DefaultEffectivenessTest {
     @Test
     fun `test the compute value when there are no assignments`() {
-        val organization: Organization = mock(Organization::class.java)
+        val organization: Organization = mock()
 
         val effectiveness: Effectiveness = DefaultEffectiveness()
 
@@ -25,11 +26,11 @@ class DefaultEffectivenessTest {
 
     @Test
     fun `test the compute value when there is one assignment`() {
-        val organization: Organization = mock(Organization::class.java)
-        val assignmentManager: AssignmentManager = mock(AssignmentManager::class.java)
-        val goodness: Goodness = mock(Goodness::class.java)
-        val assignment: Assignment = mock(Assignment::class.java)
-        val role: Role = mock(Role::class.java)
+        val organization: Organization = mock()
+        val assignmentManager: AssignmentManager = mock()
+        val goodness: Goodness = mock()
+        val assignment: Assignment = mock()
+        val role: Role = mock()
 
         `when`(organization.getGoodness(any())).thenReturn(goodness)
         `when`(organization.assignmentRelations).thenReturn(assignmentManager)
@@ -47,12 +48,12 @@ class DefaultEffectivenessTest {
 
     @Test
     fun `test the compute value when there are two assignments`() {
-        val organization: Organization = mock(Organization::class.java)
-        val assignmentManager: AssignmentManager = mock(AssignmentManager::class.java)
-        val goodness: Goodness = mock(Goodness::class.java)
-        val assignment1: Assignment = mock(Assignment::class.java)
-        val assignment2: Assignment = mock(Assignment::class.java)
-        val role: Role = mock(Role::class.java)
+        val organization: Organization = mock()
+        val assignmentManager: AssignmentManager = mock()
+        val goodness: Goodness = mock()
+        val assignment1: Assignment = mock()
+        val assignment2: Assignment = mock()
+        val role: Role = mock()
 
         `when`(organization.getGoodness(any())).thenReturn(goodness)
         `when`(organization.assignmentRelations).thenReturn(assignmentManager)
@@ -77,13 +78,13 @@ class DefaultEffectivenessTest {
 
     @Test
     fun `test the compute value when there are three assignments`() {
-        val organization: Organization = mock(Organization::class.java)
-        val assignmentManager: AssignmentManager = mock(AssignmentManager::class.java)
-        val goodness: Goodness = mock(Goodness::class.java)
-        val assignment1: Assignment = mock(Assignment::class.java)
-        val assignment2: Assignment = mock(Assignment::class.java)
-        val assignment3: Assignment = mock(Assignment::class.java)
-        val role: Role = mock(Role::class.java)
+        val organization: Organization = mock()
+        val assignmentManager: AssignmentManager = mock()
+        val goodness: Goodness = mock()
+        val assignment1: Assignment = mock()
+        val assignment2: Assignment = mock()
+        val assignment3: Assignment = mock()
+        val role: Role = mock()
 
         `when`(organization.getGoodness(any())).thenReturn(goodness)
         `when`(organization.assignmentRelations).thenReturn(assignmentManager)
@@ -103,11 +104,5 @@ class DefaultEffectivenessTest {
             { assertThat(effectiveness.compute(organization, setOf(assignment1, assignment2, assignment3)).scaleInt()).isEqualTo(6) },
             { assertThat(effectiveness.compute(organization, setOf(assignment1, assignment2, assignment3)).scaleInt()).isEqualTo(30) }
         )
-    }
-
-    private fun Double.scaleInt() = (this * 10).toInt()
-
-    private fun <T> any(): T {
-        return Mockito.any<T>() as T
     }
 }
