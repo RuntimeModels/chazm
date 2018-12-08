@@ -9,7 +9,6 @@ import runtimemodels.chazm.api.id.*
 import runtimemodels.chazm.api.organization.*
 import runtimemodels.chazm.api.relation.*
 import runtimemodels.chazm.model.Functions
-import runtimemodels.chazm.model.Relations
 import runtimemodels.chazm.model.event.EventFactory
 import runtimemodels.chazm.model.event.EventType
 import runtimemodels.chazm.model.message.E
@@ -43,7 +42,6 @@ internal open class DefaultOrganization @Inject constructor(
     override val usesRelations: UsesManager
 ) : Organization, FlowableOnSubscribe<Organization> {
 
-    private val relations = Relations()
     private val functions = Functions()
 
     override fun add(agent: Agent) {
