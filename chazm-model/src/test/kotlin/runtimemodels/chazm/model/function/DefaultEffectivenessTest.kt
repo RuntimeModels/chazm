@@ -14,7 +14,7 @@ import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.api.relation.Assignment
 import scaleInt
 
-class DefaultEffectivenessTest {
+internal class DefaultEffectivenessTest {
     @Test
     fun `test the compute value when there are no assignments`() {
         val organization: Organization = mock()
