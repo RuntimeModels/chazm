@@ -12,7 +12,7 @@ import runtimemodels.chazm.api.relation.Uses
  * @author Christopher Zhong
  * @since 7.0.0
  */
-interface UsesManager : Map<RoleId, Map<PmfId, Uses>> {
+interface UsesManager {
     /**
      * Adds a [Uses] relation between a [Role] and a [Pmf] to this [UsesManager].
      *
@@ -32,10 +32,10 @@ interface UsesManager : Map<RoleId, Map<PmfId, Uses>> {
     /**
      * Returns a [Map] of [Pmf]s that is required by a [Role] in this [UsesManager].
      *
-     * @param key the [RoleId] that represents the [Role].
+     * @param id the [RoleId] that represents the [Role].
      * @return the [Map] of [Pmf]s.
      */
-    override operator fun get(key: RoleId): Map<PmfId, Uses>
+    operator fun get(id: RoleId): Map<PmfId, Uses>
 
     /**
      * Returns a [Map] of [Role]s that requires a [Pmf] in this [UsesManager].
@@ -50,9 +50,9 @@ interface UsesManager : Map<RoleId, Map<PmfId, Uses>> {
      *
      * @param roleId the [RoleId] that represents the [Role].
      * @param pmfId  the [PmfId] that represents the [Pmf].
-     * @return the [Uses] that was removed.
+     * @return the [Uses] that was removed, `null` otherwise.
      */
-    fun remove(roleId: RoleId, pmfId: PmfId): Uses
+    fun remove(roleId: RoleId, pmfId: PmfId): Uses?
 
     /**
      * Removes all [Uses] relations associated to a [Role] from this [UsesManager].
