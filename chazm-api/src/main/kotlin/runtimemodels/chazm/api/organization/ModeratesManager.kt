@@ -12,7 +12,7 @@ import runtimemodels.chazm.api.relation.Moderates
  * @author Christopher Zhong
  * @since 7.0.0
  */
-interface ModeratesManager : Map<PmfId, Map<AttributeId, Moderates>> {
+interface ModeratesManager {
     /**
      * Adds a [Moderates] relation between a [Pmf] and an [Attribute] to this [ModeratesManager].
      *
@@ -32,10 +32,10 @@ interface ModeratesManager : Map<PmfId, Map<AttributeId, Moderates>> {
     /**
      * Returns a [Map] of [Attribute]s that are contained by a [Pmf] from this [ModeratesManager].
      *
-     * @param key the [PmfId] that represents the [Pmf].
+     * @param id the [PmfId] that represents the [Pmf].
      * @return a [Map] of [Attribute]s.
      */
-    override operator fun get(key: PmfId): Map<AttributeId, Moderates>
+    operator fun get(id: PmfId): Map<AttributeId, Moderates>
 
     /**
      * Returns a [Map] of [Pmf]s that contains a [Attribute] from this [ModeratesManager].
@@ -50,8 +50,9 @@ interface ModeratesManager : Map<PmfId, Map<AttributeId, Moderates>> {
      *
      * @param pmfId       the [PmfId] that represents the [Pmf].
      * @param attributeId the [AttributeId] that represents the [Attribute].
+     * @return the [Moderates] that was removed, `null` otherwise.
      */
-    fun remove(pmfId: PmfId, attributeId: AttributeId): Moderates
+    fun remove(pmfId: PmfId, attributeId: AttributeId): Moderates?
 
     /**
      * Removes all [Moderates] relations associated to a [Pmf] from this [ModeratesManager].

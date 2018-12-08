@@ -260,9 +260,8 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun remove(pmfId: PmfId, attributeId: AttributeId) {
-        if (moderatesRelations.containsKey(pmfId)) {
-            val moderates = moderatesRelations.remove(pmfId, attributeId)
-            publisher.post(eventFactory.build(EventType.REMOVED, moderates))
+        moderatesRelations.remove(pmfId, attributeId)?.also {
+            publisher.post(eventFactory.build(EventType.REMOVED, it))
         }
     }
 
