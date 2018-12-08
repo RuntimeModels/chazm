@@ -353,87 +353,61 @@ internal open class DefaultOrganization @Inject constructor(
          * @return `true` if the [Organization] is valid, `false` otherwise.
          */
         fun isOrganizationValid(organization: Organization): Boolean {
-            var result = true
-            /*
-         * every goal can be achieved by at least one role from the organization
-		 */
-            for ((_, goal) in organization.specificationGoals) {
-                var isAchievable = false
-                for ((_, achieves) in organization.achievesRelations[goal.id]) {
-                    isAchievable = isAchievable or (organization.roles[achieves.role.id] != null)
-                    if (isAchievable) { /* short circuit */
-                        /*
-                     * can stop checking because there is at least one role that can achieve the goal
-					 */
-                        break
-                    }
+            if (!isEveryGoalAchievedByAtLeastOneRole(organization)) {
+                return false
+            }
+            if (!doesEveryRoleRequiresAtLeastOneCapability(organization)) {
+                return false
+            }
+            if (!doesEveryAgentPossessAtLeastOneCapability(organization)) {
+                return false
+            }
+            return true
+        }
+
+        private fun isEveryGoalAchievedByAtLeastOneRole(organization: Organization): Boolean {
+            // every goal can be achieved by at least one role of the given organization
+            for ((goalId, _) in organization.specificationGoals) {
+                val map = organization.achievesRelations[goalId]
+                if (map.isEmpty()) { // short circuit because there is a goal that cannot be achieved by any role
+                    return false
                 }
-                result = result and isAchievable
-                if (!result) { /* short circuit */
-                    /*
-                 * can stop checking because there is at least one goal that cannot be achieved by any role in the organization
-				 */
-                    break
+                // ensure that all roles exists in the organization
+                if (!organization.roles.keys.containsAll(map.keys)) {
+                    return false
                 }
             }
-            /*
-         * the set of capabilities is the union of all capabilities required by roles or possessed by agents in the organization
-		 */
-            if (result) { /* short circult */
-                /*
-             * there is no reason to continue checking if the previous results are false
-			 */
-                for ((_, role) in organization.roles) {
-                    /*
-                 * every role requires at least one capability
-				 */
-                    result = result and organization.requiresRelations[role.id].isNotEmpty()
-                    if (!result) { /* short circuit */
-                        /*
-                     * can stop checking because there is a role that does not require at least one capability
-					 */
-                        break
-                    }
-                    for ((capabilityId, _) in organization.requiresRelations[role.id]) {
-                        result = result and (organization.capabilities[capabilityId] != null)
-                        if (!result) { /* short circuit */
-                            /*
-                         * can stop checking because there is at least one capability required by a role that is not in the organization
-						 */
-                            break
-                        }
-                    }
-                    if (!result) { /* short circuit */
-                        /*
-                     * can stop checking because there is at least one capability required by a role that is not in the organization
-					 */
-                        break
-                    }
+            return true
+        }
+
+        private fun doesEveryRoleRequiresAtLeastOneCapability(organization: Organization): Boolean {
+            // every role requires at least one capability
+            for ((roleId, _) in organization.roles) {
+                val map = organization.requiresRelations[roleId]
+                if (map.isEmpty()) { // short circuit because there is a role that requires no capabilities
+                    return false
                 }
-                if (result) { /* short circuit */
-                    /*
-                 * there is no reason to continue checking if the previous results are false
-				 */
-                    for ((_, agent) in organization.agents) {
-                        for ((capabilityId, _) in organization.possessesRelations[agent.id]) {
-                            result = result and (organization.capabilities[capabilityId] != null)
-                            if (!result) { /* short circuit */
-                                /*
-                             * can stop checking because there is at least one capability possessed by an agent that is not in the organization
-							 */
-                                break
-                            }
-                        }
-                        if (!result) { /* short circuit */
-                            /*
-                         * can stop checking because there is at least one capability possessed by an agent that is not in the organization
-						 */
-                            break
-                        }
-                    }
+                // ensure that all the required capabilities exists in the organization
+                if (!organization.capabilities.keys.containsAll(map.keys)) {
+                    return false
                 }
             }
-            return result
+            return true
+        }
+
+        private fun doesEveryAgentPossessAtLeastOneCapability(organization: Organization): Boolean {
+            // every agent must have at least one capability
+            for ((agentId, _) in organization.agents) {
+                val map = organization.possessesRelations[agentId]
+                if (map.isEmpty()) { // short circuit because there is an agent that possess no capabilities
+                    return false
+                }
+                // ensure that all possessed capabilities exists in the organization
+                if (!organization.capabilities.keys.containsAll(map.keys)) {
+                    return false
+                }
+            }
+            return true
         }
     }
 }
