@@ -29,6 +29,7 @@ dependencies {
 
     implementation(org.jetbrains.kotlin.`kotlin-stdlib-jdk8`)
     implementation(org.koin.`koin-core`)
+    implementation(org.koin.`koin-core-ext`)
     implementation(platform(com.google.inject.`guice-bom`))
     implementation(com.google.inject.guice)
     implementation(com.google.inject.extensions.`guice-assistedinject`)
