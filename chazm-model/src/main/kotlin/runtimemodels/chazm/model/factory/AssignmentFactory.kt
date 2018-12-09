@@ -13,7 +13,6 @@ import runtimemodels.chazm.api.relation.Assignment
  */
 @FunctionalInterface
 interface AssignmentFactory {
-
     /**
      * Constructs an [Assignment].
      *
@@ -22,6 +21,5 @@ interface AssignmentFactory {
      * @param goal  the [InstanceGoal] of the [Assignment].
      * @return an [Assignment].
      */
-    fun buildAssignment(agent: Agent, role: Role, goal: InstanceGoal): Assignment
-
+    fun build(agent: Agent, role: Role, goal: InstanceGoal): Assignment
 }

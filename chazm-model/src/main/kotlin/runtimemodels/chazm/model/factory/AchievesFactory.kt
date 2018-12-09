@@ -12,7 +12,6 @@ import runtimemodels.chazm.api.relation.Achieves
  */
 @FunctionalInterface
 interface AchievesFactory {
-
     /**
      * Constructs an [Achieves].
      *
@@ -20,6 +19,5 @@ interface AchievesFactory {
      * @param goal the [Achieves] of the [Achieves].
      * @return an [Achieves].
      */
-    fun buildAchieves(role: Role, goal: SpecificationGoal): Achieves
-
+    fun build(role: Role, goal: SpecificationGoal): Achieves
 }

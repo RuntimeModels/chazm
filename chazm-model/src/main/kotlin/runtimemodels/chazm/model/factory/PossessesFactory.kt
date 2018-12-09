@@ -12,7 +12,6 @@ import runtimemodels.chazm.api.relation.Possesses
  */
 @FunctionalInterface
 interface PossessesFactory {
-
     /**
      * Constructs a [Possesses].
      *
@@ -21,6 +20,5 @@ interface PossessesFactory {
      * @param score      the `double` score of the [Possesses].
      * @return a [Possesses].
      */
-    fun buildPossesses(agent: Agent, capability: Capability, score: Double): Possesses
-
+    fun build(agent: Agent, capability: Capability, score: Double): Possesses
 }

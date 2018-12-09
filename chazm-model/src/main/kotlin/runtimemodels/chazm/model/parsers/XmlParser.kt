@@ -185,7 +185,7 @@ internal open class XmlParser @Inject constructor(
                                         ids,
                                         attributes,
                                         { agentId, attributeId ->
-                                            organization.hasRelations.add(relationFactory.buildHas(
+                                            organization.hasRelations.add(relationFactory.build(
                                                 organization.agents[agentId]!!,
                                                 organization.attributes[attributeId]!!,
                                                 value
@@ -211,7 +211,7 @@ internal open class XmlParser @Inject constructor(
                                         ids,
                                         capabilities,
                                         { agentId, capabilityId ->
-                                            organization.possessesRelations.add(relationFactory.buildPossesses(
+                                            organization.possessesRelations.add(relationFactory.build(
                                                 organization.agents[agentId]!!,
                                                 organization.capabilities[capabilityId]!!,
                                                 value
@@ -254,7 +254,7 @@ internal open class XmlParser @Inject constructor(
                 val goalId = instanceGoals[gId]
                     ?: throw XMLStreamException(E.INCOMPLETE_XML_FILE[InstanceGoal::class.java.simpleName, gId])
                 val goal = organization.instanceGoals[goalId]!!
-                val assignment = relationFactory.buildAssignment(agent, role, goal)
+                val assignment = relationFactory.build(agent, role, goal)
                 return organization.add(assignment)
             }
         })
@@ -294,7 +294,7 @@ internal open class XmlParser @Inject constructor(
                                 ids,
                                 attributes,
                                 { pmfId, attributeId ->
-                                    organization.moderatesRelations.add(relationFactory.buildModerates(
+                                    organization.moderatesRelations.add(relationFactory.build(
                                         organization.pmfs[pmfId]!!,
                                         organization.attributes[attributeId]!!
                                     ))
@@ -333,7 +333,7 @@ internal open class XmlParser @Inject constructor(
                                     ids,
                                     goals,
                                     { roleId, goalId ->
-                                        organization.achievesRelations.add(relationFactory.buildAchieves(
+                                        organization.achievesRelations.add(relationFactory.build(
                                             organization.roles[roleId]!!,
                                             organization.specificationGoals[goalId]!!
                                         ))
@@ -354,7 +354,7 @@ internal open class XmlParser @Inject constructor(
                                         ids,
                                         characteristics,
                                         { roleId, characteristicId ->
-                                            organization.containsRelations.add(relationFactory.buildContains(
+                                            organization.containsRelations.add(relationFactory.build(
                                                 organization.roles[roleId]!!,
                                                 organization.characteristics[characteristicId]!!,
                                                 value
@@ -378,7 +378,7 @@ internal open class XmlParser @Inject constructor(
                                     ids,
                                     attributes,
                                     { roleId, attributeId ->
-                                        organization.needsRelations.add(relationFactory.buildNeeds(
+                                        organization.needsRelations.add(relationFactory.build(
                                             organization.roles[roleId]!!,
                                             organization.attributes[attributeId]!!
                                         ))
@@ -397,7 +397,7 @@ internal open class XmlParser @Inject constructor(
                                     ids,
                                     capabilities,
                                     { roleId, capabilityId ->
-                                        organization.requiresRelations.add(relationFactory.buildRequires(
+                                        organization.requiresRelations.add(relationFactory.build(
                                             organization.roles[roleId]!!,
                                             organization.capabilities[capabilityId]!!
                                         ))

@@ -12,7 +12,6 @@ import runtimemodels.chazm.api.relation.Moderates
  */
 @FunctionalInterface
 interface ModeratesFactory {
-
     /**
      * Constructs a [Moderates].
      *
@@ -20,6 +19,5 @@ interface ModeratesFactory {
      * @param attribute the [Attribute] of the [Moderates].
      * @return a [Moderates].
      */
-    fun buildModerates(pmf: Pmf, attribute: Attribute): Moderates
-
+    fun build(pmf: Pmf, attribute: Attribute): Moderates
 }
