@@ -82,8 +82,7 @@ internal open class XmlParser @Inject constructor(
                     AGENT_ELEMENT -> {
                         val id: AgentId = DefaultAgentId(getAttributeValue(element, NAME_ATTRIBUTE))
                         // TODO parse contact info
-                        val contactInfo: Map<Any, Any> = mapOf()
-                        build(id, agents, element, { entityFactory.buildAgent(it, contactInfo) }, { organization.add(it) })
+                        build(id, agents, element, { entityFactory.build(it, emptyMap()) }, { organization.add(it) })
                         parseAgent(organization, reader, name, id, attributes, capabilities, list1)
                     }
                     ASSIGNMENT_ELEMENT -> parseAssignment(organization, element, agents, instanceGoals, roles, list2)
@@ -91,7 +90,7 @@ internal open class XmlParser @Inject constructor(
                         val id = DefaultAttributeId(getAttributeValue(element, NAME_ATTRIBUTE))
                         try {
                             val type = Attribute.Type.valueOf(getAttributeValue(element, TYPE_ATTRIBUTE))
-                            build(id, attributes, element, { entityFactory.buildAttribute(it, type) }, { organization.add(it) })
+                            build(id, attributes, element, { entityFactory.build(it, type) }, { organization.add(it) })
                         } catch (e: IllegalArgumentException) {
                             throw XMLStreamException(e)
                         }
@@ -99,30 +98,30 @@ internal open class XmlParser @Inject constructor(
                     }
                     CAPABILITY_ELEMENT -> {
                         val id = DefaultCapabilityId(getAttributeValue(element, NAME_ATTRIBUTE))
-                        build(id, capabilities, element, { entityFactory.buildCapability(it) }, { organization.add(it) })
+                        build(id, capabilities, element, { entityFactory.build(it) }, { organization.add(it) })
                     }
                     CHARACTERISTIC_ELEMENT -> {
                         val id = DefaultCharacteristicId(getAttributeValue(element, NAME_ATTRIBUTE))
-                        build(id, characteristics, element, { entityFactory.buildCharacteristic(it) }, { organization.add(it) })
+                        build(id, characteristics, element, { entityFactory.build(it) }, { organization.add(it) })
                     }
                     INSTANCEGOAL_ELEMENT -> parseInstanceGoal(organization, element, specificationGoals, instanceGoals, list1)
                     PMF_ELEMENT -> {
                         val id = DefaultPmfId(getAttributeValue(element, NAME_ATTRIBUTE))
-                        build(id, pmfs, element, { entityFactory.buildPmf(it) }, { organization.add(it) })
+                        build(id, pmfs, element, { entityFactory.build(it) }, { organization.add(it) })
                         parsePmf(organization, reader, name, id, attributes, list1)
                     }
                     POLICY_ELEMENT -> {
                         val id = DefaultPolicyId(getAttributeValue(element, NAME_ATTRIBUTE))
-                        build(id, policies, element, { entityFactory.buildPolicy(it) }, { organization.add(it) })
+                        build(id, policies, element, { entityFactory.build(it) }, { organization.add(it) })
                     }
                     ROLE_ELEMENT -> {
                         val id = DefaultRoleId(getAttributeValue(element, NAME_ATTRIBUTE))
-                        build(id, roles, element, { entityFactory.buildRole(it) }, { organization.add(it) })
+                        build(id, roles, element, { entityFactory.build(it) }, { organization.add(it) })
                         parseRole(organization, reader, name, id, attributes, capabilities, characteristics, specificationGoals, list1)
                     }
                     GOAL_ELEMENT -> {
                         val id = DefaultSpecificationGoalId(getAttributeValue(element, NAME_ATTRIBUTE))
-                        build(id, specificationGoals, element, { entityFactory.buildSpecificationGoal(it) }, { organization.add(it) })
+                        build(id, specificationGoals, element, { entityFactory.build(it) }, { organization.add(it) })
                     }
                 }
             } else if (event.isEndElement) {
@@ -273,8 +272,7 @@ internal open class XmlParser @Inject constructor(
                 val goal = organization.specificationGoals[goalId]!!
                 val id = DefaultInstanceGoalId(getAttributeValue(element, NAME_ATTRIBUTE))
                 // TODO parse parameter
-                val parameter = mapOf<Any, Any>()
-                return build(id, instanceGoals, element, { entityFactory.buildInstanceGoal(it, goal, parameter) }, { organization.add(it) })
+                return build(id, instanceGoals, element, { entityFactory.build(it, goal, emptyMap()) }, { organization.add(it) })
             }
         })
     }

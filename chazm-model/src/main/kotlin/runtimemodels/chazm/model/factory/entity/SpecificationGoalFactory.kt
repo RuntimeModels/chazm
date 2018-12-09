@@ -1,4 +1,4 @@
-package runtimemodels.chazm.model.factory
+package runtimemodels.chazm.model.factory.entity
 
 import runtimemodels.chazm.api.entity.SpecificationGoal
 import runtimemodels.chazm.api.id.SpecificationGoalId
@@ -19,6 +19,6 @@ interface SpecificationGoalFactory {
      * @param id the [UniqueId] that represents the [SpecificationGoal].
      * @return a [SpecificationGoal].
      */
-    fun buildSpecificationGoal(id: SpecificationGoalId): SpecificationGoal
+    fun build(id: SpecificationGoalId): SpecificationGoal
 
 }

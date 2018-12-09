@@ -1,4 +1,4 @@
-package runtimemodels.chazm.model.factory
+package runtimemodels.chazm.model.factory.entity
 
 import runtimemodels.chazm.api.entity.Policy
 import runtimemodels.chazm.api.id.PolicyId
@@ -19,6 +19,6 @@ interface PolicyFactory {
      * @param id the [UniqueId] that represents the [Policy].
      * @return a [Policy].
      */
-    fun buildPolicy(id: PolicyId): Policy
+    fun build(id: PolicyId): Policy
 
 }

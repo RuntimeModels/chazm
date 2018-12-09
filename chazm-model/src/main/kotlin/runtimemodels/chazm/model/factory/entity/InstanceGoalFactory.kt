@@ -1,4 +1,4 @@
-package runtimemodels.chazm.model.factory
+package runtimemodels.chazm.model.factory.entity
 
 import runtimemodels.chazm.api.entity.InstanceGoal
 import runtimemodels.chazm.api.entity.SpecificationGoal
@@ -21,5 +21,5 @@ interface InstanceGoalFactory {
      * @param parameter a [Map] of parameters for this [InstanceGoal].
      * @return an [InstanceGoal].
      */
-    fun buildInstanceGoal(id: InstanceGoalId, goal: SpecificationGoal, parameter: Map<Any, Any>): InstanceGoal
+    fun build(id: InstanceGoalId, goal: SpecificationGoal, parameter: Map<Any, Any>): InstanceGoal
 }

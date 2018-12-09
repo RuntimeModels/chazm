@@ -1,4 +1,4 @@
-package runtimemodels.chazm.model.factory
+package runtimemodels.chazm.model.factory.entity
 
 import runtimemodels.chazm.api.entity.Capability
 import runtimemodels.chazm.api.id.CapabilityId
@@ -19,6 +19,6 @@ interface CapabilityFactory {
      * @param id the [UniqueId] that represents the [Capability].
      * @return a [Capability].
      */
-    fun buildCapability(id: CapabilityId): Capability
+    fun build(id: CapabilityId): Capability
 
 }

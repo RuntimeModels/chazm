@@ -1,4 +1,4 @@
-package runtimemodels.chazm.model.factory
+package runtimemodels.chazm.model.factory.entity
 
 import runtimemodels.chazm.api.entity.Attribute
 import runtimemodels.chazm.api.id.AttributeId
@@ -20,6 +20,6 @@ interface AttributeFactory {
      * @param type the [Attribute.Type] of the [Attribute].
      * @return an [Attribute].
      */
-    fun buildAttribute(id: AttributeId, type: Attribute.Type): Attribute
+    fun build(id: AttributeId, type: Attribute.Type): Attribute
 
 }
