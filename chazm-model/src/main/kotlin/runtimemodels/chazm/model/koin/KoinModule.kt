@@ -1,6 +1,7 @@
 package runtimemodels.chazm.model.koin
 
 import org.koin.dsl.module.module
+import org.koin.experimental.builder.create
 import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.api.id.*
 import runtimemodels.chazm.api.organization.Organization
@@ -23,8 +24,13 @@ val EntityModule = module(path = DefaultEntity::class.java.packageName) {
     factory<SpecificationGoal> { (id: SpecificationGoalId) -> DefaultSpecificationGoal(id = id) }
 }
 
+val OrganizationModule = module(path = "organization") {
+    factory<Organization> { create<DefaultOrganization>() }
+}
+
 val ParserModule = module(path = XmlParser::class.java.packageName) {
     single<XMLInputFactory> { XMLInputFactory.newInstance() }
+    single<XmlParser> { create() }
 }
 
 val RelationModule = module(path = DefaultRelation::class.java.packageName) {
@@ -37,40 +43,5 @@ val RelationModule = module(path = DefaultRelation::class.java.packageName) {
     factory<Possesses> { (agent: Agent, capability: Capability, score: Double) -> PossessesRelation(agent = agent, capability = capability, score = score) }
     factory<Requires> { (role: Role, capability: Capability) -> RequiresRelation(role = role, capability = capability) }
     factory<Uses> { (role: Role, pmf: Pmf) -> UsesRelation(role = role, pmf = pmf) }
-
-}
-
-val KoinModule = module {
-
-
-    val OrganizationModule = module(path = "organization") {
-        factory<Organization> {
-            DefaultOrganization(
-                get(),
-                get(),
-                get(),
-                get(),
-                get(),
-                get(),
-                get(),
-                get(),
-                get(),
-                get(),
-                get(),
-                get(),
-                get(),
-                get(),
-                get(),
-                get(),
-                get(),
-                get(),
-                get(),
-                get(),
-                get(),
-                get()
-            )
-        }
-//        factory { create<DefaultOrganization>() }
-    }
 
 }
