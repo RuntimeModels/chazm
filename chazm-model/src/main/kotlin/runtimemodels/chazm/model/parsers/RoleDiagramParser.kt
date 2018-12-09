@@ -25,7 +25,8 @@ internal class RoleDiagramParser @Inject constructor(
     val entityFactory: EntityFactory,
     val relationFactory: RelationFactory,
     private val agentParser: AgentParser,
-    private val assignmentParser: AssignmentParser
+    private val assignmentParser: AssignmentParser,
+    private val attributeParser: AttributeParser
 ) {
     fun canParse(qName: QName): Boolean = ROLE_DIAGRAM_ELEMENT == qName.localPart
 
@@ -42,82 +43,75 @@ internal class RoleDiagramParser @Inject constructor(
         val list1 = ArrayList<RunLater>()
         val list2 = ArrayList<RunLater>()
         reader.forEach { event ->
-            if (event is XMLEvent && event.isStartElement) {
-                val element = event.asStartElement()
-                val name = element.name
-                when {
-                    agentParser.canParse(name) -> agentParser.parse(
-                        element,
-                        agents,
-                        organization,
-                        reader,
-                        name,
-                        attributes,
-                        capabilities,
-                        list1
-                    )
-                    assignmentParser.canParse(name) -> assignmentParser.parse(
-                        element,
-                        agents,
-                        roles,
-                        instanceGoals,
-                        organization,
-                        list2
-                    )
-                    name.localPart == ATTRIBUTE_ELEMENT -> {
-                        val id = DefaultAttributeId(element attribute NAME_ATTRIBUTE)
-                        try {
-                            val type = Attribute.Type.valueOf(element attribute TYPE_ATTRIBUTE)
-                            build(id, attributes, element, { entityFactory.build(it, type) }, { organization.add(it) })
-                        } catch (e: IllegalArgumentException) {
-                            throw XMLStreamException(e)
+            when {
+                event is XMLEvent && event.isStartElement -> {
+                    val element = event.asStartElement()
+                    val name = element.name
+                    when {
+                        agentParser.canParse(name) -> agentParser.parse(
+                            element,
+                            agents,
+                            organization,
+                            reader,
+                            name,
+                            attributes,
+                            capabilities,
+                            list1
+                        )
+                        assignmentParser.canParse(name) -> assignmentParser.parse(
+                            element,
+                            agents,
+                            roles,
+                            instanceGoals,
+                            organization,
+                            list2
+                        )
+                        attributeParser.canParse(name) -> attributeParser.parse(element, attributes, organization)
+                        name.localPart == CAPABILITY_ELEMENT -> {
+                            val id = DefaultCapabilityId(element attribute NAME_ATTRIBUTE)
+                            build(id, capabilities, element, { entityFactory.build(it) }, { organization.add(it) })
                         }
-
-                    }
-                    name.localPart == CAPABILITY_ELEMENT -> {
-                        val id = DefaultCapabilityId(element attribute NAME_ATTRIBUTE)
-                        build(id, capabilities, element, { entityFactory.build(it) }, { organization.add(it) })
-                    }
-                    name.localPart == CHARACTERISTIC_ELEMENT -> {
-                        val id = DefaultCharacteristicId(element attribute NAME_ATTRIBUTE)
-                        build(id, characteristics, element, { entityFactory.build(it) }, { organization.add(it) })
-                    }
-                    name.localPart == INSTANCEGOAL_ELEMENT -> parseInstanceGoal(organization, element, specificationGoals, instanceGoals, list1)
-                    name.localPart == PMF_ELEMENT -> {
-                        val id = DefaultPmfId(element attribute NAME_ATTRIBUTE)
-                        build(id, pmfs, element, { entityFactory.build(it) }, { organization.add(it) })
-                        parsePmf(organization, reader, name, id, attributes, list1)
-                    }
-                    name.localPart == POLICY_ELEMENT -> {
-                        val id = DefaultPolicyId(element attribute NAME_ATTRIBUTE)
-                        build(id, policies, element, { entityFactory.build(it) }, { organization.add(it) })
-                    }
-                    name.localPart == ROLE_ELEMENT -> {
-                        val id = DefaultRoleId(element attribute NAME_ATTRIBUTE)
-                        build(id, roles, element, { entityFactory.build(it) }, { organization.add(it) })
-                        parseRole(organization, reader, name, id, attributes, capabilities, characteristics, specificationGoals, list1)
-                    }
-                    name.localPart == GOAL_ELEMENT -> {
-                        val id = DefaultSpecificationGoalId(element attribute NAME_ATTRIBUTE)
-                        build(id, specificationGoals, element, { entityFactory.build(it) }, { organization.add(it) })
+                        name.localPart == CHARACTERISTIC_ELEMENT -> {
+                            val id = DefaultCharacteristicId(element attribute NAME_ATTRIBUTE)
+                            build(id, characteristics, element, { entityFactory.build(it) }, { organization.add(it) })
+                        }
+                        name.localPart == INSTANCEGOAL_ELEMENT -> parseInstanceGoal(organization, element, specificationGoals, instanceGoals, list1)
+                        name.localPart == PMF_ELEMENT -> {
+                            val id = DefaultPmfId(element attribute NAME_ATTRIBUTE)
+                            build(id, pmfs, element, { entityFactory.build(it) }, { organization.add(it) })
+                            parsePmf(organization, reader, name, id, attributes, list1)
+                        }
+                        name.localPart == POLICY_ELEMENT -> {
+                            val id = DefaultPolicyId(element attribute NAME_ATTRIBUTE)
+                            build(id, policies, element, { entityFactory.build(it) }, { organization.add(it) })
+                        }
+                        name.localPart == ROLE_ELEMENT -> {
+                            val id = DefaultRoleId(element attribute NAME_ATTRIBUTE)
+                            build(id, roles, element, { entityFactory.build(it) }, { organization.add(it) })
+                            parseRole(organization, reader, name, id, attributes, capabilities, characteristics, specificationGoals, list1)
+                        }
+                        name.localPart == GOAL_ELEMENT -> {
+                            val id = DefaultSpecificationGoalId(element attribute NAME_ATTRIBUTE)
+                            build(id, specificationGoals, element, { entityFactory.build(it) }, { organization.add(it) })
+                        }
                     }
                 }
-            } else if (event is XMLEvent && event.isEndElement) {
-                val element = event.asEndElement()
-                if (element.name == tagName) {
-                    for (r in list1) {
-                        r.run()
+                event is XMLEvent && event.isEndElement -> {
+                    val element = event.asEndElement()
+                    if (element.name == tagName) {
+                        for (r in list1) {
+                            r.run()
+                        }
+                        for (r in list2) {
+                            r.run()
+                        }
+                        return
                     }
-                    for (r in list2) {
-                        r.run()
-                    }
-                    return
                 }
             }
         }
         throw XMLStreamException(E.MISSING_END_TAG[tagName]) // should not happen as XMLEventReader will do it for us
     }
-
 
 
     private fun parseInstanceGoal(organization: Organization, element: StartElement,
@@ -283,7 +277,6 @@ internal class RoleDiagramParser @Inject constructor(
         private val log = org.slf4j.LoggerFactory.getLogger(XmlParser::class.java)
 
         private const val ROLE_DIAGRAM_ELEMENT = "RoleDiagram" //$NON-NLS-1$
-        private const val ATTRIBUTE_ELEMENT = "Attribute" //$NON-NLS-1$
         private const val CAPABILITY_ELEMENT = "Capability" //$NON-NLS-1$
         private const val CHARACTERISTIC_ELEMENT = "Characteristic" //$NON-NLS-1$
         private const val INSTANCEGOAL_ELEMENT = "InstanceGoal" //$NON-NLS-1$
@@ -297,7 +290,6 @@ internal class RoleDiagramParser @Inject constructor(
         private const val NEEDS_ELEMENT = "needs" //$NON-NLS-1$
         private const val REQUIRES_ELEMENT = "requires" //$NON-NLS-1$
         private const val NAME_ATTRIBUTE = "name" //$NON-NLS-1$
-        private const val TYPE_ATTRIBUTE = "type" //$NON-NLS-1$
         private const val SPECIFICATION_ATTRIBUTE = "specification" //$NON-NLS-1$
         private const val VALUE_ATTRIBUTE = "value" //$NON-NLS-1$
     }
