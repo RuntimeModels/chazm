@@ -1,6 +1,9 @@
 package runtimemodels.chazm.model.parsers
 
-import runtimemodels.chazm.api.entity.*
+import runtimemodels.chazm.api.entity.Attribute
+import runtimemodels.chazm.api.entity.Capability
+import runtimemodels.chazm.api.entity.Characteristic
+import runtimemodels.chazm.api.entity.SpecificationGoal
 import runtimemodels.chazm.api.id.*
 import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.model.factory.EntityFactory
@@ -21,7 +24,8 @@ import kotlin.reflect.KClass
 internal class RoleDiagramParser @Inject constructor(
     val entityFactory: EntityFactory,
     val relationFactory: RelationFactory,
-    private val agentParser: AgentParser
+    private val agentParser: AgentParser,
+    private val assignmentParser: AssignmentParser
 ) {
     fun canParse(qName: QName): Boolean = ROLE_DIAGRAM_ELEMENT == qName.localPart
 
@@ -41,38 +45,62 @@ internal class RoleDiagramParser @Inject constructor(
             if (event is XMLEvent && event.isStartElement) {
                 val element = event.asStartElement()
                 val name = element.name
-                if (agentParser.canParse(name)) agentParser.parse(element, agents, organization, reader, name, attributes, capabilities, list1)
-                else if (name.localPart == ASSIGNMENT_ELEMENT) parseAssignment(organization, element, agents, instanceGoals, roles, list2)
-                else if (name.localPart == ATTRIBUTE_ELEMENT) {
-                    val id = DefaultAttributeId(element attribute NAME_ATTRIBUTE)
-                    try {
-                        val type = Attribute.Type.valueOf(element attribute TYPE_ATTRIBUTE)
-                        build(id, attributes, element, { entityFactory.build(it, type) }, { organization.add(it) })
-                    } catch (e: IllegalArgumentException) {
-                        throw XMLStreamException(e)
-                    }
+                when {
+                    agentParser.canParse(name) -> agentParser.parse(
+                        element,
+                        agents,
+                        organization,
+                        reader,
+                        name,
+                        attributes,
+                        capabilities,
+                        list1
+                    )
+                    assignmentParser.canParse(name) -> assignmentParser.parse(
+                        element,
+                        agents,
+                        roles,
+                        instanceGoals,
+                        organization,
+                        list2
+                    )
+                    name.localPart == ATTRIBUTE_ELEMENT -> {
+                        val id = DefaultAttributeId(element attribute NAME_ATTRIBUTE)
+                        try {
+                            val type = Attribute.Type.valueOf(element attribute TYPE_ATTRIBUTE)
+                            build(id, attributes, element, { entityFactory.build(it, type) }, { organization.add(it) })
+                        } catch (e: IllegalArgumentException) {
+                            throw XMLStreamException(e)
+                        }
 
-                } else if (name.localPart == CAPABILITY_ELEMENT) {
-                    val id = DefaultCapabilityId(element attribute NAME_ATTRIBUTE)
-                    build(id, capabilities, element, { entityFactory.build(it) }, { organization.add(it) })
-                } else if (name.localPart == CHARACTERISTIC_ELEMENT) {
-                    val id = DefaultCharacteristicId(element attribute NAME_ATTRIBUTE)
-                    build(id, characteristics, element, { entityFactory.build(it) }, { organization.add(it) })
-                } else if (name.localPart == INSTANCEGOAL_ELEMENT) parseInstanceGoal(organization, element, specificationGoals, instanceGoals, list1)
-                else if (name.localPart == PMF_ELEMENT) {
-                    val id = DefaultPmfId(element attribute NAME_ATTRIBUTE)
-                    build(id, pmfs, element, { entityFactory.build(it) }, { organization.add(it) })
-                    parsePmf(organization, reader, name, id, attributes, list1)
-                } else if (name.localPart == POLICY_ELEMENT) {
-                    val id = DefaultPolicyId(element attribute NAME_ATTRIBUTE)
-                    build(id, policies, element, { entityFactory.build(it) }, { organization.add(it) })
-                } else if (name.localPart == ROLE_ELEMENT) {
-                    val id = DefaultRoleId(element attribute NAME_ATTRIBUTE)
-                    build(id, roles, element, { entityFactory.build(it) }, { organization.add(it) })
-                    parseRole(organization, reader, name, id, attributes, capabilities, characteristics, specificationGoals, list1)
-                } else if (name.localPart == GOAL_ELEMENT) {
-                    val id = DefaultSpecificationGoalId(element attribute NAME_ATTRIBUTE)
-                    build(id, specificationGoals, element, { entityFactory.build(it) }, { organization.add(it) })
+                    }
+                    name.localPart == CAPABILITY_ELEMENT -> {
+                        val id = DefaultCapabilityId(element attribute NAME_ATTRIBUTE)
+                        build(id, capabilities, element, { entityFactory.build(it) }, { organization.add(it) })
+                    }
+                    name.localPart == CHARACTERISTIC_ELEMENT -> {
+                        val id = DefaultCharacteristicId(element attribute NAME_ATTRIBUTE)
+                        build(id, characteristics, element, { entityFactory.build(it) }, { organization.add(it) })
+                    }
+                    name.localPart == INSTANCEGOAL_ELEMENT -> parseInstanceGoal(organization, element, specificationGoals, instanceGoals, list1)
+                    name.localPart == PMF_ELEMENT -> {
+                        val id = DefaultPmfId(element attribute NAME_ATTRIBUTE)
+                        build(id, pmfs, element, { entityFactory.build(it) }, { organization.add(it) })
+                        parsePmf(organization, reader, name, id, attributes, list1)
+                    }
+                    name.localPart == POLICY_ELEMENT -> {
+                        val id = DefaultPolicyId(element attribute NAME_ATTRIBUTE)
+                        build(id, policies, element, { entityFactory.build(it) }, { organization.add(it) })
+                    }
+                    name.localPart == ROLE_ELEMENT -> {
+                        val id = DefaultRoleId(element attribute NAME_ATTRIBUTE)
+                        build(id, roles, element, { entityFactory.build(it) }, { organization.add(it) })
+                        parseRole(organization, reader, name, id, attributes, capabilities, characteristics, specificationGoals, list1)
+                    }
+                    name.localPart == GOAL_ELEMENT -> {
+                        val id = DefaultSpecificationGoalId(element attribute NAME_ATTRIBUTE)
+                        build(id, specificationGoals, element, { entityFactory.build(it) }, { organization.add(it) })
+                    }
                 }
             } else if (event is XMLEvent && event.isEndElement) {
                 val element = event.asEndElement()
@@ -91,28 +119,6 @@ internal class RoleDiagramParser @Inject constructor(
     }
 
 
-    private fun parseAssignment(organization: Organization, element: StartElement, agents: Map<String, AgentId>,
-                                instanceGoals: Map<String, InstanceGoalId>, roles: Map<String, RoleId>, list: MutableList<RunLater>) {
-        /* construction of an assignment depends on the existence of the instance goal */
-        list.add(object : RunLater {
-            override fun run() {
-                val idString = element attribute AGENT_ATTRIBUTE
-                val agentId = agents[idString]
-                    ?: throw XMLStreamException(E.INCOMPLETE_XML_FILE[Agent::class.java.simpleName, idString])
-                val agent = organization.agents[agentId]!!
-                val rId = element attribute ROLE_ATTRIBUTE
-                val roleId = roles[rId]
-                    ?: throw XMLStreamException(E.INCOMPLETE_XML_FILE[Role::class.java.simpleName, rId])
-                val role = organization.roles[roleId]!!
-                val gId = element attribute GOAL_ATTRIBUTE
-                val goalId = instanceGoals[gId]
-                    ?: throw XMLStreamException(E.INCOMPLETE_XML_FILE[InstanceGoal::class.java.simpleName, gId])
-                val goal = organization.instanceGoals[goalId]!!
-                val assignment = relationFactory.build(agent, role, goal)
-                return organization.add(assignment)
-            }
-        })
-    }
 
     private fun parseInstanceGoal(organization: Organization, element: StartElement,
                                   specificationGoals: Map<String, SpecificationGoalId>, instanceGoals: MutableMap<String, InstanceGoalId>,
@@ -286,7 +292,6 @@ internal class RoleDiagramParser @Inject constructor(
         private const val ROLE_ELEMENT = "Role" //$NON-NLS-1$
         private const val GOAL_ELEMENT = "Goal" //$NON-NLS-1$
         private const val ACHIEVES_ELEMENT = "achieves" //$NON-NLS-1$
-        private const val ASSIGNMENT_ELEMENT = "assignment" //$NON-NLS-1$
         private const val CONTAINS_ELEMENT = "contains" //$NON-NLS-1$
         private const val MODERATES_ELEMENT = "moderates" //$NON-NLS-1$
         private const val NEEDS_ELEMENT = "needs" //$NON-NLS-1$
@@ -295,9 +300,6 @@ internal class RoleDiagramParser @Inject constructor(
         private const val TYPE_ATTRIBUTE = "type" //$NON-NLS-1$
         private const val SPECIFICATION_ATTRIBUTE = "specification" //$NON-NLS-1$
         private const val VALUE_ATTRIBUTE = "value" //$NON-NLS-1$
-        private const val AGENT_ATTRIBUTE = "agent" //$NON-NLS-1$
-        private const val ROLE_ATTRIBUTE = "role" //$NON-NLS-1$
-        private const val GOAL_ATTRIBUTE = "goal" //$NON-NLS-1$
     }
 }
 
