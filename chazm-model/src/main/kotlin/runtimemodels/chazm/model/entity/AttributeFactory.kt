@@ -12,7 +12,6 @@ import runtimemodels.chazm.api.id.UniqueId
  */
 @FunctionalInterface
 interface AttributeFactory {
-
     /**
      * Constructs an [Attribute].
      *
@@ -21,5 +20,4 @@ interface AttributeFactory {
      * @return an [Attribute].
      */
     fun build(id: AttributeId, type: Attribute.Type): Attribute
-
 }

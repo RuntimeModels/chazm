@@ -12,7 +12,6 @@ import runtimemodels.chazm.api.id.UniqueId
  */
 @FunctionalInterface
 interface SpecificationGoalFactory {
-
     /**
      * Constructs a [SpecificationGoal].
      *
@@ -20,5 +19,4 @@ interface SpecificationGoalFactory {
      * @return a [SpecificationGoal].
      */
     fun build(id: SpecificationGoalId): SpecificationGoal
-
 }

@@ -12,7 +12,6 @@ import runtimemodels.chazm.api.id.UniqueId
  */
 @FunctionalInterface
 interface RoleFactory {
-
     /**
      * Constructs a [Role].
      *
@@ -20,5 +19,4 @@ interface RoleFactory {
      * @return a [Role].
      */
     fun build(id: RoleId): Role
-
 }

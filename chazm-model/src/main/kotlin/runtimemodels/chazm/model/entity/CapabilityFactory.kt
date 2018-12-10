@@ -12,7 +12,6 @@ import runtimemodels.chazm.api.id.UniqueId
  */
 @FunctionalInterface
 interface CapabilityFactory {
-
     /**
      * Constructs a [Capability].
      *
@@ -20,5 +19,4 @@ interface CapabilityFactory {
      * @return a [Capability].
      */
     fun build(id: CapabilityId): Capability
-
 }

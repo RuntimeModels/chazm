@@ -12,7 +12,6 @@ import runtimemodels.chazm.api.id.UniqueId
  */
 @FunctionalInterface
 interface PmfFactory {
-
     /**
      * Constructs a [Pmf].
      *
@@ -20,5 +19,4 @@ interface PmfFactory {
      * @return a [Pmf].
      */
     fun build(id: PmfId): Pmf
-
 }

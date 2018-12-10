@@ -12,7 +12,6 @@ import runtimemodels.chazm.api.id.UniqueId
  */
 @FunctionalInterface
 interface PolicyFactory {
-
     /**
      * Constructs a [Policy].
      *
@@ -20,5 +19,4 @@ interface PolicyFactory {
      * @return a [Policy].
      */
     fun build(id: PolicyId): Policy
-
 }

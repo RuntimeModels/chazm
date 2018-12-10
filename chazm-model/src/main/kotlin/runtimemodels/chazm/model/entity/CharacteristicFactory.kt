@@ -12,7 +12,6 @@ import runtimemodels.chazm.api.id.UniqueId
  */
 @FunctionalInterface
 interface CharacteristicFactory {
-
     /**
      * Constructs a [Characteristic].
      *
@@ -20,5 +19,4 @@ interface CharacteristicFactory {
      * @return a [Characteristic].
      */
     fun build(id: CharacteristicId): Characteristic
-
 }
