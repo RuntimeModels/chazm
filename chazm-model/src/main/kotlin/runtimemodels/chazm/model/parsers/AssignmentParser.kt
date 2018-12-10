@@ -23,10 +23,10 @@ internal class AssignmentParser @Inject constructor(
 
     fun parse(
         element: StartElement,
+        organization: Organization,
         agents: Map<String, AgentId>,
         roles: Map<String, RoleId>,
         instanceGoals: Map<String, InstanceGoalId>,
-        organization: Organization,
         list: MutableList<() -> Unit>
     ) {
         /* construction of an assignment depends on the existence of the instance goal */

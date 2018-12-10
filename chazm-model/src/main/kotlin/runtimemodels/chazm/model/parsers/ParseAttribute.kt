@@ -12,16 +12,16 @@ import javax.xml.stream.XMLStreamException
 import javax.xml.stream.events.StartElement
 
 @Singleton
-internal class AttributeParser @Inject constructor(
+internal class ParseAttribute @Inject constructor(
     private val entityFactory: EntityFactory
 ) {
     fun canParse(qName: QName): Boolean = ATTRIBUTE_ELEMENT == qName.localPart
 
-    fun parse(element: StartElement, attributes: MutableMap<String, AttributeId>, organization: Organization) {
+    operator fun invoke(element: StartElement, organization: Organization, attributes: MutableMap<String, AttributeId>) {
         val id = DefaultAttributeId(element attribute NAME_ATTRIBUTE)
         try {
             val type = Attribute.Type.valueOf(element attribute TYPE_ATTRIBUTE)
-            build(id, attributes, element, { entityFactory.build(it, type) }, { organization.add(it) })
+            build(id, attributes, element, { entityFactory.build(it, type) }, organization::add)
         } catch (e: IllegalArgumentException) {
             throw XMLStreamException(e)
         }

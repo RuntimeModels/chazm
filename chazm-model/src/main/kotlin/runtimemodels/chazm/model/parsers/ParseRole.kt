@@ -18,22 +18,41 @@ import javax.xml.stream.XMLStreamException
 import javax.xml.stream.events.StartElement
 
 @Singleton
-internal class RoleParser @Inject constructor(
+internal class ParseRole @Inject constructor(
     private val entityFactory: EntityFactory,
     private val relationFactory: RelationFactory
 ) {
     fun canParse(qName: QName): Boolean = ROLE_ELEMENT == qName.localPart
 
-    fun parse(element: StartElement, roles: MutableMap<String, RoleId>, organization: Organization, reader: XMLEventReader, name: QName, attributes: MutableMap<String, AttributeId>, capabilities: MutableMap<String, CapabilityId>, characteristics: MutableMap<String, CharacteristicId>, specificationGoals: MutableMap<String, SpecificationGoalId>, list1: MutableList<() -> Unit>) {
+    operator fun invoke(
+        element: StartElement,
+        organization: Organization,
+        reader: XMLEventReader,
+        tagName: QName,
+        roles: MutableMap<String, RoleId>,
+        attributes: MutableMap<String, AttributeId>,
+        capabilities: MutableMap<String, CapabilityId>,
+        characteristics: MutableMap<String, CharacteristicId>,
+        specificationGoals: MutableMap<String, SpecificationGoalId>,
+        list: MutableList<() -> Unit>
+    ) {
         val id = DefaultRoleId(element attribute NAME_ATTRIBUTE)
-        build(id, roles, element, { entityFactory.build(it) }, { organization.add(it) })
-        parseRole(organization, reader, name, id, attributes, capabilities, characteristics, specificationGoals, list1)
+        build(id, roles, element, entityFactory::build, organization::add)
+        parseRole(id, organization, reader, tagName, attributes, capabilities, characteristics, specificationGoals, list)
     }
 
     @Throws(XMLStreamException::class)
-    private fun parseRole(organization: Organization, reader: XMLEventReader, tagName: QName, id: RoleId,
-                          attributes: Map<String, AttributeId>, capabilities: Map<String, CapabilityId>,
-                          characteristics: Map<String, CharacteristicId>, goals: Map<String, SpecificationGoalId>, list: MutableList<() -> Unit>) {
+    private fun parseRole(
+        id: RoleId,
+        organization: Organization,
+        reader: XMLEventReader,
+        tagName: QName,
+        attributes: Map<String, AttributeId>,
+        capabilities: Map<String, CapabilityId>,
+        characteristics: Map<String, CharacteristicId>,
+        goals: Map<String, SpecificationGoalId>,
+        list: MutableList<() -> Unit>
+    ) {
         while (reader.hasNext()) {
             val event = reader.nextEvent()
             if (event.isStartElement) {

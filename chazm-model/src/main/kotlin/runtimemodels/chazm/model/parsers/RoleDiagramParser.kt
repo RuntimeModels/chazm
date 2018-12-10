@@ -1,12 +1,8 @@
 package runtimemodels.chazm.model.parsers
 
-import runtimemodels.chazm.api.entity.Attribute
-import runtimemodels.chazm.api.entity.SpecificationGoal
 import runtimemodels.chazm.api.id.*
 import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.model.factory.EntityFactory
-import runtimemodels.chazm.model.factory.RelationFactory
-import runtimemodels.chazm.model.id.*
 import runtimemodels.chazm.model.message.E
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -15,16 +11,20 @@ import javax.xml.stream.XMLEventReader
 import javax.xml.stream.XMLStreamException
 import javax.xml.stream.events.StartElement
 import javax.xml.stream.events.XMLEvent
-import kotlin.reflect.KClass
 
 @Singleton
 internal class RoleDiagramParser @Inject constructor(
     val entityFactory: EntityFactory,
-    val relationFactory: RelationFactory,
-    private val agentParser: AgentParser,
+    private val parseAgent: ParseAgent,
     private val assignmentParser: AssignmentParser,
-    private val attributeParser: AttributeParser,
-    private val roleParser: RoleParser
+    private val parseAttribute: ParseAttribute,
+    private val parseCapability: ParseCapability,
+    private val parseCharacteristic: ParseCharacteristic,
+    private val parseInstanceGoal: ParseInstanceGoal,
+    private val parsePmf: ParsePmf,
+    private val parsePolicy: ParsePolicy,
+    private val parseRole: ParseRole,
+    private val parseSpecificationGoal: ParseSpecificationGoal
 ) {
     fun canParse(qName: QName): Boolean = ROLE_DIAGRAM_ELEMENT == qName.localPart
 
@@ -40,69 +40,13 @@ internal class RoleDiagramParser @Inject constructor(
         val specificationGoals = mutableMapOf<String, SpecificationGoalId>()
         val list1 = mutableListOf<() -> Unit>()
         val list2 = mutableListOf<() -> Unit>()
-        reader.forEach { event ->
+        reader.forEach {
             when {
-                event is XMLEvent && event.isStartElement -> {
-                    val element = event.asStartElement()
-                    val name = element.name
-                    when {
-                        agentParser.canParse(name) -> agentParser.parse(
-                            element,
-                            agents,
-                            organization,
-                            reader,
-                            name,
-                            attributes,
-                            capabilities,
-                            list1
-                        )
-                        assignmentParser.canParse(name) -> assignmentParser.parse(
-                            element,
-                            agents,
-                            roles,
-                            instanceGoals,
-                            organization,
-                            list2
-                        )
-                        attributeParser.canParse(name) -> attributeParser.parse(element, attributes, organization)
-                        name.localPart == CAPABILITY_ELEMENT -> {
-                            val id = DefaultCapabilityId(element attribute NAME_ATTRIBUTE)
-                            build(id, capabilities, element, { entityFactory.build(it) }, { organization.add(it) })
-                        }
-                        name.localPart == CHARACTERISTIC_ELEMENT -> {
-                            val id = DefaultCharacteristicId(element attribute NAME_ATTRIBUTE)
-                            build(id, characteristics, element, { entityFactory.build(it) }, { organization.add(it) })
-                        }
-                        name.localPart == INSTANCEGOAL_ELEMENT -> parseInstanceGoal(organization, element, specificationGoals, instanceGoals, list1)
-                        name.localPart == PMF_ELEMENT -> {
-                            val id = DefaultPmfId(element attribute NAME_ATTRIBUTE)
-                            build(id, pmfs, element, { entityFactory.build(it) }, { organization.add(it) })
-                            parsePmf(organization, reader, name, id, attributes, list1)
-                        }
-                        name.localPart == POLICY_ELEMENT -> {
-                            val id = DefaultPolicyId(element attribute NAME_ATTRIBUTE)
-                            build(id, policies, element, { entityFactory.build(it) }, { organization.add(it) })
-                        }
-                        roleParser.canParse(name) -> roleParser.parse(
-                            element,
-                            roles,
-                            organization,
-                            reader,
-                            name,
-                            attributes,
-                            capabilities,
-                            characteristics,
-                            specificationGoals,
-                            list1
-                        )
-                        name.localPart == GOAL_ELEMENT -> {
-                            val id = DefaultSpecificationGoalId(element attribute NAME_ATTRIBUTE)
-                            build(id, specificationGoals, element, { entityFactory.build(it) }, { organization.add(it) })
-                        }
-                    }
+                it is XMLEvent && it.isStartElement -> {
+                    startElement(it, organization, reader, agents, attributes, capabilities, characteristics, instanceGoals, pmfs, policies, roles, specificationGoals, list1, list2)
                 }
-                event is XMLEvent && event.isEndElement -> {
-                    val element = event.asEndElement()
+                it is XMLEvent && it.isEndElement -> {
+                    val element = it.asEndElement()
                     if (element.name == tagName) {
                         for (r in list1) {
                             r()
@@ -118,75 +62,71 @@ internal class RoleDiagramParser @Inject constructor(
         throw XMLStreamException(E.MISSING_END_TAG[tagName]) // should not happen as XMLEventReader will do it for us
     }
 
-
-    private fun parseInstanceGoal(organization: Organization, element: StartElement,
-                                  specificationGoals: Map<String, SpecificationGoalId>, instanceGoals: MutableMap<String, InstanceGoalId>,
-                                  list: MutableList<() -> Unit>) {
-        /* construction of an instance goal depends on the existence of the specification goal */
-        list.add {
-            val value = element attribute SPECIFICATION_ATTRIBUTE
-            val goalId = specificationGoals[value]
-                ?: throw XMLStreamException(E.INCOMPLETE_XML_FILE[SpecificationGoal::class.java.simpleName, value])
-            val goal = organization.specificationGoals[goalId]!!
-            val id = DefaultInstanceGoalId(element attribute NAME_ATTRIBUTE)
-            // TODO parse parameter
-            build(id, instanceGoals, element, { entityFactory.build(it, goal, emptyMap()) }, { organization.add(it) })
+    private fun startElement(
+        it: XMLEvent,
+        organization: Organization,
+        reader: XMLEventReader,
+        agents: MutableMap<String, AgentId>,
+        attributes: MutableMap<String, AttributeId>,
+        capabilities: MutableMap<String, CapabilityId>,
+        characteristics: MutableMap<String, CharacteristicId>,
+        instanceGoals: MutableMap<String, InstanceGoalId>,
+        pmfs: MutableMap<String, PmfId>,
+        policies: MutableMap<String, PolicyId>,
+        roles: MutableMap<String, RoleId>,
+        specificationGoals: MutableMap<String, SpecificationGoalId>,
+        list1: MutableList<() -> Unit>,
+        list2: MutableList<() -> Unit>
+    ) {
+        val element = it.asStartElement()
+        val name = element.name
+        when {
+            parseAgent.canParse(name) -> parseAgent(
+                element,
+                organization,
+                reader,
+                name,
+                agents,
+                attributes,
+                capabilities,
+                list1
+            )
+            assignmentParser.canParse(name) -> assignmentParser.parse(
+                element,
+                organization,
+                agents,
+                roles,
+                instanceGoals,
+                list2
+            )
+            parseAttribute.canParse(name) -> parseAttribute(element, organization, attributes)
+            parseCapability.canParse(name) -> parseCapability(element, organization, capabilities)
+            parseCharacteristic.canParse(name) -> parseCharacteristic(element, organization, characteristics)
+            parseInstanceGoal.canParse(name) -> parseInstanceGoal(element, organization, instanceGoals, specificationGoals, list1)
+            parsePmf.canParse(name) -> parsePmf(element, organization, reader, name, pmfs, attributes, list1)
+            parsePolicy.canParse(name) -> parsePolicy(element, organization, policies)
+            parseRole.canParse(name) -> parseRole(
+                element,
+                organization,
+                reader,
+                name,
+                roles,
+                attributes,
+                capabilities,
+                characteristics,
+                specificationGoals,
+                list1
+            )
+            parseSpecificationGoal.canParse(name) -> parseSpecificationGoal(element, organization, specificationGoals)
         }
     }
-
-    @Throws(XMLStreamException::class)
-    private fun parsePmf(organization: Organization, reader: XMLEventReader, tagName: QName, id: PmfId,
-                         attributes: Map<String, AttributeId>, list: MutableList<() -> Unit>) {
-        while (reader.hasNext()) {
-            val event = reader.nextEvent()
-            if (event.isStartElement) {
-                val element = event.asStartElement()
-                val name = element.name
-                if (MODERATES_ELEMENT == name.localPart) {
-                    val ids = collectIds(reader, name)
-                    list.add {
-                        addRelation(
-                            id,
-                            ids,
-                            attributes,
-                            { pmfId, attributeId ->
-                                organization.moderatesRelations.add(relationFactory.build(
-                                    organization.pmfs[pmfId]!!,
-                                    organization.attributes[attributeId]!!
-                                ))
-                            },
-                            Attribute::class.java
-                        )
-                    }
-                }
-            } else if (event.isEndElement) {
-                val element = event.asEndElement()
-                if (element.name == tagName) {
-                    return
-                }
-            }
-        }
-        throw XMLStreamException(E.MISSING_END_TAG[tagName]) // should not happen as XMLEventReader will do it for us
-    }
-
-
 
     companion object {
         private const val ROLE_DIAGRAM_ELEMENT = "RoleDiagram" //$NON-NLS-1$
-        private const val CAPABILITY_ELEMENT = "Capability" //$NON-NLS-1$
-        private const val CHARACTERISTIC_ELEMENT = "Characteristic" //$NON-NLS-1$
-        private const val INSTANCEGOAL_ELEMENT = "InstanceGoal" //$NON-NLS-1$
-        private const val PMF_ELEMENT = "Pmf" //$NON-NLS-1$
-        private const val POLICY_ELEMENT = "Policy" //$NON-NLS-1$
-        private const val GOAL_ELEMENT = "Goal" //$NON-NLS-1$
-        private const val MODERATES_ELEMENT = "moderates" //$NON-NLS-1$
-        private const val NAME_ATTRIBUTE = "name" //$NON-NLS-1$
-        private const val SPECIFICATION_ATTRIBUTE = "specification" //$NON-NLS-1$
     }
 }
 
 private const val ID_ATTRIBUTE = "id" //$NON-NLS-1$
-@Throws(XMLStreamException::class)
 fun <T : UniqueId<U>, U> build(
     id: T,
     map: MutableMap<String, T>,
@@ -204,32 +144,12 @@ fun <T : UniqueId<U>, U> build(
 
 }
 
-@Throws(XMLStreamException::class)
-fun <T : UniqueId<U>, U> build(
-    id: T,
-    map: MutableMap<String, T>,
-    key: String,
-    f: (T) -> U,
-    c: (U) -> Unit
-) {
-    map[key] = id
-    val t = f(id)
-    try {
-        c(t)
-    } catch (e: IllegalArgumentException) {
-        throw XMLStreamException(e)
-    }
-
-}
-
-@Throws(XMLStreamException::class)
 infix fun StartElement.attribute(localPart: String): String {
     val attribute = getAttributeByName(QName(localPart))
         ?: throw XMLStreamException(E.MISSING_ATTRIBUTE_IN_TAG[name.localPart, localPart])
     return attribute.value
 }
 
-@Throws(XMLStreamException::class)
 fun <T : UniqueId<U>, U, V : UniqueId<W>, W> addRelation(
     id1: T,
     ids: List<String>,
@@ -243,21 +163,6 @@ fun <T : UniqueId<U>, U, V : UniqueId<W>, W> addRelation(
     }
 }
 
-@Throws(XMLStreamException::class)
-fun <T : UniqueId<U>, U, V : UniqueId<W>, W : Any> addRelation(
-    id1: T,
-    ids: List<String>,
-    map: Map<String, V>,
-    c: (T, V) -> Unit,
-    kClass: KClass<W>
-) {
-    for (id in ids) {
-        val id2 = map[id] ?: throw XMLStreamException(E.INCOMPLETE_XML_FILE[kClass.java.simpleName, id])
-        c(id1, id2)
-    }
-}
-
-@Throws(XMLStreamException::class)
 inline fun <T : UniqueId<U>, U, V : UniqueId<W>, reified W : Any> addRelation(
     id1: T,
     ids: List<String>,
@@ -272,7 +177,6 @@ inline fun <T : UniqueId<U>, U, V : UniqueId<W>, reified W : Any> addRelation(
 
 
 private const val CHILD_ELEMENT = "child" //$NON-NLS-1$
-@Throws(XMLStreamException::class)
 fun collectIds(reader: XMLEventReader, tagName: QName): List<String> {
     val ids = mutableListOf<String>()
     reader.forEach {

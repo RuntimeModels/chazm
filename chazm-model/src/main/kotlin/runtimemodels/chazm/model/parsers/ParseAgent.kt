@@ -16,19 +16,19 @@ import javax.xml.stream.events.StartElement
 import javax.xml.stream.events.XMLEvent
 
 @Singleton
-internal class AgentParser @Inject constructor(
+internal class ParseAgent @Inject constructor(
     private val entityFactory: EntityFactory,
     private val hasParser: HasParser,
     private val possessesParser: PossessesParser
 ) {
     fun canParse(qName: QName): Boolean = AGENT_ELEMENT == qName.localPart
 
-    fun parse(
+    operator fun invoke(
         element: StartElement,
-        agents: MutableMap<String, AgentId>,
         organization: Organization,
         reader: XMLEventReader,
         tagName: QName,
+        agents: MutableMap<String, AgentId>,
         attributes: MutableMap<String, AttributeId>,
         capabilities: MutableMap<String, CapabilityId>,
         list: MutableList<() -> Unit>
@@ -38,9 +38,9 @@ internal class AgentParser @Inject constructor(
         build(
             id,
             agents,
-            element attribute ID_ATTRIBUTE,
+            element,
             { entityFactory.build(it, emptyMap()) },
-            { organization.add(it) }
+            organization::add
         )
         parseAgent(
             id,
@@ -53,7 +53,6 @@ internal class AgentParser @Inject constructor(
         )
     }
 
-    @Throws(XMLStreamException::class)
     private fun parseAgent(
         id: AgentId,
         organization: Organization,
@@ -102,7 +101,6 @@ internal class AgentParser @Inject constructor(
 
     companion object {
         private const val AGENT_ELEMENT = "Agent" //$NON-NLS-1$
-        private const val ID_ATTRIBUTE = "id" //$NON-NLS-1$
         private const val NAME_ATTRIBUTE = "name" //$NON-NLS-1$
     }
 }

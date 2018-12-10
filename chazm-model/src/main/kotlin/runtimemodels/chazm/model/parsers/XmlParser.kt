@@ -40,6 +40,7 @@ internal open class XmlParser @Inject constructor(
                 }
             }
         }
+        reader.close()
     }
 
     companion object {
