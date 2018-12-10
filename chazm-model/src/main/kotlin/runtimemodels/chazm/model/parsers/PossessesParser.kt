@@ -24,28 +24,26 @@ internal class PossessesParser @Inject constructor(
         reader: XMLEventReader,
         name: QName,
         capabilities: Map<String, CapabilityId>,
-        list: MutableList<RunLater>
+        list: MutableList<() -> Unit>
     ) {
         val ids = collectIds(reader, name)
         try {
             val value = (element attribute SCORE_ATTRIBUTE).toDouble()
-            list.add(object : RunLater {
-                override fun run() {
-                    addRelation(
-                        id,
-                        ids,
-                        capabilities
-                    ) { agentId, capabilityId ->
-                        organization.possessesRelations.add(
-                            relationFactory.build(
-                                organization.agents[agentId]!!,
-                                organization.capabilities[capabilityId]!!,
-                                value
-                            )
+            list.add {
+                addRelation(
+                    id,
+                    ids,
+                    capabilities
+                ) { agentId, capabilityId ->
+                    organization.possessesRelations.add(
+                        relationFactory.build(
+                            organization.agents[agentId]!!,
+                            organization.capabilities[capabilityId]!!,
+                            value
                         )
-                    }
+                    )
                 }
-            })
+            }
         } catch (e: NumberFormatException) {
             throw XMLStreamException(e)
         }

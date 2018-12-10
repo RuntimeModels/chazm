@@ -31,7 +31,7 @@ internal class AgentParser @Inject constructor(
         tagName: QName,
         attributes: MutableMap<String, AttributeId>,
         capabilities: MutableMap<String, CapabilityId>,
-        list: MutableList<RunLater>
+        list: MutableList<() -> Unit>
     ) {
         val id: AgentId = DefaultAgentId(element attribute NAME_ATTRIBUTE)
         // TODO parse contact info
@@ -61,7 +61,7 @@ internal class AgentParser @Inject constructor(
         tagName: QName,
         attributes: Map<String, AttributeId>,
         capabilities: Map<String, CapabilityId>,
-        list: MutableList<RunLater>
+        list: MutableList<() -> Unit>
     ) {
         reader.forEach {
             when {

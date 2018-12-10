@@ -27,27 +27,25 @@ internal class AssignmentParser @Inject constructor(
         roles: Map<String, RoleId>,
         instanceGoals: Map<String, InstanceGoalId>,
         organization: Organization,
-        list: MutableList<RunLater>
+        list: MutableList<() -> Unit>
     ) {
         /* construction of an assignment depends on the existence of the instance goal */
-        list.add(object : RunLater {
-            override fun run() {
-                val idString = element attribute AGENT_ATTRIBUTE
-                val agentId = agents[idString]
+        list.add {
+            val idString = element attribute AGENT_ATTRIBUTE
+            val agentId = agents[idString]
                     ?: throw XMLStreamException(E.INCOMPLETE_XML_FILE[Agent::class.java.simpleName, idString])
-                val agent = organization.agents[agentId]!!
-                val rId = element attribute ROLE_ATTRIBUTE
-                val roleId = roles[rId]
+            val agent = organization.agents[agentId]!!
+            val rId = element attribute ROLE_ATTRIBUTE
+            val roleId = roles[rId]
                     ?: throw XMLStreamException(E.INCOMPLETE_XML_FILE[Role::class.java.simpleName, rId])
-                val role = organization.roles[roleId]!!
-                val gId = element attribute GOAL_ATTRIBUTE
-                val goalId = instanceGoals[gId]
+            val role = organization.roles[roleId]!!
+            val gId = element attribute GOAL_ATTRIBUTE
+            val goalId = instanceGoals[gId]
                     ?: throw XMLStreamException(E.INCOMPLETE_XML_FILE[InstanceGoal::class.java.simpleName, gId])
-                val goal = organization.instanceGoals[goalId]!!
-                val assignment = relationFactory.build(agent, role, goal)
-                organization.add(assignment)
-            }
-        })
+            val goal = organization.instanceGoals[goalId]!!
+            val assignment = relationFactory.build(agent, role, goal)
+            organization.add(assignment)
+        }
     }
 
     companion object {

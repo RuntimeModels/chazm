@@ -24,28 +24,26 @@ internal class HasParser @Inject constructor(
         reader: XMLEventReader,
         name: QName,
         attributes: Map<String, AttributeId>,
-        list: MutableList<RunLater>
+        list: MutableList<() -> Unit>
     ) {
         val ids = collectIds(reader, name)
         try {
             val value = (element attribute VALUE_ATTRIBUTE).toDouble()
-            list.add(object : RunLater {
-                override fun run() {
-                    addRelation(
-                        id,
-                        ids,
-                        attributes
-                    ) { agentId, attributeId ->
-                        organization.hasRelations.add(
-                            relationFactory.build(
-                                organization.agents[agentId]!!,
-                                organization.attributes[attributeId]!!,
-                                value
-                            )
+            list.add {
+                addRelation(
+                    id,
+                    ids,
+                    attributes
+                ) { agentId, attributeId ->
+                    organization.hasRelations.add(
+                        relationFactory.build(
+                            organization.agents[agentId]!!,
+                            organization.attributes[attributeId]!!,
+                            value
                         )
-                    }
+                    )
                 }
-            })
+            }
         } catch (e: NumberFormatException) {
             throw XMLStreamException(e)
         }
