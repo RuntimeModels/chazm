@@ -1,10 +1,9 @@
-package runtimemodels.chazm.api.organization
+package runtimemodels.chazm.api.relation
 
 import runtimemodels.chazm.api.entity.Characteristic
 import runtimemodels.chazm.api.entity.Role
 import runtimemodels.chazm.api.id.CharacteristicId
 import runtimemodels.chazm.api.id.RoleId
-import runtimemodels.chazm.api.relation.Contains
 
 /**
  * The [ContainsManager] interface defines the APIs for managing a set of [Contains] relations.

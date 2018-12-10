@@ -1,4 +1,4 @@
-package runtimemodels.chazm.api.organization
+package runtimemodels.chazm.api.relation
 
 import runtimemodels.chazm.api.entity.Agent
 import runtimemodels.chazm.api.entity.InstanceGoal
@@ -6,7 +6,6 @@ import runtimemodels.chazm.api.entity.Role
 import runtimemodels.chazm.api.id.AgentId
 import runtimemodels.chazm.api.id.InstanceGoalId
 import runtimemodels.chazm.api.id.RoleId
-import runtimemodels.chazm.api.relation.Assignment
 
 /**
  * The [AssignmentManager] interface defines the APIs for managing a set of [Assignment] relations.

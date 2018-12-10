@@ -6,7 +6,7 @@ import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.api.function.Effectiveness
 import runtimemodels.chazm.api.function.Goodness
 import runtimemodels.chazm.api.id.*
-import runtimemodels.chazm.api.organization.*
+import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.api.relation.*
 import runtimemodels.chazm.model.Functions
 import runtimemodels.chazm.model.event.EventFactory

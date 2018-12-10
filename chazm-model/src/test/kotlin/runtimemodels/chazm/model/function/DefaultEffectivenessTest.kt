@@ -9,9 +9,9 @@ import org.mockito.Mockito.`when`
 import runtimemodels.chazm.api.entity.Role
 import runtimemodels.chazm.api.function.Effectiveness
 import runtimemodels.chazm.api.function.Goodness
-import runtimemodels.chazm.api.organization.AssignmentManager
 import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.api.relation.Assignment
+import runtimemodels.chazm.api.relation.AssignmentManager
 import scaleInt
 
 internal class DefaultEffectivenessTest {

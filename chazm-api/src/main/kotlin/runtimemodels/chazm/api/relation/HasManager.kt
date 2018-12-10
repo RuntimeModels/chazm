@@ -1,10 +1,9 @@
-package runtimemodels.chazm.api.organization
+package runtimemodels.chazm.api.relation
 
 import runtimemodels.chazm.api.entity.Agent
 import runtimemodels.chazm.api.entity.Attribute
 import runtimemodels.chazm.api.id.AgentId
 import runtimemodels.chazm.api.id.AttributeId
-import runtimemodels.chazm.api.relation.Has
 
 /**
  * The [HasManager] interface defines the APIs for managing a set of [Has] relations.

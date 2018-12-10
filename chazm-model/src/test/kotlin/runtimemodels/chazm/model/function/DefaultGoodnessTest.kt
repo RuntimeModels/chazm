@@ -13,11 +13,8 @@ import runtimemodels.chazm.api.id.AttributeId
 import runtimemodels.chazm.api.id.CapabilityId
 import runtimemodels.chazm.api.id.RoleId
 import runtimemodels.chazm.api.id.SpecificationGoalId
-import runtimemodels.chazm.api.organization.*
-import runtimemodels.chazm.api.relation.Achieves
-import runtimemodels.chazm.api.relation.Needs
-import runtimemodels.chazm.api.relation.Possesses
-import runtimemodels.chazm.api.relation.Requires
+import runtimemodels.chazm.api.organization.Organization
+import runtimemodels.chazm.api.relation.*
 import scaleInt
 
 internal class DefaultGoodnessTest {

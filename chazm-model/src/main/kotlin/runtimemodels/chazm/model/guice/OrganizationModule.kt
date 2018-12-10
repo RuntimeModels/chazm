@@ -4,7 +4,7 @@ import com.google.inject.AbstractModule
 import com.google.inject.Provides
 import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.api.id.*
-import runtimemodels.chazm.api.organization.*
+import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.api.relation.*
 import runtimemodels.chazm.model.entity.impl.*
 import runtimemodels.chazm.model.organization.DefaultOrganization

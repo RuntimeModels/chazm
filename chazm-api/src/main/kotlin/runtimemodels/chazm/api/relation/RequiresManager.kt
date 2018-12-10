@@ -1,10 +1,9 @@
-package runtimemodels.chazm.api.organization
+package runtimemodels.chazm.api.relation
 
 import runtimemodels.chazm.api.entity.Capability
 import runtimemodels.chazm.api.entity.Role
 import runtimemodels.chazm.api.id.CapabilityId
 import runtimemodels.chazm.api.id.RoleId
-import runtimemodels.chazm.api.relation.Requires
 
 /**
  * The [RequiresManager] interface defines the APIs for managing a set of [Requires] relations.
