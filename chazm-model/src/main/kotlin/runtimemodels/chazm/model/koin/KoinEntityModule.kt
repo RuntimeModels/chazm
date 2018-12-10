@@ -77,6 +77,30 @@ private class KoinEntityFactory(
     RoleFactory by roleFactory,
     SpecificationGoalFactory by specificationGoalFactory
 
+val EntityModule = module(path = KoinEntityModule::class.java.packageName) {
+    factory<Agent> { (id: AgentId) -> DefaultAgent(id = id) }
+    factory<Attribute> { (id: AttributeId, type: Attribute.Type) -> DefaultAttribute(id = id, type = type) }
+    factory<Capability> { (id: CapabilityId) -> DefaultCapability(id = id) }
+    factory<Characteristic> { (id: CharacteristicId) -> DefaultCharacteristic(id = id) }
+    factory<InstanceGoal> { (id: InstanceGoalId, goal: SpecificationGoal) -> DefaultInstanceGoal(id = id, goal = goal) }
+    factory<Pmf> { (id: PmfId) -> DefaultPmf(id = id) }
+    factory<Policy> { (id: PolicyId) -> DefaultPolicy(id = id) }
+    factory<Role> { (id: RoleId) -> DefaultRole(id = id) }
+    factory<SpecificationGoal> { (id: SpecificationGoalId) -> DefaultSpecificationGoal(id = id) }
+}
+
+val EntityManagerModule = module(path = KoinEntityModule::class.java.packageName) {
+    factory<AgentManager> { DefaultAgentManager(mutableMapOf()) }
+    factory<AttributeManager> { DefaultAttributeManager(mutableMapOf()) }
+    factory<CapabilityManager> { DefaultCapabilityManager(mutableMapOf()) }
+    factory<CharacteristicManager> { DefaultCharacteristicManager(mutableMapOf()) }
+    factory<InstanceGoalManager> { DefaultInstanceGoalManager(mutableMapOf(), mutableMapOf()) }
+    factory<PmfManager> { DefaultPmfManager(mutableMapOf()) }
+    factory<PolicyManager> { DefaultPolicyManager(mutableMapOf()) }
+    factory<RoleManager> { DefaultRoleManager(mutableMapOf()) }
+    factory<SpecificationGoalManager> { DefaultSpecificationGoalManager(mutableMapOf()) }
+}
+
 val EntityFactoryModule = module(path = KoinEntityModule::class.java.packageName) {
     single<AgentFactory> { create<KoinAgentFactory>() }
     single<AttributeFactory> { create<KoinAttributeFactory>() }
@@ -90,14 +114,3 @@ val EntityFactoryModule = module(path = KoinEntityModule::class.java.packageName
     single<EntityFactory> { create<KoinEntityFactory>() }
 }
 
-val EntityModule = module(path = KoinEntityModule::class.java.packageName) {
-    factory<Agent> { (id: AgentId) -> DefaultAgent(id = id) }
-    factory<Attribute> { (id: AttributeId, type: Attribute.Type) -> DefaultAttribute(id = id, type = type) }
-    factory<Capability> { (id: CapabilityId) -> DefaultCapability(id = id) }
-    factory<Characteristic> { (id: CharacteristicId) -> DefaultCharacteristic(id = id) }
-    factory<InstanceGoal> { (id: InstanceGoalId, goal: SpecificationGoal) -> DefaultInstanceGoal(id = id, goal = goal) }
-    factory<Pmf> { (id: PmfId) -> DefaultPmf(id = id) }
-    factory<Policy> { (id: PolicyId) -> DefaultPolicy(id = id) }
-    factory<Role> { (id: RoleId) -> DefaultRole(id = id) }
-    factory<SpecificationGoal> { (id: SpecificationGoalId) -> DefaultSpecificationGoal(id = id) }
-}

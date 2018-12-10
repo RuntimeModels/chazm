@@ -10,8 +10,6 @@ import runtimemodels.chazm.api.function.Effectiveness
 import runtimemodels.chazm.api.function.Goodness
 import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.api.relation.*
-import runtimemodels.chazm.model.entity.impl.DefaultAgentManager
-import runtimemodels.chazm.model.entity.impl.DefaultAttributeManager
 import runtimemodels.chazm.model.event.*
 import runtimemodels.chazm.model.function.DefaultEffectiveness
 import runtimemodels.chazm.model.function.DefaultGoodness
@@ -112,8 +110,6 @@ val EventFactoryModule = module(path = KoinModule::class.java.packageName) {
     single<EventFactory> { create<KoinEventFactory>() }
 }
 private val OrganizationModule = module(path = KoinModule::class.java.packageName) {
-    factory<AgentManager> { create<DefaultAgentManager>() }
-    factory<AttributeManager> { create<DefaultAttributeManager>() }
     single<Mediator> { create<DefaultMediator>() }
     single<Publisher> { create<DefaultPublisher>() }
     single<Effectiveness> { create<DefaultEffectiveness>() }
@@ -145,5 +141,5 @@ private val ParserModule = module(path = KoinModule::class.java.packageName) {
 val EntitiesModules = listOf(EntityModule, EntityFactoryModule)
 val EventModules = listOf(EventModule, EventFactoryModule)
 val RelationsModules = listOf(RelationModule, RelationFactoryModule)
-val OrganizationModules = EventModules + OrganizationModule
+val OrganizationModules = EventModules + OrganizationModule + EntityManagerModule
 val ParsingModules = EntitiesModules + RelationsModules + ParserModule
