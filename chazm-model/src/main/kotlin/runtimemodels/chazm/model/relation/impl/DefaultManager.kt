@@ -4,7 +4,7 @@ import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.api.relation.*
 import javax.inject.Inject
 
-sealed class DefaultManager
+internal sealed class DefaultManager
 
 internal data class DefaultAchievesManager @Inject constructor(
     private val map: MutableMap<RoleId, MutableMap<SpecificationGoalId, Achieves>>,
