@@ -4,7 +4,7 @@ import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.*
 import javax.inject.Inject
 
-sealed class DefaultEntity
+internal sealed class DefaultEntity
 
 internal data class DefaultAgent @Inject constructor(
     @Assisted override val id: AgentId

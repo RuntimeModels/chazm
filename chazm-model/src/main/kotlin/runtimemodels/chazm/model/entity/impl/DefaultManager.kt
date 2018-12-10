@@ -5,7 +5,7 @@ import runtimemodels.chazm.model.exceptions.EntityExistsException
 import runtimemodels.chazm.model.exceptions.EntityNotExistsException
 import javax.inject.Inject
 
-sealed class DefaultManager
+internal sealed class DefaultManager
 
 internal data class DefaultAgentManager @Inject constructor(
     private val map: MutableMap<AgentId, Agent>
