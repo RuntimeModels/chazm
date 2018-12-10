@@ -2,7 +2,6 @@ package runtimemodels.chazm.model.entity.impl
 
 import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.api.id.*
-import runtimemodels.chazm.api.organization.*
 import runtimemodels.chazm.model.exceptions.EntityExistsException
 import runtimemodels.chazm.model.exceptions.EntityNotExistsException
 import javax.inject.Inject
