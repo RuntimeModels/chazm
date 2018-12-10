@@ -1,8 +1,10 @@
-package runtimemodels.chazm.model.function
+package runtimemodels.chazm.model.guice
 
 import com.google.inject.AbstractModule
 import runtimemodels.chazm.api.function.Effectiveness
 import runtimemodels.chazm.api.function.Goodness
+import runtimemodels.chazm.model.function.DefaultEffectiveness
+import runtimemodels.chazm.model.function.DefaultGoodness
 
 /**
  * The [FunctionModule] class provides a Guice binding module for functions.
