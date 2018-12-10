@@ -2,16 +2,18 @@ package runtimemodels.chazm.model.parsers
 
 import com.google.inject.Guice
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Disabled
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
-import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.api.*
+import org.koin.standalone.StandAloneContext.loadKoinModules
+import org.koin.standalone.StandAloneContext.stopKoin
+import org.koin.standalone.get
+import org.koin.test.KoinTest
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
 import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.model.guice.ParsersModule
 import runtimemodels.chazm.model.id.*
+import runtimemodels.chazm.model.koin.ParsingModules
 import runtimemodels.chazm.model.message.E
 import java.io.InputStream
 import javax.xml.namespace.QName
@@ -20,27 +22,25 @@ import javax.xml.stream.XMLInputFactory
 import javax.xml.stream.XMLStreamException
 import javax.xml.stream.events.XMLEvent
 
-internal class XmlParserTest {
+internal class XmlParserTest : KoinTest {
 
     private val injector = Guice.createInjector(ParsersModule())
-    private val provider = injector.getProvider(XmlParser::class.java)
 
     @Test
-    fun `XmlParser instantiates as a singleton`() {
-        val parser1 = provider.get()
-        val parser2 = provider.get()
+    fun `XmlParser is a singleton`() {
+        val parser1: XmlParser = get()
 
         assertAll(
             { assertThat(parser1).isNotNull() },
-            { assertThat(parser1).isSameAs(parser2) }
+            { assertThat(parser1).isSameAs(get<XmlParser>()) }
         )
     }
 
     @Test
-    @Disabled
+//    @Disabled
     @Throws(XMLStreamException::class)
     fun testParseCMS() {
-        val parser = provider.get()
+        val parser: XmlParser = get()
         val organization = injector.getInstance(Organization::class.java)
         val inputStream = ClassLoader.getSystemResourceAsStream("CMS.xml")
 
@@ -51,7 +51,7 @@ internal class XmlParserTest {
 
     @Test
     fun `reads the Sample1 file correctly`() {
-        val parser = provider.get()
+        val parser: XmlParser = get()
         val organization = injector.getInstance(Organization::class.java)
         val inputStream = ClassLoader.getSystemResourceAsStream("Sample1.xml")
 
@@ -112,7 +112,7 @@ internal class XmlParserTest {
 
     @Test
     fun `reads the Sample2 file correctly`() {
-        val parser = provider.get()
+        val parser: XmlParser = get()
         val organization = injector.getInstance(Organization::class.java)
         val inputStream = ClassLoader.getSystemResourceAsStream("Sample2.xml")
 
@@ -142,7 +142,7 @@ internal class XmlParserTest {
 
     @Test
     fun `reads the Sample3 file correctly`() {
-        val parser = provider.get()
+        val parser: XmlParser = get()
         val organization = injector.getInstance(Organization::class.java)
         val inputStream = ClassLoader.getSystemResourceAsStream("Sample3.xml")
 
@@ -172,7 +172,7 @@ internal class XmlParserTest {
 
     @Test
     fun `reads the Sample4 file correctly`() {
-        val parser = provider.get()
+        val parser: XmlParser = get()
         val organization = injector.getInstance(Organization::class.java)
         val inputStream = ClassLoader.getSystemResourceAsStream("Sample4.xml")
 
@@ -210,7 +210,7 @@ internal class XmlParserTest {
 
     @Test
     fun `reads the Sample5 file correctly`() {
-        val parser = provider.get()
+        val parser: XmlParser = get()
         val organization = injector.getInstance(Organization::class.java)
         val inputStream = ClassLoader.getSystemResourceAsStream("Sample5.xml")
 
@@ -248,7 +248,7 @@ internal class XmlParserTest {
 
     @Test
     fun `reads the Sample6 file correctly`() {
-        val parser = provider.get()
+        val parser: XmlParser = get()
         val organization = injector.getInstance(Organization::class.java)
         val inputStream = ClassLoader.getSystemResourceAsStream("Sample6.xml")
 
@@ -268,7 +268,7 @@ internal class XmlParserTest {
 
     @Test
     fun `handles duplicate entities correctly`() {
-        val parser = provider.get()
+        val parser: XmlParser = get()
         val organization = injector.getInstance(Organization::class.java)
         val inputStream = ClassLoader.getSystemResourceAsStream("Bad1.xml")
 
@@ -282,7 +282,7 @@ internal class XmlParserTest {
 
     @Test
     fun `handles missing or incorrect Id used in creating relations`() {
-        val parser = provider.get()
+        val parser: XmlParser = get()
         val organization = injector.getInstance(Organization::class.java)
         val inputStream = ClassLoader.getSystemResourceAsStream("Bad2.xml")
 
@@ -293,7 +293,7 @@ internal class XmlParserTest {
 
     @Test
     fun `handles undefined attribute type`() {
-        val parser = provider.get()
+        val parser: XmlParser = get()
         val organization = injector.getInstance(Organization::class.java)
         val inputStream = ClassLoader.getSystemResourceAsStream("Bad3.xml")
 
@@ -307,7 +307,7 @@ internal class XmlParserTest {
 
     @Test
     fun `handles missing attribute`() {
-        val parser = provider.get()
+        val parser: XmlParser = get()
         val organization = injector.getInstance(Organization::class.java)
         val inputStream = ClassLoader.getSystemResourceAsStream("Bad4.xml")
 
@@ -318,7 +318,7 @@ internal class XmlParserTest {
 
     @Test
     fun `handles incorrect value in the 'value' attribute of the 'has' element`() {
-        val parser = provider.get()
+        val parser: XmlParser = get()
         val organization = injector.getInstance(Organization::class.java)
         val inputStream = ClassLoader.getSystemResourceAsStream("Bad5.xml")
 
@@ -332,7 +332,7 @@ internal class XmlParserTest {
 
     @Test
     fun `handles incorrect value in the 'score' attribute of the 'possesses' element`() {
-        val parser = provider.get()
+        val parser: XmlParser = get()
         val organization = injector.getInstance(Organization::class.java)
         val inputStream = ClassLoader.getSystemResourceAsStream("Bad6.xml")
 
@@ -346,7 +346,7 @@ internal class XmlParserTest {
 
     @Test
     fun `handles incorrect value in the 'value' attribute of the 'contains' element`() {
-        val parser = provider.get()
+        val parser: XmlParser = get()
         val organization = injector.getInstance(Organization::class.java)
         val inputStream = ClassLoader.getSystemResourceAsStream("Bad7.xml")
 
@@ -360,7 +360,7 @@ internal class XmlParserTest {
 
     @Test
     fun `handles missing agent for 'assignment' element`() {
-        val parser = provider.get()
+        val parser: XmlParser = get()
         val organization = injector.getInstance(Organization::class.java)
         val inputStream = ClassLoader.getSystemResourceAsStream("Bad8.xml")
 
@@ -371,7 +371,7 @@ internal class XmlParserTest {
 
     @Test
     fun `missing role for 'assignment' element`() {
-        val parser = provider.get()
+        val parser: XmlParser = get()
         val organization = injector.getInstance(Organization::class.java)
         val inputStream = ClassLoader.getSystemResourceAsStream("Bad9.xml")
 
@@ -382,7 +382,7 @@ internal class XmlParserTest {
 
     @Test
     fun `missing goal for 'assignment' element`() {
-        val parser = provider.get()
+        val parser: XmlParser = get()
         val organization = injector.getInstance(Organization::class.java)
         val inputStream = ClassLoader.getSystemResourceAsStream("Bad10.xml")
 
@@ -393,7 +393,7 @@ internal class XmlParserTest {
 
     @Test
     fun `handles missing specification goal`() {
-        val parser = provider.get()
+        val parser: XmlParser = get()
         val organization = injector.getInstance(Organization::class.java)
         val inputStream = ClassLoader.getSystemResourceAsStream("Bad11.xml")
 
@@ -404,7 +404,7 @@ internal class XmlParserTest {
 
     @Test
     fun `ignores unknown child elements in the 'Agent' element`() {
-        val parser = provider.get()
+        val parser: XmlParser = get()
         val organization = injector.getInstance(Organization::class.java)
         val inputStream = ClassLoader.getSystemResourceAsStream("Bad12.xml")
 
@@ -415,7 +415,7 @@ internal class XmlParserTest {
 
     @Test
     fun `ignores unknown child elements in the 'Pmf' element`() {
-        val parser = provider.get()
+        val parser: XmlParser = get()
         val organization = injector.getInstance(Organization::class.java)
         val inputStream = ClassLoader.getSystemResourceAsStream("Bad13.xml")
 
@@ -426,7 +426,7 @@ internal class XmlParserTest {
 
     @Test
     fun `ignores unknown child elements in the 'Role' element`() {
-        val parser = provider.get()
+        val parser: XmlParser = get()
         val organization = injector.getInstance(Organization::class.java)
         val inputStream = ClassLoader.getSystemResourceAsStream("Bad14.xml")
 
@@ -437,7 +437,7 @@ internal class XmlParserTest {
 
     @Test
     fun `ignores unknown child elements in 'has' element`() {
-        val parser = provider.get()
+        val parser: XmlParser = get()
         val organization = injector.getInstance(Organization::class.java)
         val inputStream = ClassLoader.getSystemResourceAsStream("Bad15.xml")
 
@@ -455,7 +455,7 @@ internal class XmlParserTest {
         val reader = mock(XMLEventReader::class.java)
         val event = mock(XMLEvent::class.java)
         val name = mock(QName::class.java)
-        val parser = provider.get()
+        val parser: XmlParser = get()
         val organization = injector.getInstance(Organization::class.java)
         /* test missing </RoleDiagram> end tag */
         `when`(factory.createXMLEventReader(inputStream)).thenReturn(reader)
@@ -480,7 +480,7 @@ internal class XmlParserTest {
         val event = mock(XMLEvent::class.java)
         val name = mock(QName::class.java)
         val attribute = mock(javax.xml.stream.events.Attribute::class.java)
-        val parser = provider.get()
+        val parser: XmlParser = get()
         val organization = injector.getInstance(Organization::class.java)
         /* test missing </Agent> end tag */
         `when`(factory.createXMLEventReader(inputStream)).thenReturn(reader)
@@ -506,7 +506,7 @@ internal class XmlParserTest {
         val event = mock(XMLEvent::class.java)
         val name = mock(QName::class.java)
         val attribute = mock(javax.xml.stream.events.Attribute::class.java)
-        val parser = provider.get()
+        val parser: XmlParser = get()
         val organization = injector.getInstance(Organization::class.java)
         /* test missing </Pmf> end tag */
         `when`(factory.createXMLEventReader(inputStream)).thenReturn(reader)
@@ -532,7 +532,7 @@ internal class XmlParserTest {
         val event = mock(XMLEvent::class.java)
         val name = mock(QName::class.java)
         val attribute = mock(javax.xml.stream.events.Attribute::class.java)
-        val parser = provider.get()
+        val parser: XmlParser = get()
         val organization = injector.getInstance(Organization::class.java)
         /* test missing </Role> end tag */
         `when`(factory.createXMLEventReader(inputStream)).thenReturn(reader)
@@ -558,8 +558,7 @@ internal class XmlParserTest {
         val event = mock(XMLEvent::class.java)
         val name = mock(QName::class.java)
         val attribute = mock(javax.xml.stream.events.Attribute::class.java)
-        val parser = provider.get()
-        val organization = injector.getInstance(Organization::class.java)
+
         /* test missing relations end tags: </has>, </possesses>, </moderates>, </achieves>, </contains>, </needs>, </requires> */
         `when`(factory.createXMLEventReader(inputStream)).thenReturn(reader)
         `when`(reader.hasNext()).thenReturn(true, true, true, false)
@@ -569,9 +568,25 @@ internal class XmlParserTest {
         `when`(name.toString()).thenReturn("has")
         `when`(attribute.value).thenReturn("Agent 1")
 
+        val parser: XmlParser = get()
+        val organization = injector.getInstance(Organization::class.java)
+
         val exception = assertThrows<XMLStreamException> { parser.parse(organization, inputStream) }
 
         assertThat(exception.message).isEqualTo(E.MISSING_END_TAG["has"])
     }
 
+    companion object {
+        @BeforeAll
+        @JvmStatic
+        fun beforeAll() {
+            loadKoinModules(ParsingModules)
+        }
+
+        @AfterAll
+        @JvmStatic
+        fun afterAll() {
+            stopKoin()
+        }
+    }
 }
