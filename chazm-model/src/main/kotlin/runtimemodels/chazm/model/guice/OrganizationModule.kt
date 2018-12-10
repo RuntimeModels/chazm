@@ -6,8 +6,9 @@ import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.api.id.*
 import runtimemodels.chazm.api.organization.*
 import runtimemodels.chazm.api.relation.*
-import runtimemodels.chazm.model.function.FunctionModule
-import runtimemodels.chazm.model.organization.*
+import runtimemodels.chazm.model.entity.impl.*
+import runtimemodels.chazm.model.organization.DefaultOrganization
+import runtimemodels.chazm.model.relation.impl.*
 
 /**
  * The [OrganizationModule] class provides a Guice binding module for entities.

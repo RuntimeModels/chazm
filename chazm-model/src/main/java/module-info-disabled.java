@@ -18,6 +18,6 @@
 //    opens runtimemodels.chazm.model.event to com.google.guice;
 //    opens runtimemodels.chazm.model.function to com.google.guice;
 //    opens runtimemodels.chazm.model.notification to com.google.guice;
-//    opens runtimemodels.chazm.model.parsers to com.google.guice;
+//    opens runtimemodels.chazm.model.parser to com.google.guice;
 //    opens runtimemodels.chazm.model.relation to com.google.guice;
 //}

@@ -4,8 +4,7 @@ import com.google.inject.AbstractModule
 import com.google.inject.assistedinject.FactoryModuleBuilder
 import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.model.entity.*
-import runtimemodels.chazm.model.factory.EntityFactory
-import runtimemodels.chazm.model.factory.entity.*
+import runtimemodels.chazm.model.entity.impl.*
 
 /**
  * The [EntityModule] class provides a Guice binding module for entities.
