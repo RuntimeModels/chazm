@@ -21,6 +21,7 @@ internal data class AssignmentRelation @Inject constructor(
     @param:Assisted override val goal: InstanceGoal
 ) : Assignment, DefaultRelation()
 
+// TODO change to a data class without using value in the equals
 internal open class ContainsRelation @Inject constructor(
     @param:Assisted override val role: Role,
     @param:Assisted override val characteristic: Characteristic,
@@ -38,6 +39,7 @@ internal open class ContainsRelation @Inject constructor(
     override fun toString(): String = M.RELATION_WITH_VALUE[role.id, characteristic.id, value]
 }
 
+// TODO change to a data class without using value in the equals
 internal open class HasRelation @Inject constructor(
     @param:Assisted override val agent: Agent,
     @param:Assisted override val attribute: Attribute,
@@ -97,6 +99,7 @@ internal data class NeedsRelation @Inject constructor(
     @param:Assisted override val attribute: Attribute
 ) : Needs, DefaultRelation()
 
+// TODO change to a data class without using value in the equals
 internal open class PossessesRelation @Inject constructor(
     @param:Assisted override val agent: Agent,
     @param:Assisted override val capability: Capability,
