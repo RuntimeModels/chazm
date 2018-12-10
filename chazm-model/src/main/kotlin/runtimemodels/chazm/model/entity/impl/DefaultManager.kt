@@ -174,7 +174,7 @@ internal data class DefaultRoleManager @Inject constructor(
     }
 }
 
-internal data class DefaultSpecifcationGoalManager @Inject constructor(
+internal data class DefaultSpecificationGoalManager @Inject constructor(
     private val map: MutableMap<SpecificationGoalId, SpecificationGoal>
 ) : SpecificationGoalManager, DefaultManager(), Map<SpecificationGoalId, SpecificationGoal> by map {
     override fun add(goal: SpecificationGoal) {

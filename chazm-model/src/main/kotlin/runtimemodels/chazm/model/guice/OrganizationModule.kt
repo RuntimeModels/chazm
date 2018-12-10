@@ -113,7 +113,7 @@ class OrganizationModule : AbstractModule() {
         bind(PmfManager::class.java).to(DefaultPmfManager::class.java)
         bind(PolicyManager::class.java).to(DefaultPolicyManager::class.java)
         bind(RoleManager::class.java).to(DefaultRoleManager::class.java)
-        bind(SpecificationGoalManager::class.java).to(DefaultSpecifcationGoalManager::class.java)
+        bind(SpecificationGoalManager::class.java).to(DefaultSpecificationGoalManager::class.java)
 
         bind(AchievesManager::class.java).to(DefaultAchievesManager::class.java)
         bind(AssignmentManager::class.java).to(DefaultAssignmentManager::class.java)
