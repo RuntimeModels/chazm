@@ -1,11 +1,11 @@
 package runtimemodels.chazm.model.parser.entity
 
-import runtimemodels.chazm.api.id.AgentId
-import runtimemodels.chazm.api.id.AttributeId
-import runtimemodels.chazm.api.id.CapabilityId
+import runtimemodels.chazm.api.entity.AgentId
+import runtimemodels.chazm.api.entity.AttributeId
+import runtimemodels.chazm.api.entity.CapabilityId
 import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.model.entity.EntityFactory
-import runtimemodels.chazm.model.id.impl.DefaultAgentId
+import runtimemodels.chazm.model.entity.impl.DefaultAgentId
 import runtimemodels.chazm.model.message.E
 import runtimemodels.chazm.model.parser.attribute
 import runtimemodels.chazm.model.parser.build

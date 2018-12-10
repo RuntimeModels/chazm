@@ -1,6 +1,6 @@
-package runtimemodels.chazm.api.id
+package runtimemodels.chazm.api.entity
 
-import runtimemodels.chazm.api.entity.SpecificationGoal
+import runtimemodels.chazm.api.id.UniqueId
 
 /**
  * The [SpecificationGoalId] interface defines a [UniqueId] for [SpecificationGoal].

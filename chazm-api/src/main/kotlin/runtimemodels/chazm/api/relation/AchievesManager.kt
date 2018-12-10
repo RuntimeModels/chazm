@@ -1,9 +1,9 @@
 package runtimemodels.chazm.api.relation
 
 import runtimemodels.chazm.api.entity.Role
+import runtimemodels.chazm.api.entity.RoleId
 import runtimemodels.chazm.api.entity.SpecificationGoal
-import runtimemodels.chazm.api.id.RoleId
-import runtimemodels.chazm.api.id.SpecificationGoalId
+import runtimemodels.chazm.api.entity.SpecificationGoalId
 
 /**
  * The [AchievesManager] interface defines the APIs for managing a set of [Achieves] relations.

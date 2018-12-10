@@ -1,7 +1,5 @@
 package runtimemodels.chazm.api.entity
 
-import runtimemodels.chazm.api.id.PmfId
-
 /**
  * The [PmfManager] interface defines APIs that can be used for managing a set [Pmf]s.
  *

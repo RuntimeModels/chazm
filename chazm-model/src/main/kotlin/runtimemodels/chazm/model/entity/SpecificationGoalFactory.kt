@@ -1,7 +1,7 @@
 package runtimemodels.chazm.model.entity
 
 import runtimemodels.chazm.api.entity.SpecificationGoal
-import runtimemodels.chazm.api.id.SpecificationGoalId
+import runtimemodels.chazm.api.entity.SpecificationGoalId
 import runtimemodels.chazm.api.id.UniqueId
 
 /**

@@ -1,7 +1,5 @@
 package runtimemodels.chazm.api.entity
 
-import runtimemodels.chazm.api.id.AttributeId
-
 /**
  * The [AttributeManager] interface defines APIs that can be used for managing a set of [Attribute]s.
  *

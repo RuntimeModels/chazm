@@ -1,7 +1,5 @@
 package runtimemodels.chazm.api.entity
 
-import runtimemodels.chazm.api.id.AgentId
-
 /**
  * The [AgentManager] interface defines APIs that can be used for managing a [Set] of [Agent]s.
  *

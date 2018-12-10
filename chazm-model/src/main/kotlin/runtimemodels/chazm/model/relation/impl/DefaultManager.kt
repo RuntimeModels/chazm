@@ -1,6 +1,6 @@
 package runtimemodels.chazm.model.relation.impl
 
-import runtimemodels.chazm.api.id.*
+import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.api.relation.*
 import javax.inject.Inject
 

@@ -1,6 +1,7 @@
 package runtimemodels.chazm.model.parser
 
-import runtimemodels.chazm.api.id.*
+import runtimemodels.chazm.api.entity.*
+import runtimemodels.chazm.api.id.UniqueId
 import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.model.entity.EntityFactory
 import runtimemodels.chazm.model.message.E

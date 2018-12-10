@@ -1,7 +1,7 @@
-package runtimemodels.chazm.model.id.impl
+package runtimemodels.chazm.model.entity.impl
 
 import runtimemodels.chazm.api.entity.*
-import runtimemodels.chazm.api.id.*
+import runtimemodels.chazm.api.id.UniqueId
 import javax.inject.Inject
 import kotlin.reflect.KClass
 

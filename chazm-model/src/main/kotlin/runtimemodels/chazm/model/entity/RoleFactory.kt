@@ -1,7 +1,7 @@
 package runtimemodels.chazm.model.entity
 
 import runtimemodels.chazm.api.entity.Role
-import runtimemodels.chazm.api.id.RoleId
+import runtimemodels.chazm.api.entity.RoleId
 import runtimemodels.chazm.api.id.UniqueId
 
 /**

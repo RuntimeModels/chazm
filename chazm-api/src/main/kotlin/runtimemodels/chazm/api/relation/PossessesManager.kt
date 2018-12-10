@@ -1,9 +1,9 @@
 package runtimemodels.chazm.api.relation
 
 import runtimemodels.chazm.api.entity.Agent
+import runtimemodels.chazm.api.entity.AgentId
 import runtimemodels.chazm.api.entity.Capability
-import runtimemodels.chazm.api.id.AgentId
-import runtimemodels.chazm.api.id.CapabilityId
+import runtimemodels.chazm.api.entity.CapabilityId
 
 /**
  * The [PossessesManager] interface defines the APIs for managing a set of [Possesses] relations.

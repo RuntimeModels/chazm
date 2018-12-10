@@ -1,11 +1,11 @@
 package runtimemodels.chazm.model.parser.entity
 
 import runtimemodels.chazm.api.entity.Attribute
-import runtimemodels.chazm.api.id.AttributeId
-import runtimemodels.chazm.api.id.PmfId
+import runtimemodels.chazm.api.entity.AttributeId
+import runtimemodels.chazm.api.entity.PmfId
 import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.model.entity.EntityFactory
-import runtimemodels.chazm.model.id.impl.DefaultPmfId
+import runtimemodels.chazm.model.entity.impl.DefaultPmfId
 import runtimemodels.chazm.model.message.E
 import runtimemodels.chazm.model.parser.addRelation
 import runtimemodels.chazm.model.parser.attribute

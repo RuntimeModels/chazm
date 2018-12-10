@@ -1,7 +1,7 @@
 package runtimemodels.chazm.model.parser.relation
 
-import runtimemodels.chazm.api.id.AgentId
-import runtimemodels.chazm.api.id.AttributeId
+import runtimemodels.chazm.api.entity.AgentId
+import runtimemodels.chazm.api.entity.AttributeId
 import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.model.parser.addRelation
 import runtimemodels.chazm.model.parser.attribute

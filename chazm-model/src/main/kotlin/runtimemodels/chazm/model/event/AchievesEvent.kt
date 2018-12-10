@@ -2,9 +2,9 @@ package runtimemodels.chazm.model.event
 
 import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.Role
+import runtimemodels.chazm.api.entity.RoleId
 import runtimemodels.chazm.api.entity.SpecificationGoal
-import runtimemodels.chazm.api.id.RoleId
-import runtimemodels.chazm.api.id.SpecificationGoalId
+import runtimemodels.chazm.api.entity.SpecificationGoalId
 import runtimemodels.chazm.api.id.UniqueId
 import runtimemodels.chazm.api.relation.Achieves
 import runtimemodels.chazm.model.message.M

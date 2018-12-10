@@ -1,6 +1,6 @@
-package runtimemodels.chazm.api.id
+package runtimemodels.chazm.api.entity
 
-import runtimemodels.chazm.api.entity.Attribute
+import runtimemodels.chazm.api.id.UniqueId
 
 /**
  * The [AttributeId] interface defines a [UniqueId] for [Attribute].

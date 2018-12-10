@@ -2,7 +2,6 @@ package runtimemodels.chazm.api.entity
 
 import runtimemodels.chazm.api.function.Goodness
 import runtimemodels.chazm.api.id.Identifiable
-import runtimemodels.chazm.api.id.RoleId
 import runtimemodels.chazm.api.organization.Organization
 
 /**

@@ -1,12 +1,7 @@
 package runtimemodels.chazm.model.event
 
 import com.google.inject.assistedinject.Assisted
-import runtimemodels.chazm.api.entity.Agent
-import runtimemodels.chazm.api.entity.InstanceGoal
-import runtimemodels.chazm.api.entity.Role
-import runtimemodels.chazm.api.id.AgentId
-import runtimemodels.chazm.api.id.InstanceGoalId
-import runtimemodels.chazm.api.id.RoleId
+import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.api.id.UniqueId
 import runtimemodels.chazm.api.relation.Assignment
 import runtimemodels.chazm.model.message.M

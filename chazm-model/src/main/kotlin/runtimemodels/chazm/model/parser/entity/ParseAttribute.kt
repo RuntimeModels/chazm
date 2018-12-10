@@ -1,10 +1,10 @@
 package runtimemodels.chazm.model.parser.entity
 
 import runtimemodels.chazm.api.entity.Attribute
-import runtimemodels.chazm.api.id.AttributeId
+import runtimemodels.chazm.api.entity.AttributeId
 import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.model.entity.EntityFactory
-import runtimemodels.chazm.model.id.impl.DefaultAttributeId
+import runtimemodels.chazm.model.entity.impl.DefaultAttributeId
 import runtimemodels.chazm.model.parser.attribute
 import runtimemodels.chazm.model.parser.build
 import javax.inject.Inject

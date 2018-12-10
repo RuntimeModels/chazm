@@ -1,11 +1,6 @@
 package runtimemodels.chazm.model.parser.relation
 
-import runtimemodels.chazm.api.entity.Agent
-import runtimemodels.chazm.api.entity.InstanceGoal
-import runtimemodels.chazm.api.entity.Role
-import runtimemodels.chazm.api.id.AgentId
-import runtimemodels.chazm.api.id.InstanceGoalId
-import runtimemodels.chazm.api.id.RoleId
+import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.model.message.E
 import runtimemodels.chazm.model.parser.attribute

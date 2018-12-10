@@ -2,7 +2,6 @@ package runtimemodels.chazm.model.entity.impl
 
 import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.*
-import runtimemodels.chazm.api.id.*
 import javax.inject.Inject
 
 sealed class DefaultEntity

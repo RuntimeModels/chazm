@@ -1,11 +1,11 @@
 package runtimemodels.chazm.model.parser.entity
 
+import runtimemodels.chazm.api.entity.InstanceGoalId
 import runtimemodels.chazm.api.entity.SpecificationGoal
-import runtimemodels.chazm.api.id.InstanceGoalId
-import runtimemodels.chazm.api.id.SpecificationGoalId
+import runtimemodels.chazm.api.entity.SpecificationGoalId
 import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.model.entity.EntityFactory
-import runtimemodels.chazm.model.id.impl.DefaultInstanceGoalId
+import runtimemodels.chazm.model.entity.impl.DefaultInstanceGoalId
 import runtimemodels.chazm.model.message.E
 import runtimemodels.chazm.model.parser.attribute
 import runtimemodels.chazm.model.parser.build

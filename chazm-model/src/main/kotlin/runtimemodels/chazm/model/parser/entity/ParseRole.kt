@@ -1,13 +1,9 @@
 package runtimemodels.chazm.model.parser.entity
 
-import runtimemodels.chazm.api.entity.Attribute
-import runtimemodels.chazm.api.entity.Capability
-import runtimemodels.chazm.api.entity.Characteristic
-import runtimemodels.chazm.api.entity.SpecificationGoal
-import runtimemodels.chazm.api.id.*
+import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.model.entity.EntityFactory
-import runtimemodels.chazm.model.id.impl.DefaultRoleId
+import runtimemodels.chazm.model.entity.impl.DefaultRoleId
 import runtimemodels.chazm.model.message.E
 import runtimemodels.chazm.model.parser.addRelation
 import runtimemodels.chazm.model.parser.attribute

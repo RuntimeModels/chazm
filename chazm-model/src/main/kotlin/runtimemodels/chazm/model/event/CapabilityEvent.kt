@@ -2,7 +2,7 @@ package runtimemodels.chazm.model.event
 
 import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.Capability
-import runtimemodels.chazm.api.id.CapabilityId
+import runtimemodels.chazm.api.entity.CapabilityId
 import runtimemodels.chazm.api.id.UniqueId
 import runtimemodels.chazm.model.message.M
 import java.util.*

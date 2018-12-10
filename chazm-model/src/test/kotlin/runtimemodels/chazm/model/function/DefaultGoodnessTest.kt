@@ -5,14 +5,7 @@ import mock
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.`when`
-import runtimemodels.chazm.api.entity.Agent
-import runtimemodels.chazm.api.entity.InstanceGoal
-import runtimemodels.chazm.api.entity.Role
-import runtimemodels.chazm.api.entity.SpecificationGoal
-import runtimemodels.chazm.api.id.AttributeId
-import runtimemodels.chazm.api.id.CapabilityId
-import runtimemodels.chazm.api.id.RoleId
-import runtimemodels.chazm.api.id.SpecificationGoalId
+import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.api.relation.*
 import scaleInt

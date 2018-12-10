@@ -1,6 +1,6 @@
-package runtimemodels.chazm.api.id
+package runtimemodels.chazm.api.entity
 
-import runtimemodels.chazm.api.entity.InstanceGoal
+import runtimemodels.chazm.api.id.UniqueId
 
 /**
  * The [InstanceGoalId] interface defines a [UniqueId] for [InstanceGoal].

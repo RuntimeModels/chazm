@@ -1,4 +1,4 @@
-package runtimemodels.chazm.model.parsers
+package runtimemodels.chazm.model.parser
 
 import com.google.inject.Guice
 import org.assertj.core.api.Assertions.assertThat
@@ -11,8 +11,8 @@ import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
 import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.api.organization.Organization
+import runtimemodels.chazm.model.entity.impl.*
 import runtimemodels.chazm.model.guice.ParsersModule
-import runtimemodels.chazm.model.id.*
 import runtimemodels.chazm.model.koin.ParsingModules
 import runtimemodels.chazm.model.message.E
 import java.io.InputStream
@@ -532,8 +532,7 @@ internal class XmlParserTest : KoinTest {
         val event = mock(XMLEvent::class.java)
         val name = mock(QName::class.java)
         val attribute = mock(javax.xml.stream.events.Attribute::class.java)
-        val parser: XmlParser = get()
-        val organization = injector.getInstance(Organization::class.java)
+
         /* test missing </Role> end tag */
         `when`(factory.createXMLEventReader(inputStream)).thenReturn(reader)
         `when`(reader.hasNext()).thenReturn(true, true, false)
@@ -542,6 +541,9 @@ internal class XmlParserTest : KoinTest {
         `when`(name.localPart).thenReturn("RoleDiagram", "Role")
         `when`(name.toString()).thenReturn("Role")
         `when`(attribute.value).thenReturn("Role 1")
+
+        val parser: XmlParser = get()
+        val organization = injector.getInstance(Organization::class.java)
 
         val exception = assertThrows<XMLStreamException> { parser.parse(organization, inputStream) }
 

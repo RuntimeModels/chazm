@@ -1,9 +1,9 @@
 package runtimemodels.chazm.api.relation
 
 import runtimemodels.chazm.api.entity.Attribute
+import runtimemodels.chazm.api.entity.AttributeId
 import runtimemodels.chazm.api.entity.Pmf
-import runtimemodels.chazm.api.id.AttributeId
-import runtimemodels.chazm.api.id.PmfId
+import runtimemodels.chazm.api.entity.PmfId
 
 /**
  * The [ModeratesManager] interface defines the APIs for managing a set of [Moderates] relations.
