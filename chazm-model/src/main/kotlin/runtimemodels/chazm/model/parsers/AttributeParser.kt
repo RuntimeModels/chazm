@@ -13,7 +13,7 @@ import javax.xml.stream.events.StartElement
 
 @Singleton
 internal class AttributeParser @Inject constructor(
-    val entityFactory: EntityFactory
+    private val entityFactory: EntityFactory
 ) {
     fun canParse(qName: QName): Boolean = ATTRIBUTE_ELEMENT == qName.localPart
 
@@ -28,8 +28,6 @@ internal class AttributeParser @Inject constructor(
     }
 
     companion object {
-        private val logger = org.slf4j.LoggerFactory.getLogger(XmlParser::class.java)
-
         private const val ATTRIBUTE_ELEMENT = "Attribute" //$NON-NLS-1$
         private const val NAME_ATTRIBUTE = "name" //$NON-NLS-1$
         private const val TYPE_ATTRIBUTE = "type" //$NON-NLS-1$

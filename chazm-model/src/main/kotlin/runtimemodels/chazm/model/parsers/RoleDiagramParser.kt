@@ -274,8 +274,6 @@ internal class RoleDiagramParser @Inject constructor(
 
 
     companion object {
-        private val log = org.slf4j.LoggerFactory.getLogger(XmlParser::class.java)
-
         private const val ROLE_DIAGRAM_ELEMENT = "RoleDiagram" //$NON-NLS-1$
         private const val CAPABILITY_ELEMENT = "Capability" //$NON-NLS-1$
         private const val CHARACTERISTIC_ELEMENT = "Characteristic" //$NON-NLS-1$

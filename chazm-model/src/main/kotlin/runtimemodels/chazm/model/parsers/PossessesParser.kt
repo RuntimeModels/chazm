@@ -13,7 +13,7 @@ import javax.xml.stream.events.StartElement
 
 @Singleton
 internal class PossessesParser @Inject constructor(
-    val relationFactory: RelationFactory
+    private val relationFactory: RelationFactory
 ) {
     fun canParse(qName: QName): Boolean = POSSESSES_ELEMENT == qName.localPart
 
@@ -52,8 +52,6 @@ internal class PossessesParser @Inject constructor(
     }
 
     companion object {
-        private val logger = org.slf4j.LoggerFactory.getLogger(PossessesParser::class.java)
-
         private const val POSSESSES_ELEMENT = "possesses" //$NON-NLS-1$
         private const val SCORE_ATTRIBUTE = "score" //$NON-NLS-1$
     }

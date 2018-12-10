@@ -13,7 +13,7 @@ import javax.xml.stream.events.StartElement
 
 @Singleton
 internal class HasParser @Inject constructor(
-    val relationFactory: RelationFactory
+    private val relationFactory: RelationFactory
 ) {
     fun canParse(qName: QName): Boolean = HAS_ELEMENT == qName.localPart
 
@@ -52,8 +52,6 @@ internal class HasParser @Inject constructor(
     }
 
     companion object {
-        private val logger = org.slf4j.LoggerFactory.getLogger(HasParser::class.java)
-
         private const val HAS_ELEMENT = "has" //$NON-NLS-1$
         private const val VALUE_ATTRIBUTE = "value" //$NON-NLS-1$
     }

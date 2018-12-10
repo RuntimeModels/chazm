@@ -17,7 +17,7 @@ import javax.xml.stream.events.StartElement
 
 @Singleton
 internal class AssignmentParser @Inject constructor(
-    val relationFactory: RelationFactory
+    private val relationFactory: RelationFactory
 ) {
     fun canParse(qName: QName): Boolean = ASSIGNMENT_ELEMENT == qName.localPart
 
@@ -51,8 +51,6 @@ internal class AssignmentParser @Inject constructor(
     }
 
     companion object {
-        private val logger = org.slf4j.LoggerFactory.getLogger(XmlParser::class.java)
-
         private const val ASSIGNMENT_ELEMENT = "assignment" //$NON-NLS-1$
         private const val AGENT_ATTRIBUTE = "agent" //$NON-NLS-1$
         private const val ROLE_ATTRIBUTE = "role" //$NON-NLS-1$

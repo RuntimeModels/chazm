@@ -101,8 +101,6 @@ internal class AgentParser @Inject constructor(
     }
 
     companion object {
-        private val logger = org.slf4j.LoggerFactory.getLogger(AgentParser::class.java)
-
         private const val AGENT_ELEMENT = "Agent" //$NON-NLS-1$
         private const val ID_ATTRIBUTE = "id" //$NON-NLS-1$
         private const val NAME_ATTRIBUTE = "name" //$NON-NLS-1$
