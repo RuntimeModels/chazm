@@ -48,6 +48,7 @@ dependencies {
     testImplementation(org.mockito.`mockito-junit-jupiter`)
 
     testRuntimeOnly(org.junit.jupiter.`junit-jupiter-engine`)
+    testRuntimeOnly(org.jetbrains.kotlin.`kotlin-reflect`)
 }
 
 val sourceJar by tasks.registering(Jar::class) {
