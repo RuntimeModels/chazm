@@ -18,7 +18,7 @@ interface AttributeManager : Map<AttributeId, Attribute> {
      * Removes an [Attribute] from this [AttributeManager].
      *
      * @param id the [AttributeId] that represents the [Attribute] to remove.
-     * @return the [Attribute] that was removed.
+     * @return the [Attribute] that was removed, `null` otherwise.
      */
-    fun remove(id: AttributeId): Attribute
+    fun remove(id: AttributeId): Attribute?
 }

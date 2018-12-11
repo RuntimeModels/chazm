@@ -18,7 +18,7 @@ interface CapabilityManager : Map<CapabilityId, Capability> {
      * Removes a [Capability] from this [CapabilityManager].
      *
      * @param id the [CapabilityId] that represents the [Capability] to remove.
-     * @return the [Capability] that was removed.
+     * @return the [Capability] that was removed, `null` otherwise.
      */
-    fun remove(id: CapabilityId): Capability
+    fun remove(id: CapabilityId): Capability?
 }

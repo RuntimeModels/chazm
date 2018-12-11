@@ -18,7 +18,7 @@ interface SpecificationGoalManager : Map<SpecificationGoalId, SpecificationGoal>
      * Removes a [SpecificationGoal] from this [SpecificationGoalManager].
      *
      * @param id the [SpecificationGoalId] that represents the [SpecificationGoal] to remove.
-     * @return the [SpecificationGoal] that was removed.
+     * @return the [SpecificationGoal] that was removed, `null` otherwise.
      */
-    fun remove(id: SpecificationGoalId): SpecificationGoal
+    fun remove(id: SpecificationGoalId): SpecificationGoal?
 }

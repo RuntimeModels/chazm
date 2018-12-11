@@ -18,7 +18,7 @@ interface RoleManager : Map<RoleId, Role> {
      * Removes a [Role] from this [RoleManager].
      *
      * @param id the [RoleId] that represents the [Role] to remove.
-     * @return the [Role] that was removed.
+     * @return the [Role] that was removed, `null` otherwise.
      */
-    fun remove(id: RoleId): Role
+    fun remove(id: RoleId): Role?
 }

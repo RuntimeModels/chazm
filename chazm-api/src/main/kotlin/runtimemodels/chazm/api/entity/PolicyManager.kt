@@ -18,7 +18,7 @@ interface PolicyManager : Map<PolicyId, Policy> {
      * Removes a [Policy] from this [PolicyManager].
      *
      * @param id the [PolicyId] that represents the [Policy] to remove.
-     * @return the [Policy] that was removed
+     * @return the [Policy] that was removed, `null` otherwise.
      */
-    fun remove(id: PolicyId): Policy
+    fun remove(id: PolicyId): Policy?
 }

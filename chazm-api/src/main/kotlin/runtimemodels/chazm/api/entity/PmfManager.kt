@@ -18,7 +18,7 @@ interface PmfManager : Map<PmfId, Pmf> {
      * Removes a [Pmf] from this [PmfManager].
      *
      * @param id the [PmfId] that represents the [Pmf] to remove.
-     * @return the [Pmf] that was removed.
+     * @return the [Pmf] that was removed, `null` otherwise.
      */
-    fun remove(id: PmfId): Pmf
+    fun remove(id: PmfId): Pmf?
 }

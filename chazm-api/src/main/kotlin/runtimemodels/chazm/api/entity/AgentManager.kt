@@ -6,7 +6,7 @@ package runtimemodels.chazm.api.entity
  * @author Christopher Zhong
  * @since 7.0.0
  */
-interface AgentManager : Map<AgentId, Agent> {
+interface AgentManager {
     /**
      * Adds an [Agent] to this [AgentManager].
 
@@ -18,7 +18,7 @@ interface AgentManager : Map<AgentId, Agent> {
      * Removes an [Agent] from this [AgentManager].
      *
      * @param id the [AgentId] that represents the [Agent] to remove.
-     * @return the [Agent] that was removed.
+     * @return the [Agent] that was removed, `null` otherwise.
      */
-    fun remove(id: AgentId): Agent
+    fun remove(id: AgentId): Agent?
 }

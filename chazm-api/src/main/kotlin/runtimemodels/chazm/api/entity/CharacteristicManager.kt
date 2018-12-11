@@ -18,7 +18,7 @@ interface CharacteristicManager : Map<CharacteristicId, Characteristic> {
      * Removes a [Characteristic] from this [CharacteristicManager].
      *
      * @param id the [CharacteristicId] that represents the [Characteristic] to remove.
-     * @return the [Characteristic] that was removed.
+     * @return the [Characteristic] that was removed, `null` otherwise.
      */
-    fun remove(id: CharacteristicId): Characteristic
+    fun remove(id: CharacteristicId): Characteristic?
 }
