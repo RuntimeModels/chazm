@@ -6,7 +6,7 @@ package runtimemodels.chazm.api.entity
  * @author Christopher Zhong
  * @since 7.0.0
  */
-interface AgentManager {
+interface AgentManager : Map<AgentId, Agent> {
     /**
      * Adds an [Agent] to this [AgentManager].
 
