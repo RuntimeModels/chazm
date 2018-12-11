@@ -43,6 +43,7 @@ private class ModuleSource : ArgumentsProvider {
         Arguments.of(listOf(EventModule), "EventModule"),
         Arguments.of(listOf(EventFactoryModule), "EventFactoryModule"),
         Arguments.of(listOf(RelationModule), "RelationModule"),
+        Arguments.of(listOf(RelationManagerModule), "RelationManagerModule"),
         Arguments.of(listOf(RelationFactoryModule), "RelationFactoryModule"),
 
         Arguments.of(EntitiesModules, "EntitiesModules"),

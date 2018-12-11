@@ -104,5 +104,13 @@ val RelationModule = module(path = KoinRelationModule::class.java.packageName) {
 }
 
 val RelationManagerModule = module(path = KoinRelationModule::class.java.packageName) {
-
+    factory<AchievesManager> { DefaultAchievesManager(mutableMapOf(), mutableMapOf()) }
+    factory<AssignmentManager> { DefaultAssignmentManager(mutableMapOf(), mutableMapOf(), mutableMapOf()) }
+    factory<ContainsManager> { DefaultContainsManager(mutableMapOf(), mutableMapOf()) }
+    factory<HasManager> { DefaultHasManager(mutableMapOf(), mutableMapOf()) }
+    factory<ModeratesManager> { DefaultModeratesManager(mutableMapOf(), mutableMapOf()) }
+    factory<NeedsManager> { DefaultNeedsManager(mutableMapOf(), mutableMapOf()) }
+    factory<PossessesManager> { DefaultPossessesManager(mutableMapOf(), mutableMapOf()) }
+    factory<RequiresManager> { DefaultRequiresManager(mutableMapOf(), mutableMapOf()) }
+    factory<UsesManager> { DefaultUsesManager(mutableMapOf(), mutableMapOf()) }
 }

@@ -23,9 +23,6 @@ import javax.xml.stream.XMLInputFactory
 private class KoinModule
 
 
-
-
-
 private val OrganizationModule = module(path = KoinModule::class.java.packageName) {
     single<Mediator> { create<DefaultMediator>() }
     single<Publisher> { create<DefaultPublisher>() }
@@ -58,5 +55,5 @@ private val ParserModule = module(path = KoinModule::class.java.packageName) {
 val EntitiesModules = listOf(EntityModule, EntityFactoryModule)
 val EventModules = listOf(EventModule, EventFactoryModule)
 val RelationsModules = listOf(RelationModule, RelationFactoryModule)
-val OrganizationModules = EventModules + OrganizationModule + EntityManagerModule
+val OrganizationModules = EventModules + EntityManagerModule + RelationManagerModule + OrganizationModule
 val ParsingModules = EntitiesModules + RelationsModules + ParserModule
