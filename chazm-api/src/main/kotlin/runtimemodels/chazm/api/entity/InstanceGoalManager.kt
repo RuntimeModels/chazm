@@ -18,9 +18,9 @@ interface InstanceGoalManager : Map<InstanceGoalId, InstanceGoal> {
      * Removes an [InstanceGoal] from this [InstanceGoalManager].
      *
      * @param id the [InstanceGoalId] that represents the [InstanceGoal] to remove.
-     * @return the [InstanceGoal] that was removed.
+     * @return the [InstanceGoal] that was removed, `null` otherwise.
      */
-    fun remove(id: InstanceGoalId): InstanceGoal
+    fun remove(id: InstanceGoalId): InstanceGoal?
 
     /**
      * Removes all [InstanceGoal]s associated to a [SpecificationGoal] from this [InstanceGoalManager].
