@@ -102,3 +102,7 @@ val RelationModule = module(path = KoinRelationModule::class.java.packageName) {
     factory<Requires> { (role: Role, capability: Capability) -> RequiresRelation(role = role, capability = capability) }
     factory<Uses> { (role: Role, pmf: Pmf) -> UsesRelation(role = role, pmf = pmf) }
 }
+
+val RelationManagerModule = module(path = KoinRelationModule::class.java.packageName) {
+
+}

@@ -1,5 +1,8 @@
 package runtimemodels.chazm.model.event
 
+import runtimemodels.chazm.model.entity.*
+import runtimemodels.chazm.model.relation.*
+
 /**
  * The [EventFactory] interface defines the APIs for constructing events.
  *

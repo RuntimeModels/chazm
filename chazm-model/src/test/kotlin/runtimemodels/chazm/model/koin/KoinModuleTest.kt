@@ -47,7 +47,7 @@ private class ModuleSource : ArgumentsProvider {
 
         Arguments.of(EntitiesModules, "EntitiesModules"),
         Arguments.of(RelationsModules, "RelationsModules"),
-//        Arguments.of(OrganizationModules, "OrganizationModules"),
+        Arguments.of(OrganizationModules, "OrganizationModules"),
         Arguments.of(ParsingModules, "ParsingModules")
     )
 }

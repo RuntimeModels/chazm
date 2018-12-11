@@ -77,6 +77,19 @@ private class KoinEntityFactory(
     RoleFactory by roleFactory,
     SpecificationGoalFactory by specificationGoalFactory
 
+val EntityFactoryModule = module(path = KoinEntityModule::class.java.packageName) {
+    single<AgentFactory> { create<KoinAgentFactory>() }
+    single<AttributeFactory> { create<KoinAttributeFactory>() }
+    single<CapabilityFactory> { create<KoinCapabilityFactory>() }
+    single<CharacteristicFactory> { create<KoinCharacteristicFactory>() }
+    single<InstanceGoalFactory> { create<KoinInstanceGoalFactory>() }
+    single<PmfFactory> { create<KoinPmfFactory>() }
+    single<PolicyFactory> { create<KoinPolicyFactory>() }
+    single<RoleFactory> { create<KoinRoleFactory>() }
+    single<SpecificationGoalFactory> { create<KoinSpecifcationGoalFactory>() }
+    single<EntityFactory> { create<KoinEntityFactory>() }
+}
+
 val EntityModule = module(path = KoinEntityModule::class.java.packageName) {
     factory<Agent> { (id: AgentId) -> DefaultAgent(id = id) }
     factory<Attribute> { (id: AttributeId, type: Attribute.Type) -> DefaultAttribute(id = id, type = type) }
@@ -100,17 +113,3 @@ val EntityManagerModule = module(path = KoinEntityModule::class.java.packageName
     factory<RoleManager> { DefaultRoleManager(mutableMapOf()) }
     factory<SpecificationGoalManager> { DefaultSpecificationGoalManager(mutableMapOf()) }
 }
-
-val EntityFactoryModule = module(path = KoinEntityModule::class.java.packageName) {
-    single<AgentFactory> { create<KoinAgentFactory>() }
-    single<AttributeFactory> { create<KoinAttributeFactory>() }
-    single<CapabilityFactory> { create<KoinCapabilityFactory>() }
-    single<CharacteristicFactory> { create<KoinCharacteristicFactory>() }
-    single<InstanceGoalFactory> { create<KoinInstanceGoalFactory>() }
-    single<PmfFactory> { create<KoinPmfFactory>() }
-    single<PolicyFactory> { create<KoinPolicyFactory>() }
-    single<RoleFactory> { create<KoinRoleFactory>() }
-    single<SpecificationGoalFactory> { create<KoinSpecifcationGoalFactory>() }
-    single<EntityFactory> { create<KoinEntityFactory>() }
-}
-
