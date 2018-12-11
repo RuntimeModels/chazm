@@ -1,6 +1,5 @@
 package runtimemodels.chazm.model.entity
 
-import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.Pmf
 import runtimemodels.chazm.api.entity.PmfId
 import runtimemodels.chazm.api.id.UniqueId
@@ -17,8 +16,8 @@ import javax.inject.Inject
  * @since 7.0.0
  */
 open class PmfEvent @Inject internal constructor(
-    @Assisted category: EventType,
-    @Assisted pmf: Pmf
+    category: EventType,
+    pmf: Pmf
 ) : AbstractEvent(category) {
     /**
      * Returns a [UniqueId] that represents a [Pmf].

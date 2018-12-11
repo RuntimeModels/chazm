@@ -1,6 +1,5 @@
 package runtimemodels.chazm.model.entity
 
-import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.Policy
 import runtimemodels.chazm.api.entity.PolicyId
 import runtimemodels.chazm.api.id.UniqueId
@@ -17,8 +16,8 @@ import javax.inject.Inject
  * @since 7.0.0
  */
 open class PolicyEvent @Inject internal constructor(
-    @Assisted category: EventType,
-    @Assisted policy: Policy
+    category: EventType,
+    policy: Policy
 ) : AbstractEvent(category) {
     /**
      * Returns a [UniqueId] that represents a [Policy].

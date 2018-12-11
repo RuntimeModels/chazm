@@ -1,6 +1,5 @@
 package runtimemodels.chazm.model.entity
 
-import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.SpecificationGoal
 import runtimemodels.chazm.api.entity.SpecificationGoalId
 import runtimemodels.chazm.api.id.UniqueId
@@ -17,8 +16,8 @@ import javax.inject.Inject
  * @since 7.0.0
  */
 open class SpecificationGoalEvent @Inject internal constructor(
-    @Assisted category: EventType,
-    @Assisted goal: SpecificationGoal
+    category: EventType,
+    goal: SpecificationGoal
 ) : AbstractEvent(category) {
     /**
      * Returns a [UniqueId] that represents a [SpecificationGoal].

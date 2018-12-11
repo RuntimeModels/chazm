@@ -1,6 +1,5 @@
 package runtimemodels.chazm.model.entity
 
-import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.Agent
 import runtimemodels.chazm.api.entity.AgentId
 import runtimemodels.chazm.api.id.UniqueId
@@ -17,8 +16,8 @@ import javax.inject.Inject
  * @since 7.0.0
  */
 open class AgentEvent @Inject internal constructor(
-    @Assisted category: EventType,
-    @Assisted agent: Agent
+    category: EventType,
+    agent: Agent
 ) : AbstractEvent(category) {
     /**
      * Returns a [UniqueId] that represents a [Agent].

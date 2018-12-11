@@ -1,6 +1,5 @@
 package runtimemodels.chazm.model.entity
 
-import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.Characteristic
 import runtimemodels.chazm.api.entity.CharacteristicId
 import runtimemodels.chazm.api.id.UniqueId
@@ -17,8 +16,8 @@ import javax.inject.Inject
  * @since 7.0.0
  */
 open class CharacteristicEvent @Inject internal constructor(
-    @Assisted category: EventType,
-    @Assisted characteristic: Characteristic
+    category: EventType,
+    characteristic: Characteristic
 ) : AbstractEvent(category) {
     /**
      * Returns a [UniqueId] that represents a [Characteristic].

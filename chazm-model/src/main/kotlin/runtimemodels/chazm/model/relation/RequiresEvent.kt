@@ -1,6 +1,5 @@
 package runtimemodels.chazm.model.relation
 
-import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.Capability
 import runtimemodels.chazm.api.entity.CapabilityId
 import runtimemodels.chazm.api.entity.Role
@@ -20,8 +19,8 @@ import javax.inject.Inject
  * @since 7.0.0
  */
 open class RequiresEvent @Inject internal constructor(
-    @Assisted category: EventType,
-    @Assisted requires: Requires
+    category: EventType,
+    requires: Requires
 ) : AbstractEvent(category) {
     /**
      * Returns a [UniqueId] that represents a [Role].

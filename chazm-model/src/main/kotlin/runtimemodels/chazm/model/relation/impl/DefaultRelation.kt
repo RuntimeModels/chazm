@@ -1,6 +1,5 @@
 package runtimemodels.chazm.model.relation.impl
 
-import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.api.relation.*
 import runtimemodels.chazm.model.message.E
@@ -11,21 +10,21 @@ import javax.inject.Inject
 internal sealed class DefaultRelation
 
 internal data class AchievesRelation @Inject constructor(
-    @param:Assisted override val role: Role,
-    @param:Assisted override val goal: SpecificationGoal
+    override val role: Role,
+    override val goal: SpecificationGoal
 ) : Achieves, DefaultRelation()
 
 internal data class AssignmentRelation @Inject constructor(
-    @param:Assisted override val agent: Agent,
-    @param:Assisted override val role: Role,
-    @param:Assisted override val goal: InstanceGoal
+    override val agent: Agent,
+    override val role: Role,
+    override val goal: InstanceGoal
 ) : Assignment, DefaultRelation()
 
 // TODO change to a data class without using value in the equals
 internal open class ContainsRelation @Inject constructor(
-    @param:Assisted override val role: Role,
-    @param:Assisted override val characteristic: Characteristic,
-    @param:Assisted override var value: Double
+    override val role: Role,
+    override val characteristic: Characteristic,
+    override var value: Double
 ) : Contains, DefaultRelation() {
     override fun equals(other: Any?): Boolean {
         if (other is Contains) {
@@ -41,9 +40,9 @@ internal open class ContainsRelation @Inject constructor(
 
 // TODO change to a data class without using value in the equals
 internal open class HasRelation @Inject constructor(
-    @param:Assisted override val agent: Agent,
-    @param:Assisted override val attribute: Attribute,
-    @Assisted value: Double
+    override val agent: Agent,
+    override val attribute: Attribute,
+    value: Double
 ) : Has, DefaultRelation() {
     override var value: Double = value
         set(value) {
@@ -90,20 +89,20 @@ internal open class HasRelation @Inject constructor(
 }
 
 internal data class ModeratesRelation @Inject constructor(
-    @param:Assisted override val pmf: Pmf,
-    @param:Assisted override val attribute: Attribute
+    override val pmf: Pmf,
+    override val attribute: Attribute
 ) : Moderates, DefaultRelation()
 
 internal data class NeedsRelation @Inject constructor(
-    @param:Assisted override val role: Role,
-    @param:Assisted override val attribute: Attribute
+    override val role: Role,
+    override val attribute: Attribute
 ) : Needs, DefaultRelation()
 
 // TODO change to a data class without using value in the equals
 internal open class PossessesRelation @Inject constructor(
-    @param:Assisted override val agent: Agent,
-    @param:Assisted override val capability: Capability,
-    @Assisted score: Double
+    override val agent: Agent,
+    override val capability: Capability,
+    score: Double
 ) : Possesses, DefaultRelation() {
     override var score: Double = score
         set(value) {
@@ -137,11 +136,11 @@ internal open class PossessesRelation @Inject constructor(
 }
 
 internal data class RequiresRelation @Inject constructor(
-    @param:Assisted override val role: Role,
-    @param:Assisted override val capability: Capability
+    override val role: Role,
+    override val capability: Capability
 ) : Requires, DefaultRelation()
 
 internal data class UsesRelation @Inject constructor(
-    @param:Assisted override val role: Role,
-    @param:Assisted override val pmf: Pmf
+    override val role: Role,
+    override val pmf: Pmf
 ) : Uses, DefaultRelation()

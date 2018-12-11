@@ -1,13 +1,12 @@
 package runtimemodels.chazm.model.entity.impl
 
-import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.*
 import javax.inject.Inject
 
 internal sealed class DefaultEntity
 
 internal data class DefaultAgent @Inject constructor(
-    @Assisted override val id: AgentId
+    override val id: AgentId
 ) : Agent, DefaultEntity() {
     internal data class DefaultContactInfo(
         private val map: MutableMap<Any, Any> = mutableMapOf()
@@ -25,21 +24,21 @@ internal data class DefaultAgent @Inject constructor(
 }
 
 internal data class DefaultAttribute @Inject constructor(
-    @Assisted override val id: AttributeId,
-    @param:Assisted override val type: Attribute.Type
+    override val id: AttributeId,
+    override val type: Attribute.Type
 ) : Attribute, DefaultEntity()
 
 internal data class DefaultCapability @Inject constructor(
-    @Assisted override val id: CapabilityId
+    override val id: CapabilityId
 ) : Capability, DefaultEntity()
 
 internal data class DefaultCharacteristic @Inject constructor(
-    @Assisted override val id: CharacteristicId
+    override val id: CharacteristicId
 ) : Characteristic, DefaultEntity()
 
 internal data class DefaultInstanceGoal @Inject constructor(
-    @Assisted override val id: InstanceGoalId,
-    @param:Assisted override val goal: SpecificationGoal
+    override val id: InstanceGoalId,
+    override val goal: SpecificationGoal
 ) : InstanceGoal, DefaultEntity() {
     internal data class DefaultGoalParameter(
         private val map: MutableMap<Any, Any> = mutableMapOf()
@@ -57,17 +56,17 @@ internal data class DefaultInstanceGoal @Inject constructor(
 }
 
 internal data class DefaultPmf @Inject constructor(
-    @Assisted override val id: PmfId
+    override val id: PmfId
 ) : Pmf, DefaultEntity()
 
 internal data class DefaultPolicy @Inject constructor(
-    @Assisted override val id: PolicyId
+    override val id: PolicyId
 ) : Policy, DefaultEntity()
 
 internal data class DefaultRole @Inject constructor(
-    @Assisted override val id: RoleId
+    override val id: RoleId
 ) : Role, DefaultEntity()
 
 internal data class DefaultSpecificationGoal @Inject constructor(
-    @Assisted override val id: SpecificationGoalId
+    override val id: SpecificationGoalId
 ) : SpecificationGoal, DefaultEntity()

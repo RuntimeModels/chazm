@@ -1,6 +1,5 @@
 package runtimemodels.chazm.model.entity
 
-import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.Capability
 import runtimemodels.chazm.api.entity.CapabilityId
 import runtimemodels.chazm.api.id.UniqueId
@@ -17,8 +16,8 @@ import javax.inject.Inject
  * @since 7.0.0
  */
 open class CapabilityEvent @Inject internal constructor(
-    @Assisted category: EventType,
-    @Assisted capability: Capability
+    category: EventType,
+    capability: Capability
 ) : AbstractEvent(category) {
     /**
      * Returns a [UniqueId] that represents a [Capability].

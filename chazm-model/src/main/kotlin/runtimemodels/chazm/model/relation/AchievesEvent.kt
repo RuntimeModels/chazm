@@ -1,6 +1,5 @@
 package runtimemodels.chazm.model.relation
 
-import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.Role
 import runtimemodels.chazm.api.entity.RoleId
 import runtimemodels.chazm.api.entity.SpecificationGoal
@@ -20,8 +19,8 @@ import javax.inject.Inject
  * @since 7.0.0
  */
 open class AchievesEvent @Inject internal constructor(
-    @Assisted category: EventType,
-    @Assisted achieves: Achieves
+    category: EventType,
+    achieves: Achieves
 ) : AbstractEvent(category) {
     /**
      * Returns a [UniqueId] that represents a [Role].

@@ -1,6 +1,5 @@
 package runtimemodels.chazm.model.relation
 
-import com.google.inject.assistedinject.Assisted
 import runtimemodels.chazm.api.entity.Attribute
 import runtimemodels.chazm.api.entity.AttributeId
 import runtimemodels.chazm.api.entity.Pmf
@@ -20,8 +19,8 @@ import javax.inject.Inject
  * @since 7.0.0
  */
 open class ModeratesEvent @Inject internal constructor(
-    @Assisted category: EventType,
-    @Assisted moderates: Moderates
+    category: EventType,
+    moderates: Moderates
 ) : AbstractEvent(category) {
     /**
      * Returns a [UniqueId] that represents a [Pmf].
