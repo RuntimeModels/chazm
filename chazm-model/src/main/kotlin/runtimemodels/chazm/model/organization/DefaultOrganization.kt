@@ -5,17 +5,15 @@ import io.reactivex.FlowableOnSubscribe
 import runtimemodels.chazm.api.entity.*
 import runtimemodels.chazm.api.function.Effectiveness
 import runtimemodels.chazm.api.function.Goodness
-import runtimemodels.chazm.api.id.*
-import runtimemodels.chazm.api.organization.*
+import runtimemodels.chazm.api.id.Identifiable
+import runtimemodels.chazm.api.id.UniqueId
+import runtimemodels.chazm.api.organization.Organization
 import runtimemodels.chazm.api.relation.*
 import runtimemodels.chazm.model.Functions
-import runtimemodels.chazm.model.Relations
 import runtimemodels.chazm.model.event.EventFactory
 import runtimemodels.chazm.model.event.EventType
 import runtimemodels.chazm.model.message.E
-import runtimemodels.chazm.model.message.L
 import runtimemodels.chazm.model.notification.Publisher
-import java.util.function.Consumer
 import javax.inject.Inject
 
 internal open class DefaultOrganization @Inject constructor(
@@ -43,89 +41,89 @@ internal open class DefaultOrganization @Inject constructor(
     override val usesRelations: UsesManager
 ) : Organization, FlowableOnSubscribe<Organization> {
 
-    private val relations = Relations()
     private val functions = Functions()
 
     override fun add(agent: Agent) {
-        checkNotExists(agent) { agents.containsKey(it) }
+        checkNotExists(agent, agents::containsKey)
         agents.add(agent)
         publisher.post(eventFactory.build(EventType.ADDED, agent))
     }
 
     override fun remove(id: AgentId) {
-        if (agents.contains(id)) {
-            /* remove the agent, all associated assignments, all associated possesses relations, all associated has relations */
-            val agent = agents.remove(id)
+        agents.remove(id)?.also {
+            // if the agent is removed
+            // remove all associated assignment, has, and possesses relations
+            // and publish the event
             assignmentRelations.remove(id)
             hasRelations.remove(id)
             possessesRelations.remove(id)
-            publisher.post(eventFactory.build(EventType.REMOVED, agent))
+            publisher.post(eventFactory.build(EventType.REMOVED, it))
         }
     }
 
     override fun add(attribute: Attribute) {
-        checkNotExists(attribute) { attributes.containsKey(it) }
+        checkNotExists(attribute, attributes::containsKey)
         attributes.add(attribute)
         publisher.post(eventFactory.build(EventType.ADDED, attribute))
     }
 
     override fun remove(id: AttributeId) {
-        if (attributes.containsKey(id)) {
-            // remove the attribute,
-            // all associated has relations,
-            // all associated moderates relations,
-            // all associated needs relations,
-            val attribute = attributes.remove(id)
+        attributes.remove(id)?.also {
+            // if the attribute is removed
+            // remove all associated has, moderates, and needs relations
+            // and publish the event
             hasRelations.remove(id)
             moderatesRelations.remove(id)
             needsRelations.remove(id)
-            publisher.post(eventFactory.build(EventType.REMOVED, attribute))
+            publisher.post(eventFactory.build(EventType.REMOVED, it))
         }
     }
 
     override fun add(capability: Capability) {
-        checkNotExists(capability) { capabilities.containsKey(it) }
+        checkNotExists(capability, capabilities::containsKey)
         capabilities.add(capability)
         publisher.post(eventFactory.build(EventType.ADDED, capability))
     }
 
     override fun remove(id: CapabilityId) {
-        if (capabilities.containsKey(id)) {
-            /* remove the capability, all associated requires relations, all associated possesses relations */
-            val capability = capabilities.remove(id)
+        capabilities.remove(id)?.also {
+            // if the capability is removed
+            // remove all associated possesses and requires relations
+            // and publish the event
             possessesRelations.remove(id)
             requiresRelations.remove(id)
-            publisher.post(eventFactory.build(EventType.REMOVED, capability))
+            publisher.post(eventFactory.build(EventType.REMOVED, it))
         }
     }
 
     override fun add(characteristic: Characteristic) {
-        checkNotExists(characteristic) { characteristics.containsKey(it) }
+        checkNotExists(characteristic, characteristics::containsKey)
         characteristics.add(characteristic)
         publisher.post(eventFactory.build(EventType.ADDED, characteristic))
     }
 
     override fun remove(id: CharacteristicId) {
-        if (characteristics.containsKey(id)) {
-            /* remove characteristics, all associated contains relations */
-            val characteristic = characteristics.remove(id)
+        characteristics.remove(id)?.also {
+            // if the characteristic is removed
+            // remove all associated contains relations
+            // and publish the event
             containsRelations.remove(id)
-            publisher.post(eventFactory.build(EventType.REMOVED, characteristic))
+            publisher.post(eventFactory.build(EventType.REMOVED, it))
         }
     }
 
     override fun add(goal: InstanceGoal) {
-        checkNotExists(goal) { instanceGoals.containsKey(it) }
+        checkNotExists(goal, instanceGoals::containsKey)
         checkExists(goal.goal.id, specificationGoals::get)
         instanceGoals.add(goal)
         publisher.post(eventFactory.build(EventType.ADDED, goal))
     }
 
     override fun remove(id: InstanceGoalId) {
-        if (instanceGoals.containsKey(id)) {
+        instanceGoals.remove(id)?.also {
             /* remove the instance goal, instanceGoalsBySpecificationGoal map */
-            val goal = instanceGoals.remove(id)
-            publisher.post(eventFactory.build(EventType.REMOVED, goal))
+            // and publish the event
+            publisher.post(eventFactory.build(EventType.REMOVED, it))
         }
     }
 
@@ -136,11 +134,12 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun remove(id: PmfId) {
-        if (pmfs.containsKey(id)) {
-            /* remove the pmf, all associated moderates relations */
-            val pmf = pmfs.remove(id)
+        pmfs.remove(id)?.also {
+            // if the pmf is removed
+            // remove all associated moderates relations
+            // and publish the event
             moderatesRelations.remove(id)
-            publisher.post(eventFactory.build(EventType.REMOVED, pmf))
+            publisher.post(eventFactory.build(EventType.REMOVED, it))
         }
     }
 
@@ -151,10 +150,10 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun remove(id: PolicyId) {
-        if (policies.containsKey(id)) {
-            /* remove the policy */
-            val policy = policies.remove(id)
-            publisher.post(eventFactory.build(EventType.REMOVED, policy))
+        policies.remove(id)?.also {
+            // if the policy is removed
+            // publish the event
+            publisher.post(eventFactory.build(EventType.REMOVED, it))
         }
     }
 
@@ -166,21 +165,18 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun remove(id: RoleId) {
-        if (roles.containsKey(id)) {
-            // removes role,
-            // all associated achieves relations,
-            // all associated contains relations,
-            // all associated requires relations,
-            // all associated needs relations,
-            // all associated uses relations,
-            val role = roles.remove(id)
+        roles.remove(id)?.also {
+            // if the role is removed
+            // remove all associated achieves, contains, needs, requires, and uses relations,
+            // remove the associated goodness function
+            // and publish the event
             achievesRelations.remove(id)
             containsRelations.remove(id)
             needsRelations.remove(id)
             requiresRelations.remove(id)
             usesRelations.remove(id)
             functions.goodness.remove(id)
-            publisher.post(eventFactory.build(EventType.REMOVED, role))
+            publisher.post(eventFactory.build(EventType.REMOVED, it))
         }
     }
 
@@ -191,12 +187,13 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun remove(id: SpecificationGoalId) {
-        if (specificationGoals.containsKey(id)) {
-            /* remove the specification goal, all associated instance goals, all associated achieves relations */
-            val goal = specificationGoals.remove(id)
+        specificationGoals.remove(id)?.also {
+            // if the goal is removed
+            // remove all associated instance goals and achieves relations
+            // and publish the event
             instanceGoals.remove(id)
             achievesRelations.remove(id)
-            publisher.post(eventFactory.build(EventType.REMOVED, goal))
+            publisher.post(eventFactory.build(EventType.REMOVED, it))
         }
     }
 
@@ -208,9 +205,8 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun remove(roleId: RoleId, goalId: SpecificationGoalId) {
-        if (achievesRelations.containsKey(roleId) && achievesRelations[roleId].containsKey(goalId)) {
-            val achieves = achievesRelations.remove(roleId, goalId)
-            publisher.post(eventFactory.build(EventType.REMOVED, achieves))
+        achievesRelations.remove(roleId, goalId)?.also {
+            publisher.post(eventFactory.build(EventType.REMOVED, it))
         }
     }
 
@@ -223,9 +219,8 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun remove(agentId: AgentId, roleId: RoleId, goalId: InstanceGoalId) {
-        if (assignmentRelations[agentId][roleId]?.containsKey(goalId) == true) {
-            val assignment = assignmentRelations.remove(agentId, roleId, goalId)
-            publisher.post(eventFactory.build(EventType.REMOVED, assignment))
+        assignmentRelations.remove(agentId, roleId, goalId)?.also {
+            publisher.post(eventFactory.build(EventType.REMOVED, it))
         }
     }
 
@@ -237,9 +232,8 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun remove(roleId: RoleId, characteristicId: CharacteristicId) {
-        if (containsRelations.containsKey(roleId) && containsRelations[roleId].containsKey(characteristicId)) {
-            val contains = containsRelations.remove(roleId, characteristicId)
-            publisher.post(eventFactory.build(EventType.REMOVED, contains))
+        containsRelations.remove(roleId, characteristicId)?.also {
+            publisher.post(eventFactory.build(EventType.REMOVED, it))
         }
     }
 
@@ -251,9 +245,8 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun remove(agentId: AgentId, attributeId: AttributeId) {
-        if (hasRelations.containsKey(agentId) && hasRelations[agentId].containsKey(attributeId)) {
-            val has = hasRelations.remove(agentId, attributeId)
-            publisher.post(eventFactory.build(EventType.REMOVED, has))
+        hasRelations.remove(agentId, attributeId)?.also {
+            publisher.post(eventFactory.build(EventType.REMOVED, it))
         }
     }
 
@@ -265,9 +258,8 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun remove(pmfId: PmfId, attributeId: AttributeId) {
-        if (moderatesRelations.containsKey(pmfId)) {
-            val moderates = moderatesRelations.remove(pmfId, attributeId)
-            publisher.post(eventFactory.build(EventType.REMOVED, moderates))
+        moderatesRelations.remove(pmfId, attributeId)?.also {
+            publisher.post(eventFactory.build(EventType.REMOVED, it))
         }
     }
 
@@ -279,9 +271,8 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun remove(roleId: RoleId, attributeId: AttributeId) {
-        if (needsRelations.containsKey(roleId) && needsRelations[roleId].containsKey(attributeId)) {
-            val needs = needsRelations.remove(roleId, attributeId)
-            publisher.post(eventFactory.build(EventType.REMOVED, needs))
+        needsRelations.remove(roleId, attributeId)?.also {
+            publisher.post(eventFactory.build(EventType.REMOVED, it))
         }
     }
 
@@ -293,9 +284,8 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun remove(agentId: AgentId, capabilityId: CapabilityId) {
-        if (possessesRelations.containsKey(agentId) && possessesRelations[agentId].containsKey(capabilityId)) {
-            val possesses = possessesRelations.remove(agentId, capabilityId)
-            publisher.post(eventFactory.build(EventType.REMOVED, possesses))
+        possessesRelations.remove(agentId, capabilityId)?.also {
+            publisher.post(eventFactory.build(EventType.REMOVED, it))
         }
     }
 
@@ -307,9 +297,8 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun remove(roleId: RoleId, capabilityId: CapabilityId) {
-        if (requiresRelations.containsKey(roleId) && requiresRelations[roleId].containsKey(capabilityId)) {
-            val requires = requiresRelations.remove(roleId, capabilityId)
-            publisher.post(eventFactory.build(EventType.REMOVED, requires))
+        requiresRelations.remove(roleId, capabilityId)?.also {
+            publisher.post(eventFactory.build(EventType.REMOVED, it))
         }
     }
 
@@ -321,9 +310,8 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     override fun remove(roleId: RoleId, pmfId: PmfId) {
-        if (usesRelations.containsKey(roleId) && usesRelations[roleId].containsKey(pmfId)) {
-            val uses = usesRelations.remove(roleId, pmfId)
-            publisher.post(eventFactory.build(EventType.REMOVED, uses))
+        usesRelations.remove(roleId, pmfId)?.also {
+            publisher.post(eventFactory.build(EventType.REMOVED, it))
         }
     }
 
@@ -346,24 +334,6 @@ internal open class DefaultOrganization @Inject constructor(
     }
 
     companion object {
-        private val ASSIGNMENTS_BY_AGENT = "assignmentsByAgent"
-        private val log = org.slf4j.LoggerFactory.getLogger(DefaultOrganization::class.java)
-
-        private fun <T, U : UniqueId<V>, V, W> remove(
-            id: T,
-            map: MutableMap<T, MutableMap<U, W>>,
-            mapName: String,
-            consumer: Consumer<U>
-        ) {
-            if (map.containsKey(id)) {
-                val ids = map[id]!!.keys
-                ids.forEach(consumer)
-                map.remove(id)
-            } else {
-                log.warn(L.MAP_IS_MISSING_KEY.get(), mapName, id)
-            }
-        }
-
         private fun <T : Identifiable<T, U>, U : UniqueId<T>> checkNotExists(t: T, predicate: (U) -> Boolean) {
             if (predicate(t.id)) {
                 throw IllegalArgumentException(E.ENTITY_ALREADY_EXISTS[t.id.type, t.id])
@@ -384,87 +354,61 @@ internal open class DefaultOrganization @Inject constructor(
          * @return `true` if the [Organization] is valid, `false` otherwise.
          */
         fun isOrganizationValid(organization: Organization): Boolean {
-            var result = true
-            /*
-         * every goal can be achieved by at least one role from the organization
-		 */
-            for ((_, goal) in organization.specificationGoals) {
-                var isAchievable = false
-                for ((_, achieves) in organization.achievesRelations[goal.id]) {
-                    isAchievable = isAchievable or (organization.roles[achieves.role.id] != null)
-                    if (isAchievable) { /* short circuit */
-                        /*
-                     * can stop checking because there is at least one role that can achieve the goal
-					 */
-                        break
-                    }
+            if (!isEveryGoalAchievedByAtLeastOneRole(organization)) {
+                return false
+            }
+            if (!doesEveryRoleRequiresAtLeastOneCapability(organization)) {
+                return false
+            }
+            if (!doesEveryAgentPossessAtLeastOneCapability(organization)) {
+                return false
+            }
+            return true
+        }
+
+        private fun isEveryGoalAchievedByAtLeastOneRole(organization: Organization): Boolean {
+            // every goal can be achieved by at least one role of the given organization
+            for ((goalId, _) in organization.specificationGoals) {
+                val map = organization.achievesRelations[goalId]
+                if (map.isEmpty()) { // short circuit because there is a goal that cannot be achieved by any role
+                    return false
                 }
-                result = result and isAchievable
-                if (!result) { /* short circuit */
-                    /*
-                 * can stop checking because there is at least one goal that cannot be achieved by any role in the organization
-				 */
-                    break
+                // ensure that all roles exists in the organization
+                if (!organization.roles.keys.containsAll(map.keys)) {
+                    return false
                 }
             }
-            /*
-         * the set of capabilities is the union of all capabilities required by roles or possessed by agents in the organization
-		 */
-            if (result) { /* short circult */
-                /*
-             * there is no reason to continue checking if the previous results are false
-			 */
-                for ((_, role) in organization.roles) {
-                    /*
-                 * every role requires at least one capability
-				 */
-                    result = result and organization.requiresRelations[role.id].isNotEmpty()
-                    if (!result) { /* short circuit */
-                        /*
-                     * can stop checking because there is a role that does not require at least one capability
-					 */
-                        break
-                    }
-                    for ((capabilityId, _) in organization.requiresRelations[role.id]) {
-                        result = result and (organization.capabilities[capabilityId] != null)
-                        if (!result) { /* short circuit */
-                            /*
-                         * can stop checking because there is at least one capability required by a role that is not in the organization
-						 */
-                            break
-                        }
-                    }
-                    if (!result) { /* short circuit */
-                        /*
-                     * can stop checking because there is at least one capability required by a role that is not in the organization
-					 */
-                        break
-                    }
+            return true
+        }
+
+        private fun doesEveryRoleRequiresAtLeastOneCapability(organization: Organization): Boolean {
+            // every role requires at least one capability
+            for ((roleId, _) in organization.roles) {
+                val map = organization.requiresRelations[roleId]
+                if (map.isEmpty()) { // short circuit because there is a role that requires no capabilities
+                    return false
                 }
-                if (result) { /* short circuit */
-                    /*
-                 * there is no reason to continue checking if the previous results are false
-				 */
-                    for ((_, agent) in organization.agents) {
-                        for ((capabilityId, _) in organization.possessesRelations[agent.id]) {
-                            result = result and (organization.capabilities[capabilityId] != null)
-                            if (!result) { /* short circuit */
-                                /*
-                             * can stop checking because there is at least one capability possessed by an agent that is not in the organization
-							 */
-                                break
-                            }
-                        }
-                        if (!result) { /* short circuit */
-                            /*
-                         * can stop checking because there is at least one capability possessed by an agent that is not in the organization
-						 */
-                            break
-                        }
-                    }
+                // ensure that all the required capabilities exists in the organization
+                if (!organization.capabilities.keys.containsAll(map.keys)) {
+                    return false
                 }
             }
-            return result
+            return true
+        }
+
+        private fun doesEveryAgentPossessAtLeastOneCapability(organization: Organization): Boolean {
+            // every agent must have at least one capability
+            for ((agentId, _) in organization.agents) {
+                val map = organization.possessesRelations[agentId]
+                if (map.isEmpty()) { // short circuit because there is an agent that possess no capabilities
+                    return false
+                }
+                // ensure that all possessed capabilities exists in the organization
+                if (!organization.capabilities.keys.containsAll(map.keys)) {
+                    return false
+                }
+            }
+            return true
         }
     }
 }

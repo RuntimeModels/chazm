@@ -1,6 +1,5 @@
 package runtimemodels.chazm.api.entity
 
-import runtimemodels.chazm.api.id.CapabilityId
 import runtimemodels.chazm.api.id.Identifiable
 import runtimemodels.chazm.api.organization.Organization
 

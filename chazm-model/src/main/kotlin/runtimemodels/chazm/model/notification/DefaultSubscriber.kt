@@ -1,7 +1,8 @@
 package runtimemodels.chazm.model.notification
 
-import runtimemodels.chazm.model.event.*
+import runtimemodels.chazm.model.entity.*
 import runtimemodels.chazm.model.message.L
+import runtimemodels.chazm.model.relation.*
 
 internal open class DefaultSubscriber : Subscriber {
 

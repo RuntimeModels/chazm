@@ -1,70 +1,108 @@
 package runtimemodels.chazm.model.function
 
-import com.google.inject.Guice
+import any
+import mock
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
+import org.mockito.Mockito.`when`
+import runtimemodels.chazm.api.entity.Role
 import runtimemodels.chazm.api.function.Effectiveness
+import runtimemodels.chazm.api.function.Goodness
 import runtimemodels.chazm.api.organization.Organization
-import runtimemodels.chazm.model.factory.EntityFactory
-import runtimemodels.chazm.model.factory.RelationFactory
-import runtimemodels.chazm.model.guice.OrganizationModule
-import runtimemodels.chazm.model.id.*
-import runtimemodels.chazm.model.relation.PossessesRelation
-import runtimemodels.chazm.model.relation.RequiresRelation
+import runtimemodels.chazm.api.relation.Assignment
+import runtimemodels.chazm.api.relation.AssignmentManager
+import scaleInt
 
+internal class DefaultEffectivenessTest {
+    @Test
+    fun `test the compute value when there are no assignments`() {
+        val organization: Organization = mock()
 
-class DefaultEffectivenessTest {
+        val effectiveness: Effectiveness = DefaultEffectiveness()
 
-    private val injector = Guice.createInjector(OrganizationModule(), FunctionModule())
-    private val provider = injector.getProvider(Organization::class.java)
-    private val entityFactory = injector.getInstance(EntityFactory::class.java)
-    private val relationFactory = injector.getInstance(RelationFactory::class.java)
-    private val effectiveness = injector.getInstance(Effectiveness::class.java)
+        assertThat(effectiveness.compute(organization, setOf()).scaleInt()).isEqualTo(0)
+    }
 
     @Test
-    fun `test that compute works correctly`() {
-        val organization = provider.get()
-        val agent1 = entityFactory.buildAgent(DefaultAgentId("a1"), mapOf())
-        val agent2 = entityFactory.buildAgent(DefaultAgentId("a2"), mapOf())
-        val role = entityFactory.buildRole(DefaultRoleId("r"))
-        val specificationGoal = entityFactory.buildSpecificationGoal(DefaultSpecificationGoalId("sg"))
-        val instanceGoal1 = entityFactory.buildInstanceGoal(DefaultInstanceGoalId("ig1"), specificationGoal, mapOf())
-        val instanceGoal2 = entityFactory.buildInstanceGoal(DefaultInstanceGoalId("ig2"), specificationGoal, mapOf())
-        val capability1 = entityFactory.buildCapability(DefaultCapabilityId("c1"))
-        val capability2 = entityFactory.buildCapability(DefaultCapabilityId("c2"))
-        val assignment1 = relationFactory.buildAssignment(agent1, role, instanceGoal1)
-        val assignment2 = relationFactory.buildAssignment(agent1, role, instanceGoal2)
-        val assignment3 = relationFactory.buildAssignment(agent2, role, instanceGoal1)
-        val assignment4 = relationFactory.buildAssignment(agent2, role, instanceGoal2)
-        val achieves = relationFactory.buildAchieves(role, specificationGoal)
+    fun `test the compute value when there is one assignment`() {
+        val organization: Organization = mock()
+        val assignmentManager: AssignmentManager = mock()
+        val goodness: Goodness = mock()
+        val assignment: Assignment = mock()
+        val role: Role = mock()
 
-        assertThat(effectiveness.compute(organization, organization.assignmentRelations.flatMap { it.value.flatMap { it.value.values } }.toSet())).isEqualTo(0.0)
+        `when`(organization.getGoodness(any())).thenReturn(goodness)
+        `when`(organization.assignmentRelations).thenReturn(assignmentManager)
+        `when`(assignment.role).thenReturn(role)
+        `when`(goodness.compute(any(), any(), any(), any(), any())).thenReturn(0.0, 0.5, 1.0)
 
-        organization.add(agent1)
-        organization.add(agent2)
-        organization.add(role)
-        organization.add(specificationGoal)
-        organization.add(instanceGoal1)
-        organization.add(instanceGoal2)
-        organization.add(capability1)
-        organization.add(capability2)
-        organization.add(achieves)
-        organization.add(RequiresRelation(role, capability1))
-        organization.add(PossessesRelation(agent1, capability1, 1.0))
-        organization.add(assignment1)
+        val effectiveness: Effectiveness = DefaultEffectiveness()
 
-        assertThat(effectiveness.compute(organization, organization.assignmentRelations.flatMap { it.value.flatMap { it.value.values } }.toSet())).isEqualTo(1.0)
+        assertAll(
+            { assertThat(effectiveness.compute(organization, setOf(assignment)).scaleInt()).isEqualTo(0) },
+            { assertThat(effectiveness.compute(organization, setOf(assignment)).scaleInt()).isEqualTo(5) },
+            { assertThat(effectiveness.compute(organization, setOf(assignment)).scaleInt()).isEqualTo(10) }
+        )
+    }
 
-        organization.add(assignment2)
+    @Test
+    fun `test the compute value when there are two assignments`() {
+        val organization: Organization = mock()
+        val assignmentManager: AssignmentManager = mock()
+        val goodness: Goodness = mock()
+        val assignment1: Assignment = mock()
+        val assignment2: Assignment = mock()
+        val role: Role = mock()
 
-        assertThat(effectiveness.compute(organization, organization.assignmentRelations.flatMap { it.value.flatMap { it.value.values } }.toSet())).isEqualTo(2.0)
+        `when`(organization.getGoodness(any())).thenReturn(goodness)
+        `when`(organization.assignmentRelations).thenReturn(assignmentManager)
+        `when`(assignment1.role).thenReturn(role)
+        `when`(assignment2.role).thenReturn(role)
+        `when`(goodness.compute(any(), any(), any(), any(), any())).thenReturn(
+            0.0, 0.0,
+            1.0, 0.0,
+            0.2, 0.3,
+            1.0, 1.0
+        )
 
-        organization.add(assignment3)
+        val effectiveness: Effectiveness = DefaultEffectiveness()
 
-        assertThat(effectiveness.compute(organization, organization.assignmentRelations.flatMap { it.value.flatMap { it.value.values } }.toSet())).isEqualTo(2.0)
+        assertAll(
+            { assertThat(effectiveness.compute(organization, setOf(assignment1, assignment2)).scaleInt()).isEqualTo(0) },
+            { assertThat(effectiveness.compute(organization, setOf(assignment1, assignment2)).scaleInt()).isEqualTo(10) },
+            { assertThat(effectiveness.compute(organization, setOf(assignment1, assignment2)).scaleInt()).isEqualTo(5) },
+            { assertThat(effectiveness.compute(organization, setOf(assignment1, assignment2)).scaleInt()).isEqualTo(20) }
+        )
+    }
 
-        organization.add(assignment4)
+    @Test
+    fun `test the compute value when there are three assignments`() {
+        val organization: Organization = mock()
+        val assignmentManager: AssignmentManager = mock()
+        val goodness: Goodness = mock()
+        val assignment1: Assignment = mock()
+        val assignment2: Assignment = mock()
+        val assignment3: Assignment = mock()
+        val role: Role = mock()
 
-        assertThat(effectiveness.compute(organization, organization.assignmentRelations.flatMap { it.value.flatMap { it.value.values } }.toSet())).isEqualTo(2.0)
+        `when`(organization.getGoodness(any())).thenReturn(goodness)
+        `when`(organization.assignmentRelations).thenReturn(assignmentManager)
+        `when`(assignment1.role).thenReturn(role)
+        `when`(assignment2.role).thenReturn(role)
+        `when`(assignment3.role).thenReturn(role)
+        `when`(goodness.compute(any(), any(), any(), any(), any())).thenReturn(
+            0.0, 0.0, 0.0,
+            0.1, 0.2, 0.3,
+            1.0, 1.0, 1.0
+        )
+
+        val effectiveness: Effectiveness = DefaultEffectiveness()
+
+        assertAll(
+            { assertThat(effectiveness.compute(organization, setOf(assignment1, assignment2, assignment3)).scaleInt()).isEqualTo(0) },
+            { assertThat(effectiveness.compute(organization, setOf(assignment1, assignment2, assignment3)).scaleInt()).isEqualTo(6) },
+            { assertThat(effectiveness.compute(organization, setOf(assignment1, assignment2, assignment3)).scaleInt()).isEqualTo(30) }
+        )
     }
 }
