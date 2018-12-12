@@ -3,11 +3,11 @@ package runtimemodels.chazm.model.entity.impl
 import runtimemodels.chazm.api.entity.*
 import javax.inject.Inject
 
-internal sealed class DefaultManager
+internal sealed class DefaultManager<T, U>(map: MutableMap<T, U>) : Map<T, U> by map
 
 internal data class DefaultAgentManager @Inject constructor(
     private val map: MutableMap<AgentId, Agent>
-) : AgentManager, DefaultManager(), Map<AgentId, Agent> by map {
+) : AgentManager, DefaultManager<AgentId, Agent>(map) {
     override fun add(agent: Agent) {
         map.putIfAbsent(agent.id, agent)
     }
@@ -19,7 +19,7 @@ internal data class DefaultAgentManager @Inject constructor(
 
 internal data class DefaultAttributeManager @Inject constructor(
     private val map: MutableMap<AttributeId, Attribute>
-) : AttributeManager, DefaultManager(), Map<AttributeId, Attribute> by map {
+) : AttributeManager, DefaultManager<AttributeId, Attribute>(map) {
     override fun add(attribute: Attribute) {
         map.putIfAbsent(attribute.id, attribute)
     }
@@ -31,7 +31,7 @@ internal data class DefaultAttributeManager @Inject constructor(
 
 internal data class DefaultCapabilityManager @Inject constructor(
     private val map: MutableMap<CapabilityId, Capability>
-) : CapabilityManager, DefaultManager(), Map<CapabilityId, Capability> by map {
+) : CapabilityManager, DefaultManager<CapabilityId, Capability>(map) {
     override fun add(capability: Capability) {
         map.putIfAbsent(capability.id, capability)
     }
@@ -43,7 +43,7 @@ internal data class DefaultCapabilityManager @Inject constructor(
 
 internal data class DefaultCharacteristicManager @Inject constructor(
     private val map: MutableMap<CharacteristicId, Characteristic>
-) : CharacteristicManager, DefaultManager(), Map<CharacteristicId, Characteristic> by map {
+) : CharacteristicManager, DefaultManager<CharacteristicId, Characteristic>(map) {
     override fun add(characteristic: Characteristic) {
         map.putIfAbsent(characteristic.id, characteristic)
     }
@@ -56,7 +56,7 @@ internal data class DefaultCharacteristicManager @Inject constructor(
 internal data class DefaultInstanceGoalManager @Inject constructor(
     private val map: MutableMap<InstanceGoalId, InstanceGoal>,
     private val byMap: MutableMap<SpecificationGoalId, MutableMap<InstanceGoalId, InstanceGoal>>
-) : InstanceGoalManager, DefaultManager(), Map<InstanceGoalId, InstanceGoal> by map {
+) : InstanceGoalManager, DefaultManager<InstanceGoalId, InstanceGoal>(map) {
     override fun add(goal: InstanceGoal) {
         if (map.putIfAbsent(goal.id, goal) == null) {
             byMap.computeIfAbsent(goal.goal.id) { mutableMapOf() }[goal.id] = goal
@@ -84,7 +84,7 @@ internal data class DefaultInstanceGoalManager @Inject constructor(
 
 internal data class DefaultPmfManager @Inject constructor(
     private val map: MutableMap<PmfId, Pmf>
-) : PmfManager, DefaultManager(), Map<PmfId, Pmf> by map {
+) : PmfManager, DefaultManager<PmfId, Pmf>(map) {
     override fun add(pmf: Pmf) {
         map.putIfAbsent(pmf.id, pmf)
     }
@@ -96,7 +96,7 @@ internal data class DefaultPmfManager @Inject constructor(
 
 internal data class DefaultPolicyManager @Inject constructor(
     private val map: MutableMap<PolicyId, Policy>
-) : PolicyManager, DefaultManager(), Map<PolicyId, Policy> by map {
+) : PolicyManager, DefaultManager<PolicyId, Policy>(map) {
     override fun add(policy: Policy) {
         map.putIfAbsent(policy.id, policy)
     }
@@ -108,7 +108,7 @@ internal data class DefaultPolicyManager @Inject constructor(
 
 internal data class DefaultRoleManager @Inject constructor(
     private val map: MutableMap<RoleId, Role>
-) : RoleManager, DefaultManager(), Map<RoleId, Role> by map {
+) : RoleManager, DefaultManager<RoleId, Role>(map) {
     override fun add(role: Role) {
         map.putIfAbsent(role.id, role)
     }
@@ -120,7 +120,7 @@ internal data class DefaultRoleManager @Inject constructor(
 
 internal data class DefaultSpecificationGoalManager @Inject constructor(
     private val map: MutableMap<SpecificationGoalId, SpecificationGoal>
-) : SpecificationGoalManager, DefaultManager(), Map<SpecificationGoalId, SpecificationGoal> by map {
+) : SpecificationGoalManager, DefaultManager<SpecificationGoalId, SpecificationGoal>(map) {
     override fun add(goal: SpecificationGoal) {
         map.putIfAbsent(goal.id, goal)
     }
