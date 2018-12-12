@@ -7,8 +7,8 @@
  */
 package runtimemodels.chazm.model.ui;
 
-import runtimemodels.chazm.api.Organization;
 import runtimemodels.chazm.api.entity.Role;
+import runtimemodels.chazm.api.organization.Organization;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -50,7 +50,8 @@ public class RoleVisualizationPanel extends AbstractListVisualizationPanel<Role>
 
     @Override
     List<Role> getCollection() {
-        final List<Role> roles = new ArrayList<>(getOrganization().getRoles());
+//        final List<Role> roles = new ArrayList<>(getOrganization().getRoles());
+        final List<Role> roles = new ArrayList<>();
         final Comparator<Role> comparator = (role1, role2) -> role1.toString().compareTo(role2.toString());
         Collections.sort(roles, comparator);
         return roles;

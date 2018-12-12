@@ -12,7 +12,6 @@ import runtimemodels.chazm.api.relation.Needs
  */
 @FunctionalInterface
 interface NeedsFactory {
-
     /**
      * Constructs a [Needs].
      *
@@ -20,6 +19,5 @@ interface NeedsFactory {
      * @param attribute the [Attribute] of the [Needs].
      * @return a [Needs].
      */
-    fun buildNeeds(role: Role, attribute: Attribute): Needs
-
+    fun build(role: Role, attribute: Attribute): Needs
 }

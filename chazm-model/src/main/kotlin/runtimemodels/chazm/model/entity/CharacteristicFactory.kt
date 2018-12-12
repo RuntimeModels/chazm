@@ -1,6 +1,7 @@
 package runtimemodels.chazm.model.entity
 
 import runtimemodels.chazm.api.entity.Characteristic
+import runtimemodels.chazm.api.entity.CharacteristicId
 import runtimemodels.chazm.api.id.UniqueId
 
 /**
@@ -11,13 +12,11 @@ import runtimemodels.chazm.api.id.UniqueId
  */
 @FunctionalInterface
 interface CharacteristicFactory {
-
     /**
      * Constructs a [Characteristic].
      *
      * @param id the [UniqueId] that represents the [Characteristic].
      * @return a [Characteristic].
      */
-    fun buildCharacteristic(id: UniqueId<Characteristic>): Characteristic
-
+    fun build(id: CharacteristicId): Characteristic
 }

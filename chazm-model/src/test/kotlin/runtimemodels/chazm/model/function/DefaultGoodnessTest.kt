@@ -1,108 +1,268 @@
 package runtimemodels.chazm.model.function
 
-import com.google.inject.Guice
+import any
+import mock
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
-import runtimemodels.chazm.api.Organization
-import runtimemodels.chazm.api.entity.Attribute
-import runtimemodels.chazm.api.function.Goodness
-import runtimemodels.chazm.model.OrganizationModule
-import runtimemodels.chazm.model.entity.EntityFactory
-import runtimemodels.chazm.model.id.IdFactory
-import runtimemodels.chazm.model.id.build
+import org.mockito.Mockito.`when`
+import runtimemodels.chazm.api.entity.*
+import runtimemodels.chazm.api.organization.Organization
+import runtimemodels.chazm.api.relation.*
+import scaleInt
 
-class DefaultGoodnessTest {
-
-    private val injector = Guice.createInjector(OrganizationModule(), FunctionModule())
-    private val provider = injector.getProvider(Organization::class.java)
-    private val idFactory = injector.getInstance(IdFactory::class.java)
-    private val entityFactory = injector.getInstance(EntityFactory::class.java)
-    private val goodness = injector.getInstance(Goodness::class.java)
-
+internal class DefaultGoodnessTest {
     @Test
-    fun `test that the compute function works properly`() {
-        val o = provider.get()
-        val a = entityFactory.buildAgent(idFactory.build("a"), mapOf())
-        val r = entityFactory.buildRole(idFactory.build("r"))
-        val sg = entityFactory.buildSpecificationGoal(idFactory.build("sg"))
-        val ig = entityFactory.buildInstanceGoal(idFactory.build("ig"), sg, mapOf())
-        val c1 = entityFactory.buildCapability(idFactory.build("c1"))
-        val c2 = entityFactory.buildCapability(idFactory.build("c2"))
-        val t = entityFactory.buildAttribute(idFactory.build("t"), Attribute.Type.NEGATIVE_QUALITY)
+    fun `when the agent does not have the required attribute`() {
+        val organization: Organization = mock()
+        val agent: Agent = mock()
+        val role: Role = mock()
+        val goal: InstanceGoal = mock()
+        val roleId: RoleId = mock()
+        val needsRelations: NeedsManager = mock()
+        val attributeId: AttributeId = mock()
+        val needs: Needs = mock()
+        val hasRelations: HasManager = mock()
 
-        assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MIN_SCORE)
+        `when`(role.id).thenReturn(roleId)
+        `when`(organization.needsRelations).thenReturn(needsRelations)
+        `when`(needsRelations[roleId]).thenReturn(mapOf(attributeId to needs))
+        `when`(organization.hasRelations).thenReturn(hasRelations)
+        `when`(hasRelations[any(), any()]).thenReturn(null)
 
-        o.addAgent(a)
-        o.addRole(r)
-        o.addSpecificationGoal(sg)
-        o.addInstanceGoal(ig)
-        o.addCapability(c1)
-        o.addAchieves(r.id, sg.id)
+        val goodness = DefaultGoodness()
 
-        assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MAX_SCORE)
-
-        o.addRequires(r.id, c1.id)
-
-        assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MIN_SCORE)
-
-        o.addPossesses(a.id, c1.id, 0.0)
-
-        assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MIN_SCORE)
-
-        o.setPossessesScore(a.id, c1.id, 1.0)
-
-        assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MAX_SCORE)
-
-        o.addCapability(c2)
-        o.addRequires(r.id, c2.id)
-        o.addPossesses(a.id, c2.id, 1.0)
-
-        assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MAX_SCORE)
-
-        o.addAttribute(t)
-        o.addNeeds(r.id, t.id)
-
-        assertThat(goodness.compute(o, a, r, ig, setOf())).isEqualTo(DefaultGoodness.MIN_SCORE)
+        assertThat(goodness.compute(organization, agent, role, goal, emptySet()).scaleInt()).isEqualTo(0)
     }
 
     @Test
-    fun `test that the compute function throws an IllegalArgumentException when called with all parameters as null`() {
-        assertThrows<IllegalArgumentException> { goodness.compute(null, null, null, null, null) }
+    fun `when the role does not achieve the goal`() {
+        val organization: Organization = mock()
+        val agent: Agent = mock()
+        val role: Role = mock()
+        val goal: InstanceGoal = mock()
+        val roleId: RoleId = mock()
+        val needsRelations: NeedsManager = mock()
+        val achievesRelations: AchievesManager = mock()
+        val specificationGoal: SpecificationGoal = mock()
+
+        `when`(role.id).thenReturn(roleId)
+        `when`(organization.needsRelations).thenReturn(needsRelations)
+        `when`(needsRelations[roleId]).thenReturn(emptyMap())
+        `when`(organization.achievesRelations).thenReturn(achievesRelations)
+        `when`(achievesRelations[roleId]).thenReturn(emptyMap())
+        `when`(goal.goal).thenReturn(specificationGoal)
+
+        val goodness = DefaultGoodness()
+
+        assertThat(goodness.compute(organization, agent, role, goal, emptySet()).scaleInt()).isEqualTo(0)
     }
 
     @Test
-    fun `test that the compute function throws an IllegalArgumentException when called with a null agent, a null role, a null goal, and a null assignment`() {
-        val o = provider.get()
-        assertThrows<IllegalArgumentException> { goodness.compute(o, null, null, null, null) }
+    fun `when the role does not require any capability`() {
+        val organization: Organization = mock()
+        val agent: Agent = mock()
+        val role: Role = mock()
+        val goal: InstanceGoal = mock()
+        val roleId: RoleId = mock()
+        val needsRelations: NeedsManager = mock()
+        val achievesRelations: AchievesManager = mock()
+        val specificationGoal: SpecificationGoal = mock()
+        val specificationGoalId: SpecificationGoalId = mock()
+        val achieves: Achieves = mock()
+        val requiresRelation: RequiresManager = mock()
+
+        `when`(role.id).thenReturn(roleId)
+        `when`(organization.needsRelations).thenReturn(needsRelations)
+        `when`(needsRelations[roleId]).thenReturn(emptyMap())
+        `when`(organization.achievesRelations).thenReturn(achievesRelations)
+        `when`(achievesRelations[roleId]).thenReturn(mapOf(specificationGoalId to achieves))
+        `when`(goal.goal).thenReturn(specificationGoal)
+        `when`(specificationGoal.id).thenReturn(specificationGoalId)
+        `when`(organization.requiresRelations).thenReturn(requiresRelation)
+        `when`(requiresRelation[roleId]).thenReturn(emptyMap())
+
+        val goodness = DefaultGoodness()
+
+        assertThat(goodness.compute(organization, agent, role, goal, emptySet()).scaleInt()).isEqualTo(10)
     }
 
     @Test
-    fun `test that the compute function throws an IllegalArgumentException when called with a null role, a null goal, and a null assignment`() {
-        val o = provider.get()
-        val a = entityFactory.buildAgent(idFactory.build("a"), mapOf())
+    fun `when the agent does not have the required any capability`() {
+        val organization: Organization = mock()
+        val agent: Agent = mock()
+        val role: Role = mock()
+        val goal: InstanceGoal = mock()
+        val roleId: RoleId = mock()
+        val needsRelations: NeedsManager = mock()
+        val achievesRelations: AchievesManager = mock()
+        val specificationGoal: SpecificationGoal = mock()
+        val specificationGoalId: SpecificationGoalId = mock()
+        val achieves: Achieves = mock()
+        val requiresRelation: RequiresManager = mock()
+        val capabilityId: CapabilityId = mock()
+        val requires: Requires = mock()
+        val possessesRelations: PossessesManager = mock()
 
-        assertThrows<IllegalArgumentException> { goodness.compute(o, a, null, null, null) }
+        `when`(role.id).thenReturn(roleId)
+        `when`(organization.needsRelations).thenReturn(needsRelations)
+        `when`(needsRelations[roleId]).thenReturn(emptyMap())
+        `when`(organization.achievesRelations).thenReturn(achievesRelations)
+        `when`(achievesRelations[roleId]).thenReturn(mapOf(specificationGoalId to achieves))
+        `when`(goal.goal).thenReturn(specificationGoal)
+        `when`(specificationGoal.id).thenReturn(specificationGoalId)
+        `when`(organization.requiresRelations).thenReturn(requiresRelation)
+        `when`(requiresRelation[roleId]).thenReturn(mapOf(capabilityId to requires))
+        `when`(organization.possessesRelations).thenReturn(possessesRelations)
+        `when`(possessesRelations[any(), any()]).thenReturn(null)
+
+        val goodness = DefaultGoodness()
+
+        assertThat(goodness.compute(organization, agent, role, goal, emptySet()).scaleInt()).isEqualTo(0)
     }
 
     @Test
-    fun `test that the compute function throws an IllegalArgumentException when called with a null goal and a null assignment`() {
-        val o = provider.get()
-        val a = entityFactory.buildAgent(idFactory.build("a"), mapOf())
-        val r = entityFactory.buildRole(idFactory.build("r"))
+    fun `when the required capability score is zero`() {
+        val organization: Organization = mock()
+        val agent: Agent = mock()
+        val role: Role = mock()
+        val goal: InstanceGoal = mock()
+        val roleId: RoleId = mock()
+        val needsRelations: NeedsManager = mock()
+        val achievesRelations: AchievesManager = mock()
+        val specificationGoal: SpecificationGoal = mock()
+        val specificationGoalId: SpecificationGoalId = mock()
+        val achieves: Achieves = mock()
+        val requiresRelation: RequiresManager = mock()
+        val capabilityId: CapabilityId = mock()
+        val requires: Requires = mock()
+        val possessesRelations: PossessesManager = mock()
+        val possesses: Possesses = mock()
 
-        assertThrows<IllegalArgumentException> { goodness.compute(o, a, r, null, null) }
+        `when`(role.id).thenReturn(roleId)
+        `when`(organization.needsRelations).thenReturn(needsRelations)
+        `when`(needsRelations[roleId]).thenReturn(emptyMap())
+        `when`(organization.achievesRelations).thenReturn(achievesRelations)
+        `when`(achievesRelations[roleId]).thenReturn(mapOf(specificationGoalId to achieves))
+        `when`(goal.goal).thenReturn(specificationGoal)
+        `when`(specificationGoal.id).thenReturn(specificationGoalId)
+        `when`(organization.requiresRelations).thenReturn(requiresRelation)
+        `when`(requiresRelation[roleId]).thenReturn(mapOf(capabilityId to requires))
+        `when`(organization.possessesRelations).thenReturn(possessesRelations)
+        `when`(possessesRelations[any(), any()]).thenReturn(possesses)
+        `when`(possesses.score).thenReturn(0.0)
+
+        val goodness = DefaultGoodness()
+
+        assertThat(goodness.compute(organization, agent, role, goal, emptySet()).scaleInt()).isEqualTo(0)
     }
 
     @Test
-    fun `test that the compute function throws an IllegalArgumentException when called with a null assignment`() {
-        val o = provider.get()
-        val a = entityFactory.buildAgent(idFactory.build("a"), mapOf())
-        val r = entityFactory.buildRole(idFactory.build("r"))
-        val sg = entityFactory.buildSpecificationGoal(idFactory.build("sg"))
-        val ig = entityFactory.buildInstanceGoal(idFactory.build("ig"), sg, mapOf())
+    fun `when the required capability score is one`() {
+        val organization: Organization = mock()
+        val agent: Agent = mock()
+        val role: Role = mock()
+        val goal: InstanceGoal = mock()
+        val roleId: RoleId = mock()
+        val needsRelations: NeedsManager = mock()
+        val achievesRelations: AchievesManager = mock()
+        val specificationGoal: SpecificationGoal = mock()
+        val specificationGoalId: SpecificationGoalId = mock()
+        val achieves: Achieves = mock()
+        val requiresRelation: RequiresManager = mock()
+        val capabilityId: CapabilityId = mock()
+        val requires: Requires = mock()
+        val possessesRelations: PossessesManager = mock()
+        val possesses: Possesses = mock()
 
-        assertThrows<IllegalArgumentException> { goodness.compute(o, a, r, ig, null) }
+        `when`(role.id).thenReturn(roleId)
+        `when`(organization.needsRelations).thenReturn(needsRelations)
+        `when`(needsRelations[roleId]).thenReturn(emptyMap())
+        `when`(organization.achievesRelations).thenReturn(achievesRelations)
+        `when`(achievesRelations[roleId]).thenReturn(mapOf(specificationGoalId to achieves))
+        `when`(goal.goal).thenReturn(specificationGoal)
+        `when`(specificationGoal.id).thenReturn(specificationGoalId)
+        `when`(organization.requiresRelations).thenReturn(requiresRelation)
+        `when`(requiresRelation[roleId]).thenReturn(mapOf(capabilityId to requires))
+        `when`(organization.possessesRelations).thenReturn(possessesRelations)
+        `when`(possessesRelations[any(), any()]).thenReturn(possesses)
+        `when`(possesses.score).thenReturn(1.0)
+
+        val goodness = DefaultGoodness()
+
+        assertThat(goodness.compute(organization, agent, role, goal, emptySet()).scaleInt()).isEqualTo(10)
     }
 
+    @Test
+    fun `when there are two required capabilities with scores of one and zero`() {
+        val organization: Organization = mock()
+        val agent: Agent = mock()
+        val role: Role = mock()
+        val goal: InstanceGoal = mock()
+        val roleId: RoleId = mock()
+        val needsRelations: NeedsManager = mock()
+        val achievesRelations: AchievesManager = mock()
+        val specificationGoal: SpecificationGoal = mock()
+        val specificationGoalId: SpecificationGoalId = mock()
+        val achieves: Achieves = mock()
+        val requiresRelation: RequiresManager = mock()
+        val capabilityId1: CapabilityId = mock()
+        val capabilityId2: CapabilityId = mock()
+        val requires: Requires = mock()
+        val possessesRelations: PossessesManager = mock()
+        val possesses: Possesses = mock()
+
+        `when`(role.id).thenReturn(roleId)
+        `when`(organization.needsRelations).thenReturn(needsRelations)
+        `when`(needsRelations[roleId]).thenReturn(emptyMap())
+        `when`(organization.achievesRelations).thenReturn(achievesRelations)
+        `when`(achievesRelations[roleId]).thenReturn(mapOf(specificationGoalId to achieves))
+        `when`(goal.goal).thenReturn(specificationGoal)
+        `when`(specificationGoal.id).thenReturn(specificationGoalId)
+        `when`(organization.requiresRelations).thenReturn(requiresRelation)
+        `when`(requiresRelation[roleId]).thenReturn(mapOf(capabilityId1 to requires, capabilityId2 to requires))
+        `when`(organization.possessesRelations).thenReturn(possessesRelations)
+        `when`(possessesRelations[any(), any()]).thenReturn(possesses)
+        `when`(possesses.score).thenReturn(1.0, 0.0)
+
+        val goodness = DefaultGoodness()
+
+        assertThat(goodness.compute(organization, agent, role, goal, emptySet()).scaleInt()).isEqualTo(0)
+    }
+
+    @Test
+    fun `when there are two required capabilities with scores of one and one`() {
+        val organization: Organization = mock()
+        val agent: Agent = mock()
+        val role: Role = mock()
+        val goal: InstanceGoal = mock()
+        val roleId: RoleId = mock()
+        val needsRelations: NeedsManager = mock()
+        val achievesRelations: AchievesManager = mock()
+        val specificationGoal: SpecificationGoal = mock()
+        val specificationGoalId: SpecificationGoalId = mock()
+        val achieves: Achieves = mock()
+        val requiresRelation: RequiresManager = mock()
+        val capabilityId1: CapabilityId = mock()
+        val capabilityId2: CapabilityId = mock()
+        val requires: Requires = mock()
+        val possessesRelations: PossessesManager = mock()
+        val possesses: Possesses = mock()
+
+        `when`(role.id).thenReturn(roleId)
+        `when`(organization.needsRelations).thenReturn(needsRelations)
+        `when`(needsRelations[roleId]).thenReturn(emptyMap())
+        `when`(organization.achievesRelations).thenReturn(achievesRelations)
+        `when`(achievesRelations[roleId]).thenReturn(mapOf(specificationGoalId to achieves))
+        `when`(goal.goal).thenReturn(specificationGoal)
+        `when`(specificationGoal.id).thenReturn(specificationGoalId)
+        `when`(organization.requiresRelations).thenReturn(requiresRelation)
+        `when`(requiresRelation[roleId]).thenReturn(mapOf(capabilityId1 to requires, capabilityId2 to requires))
+        `when`(organization.possessesRelations).thenReturn(possessesRelations)
+        `when`(possessesRelations[any(), any()]).thenReturn(possesses)
+        `when`(possesses.score).thenReturn(1.0, 1.0)
+
+        val goodness = DefaultGoodness()
+
+        assertThat(goodness.compute(organization, agent, role, goal, emptySet()).scaleInt()).isEqualTo(10)
+    }
 }

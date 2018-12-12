@@ -12,7 +12,6 @@ import runtimemodels.chazm.api.relation.Uses
  */
 @FunctionalInterface
 interface UsesFactory {
-
     /**
      * Constructs an [Uses].
      *
@@ -20,6 +19,5 @@ interface UsesFactory {
      * @param pmf  the [Pmf] of the [Uses].
      * @return an [Uses].
      */
-    fun buildUses(role: Role, pmf: Pmf): Uses
-
+    fun build(role: Role, pmf: Pmf): Uses
 }

@@ -17,4 +17,13 @@ package runtimemodels.chazm.model.relation
  *
  * @since 7.0.0
  */
-interface RelationFactory : AchievesFactory, AssignmentFactory, ContainsFactory, HasFactory, ModeratesFactory, NeedsFactory, PossessesFactory, RequiresFactory, UsesFactory
+interface RelationFactory :
+    AchievesFactory,
+    AssignmentFactory,
+    ContainsFactory,
+    HasFactory,
+    ModeratesFactory,
+    NeedsFactory,
+    PossessesFactory,
+    RequiresFactory,
+    UsesFactory

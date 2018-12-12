@@ -12,7 +12,6 @@ import runtimemodels.chazm.api.relation.Contains
  */
 @FunctionalInterface
 interface ContainsFactory {
-
     /**
      * Constructs a [Contains].
      *
@@ -21,6 +20,5 @@ interface ContainsFactory {
      * @param value          the `double` value of the [Contains].
      * @return a [Contains].
      */
-    fun buildContains(role: Role, characteristic: Characteristic, value: Double): Contains
-
+    fun build(role: Role, characteristic: Characteristic, value: Double): Contains
 }

@@ -12,7 +12,6 @@ import runtimemodels.chazm.api.relation.Has
  */
 @FunctionalInterface
 interface HasFactory {
-
     /**
      * Constructs a [Has].
      *
@@ -21,6 +20,5 @@ interface HasFactory {
      * @param value     the `double` value of the [Has].
      * @return a [Has].
      */
-    fun buildHas(agent: Agent, attribute: Attribute, value: Double): Has
-
+    fun build(agent: Agent, attribute: Attribute, value: Double): Has
 }

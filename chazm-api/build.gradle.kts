@@ -2,16 +2,14 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 import java.time.Instant
 
 plugins {
-    `java-library`
+    `kotlin-jvm`()
+    dokka()
     jacoco
     distribution
     `maven-publish`
     signing
     bintray(includeVersion = false)
 }
-
-group = rootProject.group
-version = "${rootProject.version}.0.0"
 
 repositories {
     jcenter()
@@ -23,7 +21,12 @@ java {
     targetCompatibility = JavaVersion.VERSION_11
 }
 
+group = rootProject.group
+version = "${rootProject.version}.0.0"
+
 dependencies {
+    implementation(org.jetbrains.kotlin.`kotlin-stdlib-jdk8`)
+
     testImplementation(platform(org.junit.`junit-bom`))
     testImplementation(org.junit.jupiter.`junit-jupiter-api`)
     testImplementation(org.junit.jupiter.`junit-jupiter-params`)
@@ -38,10 +41,10 @@ val sourceJar by tasks.registering(Jar::class) {
     manifest = tasks.jar.get().manifest
 }
 
-val javadocJar by tasks.registering(Jar::class) {
-    dependsOn(tasks.javadoc)
-    classifier = "javadoc"
-    from(tasks.javadoc.get().destinationDir)
+val dokkaJar by tasks.registering(Jar::class) {
+    dependsOn(tasks.dokka)
+    classifier = "dokka"
+    from(tasks.dokka.get().outputDirectory)
     manifest = tasks.jar.get().manifest
 }
 
@@ -50,7 +53,7 @@ distributions {
         contents {
             from(tasks.jar)
             from(sourceJar)
-            from(javadocJar)
+            from(dokkaJar)
         }
     }
 }
@@ -60,7 +63,7 @@ publishing {
         create<MavenPublication>("mavenJava") {
             artifact(tasks.jar.get())
             artifact(sourceJar.get())
-            artifact(javadocJar.get())
+            artifact(dokkaJar.get())
         }
     }
 }
@@ -88,71 +91,33 @@ bintray {
 }
 
 tasks {
-    val moduleName = "runtimemodels.chazm.api"
-    val junitModule = "org.junit.jupiter.api"
-
-    compileJava<JavaCompile> {
-        inputs.property("moduleName", moduleName)
-        doFirst {
-            options.compilerArgs = listOf(
-                    "-Xlint", // Enables all recommended warnings.
-                    "-Werror", // Terminates compilation when warnings occur.
-                    "--module-path", classpath.asPath
-            )
-            classpath = files()
+    compileKotlin {
+        kotlinOptions {
+            jvmTarget = "1.8"
         }
     }
-    compileTestJava<JavaCompile> {
-        inputs.property("moduleName", moduleName)
-        doFirst {
-            options.compilerArgs = listOf(
-                    "-Xlint",     // Enables all recommended warnings.
-                    "-Xlint:-overrides", // Disables "method overrides" warnings.
-                    "-parameters", // Generates metadata for reflection on method parameters.
-                    "--module-path", classpath.asPath,
-                    "--add-modules", junitModule,
-                    "--add-reads", "$moduleName=$junitModule",
-                    "--patch-module", "$moduleName=${files(sourceSets.test.get().java.srcDirs).asPath}"
-            )
-            classpath = files()
+    compileTestKotlin {
+        kotlinOptions {
+            jvmTarget = "1.8"
         }
     }
-    test<Test> {
+    test {
         useJUnitPlatform()
-        inputs.property("moduleName", moduleName)
-        doFirst {
-            jvmArgs = listOf(
-                    "--module-path", classpath.asPath,
-                    "--add-modules", "ALL-MODULE-PATH",
-                    "--add-reads", "$moduleName=$junitModule",
-                    "--add-reads", "$moduleName=org.assertj.core",
-                    "--add-opens", "$moduleName/$moduleName=org.junit.platform.commons",
-                    "--patch-module", "$moduleName=${files(sourceSets.test.get().java.outputDir).asPath}"
-            )
-            classpath = files()
-        }
         testLogging {
             events(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
         }
     }
-    jacocoTestReport<JacocoReport> {
+    jacocoTestReport {
         reports {
             csv.isEnabled = false
             xml.isEnabled = true
             html.isEnabled = System.getenv("CI").isNullOrBlank()
         }
     }
-    jar<Jar> {
+    jar {
         manifest {
             attributes["API-Title"] = project.name
             attributes["API-Version"] = project.version
-        }
-    }
-    javadoc {
-        inputs.property("moduleName", moduleName)
-        val options = options as CoreJavadocOptions
-        doFirst {
-            options.addStringOption("-module-path", classpath.asPath)
         }
     }
 }

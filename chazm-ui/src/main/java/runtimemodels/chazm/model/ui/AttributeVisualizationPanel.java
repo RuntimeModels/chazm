@@ -7,13 +7,12 @@
  */
 package runtimemodels.chazm.model.ui;
 
-import runtimemodels.chazm.api.Organization;
 import runtimemodels.chazm.api.entity.Attribute;
+import runtimemodels.chazm.api.organization.Organization;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -50,9 +49,10 @@ public class AttributeVisualizationPanel extends AbstractListVisualizationPanel<
 
     @Override
     List<Attribute> getCollection() {
-        final List<Attribute> attributes = new ArrayList<>(getOrganization().getAttributes());
-        final Comparator<Attribute> comparator = (attribute1, attribute2) -> attribute1.toString().compareTo(attribute2.toString());
-        Collections.sort(attributes, comparator);
+//        final List<Attribute> attributes = new ArrayList<>(getOrganization().getAttributes());
+        final List<Attribute> attributes = new ArrayList<>();
+        final Comparator<Attribute> comparator = Comparator.comparing(Attribute::toString);
+        attributes.sort(comparator);
         return attributes;
     }
 

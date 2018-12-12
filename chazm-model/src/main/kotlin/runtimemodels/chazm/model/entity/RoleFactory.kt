@@ -1,6 +1,7 @@
 package runtimemodels.chazm.model.entity
 
 import runtimemodels.chazm.api.entity.Role
+import runtimemodels.chazm.api.entity.RoleId
 import runtimemodels.chazm.api.id.UniqueId
 
 /**
@@ -11,13 +12,11 @@ import runtimemodels.chazm.api.id.UniqueId
  */
 @FunctionalInterface
 interface RoleFactory {
-
     /**
      * Constructs a [Role].
      *
      * @param id the [UniqueId] that represents the [Role].
      * @return a [Role].
      */
-    fun buildRole(id: UniqueId<Role>): Role
-
+    fun build(id: RoleId): Role
 }

@@ -1,6 +1,4 @@
-import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.time.Instant
 
 plugins {
@@ -18,7 +16,6 @@ version = "${rootProject.version}.0.0"
 
 repositories {
     jcenter()
-    mavenCentral()
 }
 
 java {
@@ -27,18 +24,19 @@ java {
 }
 
 dependencies {
+
     api(project(":chazm-api"))
 
     implementation(org.jetbrains.kotlin.`kotlin-stdlib-jdk8`)
-    implementation(platform(com.google.inject.`guice-bom`))
-    implementation(com.google.inject.guice)
-    implementation(com.google.inject.extensions.`guice-assistedinject`)
+    implementation(org.koin.`koin-core`)
+    implementation(org.koin.`koin-core-ext`)
     implementation(org.slf4j.`slf4j-api`)
     implementation(javax.inject.javax_inject)
     implementation(javax.validation.`validation-api`)
     implementation(io.reactivex.rxjava2.rxjava)
 
     testImplementation(org.jetbrains.kotlin.`kotlin-test-junit5`)
+    testImplementation(org.koin.`koin-test`)
     testImplementation(platform(org.junit.`junit-bom`))
     testImplementation(org.junit.jupiter.`junit-jupiter-api`)
     testImplementation(org.junit.jupiter.`junit-jupiter-params`)
@@ -47,6 +45,7 @@ dependencies {
     testImplementation(org.mockito.`mockito-junit-jupiter`)
 
     testRuntimeOnly(org.junit.jupiter.`junit-jupiter-engine`)
+    testRuntimeOnly(org.jetbrains.kotlin.`kotlin-reflect`)
 }
 
 val sourceJar by tasks.registering(Jar::class) {

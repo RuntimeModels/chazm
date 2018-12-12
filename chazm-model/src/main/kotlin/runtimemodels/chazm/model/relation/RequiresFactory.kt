@@ -12,7 +12,6 @@ import runtimemodels.chazm.api.relation.Requires
  */
 @FunctionalInterface
 interface RequiresFactory {
-
     /**
      * Constructs a [Requires].
      *
@@ -20,6 +19,5 @@ interface RequiresFactory {
      * @param capability the [Capability] of the [Requires].
      * @return a [Requires].
      */
-    fun buildRequires(role: Role, capability: Capability): Requires
-
+    fun build(role: Role, capability: Capability): Requires
 }

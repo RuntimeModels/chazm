@@ -1,87 +1,108 @@
 package runtimemodels.chazm.model.function
 
-import com.google.inject.Guice
+import any
+import mock
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
-import runtimemodels.chazm.api.Organization
-import runtimemodels.chazm.api.entity.Capability
-import runtimemodels.chazm.api.entity.InstanceGoal
+import org.junit.jupiter.api.assertAll
+import org.mockito.Mockito.`when`
 import runtimemodels.chazm.api.entity.Role
-import runtimemodels.chazm.api.entity.SpecificationGoal
 import runtimemodels.chazm.api.function.Effectiveness
-import runtimemodels.chazm.model.OrganizationModule
-import runtimemodels.chazm.model.entity.EntityFactory
-import runtimemodels.chazm.model.id.IdFactory
-import runtimemodels.chazm.model.id.build
-import runtimemodels.chazm.model.relation.RelationFactory
+import runtimemodels.chazm.api.function.Goodness
+import runtimemodels.chazm.api.organization.Organization
+import runtimemodels.chazm.api.relation.Assignment
+import runtimemodels.chazm.api.relation.AssignmentManager
+import scaleInt
 
-
-class DefaultEffectivenessTest {
-
-    private val injector = Guice.createInjector(OrganizationModule(), FunctionModule())
-    private val provider = injector.getProvider(Organization::class.java)
-    private val idFactory = injector.getInstance(IdFactory::class.java)
-    private val entityFactory = injector.getInstance(EntityFactory::class.java)
-    private val relationFactory = injector.getInstance(RelationFactory::class.java)
-    private val effectiveness = injector.getInstance(Effectiveness::class.java)
-
+internal class DefaultEffectivenessTest {
     @Test
-    fun `test that compute works correctly`() {
-        val o = provider.get()
-        val a1 = entityFactory.buildAgent(idFactory.build("a1"), mapOf())
-        val a2 = entityFactory.buildAgent(idFactory.build("a2"), mapOf())
-        val r = entityFactory.buildRole(idFactory.build(Role::class.java, "r"))
-        val sg = entityFactory.buildSpecificationGoal(idFactory.build(SpecificationGoal::class.java, "sg"))
-        val ig1 = entityFactory.buildInstanceGoal(idFactory.build(InstanceGoal::class.java, "ig1"), sg, mapOf())
-        val ig2 = entityFactory.buildInstanceGoal(idFactory.build(InstanceGoal::class.java, "ig2"), sg, mapOf())
-        val c1 = entityFactory.buildCapability(idFactory.build(Capability::class.java, "c1"))
-        val c2 = entityFactory.buildCapability(idFactory.build(Capability::class.java, "c2"))
-        val as1 = relationFactory.buildAssignment(a1, r, ig1)
-        val as2 = relationFactory.buildAssignment(a1, r, ig2)
-        val as3 = relationFactory.buildAssignment(a2, r, ig1)
-        val as4 = relationFactory.buildAssignment(a2, r, ig2)
+    fun `test the compute value when there are no assignments`() {
+        val organization: Organization = mock()
 
-        assertThat(effectiveness.compute(o, o.assignments)).isEqualTo(0.0)
+        val effectiveness: Effectiveness = DefaultEffectiveness()
 
-        o.addAgent(a1)
-        o.addAgent(a2)
-        o.addRole(r)
-        o.addSpecificationGoal(sg)
-        o.addInstanceGoal(ig1)
-        o.addInstanceGoal(ig2)
-        o.addCapability(c1)
-        o.addCapability(c2)
-        o.addAchieves(r.id, sg.id)
-        o.addRequires(r.id, c1.id)
-        o.addPossesses(a1.id, c1.id, 1.0)
-        o.addAssignment(as1)
-
-        assertThat(effectiveness.compute(o, o.assignments)).isEqualTo(1.0)
-
-        o.addAssignment(as2)
-
-        assertThat(effectiveness.compute(o, o.assignments)).isEqualTo(2.0)
-
-        o.addAssignment(as3)
-
-        assertThat(effectiveness.compute(o, o.assignments)).isEqualTo(2.0)
-
-        o.addAssignment(as4)
-
-        assertThat(effectiveness.compute(o, o.assignments)).isEqualTo(2.0)
+        assertThat(effectiveness.compute(organization, setOf()).scaleInt()).isEqualTo(0)
     }
 
     @Test
-    fun `test compute function with a null organization and a null assignments`() {
-        assertThrows<IllegalArgumentException> { effectiveness.compute(null, null) }
+    fun `test the compute value when there is one assignment`() {
+        val organization: Organization = mock()
+        val assignmentManager: AssignmentManager = mock()
+        val goodness: Goodness = mock()
+        val assignment: Assignment = mock()
+        val role: Role = mock()
+
+        `when`(organization.getGoodness(any())).thenReturn(goodness)
+        `when`(organization.assignmentRelations).thenReturn(assignmentManager)
+        `when`(assignment.role).thenReturn(role)
+        `when`(goodness.compute(any(), any(), any(), any(), any())).thenReturn(0.0, 0.5, 1.0)
+
+        val effectiveness: Effectiveness = DefaultEffectiveness()
+
+        assertAll(
+            { assertThat(effectiveness.compute(organization, setOf(assignment)).scaleInt()).isEqualTo(0) },
+            { assertThat(effectiveness.compute(organization, setOf(assignment)).scaleInt()).isEqualTo(5) },
+            { assertThat(effectiveness.compute(organization, setOf(assignment)).scaleInt()).isEqualTo(10) }
+        )
     }
 
     @Test
-    fun `test compute function with a null assignments`() {
-        val o = provider.get()
+    fun `test the compute value when there are two assignments`() {
+        val organization: Organization = mock()
+        val assignmentManager: AssignmentManager = mock()
+        val goodness: Goodness = mock()
+        val assignment1: Assignment = mock()
+        val assignment2: Assignment = mock()
+        val role: Role = mock()
 
-        assertThrows<IllegalArgumentException> { effectiveness.compute(o, null) }
+        `when`(organization.getGoodness(any())).thenReturn(goodness)
+        `when`(organization.assignmentRelations).thenReturn(assignmentManager)
+        `when`(assignment1.role).thenReturn(role)
+        `when`(assignment2.role).thenReturn(role)
+        `when`(goodness.compute(any(), any(), any(), any(), any())).thenReturn(
+            0.0, 0.0,
+            1.0, 0.0,
+            0.2, 0.3,
+            1.0, 1.0
+        )
+
+        val effectiveness: Effectiveness = DefaultEffectiveness()
+
+        assertAll(
+            { assertThat(effectiveness.compute(organization, setOf(assignment1, assignment2)).scaleInt()).isEqualTo(0) },
+            { assertThat(effectiveness.compute(organization, setOf(assignment1, assignment2)).scaleInt()).isEqualTo(10) },
+            { assertThat(effectiveness.compute(organization, setOf(assignment1, assignment2)).scaleInt()).isEqualTo(5) },
+            { assertThat(effectiveness.compute(organization, setOf(assignment1, assignment2)).scaleInt()).isEqualTo(20) }
+        )
     }
 
+    @Test
+    fun `test the compute value when there are three assignments`() {
+        val organization: Organization = mock()
+        val assignmentManager: AssignmentManager = mock()
+        val goodness: Goodness = mock()
+        val assignment1: Assignment = mock()
+        val assignment2: Assignment = mock()
+        val assignment3: Assignment = mock()
+        val role: Role = mock()
+
+        `when`(organization.getGoodness(any())).thenReturn(goodness)
+        `when`(organization.assignmentRelations).thenReturn(assignmentManager)
+        `when`(assignment1.role).thenReturn(role)
+        `when`(assignment2.role).thenReturn(role)
+        `when`(assignment3.role).thenReturn(role)
+        `when`(goodness.compute(any(), any(), any(), any(), any())).thenReturn(
+            0.0, 0.0, 0.0,
+            0.1, 0.2, 0.3,
+            1.0, 1.0, 1.0
+        )
+
+        val effectiveness: Effectiveness = DefaultEffectiveness()
+
+        assertAll(
+            { assertThat(effectiveness.compute(organization, setOf(assignment1, assignment2, assignment3)).scaleInt()).isEqualTo(0) },
+            { assertThat(effectiveness.compute(organization, setOf(assignment1, assignment2, assignment3)).scaleInt()).isEqualTo(6) },
+            { assertThat(effectiveness.compute(organization, setOf(assignment1, assignment2, assignment3)).scaleInt()).isEqualTo(30) }
+        )
+    }
 }
