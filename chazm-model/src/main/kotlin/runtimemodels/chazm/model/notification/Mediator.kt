@@ -6,7 +6,7 @@ package runtimemodels.chazm.model.notification
  * @author Christopher Zhong
  * @since 7.0.0
  */
-interface Mediator {
+interface Mediator { // TODO to be replaced with RxJava
 
     /**
      * Pushes an event to interested [Subscriber]s.

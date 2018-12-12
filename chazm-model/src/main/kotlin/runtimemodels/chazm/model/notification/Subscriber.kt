@@ -19,4 +19,4 @@ package runtimemodels.chazm.model.notification
  *
  * @since 7.0.0
  */
-interface Subscriber
+interface Subscriber // TODO to be replaced with RxJava

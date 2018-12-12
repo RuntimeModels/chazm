@@ -7,7 +7,7 @@ package runtimemodels.chazm.model.notification
  * @author Christopher Zhong
  * @since 7.0.0
  */
-interface Publisher {
+interface Publisher { // TODO to be replaced with RxJava
 
     /**
      * Post an event.
