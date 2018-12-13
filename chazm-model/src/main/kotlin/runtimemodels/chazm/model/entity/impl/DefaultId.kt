@@ -5,7 +5,7 @@ import runtimemodels.chazm.api.id.UniqueId
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
-internal sealed class DefaultId<T : Any> constructor(
+internal sealed class DefaultId<T : Any>(
     override val type: KClass<T>
 ) : UniqueId<T> {
     override fun equals(other: Any?): Boolean {
