@@ -18,6 +18,7 @@ import javax.xml.namespace.QName
 import javax.xml.stream.XMLEventReader
 import javax.xml.stream.XMLStreamException
 import javax.xml.stream.events.StartElement
+import javax.xml.stream.events.XMLEvent
 
 @Singleton
 internal class ParsePmf @Inject constructor(
@@ -48,32 +49,34 @@ internal class ParsePmf @Inject constructor(
         attributes: Map<String, AttributeId>,
         list: MutableList<() -> Unit>
     ) {
-        while (reader.hasNext()) {
-            val event = reader.nextEvent()
-            if (event.isStartElement) {
-                val element = event.asStartElement()
-                val name = element.name
-                if (MODERATES_ELEMENT == name.localPart) {
-                    val ids = collectIds(reader, name)
-                    list.add {
-                        addRelation(
-                            id,
-                            ids,
-                            attributes,
-                            { pmfId, attributeId ->
-                                organization.moderatesRelations.add(relationFactory.build(
-                                    organization.pmfs[pmfId]!!,
-                                    organization.attributes[attributeId]!!
-                                ))
-                            },
-                            Attribute::class.java
-                        )
+        reader.forEach {
+            when {
+                it is XMLEvent && it.isStartElement -> {
+                    val element = it.asStartElement()
+                    val name = element.name
+                    if (MODERATES_ELEMENT == name.localPart) { // TODO extract into a relation parser
+                        val ids = collectIds(reader, name)
+                        list.add {
+                            addRelation(
+                                id,
+                                ids,
+                                attributes,
+                                { pmfId, attributeId ->
+                                    organization.moderatesRelations.add(relationFactory.build(
+                                        organization.pmfs[pmfId]!!,
+                                        organization.attributes[attributeId]!!
+                                    ))
+                                },
+                                Attribute::class.java
+                            )
+                        }
                     }
                 }
-            } else if (event.isEndElement) {
-                val element = event.asEndElement()
-                if (element.name == tagName) {
-                    return
+                it is XMLEvent && it.isEndElement -> {
+                    val element = it.asEndElement()
+                    if (element.name == tagName) {
+                        return
+                    }
                 }
             }
         }

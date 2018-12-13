@@ -4,7 +4,7 @@ import runtimemodels.chazm.model.entity.*
 import runtimemodels.chazm.model.message.L
 import runtimemodels.chazm.model.relation.*
 
-internal open class DefaultSubscriber : Subscriber {
+internal open class DefaultSubscriber : Subscriber { // TODO to be replaced with RxJava
 
     @Subscribe
     fun event(event: AchievesEvent) {

@@ -16,6 +16,7 @@ import javax.xml.namespace.QName
 import javax.xml.stream.XMLEventReader
 import javax.xml.stream.XMLStreamException
 import javax.xml.stream.events.StartElement
+import javax.xml.stream.events.XMLEvent
 
 @Singleton
 internal class ParseRole @Inject constructor(
@@ -53,92 +54,94 @@ internal class ParseRole @Inject constructor(
         goals: Map<String, SpecificationGoalId>,
         list: MutableList<() -> Unit>
     ) {
-        while (reader.hasNext()) {
-            val event = reader.nextEvent()
-            if (event.isStartElement) {
-                val element = event.asStartElement()
-                val name = element.name
-                when (name.localPart) {
-                    ACHIEVES_ELEMENT -> {
-                        val ids = collectIds(reader, name)
-                        list.add {
-                            addRelation(
-                                id,
-                                ids,
-                                goals,
-                                { roleId, goalId ->
-                                    organization.achievesRelations.add(relationFactory.build(
-                                        organization.roles[roleId]!!,
-                                        organization.specificationGoals[goalId]!!
-                                    ))
-                                },
-                                SpecificationGoal::class.java
-                            )
-                        }
-                    }
-                    CONTAINS_ELEMENT -> {
-                        val ids = collectIds(reader, name)
-                        try {
-                            val value = java.lang.Double.valueOf(element attribute VALUE_ATTRIBUTE)
+        reader.forEach {
+            when {
+                it is XMLEvent && it.isStartElement -> {
+                    val element = it.asStartElement()
+                    val name = element.name
+                    when (name.localPart) {
+                        ACHIEVES_ELEMENT -> { // TODO extract into a relation parser
+                            val ids = collectIds(reader, name)
                             list.add {
                                 addRelation(
                                     id,
                                     ids,
-                                    characteristics,
-                                    { roleId, characteristicId ->
-                                        organization.containsRelations.add(relationFactory.build(
+                                    goals,
+                                    { roleId, goalId ->
+                                        organization.achievesRelations.add(relationFactory.build(
                                             organization.roles[roleId]!!,
-                                            organization.characteristics[characteristicId]!!,
-                                            value
+                                            organization.specificationGoals[goalId]!!
                                         ))
                                     },
-                                    Characteristic::class.java
+                                    SpecificationGoal::class.java
                                 )
                             }
-                        } catch (e: NumberFormatException) {
-                            throw XMLStreamException(e)
                         }
+                        CONTAINS_ELEMENT -> { // TODO extract into a relation parser
+                            val ids = collectIds(reader, name)
+                            try {
+                                val value = java.lang.Double.valueOf(element attribute VALUE_ATTRIBUTE)
+                                list.add {
+                                    addRelation(
+                                        id,
+                                        ids,
+                                        characteristics,
+                                        { roleId, characteristicId ->
+                                            organization.containsRelations.add(relationFactory.build(
+                                                organization.roles[roleId]!!,
+                                                organization.characteristics[characteristicId]!!,
+                                                value
+                                            ))
+                                        },
+                                        Characteristic::class.java
+                                    )
+                                }
+                            } catch (e: NumberFormatException) {
+                                throw XMLStreamException(e)
+                            }
 
-                    }
-                    NEEDS_ELEMENT -> {
-                        val ids = collectIds(reader, name)
-                        list.add {
-                            addRelation(
-                                id,
-                                ids,
-                                attributes,
-                                { roleId, attributeId ->
-                                    organization.needsRelations.add(relationFactory.build(
-                                        organization.roles[roleId]!!,
-                                        organization.attributes[attributeId]!!
-                                    ))
-                                },
-                                Attribute::class.java
-                            )
                         }
-                    }
-                    REQUIRES_ELEMENT -> {
-                        val ids = collectIds(reader, name)
-                        list.add {
-                            addRelation(
-                                id,
-                                ids,
-                                capabilities,
-                                { roleId, capabilityId ->
-                                    organization.requiresRelations.add(relationFactory.build(
-                                        organization.roles[roleId]!!,
-                                        organization.capabilities[capabilityId]!!
-                                    ))
-                                },
-                                Capability::class.java
-                            )
+                        NEEDS_ELEMENT -> { // TODO extract into a relation parser
+                            val ids = collectIds(reader, name)
+                            list.add {
+                                addRelation(
+                                    id,
+                                    ids,
+                                    attributes,
+                                    { roleId, attributeId ->
+                                        organization.needsRelations.add(relationFactory.build(
+                                            organization.roles[roleId]!!,
+                                            organization.attributes[attributeId]!!
+                                        ))
+                                    },
+                                    Attribute::class.java
+                                )
+                            }
+                        }
+                        REQUIRES_ELEMENT -> { // TODO extract into a relation parser
+                            val ids = collectIds(reader, name)
+                            list.add {
+                                addRelation(
+                                    id,
+                                    ids,
+                                    capabilities,
+                                    { roleId, capabilityId ->
+                                        organization.requiresRelations.add(relationFactory.build(
+                                            organization.roles[roleId]!!,
+                                            organization.capabilities[capabilityId]!!
+                                        ))
+                                    },
+                                    Capability::class.java
+                                )
+                            }
                         }
                     }
                 }
-            } else if (event.isEndElement) {
-                val element = event.asEndElement()
-                if (element.name == tagName) {
-                    return
+                it is XMLEvent && it.isEndElement -> {
+                    val element = it.asEndElement()
+                    if (element.name == tagName) {
+                        return
+                    }
                 }
             }
         }
