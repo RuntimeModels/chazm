@@ -14,7 +14,7 @@ plugins {
 
 buildScan {
     termsOfServiceUrl = "https://gradle.com/terms-of-service"
-    setTermsOfServiceAgree("yes")
+    termsOfServiceAgree = "yes"
 }
 
 //add(from = "sonarqube.gradle")
@@ -30,7 +30,7 @@ apply(from = "ext.gradle")
 //add(from = "jacocoTestReport.gradle")
 
 tasks {
-    wrapper<Wrapper> {
+    wrapper {
         distributionType = Wrapper.DistributionType.ALL
         gradleVersion = Gradle.VERSION
     }

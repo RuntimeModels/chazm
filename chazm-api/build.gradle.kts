@@ -11,28 +11,27 @@ plugins {
     bintray(includeVersion = false)
 }
 
+group = rootProject.group
+version = rootProject.version
+
 repositories {
     jcenter()
-    mavenCentral()
+}
+
+dependencies {
+    implementation(`kotlin-stdlib-jdk8`)
+
+    testImplementation(platform(`junit-bom`))
+    testImplementation(`junit-jupiter-api`)
+    testImplementation(`junit-jupiter-params`)
+    testImplementation(`assertj-core`)
+
+    testRuntimeOnly(`junit-jupiter-engine`)
 }
 
 java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
-}
-
-group = rootProject.group
-version = "${rootProject.version}.0.0"
-
-dependencies {
-    implementation(org.jetbrains.kotlin.`kotlin-stdlib-jdk8`)
-
-    testImplementation(platform(org.junit.`junit-bom`))
-    testImplementation(org.junit.jupiter.`junit-jupiter-api`)
-    testImplementation(org.junit.jupiter.`junit-jupiter-params`)
-    testImplementation(org.assertj.`assertj-core`)
-
-    testRuntimeOnly(org.junit.jupiter.`junit-jupiter-engine`)
 }
 
 val sourceJar by tasks.registering(Jar::class) {
@@ -60,7 +59,7 @@ distributions {
 
 publishing {
     publications {
-        create<MavenPublication>("mavenJava") {
+        register<MavenPublication>("mavenJava") {
             artifact(tasks.jar.get())
             artifact(sourceJar.get())
             artifact(dokkaJar.get())
@@ -111,7 +110,7 @@ tasks {
         reports {
             csv.isEnabled = false
             xml.isEnabled = true
-            html.isEnabled = System.getenv("CI").isNullOrBlank()
+            html.isEnabled = isCI
         }
     }
     jar {

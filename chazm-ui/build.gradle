@@ -5,16 +5,10 @@ plugins {
 }
 
 group = rootProject.group
-version = "${rootProject.version}.0.0"
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_10
-    targetCompatibility = JavaVersion.VERSION_1_10
-}
+version = rootProject.version
 
 repositories {
     jcenter()
-    mavenCentral()
 }
 
 dependencies {
@@ -23,6 +17,11 @@ dependencies {
 
     testImplementation("junit:junit:${junitVersion}")
     testImplementation("org.jmockit:jmockit:${jmockitVersion}")
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 jacocoTestReport {

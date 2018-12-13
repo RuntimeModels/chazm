@@ -12,40 +12,38 @@ plugins {
 }
 
 group = rootProject.group
-version = "${rootProject.version}.0.0"
+version = rootProject.version
 
 repositories {
     jcenter()
 }
 
+dependencies {
+    api(project(":chazm-api"))
+
+    implementation(`kotlin-stdlib-jdk8`)
+    implementation(`koin-core`)
+    implementation(`koin-core-ext`)
+    implementation(`slf4j-api`)
+    implementation(javax_inject)
+    implementation(rxjava)
+
+    testImplementation(`kotlin-test-junit5`)
+    testImplementation(`koin-test`)
+    testImplementation(platform(`junit-bom`))
+    testImplementation(`junit-jupiter-api`)
+    testImplementation(`junit-jupiter-params`)
+    testImplementation(`assertj-core`)
+    testImplementation(`mockito-core`)
+    testImplementation(`mockito-junit-jupiter`)
+
+    testRuntimeOnly(`junit-jupiter-engine`)
+    testRuntimeOnly(`kotlin-reflect`)
+}
+
 java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
-}
-
-dependencies {
-
-    api(project(":chazm-api"))
-
-    implementation(org.jetbrains.kotlin.`kotlin-stdlib-jdk8`)
-    implementation(org.koin.`koin-core`)
-    implementation(org.koin.`koin-core-ext`)
-    implementation(org.slf4j.`slf4j-api`)
-    implementation(javax.inject.javax_inject)
-    implementation(javax.validation.`validation-api`)
-    implementation(io.reactivex.rxjava2.rxjava)
-
-    testImplementation(org.jetbrains.kotlin.`kotlin-test-junit5`)
-    testImplementation(org.koin.`koin-test`)
-    testImplementation(platform(org.junit.`junit-bom`))
-    testImplementation(org.junit.jupiter.`junit-jupiter-api`)
-    testImplementation(org.junit.jupiter.`junit-jupiter-params`)
-    testImplementation(org.assertj.`assertj-core`)
-    testImplementation(org.mockito.`mockito-core`)
-    testImplementation(org.mockito.`mockito-junit-jupiter`)
-
-    testRuntimeOnly(org.junit.jupiter.`junit-jupiter-engine`)
-    testRuntimeOnly(org.jetbrains.kotlin.`kotlin-reflect`)
 }
 
 val sourceJar by tasks.registering(Jar::class) {
@@ -73,7 +71,7 @@ distributions {
 
 publishing {
     publications {
-        create<MavenPublication>("mavenJava") {
+        register<MavenPublication>("mavenJava") {
             artifact(tasks.jar.get())
             artifact(sourceJar.get())
             artifact(dokkaJar.get())
@@ -124,7 +122,7 @@ tasks {
         reports {
             csv.isEnabled = false
             xml.isEnabled = true
-            html.isEnabled = System.getenv("CI").isNullOrBlank()
+            html.isEnabled = isCI
         }
     }
     jar {
