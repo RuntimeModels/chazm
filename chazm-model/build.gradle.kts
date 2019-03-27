@@ -2,8 +2,8 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 import java.time.Instant
 
 plugins {
-    `kotlin-jvm`()
-    dokka()
+    `kotlin-jvm`
+    dokka
     jacoco
     distribution
     `maven-publish`
