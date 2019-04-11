@@ -8,6 +8,7 @@
 [![Dependency Status][ds-img]][ds-lnk]
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/21b1b8b1232a4551ad8095d66d4c2abb)](https://app.codacy.com/app/RuntimeModels/chazm?utm_source=github.com&utm_medium=referral&utm_content=RuntimeModels/chazm&utm_campaign=Badge_Grade_Dashboard)
 [![CodeFactor](https://www.codefactor.io/repository/github/runtimemodels/chazm/badge)](https://www.codefactor.io/repository/github/runtimemodels/chazm)
+[![BCH compliance](https://bettercodehub.com/edge/badge/RuntimeModels/chazm?branch=master)](https://bettercodehub.com/)
 
 The Chazm model is an extension of the Organization Model for Adaptive Complex Systems ([OMACS](http://macr.cs.ksu.edu/projects/omacs.html)) to include new concepts for modelling humans.
 Chazm can model the mechanics of performance moderator functions (PMFs).
