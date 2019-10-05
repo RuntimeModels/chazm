@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Building with JDK-${{matrix.java}}
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        java: [8, 11]
+
+    steps:
+      - uses: actions/checkout@v1
+      - run: ./gradlew build
+
+  upload-to-bintray:
+    if: github.ref == 'master'
+    needs: [build]
+
+    name: Uploading artifacts to Bintray
+    runs-on: ubuntu-latest
+    
+    steps:
+      - run Echo TODO
+
+  upload-to-github-repository:
+    if: github.ref == 'master'
+    needs: [build]
+
+    name: Uploading artifacts to GitHub repository
+    runs-on: ubuntu-latest
+
+    steps:
+      - run Echo TODO
