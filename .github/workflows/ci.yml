@@ -8,6 +8,7 @@ on:
 
 jobs:
   build:
+    name: Build (JDK ${{ matrix.java }})
     runs-on: ubuntu-latest
 
     strategy:
