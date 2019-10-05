@@ -34,7 +34,7 @@ jobs:
 
     name: Uploading artifacts to Bintray
     runs-on: ubuntu-latest
-    
+
     steps:
       - run: echo TODO
 
