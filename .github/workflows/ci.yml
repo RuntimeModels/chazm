@@ -17,6 +17,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
+        submodules: recursive
       - run: ./gradlew build
 
   upload-to-bintray:
