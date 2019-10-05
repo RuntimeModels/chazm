@@ -20,6 +20,7 @@ jobs:
           submodules: recursive
 
       - uses: actions/setup-java@v1
+        name: Setup JDK ${{ matrix.java }}
         with:
           java-version: ${{ matrix.java }}
 
