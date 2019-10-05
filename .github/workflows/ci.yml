@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Build (JDK ${{ matrix.java }})
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        java: [11]
+
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          submodules: recursive
+
+      - uses: actions/setup-java@v1
+        name: Setup JDK ${{ matrix.java }}
+        with:
+          java-version: ${{ matrix.java }}
+
+      - run: ./gradlew build
+        name: Build with Gradle
+
+  upload-to-bintray:
+    if: github.ref == 'master'
+    needs: [build]
+
+    name: Uploading artifacts to Bintray
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo TODO
+
+  upload-to-github-repository:
+    if: github.ref == 'master'
+    needs: [build]
+
+    name: Uploading artifacts to GitHub repository
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo TODO
