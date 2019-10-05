@@ -25,6 +25,7 @@ jobs:
           java-version: ${{ matrix.java }}
 
       - run: ./gradlew build
+        name: Build with Gradle
 
   upload-to-bintray:
     if: github.ref == 'master'
