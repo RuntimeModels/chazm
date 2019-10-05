@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - run echo TODO
+      - run: echo TODO
 
   upload-to-github-repository:
     if: github.ref == 'master'
@@ -37,4 +37,4 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run echo TODO
+      - run: echo TODO
